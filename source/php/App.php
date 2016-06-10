@@ -2,10 +2,11 @@
 
 namespace HbgEventImporter;
 
-ini_set("display_errors", "on");
-
 class App
 {
+    public $eventPostType = null;
+    public $locationsPostType = null;
+
     public function __construct()
     {
         add_action('plugins_loaded', function () {
@@ -28,9 +29,13 @@ class App
         add_action('admin_enqueue_scripts', array($this, 'enqueueStyles'));
         add_action('admin_enqueue_scripts', array($this, 'enqueueScripts'));
 
-        add_action('init', '\HbgEventImporter\Event::initPostType');
-        add_action('init', '\HbgEventImporter\Location::initPostType');
-        add_action('init', '\HbgEventImporter\Contact::initPostType');
+        // add_action('init', '\HbgEventImporter\Event::initPostType');
+        // add_action('init', '\HbgEventImporter\Location::initPostType');
+        // add_action('init', '\HbgEventImporter\Contact::initPostType');
+
+        $this->eventsPostType = new PostTypes\Events();
+        $this->locationsPostType = new PostTypes\Locations();
+        $this->contactsPostType = new PostTypes\Contacts();
 
         add_action('admin_menu', array($this, 'createParsePage'));
         add_action('admin_notices', array($this, 'adminNotices'));
