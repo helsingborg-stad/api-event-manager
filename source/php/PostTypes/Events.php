@@ -28,6 +28,28 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
                 'supports'              =>  array('title', 'revisions', 'editor', 'thumbnail'),
             )
         );
+
+        add_action('manage_posts_extra_tablenav', array($this, 'tablenavButtons'));
+    }
+
+    /**
+     * Add buttons to start parsing xcap and Cbis
+     * @return void
+     */
+    public function tablenavButtons($which)
+    {
+        global $current_screen;
+
+        if ($current_screen->id != 'edit-event' || $which != 'top') {
+            return;
+        }
+
+        echo '<div class="alignleft actions">';
+            echo '<a href="' . admin_url('options.php?page=import-events')
+                    . '" class="button-primary" id="post-query-submit">Import XCAP</a>';
+            echo '<a href="' . admin_url('options.php?page=import-cbis-events')
+                    . '" class="button-primary" id="post-query-submit">Import CBIS</a>';
+        echo '</div>';
     }
 
 
