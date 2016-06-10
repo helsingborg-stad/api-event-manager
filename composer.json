@@ -1,0 +1,19 @@
+{
+    "name": "helsingborg-stad/xcap-import",
+    "description": "Import events from xcap (mittkulturkort.se)",
+    "type": "wordpress-plugin",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Kristoffer Svanmark",
+            "email": "kristoffer.svanmark@lexiconitkonsult.se"
+        },
+        {
+            "name": "Sebastian Thulin",
+            "email": "sebastian.thulin@helsingborg.se"
+        }
+    ],
+    "require": {
+        "composer/installers": "~1.0"
+    }
+}
