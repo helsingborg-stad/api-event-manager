@@ -9,7 +9,7 @@ class CBIS extends \HbgEventImporter\Parser
     public function __construct($url)
     {
         $this->writeAttributeDataToFile = false;
-        $this->insertIntoDatabase = false;
+        $this->insertIntoDatabase = true;
         $this->sortedAttributesFromCBIS = array();
         $this->client = new \SoapClient($url, array('keep_alive' => false));
         $this->CBISCONSTANTS = new \CBISAttributes();

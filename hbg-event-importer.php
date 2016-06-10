@@ -1,15 +1,15 @@
 <?php
 
 /**
- * Plugin Name:       Helsingborg Event Import new
- * Plugin URI:        http://github.com/helsingborg-stad
- * Description:       Imports events related to the city of Helsingborg.
+ * Plugin Name:       Event Manager
+ * Plugin URI:        http://github.com/helsingborg-stad/api-event-manager/
+ * Description:       Manage events locally, and import from XCAP & CBIS.
  * Version:           1.0.0
- * Author:            Kristoffer Svanmark, Sebastian Thulin
+ * Author:            Kristoffer Svanmark, Sebastian Thulin, Tommy Morberg
  * Author URI:        http://www.helsingborg.se
  * License:           MIT
  * License URI:       https://opensource.org/licenses/MIT
- * Text Domain:       hbg-event-importer
+ * Text Domain:       event-manager
  * Domain Path:       /languages
  */
 
