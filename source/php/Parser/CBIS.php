@@ -278,7 +278,10 @@ class Cbis extends \HbgEventImporter\Parser
             )
         );
 
-        $contactId = $contact->save();
+        $contactId = null;
+        if (!empty($contact->email)) {
+            $contactId = $contact->save();
+        }
 
         // Creates the event object
         $event = new Event(
@@ -310,7 +313,7 @@ class Cbis extends \HbgEventImporter\Parser
                 'location'              => (array) $locationId,
 
                 // Data for contacts tab
-                'contacts'              => (array) $contactId,
+                'contacts'              => !is_null($contactId) ? (array) $contactId : null,
 
                 //Data for booking tab
                 'ticketUrl'             => '',
