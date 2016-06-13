@@ -4,6 +4,9 @@ namespace HbgEventImporter\Entity;
 
 abstract class PostManager
 {
+    /**
+     * Post object sticky values
+     */
     public $postType = null;
     public $postStatus = 'publish';
 
@@ -12,7 +15,7 @@ abstract class PostManager
      * Any other key will be treated as meta properties
      * @var array
      */
-    protected $postFields = array(
+    protected $allowedPostFields = array(
         'ID',
         'post_author',
         'post_date',
@@ -41,7 +44,12 @@ abstract class PostManager
      * @var array
      */
     protected $forbiddenKeys = array(
-        'post_type'
+        'post_type',
+        'allowedPostFields',
+        'postType',
+        'postStatus',
+        'forbiddenKeys',
+
     );
 
     /**
@@ -106,19 +114,14 @@ abstract class PostManager
     public function save()
     {
         $data = array_filter(get_object_vars($this), function ($item) {
-            return !in_array($item, array(
-                'postFields',
-                'postType',
-                'postStatus',
-                'forbiddenKeys'
-            ));
+            return !in_array($item, $this->forbiddenKeys);
         }, ARRAY_FILTER_USE_KEY);
 
         $post = array();
         $meta = array();
 
         foreach ($data as $key => $value) {
-            if (in_array($key, $this->postFields)) {
+            if (in_array($key, $this->allowedPostFields)) {
                 $post[$key] = $value;
                 continue;
             }
