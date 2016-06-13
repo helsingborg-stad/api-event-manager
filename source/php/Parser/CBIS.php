@@ -294,7 +294,7 @@ class Cbis extends \HbgEventImporter\Parser
                 'description'           => $this->getAttributeValue(self::ATTRIBUTE_DESCRIPTION, $attributes),
                 'publishedDate'         => '', // NEED TO FIX
                 'categories'            => $categories,
-                'image'                 => (isset($eventData->image->Url) ? $eventData->image->Url : null),
+                'image'                 => (isset($eventData->Image->Url) ? $eventData->Image->Url : null),
                 'uniqueId'              => 'cbis-' . $eventData->Id,
 
                 //Data for event main tab
@@ -338,6 +338,12 @@ class Cbis extends \HbgEventImporter\Parser
         );
 
         $eventId = $event->save();
+
+        if (!is_null($event->image)) {
+            $event->setFeaturedImageFromUrl($event->image);
+        }
+
+        return $eventId;
     }
 
     /**
