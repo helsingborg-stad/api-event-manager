@@ -84,6 +84,15 @@ abstract class PostManager
     }
 
     /**
+     * Save hooks
+     * @param  string $postType Saved post type
+     * @param  object $object   Saved object
+     * @return void
+     */
+    public function beforeSave() {}
+    public function afterSave() {}
+
+    /**
      * Get  posts
      * @param  integer        $count       Number of posts to get
      * @param  array          $metaQuery   Meta query
@@ -121,6 +130,8 @@ abstract class PostManager
      */
     public function save()
     {
+        $this->beforeSave();
+
         $data = array_filter(get_object_vars($this), function ($item) {
             return !in_array($item, $this->forbiddenKeys);
         }, ARRAY_FILTER_USE_KEY);
@@ -160,12 +171,14 @@ abstract class PostManager
             $post['ID'] = $duplicate->ID;
             $this->ID = wp_update_post($post);
 
+            $this->afterSave();
             return $this->ID;
         }
 
         // Create if not duplicate
         $this->ID = wp_insert_post($post);
 
+        $this->afterSave();
         return $this->ID;
     }
 
