@@ -1,7 +1,28 @@
-{
+    {
         "key": "group_57445bbce8b05",
         "title": "Contact",
         "fields": [
+            {
+                "key": "field_575e73a5c6a18",
+                "label": "Name",
+                "name": "name",
+                "type": "text",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "placeholder": "",
+                "prepend": "",
+                "append": "",
+                "maxlength": "",
+                "readonly": 0,
+                "disabled": 0
+            },
             {
                 "key": "field_57445c09358ce",
                 "label": "Phone number",
