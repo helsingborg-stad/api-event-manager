@@ -101,6 +101,10 @@ class Cbis extends \HbgEventImporter\Parser
     const ATTRIBUTE_GLOBAL                      =   908; //This is just a bunch of booleans
     const ATTRIBUTE_WHITE_GUIDE                 =   982;
 
+    /**
+     * Start the parsing!
+     * @return void
+     */
     public function start()
     {
         $this->client = new \SoapClient($this->url, array('keep_alive' => false));
@@ -157,9 +161,14 @@ class Cbis extends \HbgEventImporter\Parser
             $this->saveEvent($eventData);
         }
 
-        exit;
+        return true;
     }
 
+    /**
+     * Get attributes from event data
+     * @param  object $eventData Event data object
+     * @return array             Attributes
+     */
     public function getAttributes($eventData)
     {
         $attributes = array();
@@ -171,6 +180,11 @@ class Cbis extends \HbgEventImporter\Parser
         return $attributes;
     }
 
+    /**
+     * Get categories from event data
+     * @param  object $eventData Event data object
+     * @return array             Categories
+     */
     public function getCategories($eventData)
     {
         $categories = array();
@@ -188,6 +202,11 @@ class Cbis extends \HbgEventImporter\Parser
         return $categories;
     }
 
+    /**
+     * Get occasions from the event data
+     * @param  object $eventData Event data object
+     * @return array            Occasions
+     */
     public function getOccasions($eventData)
     {
         $occasionsToRegister = array();
@@ -261,66 +280,61 @@ class Cbis extends \HbgEventImporter\Parser
 
         $contactId = $contact->save();
 
-        exit(var_dump($contactId));
-
         // Creates the event object
         $event = new Event(
-            // Post object
             array(
-                'post_title' => ''
+                'post_title'            => $this->getAttributeValue(self::ATTRIBUTE_NAME, $attributes, ($eventData->Name != null ? $eventData->Name : null)),
+                'post_content'          => $this->getAttributeValue(self::ATTRIBUTE_INGRESS, $attributes) . "\n\n" . $this->getAttributeValue(self::ATTRIBUTE_DESCRIPTION, $attributes)
             ),
-            // Metadata
             array(
-                //Data for contact post
-                'contact' => array(
+                'name'                  => $this->getAttributeValue(self::ATTRIBUTE_NAME, $attributes, ($eventData->Name != null ? $eventData->Name : null)),
+                'description'           => $this->getAttributeValue(self::ATTRIBUTE_DESCRIPTION, $attributes),
+                'publishedDate'         => '', // NEED TO FIX
+                'categories'            => $categories,
+                'image'                 => (isset($eventData->image->Url) ? $eventData->image->Url : null),
+                'uniqueId'              => 'cbis-' . $eventData->Id,
 
-                ),
+                //Data for event main tab
+                'ingress'               => $this->getAttributeValue(self::ATTRIBUTE_INGRESS, $attributes),
+                'organizerEmail'        => $this->getAttributeValue(self::ATTRIBUTE_ORGANIZER_EMAIL, $attributes),
+                'phoneNumber'           => $this->getAttributeValue(self::ATTRIBUTE_PHONE_NUMBER, $attributes),
+                'coOrganizer'           => $this->getAttributeValue(self::ATTRIBUTE_CO_ORGANIZER, $attributes),
+                'countryCode'           => $this->getAttributeValue(self::ATTRIBUTE_COUNTRY_CODE, $attributes),
+                'countryCode2'          => $this->getAttributeValue(self::ATTRIBUTE_COUNTRY_CODE2, $attributes),
+                'duration'              => '',
+                'doorTime'              => '',
+                'eventlink'             => $this->getAttributeValue(self::ATTRIBUTE_EVENT_LINK, $attributes),
+                'externalLink'          => $this->getAttributeValue(self::ATTRIBUTE_EXTERNAL_LINKS, $attributes),
 
-                //Data for event post
-                'event' => array(
-                    'name'                  => $this->getAttributeValue(self::ATTRIBUTE_NAME, $attributes, ($eventData->Name != null ? $eventData->Name : null)),
-                    'description'           => $this->getAttributeValue(self::ATTRIBUTE_DESCRIPTION, $attributes),
-                    'publishedDate'         => '', // NEED TO FIX
-                    'categories'            => $categories,
-                    'image'                 => (isset($eventData->image->Url) ? $eventData->image->Url : null),
-                    'uniqueId'              => 'cbis-' . $eventData->Id,
+                // Data for locaiton tab
+                'location'              => (array) $locationId,
 
-                    //Data for event main tab
-                    'ingress'               => $this->getAttributeValue(self::ATTRIBUTE_INGRESS, $attributes),
-                    'organizerEmail'        => $this->getAttributeValue(self::ATTRIBUTE_ORGANIZER_EMAIL, $attributes),
-                    'phoneNumber'           => $this->getAttributeValue(self::ATTRIBUTE_PHONE_NUMBER, $attributes),
-                    'coOrganizer'           => $this->getAttributeValue(self::ATTRIBUTE_CO_ORGANIZER, $attributes),
-                    'countryCode'           => $this->getAttributeValue(self::ATTRIBUTE_COUNTRY_CODE, $attributes),
-                    'countryCode2'          => $this->getAttributeValue(self::ATTRIBUTE_COUNTRY_CODE2, $attributes),
-                    'duration'              => '',
-                    'doorTime'              => '',
-                    'eventlink'             => $this->getAttributeValue(self::ATTRIBUTE_EVENT_LINK, $attributes),
-                    'externalLinks'         => $this->getAttributeValue(self::ATTRIBUTE_EXTERNAL_LINKS, $attributes),
+                // Data for contacts tab
+                'contacts'              => (array) $contactId,
 
-                    //Data for booking tab
-                    'ticketUrl'             => '',
-                    'bookingLink'           => $this->getAttributeValue(self::ATTRIBUTE_BOOKING_LINK, $attributes),
-                    'bookingPhoneNumber'    => $this->getAttributeValue(self::ATTRIBUTE_BOOKING_PHONE_NUMBER, $attributes),
-                    'priceInformation'      => $this->getAttributeValue(self::ATTRIBUTE_PRICE_INFORMATION, $attributes),
-                    'ageRestriction'        => $this->getAttributeValue(self::ATTRIBUTE_AGE_RESTRICTION, $attributes),
-                    'priceAdult'            => $this->getAttributeValue(self::ATTRIBUTE_PRICE_ADULT, $attributes),
-                    'priceChild'            => $this->getAttributeValue(self::ATTRIBUTE_PRICE_CHILD, $attributes),
+                //Data for booking tab
+                'ticketUrl'             => '',
+                'bookingLink'           => $this->getAttributeValue(self::ATTRIBUTE_BOOKING_LINK, $attributes),
+                'bookingPhoneNumber'    => $this->getAttributeValue(self::ATTRIBUTE_BOOKING_PHONE_NUMBER, $attributes),
+                'priceInformation'      => $this->getAttributeValue(self::ATTRIBUTE_PRICE_INFORMATION, $attributes),
+                'ageRestriction'        => $this->getAttributeValue(self::ATTRIBUTE_AGE_RESTRICTION, $attributes),
+                'priceAdult'            => $this->getAttributeValue(self::ATTRIBUTE_PRICE_ADULT, $attributes),
+                'priceChild'            => $this->getAttributeValue(self::ATTRIBUTE_PRICE_CHILD, $attributes),
 
-                    //Data for other information tab
-                    'status'                => isset($eventData->Status) && !empty($eventData->Status) ? $eventData->Status : null,
-                    'alternateName'         => isset($eventData->SystemName) && !empty($eventData->SystemName) ? $eventData->SystemName : null,
-                    'url'                   => '',
-                    'website'               => $this->getAttributeValue(self::ATTRIBUTE_WEB_SITE, $attributes),
+                //Data for other information tab
+                'status'                => isset($eventData->Status) && !empty($eventData->Status) ? $eventData->Status : null,
+                'alternateName'         => isset($eventData->SystemName) && !empty($eventData->SystemName) ? $eventData->SystemName : null,
+                'url'                   => '',
+                'website'               => $this->getAttributeValue(self::ATTRIBUTE_WEB_SITE, $attributes),
 
-                    //Data special
-                    'occasions'             => $occasionsToRegister
-                )
+                //Data special
+                'occasions'             => $occasions,
+
+                '_event_manager_uid'    => 'cbis-' . $eventData->Id
             )
         );
 
-        $event->save();
-
-        exit;
+        $eventId = $event->save();
     }
 
     /**
