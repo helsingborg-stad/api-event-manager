@@ -21,7 +21,7 @@ class CBISAttributes
     const ATTRIBUTE_BOOKING_LINK                =   126;
     const ATTRIBUTE_AGE_RESTRICTION             =   127;
     const ATTRIBUTE_BOOKING_PHONE_NUMBER        =   145;
-    const ATTRIBUTE_COUNTRY_CODE                =   147;//Examples I have seen '46', '+46', '046', '0046', '042-183270'
+    const ATTRIBUTE_COUNTRY_CODE                =   147; //Examples I have seen '46', '+46', '046', '0046', '042-183270'
     const ATTRIBUTE_EXTERNAL_LINKS              =   152;
     const ATTRIBUTE_CONTACT_PERSON              =   160;
     const ATTRIBUTE_CONTACT_EMAIL               =   161;
@@ -29,14 +29,14 @@ class CBISAttributes
     const ATTRIBUTE_PRICE_ADULT                 =   191;
     const ATTRIBUTE_CO_ORGANIZER                =   262;
     const ATTRIBUTE_MUNICIPALITY                =   356;
-    const ATTRIBUTE_COUNTRY_CODE2               =   556;//Examples I have seen '46', '+46', '046', '0046', '042-107400'
+    const ATTRIBUTE_COUNTRY_CODE2               =   556; //Examples I have seen '46', '+46', '046', '0046', '042-107400'
 
     //CBIS attributes we need to decide if we want to use
     const ATTRIBUTE_BUSINESS_HOURS              =   104;
     const ATTRIBUTE_NUMBER_OF_ROOMS             =   130;
     const ATTRIBUTE_SPECIAL_THEME               =   155;
     const ATTRIBUTE_NOTE                        =   162;
-    const ATTRIBUTE_FACILITIES                  =   163;//This is just a bunch of booleans
+    const ATTRIBUTE_FACILITIES                  =   163; //This is just a bunch of booleans
     const ATTRIBUTE_LINK_TO_WHITE_GUIDE         =   178;
     const ATTRIBUTE_PRICE_CHILD_UNDER_12        =   185;
     const ATTRIBUTE_PRICE_CHILD_UNDER_7         =   187;
@@ -68,13 +68,13 @@ class CBISAttributes
     const ATTRIBUTE_EXTERNAL_BOOKING_LINK       =   283;
     const ATTRIBUTE_ZOOM_LEVEL                  =   297;
     const ATTRIBUTE_CURRENCY                    =   402;
-    const ATTRIBUTE_SPECIAL_NEEDS               =   418;//This is just a bunch of booleans
+    const ATTRIBUTE_SPECIAL_NEEDS               =   418; //This is just a bunch of booleans
     const ATTRIBUTE_EVENT_HIGHLIGHT             =   526;
     const ATTRIBUTE_HIGHLIGHT_FULLSCREEN_MAP    =   550;
     const ATTRIBUTE_EMAIL_OTHER                 =   568;
     const ATTRIBUTE_YOUTUBE_LINK                =   577;
-    const ATTRIBUTE_LOCAL                       =   668;//This is just a bunch of booleans
+    const ATTRIBUTE_LOCAL                       =   668; //This is just a bunch of booleans
     const ATTRIBUTE_EXTERNAL_BOOKING_LINK2      =   671;
-    const ATTRIBUTE_GLOBAL                      =   908;//This is just a bunch of booleans
+    const ATTRIBUTE_GLOBAL                      =   908; //This is just a bunch of booleans
     const ATTRIBUTE_WHITE_GUIDE                 =   982;
-};
+}
