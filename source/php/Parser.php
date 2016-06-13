@@ -8,6 +8,8 @@ abstract class Parser
 
     public function __construct($url)
     {
+        ini_set('max_execution_time', 300);
+
         $this->url = $url;
         $this->start();
         $this->done();
