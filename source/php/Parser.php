@@ -23,5 +23,6 @@ abstract class Parser
     public function done()
     {
         echo 'Parser done.';
+        echo '<script>location.href = "' . admin_url('edit.php?post_type=event&msg=import-complete') . '";</script>';
     }
 }
