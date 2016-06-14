@@ -18,6 +18,9 @@ if (! defined('WPINC')) {
     die;
 }
 
+// Require composer dependencies (autoloader)
+require __DIR__ . '/vendor/autoload.php';
+
 define('HBGEVENTIMPORTER_PATH', plugin_dir_path(__FILE__));
 define('HBGEVENTIMPORTER_URL', plugins_url('', __FILE__));
 define('HBGEVENTIMPORTER_TEMPLATE_PATH', HBGEVENTIMPORTER_PATH . 'templates/');
