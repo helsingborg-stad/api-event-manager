@@ -24,7 +24,7 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
                 ),
                 'hierarchical'          =>  false,
                 'exclude_from_search'   =>  false,
-                //'taxonomies'            =>  array('event-types'),
+                'taxonomies'            =>  array('event-categories'),
                 'supports'              =>  array('title', 'revisions', 'editor', 'thumbnail'),
             )
         );
