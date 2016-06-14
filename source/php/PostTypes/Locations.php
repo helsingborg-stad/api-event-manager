@@ -27,6 +27,14 @@ class Locations extends \HbgEventImporter\Entity\CustomPostType
                 'supports'             => array('title', 'revisions', 'editor', 'thumbnail')
             )
         );
+
+        $this->addTableColumn('cb', '<input type="checkbox">');
+
+        $this->addTableColumn('title', __('Title'));
+        $this->addTableColumn('name', __('Address'), true, function ($column, $postId) {
+            echo get_post_meta($postId, 'formattedAddress', true) ? get_post_meta($postId, 'formattedAddress', true) : 'n/a';
+        });
+        $this->addTableColumn('date', __('Date'));
     }
 
 
