@@ -27,6 +27,19 @@ class Contacts extends \HbgEventImporter\Entity\CustomPostType
                 'supports'             => array('title', 'revisions', 'editor', 'thumbnail')
             )
         );
+
+        $this->addTableColumn('cb', '<input type="checkbox">');
+
+        $this->addTableColumn('title', __('Title'));
+        $this->addTableColumn('name', __('Name'), true, function ($column, $postId) {
+            echo get_post_meta($postId, 'name', true) ? get_post_meta($postId, 'name', true) : 'n/a';
+        });
+        $this->addTableColumn('email', __('Email'), true, function ($column, $postId) {
+            echo get_post_meta($postId, 'email', true) ? get_post_meta($postId, 'email', true) : 'n/a';
+        });
+        $this->addTableColumn('phone', __('Phone'), true, function ($column, $postId) {
+            echo get_post_meta($postId, 'phone', true) ? get_post_meta($postId, 'phone', true) : 'n/a';
+        });
     }
 
 
