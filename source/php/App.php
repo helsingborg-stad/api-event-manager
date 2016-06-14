@@ -29,10 +29,6 @@ class App
         add_action('admin_enqueue_scripts', array($this, 'enqueueStyles'));
         add_action('admin_enqueue_scripts', array($this, 'enqueueScripts'));
 
-        // add_action('init', '\HbgEventImporter\Event::initPostType');
-        // add_action('init', '\HbgEventImporter\Location::initPostType');
-        // add_action('init', '\HbgEventImporter\Contact::initPostType');
-
         $this->eventsPostType = new PostTypes\Events();
         $this->locationsPostType = new PostTypes\Locations();
         $this->contactsPostType = new PostTypes\Contacts();
@@ -49,6 +45,7 @@ class App
             add_action('admin_enqueue_scripts', array($this, 'enqueuStyleSheets'));
         }
 
+        new Taxonomy\EventCategories();
         new Admin\Options();
     }
 
