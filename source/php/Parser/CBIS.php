@@ -199,6 +199,9 @@ class Cbis extends \HbgEventImporter\Parser
             }
         }
 
+        $categories = array_map('trim', $categories);
+        $categories = array_map('ucwords', $categories);
+
         return $categories;
     }
 
