@@ -68,8 +68,15 @@ abstract class PostManager
      * @param  object $object   Saved object
      * @return void
      */
-    public function beforeSave() {}
-    public function afterSave() {}
+    public function beforeSave()
+    {
+
+    }
+
+    public function afterSave()
+    {
+
+    }
 
     /**
      * Get  posts
