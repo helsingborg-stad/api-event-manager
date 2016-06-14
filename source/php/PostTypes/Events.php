@@ -30,6 +30,22 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
         );
 
         add_action('manage_posts_extra_tablenav', array($this, 'tablenavButtons'));
+
+        $this->addTableColumn('cb', '<input type="checkbox">');
+        $this->addTableColumn('title', __('Title'));
+        $this->addTableColumn('location', __('Location'), true, function ($column, $postId) {
+            $locationId = get_field('location', $postId);
+            echo '<a href="' . get_edit_post_link($locationId[0]) . '">' . get_the_title($locationId[0]) . '</a>';
+        });
+        $this->addTableColumn('contact', __('Contact'), true, function ($column, $postId) {
+            $contactId = get_field('contacts', $postId);
+            if (!isset($contactId[0])) {
+                echo 'n/a';
+                return;
+            }
+
+            echo '<a href="' . get_edit_post_link($contactId[0]) . '">' . get_the_title($contactId[0]) . '</a>';
+        });
     }
 
     /**
