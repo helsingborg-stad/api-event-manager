@@ -7,15 +7,15 @@ abstract class PostManager
     /**
      * Post object sticky values
      */
-    public $postType = null;
-    public $postStatus = 'publish';
+    public $post_type = null;
+    public $post_status = 'publish';
 
     /**
      * Keys that counts as post object properties
      * Any other key will be treated as meta properties
      * @var array
      */
-    protected $allowedPostFields = array(
+    public $allowedPostFields = array(
         'ID',
         'post_author',
         'post_date',
@@ -40,45 +40,24 @@ abstract class PostManager
     );
 
     /**
-     * Keys that will not be added as properties
-     * @var array
-     */
-    protected $forbiddenKeys = array(
-        'post_type',
-        'allowedPostFields',
-        'postType',
-        'postStatus',
-        'forbiddenKeys',
-
-    );
-
-    /**
      * Constructor
      * @param array $postData Post object fields as array
      * @param array $metaData Post meta as array
      */
     public function __construct($postData = array(), $metaData = array())
     {
-        if (is_null($this->postType)) {
+        if (is_null($this->post_type)) {
             throw new \Exception('You need to specify a post type by setting the class property $postType');
             exit;
         }
 
         // Add post data as separate object parameters
         foreach ($postData as $key => $value) {
-            if (in_array($key, $this->forbiddenKeys)) {
-                continue;
-            }
-
             $this->{$key} = $value;
         }
 
         // Add meta data as separate object parameters
         foreach ($metaData as $key => $value) {
-            if (in_array($key, $this->forbiddenKeys)) {
-                continue;
-            }
-
             $this->{$key} = $value;
         }
     }
@@ -132,13 +111,19 @@ abstract class PostManager
     {
         $this->beforeSave();
 
-        $data = array_filter(get_object_vars($this), function ($item) {
-            return !in_array($item, $this->forbiddenKeys);
-        }, ARRAY_FILTER_USE_KEY);
-
+        // Arrays for holding save data
         $post = array();
         $meta = array();
 
+        // Get the default class variables and set it's keys to forbiddenKeys
+        $defaultData = get_class_vars(get_class($this));
+        $forbiddenKeys = array_keys($defaultData);
+
+        $data = array_filter(get_object_vars($this), function ($item) use ($forbiddenKeys) {
+            return !in_array($item, $forbiddenKeys);
+        }, ARRAY_FILTER_USE_KEY);
+
+        // If data key is allowed post field add to $post else add to $meta
         foreach ($data as $key => $value) {
             if (in_array($key, $this->allowedPostFields)) {
                 $post[$key] = $value;
@@ -148,8 +133,8 @@ abstract class PostManager
             $meta[$key] = $value;
         }
 
-        $post['post_type'] = $this->postType;
-        $post['post_status'] = $this->postStatus;
+        $post['post_type'] = $this->post_type;
+        $post['post_status'] = $this->post_status;
         $post['meta_input'] = $meta;
 
         // Check if duplicate by matching "_event_manager_uid" meta value
@@ -163,7 +148,7 @@ abstract class PostManager
                     'compare' => '='
                 )
             ),
-            $this->postType
+            $this->post_type
         );
 
         // Update if duplicate
@@ -180,7 +165,10 @@ abstract class PostManager
 
         $this->afterSave();
         return $this->ID;
+
+        $this->afterSave();
     }
+
 
     /**
      * Uploads an image from a specified url and sets it as the current post's featured image

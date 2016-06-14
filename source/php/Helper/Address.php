@@ -9,13 +9,13 @@ class Address
      * @param  string $address Address
      * @return array          Lat and long
      */
-    public static function getCoordinatesByAddress($address)
+    public static function gmapsGetAddressComponents($address)
     {
-        $url = 'http://maps.googleapis.com/maps/api/geocode/json?address=' . urlencode($address);
+        $url = 'https://maps.googleapis.com/maps/api/geocode/json?address=' . urlencode($address) . '&key=AIzaSyAK4m-Yqi12k0CsfCwc5S0av_JK9gJ-4uE';
         $data = json_decode(file_get_contents($url));
 
         if (isset($data->status) && $data->status == 'OK') {
-            return $data->results[0]->geometry->location;
+            return $data->results[0];
         }
 
         return false;
@@ -26,7 +26,7 @@ class Address
      * @param  string $address Address
      * @return array          Lat and long
      */
-    public static function getAddressByCoordinates($lat, $lng)
+    public static function gmapsGetAddressByCoordinates($lat, $lng)
     {
         $lat = str_replace(',', '.', $lat);
         $lng = str_replace(',', '.', $lng);

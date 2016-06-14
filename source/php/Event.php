@@ -4,5 +4,5 @@ namespace HbgEventImporter;
 
 class Event extends \HbgEventImporter\Entity\PostManager
 {
-    public $postType = 'event';
+    public $post_type = 'event';
 }

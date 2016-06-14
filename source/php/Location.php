@@ -4,16 +4,22 @@ namespace HbgEventImporter;
 
 class Location extends \HbgEventImporter\Entity\PostManager
 {
-    public $postType = 'location';
+    public $post_type = 'location';
 
     public function afterSave()
     {
-        $coordinates = Helper\Address::getCoordinatesByAddress($this->postalAddress . ' ' . $this->postcode . ' ' . $this->city);
+        $res = Helper\Address::gmapsGetAddressComponents($this->postalAddress . ' ' . $this->postcode . ' ' . $this->city . ' ' . $this->country);
+
+        if (!isset($res->geometry->location)) {
+            return;
+        }
 
         update_post_meta($this->ID, 'map', array(
-            'address' => $this->postalAddress . ', ' . $this->postcode . ' ' . $this->city . ', ' . $this->country,
-            'lat' => $coordinates->lat,
-            'lng' => $corrdinates->lng
+            'address' => $res->formatted_address,
+            'lat' => $res->geometry->location->lat,
+            'lng' => $res->geometry->location->lng
         ));
+
+        update_post_meta($this->ID, 'formattedAddress', $res->formatted_address);
     }
 }
