@@ -11,7 +11,11 @@ class Address
      */
     public static function gmapsGetAddressComponents($address)
     {
-        $url = 'https://maps.googleapis.com/maps/api/geocode/json?address=' . urlencode($address) . '&key=AIzaSyAK4m-Yqi12k0CsfCwc5S0av_JK9gJ-4uE';
+        if (empty(get_option('options_google_geocode_api_key'))) {
+            return false;
+        }
+
+        $url = 'https://maps.googleapis.com/maps/api/geocode/json?address=' . urlencode($address) . '&key=' . get_option('options_google_geocode_api_key');
         $data = json_decode(file_get_contents($url));
 
         if (isset($data->status) && $data->status == 'OK') {
