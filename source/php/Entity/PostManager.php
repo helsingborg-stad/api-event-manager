@@ -140,6 +140,9 @@ abstract class PostManager
             $meta[$key] = $value;
         }
 
+        // Do not include null values in meta
+        $meta = array_filter($meta);
+
         $post['post_type'] = $this->post_type;
         $post['post_status'] = $this->post_status;
         $post['meta_input'] = $meta;
