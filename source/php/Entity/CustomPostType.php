@@ -9,6 +9,10 @@ abstract class CustomPostType
     protected $slug;
     protected $args;
 
+    public $tableColumns = array();
+    public $tableSortableColumns = array();
+    public $tableColumnsContentCallback = array();
+
     /**
      * Registers a custom post type
      * @param string $namePlural   Post type name in plural
@@ -25,6 +29,10 @@ abstract class CustomPostType
 
         // Register post type on init
         add_action('init', array($this, 'registerPostType'));
+
+        add_filter('manage_edit-' . $this->slug . '_columns', array($this, 'tableColumns'));
+        add_filter('manage_edit-' . $this->slug . '_sortable_columns', array($this, 'tableSortableColumns'));
+        add_action('manage_' . $this->slug . '_posts_custom_column', array($this, 'tableColumnsContent'), 10, 2);
     }
 
     /**
@@ -53,5 +61,69 @@ abstract class CustomPostType
         register_post_type($this->slug, $this->args);
 
         return $this->slug;
+    }
+
+    /**
+     * Adds a column to the admin list table
+     * @param string   $key             Column key
+     * @param string   $title           Column title
+     * @param boolean  $sortable        Sortable or not
+     * @param callback $contentCallback Callback function for displaying
+     *                                  column content (params: $columnKey, $postId)
+     */
+    public function addTableColumn($key, $title, $sortable = false, $contentCallback = false)
+    {
+        $this->tableColumns[$key] = $title;
+
+        if ($sortable === true) {
+            $this->tableSortableColumns[$key] = $key;
+        }
+
+        if ($contentCallback !== false) {
+            $this->tableColumnsContentCallback[$key] = $contentCallback;
+        }
+    }
+
+    /**
+     * Set up table columns
+     * @param  array $columns Default columns
+     * @return array          New columns
+     */
+    public function tableColumns($columns)
+    {
+        if (!empty($this->tableColumns) && is_array($this->tableColumns)) {
+            $columns = $this->tableColumns;
+        }
+
+        return $columns;
+    }
+
+    /**
+     * Setup sortable columns
+     * @param  array $columns Default columns
+     * @return array          New columns
+     */
+    public function tableSortableColumns($columns)
+    {
+        if (!empty($this->tableSortableColumns) && is_array($this->tableSortableColumns)) {
+            $columns = $this->tableColumns;
+        }
+
+        return $columns;
+    }
+
+    /**
+     * Set table column content with callback functions
+     * @param  string  $column Key of the column
+     * @param  integer $postId Post id of the current row in table
+     * @return void
+     */
+    public function tableColumnsContent($column, $postId)
+    {
+        if (!isset($this->tableColumnsContentCallback[$column])) {
+            return;
+        }
+
+        call_user_func_array($this->tableColumnsContentCallback[$column], array($column, $postId));
     }
 }
