@@ -15,7 +15,8 @@ class Event extends \HbgEventImporter\Entity\PostManager
     public function beforeSave()
     {
         // Format phone number
-        $this->phoneNumber = DataCleaner::phoneNumber($this->phoneNumber);
+        $this->organizer_phone = DataCleaner::phoneNumber($this->organizer_phone);
+        $this->booking_phone = DataCleaner::phoneNumber($this->booking_phone);
     }
 
     /**
