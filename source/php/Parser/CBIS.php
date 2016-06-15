@@ -142,15 +142,15 @@ class Cbis extends \HbgEventImporter\Parser
                 'MinLongitude' => null,
                 'SubCategoryId' => 0,
                 'ProductType' => $this->productType,
-                'WithOccasionsOnly' => false,
-                'ExcludeProductsWithoutOccasions' => false,
+                'WithOccasionsOnly' => true,
+                'ExcludeProductsWithoutOccasions' => true,
                 'ExcludeProductsNotInCurrentLanguage' => false,
-                'IncludeArchivedProducts' => true,
-                'IncludeInactiveProducts' => true,
+                'IncludeArchivedProducts' => false,
+                'IncludeInactiveProducts' => false,
                 'BookableProductsFirst' => false,
                 'RandomSortSeed' => 0,
                 'ExcludeProductsWhereNameNotInCurrentLanguage' => false,
-                'IncludePendingPublish' => true
+                'IncludePendingPublish' => false
             )
         );
 
@@ -219,7 +219,9 @@ class Cbis extends \HbgEventImporter\Parser
             $occasions = $eventData->Occasions->OccasionObject;
         }
 
-        $occasions = (array) $occasions;
+        if (!is_array($occasions)) {
+            $occasions = array($occasions);
+        }
 
         foreach ($occasions as $occasion) {
             $startDate = null;
