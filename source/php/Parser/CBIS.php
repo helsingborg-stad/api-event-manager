@@ -110,7 +110,7 @@ class Cbis extends \HbgEventImporter\Parser
         $this->client = new \SoapClient($this->url, array('keep_alive' => false));
 
         $cbisKey = get_option('options_cbis_api_key');
-        $cbisId = get_option('options_cbis_api_id');
+        $cbisId = intval(get_option('options_cbis_api_id'));
         $cbisCategory = 14086;
 
         if (!isset($cbisKey) || empty($cbisKey) || !isset($cbisId) || empty($cbisId)) {
