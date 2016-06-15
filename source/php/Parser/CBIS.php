@@ -224,14 +224,25 @@ class Cbis extends \HbgEventImporter\Parser
         foreach ($occasions as $occasion) {
             $startDate = null;
             $endDate = null;
+            $doorTime = null;
+
             if (isset($occasion->StartDate)) {
-                $startDate = $this->formatDate($occasion->StartDate);
-            }
-            if (isset($occasion->EndDate)) {
-                $endDate = $this->formatDate($occasion->EndDate);
+                $startDate = explode('T', $occasion->StartDate)[0] . 'T' . explode('T', $occasion->StartTime)[1];
             }
 
-            $occasionsToRegister[] = array('startDate' => $startDate, 'endDate' => $endDate);
+            if (isset($occasion->EndDate)) {
+                $endDate = explode('T', $occasion->EndDate)[0] . 'T' . explode('T', $occasion->EndTime)[1];
+            }
+
+            if (isset($occasion->EntryTime)) {
+                $doorTime = explode('T', $occasion->StartDate)[0] . 'T' . explode('T', $occasion->EntryTime)[1];
+            }
+
+            $occasionsToRegister[] = array(
+                'start_date' => $startDate,
+                'end_date' => $endDate,
+                'door_time' => $doorTime
+            );
         }
 
         return $occasionsToRegister;
@@ -301,6 +312,7 @@ class Cbis extends \HbgEventImporter\Parser
             array(
                 'uniqueId'           => 'cbis-' . $eventData->Id,
                 '_event_manager_uid' => 'cbis-' . $eventData->Id,
+                'sync'               => true,
                 'status'             => isset($eventData->Status) && !empty($eventData->Status) ? $eventData->Status : null,
                 'image'              => (isset($eventData->Image->Url) ? $eventData->Image->Url : null),
                 'alternate_name'     => isset($eventData->SystemName) && !empty($eventData->SystemName) ? $eventData->SystemName : null,

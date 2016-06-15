@@ -26,6 +26,7 @@ class Event extends \HbgEventImporter\Entity\PostManager
     public function afterSave()
     {
         $this->saveCategories();
+        $this->saveOccasions();
     }
 
     /**
@@ -35,5 +36,14 @@ class Event extends \HbgEventImporter\Entity\PostManager
     public function saveCategories()
     {
         wp_set_object_terms($this->ID, $this->categories, 'event-categories', true);
+    }
+
+    /**
+     * Saves occasions to the occasions repeater
+     * @return void
+     */
+    public function saveOccasions()
+    {
+        update_field('field_5761106783967', $this->occasions, $this->ID);
     }
 }
