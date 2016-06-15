@@ -8,7 +8,7 @@ class Location extends \HbgEventImporter\Entity\PostManager
 
     public function afterSave()
     {
-        $res = Helper\Address::gmapsGetAddressComponents($this->postalAddress . ' ' . $this->postcode . ' ' . $this->city . ' ' . $this->country);
+        $res = Helper\Address::gmapsGetAddressComponents($this->postal_address . ' ' . $this->postal_code . ' ' . $this->city . ' ' . $this->country);
 
         if (!isset($res->geometry->location)) {
             return;
