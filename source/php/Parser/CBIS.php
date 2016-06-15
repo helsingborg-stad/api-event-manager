@@ -118,9 +118,9 @@ class Cbis extends \HbgEventImporter\Parser
         }
 
         // Number of events to get
-        $getLength = 500;
+        $getLength = 1500;
         if ($this->productType == 'Arena') {
-            $getLength = 500;
+            $getLength = 1500;
         }
 
         $requestParams = array(
