@@ -109,12 +109,12 @@ class Cbis extends \HbgEventImporter\Parser
     {
         $this->client = new \SoapClient($this->url, array('keep_alive' => false));
 
-        $cbisKey = 'EKRODIUNR2JUSRTQ5F4F4R3NNQKZ3C76';
-        $cbisId = 65072;
+        $cbisKey = get_option('options_cbis_api_key');
+        $cbisId = get_option('options_cbis_api_id');
         $cbisCategory = 14086;
 
-        if (!isset($cbisKey) || empty($cbisKey)) {
-            throw new \Exception('No $cbisKey supplied');
+        if (!isset($cbisKey) || empty($cbisKey) || !isset($cbisId) || empty($cbisId)) {
+            throw new \Exception('Needed authorization information (CBIS API id and/or CBIS API key) is missing.');
         }
 
         // Number of events to get
