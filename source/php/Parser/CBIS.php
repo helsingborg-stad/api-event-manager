@@ -309,7 +309,7 @@ class Cbis extends \HbgEventImporter\Parser
                 'occasions'          => $occasions,
                 'location'           => (array) $locationId,
                 'organizer'          => '',
-                'organizer_phone'    => $this->getAttributeValue(self::ATTRIBUTE_PHONE_NUMBER, $attributes), // CLEAN THIS
+                'organizer_phone'    => $this->getAttributeValue(self::ATTRIBUTE_PHONE_NUMBER, $attributes),
                 'organizer_email'    => $this->getAttributeValue(self::ATTRIBUTE_ORGANIZER_EMAIL, $attributes),
                 'coorganizer'        => $this->getAttributeValue(self::ATTRIBUTE_CO_ORGANIZER, $attributes),
                 'contacts'           => !is_null($contactId) ? (array) $contactId : null,
