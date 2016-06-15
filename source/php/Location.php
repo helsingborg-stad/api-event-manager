@@ -20,6 +20,6 @@ class Location extends \HbgEventImporter\Entity\PostManager
             'lng' => $res->geometry->location->lng
         ));
 
-        update_post_meta($this->ID, 'formattedAddress', $res->formatted_address);
+        update_post_meta($this->ID, 'formatted_address', $res->formatted_address);
     }
 }

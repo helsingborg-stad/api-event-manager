@@ -118,9 +118,9 @@ class Cbis extends \HbgEventImporter\Parser
         }
 
         // Number of events to get
-        $getLength = 100;
+        $getLength = 500;
         if ($this->productType == 'Arena') {
-            $getLength = 100;
+            $getLength = 500;
         }
 
         $requestParams = array(
@@ -254,15 +254,15 @@ class Cbis extends \HbgEventImporter\Parser
                 'post_title' => $this->getAttributeValue(self::ATTRIBUTE_ADDRESS, $attributes) ? $this->getAttributeValue(self::ATTRIBUTE_ADDRESS, $attributes) : $eventData->GeoNode->Name
             ),
             array(
-                'description'           => null,
-                'country'               => $this->getAttributeValue(self::ATTRIBUTE_COUNTRY, $attributes),
-                'municipality'          => $this->getAttributeValue(self::ATTRIBUTE_MUNICIPALITY, $attributes),
-                'city'                  => $eventData->GeoNode->Name,
-                'postalAddress'         => $this->getAttributeValue(self::ATTRIBUTE_ADDRESS, $attributes),
-                'postcode'              => $this->getAttributeValue(self::ATTRIBUTE_POSTCODE, $attributes),
-                'latitude'              => $this->getAttributeValue(self::ATTRIBUTE_LATITUDE, $attributes),
-                'longitude'             => $this->getAttributeValue(self::ATTRIBUTE_LONGITUDE, $attributes),
-                '_event_manager_uid'    => $this->getAttributeValue(self::ATTRIBUTE_ADDRESS, $attributes) ? $this->getAttributeValue(self::ATTRIBUTE_ADDRESS, $attributes) : $eventData->GeoNode->Name
+                'street_address'     => $this->getAttributeValue(self::ATTRIBUTE_ADDRESS, $attributes),
+                'postal_code'        => $this->getAttributeValue(self::ATTRIBUTE_POSTCODE, $attributes),
+                'city'               => $eventData->GeoNode->Name,
+                'municipality'       => $this->getAttributeValue(self::ATTRIBUTE_MUNICIPALITY, $attributes),
+                'country'            => $this->getAttributeValue(self::ATTRIBUTE_COUNTRY, $attributes),
+                'latitude'           => $this->getAttributeValue(self::ATTRIBUTE_LATITUDE, $attributes),
+                'longitude'          => $this->getAttributeValue(self::ATTRIBUTE_LONGITUDE, $attributes),
+
+                '_event_manager_uid' => $this->getAttributeValue(self::ATTRIBUTE_ADDRESS, $attributes) ? $this->getAttributeValue(self::ATTRIBUTE_ADDRESS, $attributes) : $eventData->GeoNode->Name
             )
         );
 
@@ -276,7 +276,7 @@ class Cbis extends \HbgEventImporter\Parser
             array(
                 'name'                  => $this->getAttributeValue(self::ATTRIBUTE_CONTACT_PERSON, $attributes),
                 'email'                 => strtolower($this->getAttributeValue(self::ATTRIBUTE_CONTACT_EMAIL, $attributes)),
-                'phoneNumber'           => null,
+                'phone_number'           => null,
                 '_event_manager_uid'    => $this->getAttributeValue(self::ATTRIBUTE_CONTACT_PERSON, $attributes) . ': ' . strtolower($this->getAttributeValue(self::ATTRIBUTE_CONTACT_EMAIL, $attributes))
             )
         );

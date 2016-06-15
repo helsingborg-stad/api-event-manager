@@ -26,13 +26,13 @@
             {
                 "key": "field_57445c09358ce",
                 "label": "Phone number",
-                "name": "phoneNumber",
+                "name": "phone_number",
                 "type": "text",
                 "instructions": "",
                 "required": 0,
                 "conditional_logic": 0,
                 "wrapper": {
-                    "width": "",
+                    "width": 50,
                     "class": "",
                     "id": ""
                 },
@@ -53,7 +53,7 @@
                 "required": 0,
                 "conditional_logic": 0,
                 "wrapper": {
-                    "width": "",
+                    "width": 50,
                     "class": "",
                     "id": ""
                 },

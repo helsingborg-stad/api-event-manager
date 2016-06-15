@@ -15,6 +15,6 @@ class Contact extends \HbgEventImporter\Entity\PostManager
     public function beforeSave()
     {
         // Format phone number
-        $this->phoneNumber = DataCleaner::phoneNumber($this->phoneNumber);
+        $this->phone_number = DataCleaner::phoneNumber($this->phone_number);
     }
 }
