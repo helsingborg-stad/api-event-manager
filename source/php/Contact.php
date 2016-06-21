@@ -16,5 +16,8 @@ class Contact extends \HbgEventImporter\Entity\PostManager
     {
         // Format phone number
         $this->phone_number = DataCleaner::phoneNumber($this->phone_number);
+
+        // Validate email
+        $this->email = DataCleaner::email($this->email);
     }
 }

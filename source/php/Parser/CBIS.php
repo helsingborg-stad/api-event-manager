@@ -18,13 +18,19 @@ class Cbis extends \HbgEventImporter\Parser
      * Which product type to get
      * @var string Product|Arena
      */
-    private $productType = 'Product';
+    private $productType = 'Arena';
 
     /**
      * Holds a list of all found events
      * @var array
      */
     private $events = array();
+
+    /**
+     * Holds a list of all found arenas
+     * @var array
+     */
+    private $arenas = array();
 
     //CBIS attribute id's we use
     const ATTRIBUTE_NAME                        =   99;
@@ -117,11 +123,8 @@ class Cbis extends \HbgEventImporter\Parser
             throw new \Exception('Needed authorization information (CBIS API id and/or CBIS API key) is missing.');
         }
 
-        // Number of events to get
-        $getLength = 1500;
-        if ($this->productType == 'Arena') {
-            $getLength = 1500;
-        }
+        // Number of arenas to get
+        $getLength = 10;
 
         $requestParams = array(
             'apiKey' => $cbisKey,
@@ -154,11 +157,27 @@ class Cbis extends \HbgEventImporter\Parser
             )
         );
 
+        // Get and save the arenas
+        $this->arenas = $this->client->ListAll($requestParams)->ListAllResult->Items->Product;
+
+        foreach($this->arenas as $arenaData) {
+            //var_dump($arenaData);
+            $this->saveArena($arenaData);
+            die();
+        }
+
+        die();
+
+        // Adjust request parameters for getting products
+        $requestParams['filter']['ProductType'] = "Product";
+        $requestParams['itemsPerPage'] = 10;
+
         // Get and save the events
         $this->events = $this->client->ListAll($requestParams)->ListAllResult->Items->Product;
 
         foreach ($this->events as $eventData) {
-            $this->saveEvent($eventData);
+            var_dump($eventData);
+            //$this->saveEvent($eventData);
         }
 
         return true;
@@ -251,6 +270,35 @@ class Cbis extends \HbgEventImporter\Parser
     }
 
     /**
+     * Cleans a single locations data into correct format and saves it to db
+     * @param  object $arenaData  Location data
+     * @return void
+     */
+    public function saveArena($arenaData)
+    {
+        $attributes = $this->getAttributes($arenaData);
+        // Create the location
+        $location = new Location(
+            array(
+                'post_title' => $this->getAttributeValue(self::ATTRIBUTE_ADDRESS, $attributes) ? $this->getAttributeValue(self::ATTRIBUTE_ADDRESS, $attributes) : $eventData->GeoNode->Name
+            ),
+            array(
+                'street_address'     => $this->getAttributeValue(self::ATTRIBUTE_ADDRESS, $attributes),
+                'postal_code'        => $this->getAttributeValue(self::ATTRIBUTE_POSTCODE, $attributes),
+                'city'               => $this->getAttributeValue(self::ATTRIBUTE_POSTAL_ADDRESS, $attributes),
+                'municipality'       => $this->getAttributeValue(self::ATTRIBUTE_MUNICIPALITY, $attributes),
+                'country'            => $this->getAttributeValue(self::ATTRIBUTE_COUNTRY, $attributes),
+                'latitude'           => $this->getAttributeValue(self::ATTRIBUTE_LATITUDE, $attributes),
+                'longitude'          => $this->getAttributeValue(self::ATTRIBUTE_LONGITUDE, $attributes),
+
+                '_event_manager_uid' => $this->getAttributeValue(self::ATTRIBUTE_ADDRESS, $attributes) ? $this->getAttributeValue(self::ATTRIBUTE_ADDRESS, $attributes) : $eventData->GeoNode->Name
+            )
+        );
+
+        $locationId = $location->save();
+    }
+
+    /**
      * Cleans a single events data into correct format and saves it to db
      * @param  object $eventData  Event data
      * @return void
@@ -280,6 +328,7 @@ class Cbis extends \HbgEventImporter\Parser
         );
 
         $locationId = $location->save();
+        //$locationId
 
         // Save contact
         $contact = new Contact(
@@ -294,10 +343,10 @@ class Cbis extends \HbgEventImporter\Parser
             )
         );
 
-        $contactId = null;
-        if (!empty($contact->email)) {
+        //$contactId = null;
+        //if (!empty($contact->email)) {
             $contactId = $contact->save();
-        }
+        //}
 
         $postContent = $this->getAttributeValue(self::ATTRIBUTE_DESCRIPTION, $attributes);
         if ($this->getAttributeValue(self::ATTRIBUTE_INGRESS, $attributes) && !empty($this->getAttributeValue(self::ATTRIBUTE_INGRESS, $attributes))) {

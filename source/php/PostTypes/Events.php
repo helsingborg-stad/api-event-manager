@@ -35,6 +35,10 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
         $this->addTableColumn('title', __('Title'));
         $this->addTableColumn('location', __('Location'), true, function ($column, $postId) {
             $locationId = get_field('location', $postId);
+            if (!isset($locationId[0])) {
+                echo 'n/a';
+                return;
+            }
             echo '<a href="' . get_edit_post_link($locationId[0]) . '">' . get_the_title($locationId[0]) . '</a>';
         });
         $this->addTableColumn('contact', __('Contact'), true, function ($column, $postId) {

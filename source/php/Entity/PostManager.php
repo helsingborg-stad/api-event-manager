@@ -175,8 +175,6 @@ abstract class PostManager
 
         $this->afterSave();
         return $this->ID;
-
-        $this->afterSave();
     }
 
 
@@ -259,7 +257,7 @@ abstract class PostManager
     }
 
     /**
-     * Checks if a attatchment src already exists in media library
+     * Checks if a attachment src already exists in media library
      * @param  string $src Media url
      * @return mixed
      */

@@ -17,6 +17,9 @@ class Event extends \HbgEventImporter\Entity\PostManager
         // Format phone number
         $this->organizer_phone = DataCleaner::phoneNumber($this->organizer_phone);
         $this->booking_phone = DataCleaner::phoneNumber($this->booking_phone);
+
+        // Validate email
+        $this->organizer_email = DataCleaner::email($this->organizer_email);
     }
 
     /**
