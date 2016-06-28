@@ -1,6 +1,6 @@
 {
-    "name": "helsingborg-stad/xcap-import",
-    "description": "Import events from xcap (mittkulturkort.se)",
+    "name": "helsingborg-stad/api-event-manager",
+    "description": "Manage events",
     "type": "wordpress-plugin",
     "license": "MIT",
     "authors": [
@@ -11,6 +11,10 @@
         {
             "name": "Sebastian Thulin",
             "email": "sebastian.thulin@helsingborg.se"
+        },
+        {
+            "name": "Tommy Moberg",
+            "email": "tommy.moberg@hiq.se"
         }
     ],
     "require": {
