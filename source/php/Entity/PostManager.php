@@ -117,6 +117,7 @@ abstract class PostManager
     public function save()
     {
         $this->beforeSave();
+        return;
 
         // Arrays for holding save data
         $post = array();

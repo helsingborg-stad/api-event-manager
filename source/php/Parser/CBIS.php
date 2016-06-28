@@ -32,6 +32,12 @@ class Cbis extends \HbgEventImporter\Parser
      */
     private $arenas = array();
 
+    /**
+     * Holds all titles of existing locations, contacts and events in wordpress
+     * @var array
+     */
+    private $levenshteinTitles = array('location' => array(), 'contact' => array(), 'event' => array());
+
     //CBIS attribute id's we use
     const ATTRIBUTE_NAME                        =   99;
     const ATTRIBUTE_INGRESS                     =   101;
@@ -107,12 +113,70 @@ class Cbis extends \HbgEventImporter\Parser
     const ATTRIBUTE_GLOBAL                      =   908; //This is just a bunch of booleans
     const ATTRIBUTE_WHITE_GUIDE                 =   982;
 
+
+    /**
+     * Collecting titles of existing events, locations and contacts
+     * @return void
+     */
+    public function collectDataForLevenshtein()
+    {
+        global $wpdb;
+        $types = array('event', 'location', 'contact');
+
+        foreach($types as $type) {
+            $this->levenshteinTitles[$type] = $wpdb->get_results("SELECT ID,post_title FROM event_posts WHERE post_status = 'publish' AND post_type = '" . $type . "'");
+        }
+    }
+
+    /**
+     * See if title for post already exists or something that are really similar, using levenshtein
+     * @return boolean
+     */
+    public function checkIfPostExists($postType, $postTitle)
+    {
+        foreach($this->levenshteinTitles[$postType] as $title) {
+            if(isSimilarEnough($postTitle, $title->post_title))
+                return $title->ID;
+            else
+                $this->levenshteinTitles[$postType][] = $postTitle;
+        }
+        return null;
+        /*$first = ;
+        $steps = levenshtein($first, "Nise");
+        $result = $steps / strlen($first);
+        echo "String: " . $first . ",Length: " . strlen($first) . ", Steps: " . $steps . "\n";
+        echo "Percent: " . ((1-$result) * 100) . "\n";
+        var_dump(1-$result);*/
+    }
+
+    /**
+     * Check if the new title are similar enough with existing one
+     * @return boolean
+     */
+    public function isSimilarEnough($newTitle, $existingTitle)
+    {
+        $steps = levenshtein($newTitle, $existingTitle);
+        if($steps <= 3)
+        {
+            echo "New title: ";
+             var_dump($newTitle);
+             echo "Old title: ";
+             var_dump($existingTitle);
+             echo "Nr steps: ";
+             var_dump($steps);
+            return true;
+        }
+        return false;
+    }
+
     /**
      * Start the parsing!
      * @return void
      */
     public function start()
     {
+        $this->collectDataForLevenshtein();
+
         $this->client = new \SoapClient($this->url, array('keep_alive' => false));
 
         $cbisKey = get_option('options_cbis_api_key');
@@ -123,8 +187,8 @@ class Cbis extends \HbgEventImporter\Parser
             throw new \Exception('Needed authorization information (CBIS API id and/or CBIS API key) is missing.');
         }
 
-        // Number of arenas to get
-        $getLength = 10;
+        // Number of arenas to get, 200 to get all
+        $getLength = 200;
 
         $requestParams = array(
             'apiKey' => $cbisKey,
@@ -160,25 +224,34 @@ class Cbis extends \HbgEventImporter\Parser
         // Get and save the arenas
         $this->arenas = $this->client->ListAll($requestParams)->ListAllResult->Items->Product;
 
-        foreach($this->arenas as $arenaData) {
+        //echo "Arenas total: " . count($this->arenas) . "\n";
+        foreach($this->arenas as $key => $arenaData) {
             //var_dump($arenaData);
             $this->saveArena($arenaData);
-            die();
         }
 
-        die();
+        //die();
 
-        // Adjust request parameters for getting products
+        //echo "End of arenas:\n";
+
+        //die();
+
+        // Adjust request parameters for getting products, 1500 itemsPerPage to get all events
         $requestParams['filter']['ProductType'] = "Product";
-        $requestParams['itemsPerPage'] = 10;
+        $requestParams['itemsPerPage'] = 1500;
 
         // Get and save the events
         $this->events = $this->client->ListAll($requestParams)->ListAllResult->Items->Product;
 
+        //echo "Products total: " . count($this->events) . "\n";
         foreach ($this->events as $eventData) {
-            var_dump($eventData);
-            //$this->saveEvent($eventData);
+            //var_dump($eventData);
+            $this->saveEvent($eventData);
         }
+
+        //echo "End of products:\n";
+
+        //die();
 
         return true;
     }
@@ -192,7 +265,12 @@ class Cbis extends \HbgEventImporter\Parser
     {
         $attributes = array();
 
-        foreach ($eventData->Attributes->AttributeData as $attribute) {
+        $dataHolder = $eventData->Attributes->AttributeData;
+
+        if(!is_array($dataHolder))
+            $dataHolder = array($dataHolder);
+
+        foreach ($dataHolder as $attribute) {
             $attributes[$attribute->AttributeId] = $attribute->Value;
         }
 
@@ -274,13 +352,36 @@ class Cbis extends \HbgEventImporter\Parser
      * @param  object $arenaData  Location data
      * @return void
      */
+    //This function is not the same as the part in saveEvent that looks almost like this, there are no GeoNode when getting arenas from CBIS
     public function saveArena($arenaData)
     {
         $attributes = $this->getAttributes($arenaData);
+
+        if($this->getAttributeValue(self::ATTRIBUTE_ADDRESS, $attributes) == null && $this->getAttributeValue(self::ATTRIBUTE_NAME, $attributes) == null)
+        {
+            echo "There was no address in this arena: \n";
+            var_dump($arenaData);
+            echo "\n";
+            return;
+        }
+
+        $newPostTitle = $this->getAttributeValue(self::ATTRIBUTE_ADDRESS, $attributes) != null ? $this->getAttributeValue(self::ATTRIBUTE_ADDRESS, $attributes) : $this->getAttributeValue(self::ATTRIBUTE_NAME, $attributes);
+
+        // Checking if there is a post already with this title or similar enough
+        /*$existingPostId = $this->checkIfPostExists('location', $newPostTitle);
+        if($existingPostId != null)
+        {
+            global $wpdb;
+            echo "This post already exist, id: " . $existingPostId . "\n";
+            $oldPost = $wpdb->get_result("SELECT * FROM event_posts WHERE ID = " . $existingPostId);
+            var_dump($oldPost);
+            return;
+        }*/
+
         // Create the location
         $location = new Location(
             array(
-                'post_title' => $this->getAttributeValue(self::ATTRIBUTE_ADDRESS, $attributes) ? $this->getAttributeValue(self::ATTRIBUTE_ADDRESS, $attributes) : $eventData->GeoNode->Name
+                'post_title' => $newPostTitle
             ),
             array(
                 'street_address'     => $this->getAttributeValue(self::ATTRIBUTE_ADDRESS, $attributes),
@@ -291,9 +392,12 @@ class Cbis extends \HbgEventImporter\Parser
                 'latitude'           => $this->getAttributeValue(self::ATTRIBUTE_LATITUDE, $attributes),
                 'longitude'          => $this->getAttributeValue(self::ATTRIBUTE_LONGITUDE, $attributes),
 
-                '_event_manager_uid' => $this->getAttributeValue(self::ATTRIBUTE_ADDRESS, $attributes) ? $this->getAttributeValue(self::ATTRIBUTE_ADDRESS, $attributes) : $eventData->GeoNode->Name
+                '_event_manager_uid' => $this->getAttributeValue(self::ATTRIBUTE_ADDRESS, $attributes) ? $this->getAttributeValue(self::ATTRIBUTE_ADDRESS, $attributes) : $this->getAttributeValue(self::ATTRIBUTE_NAME, $attributes)
             )
         );
+
+        //var_dump($location->post_type);
+        //die();
 
         $locationId = $location->save();
     }
