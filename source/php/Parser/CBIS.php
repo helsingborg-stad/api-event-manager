@@ -125,12 +125,10 @@ class Cbis extends \HbgEventImporter\Parser
 
         foreach($types as $type) {
             $allOfCertainType = $wpdb->get_results("SELECT ID,post_title FROM event_posts WHERE post_status = 'publish' AND post_type = '" . $type . "'");
-            //var_dump($allOfCertainType);
             foreach($allOfCertainType as $post) {
                 $this->levenshteinTitles[$type][] = array('ID' => $post->ID, 'post_title' => $post->post_title);
             }
         }
-        //var_dump($this->levenshteinTitles);
     }
 
     /**
@@ -140,36 +138,21 @@ class Cbis extends \HbgEventImporter\Parser
     public function checkIfPostExists($postType, $postTitle)
     {
         foreach($this->levenshteinTitles[$postType] as $title) {
-            //var_dump($title);
-            if($this->isSimilarEnough($postTitle, $title['post_title']))
+            if($this->isSimilarEnough($postTitle, $title['post_title'], $postType == 'location' ? 0 : 3))
                 return $title['ID'];
         }
         return null;
-        /*$first = ;
-        $steps = levenshtein($first, "Nise");
-        $result = $steps / strlen($first);
-        echo "String: " . $first . ",Length: " . strlen($first) . ", Steps: " . $steps . "\n";
-        echo "Percent: " . ((1-$result) * 100) . "\n";
-        var_dump(1-$result);*/
     }
 
     /**
      * Check if the new title are similar enough with existing one
      * @return boolean
      */
-    public function isSimilarEnough($newTitle, $existingTitle)
+    public function isSimilarEnough($newTitle, $existingTitle, $threshold)
     {
         $steps = levenshtein($newTitle, $existingTitle);
-        if($steps <= 3)
-        {
-            /*echo "New title: ";
-            var_dump($newTitle);
-            echo "Old title: ";
-            var_dump($existingTitle);
-            echo "Nr steps: ";
-            var_dump($steps);*/
+        if($steps <= $threshold)
             return true;
-        }
         return false;
     }
 
@@ -228,16 +211,9 @@ class Cbis extends \HbgEventImporter\Parser
         // Get and save the arenas
         $this->arenas = $this->client->ListAll($requestParams)->ListAllResult->Items->Product;
 
-        echo "Teeeeest\n";
-        echo "Arenas total: " . count($this->arenas) . "\n";
         foreach($this->arenas as $key => $arenaData) {
-            //var_dump($arenaData);
             $this->saveArena($arenaData);
         }
-
-        echo "End of arenas:\n";
-
-        //die();
 
         // Adjust request parameters for getting products, 1500 itemsPerPage to get all events
         $requestParams['filter']['ProductType'] = "Product";
@@ -246,22 +222,10 @@ class Cbis extends \HbgEventImporter\Parser
         // Get and save the events
         $this->events = $this->client->ListAll($requestParams)->ListAllResult->Items->Product;
 
-        echo "Products total: " . count($this->events) . "\n";
         foreach ($this->events as $eventData) {
             //var_dump($eventData);
             $this->saveEvent($eventData);
         }
-
-        echo "Nr of events: " . count($this->levenshteinTitles['event']) . "\n";
-        var_dump($this->levenshteinTitles['event']);
-        echo "Nr of contacts: " . count($this->levenshteinTitles['contact']) . "\n";
-        var_dump($this->levenshteinTitles['contact']);
-        echo "Nr of locations: " . count($this->levenshteinTitles['location']) . "\n";
-        var_dump($this->levenshteinTitles['location']);
-
-        echo "End of products:\n";
-
-        die();
 
         return true;
     }
@@ -368,25 +332,13 @@ class Cbis extends \HbgEventImporter\Parser
         $attributes = $this->getAttributes($arenaData);
 
         if($this->getAttributeValue(self::ATTRIBUTE_ADDRESS, $attributes) == null && $this->getAttributeValue(self::ATTRIBUTE_NAME, $attributes) == null)
-        {
-            echo "There was no address in this arena: \n";
-            var_dump($arenaData);
-            echo "\n";
             return;
-        }
 
         $newPostTitle = $this->getAttributeValue(self::ATTRIBUTE_ADDRESS, $attributes) != null ? $this->getAttributeValue(self::ATTRIBUTE_ADDRESS, $attributes) : $this->getAttributeValue(self::ATTRIBUTE_NAME, $attributes);
 
         // Checking if there is a post already with this title or similar enough
         $locationId = $this->checkIfPostExists('location', $newPostTitle);
-        if($locationId != null)
-        {
-            //global $wpdb;
-            echo "This location already exist, title: " . $newPostTitle . ", id: " . $locationId . "\n";
-            //$oldPost = $wpdb->get_results("SELECT * FROM event_posts WHERE ID = " . $locationId);
-            //var_dump($oldPost);
-        }
-        else
+        if($locationId == null)
         {
             // Create the location
             $location = new Location(
@@ -407,12 +359,7 @@ class Cbis extends \HbgEventImporter\Parser
             );
             $locationId = $location->save();
 
-            //echo "Existing titles before:";
-            //var_dump($this->levenshteinTitles);
-            //echo "New location created with title: " . $newPostTitle . "\n";
             $this->levenshteinTitles['location'][] = array('ID' => $locationId, 'post_title' => $newPostTitle);
-            //echo "Existing titles after:";
-            //var_dump($this->levenshteinTitles);
         }
     }
 
@@ -434,12 +381,6 @@ class Cbis extends \HbgEventImporter\Parser
         $locationId = $this->checkIfPostExists('location', $newPostTitle);
         if($locationId != null)
         {
-            echo "This location already exist, title: " . $newPostTitle . ",id: " . $locationId . "\n";
-            //$oldPost = $wpdb->get_results("SELECT * FROM event_posts WHERE ID = " . $locationId);
-            //var_dump($oldPost);
-        }
-        else
-        {
             // Create the location
             $location = new Location(
                 array(
@@ -460,12 +401,7 @@ class Cbis extends \HbgEventImporter\Parser
 
             $locationId = $location->save();
 
-            //echo "Existing titles before:";
-            //var_dump($this->levenshteinTitles);
-            //echo "New location created with title: " . $newPostTitle . "\n";
             $this->levenshteinTitles['location'][] = array('ID' => $locationId, 'post_title' => $newPostTitle);
-            //echo "Existing titles after:";
-            //var_dump($this->levenshteinTitles);
         }
 
         $newPostTitle = $this->getAttributeValue(self::ATTRIBUTE_CONTACT_PERSON, $attributes) != null ? $this->getAttributeValue(self::ATTRIBUTE_CONTACT_PERSON, $attributes) : '';
@@ -484,12 +420,6 @@ class Cbis extends \HbgEventImporter\Parser
             $contactId = $this->checkIfPostExists('contact', $newPostTitle);
             if($contactId != null)
             {
-                echo "This contact already exist, title: " . $newPostTitle . ", id: " . $contactId . "\n";
-                //$oldPost = $wpdb->get_results("SELECT * FROM event_posts WHERE ID = " . $contactId);
-                //var_dump($oldPost);
-            }
-            else
-            {
                 // Save contact
                 $contact = new Contact(
                     array(
@@ -505,12 +435,7 @@ class Cbis extends \HbgEventImporter\Parser
 
                 $contactId = $contact->save();
 
-                //echo "Existing titles before:";
-                //var_dump($this->levenshteinTitles);
-                //echo "New contact created with title: " . $newPostTitle . "\n";
                 $this->levenshteinTitles['contact'][] = array('ID' => $contactId, 'post_title' => $newPostTitle);
-                //echo "Existing titles after:";
-                //var_dump($this->levenshteinTitles);
             }
         }
 
@@ -523,12 +448,6 @@ class Cbis extends \HbgEventImporter\Parser
 
         $eventId = $this->checkIfPostExists('event', $newPostTitle);
         if($eventId != null)
-        {
-            echo "This event already exist, title: " . $newPostTitle . ", id: " . $eventId . "\n";
-            //$oldPost = $wpdb->get_results("SELECT * FROM event_posts WHERE ID = " . $eventId);
-            //var_dump($oldPost);
-        }
-        else
         {
             // Creates the event object
             $event = new Event(
@@ -563,12 +482,7 @@ class Cbis extends \HbgEventImporter\Parser
 
             $eventId = $event->save();
 
-            //echo "Existing titles before:";
-            //var_dump($this->levenshteinTitles);
-            //echo "New event created with title: " . $newPostTitle . "\n";
             $this->levenshteinTitles['event'][] = array('ID' => $eventId, 'post_title' => $newPostTitle);
-            //echo "Existing titles after:";
-            //var_dump($this->levenshteinTitles);
 
             if (!is_null($event->image)) {
                 $event->setFeaturedImageFromUrl($event->image);
