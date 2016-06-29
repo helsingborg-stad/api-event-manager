@@ -19,7 +19,14 @@ if (! defined('WPINC')) {
 }
 
 // Require composer dependencies (autoloader)
-require __DIR__ . '/vendor/autoload.php';
+if (file_exists(__DIR__ . 'vendor/autoload.php')) {
+    require_once __DIR__ . 'vendor/autoload.php';
+}
+
+//Include vendor files
+if (file_exists(dirname(ABSPATH) . '/vendor/autoload.php')) {
+    require_once dirname(ABSPATH) . '/vendor/autoload.php';
+}
 
 define('HBGEVENTIMPORTER_PATH', plugin_dir_path(__FILE__));
 define('HBGEVENTIMPORTER_URL', plugins_url('', __FILE__));
