@@ -6,7 +6,7 @@ use \HbgEventImporter\Event as Event;
 use \HbgEventImporter\Location as Location;
 use \HbgEventImporter\Contact as Contact;
 
-class Cbis extends \HbgEventImporter\Parser
+class CBIS extends \HbgEventImporter\Parser
 {
     /**
      * Holds the Soap client
@@ -123,14 +123,12 @@ class Cbis extends \HbgEventImporter\Parser
         global $wpdb;
         $types = array('event', 'location', 'contact');
 
-        foreach($types as $type) {
-            $allOfCertainType = $wpdb->get_results("SELECT ID,post_title FROM event_posts WHERE post_status = 'publish' AND post_type = '" . $type . "'");
-            //var_dump($allOfCertainType);
-            foreach($allOfCertainType as $post) {
+        foreach ($types as $type) {
+            $allOfCertainType = $wpdb->get_results("SELECT ID,post_title FROM " . $wpdb->posts . " WHERE post_status = 'publish' AND post_type = '" . $type . "'");
+            foreach ($allOfCertainType as $post) {
                 $this->levenshteinTitles[$type][] = array('ID' => $post->ID, 'post_title' => $post->post_title);
             }
         }
-        //var_dump($this->levenshteinTitles);
     }
 
     /**
@@ -139,10 +137,11 @@ class Cbis extends \HbgEventImporter\Parser
      */
     public function checkIfPostExists($postType, $postTitle)
     {
-        foreach($this->levenshteinTitles[$postType] as $title) {
+        foreach ($this->levenshteinTitles[$postType] as $title) {
             //var_dump($title);
-            if($this->isSimilarEnough($postTitle, $title['post_title']))
+            if ($this->isSimilarEnough($postTitle, $title['post_title'])) {
                 return $title['ID'];
+            }
         }
         return null;
         /*$first = ;
@@ -160,8 +159,7 @@ class Cbis extends \HbgEventImporter\Parser
     public function isSimilarEnough($newTitle, $existingTitle)
     {
         $steps = levenshtein($newTitle, $existingTitle);
-        if($steps <= 3)
-        {
+        if ($steps <= 3) {
             /*echo "New title: ";
             var_dump($newTitle);
             echo "Old title: ";
@@ -230,7 +228,7 @@ class Cbis extends \HbgEventImporter\Parser
 
         echo "Teeeeest\n";
         echo "Arenas total: " . count($this->arenas) . "\n";
-        foreach($this->arenas as $key => $arenaData) {
+        foreach ($this->arenas as $key => $arenaData) {
             //var_dump($arenaData);
             $this->saveArena($arenaData);
         }
@@ -277,8 +275,9 @@ class Cbis extends \HbgEventImporter\Parser
 
         $dataHolder = $eventData->Attributes->AttributeData;
 
-        if(!is_array($dataHolder))
+        if (!is_array($dataHolder)) {
             $dataHolder = array($dataHolder);
+        }
 
         foreach ($dataHolder as $attribute) {
             $attributes[$attribute->AttributeId] = $attribute->Value;
@@ -367,8 +366,7 @@ class Cbis extends \HbgEventImporter\Parser
     {
         $attributes = $this->getAttributes($arenaData);
 
-        if($this->getAttributeValue(self::ATTRIBUTE_ADDRESS, $attributes) == null && $this->getAttributeValue(self::ATTRIBUTE_NAME, $attributes) == null)
-        {
+        if ($this->getAttributeValue(self::ATTRIBUTE_ADDRESS, $attributes) == null && $this->getAttributeValue(self::ATTRIBUTE_NAME, $attributes) == null) {
             echo "There was no address in this arena: \n";
             var_dump($arenaData);
             echo "\n";
@@ -379,15 +377,12 @@ class Cbis extends \HbgEventImporter\Parser
 
         // Checking if there is a post already with this title or similar enough
         $locationId = $this->checkIfPostExists('location', $newPostTitle);
-        if($locationId != null)
-        {
+        if ($locationId != null) {
             //global $wpdb;
             echo "This location already exist, title: " . $newPostTitle . ", id: " . $locationId . "\n";
             //$oldPost = $wpdb->get_results("SELECT * FROM event_posts WHERE ID = " . $locationId);
             //var_dump($oldPost);
-        }
-        else
-        {
+        } else {
             // Create the location
             $location = new Location(
                 array(
@@ -432,14 +427,11 @@ class Cbis extends \HbgEventImporter\Parser
         $newPostTitle = $this->getAttributeValue(self::ATTRIBUTE_ADDRESS, $attributes) ? $this->getAttributeValue(self::ATTRIBUTE_ADDRESS, $attributes) : $eventData->GeoNode->Name;
 
         $locationId = $this->checkIfPostExists('location', $newPostTitle);
-        if($locationId != null)
-        {
+        if ($locationId != null) {
             echo "This location already exist, title: " . $newPostTitle . ",id: " . $locationId . "\n";
             //$oldPost = $wpdb->get_results("SELECT * FROM event_posts WHERE ID = " . $locationId);
             //var_dump($oldPost);
-        }
-        else
-        {
+        } else {
             // Create the location
             $location = new Location(
                 array(
@@ -470,26 +462,22 @@ class Cbis extends \HbgEventImporter\Parser
 
         $newPostTitle = $this->getAttributeValue(self::ATTRIBUTE_CONTACT_PERSON, $attributes) != null ? $this->getAttributeValue(self::ATTRIBUTE_CONTACT_PERSON, $attributes) : '';
 
-        if($this->getAttributeValue(self::ATTRIBUTE_CONTACT_EMAIL, $attributes) != null)
-        {
-            if(!empty($newPostTitle))
+        if ($this->getAttributeValue(self::ATTRIBUTE_CONTACT_EMAIL, $attributes) != null) {
+            if (!empty($newPostTitle)) {
                 $newPostTitle .= ' : ';
+            }
             $newPostTitle .= $this->getAttributeValue(self::ATTRIBUTE_CONTACT_EMAIL, $attributes);
         }
 
         $contactId = null;
 
-        if(!empty($newPostTitle))
-        {
+        if (!empty($newPostTitle)) {
             $contactId = $this->checkIfPostExists('contact', $newPostTitle);
-            if($contactId != null)
-            {
+            if ($contactId != null) {
                 echo "This contact already exist, title: " . $newPostTitle . ", id: " . $contactId . "\n";
                 //$oldPost = $wpdb->get_results("SELECT * FROM event_posts WHERE ID = " . $contactId);
                 //var_dump($oldPost);
-            }
-            else
-            {
+            } else {
                 // Save contact
                 $contact = new Contact(
                     array(
@@ -522,14 +510,11 @@ class Cbis extends \HbgEventImporter\Parser
         $newPostTitle = $this->getAttributeValue(self::ATTRIBUTE_NAME, $attributes, ($eventData->Name != null ? $eventData->Name : null));
 
         $eventId = $this->checkIfPostExists('event', $newPostTitle);
-        if($eventId != null)
-        {
+        if ($eventId != null) {
             echo "This event already exist, title: " . $newPostTitle . ", id: " . $eventId . "\n";
             //$oldPost = $wpdb->get_results("SELECT * FROM event_posts WHERE ID = " . $eventId);
             //var_dump($oldPost);
-        }
-        else
-        {
+        } else {
             // Creates the event object
             $event = new Event(
                 array(
