@@ -124,8 +124,13 @@ class Cbis extends \HbgEventImporter\Parser
         $types = array('event', 'location', 'contact');
 
         foreach($types as $type) {
-            $this->levenshteinTitles[$type] = $wpdb->get_results("SELECT ID,post_title FROM event_posts WHERE post_status = 'publish' AND post_type = '" . $type . "'");
+            $allOfCertainType = $wpdb->get_results("SELECT ID,post_title FROM event_posts WHERE post_status = 'publish' AND post_type = '" . $type . "'");
+            //var_dump($allOfCertainType);
+            foreach($allOfCertainType as $post) {
+                $this->levenshteinTitles[$type][] = array('ID' => $post->ID, 'post_title' => $post->post_title);
+            }
         }
+        //var_dump($this->levenshteinTitles);
     }
 
     /**
@@ -135,10 +140,9 @@ class Cbis extends \HbgEventImporter\Parser
     public function checkIfPostExists($postType, $postTitle)
     {
         foreach($this->levenshteinTitles[$postType] as $title) {
-            if(isSimilarEnough($postTitle, $title->post_title))
-                return $title->ID;
-            else
-                $this->levenshteinTitles[$postType][] = $postTitle;
+            //var_dump($title);
+            if($this->isSimilarEnough($postTitle, $title['post_title']))
+                return $title['ID'];
         }
         return null;
         /*$first = ;
@@ -158,12 +162,12 @@ class Cbis extends \HbgEventImporter\Parser
         $steps = levenshtein($newTitle, $existingTitle);
         if($steps <= 3)
         {
-            echo "New title: ";
-             var_dump($newTitle);
-             echo "Old title: ";
-             var_dump($existingTitle);
-             echo "Nr steps: ";
-             var_dump($steps);
+            /*echo "New title: ";
+            var_dump($newTitle);
+            echo "Old title: ";
+            var_dump($existingTitle);
+            echo "Nr steps: ";
+            var_dump($steps);*/
             return true;
         }
         return false;
@@ -224,15 +228,13 @@ class Cbis extends \HbgEventImporter\Parser
         // Get and save the arenas
         $this->arenas = $this->client->ListAll($requestParams)->ListAllResult->Items->Product;
 
-        //echo "Arenas total: " . count($this->arenas) . "\n";
+        echo "Arenas total: " . count($this->arenas) . "\n";
         foreach($this->arenas as $key => $arenaData) {
             //var_dump($arenaData);
             $this->saveArena($arenaData);
         }
 
-        //die();
-
-        //echo "End of arenas:\n";
+        echo "End of arenas:\n";
 
         //die();
 
@@ -243,15 +245,22 @@ class Cbis extends \HbgEventImporter\Parser
         // Get and save the events
         $this->events = $this->client->ListAll($requestParams)->ListAllResult->Items->Product;
 
-        //echo "Products total: " . count($this->events) . "\n";
+        echo "Products total: " . count($this->events) . "\n";
         foreach ($this->events as $eventData) {
             //var_dump($eventData);
             $this->saveEvent($eventData);
         }
 
-        //echo "End of products:\n";
+        echo "Nr of events: " . count($this->levenshteinTitles['event']) . "\n";
+        var_dump($this->levenshteinTitles['event']);
+        echo "Nr of contacts: " . count($this->levenshteinTitles['contact']) . "\n";
+        var_dump($this->levenshteinTitles['contact']);
+        echo "Nr of locations: " . count($this->levenshteinTitles['location']) . "\n";
+        var_dump($this->levenshteinTitles['location']);
 
-        //die();
+        echo "End of products:\n";
+
+        die();
 
         return true;
     }
@@ -368,38 +377,42 @@ class Cbis extends \HbgEventImporter\Parser
         $newPostTitle = $this->getAttributeValue(self::ATTRIBUTE_ADDRESS, $attributes) != null ? $this->getAttributeValue(self::ATTRIBUTE_ADDRESS, $attributes) : $this->getAttributeValue(self::ATTRIBUTE_NAME, $attributes);
 
         // Checking if there is a post already with this title or similar enough
-        /*$existingPostId = $this->checkIfPostExists('location', $newPostTitle);
-        if($existingPostId != null)
+        $locationId = $this->checkIfPostExists('location', $newPostTitle);
+        if($locationId != null)
         {
-            global $wpdb;
-            echo "This post already exist, id: " . $existingPostId . "\n";
-            $oldPost = $wpdb->get_result("SELECT * FROM event_posts WHERE ID = " . $existingPostId);
-            var_dump($oldPost);
-            return;
-        }*/
+            //global $wpdb;
+            echo "This location already exist, title: " . $newPostTitle . ", id: " . $locationId . "\n";
+            //$oldPost = $wpdb->get_results("SELECT * FROM event_posts WHERE ID = " . $locationId);
+            //var_dump($oldPost);
+        }
+        else
+        {
+            // Create the location
+            $location = new Location(
+                array(
+                    'post_title' => $newPostTitle
+                ),
+                array(
+                    'street_address'     => $this->getAttributeValue(self::ATTRIBUTE_ADDRESS, $attributes),
+                    'postal_code'        => $this->getAttributeValue(self::ATTRIBUTE_POSTCODE, $attributes),
+                    'city'               => $this->getAttributeValue(self::ATTRIBUTE_POSTAL_ADDRESS, $attributes),
+                    'municipality'       => $this->getAttributeValue(self::ATTRIBUTE_MUNICIPALITY, $attributes),
+                    'country'            => $this->getAttributeValue(self::ATTRIBUTE_COUNTRY, $attributes),
+                    'latitude'           => $this->getAttributeValue(self::ATTRIBUTE_LATITUDE, $attributes),
+                    'longitude'          => $this->getAttributeValue(self::ATTRIBUTE_LONGITUDE, $attributes),
 
-        // Create the location
-        $location = new Location(
-            array(
-                'post_title' => $newPostTitle
-            ),
-            array(
-                'street_address'     => $this->getAttributeValue(self::ATTRIBUTE_ADDRESS, $attributes),
-                'postal_code'        => $this->getAttributeValue(self::ATTRIBUTE_POSTCODE, $attributes),
-                'city'               => $this->getAttributeValue(self::ATTRIBUTE_POSTAL_ADDRESS, $attributes),
-                'municipality'       => $this->getAttributeValue(self::ATTRIBUTE_MUNICIPALITY, $attributes),
-                'country'            => $this->getAttributeValue(self::ATTRIBUTE_COUNTRY, $attributes),
-                'latitude'           => $this->getAttributeValue(self::ATTRIBUTE_LATITUDE, $attributes),
-                'longitude'          => $this->getAttributeValue(self::ATTRIBUTE_LONGITUDE, $attributes),
+                    '_event_manager_uid' => $this->getAttributeValue(self::ATTRIBUTE_ADDRESS, $attributes) ? $this->getAttributeValue(self::ATTRIBUTE_ADDRESS, $attributes) : $this->getAttributeValue(self::ATTRIBUTE_NAME, $attributes)
+                )
+            );
+            $locationId = $location->save();
 
-                '_event_manager_uid' => $this->getAttributeValue(self::ATTRIBUTE_ADDRESS, $attributes) ? $this->getAttributeValue(self::ATTRIBUTE_ADDRESS, $attributes) : $this->getAttributeValue(self::ATTRIBUTE_NAME, $attributes)
-            )
-        );
-
-        //var_dump($location->post_type);
-        //die();
-
-        $locationId = $location->save();
+            //echo "Existing titles before:";
+            //var_dump($this->levenshteinTitles);
+            //echo "New location created with title: " . $newPostTitle . "\n";
+            $this->levenshteinTitles['location'][] = array('ID' => $locationId, 'post_title' => $newPostTitle);
+            //echo "Existing titles after:";
+            //var_dump($this->levenshteinTitles);
+        }
     }
 
     /**
@@ -409,93 +422,157 @@ class Cbis extends \HbgEventImporter\Parser
      */
     public function saveEvent($eventData)
     {
+        //global $wpdb;
+
         $attributes = $this->getAttributes($eventData);
         $categories = $this->getCategories($eventData);
         $occasions = $this->getOccasions($eventData);
 
-        // Create the location
-        $location = new Location(
-            array(
-                'post_title' => $this->getAttributeValue(self::ATTRIBUTE_ADDRESS, $attributes) ? $this->getAttributeValue(self::ATTRIBUTE_ADDRESS, $attributes) : $eventData->GeoNode->Name
-            ),
-            array(
-                'street_address'     => $this->getAttributeValue(self::ATTRIBUTE_ADDRESS, $attributes),
-                'postal_code'        => $this->getAttributeValue(self::ATTRIBUTE_POSTCODE, $attributes),
-                'city'               => $eventData->GeoNode->Name,
-                'municipality'       => $this->getAttributeValue(self::ATTRIBUTE_MUNICIPALITY, $attributes),
-                'country'            => $this->getAttributeValue(self::ATTRIBUTE_COUNTRY, $attributes),
-                'latitude'           => $this->getAttributeValue(self::ATTRIBUTE_LATITUDE, $attributes),
-                'longitude'          => $this->getAttributeValue(self::ATTRIBUTE_LONGITUDE, $attributes),
+        $newPostTitle = $this->getAttributeValue(self::ATTRIBUTE_ADDRESS, $attributes) ? $this->getAttributeValue(self::ATTRIBUTE_ADDRESS, $attributes) : $eventData->GeoNode->Name;
 
-                '_event_manager_uid' => $this->getAttributeValue(self::ATTRIBUTE_ADDRESS, $attributes) ? $this->getAttributeValue(self::ATTRIBUTE_ADDRESS, $attributes) : $eventData->GeoNode->Name
-            )
-        );
+        $locationId = $this->checkIfPostExists('location', $newPostTitle);
+        if($locationId != null)
+        {
+            echo "This location already exist, title: " . $newPostTitle . ",id: " . $locationId . "\n";
+            //$oldPost = $wpdb->get_results("SELECT * FROM event_posts WHERE ID = " . $locationId);
+            //var_dump($oldPost);
+        }
+        else
+        {
+            // Create the location
+            $location = new Location(
+                array(
+                    'post_title'            =>  $newPostTitle
+                ),
+                array(
+                    'street_address'        =>  $this->getAttributeValue(self::ATTRIBUTE_ADDRESS, $attributes),
+                    'postal_code'           =>  $this->getAttributeValue(self::ATTRIBUTE_POSTCODE, $attributes),
+                    'city'                  =>  $eventData->GeoNode->Name,
+                    'municipality'          =>  $this->getAttributeValue(self::ATTRIBUTE_MUNICIPALITY, $attributes),
+                    'country'               =>  $this->getAttributeValue(self::ATTRIBUTE_COUNTRY, $attributes),
+                    'latitude'              =>  $this->getAttributeValue(self::ATTRIBUTE_LATITUDE, $attributes),
+                    'longitude'             =>  $this->getAttributeValue(self::ATTRIBUTE_LONGITUDE, $attributes),
 
-        $locationId = $location->save();
-        //$locationId
+                    '_event_manager_uid'    =>  $this->getAttributeValue(self::ATTRIBUTE_ADDRESS, $attributes) ? $this->getAttributeValue(self::ATTRIBUTE_ADDRESS, $attributes) : $eventData->GeoNode->Name
+                )
+            );
 
-        // Save contact
-        $contact = new Contact(
-            array(
-                'post_title'            => $this->getAttributeValue(self::ATTRIBUTE_CONTACT_PERSON, $attributes) . ': ' . strtolower($this->getAttributeValue(self::ATTRIBUTE_CONTACT_EMAIL, $attributes))
-            ),
-            array(
-                'name'                  => $this->getAttributeValue(self::ATTRIBUTE_CONTACT_PERSON, $attributes),
-                'email'                 => strtolower($this->getAttributeValue(self::ATTRIBUTE_CONTACT_EMAIL, $attributes)),
-                'phone_number'           => null,
-                '_event_manager_uid'    => $this->getAttributeValue(self::ATTRIBUTE_CONTACT_PERSON, $attributes) . ': ' . strtolower($this->getAttributeValue(self::ATTRIBUTE_CONTACT_EMAIL, $attributes))
-            )
-        );
+            $locationId = $location->save();
 
-        //$contactId = null;
-        //if (!empty($contact->email)) {
-            $contactId = $contact->save();
-        //}
+            //echo "Existing titles before:";
+            //var_dump($this->levenshteinTitles);
+            //echo "New location created with title: " . $newPostTitle . "\n";
+            $this->levenshteinTitles['location'][] = array('ID' => $locationId, 'post_title' => $newPostTitle);
+            //echo "Existing titles after:";
+            //var_dump($this->levenshteinTitles);
+        }
+
+        $newPostTitle = $this->getAttributeValue(self::ATTRIBUTE_CONTACT_PERSON, $attributes) != null ? $this->getAttributeValue(self::ATTRIBUTE_CONTACT_PERSON, $attributes) : '';
+
+        if($this->getAttributeValue(self::ATTRIBUTE_CONTACT_EMAIL, $attributes) != null)
+        {
+            if(!empty($newPostTitle))
+                $newPostTitle .= ' : ';
+            $newPostTitle .= $this->getAttributeValue(self::ATTRIBUTE_CONTACT_EMAIL, $attributes);
+        }
+
+        $contactId = null;
+
+        if(!empty($newPostTitle))
+        {
+            $contactId = $this->checkIfPostExists('contact', $newPostTitle);
+            if($contactId != null)
+            {
+                echo "This contact already exist, title: " . $newPostTitle . ", id: " . $contactId . "\n";
+                //$oldPost = $wpdb->get_results("SELECT * FROM event_posts WHERE ID = " . $contactId);
+                //var_dump($oldPost);
+            }
+            else
+            {
+                // Save contact
+                $contact = new Contact(
+                    array(
+                        'post_title'            =>  $newPostTitle
+                    ),
+                    array(
+                        'name'                  =>  $this->getAttributeValue(self::ATTRIBUTE_CONTACT_PERSON, $attributes),
+                        'email'                 =>  strtolower($this->getAttributeValue(self::ATTRIBUTE_CONTACT_EMAIL, $attributes)),
+                        'phone_number'          =>  null,
+                        '_event_manager_uid'    =>  $this->getAttributeValue(self::ATTRIBUTE_CONTACT_PERSON, $attributes) . ': ' . strtolower($this->getAttributeValue(self::ATTRIBUTE_CONTACT_EMAIL, $attributes))
+                    )
+                );
+
+                $contactId = $contact->save();
+
+                //echo "Existing titles before:";
+                //var_dump($this->levenshteinTitles);
+                //echo "New contact created with title: " . $newPostTitle . "\n";
+                $this->levenshteinTitles['contact'][] = array('ID' => $contactId, 'post_title' => $newPostTitle);
+                //echo "Existing titles after:";
+                //var_dump($this->levenshteinTitles);
+            }
+        }
 
         $postContent = $this->getAttributeValue(self::ATTRIBUTE_DESCRIPTION, $attributes);
         if ($this->getAttributeValue(self::ATTRIBUTE_INGRESS, $attributes) && !empty($this->getAttributeValue(self::ATTRIBUTE_INGRESS, $attributes))) {
             $postContent = $this->getAttributeValue(self::ATTRIBUTE_INGRESS, $attributes) . "<!--more-->\n\n" . $postContent;
         }
 
+        $newPostTitle = $this->getAttributeValue(self::ATTRIBUTE_NAME, $attributes, ($eventData->Name != null ? $eventData->Name : null));
 
-        // Creates the event object
-        $event = new Event(
-            array(
-                'post_title'         => $this->getAttributeValue(self::ATTRIBUTE_NAME, $attributes, ($eventData->Name != null ? $eventData->Name : null)),
-                'post_content'       => $postContent
-            ),
-            array(
-                'uniqueId'           => 'cbis-' . $eventData->Id,
-                '_event_manager_uid' => 'cbis-' . $eventData->Id,
-                'sync'               => true,
-                'status'             => isset($eventData->Status) && !empty($eventData->Status) ? $eventData->Status : null,
-                'image'              => (isset($eventData->Image->Url) ? $eventData->Image->Url : null),
-                'alternate_name'     => isset($eventData->SystemName) && !empty($eventData->SystemName) ? $eventData->SystemName : null,
-                'event_link'         => $this->getAttributeValue(self::ATTRIBUTE_EVENT_LINK, $attributes),
-                'categories'         => $categories,
-                'occasions'          => $occasions,
-                'location'           => (array) $locationId,
-                'organizer'          => '',
-                'organizer_phone'    => $this->getAttributeValue(self::ATTRIBUTE_PHONE_NUMBER, $attributes),
-                'organizer_email'    => $this->getAttributeValue(self::ATTRIBUTE_ORGANIZER_EMAIL, $attributes),
-                'coorganizer'        => $this->getAttributeValue(self::ATTRIBUTE_CO_ORGANIZER, $attributes),
-                'contacts'           => !is_null($contactId) ? (array) $contactId : null,
-                'booking_link'       => $this->getAttributeValue(self::ATTRIBUTE_BOOKING_LINK, $attributes),
-                'booking_phone'      => $this->getAttributeValue(self::ATTRIBUTE_BOOKING_PHONE_NUMBER, $attributes),
-                'age_restriction'    => $this->getAttributeValue(self::ATTRIBUTE_AGE_RESTRICTION, $attributes),
-                'price_information'  => $this->getAttributeValue(self::ATTRIBUTE_PRICE_INFORMATION, $attributes),
-                'price_adult'        => $this->getAttributeValue(self::ATTRIBUTE_PRICE_ADULT, $attributes),
-                'price_children'     => $this->getAttributeValue(self::ATTRIBUTE_PRICE_CHILD, $attributes)
-            )
-        );
-
-        $eventId = $event->save();
-
-        if (!is_null($event->image)) {
-            $event->setFeaturedImageFromUrl($event->image);
+        $eventId = $this->checkIfPostExists('event', $newPostTitle);
+        if($eventId != null)
+        {
+            echo "This event already exist, title: " . $newPostTitle . ", id: " . $eventId . "\n";
+            //$oldPost = $wpdb->get_results("SELECT * FROM event_posts WHERE ID = " . $eventId);
+            //var_dump($oldPost);
         }
+        else
+        {
+            // Creates the event object
+            $event = new Event(
+                array(
+                    'post_title'         => $newPostTitle,
+                    'post_content'       => $postContent
+                ),
+                array(
+                    'uniqueId'           => 'cbis-' . $eventData->Id,
+                    '_event_manager_uid' => 'cbis-' . $eventData->Id,
+                    'sync'               => true,
+                    'status'             => isset($eventData->Status) && !empty($eventData->Status) ? $eventData->Status : null,
+                    'image'              => (isset($eventData->Image->Url) ? $eventData->Image->Url : null),
+                    'alternate_name'     => isset($eventData->SystemName) && !empty($eventData->SystemName) ? $eventData->SystemName : null,
+                    'event_link'         => $this->getAttributeValue(self::ATTRIBUTE_EVENT_LINK, $attributes),
+                    'categories'         => $categories,
+                    'occasions'          => $occasions,
+                    'location'           => (array) $locationId,
+                    'organizer'          => '',
+                    'organizer_phone'    => $this->getAttributeValue(self::ATTRIBUTE_PHONE_NUMBER, $attributes),
+                    'organizer_email'    => $this->getAttributeValue(self::ATTRIBUTE_ORGANIZER_EMAIL, $attributes),
+                    'coorganizer'        => $this->getAttributeValue(self::ATTRIBUTE_CO_ORGANIZER, $attributes),
+                    'contacts'           => !is_null($contactId) ? (array) $contactId : null,
+                    'booking_link'       => $this->getAttributeValue(self::ATTRIBUTE_BOOKING_LINK, $attributes),
+                    'booking_phone'      => $this->getAttributeValue(self::ATTRIBUTE_BOOKING_PHONE_NUMBER, $attributes),
+                    'age_restriction'    => $this->getAttributeValue(self::ATTRIBUTE_AGE_RESTRICTION, $attributes),
+                    'price_information'  => $this->getAttributeValue(self::ATTRIBUTE_PRICE_INFORMATION, $attributes),
+                    'price_adult'        => $this->getAttributeValue(self::ATTRIBUTE_PRICE_ADULT, $attributes),
+                    'price_children'     => $this->getAttributeValue(self::ATTRIBUTE_PRICE_CHILD, $attributes)
+                )
+            );
 
-        return $eventId;
+            $eventId = $event->save();
+
+            //echo "Existing titles before:";
+            //var_dump($this->levenshteinTitles);
+            //echo "New event created with title: " . $newPostTitle . "\n";
+            $this->levenshteinTitles['event'][] = array('ID' => $eventId, 'post_title' => $newPostTitle);
+            //echo "Existing titles after:";
+            //var_dump($this->levenshteinTitles);
+
+            if (!is_null($event->image)) {
+                $event->setFeaturedImageFromUrl($event->image);
+            }
+        }
     }
 
     /**
