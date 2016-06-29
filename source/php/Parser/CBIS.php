@@ -6,7 +6,7 @@ use \HbgEventImporter\Event as Event;
 use \HbgEventImporter\Location as Location;
 use \HbgEventImporter\Contact as Contact;
 
-class Cbis extends \HbgEventImporter\Parser
+class CBIS extends \HbgEventImporter\Parser
 {
     /**
      * Holds the Soap client
@@ -126,6 +126,9 @@ class Cbis extends \HbgEventImporter\Parser
         foreach($types as $type) {
             $allOfCertainType = $wpdb->get_results("SELECT ID,post_title FROM event_posts WHERE post_status = 'publish' AND post_type = '" . $type . "'");
             foreach($allOfCertainType as $post) {
+        foreach ($types as $type) {
+            $allOfCertainType = $wpdb->get_results("SELECT ID,post_title FROM " . $wpdb->posts . " WHERE post_status = 'publish' AND post_type = '" . $type . "'");
+            foreach ($allOfCertainType as $post) {
                 $this->levenshteinTitles[$type][] = array('ID' => $post->ID, 'post_title' => $post->post_title);
             }
         }
@@ -140,6 +143,7 @@ class Cbis extends \HbgEventImporter\Parser
         foreach($this->levenshteinTitles[$postType] as $title) {
             if($this->isSimilarEnough($postTitle, $title['post_title'], $postType == 'location' ? 0 : 3))
                 return $title['ID'];
+            }
         }
         return null;
     }
@@ -242,7 +246,9 @@ class Cbis extends \HbgEventImporter\Parser
         $dataHolder = $eventData->Attributes->AttributeData;
 
         if(!is_array($dataHolder))
+        if (!is_array($dataHolder)) {
             $dataHolder = array($dataHolder);
+        }
 
         foreach ($dataHolder as $attribute) {
             $attributes[$attribute->AttributeId] = $attribute->Value;
@@ -381,6 +387,7 @@ class Cbis extends \HbgEventImporter\Parser
         $locationId = $this->checkIfPostExists('location', $newPostTitle);
         if($locationId != null)
         {
+        if ($locationId != null) {
             // Create the location
             $location = new Location(
                 array(
@@ -409,7 +416,10 @@ class Cbis extends \HbgEventImporter\Parser
         if($this->getAttributeValue(self::ATTRIBUTE_CONTACT_EMAIL, $attributes) != null)
         {
             if(!empty($newPostTitle))
+        if ($this->getAttributeValue(self::ATTRIBUTE_CONTACT_EMAIL, $attributes) != null) {
+            if (!empty($newPostTitle)) {
                 $newPostTitle .= ' : ';
+            }
             $newPostTitle .= $this->getAttributeValue(self::ATTRIBUTE_CONTACT_EMAIL, $attributes);
         }
 
@@ -417,9 +427,11 @@ class Cbis extends \HbgEventImporter\Parser
 
         if(!empty($newPostTitle))
         {
+        if (!empty($newPostTitle)) {
             $contactId = $this->checkIfPostExists('contact', $newPostTitle);
             if($contactId != null)
             {
+            if ($contactId != null) {
                 // Save contact
                 $contact = new Contact(
                     array(
@@ -449,6 +461,7 @@ class Cbis extends \HbgEventImporter\Parser
         $eventId = $this->checkIfPostExists('event', $newPostTitle);
         if($eventId != null)
         {
+        if ($eventId != null) {
             // Creates the event object
             $event = new Event(
                 array(
