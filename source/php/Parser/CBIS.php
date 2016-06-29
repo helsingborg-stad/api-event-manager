@@ -228,6 +228,7 @@ class Cbis extends \HbgEventImporter\Parser
         // Get and save the arenas
         $this->arenas = $this->client->ListAll($requestParams)->ListAllResult->Items->Product;
 
+        echo "Teeeeest\n";
         echo "Arenas total: " . count($this->arenas) . "\n";
         foreach($this->arenas as $key => $arenaData) {
             //var_dump($arenaData);

@@ -50,6 +50,10 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
 
             echo '<a href="' . get_edit_post_link($contactId[0]) . '">' . get_the_title($contactId[0]) . '</a>';
         });
+
+        /*$this->addTableColumn('approve', __('Approve'), true, function($column, $postId) {
+
+        });*/
     }
 
     /**
