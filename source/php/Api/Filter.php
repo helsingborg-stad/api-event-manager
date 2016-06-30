@@ -3,7 +3,7 @@
 namespace HbgEventImporter\Api;
 
 /**
- * Class for filtering WordPress API
+ * Filtering WordPress API
  */
 
 class Filter

@@ -1,6 +1,10 @@
 <?php
 
-namespace  HbgEventImporter\Api;
+namespace HbgEventImporter\Api;
+
+/**
+ * Managing cpt capabilities WordPress API
+ */
 
 class PostTypes
 {
