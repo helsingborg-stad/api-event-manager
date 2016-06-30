@@ -10,8 +10,8 @@ class Filter
 {
     public function __construct()
     {
-        //add_filter('json_url_prefix', array($this, 'apiBasePrefix'));
-        //add_filter('json_endpoints', array($this, 'translateDefaultRoutes'));
+        add_filter('json_url_prefix', array($this, 'apiBasePrefix'));
+        add_filter('json_endpoints', array($this, 'translateDefaultRoutes'));
     }
 
     /**
@@ -25,7 +25,6 @@ class Filter
 
     public function translateDefaultRoutes($routes)
     {
-        die(var_dump($routes));
         return $routes;
     }
 }

@@ -56,6 +56,7 @@ class App
         new Taxonomy\EventCategories();
         new Admin\Options();
         new Api\Filter();
+        new Api\PostTypes();
     }
 
     public function enqueuStyleSheets()
