@@ -124,9 +124,6 @@ class CBIS extends \HbgEventImporter\Parser
         $types = array('event', 'location', 'contact');
 
         foreach($types as $type) {
-            $allOfCertainType = $wpdb->get_results("SELECT ID,post_title FROM event_posts WHERE post_status = 'publish' AND post_type = '" . $type . "'");
-            foreach($allOfCertainType as $post) {
-        foreach ($types as $type) {
             $allOfCertainType = $wpdb->get_results("SELECT ID,post_title FROM " . $wpdb->posts . " WHERE post_status = 'publish' AND post_type = '" . $type . "'");
             foreach ($allOfCertainType as $post) {
                 $this->levenshteinTitles[$type][] = array('ID' => $post->ID, 'post_title' => $post->post_title);
@@ -143,7 +140,6 @@ class CBIS extends \HbgEventImporter\Parser
         foreach($this->levenshteinTitles[$postType] as $title) {
             if($this->isSimilarEnough($postTitle, $title['post_title'], $postType == 'location' ? 0 : 3))
                 return $title['ID'];
-            }
         }
         return null;
     }
@@ -179,7 +175,7 @@ class CBIS extends \HbgEventImporter\Parser
         }
 
         // Number of arenas to get, 200 to get all
-        $getLength = 200;
+        $getLength = 20;
 
         $requestParams = array(
             'apiKey' => $cbisKey,
@@ -221,7 +217,7 @@ class CBIS extends \HbgEventImporter\Parser
 
         // Adjust request parameters for getting products, 1500 itemsPerPage to get all events
         $requestParams['filter']['ProductType'] = "Product";
-        $requestParams['itemsPerPage'] = 1500;
+        $requestParams['itemsPerPage'] = 15;
 
         // Get and save the events
         $this->events = $this->client->ListAll($requestParams)->ListAllResult->Items->Product;
@@ -376,8 +372,6 @@ class CBIS extends \HbgEventImporter\Parser
      */
     public function saveEvent($eventData)
     {
-        //global $wpdb;
-
         $attributes = $this->getAttributes($eventData);
         $categories = $this->getCategories($eventData);
         $occasions = $this->getOccasions($eventData);
@@ -385,8 +379,6 @@ class CBIS extends \HbgEventImporter\Parser
         $newPostTitle = $this->getAttributeValue(self::ATTRIBUTE_ADDRESS, $attributes) ? $this->getAttributeValue(self::ATTRIBUTE_ADDRESS, $attributes) : $eventData->GeoNode->Name;
 
         $locationId = $this->checkIfPostExists('location', $newPostTitle);
-        if($locationId != null)
-        {
         if ($locationId != null) {
             // Create the location
             $location = new Location(
@@ -413,9 +405,6 @@ class CBIS extends \HbgEventImporter\Parser
 
         $newPostTitle = $this->getAttributeValue(self::ATTRIBUTE_CONTACT_PERSON, $attributes) != null ? $this->getAttributeValue(self::ATTRIBUTE_CONTACT_PERSON, $attributes) : '';
 
-        if($this->getAttributeValue(self::ATTRIBUTE_CONTACT_EMAIL, $attributes) != null)
-        {
-            if(!empty($newPostTitle))
         if ($this->getAttributeValue(self::ATTRIBUTE_CONTACT_EMAIL, $attributes) != null) {
             if (!empty($newPostTitle)) {
                 $newPostTitle .= ' : ';
@@ -425,12 +414,8 @@ class CBIS extends \HbgEventImporter\Parser
 
         $contactId = null;
 
-        if(!empty($newPostTitle))
-        {
         if (!empty($newPostTitle)) {
             $contactId = $this->checkIfPostExists('contact', $newPostTitle);
-            if($contactId != null)
-            {
             if ($contactId != null) {
                 // Save contact
                 $contact = new Contact(
@@ -459,8 +444,6 @@ class CBIS extends \HbgEventImporter\Parser
         $newPostTitle = $this->getAttributeValue(self::ATTRIBUTE_NAME, $attributes, ($eventData->Name != null ? $eventData->Name : null));
 
         $eventId = $this->checkIfPostExists('event', $newPostTitle);
-        if($eventId != null)
-        {
         if ($eventId != null) {
             // Creates the event object
             $event = new Event(
