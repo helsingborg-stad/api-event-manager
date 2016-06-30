@@ -4,52 +4,61 @@ namespace HbgEventImporter;
 
 class App
 {
-    public $eventPostType = null;
-    public $locationsPostType = null;
+    public $eventPostType       = null;
+    public $locationsPostType   = null;
+    public $contactsPostType    = null;
 
     public function __construct()
     {
+
+        //Load third party componets
         add_action('plugins_loaded', function () {
             if (!class_exists('acf_field_date_time_picker_plugin')) {
                 require_once(HBGEVENTIMPORTER_PATH . 'source/php/Vendor/acf-field-date-time-picker/acf-date_time_picker.php');
             }
         });
-
         add_action('init', function () {
             if (!file_exists(WP_CONTENT_DIR . '/mu-plugins/AcfImportCleaner.php') && !class_exists('\\AcfImportCleaner\\AcfImportCleaner')) {
                 require_once HBGEVENTIMPORTER_PATH . 'source/php/Helper/AcfImportCleaner.php';
             }
         });
 
+        //Activations hooks
         register_activation_hook(plugin_basename(__FILE__), '\HbgEventImporter\App::addCronJob');
         register_deactivation_hook(plugin_basename(__FILE__), '\HbgEventImporter\App::removeCronJob');
 
+        //Json load files
         add_filter('acf/settings/load_json', array($this, 'acfJsonLoadPath'));
 
+        //Admin scriots
         add_action('admin_enqueue_scripts', array($this, 'enqueueStyles'));
         add_action('admin_enqueue_scripts', array($this, 'enqueueScripts'));
 
-        $this->eventsPostType = new PostTypes\Events();
-        $this->locationsPostType = new PostTypes\Locations();
-        $this->contactsPostType = new PostTypes\Contacts();
-
+        //Admin components
         add_action('admin_menu', array($this, 'createParsePage'));
         add_action('admin_notices', array($this, 'adminNotices'));
 
         // Register cron action
         add_action('import_events_daily', array($this, 'startImport'));
 
+        //Check referer (popup box)
         $referer = (isset($_SERVER['HTTP_REFERER'])) ? $_SERVER['HTTP_REFERER'] : null;
-
         if ((isset($_GET['lightbox']) && $_GET['lightbox'] == 'true') || strpos($referer, 'lightbox=true') > -1) {
             add_action('admin_enqueue_scripts', array($this, 'enqueuStyleSheets'));
         }
 
+        //Init post types
+        $this->eventsPostType = new PostTypes\Events();
+        $this->locationsPostType = new PostTypes\Locations();
+        $this->contactsPostType = new PostTypes\Contacts();
+
+        //Init functions
         new Taxonomy\EventCategories();
         new Admin\Options();
+        new Api\Filter();
     }
 
-    function enqueuStyleSheets()
+    public function enqueuStyleSheets()
     {
         wp_register_style('lightbox', plugins_url(
             ) . '/import-event/dist/css/lightbox.dev.css', false, '1.0.0');
@@ -122,7 +131,7 @@ class App
             __('Import CBIS events', 'hbg-event-importer'),
             'edit_posts',
             'import-cbis-events',
-            function(){
+            function () {
                 new \HbgEventImporter\Parser\CBIS('http://api.cbis.citybreak.com/Products.asmx?wsdl');
             });
     }
