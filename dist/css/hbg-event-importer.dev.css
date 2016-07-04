@@ -1,3 +1,12 @@
+tbody .type-event.red {
+  background-color: #fb7171; }
+
+tbody .type-event.green {
+  background-color: #76f578; }
+
+.acceptAndDeny .hiddenElement {
+  display: none; }
+
 .wp-admin.post-type-event.post-php.no-sync .postbox:not(#submitdiv):not(.acf-postbox),
 .wp-admin.post-type-event.post-php.no-sync .postarea,
 .wp-admin.post-type-event.post-php.no-sync .acf-field:not([data-name="sync"]) {

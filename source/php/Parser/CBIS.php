@@ -175,7 +175,7 @@ class CBIS extends \HbgEventImporter\Parser
         }
 
         // Number of arenas to get, 200 to get all
-        $getLength = 20;
+        $getLength = 200;
 
         $requestParams = array(
             'apiKey' => $cbisKey,
@@ -217,13 +217,12 @@ class CBIS extends \HbgEventImporter\Parser
 
         // Adjust request parameters for getting products, 1500 itemsPerPage to get all events
         $requestParams['filter']['ProductType'] = "Product";
-        $requestParams['itemsPerPage'] = 15;
+        $requestParams['itemsPerPage'] = 1500;
 
         // Get and save the events
         $this->events = $this->client->ListAll($requestParams)->ListAllResult->Items->Product;
 
         foreach ($this->events as $eventData) {
-            //var_dump($eventData);
             $this->saveEvent($eventData);
         }
 
@@ -379,7 +378,7 @@ class CBIS extends \HbgEventImporter\Parser
         $newPostTitle = $this->getAttributeValue(self::ATTRIBUTE_ADDRESS, $attributes) ? $this->getAttributeValue(self::ATTRIBUTE_ADDRESS, $attributes) : $eventData->GeoNode->Name;
 
         $locationId = $this->checkIfPostExists('location', $newPostTitle);
-        if ($locationId != null) {
+        if ($locationId == null) {
             // Create the location
             $location = new Location(
                 array(
@@ -416,7 +415,7 @@ class CBIS extends \HbgEventImporter\Parser
 
         if (!empty($newPostTitle)) {
             $contactId = $this->checkIfPostExists('contact', $newPostTitle);
-            if ($contactId != null) {
+            if ($contactId == null) {
                 // Save contact
                 $contact = new Contact(
                     array(
@@ -444,35 +443,36 @@ class CBIS extends \HbgEventImporter\Parser
         $newPostTitle = $this->getAttributeValue(self::ATTRIBUTE_NAME, $attributes, ($eventData->Name != null ? $eventData->Name : null));
 
         $eventId = $this->checkIfPostExists('event', $newPostTitle);
-        if ($eventId != null) {
+        if ($eventId == null) {
             // Creates the event object
             $event = new Event(
                 array(
-                    'post_title'         => $newPostTitle,
-                    'post_content'       => $postContent
+                    'post_title'            => $newPostTitle,
+                    'post_content'          => $postContent
                 ),
                 array(
-                    'uniqueId'           => 'cbis-' . $eventData->Id,
-                    '_event_manager_uid' => 'cbis-' . $eventData->Id,
-                    'sync'               => true,
-                    'status'             => isset($eventData->Status) && !empty($eventData->Status) ? $eventData->Status : null,
-                    'image'              => (isset($eventData->Image->Url) ? $eventData->Image->Url : null),
-                    'alternate_name'     => isset($eventData->SystemName) && !empty($eventData->SystemName) ? $eventData->SystemName : null,
-                    'event_link'         => $this->getAttributeValue(self::ATTRIBUTE_EVENT_LINK, $attributes),
-                    'categories'         => $categories,
-                    'occasions'          => $occasions,
-                    'location'           => (array) $locationId,
-                    'organizer'          => '',
-                    'organizer_phone'    => $this->getAttributeValue(self::ATTRIBUTE_PHONE_NUMBER, $attributes),
-                    'organizer_email'    => $this->getAttributeValue(self::ATTRIBUTE_ORGANIZER_EMAIL, $attributes),
-                    'coorganizer'        => $this->getAttributeValue(self::ATTRIBUTE_CO_ORGANIZER, $attributes),
-                    'contacts'           => !is_null($contactId) ? (array) $contactId : null,
-                    'booking_link'       => $this->getAttributeValue(self::ATTRIBUTE_BOOKING_LINK, $attributes),
-                    'booking_phone'      => $this->getAttributeValue(self::ATTRIBUTE_BOOKING_PHONE_NUMBER, $attributes),
-                    'age_restriction'    => $this->getAttributeValue(self::ATTRIBUTE_AGE_RESTRICTION, $attributes),
-                    'price_information'  => $this->getAttributeValue(self::ATTRIBUTE_PRICE_INFORMATION, $attributes),
-                    'price_adult'        => $this->getAttributeValue(self::ATTRIBUTE_PRICE_ADULT, $attributes),
-                    'price_children'     => $this->getAttributeValue(self::ATTRIBUTE_PRICE_CHILD, $attributes)
+                    'uniqueId'              => 'cbis-' . $eventData->Id,
+                    '_event_manager_uid'    => 'cbis-' . $eventData->Id,
+                    'sync'                  => true,
+                    'status'                => isset($eventData->Status) && !empty($eventData->Status) ? $eventData->Status : null,
+                    'image'                 => (isset($eventData->Image->Url) ? $eventData->Image->Url : null),
+                    'alternate_name'        => isset($eventData->SystemName) && !empty($eventData->SystemName) ? $eventData->SystemName : null,
+                    'event_link'            => $this->getAttributeValue(self::ATTRIBUTE_EVENT_LINK, $attributes),
+                    'categories'            => $categories,
+                    'occasions'             => $occasions,
+                    'location'              => (array) $locationId,
+                    'organizer'             => '',
+                    'organizer_phone'       => $this->getAttributeValue(self::ATTRIBUTE_PHONE_NUMBER, $attributes),
+                    'organizer_email'       => $this->getAttributeValue(self::ATTRIBUTE_ORGANIZER_EMAIL, $attributes),
+                    'coorganizer'           => $this->getAttributeValue(self::ATTRIBUTE_CO_ORGANIZER, $attributes),
+                    'contacts'              => !is_null($contactId) ? (array) $contactId : null,
+                    'booking_link'          => $this->getAttributeValue(self::ATTRIBUTE_BOOKING_LINK, $attributes),
+                    'booking_phone'         => $this->getAttributeValue(self::ATTRIBUTE_BOOKING_PHONE_NUMBER, $attributes),
+                    'age_restriction'       => $this->getAttributeValue(self::ATTRIBUTE_AGE_RESTRICTION, $attributes),
+                    'price_information'     => $this->getAttributeValue(self::ATTRIBUTE_PRICE_INFORMATION, $attributes),
+                    'price_adult'           => $this->getAttributeValue(self::ATTRIBUTE_PRICE_ADULT, $attributes),
+                    'price_children'        => $this->getAttributeValue(self::ATTRIBUTE_PRICE_CHILD, $attributes),
+                    'accepted'              => 0
                 )
             );
 
