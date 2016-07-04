@@ -33,6 +33,64 @@ abstract class CustomPostType
         add_filter('manage_edit-' . $this->slug . '_columns', array($this, 'tableColumns'));
         add_filter('manage_edit-' . $this->slug . '_sortable_columns', array($this, 'tableSortableColumns'));
         add_action('manage_' . $this->slug . '_posts_custom_column', array($this, 'tableColumnsContent'), 10, 2);
+
+        add_action('wp_ajax_my_action', array($this, 'acceptOrDeny'));
+        add_action('admin_enqueue_scripts', array($this, 'addCustomJS'));
+    }
+
+    public function testing($classes)
+    {
+        $postAndId = explode('-', $classes[3]);
+        if($postAndId[0] == 'post')
+        {
+            $metaAccepted = get_post_meta($postAndId[1], 'accepted');
+            if($metaAccepted[0] == -1)
+                $classes[] = "red";
+            else if($metaAccepted[0] == 1)
+                $classes[] = "green";
+        }
+        return $classes;
+    }
+
+    public function addPostAction()
+    {
+        add_filter('post_class', array($this, 'testing'));
+    }
+
+    public function acceptOrDeny()
+    {
+        $postId =  $_POST['postId'];
+        $newValue = $_POST['value'];
+
+        $postAccepted = get_post_meta($postId, 'accepted');
+
+        if($postAccepted == false)
+        {
+            add_post_meta($postId, 'accepted', $newValue);
+
+            ob_clean();
+            echo $newValue;
+            wp_die();
+        }
+        else
+        {
+            if($postAccepted[0] == $newValue)
+            {
+                ob_clean();
+                echo $postAccepted[0];
+                wp_die();
+            }
+            update_post_meta($postId, 'accepted', $newValue);
+            ob_clean();
+            echo $newValue;
+            wp_die();
+        }
+    }
+
+    public function addCustomJS($hook)
+    {
+        wp_enqueue_script('addCustomJS', HBGEVENTIMPORTER_URL . "/source/js/custom.js");
+        wp_enqueue_style('addCustomCss', HBGEVENTIMPORTER_URL . "/dist/css/hbg-event-importer.min.css");
     }
 
     /**

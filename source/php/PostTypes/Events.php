@@ -51,9 +51,12 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
             echo '<a href="' . get_edit_post_link($contactId[0]) . '">' . get_the_title($contactId[0]) . '</a>';
         });
 
-        /*$this->addTableColumn('approve', __('Approve'), true, function($column, $postId) {
+        $this->addTableColumn('acceptAndDeny', __('Accepted/Denied'), true, function($column, $postId) {
+            echo '<a href="#" class="accept button-primary" postid="' . $postId . '">' . __('Accept') . '</a>
+            <a href="#" class="deny button-primary" postid="' . $postId . '">' . __('Deny') . '</a>';
+        });
 
-        });*/
+        $this->addPostAction();
     }
 
     /**
