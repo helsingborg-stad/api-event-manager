@@ -27,14 +27,14 @@ class UI
     public function removeAdminBarItems()
     {
         global $wp_admin_bar;
-        $wp_admin_bar->remove_menu('about');            // Remove the about WordPress link
-        $wp_admin_bar->remove_menu('wporg');            // Remove the WordPress.org link
-        $wp_admin_bar->remove_menu('documentation');    // Remove the WordPress documentation link
-        $wp_admin_bar->remove_menu('support-forums');   // Remove the support forums link
-        $wp_admin_bar->remove_menu('feedback');         // Remove the feedback link
-        $wp_admin_bar->remove_menu('view-site');        // Remove the view site link
-        $wp_admin_bar->remove_menu('updates');          // Remove the updates link
-        $wp_admin_bar->remove_menu('comments');         // Remove the comments link
-        $wp_admin_bar->remove_menu('new-content');      // Remove the content link
+        $wp_admin_bar->remove_menu('about');                // Remove the about WordPress link
+        $wp_admin_bar->remove_menu('wporg');                // Remove the WordPress.org link
+        $wp_admin_bar->remove_menu('documentation');        // Remove the WordPress documentation link
+        $wp_admin_bar->remove_menu('support-forums');       // Remove the support forums link
+        $wp_admin_bar->remove_menu('feedback');             // Remove the feedback link
+        $wp_admin_bar->remove_menu('view-site');            // Remove the view site link
+        $wp_admin_bar->remove_menu('updates');              // Remove the updates link
+        $wp_admin_bar->remove_menu('comments');             // Remove the comments link
+        $wp_admin_bar->remove_menu('new-content');          // Remove the content link
     }
 }

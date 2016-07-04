@@ -54,8 +54,10 @@ class App
 
         //Init functions
         new Taxonomy\EventCategories();
+
         new Admin\Options();
         new Admin\UI();
+
         new Api\Filter();
         new Api\PostTypes();
     }
