@@ -22,7 +22,6 @@ class UI
         remove_menu_page('edit-comments.php');              //Comments
         remove_menu_page('themes.php');                     //Appearance
         remove_menu_page('tools.php');                      //Tools
-        remove_menu_page('admin.php?page=theme-settings');  //Theme options
     }
 
     public function removeAdminBarItems()
