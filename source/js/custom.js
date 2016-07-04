@@ -3,17 +3,11 @@ jQuery(document).ready(function ($) {
         var postId = $(this).attr('postid');
 
         changeAccepted(1, postId);
-        /*$.post(ajaxurl, data, function(response) {
-            postElement.css('background-color', 'rgb(118,245,120)');
-        });*/
     });
 
     $('.deny').click(function() {
         var postId = $(this).attr('postid');
         changeAccepted(-1, postId);
-        /*$.post(ajaxurl, data, function(response) {
-            postElement.css('background-color', 'rgb(251,113,113)');
-        });*/
     });
 });
 
@@ -27,10 +21,19 @@ function changeAccepted(newValue, postId) {
     var postElement = jQuery('#post-' + postId);
 
     jQuery.post(ajaxurl, data, function(response) {
-        console.log(response);
         if(response == 1)
-            postElement.css('background-color', 'rgb(118,245,120)');
+        {
+            postElement.removeClass('red');
+            postElement.addClass('green');
+            postElement.find('.accept').addClass('hiddenElement');
+            postElement.find('.deny').removeClass('hiddenElement');
+        }
         else if(response == -1)
-            postElement.css('background-color', 'rgb(251,113,113)');
+        {
+            postElement.removeClass('green');
+            postElement.addClass('red');
+            postElement.find('.accept').removeClass('hiddenElement');
+            postElement.find('.deny').addClass('hiddenElement');
+        }
     });
 }

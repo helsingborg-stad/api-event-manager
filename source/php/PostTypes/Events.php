@@ -52,8 +52,15 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
         });
 
         $this->addTableColumn('acceptAndDeny', __('Accepted/Denied'), true, function($column, $postId) {
-            echo '<a href="#" class="accept button-primary" postid="' . $postId . '">' . __('Accept') . '</a>
-            <a href="#" class="deny button-primary" postid="' . $postId . '">' . __('Deny') . '</a>';
+            $metaAccepted = get_post_meta($postId, 'accepted');
+            $first = '';
+            $second = '';
+            if($metaAccepted[0] == 1)
+                $first = 'hiddenElement';
+            else if($metaAccepted[0] == -1)
+                $second = 'hiddenElement';
+            echo '<a href="#" class="accept button-primary ' . $first . '" postid="' . $postId . '">' . __('Accept') . '</a>
+            <a href="#" class="deny button-primary ' . $second . '" postid="' . $postId . '">' . __('Deny') . '</a>';
         });
 
         $this->addPostAction();

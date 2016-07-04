@@ -1,7 +1,11 @@
-.red {
+tbody .type-event.red {
     background-color: rgb(251,113,113)
 }
 
-.green {
+tbody .type-event.green {
     background-color: rgb(118,245,120)
+}
+
+.acceptAndDeny .hiddenElement {
+    display: none;
 }

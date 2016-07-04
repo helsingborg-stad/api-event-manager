@@ -1,4 +1,4 @@
-    {
+{
         "key": "group_57610ebadcee8",
         "title": "Event",
         "fields": [
@@ -180,7 +180,7 @@
                     },
                     {
                         "key": "field_57611277ef032",
-                        "label": "Content",
+                        "label": "Inneh\u00e5ll",
                         "name": "content_mode",
                         "type": "radio",
                         "instructions": "",
@@ -369,7 +369,7 @@
             },
             {
                 "key": "field_576116fd23a4f",
-                "label": "Contacts",
+                "label": "Kontakter",
                 "name": "contacts",
                 "type": "relationship",
                 "instructions": "",
@@ -528,6 +528,47 @@
                 "maxlength": "",
                 "readonly": 0,
                 "disabled": 0
+            },
+            {
+                "key": "field_577a326b71ba8",
+                "label": "Gallery",
+                "name": "gallery",
+                "type": "tab",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "placement": "top",
+                "endpoint": 0
+            },
+            {
+                "key": "field_577a312acd95d",
+                "label": "Gallery",
+                "name": "gallery",
+                "type": "gallery",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "min": "",
+                "max": "",
+                "preview_size": "thumbnail",
+                "library": "all",
+                "min_width": "",
+                "min_height": "",
+                "min_size": "",
+                "max_width": "",
+                "max_height": "",
+                "max_size": "",
+                "mime_types": ""
             }
         ],
         "location": [
