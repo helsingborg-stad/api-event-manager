@@ -36,7 +36,7 @@ class Filter
      */
     public function redirectToApi()
     {
-        if (!is_admin() && strpos($this->currentUrl(), rest_url()) === false && strpos($this->currentUrl(), "wp-admin") === false) {
+        if (!is_admin() && strpos($this->currentUrl(), rest_url()) === false && strpos($this->currentUrl(), "wp-admin") === false && strpos($this->currentUrl(), "wp-login") === false) {
             wp_redirect(rest_url());
             exit;
         }
