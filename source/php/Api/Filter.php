@@ -10,7 +10,7 @@ class Filter
 {
     public function __construct()
     {
-        add_filter('rest_url_prefix', array($this, 'apiBasePrefix'), 5000, 1);
+        //add_filter('rest_url_prefix', array($this, 'apiBasePrefix'), 5000, 1);
         add_filter('rest_endpoints', array($this, 'translateDefaultRoutes'));
         add_filter('rest_prepare_post', array($this, 'removeMetaData'), 10, 3);
     }
@@ -27,7 +27,7 @@ class Filter
     public function translateDefaultRoutes($routes)
     {
         $new_routes["/"] = $routes["/"];
-        //print_r($new_routes);
+        print_r($new_routes);
         return $new_routes;
     }
 
