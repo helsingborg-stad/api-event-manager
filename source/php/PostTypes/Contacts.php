@@ -42,6 +42,4 @@ class Contacts extends \HbgEventImporter\Entity\CustomPostType
         });
         $this->addTableColumn('date', __('Date'));
     }
-
-
 }
