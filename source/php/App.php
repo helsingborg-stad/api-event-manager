@@ -60,6 +60,7 @@ class App
 
         new Api\Filter();
         new Api\PostTypes();
+        new Api\Linking();
     }
 
     public function enqueuStyleSheets()

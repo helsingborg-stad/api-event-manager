@@ -36,7 +36,7 @@ class Filter
      */
     public function redirectToApi()
     {
-        if (!is_admin() && strpos($this->currentUrl(), rest_url()) === false && strpos($this->currentUrl(), "wp-admin") === false && strpos($this->currentUrl(), "wp-login") === false) {
+        if (!is_admin() && strpos($this->currentUrl(), rtrim(rest_url(),"/")) === false && $this->currentUrl() == rtrim(home_url(),"/")) {
             wp_redirect(rest_url());
             exit;
         }
@@ -53,6 +53,6 @@ class Filter
 
         $currentURL .= $_SERVER["REQUEST_URI"];
 
-        return $currentURL;
+        return rtrim($currentURL,"/");
     }
 }
