@@ -35,7 +35,7 @@ class PostTypes
     {
         global $wp_post_types;
 
-        $post_types = array('post','page','media');
+        $post_types = array('post','page','comments');
 
         if (is_array($post_types) && !empty($post_types)) {
             foreach ($post_types as $post_type) {

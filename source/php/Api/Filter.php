@@ -9,7 +9,7 @@ namespace HbgEventImporter\Api;
 class Filter
 {
 
-    private $removeFields = array('guid', 'date_gmt', 'modified_tz', 'modified_gmt', 'author', 'link', 'comment_status', 'ping_status', 'sticky', 'format');
+    private $removeFields;
 
     public function __construct()
     {
@@ -18,7 +18,7 @@ class Filter
 
         //Filters
         add_filter('rest_url_prefix', array($this, 'apiBasePrefix'), 5000, 1);
-        add_filter('rest_prepare_post', array($this, 'removeMetaData'), 10, 3);
+        add_filter('rest_prepare_post', array($this, 'removeResponseData'), 100000, 3);
     }
 
     /**
@@ -40,25 +40,6 @@ class Filter
             wp_redirect(rest_url());
             exit;
         }
-    }
-
-    /**
-     * Remove fields uncessesary to the applications
-     * @return std-object
-     */
-    public function removeMetaData($response, $post, $context)
-    {
-        if (is_wp_error($response)) {
-            return $response;
-        }
-
-        foreach ($this->removeFields as $field) {
-            if (isset($response->data[$field])) {
-                unset($response->data[$field]);
-            }
-        }
-
-        return $response;
     }
 
     public function currentUrl()
