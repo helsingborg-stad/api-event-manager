@@ -8,11 +8,18 @@ namespace HbgEventImporter\Api;
 
 class Filter
 {
+
+    private $removeFields;
+
     public function __construct()
     {
+        //Actions
+        add_action('init', array($this, 'redirectToApi'));
+
+        //Filters
         add_filter('rest_url_prefix', array($this, 'apiBasePrefix'), 5000, 1);
-        add_filter('rest_endpoints', array($this, 'translateDefaultRoutes'));
-        add_filter('rest_prepare_post', array($this, 'removeMetaData'), 10, 3);
+        //add_filter('rest_prepare_post', array($this, 'removeResponseData'), 100000, 3);
+
     }
 
     /**
@@ -24,24 +31,29 @@ class Filter
         return "json";
     }
 
-    public function translateDefaultRoutes($routes)
+    /**
+     * Force the usage of wordpress api
+     * @return void
+     */
+    public function redirectToApi()
     {
-        $new_routes["/"] = $routes["/"];
-        //print_r($new_routes);
-        return $new_routes;
+        if (!is_admin() && strpos($this->currentUrl(), rtrim(rest_url(),"/")) === false && $this->currentUrl() == rtrim(home_url(),"/")) {
+            wp_redirect(rest_url());
+            exit;
+        }
     }
 
-    public function removeMetaData($data, $post, $context)
+    public function currentUrl()
     {
-        if ($context !== 'view' || is_wp_error($data)) {
-            return $data;
+        $currentURL = (@$_SERVER["HTTPS"] == "on") ? "https://" : "http://";
+        $currentURL .= $_SERVER["SERVER_NAME"];
+
+        if ($_SERVER["SERVER_PORT"] != "80" && $_SERVER["SERVER_PORT"] != "443") {
+            $currentURL .= ":".$_SERVER["SERVER_PORT"];
         }
 
-        unset($data['date_gmt']);
-        unset($data['modified_tz']);
-        unset($data['modified_gmt']);
-        unset($data['author']);
+        $currentURL .= $_SERVER["REQUEST_URI"];
 
-        return $data;
+        return rtrim($currentURL,"/");
     }
 }

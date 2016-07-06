@@ -54,9 +54,16 @@ class App
 
         //Init functions
         new Taxonomy\EventCategories();
+
         new Admin\Options();
+        new Admin\UI();
+
         new Api\Filter();
         new Api\PostTypes();
+        new Api\Linking();
+        new Api\LocationFields();
+        new Api\ContactFields();
+        new Api\EventFields();
     }
 
     public function enqueuStyleSheets()
