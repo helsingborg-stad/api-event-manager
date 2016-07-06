@@ -207,23 +207,5 @@ class EventFields extends Fields
                 )
             )
         );
-
-        register_rest_field($this->postType,
-            '_linksa',
-            array(
-                'get_callback' => function(){
-                    return array('blogg' => array('bla'));
-                },
-                'update_callback' => array($this, 'objectUpdateCallBack'),
-                'schema' => array(
-                    'description' => 'dawdawdawField contianing array images in gallery',
-                    'type' => 'object',
-                    'context' => array('view', 'edit')
-                )
-            )
-        );
-
-
-
     }
 }

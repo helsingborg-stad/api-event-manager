@@ -13,6 +13,7 @@ class Linking
         add_filter('rest_prepare_event', array($this, 'addEventContacts'), 10, 3);
         add_filter('rest_prepare_event', array($this, 'addEventGallery'), 15, 3);
         add_filter('rest_prepare_event', array($this, 'addEventLocation'), 20, 3);
+        add_filter('rest_prepare_event', array($this, 'addEmbedLink'), 20, 3);
     }
 
     /**
@@ -66,6 +67,17 @@ class Linking
             }
         }
 
+        return $response;
+    }
+
+    /**
+     * Register link to embedded version of object
+     * @return  object
+     * @version 0.3.4
+     */
+    public function addEmbedLink($response, $post, $request)
+    {
+        $response->add_link('complete', rest_url('/wp/v2/event/' . $post->ID . '/?_embed'));
         return $response;
     }
 }
