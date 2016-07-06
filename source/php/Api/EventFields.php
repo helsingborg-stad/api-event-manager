@@ -61,22 +61,6 @@ class EventFields extends Fields
             )
         );
 
-        /* Location tab */
-
-        //Event location  - To do: Link
-        /*register_rest_field($this->postType,
-            'location',
-            array(
-                'get_callback' => array($this, 'objectGetCallBack'),
-                'update_callback' => array($this, 'objectUpdateCallBack'),
-                'schema' => array(
-                    'description' => 'Field contianing array with event location.',
-                    'type' => 'object',
-                    'context' => array('view', 'edit')
-                )
-            )
-        );*/
-
         /* Organizer tab */
 
         //Organizer name
@@ -134,20 +118,6 @@ class EventFields extends Fields
                 )
             )
         );
-
-        //Contacts - To do: Link
-        /*register_rest_field($this->postType,
-            'contacts',
-            array(
-                'get_callback' => array($this, 'objectGetCallBack'),
-                'update_callback' => array($this, 'objectUpdateCallBack'),
-                'schema' => array(
-                    'description' => 'Field contianing array with contact posts.',
-                    'type' => 'object',
-                    'context' => array('view', 'edit')
-                )
-            )
-        );*/
 
         //Link to booking services
         register_rest_field($this->postType,
@@ -233,18 +203,22 @@ class EventFields extends Fields
             )
         );
 
-        //Gallery - To do: Link
-        /*register_rest_field($this->postType,
-            'gallery',
+        register_rest_field($this->postType,
+            '_linksa',
             array(
-                'get_callback' => array($this, 'unformattedObjectGetCallBack'),
+                'get_callback' => function(){
+                    return array('blogg' => array('bla'));
+                },
                 'update_callback' => array($this, 'objectUpdateCallBack'),
                 'schema' => array(
-                    'description' => 'Field contianing array images in gallery',
+                    'description' => 'dawdawdawField contianing array images in gallery',
                     'type' => 'object',
                     'context' => array('view', 'edit')
                 )
             )
-        );*/
+        );
+
+
+
     }
 }
