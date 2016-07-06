@@ -53,6 +53,13 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
 
         $this->addTableColumn('acceptAndDeny', __('Accepted/Denied'), true, function($column, $postId) {
             $metaAccepted = get_post_meta($postId, 'accepted');
+            //var_dump($metaAccepted);
+            //die();
+            if(!isset($metaAccepted[0]))
+            {
+                add_post_meta($postId, 'accepted', 0);
+                $metaAccepted[0] = 0;
+            }
             $first = '';
             $second = '';
             if($metaAccepted[0] == 1)

@@ -32,12 +32,6 @@ class CBIS extends \HbgEventImporter\Parser
      */
     private $arenas = array();
 
-    /**
-     * Holds all titles of existing locations, contacts and events in wordpress
-     * @var array
-     */
-    private $levenshteinTitles = array('location' => array(), 'contact' => array(), 'event' => array());
-
     //CBIS attribute id's we use
     const ATTRIBUTE_NAME                        =   99;
     const ATTRIBUTE_INGRESS                     =   101;
@@ -113,49 +107,6 @@ class CBIS extends \HbgEventImporter\Parser
     const ATTRIBUTE_GLOBAL                      =   908; //This is just a bunch of booleans
     const ATTRIBUTE_WHITE_GUIDE                 =   982;
 
-
-    /**
-     * Collecting titles of existing events, locations and contacts
-     * @return void
-     */
-    public function collectDataForLevenshtein()
-    {
-        global $wpdb;
-        $types = array('event', 'location', 'contact');
-
-        foreach($types as $type) {
-            $allOfCertainType = $wpdb->get_results("SELECT ID,post_title FROM " . $wpdb->posts . " WHERE post_status = 'publish' AND post_type = '" . $type . "'");
-            foreach ($allOfCertainType as $post) {
-                $this->levenshteinTitles[$type][] = array('ID' => $post->ID, 'post_title' => $post->post_title);
-            }
-        }
-    }
-
-    /**
-     * See if title for post already exists or something that are really similar, using levenshtein
-     * @return boolean
-     */
-    public function checkIfPostExists($postType, $postTitle)
-    {
-        foreach($this->levenshteinTitles[$postType] as $title) {
-            if($this->isSimilarEnough($postTitle, $title['post_title'], $postType == 'location' ? 0 : 3))
-                return $title['ID'];
-        }
-        return null;
-    }
-
-    /**
-     * Check if the new title are similar enough with existing one
-     * @return boolean
-     */
-    public function isSimilarEnough($newTitle, $existingTitle, $threshold)
-    {
-        $steps = levenshtein($newTitle, $existingTitle);
-        if($steps <= $threshold)
-            return true;
-        return false;
-    }
-
     /**
      * Start the parsing!
      * @return void
@@ -175,7 +126,7 @@ class CBIS extends \HbgEventImporter\Parser
         }
 
         // Number of arenas to get, 200 to get all
-        $getLength = 200;
+        $getLength = 20;
 
         $requestParams = array(
             'apiKey' => $cbisKey,
@@ -212,12 +163,12 @@ class CBIS extends \HbgEventImporter\Parser
         $this->arenas = $this->client->ListAll($requestParams)->ListAllResult->Items->Product;
 
         foreach($this->arenas as $key => $arenaData) {
-            $this->saveArena($arenaData);
+            //$this->saveArena($arenaData);
         }
 
         // Adjust request parameters for getting products, 1500 itemsPerPage to get all events
         $requestParams['filter']['ProductType'] = "Product";
-        $requestParams['itemsPerPage'] = 1500;
+        $requestParams['itemsPerPage'] = 15;
 
         // Get and save the events
         $this->events = $this->client->ListAll($requestParams)->ListAllResult->Items->Product;
@@ -496,9 +447,8 @@ class CBIS extends \HbgEventImporter\Parser
     public function getAttributeValue($attributeId, $attributes, $default = null)
     {
         if (isset($attributes[$attributeId]) && !isset($attributes[$attributeId]->Data)) {
-            echo "Inside getValue\n";
+            echo "Inside getValue, this should not happen:\n";
             var_dump($attributes[$attributeId]);
-            die();
         }
 
         return isset($attributes[$attributeId]) ? $attributes[$attributeId]->Data : $default;

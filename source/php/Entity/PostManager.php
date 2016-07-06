@@ -124,7 +124,6 @@ abstract class PostManager
     public function save()
     {
         $this->beforeSave();
-        //return;
 
         // Arrays for holding save data
         $post = array();
@@ -156,23 +155,26 @@ abstract class PostManager
         $post['meta_input'] = $meta;
 
         // Check if duplicate by matching "_event_manager_uid" meta value
-        $duplicate = self::get(
-            1,
-            array(
-                'relation' => 'OR',
+        if(isset($meta['_event_manager_uid']))
+        {
+            $duplicate = self::get(
+                1,
                 array(
-                    'key' => '_event_manager_uid',
-                    'value' => $meta['_event_manager_uid'],
-                    'compare' => '='
-                )
-            ),
-            $this->post_type
-        );
+                    'relation' => 'OR',
+                    array(
+                        'key' => '_event_manager_uid',
+                        'value' => $meta['_event_manager_uid'],
+                        'compare' => '='
+                    )
+                ),
+                $this->post_type
+            );
+        }
 
         // Update if duplicate
         if (isset($duplicate->ID)) {
             $post['ID'] = $duplicate->ID;
-            $this->ID = wp_update_post($post);
+            //$this->ID = wp_update_post($post);
 
             $this->afterSave();
             return $this->ID;
