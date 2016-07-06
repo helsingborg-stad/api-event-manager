@@ -11,7 +11,7 @@ class Address
      */
     public static function gmapsGetAddressComponents($address)
     {
-        if (empty(get_option('options_google_geocode_api_key'))) {
+        if (empty(get_option('options_google_geocode_api_key')) || empty($address)) {
             return false;
         }
 
@@ -48,5 +48,14 @@ class Address
         }
 
         return false;
+    }
+
+    public static function gmapsGetPlaceDetails($placeId)
+    {
+        $url = 'https://maps.googleapis.com/maps/api/place/details/json?placeid=' . $placeId . '&key=' . get_option('options_google_geocode_api_key');
+        $result = json_decode(file_get_contents($url));
+        if (!$result)
+            return false;
+        return $result;
     }
 }

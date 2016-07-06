@@ -21,21 +21,25 @@ function changeAccepted(newValue, postId) {
     var postElement = jQuery('#post-' + postId);
 
     jQuery.post(ajaxurl, data, function(response) {
-        if(response == 1)
-        {
-            postElement.removeClass('red');
-            postElement.addClass('green');
-            postElement.find('.accept').addClass('hiddenElement');
-            postElement.find('.deny').removeClass('hiddenElement');
-        }
-        else if(response == -1)
-        {
-            postElement.removeClass('green');
-            postElement.addClass('red');
-            postElement.find('.accept').removeClass('hiddenElement');
-            postElement.find('.deny').addClass('hiddenElement');
-        }
+        toggleClasses(postElement, response);
     });
+}
+
+function toggleClasses(element, responseValue) {
+    if(responseValue == 1)
+    {
+        element.removeClass('red');
+        element.addClass('green');
+        element.find('.accept').addClass('hiddenElement');
+        element.find('.deny').removeClass('hiddenElement');
+    }
+    else if(responseValue == -1)
+    {
+        element.removeClass('green');
+        element.addClass('red');
+        element.find('.accept').removeClass('hiddenElement');
+        element.find('.deny').addClass('hiddenElement');
+    }
 }
 
 jQuery(document).ready(function ($) {
