@@ -237,7 +237,7 @@ class EventFields extends Fields
         register_rest_field($this->postType,
             'gallery',
             array(
-                'get_callback' => array($this, 'objectGetCallBack'),
+                'get_callback' => array($this, 'unformattedObjectGetCallBack'),
                 'update_callback' => array($this, 'objectUpdateCallBack'),
                 'schema' => array(
                     'description' => 'Field contianing array images in gallery',

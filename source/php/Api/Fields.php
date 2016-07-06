@@ -8,7 +8,7 @@ namespace HbgEventImporter\Api;
 
 class Fields
 {
-    public function numericGetCallBack($object, $field_name, $request)
+    public function numericGetCallBack($object, $field_name, $request, $formatted = true)
     {
         $return_value = self::getFieldGetMetaData($object, $field_name, $request);
 
@@ -19,7 +19,12 @@ class Fields
         }
     }
 
-    public function stringGetCallBack($object, $field_name, $request)
+    public function unformattedNumericGetCallBack($object, $field_name, $request)
+    {
+        return $this->numericGetCallBack($object, $field_name, $request, false);
+    }
+
+    public function stringGetCallBack($object, $field_name, $request, $formatted = true)
     {
         $return_value = self::getFieldGetMetaData($object, $field_name, $request);
 
@@ -30,7 +35,12 @@ class Fields
         }
     }
 
-    public function objectGetCallBack($object, $field_name, $request)
+    public function unformattedStringGetCallBack($object, $field_name, $request)
+    {
+        return $this->stringGetCallBack($object, $field_name, $request, false);
+    }
+
+    public function objectGetCallBack($object, $field_name, $request, $formatted = true)
     {
         $return_value = self::getFieldGetMetaData($object, $field_name, $request);
 
@@ -39,6 +49,11 @@ class Fields
         } else {
             return null;
         }
+    }
+
+    public function unformattedObjectGetCallBack($object, $field_name, $request)
+    {
+        return $this->objectGetCallBack($object, $field_name, $request, false);
     }
 
     public function stringUpdateCallBack($value, $object, $field_name)
@@ -65,9 +80,9 @@ class Fields
         return update_post_meta($object->ID, $field_name, $value);
     }
 
-    public static function getFieldGetMetaData($object, $field_name, $request)
+    public static function getFieldGetMetaData($object, $field_name, $request, $formatted = true)
     {
-        if (function_exists('get_field')) {
+        if (function_exists('get_field') && $formatted) {
             return get_field($field_name, $object['id']);
         } else {
             return get_post_meta($object['id'], $field_name, true);
