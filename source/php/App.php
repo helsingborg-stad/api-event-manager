@@ -61,6 +61,9 @@ class App
         new Api\Filter();
         new Api\PostTypes();
         new Api\Linking();
+        new Api\LocationFields();
+        new Api\ContactFields();
+        new Api\EventFields();
     }
 
     public function enqueuStyleSheets()

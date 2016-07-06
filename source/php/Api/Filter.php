@@ -20,9 +20,6 @@ class Filter
         add_filter('rest_url_prefix', array($this, 'apiBasePrefix'), 5000, 1);
         //add_filter('rest_prepare_post', array($this, 'removeResponseData'), 100000, 3);
 
-
-        add_action('rest_api_init', array($this,'apiAddFields'));
-
     }
 
     /**
@@ -58,28 +55,5 @@ class Filter
         $currentURL .= $_SERVER["REQUEST_URI"];
 
         return rtrim($currentURL,"/");
-    }
-
-    public function apiAddFields() {
-        register_rest_field('location',
-            'postal_code',
-            array(
-                'get_callback' => function($post, $field_name, $request){
-                    return get_post_meta($post->id, $field_name);
-                },
-                'update_callback' => function($value, $post, $field_name){
-                    global $post;
-                    if (!$value || !is_string($value)) {
-                        return;
-                    }
-                    return update_post_meta($post->ID, $field_name, strip_tags($value));
-                },
-                'schema' => array(
-                                    'description' => 'My special field',
-                                    'type' => 'string',
-                                    'context' => array('view', 'edit')
-                                )
-            )
-        );
     }
 }
