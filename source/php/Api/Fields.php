@@ -8,6 +8,11 @@ namespace HbgEventImporter\Api;
 
 class Fields
 {
+    /**
+     * Returning a numeric value formatted by acf if exist
+     * @return  int, float, null
+     * @version 0.3.0 creating consumer accessable meta values.
+     */
     public function numericGetCallBack($object, $field_name, $request, $formatted = true)
     {
         $return_value = self::getFieldGetMetaData($object, $field_name, $request);
@@ -19,11 +24,21 @@ class Fields
         }
     }
 
+    /**
+     * Returning a numeric value
+     * @return  int, float, null
+     * @version 0.3.0 creating consumer accessable meta values.
+     */
     public function unformattedNumericGetCallBack($object, $field_name, $request)
     {
         return $this->numericGetCallBack($object, $field_name, $request, false);
     }
 
+    /**
+     * Returning a string value formatted by acf if exist
+     * @return  string, null
+     * @version 0.3.0 creating consumer accessable meta values.
+     */
     public function stringGetCallBack($object, $field_name, $request, $formatted = true)
     {
         $return_value = self::getFieldGetMetaData($object, $field_name, $request);
@@ -35,11 +50,21 @@ class Fields
         }
     }
 
+    /**
+     * Returning a string value
+     * @return  string, null
+     * @version 0.3.0 creating consumer accessable meta values.
+     */
     public function unformattedStringGetCallBack($object, $field_name, $request)
     {
         return $this->stringGetCallBack($object, $field_name, $request, false);
     }
 
+    /**
+     * Returning a object formatted by acf if exist
+     * @return  object, null
+     * @version 0.3.0 creating consumer accessable meta values.
+     */
     public function objectGetCallBack($object, $field_name, $request, $formatted = true)
     {
         $return_value = self::getFieldGetMetaData($object, $field_name, $request);
@@ -51,11 +76,21 @@ class Fields
         }
     }
 
+    /**
+     * Returning a object
+     * @return  object, null
+     * @version 0.3.0 creating consumer accessable meta values.
+     */
     public function unformattedObjectGetCallBack($object, $field_name, $request)
     {
         return $this->objectGetCallBack($object, $field_name, $request, false);
     }
 
+    /**
+     * Update a string in database
+     * @return  bool
+     * @version 0.3.0 creating consumer accessable meta values.
+     */
     public function stringUpdateCallBack($value, $object, $field_name)
     {
         if (! $value || ! is_string($value)) {
@@ -64,6 +99,11 @@ class Fields
         return update_post_meta($object->ID, $field_name, strip_tags($value));
     }
 
+    /**
+     * Update a int in database
+     * @return  bool
+     * @version 0.3.0 creating consumer accessable meta values.
+     */
     public function numericUpdateCallBack($value, $object, $field_name)
     {
         if (! $value || ! is_numeric($value)) {
@@ -72,6 +112,11 @@ class Fields
         return update_post_meta($object->ID, $field_name, $value);
     }
 
+    /**
+     * Update a json-object in database
+     * @return  bool
+     * @version 0.3.0 creating consumer accessable meta values.
+     */
     public function objectUpdateCallBack($value, $object, $field_name)
     {
         if (! $value || ! is_object($value) && ! is_array($value)) {
@@ -80,6 +125,11 @@ class Fields
         return update_post_meta($object->ID, $field_name, $value);
     }
 
+    /**
+     * Returning a formatted or unformatted meta field from database.
+     * @return  int, string, object, null, bool
+     * @version 0.3.0 creating consumer accessable meta values.
+     */
     public static function getFieldGetMetaData($object, $field_name, $request, $formatted = true)
     {
         if (function_exists('get_field') && $formatted) {

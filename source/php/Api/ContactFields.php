@@ -16,6 +16,11 @@ class ContactFields extends Fields
         add_action('rest_api_init', array($this, 'registerRestFields'));
     }
 
+    /**
+     * Register rest fields to consumer api
+     * @return  void
+     * @version 0.3.2 creating consumer accessable meta values.
+     */
     public static function registerRestFields()
     {
 

@@ -15,6 +15,11 @@ class Linking
         add_filter('rest_prepare_event', array($this, 'addEventLocation'), 20, 3);
     }
 
+    /**
+     * Register link to contact cpt, embeddable
+     * @return  object
+     * @version 0.3.2
+     */
     public function addEventContacts($response, $post, $request)
     {
         $contact = get_post_meta($post->ID, 'contacts', true);
@@ -26,9 +31,13 @@ class Linking
         }
 
         return $response;
-
     }
 
+    /**
+     * Register link to gallery items / media links, embeddable
+     * @return  object
+     * @version 0.3.2
+     */
     public function addEventGallery($response, $post, $request)
     {
         $gallery = get_post_meta($post->ID, 'gallery', true);
@@ -40,9 +49,13 @@ class Linking
         }
 
         return $response;
-
     }
 
+    /**
+     * Register link to location cpt, embeddable
+     * @return  object
+     * @version 0.3.2
+     */
     public function addEventLocation($response, $post, $request)
     {
         $location = get_post_meta($post->ID, 'location', true);
@@ -54,6 +67,5 @@ class Linking
         }
 
         return $response;
-
     }
 }
