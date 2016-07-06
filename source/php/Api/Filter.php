@@ -18,7 +18,6 @@ class Filter
 
         //Filters
         add_filter('rest_url_prefix', array($this, 'apiBasePrefix'), 5000, 1);
-        //add_filter('rest_prepare_post', array($this, 'removeResponseData'), 100000, 3);
 
     }
 
