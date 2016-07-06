@@ -38,7 +38,7 @@ class ContactFields extends Fields
             )
         );
 
-        //Name
+        //Phone number
         register_rest_field($this->postType,
             'phone_number',
             array(
@@ -52,7 +52,7 @@ class ContactFields extends Fields
             )
         );
 
-        //Name
+        //Email
         register_rest_field($this->postType,
             'email',
             array(
