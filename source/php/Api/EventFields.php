@@ -63,8 +63,8 @@ class EventFields extends Fields
 
         /* Location tab */
 
-        //Event location TODO: Clean + metadata
-        register_rest_field($this->postType,
+        //Event location  - To do: Link
+        /*register_rest_field($this->postType,
             'location',
             array(
                 'get_callback' => array($this, 'objectGetCallBack'),
@@ -75,7 +75,7 @@ class EventFields extends Fields
                     'context' => array('view', 'edit')
                 )
             )
-        );
+        );*/
 
         /* Organizer tab */
 
@@ -135,8 +135,8 @@ class EventFields extends Fields
             )
         );
 
-        //Contacts TODO: Clean + metadata
-        register_rest_field($this->postType,
+        //Contacts - To do: Link
+        /*register_rest_field($this->postType,
             'contacts',
             array(
                 'get_callback' => array($this, 'objectGetCallBack'),
@@ -147,7 +147,7 @@ class EventFields extends Fields
                     'context' => array('view', 'edit')
                 )
             )
-        );
+        );*/
 
         //Link to booking services
         register_rest_field($this->postType,
@@ -233,8 +233,8 @@ class EventFields extends Fields
             )
         );
 
-        //Gallery
-        register_rest_field($this->postType,
+        //Gallery - To do: Link
+        /*register_rest_field($this->postType,
             'gallery',
             array(
                 'get_callback' => array($this, 'unformattedObjectGetCallBack'),
@@ -245,6 +245,6 @@ class EventFields extends Fields
                     'context' => array('view', 'edit')
                 )
             )
-        );
+        );*/
     }
 }
