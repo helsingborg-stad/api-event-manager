@@ -12,7 +12,7 @@ class Location extends \HbgEventImporter\Entity\PostManager
     {
         $this->post_title = !is_string($this->post_title) ? $this->post_title : DataCleaner::string($this->post_title);
         $this->street_address = !is_string($this->street_address) ? $this->street_address : DataCleaner::string($this->street_address);
-        $this->postal_code = !is_string($this->postal_code) ? $this->postal_code : DataCleaner::string($this->postal_code);
+        $this->postal_code = DataCleaner::number($this->postal_code);
         $this->city = !is_string($this->city) ? $this->city : DataCleaner::string($this->city);
         $this->municipality = !is_string($this->municipality) ? $this->municipality : DataCleaner::string($this->municipality);
         $this->country = !is_string($this->country) ? $this->country : DataCleaner::string($this->country);
@@ -25,16 +25,12 @@ class Location extends \HbgEventImporter\Entity\PostManager
     {
         if(!isset($this->_event_manager_uid))
         {
-            $res = Helper\Address::gmapsGetAddressComponents($this->post_title . ' ' . $this->city != null ? $this->city : '');
+            $wholeAddress = $this->post_title;
+            $wholeAddress .= $this->city != null ? ', ' . $this->city : '';
 
-            if (!isset($res->geometry->location)) {
-                return;
-            }
+            $res = Helper\Address::gmapsGetAddressComponents($wholeAddress);
 
-            echo "Res: \n";
-            var_dump($res);
-
-            if (!isset($res->geometry->location)) {
+            if (!isset($res->geometry->location) || !is_object($res)) {
                 wp_delete_post($this->ID, true);
                 return;
             }
@@ -45,21 +41,34 @@ class Location extends \HbgEventImporter\Entity\PostManager
                 'lng' => $res->geometry->location->lng
             ));
 
-            echo "ID: " . $this->ID . "\n";
+            $street = '';
+            $streetNumber = '';
             foreach($res->address_components as $key => $component) {
+                if($component->types[0] == 'postal_code')
+                {
+                    //echo "Updating postal_code belonging to post with title: " . $this->post_title . ", data: " . DataCleaner::number($component->long_name) . "\n";
+                    update_post_meta($this->ID, 'postal_code', DataCleaner::number($component->long_name));
+                }
                 if($component->types[0] == 'country')
                 {
-                    echo "Country found: " . $component->long_name . "\n";
+                    //echo "Updating country belonging to post with title: " . $this->post_title . ", data: " . $component->long_name . "\n";
                     update_post_meta($this->ID, 'country', $component->long_name);
                 }
-
-                /*
-                update_post_meta($this->ID, 'street_address', $res->address_components[1]->long_name);
-                update_post_meta($this->ID, 'postal_code', $res->address_components[5]->long_name);
-                */
+                if($component->types[0] == 'route')
+                    $street = $component->long_name;
+                if($component->types[0] == 'street_number')
+                    $streetNumber = $component->long_name;
             }
 
-            echo "End of component stuff!\n";
+            if(!empty($street))
+            {
+                if(!empty($streetNumber))
+                    $street .= ' ' . $streetNumber;
+                //echo "Updating street_address belonging to post with title: " . $this->post_title . ", data: " . $street . "\n";
+                update_post_meta($this->ID, 'street_address', $street);
+            }
+
+            //echo "End of component stuff!\n";
 
             update_post_meta($this->ID, 'formatted_address', $res->formatted_address);
             update_post_meta($this->ID, 'latitude', $res->geometry->location->lat);

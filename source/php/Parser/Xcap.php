@@ -24,57 +24,33 @@ class Xcap extends \HbgEventImporter\Parser
 
         $this->collectDataForLevenshtein();
 
-        $allKeys = array();
-
-        //var_dump($events);
-        //die();
-        $index = 0;
-        foreach ($events as $event) {
-            if($index > 50)
-                break;
-            ++$index;
-            /*foreach($event as $key => $value) {
-                if(isset($allKeys[$key]))
-                    ++$allKeys[$key];
-                else
-                    $allKeys[$key] = 0;
-            }*/
-
+        foreach ($events as $key => $event) {
+            //if($key >= 50)
+                //break;
             if (!isset($event->uid) || empty($event->uid)) {
                 continue;
             }
 
             $this->saveEvent($event);
-            continue;
-            //var_dump($duration);
-            die();
-            //
-
-            if ($name === null || is_object($name)) {
-                continue;
-            }
-
-            // Check if the event passes the filter
-            if (!$this->filter($categories)) {
-                continue;
-            }
         }
-        die();
+        //die('The end!');
     }
 
     public function saveEvent($eventData)
     {
-        global $wpdb;
         $address = isset($eventData->{'x-xcap-address'}) && !empty($eventData->{'x-xcap-address'}) ? $eventData->{'x-xcap-address'} : null;
         $alternateName = isset($eventData->uid) && !empty($eventData->uid) ? $eventData->uid : null;
-        $categories = isset($eventData->categories) && !empty($eventData->categories) ? explode(',', $eventData->categories) : null;
+        $categories = isset($eventData->categories) && !empty($eventData->categories) ? array_map('trim', explode(',', $eventData->categories)) : null;
         $description = isset($eventData->description) && !empty($eventData->description) ? $eventData->description : null;
         $doorTime = isset($eventData->dtstart) && !empty($eventData->dtstart) ? $eventData->dtstart : null;
+        $doorTime = $this->formatDate($doorTime);
         $endDate = isset($eventData->dtend) && !empty($eventData->dtend) ? $eventData->dtend : null;
+        $endDate = $this->formatDate($endDate);
         $image = isset($eventData->{'x-xcap-imageid'}) && !empty($eventData->{'x-xcap-imageid'}) ? $eventData->{'x-xcap-imageid'} : null;
         $location = isset($eventData->location) && !empty($eventData->location) ? $eventData->location : null;
         $name = isset($eventData->summary) && !empty($eventData->summary) ? $eventData->summary : null;
         $startDate = isset($eventData->dtstart) && !empty($eventData->dtstart) ? $eventData->dtstart : null;
+        $startDate = $this->formatDate($startDate);
         $ticketUrl = isset($eventData->{'x-xcap-ticketlink'}) && !empty($eventData->{'x-xcap-ticketlink'}) ? $eventData->{'x-xcap-ticketlink'} : null;
 
         if(!is_string($name))
@@ -94,50 +70,11 @@ class Xcap extends \HbgEventImporter\Parser
         $contactId = null;
         $locationId = null;
 
+        $derp = false;
+
         // $eventData->{'x-xcap-address'} can return an object instead of a string, then we just want to ignore the location
         if(is_string($address))
         {
-            /*$res = Address::gmapsGetAddressComponents($address . ' ' . $location != null ? $location : '');
-
-            if (!isset($res->geometry->location)) {
-                echo "No geometry location:\n";
-                return;
-            }
-
-            update_post_meta($this->ID, 'map', array(
-                'address' => $res->formatted_address,
-                'lat' => $res->geometry->location->lat,
-                'lng' => $res->geometry->location->lng
-            ));
-
-            update_post_meta($this->ID, 'formatted_address', $res->formatted_address);*/
-
-            //var_dump($res);
-            //die();
-            //
-            // Checking if there is a contact already with this title or similar enough
-            /*$contactId = $this->checkIfPostExists('contact', $address);
-
-            if ($contactId == null) {
-                // Save contact
-                $contact = new Contact(
-                    array(
-                        'post_title'            =>  $address
-                    ),
-                    array(
-                        'name'                  =>  null,
-                        'email'                 =>  null,
-                        'phone_number'          =>  null,
-                        '_event_manager_uid'    =>  null
-                    )
-                );
-
-                $contactId = $contact->save();
-
-                $this->levenshteinTitles['contact'][] = array('ID' => $contactId, 'post_title' => $address);
-            }
-            return;*/
-
             // Checking if there is a location already with this title or similar enough
             $locationId = $this->checkIfPostExists('location', $address);
             if($locationId == null)
@@ -161,6 +98,7 @@ class Xcap extends \HbgEventImporter\Parser
                 );
 
                 $locationId = $location->save();
+                //wp_delete_post($locationId, true);
 
                 $this->levenshteinTitles['location'][] = array('ID' => $locationId, 'post_title' => $address);
             }
@@ -168,26 +106,15 @@ class Xcap extends \HbgEventImporter\Parser
                 echo "Location already exists: " . $locationId . "\n";
         }
 
-        return;
-
-        // Remove when done
-        $stuff = array(
-                'address'       => $address,
-                'alternateName' => $alternateName,
-                'categories'    => $categories,
-                'description'   => $description,
-                'doorTime'      => $this->formatDate($doorTime),
-                'duration'      => 0,
-                'endDate'       => $this->formatDate($endDate),
-                'image'         => $image,
-                'location'      => $location,
-                'name'          => $name,
-                'startDate'     => $this->formatDate($startDate),
-                'ticketUrl'     => $ticketUrl
-            );
+        // Check if the event passes the filter
+        if (!$this->filter($categories)) {
+            echo "Something went wrong with the categories:\n";
+            var_dump($categories);
+            var_dump($eventData);
+            die('DIE!');
+        }
 
         $eventId = $this->checkIfPostExists('event', $newPostTitle);
-        $eventId = null;
         if ($eventId == null) {
             // Creates the event object
             $event = new Event(
@@ -205,13 +132,13 @@ class Xcap extends \HbgEventImporter\Parser
                     'event_link'            => null,
                     'categories'            => $categories,
                     'occasions'             => $occasions,
-                    'location'              => (array) $locationId,
-                    'organizer'             => '',
+                    'location'              => $locationId != null ? (array) $locationId : null,
+                    'organizer'             => null,
                     'organizer_phone'       => null,
                     'organizer_email'       => null,
                     'coorganizer'           => null,
                     'contacts'              => !is_null($contactId) ? (array) $contactId : null,
-                    'booking_link'          => $ticketUrl,
+                    'booking_link'          => is_string($ticketUrl) ? $ticketUrl : null,
                     'booking_phone'         => null,
                     'age_restriction'       => null,
                     'price_information'     => null,
@@ -221,7 +148,7 @@ class Xcap extends \HbgEventImporter\Parser
                 )
             );
 
-            //$eventId = $event->save();
+            $eventId = $event->save();
 
             $this->levenshteinTitles['event'][] = array('ID' => $eventId, 'post_title' => $newPostTitle);
 
@@ -255,21 +182,14 @@ class Xcap extends \HbgEventImporter\Parser
     }
 
     /**
-     * Get how long the event is in seconds
-     * @param  string $startDate Date event starts
-     * @param  string $endDate   Date event ends
-     * @return string  Example return 3600; (1 hour)
+     * Edit the date format we get from xcap api
+     * @param  string $date example 20160105T141429Z
+     * @return string example
      */
-    public function getSecondsFromDates($startDate, $endDate)
-    {
-        $startParts = explode("T", $startDate);
-        $endParts = explode("T", $endDate);
-        $totalSeconds = (strtotime($endParts[0] . '-' . substr($endParts[1], 0, 4)) - strtotime($startParts[0] . '-' . substr($startParts[1], 0, 4)));
-        return $totalSeconds;
-    }
-
     public function formatDate($date)
     {
+        if($date == null)
+            return $date;
         // Format the date string corretly
         $dateParts = explode("T", $date);
         $dateString = substr($dateParts[0], 0, 4) . '-' . substr($dateParts[0], 4, 2) . '-' . substr($dateParts[0], 6, 2);
@@ -278,10 +198,10 @@ class Xcap extends \HbgEventImporter\Parser
         $dateString = $dateString . ' ' . $timeString;
 
         // Create UTC date object
-        $date = new \DateTime(date('Y-m-d H:i', strtotime($dateString)));
+        $returnDate = new \DateTime(date('Y-m-d H:i', strtotime($dateString)));
         $timeZone = new \DateTimeZone('Europe/Stockholm');
-        $date->setTimezone($timeZone);
+        $returnDate->setTimezone($timeZone);
 
-        return str_replace(' ', 'T', $date->format('Y-m-d H:i:s'));
+        return str_replace(' ', 'T', $returnDate->format('Y-m-d H:i:s'));
     }
 }

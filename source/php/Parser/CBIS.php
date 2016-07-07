@@ -126,7 +126,7 @@ class CBIS extends \HbgEventImporter\Parser
         }
 
         // Number of arenas to get, 200 to get all
-        $getLength = 20;
+        $getLength = 200;
 
         $requestParams = array(
             'apiKey' => $cbisKey,
@@ -163,12 +163,12 @@ class CBIS extends \HbgEventImporter\Parser
         $this->arenas = $this->client->ListAll($requestParams)->ListAllResult->Items->Product;
 
         foreach($this->arenas as $key => $arenaData) {
-            //$this->saveArena($arenaData);
+            $this->saveArena($arenaData);
         }
 
         // Adjust request parameters for getting products, 1500 itemsPerPage to get all events
         $requestParams['filter']['ProductType'] = "Product";
-        $requestParams['itemsPerPage'] = 15;
+        $requestParams['itemsPerPage'] = 1500;
 
         // Get and save the events
         $this->events = $this->client->ListAll($requestParams)->ListAllResult->Items->Product;
@@ -176,6 +176,8 @@ class CBIS extends \HbgEventImporter\Parser
         foreach ($this->events as $eventData) {
             $this->saveEvent($eventData);
         }
+
+        //die();
 
         return true;
     }
@@ -191,7 +193,6 @@ class CBIS extends \HbgEventImporter\Parser
 
         $dataHolder = $eventData->Attributes->AttributeData;
 
-        if(!is_array($dataHolder))
         if (!is_array($dataHolder)) {
             $dataHolder = array($dataHolder);
         }
@@ -212,14 +213,12 @@ class CBIS extends \HbgEventImporter\Parser
     {
         $categories = array();
 
-        if (!is_null($eventData->Categories)) {
-            if (is_array($eventData->Categories->Category)) {
-                foreach ($eventData->Categories->Category as $category) {
-                    $categories[] = $category->Name;
-                }
-            } else {
-                $categories[] = $eventData->Categories->Category->Name;
+        if (is_array($eventData->Categories->Category)) {
+            foreach ($eventData->Categories->Category as $category) {
+                $categories[] = $category->Name;
             }
+        } else {
+            $categories[] = $eventData->Categories->Category->Name;
         }
 
         $categories = array_map('trim', $categories);
@@ -292,6 +291,9 @@ class CBIS extends \HbgEventImporter\Parser
         $locationId = $this->checkIfPostExists('location', $newPostTitle);
         if($locationId == null)
         {
+            $country = $this->getAttributeValue(self::ATTRIBUTE_COUNTRY, $attributes);
+            if(is_numeric($country))
+                $country = "Sweden";
             // Create the location
             $location = new Location(
                 array(
@@ -302,7 +304,7 @@ class CBIS extends \HbgEventImporter\Parser
                     'postal_code'        => $this->getAttributeValue(self::ATTRIBUTE_POSTCODE, $attributes),
                     'city'               => $this->getAttributeValue(self::ATTRIBUTE_POSTAL_ADDRESS, $attributes),
                     'municipality'       => $this->getAttributeValue(self::ATTRIBUTE_MUNICIPALITY, $attributes),
-                    'country'            => $this->getAttributeValue(self::ATTRIBUTE_COUNTRY, $attributes),
+                    'country'            => $country,
                     'latitude'           => $this->getAttributeValue(self::ATTRIBUTE_LATITUDE, $attributes),
                     'longitude'          => $this->getAttributeValue(self::ATTRIBUTE_LONGITUDE, $attributes),
 
@@ -311,8 +313,11 @@ class CBIS extends \HbgEventImporter\Parser
             );
             $locationId = $location->save();
 
+            //echo "New location : " . $newPostTitle . "\n";
             $this->levenshteinTitles['location'][] = array('ID' => $locationId, 'post_title' => $newPostTitle);
         }
+        //else
+            //echo "Location already exists: " . $newPostTitle . "\n";
     }
 
     /**
@@ -330,6 +335,11 @@ class CBIS extends \HbgEventImporter\Parser
 
         $locationId = $this->checkIfPostExists('location', $newPostTitle);
         if ($locationId == null) {
+
+            $country = $this->getAttributeValue(self::ATTRIBUTE_COUNTRY, $attributes);
+            if(is_numeric($country))
+                $country = "Sweden";
+
             // Create the location
             $location = new Location(
                 array(
@@ -340,7 +350,7 @@ class CBIS extends \HbgEventImporter\Parser
                     'postal_code'           =>  $this->getAttributeValue(self::ATTRIBUTE_POSTCODE, $attributes),
                     'city'                  =>  $eventData->GeoNode->Name,
                     'municipality'          =>  $this->getAttributeValue(self::ATTRIBUTE_MUNICIPALITY, $attributes),
-                    'country'               =>  $this->getAttributeValue(self::ATTRIBUTE_COUNTRY, $attributes),
+                    'country'               =>  $country,
                     'latitude'              =>  $this->getAttributeValue(self::ATTRIBUTE_LATITUDE, $attributes),
                     'longitude'             =>  $this->getAttributeValue(self::ATTRIBUTE_LONGITUDE, $attributes),
 
@@ -350,8 +360,12 @@ class CBIS extends \HbgEventImporter\Parser
 
             $locationId = $location->save();
 
+            //echo "New location : " . $newPostTitle . "\n";
+
             $this->levenshteinTitles['location'][] = array('ID' => $locationId, 'post_title' => $newPostTitle);
         }
+        //else
+            //echo "Location already exists: " . $newPostTitle . "\n";
 
         $newPostTitle = $this->getAttributeValue(self::ATTRIBUTE_CONTACT_PERSON, $attributes) != null ? $this->getAttributeValue(self::ATTRIBUTE_CONTACT_PERSON, $attributes) : '';
 
@@ -382,8 +396,12 @@ class CBIS extends \HbgEventImporter\Parser
 
                 $contactId = $contact->save();
 
+                //echo "New contact : " . $newPostTitle . "\n";
+
                 $this->levenshteinTitles['contact'][] = array('ID' => $contactId, 'post_title' => $newPostTitle);
             }
+            //else
+                //echo "Contact already exists: " . $newPostTitle . "\n";
         }
 
         $postContent = $this->getAttributeValue(self::ATTRIBUTE_DESCRIPTION, $attributes);
@@ -429,12 +447,16 @@ class CBIS extends \HbgEventImporter\Parser
 
             $eventId = $event->save();
 
+            //echo "New event : " . $newPostTitle . "\n";
+
             $this->levenshteinTitles['event'][] = array('ID' => $eventId, 'post_title' => $newPostTitle);
 
             if (!is_null($event->image)) {
                 $event->setFeaturedImageFromUrl($event->image);
             }
         }
+        //else
+            //echo "Event already exists: " . $newPostTitle . "\n";
     }
 
     /**

@@ -26,6 +26,11 @@ class DataCleaner
         return $phoneUtil->format($number, $numberFormat);
     }
 
+    public static function number($number)
+    {
+        return preg_replace('/\D/', '', $number);
+    }
+
     public static function email($email)
     {
         if(is_null($email) || preg_match("/\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b/i", $email) != 1)

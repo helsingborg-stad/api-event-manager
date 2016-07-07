@@ -174,7 +174,7 @@ abstract class PostManager
         // Update if duplicate
         if (isset($duplicate->ID)) {
             $post['ID'] = $duplicate->ID;
-            //$this->ID = wp_update_post($post);
+            $this->ID = wp_update_post($post);
 
             $this->afterSave();
             return $this->ID;
