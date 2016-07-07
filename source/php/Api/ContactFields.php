@@ -16,6 +16,11 @@ class ContactFields extends Fields
         add_action('rest_api_init', array($this, 'registerRestFields'));
     }
 
+    /**
+     * Register rest fields to consumer api
+     * @return  void
+     * @version 0.3.2 creating consumer accessable meta values.
+     */
     public static function registerRestFields()
     {
 
@@ -33,7 +38,7 @@ class ContactFields extends Fields
             )
         );
 
-        //Name
+        //Phone number
         register_rest_field($this->postType,
             'phone_number',
             array(
@@ -47,7 +52,7 @@ class ContactFields extends Fields
             )
         );
 
-        //Name
+        //Email
         register_rest_field($this->postType,
             'email',
             array(

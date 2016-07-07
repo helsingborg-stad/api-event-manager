@@ -18,8 +18,10 @@ class Filter
 
         //Filters
         add_filter('rest_url_prefix', array($this, 'apiBasePrefix'), 5000, 1);
-        //add_filter('rest_prepare_post', array($this, 'removeResponseData'), 100000, 3);
 
+        add_filter('rest_prepare_event', array($this, 'removeResponseKeys'), 5000, 3);
+        add_filter('rest_prepare_location', array($this, 'removeResponseKeys'), 5000, 3);
+        add_filter('rest_prepare_contact', array($this, 'removeResponseKeys'), 5000, 3);
     }
 
     /**
@@ -37,10 +39,35 @@ class Filter
      */
     public function redirectToApi()
     {
-        if (!is_admin() && strpos($this->currentUrl(), rtrim(rest_url(),"/")) === false && $this->currentUrl() == rtrim(home_url(),"/")) {
+        if (!is_admin() && strpos($this->currentUrl(), rtrim(rest_url(), "/")) === false && $this->currentUrl() == rtrim(home_url(), "/")) {
             wp_redirect(rest_url());
             exit;
         }
+    }
+
+    public function removeResponseKeys($response, $post, $request)
+    {
+
+        //Common keys
+        $keys = array('author','acf','guid','type','link');
+
+        //Only for location
+        if ($post->post_type == "location") {
+            $keys[] = "content";
+        }
+
+        //Only for contact
+        if ($post->post_type == "contact") {
+            $keys[] = "content";
+        }
+
+        //Do filtering
+        $response->data = array_filter($response->data, function ($k) use ($keys) {
+            return !in_array($k, $keys, true);
+        }, ARRAY_FILTER_USE_KEY);
+
+        //Return santizied response
+        return $response;
     }
 
     public function currentUrl()
@@ -54,6 +81,6 @@ class Filter
 
         $currentURL .= $_SERVER["REQUEST_URI"];
 
-        return rtrim($currentURL,"/");
+        return rtrim($currentURL, "/");
     }
 }
