@@ -14,28 +14,31 @@ class Xcap extends \HbgEventImporter\Parser
         parent::__construct($url);
     }
 
+    /**
+     * Start the parsing!
+     * @return void
+     */
     public function start()
     {
         $xml = simplexml_load_file($this->url);
         $xml = json_decode(json_encode($xml));
         $events = $xml->iCal->vevent;
 
-        $index = 0;
-
         $this->collectDataForLevenshtein();
 
         foreach ($events as $key => $event) {
-            //if($key >= 50)
-                //break;
             if (!isset($event->uid) || empty($event->uid)) {
                 continue;
             }
-
             $this->saveEvent($event);
         }
-        //die('The end!');
     }
 
+    /**
+     * Cleans a single events data into correct format and saves it to db
+     * @param  object $eventData  Event data
+     * @return void
+     */
     public function saveEvent($eventData)
     {
         $address = isset($eventData->{'x-xcap-address'}) && !empty($eventData->{'x-xcap-address'}) ? $eventData->{'x-xcap-address'} : null;
@@ -56,8 +59,7 @@ class Xcap extends \HbgEventImporter\Parser
         if(!is_string($name))
             return;
         $occasions = array();
-        if($startDate != null && $endDate != null && $doorTime != null)
-        {
+        if($startDate != null && $endDate != null && $doorTime != null) {
             $occasions[] = array(
                 'start_date' => $startDate,
                 'end_date' => $endDate,
@@ -73,12 +75,10 @@ class Xcap extends \HbgEventImporter\Parser
         $derp = false;
 
         // $eventData->{'x-xcap-address'} can return an object instead of a string, then we just want to ignore the location
-        if(is_string($address))
-        {
+        if(is_string($address)) {
             // Checking if there is a location already with this title or similar enough
             $locationId = $this->checkIfPostExists('location', $address);
-            if($locationId == null)
-            {
+            if($locationId == null) {
                 // Create the location
                 $location = new Location(
                     array(
@@ -98,12 +98,9 @@ class Xcap extends \HbgEventImporter\Parser
                 );
 
                 $locationId = $location->save();
-                //wp_delete_post($locationId, true);
 
                 $this->levenshteinTitles['location'][] = array('ID' => $locationId, 'post_title' => $address);
             }
-            //else
-                //echo "Location already exists: " . $locationId . "\n";
         }
 
         // Check if the event passes the filter
@@ -111,7 +108,6 @@ class Xcap extends \HbgEventImporter\Parser
             echo "Something went wrong with the categories:\n";
             var_dump($categories);
             var_dump($eventData);
-            die('DIE!');
         }
 
         $eventId = $this->checkIfPostExists('event', $newPostTitle);

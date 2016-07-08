@@ -110,6 +110,11 @@ abstract class PostManager
         return $posts;
     }
 
+    /**
+     * Remove all values that are empty, except the value 0
+     * @param  $metaValue
+     * @return $metaValue
+     */
     public function removeEmpty($metaValue)
     {
         if(is_array($metaValue))
@@ -150,13 +155,12 @@ abstract class PostManager
         // Do not include null values in meta
         $meta = array_filter($meta, array($this, 'removeEmpty'));
 
-        $post['post_type'] = $this->post_type;
         $post['post_status'] = $this->post_status;
+        $post['post_type'] = $this->post_type;
         $post['meta_input'] = $meta;
 
         // Check if duplicate by matching "_event_manager_uid" meta value
-        if(isset($meta['_event_manager_uid']))
-        {
+        if(isset($meta['_event_manager_uid'])) {
             $duplicate = self::get(
                 1,
                 array(

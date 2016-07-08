@@ -8,6 +8,10 @@ class Location extends \HbgEventImporter\Entity\PostManager
 {
     public $post_type = 'location';
 
+    /**
+     * Stuff to do before save
+     * @return void
+     */
     public function beforeSave()
     {
         $this->post_title = !is_string($this->post_title) ? $this->post_title : DataCleaner::string($this->post_title);
@@ -21,6 +25,10 @@ class Location extends \HbgEventImporter\Entity\PostManager
         $this->_event_manager_uid = !is_string($this->_event_manager_uid) ? $this->_event_manager_uid : DataCleaner::string($this->_event_manager_uid);
     }
 
+    /**
+     * Stuff to do after save
+     * @return void
+     */
     public function afterSave()
     {
         if(!isset($this->_event_manager_uid))
@@ -45,30 +53,20 @@ class Location extends \HbgEventImporter\Entity\PostManager
             $streetNumber = '';
             foreach($res->address_components as $key => $component) {
                 if($component->types[0] == 'postal_code')
-                {
-                    //echo "Updating postal_code belonging to post with title: " . $this->post_title . ", data: " . DataCleaner::number($component->long_name) . "\n";
                     update_post_meta($this->ID, 'postal_code', DataCleaner::number($component->long_name));
-                }
                 if($component->types[0] == 'country')
-                {
-                    //echo "Updating country belonging to post with title: " . $this->post_title . ", data: " . $component->long_name . "\n";
                     update_post_meta($this->ID, 'country', $component->long_name);
-                }
                 if($component->types[0] == 'route')
                     $street = $component->long_name;
                 if($component->types[0] == 'street_number')
                     $streetNumber = $component->long_name;
             }
 
-            if(!empty($street))
-            {
+            if(!empty($street)) {
                 if(!empty($streetNumber))
                     $street .= ' ' . $streetNumber;
-                //echo "Updating street_address belonging to post with title: " . $this->post_title . ", data: " . $street . "\n";
                 update_post_meta($this->ID, 'street_address', $street);
             }
-
-            //echo "End of component stuff!\n";
 
             update_post_meta($this->ID, 'formatted_address', $res->formatted_address);
             update_post_meta($this->ID, 'latitude', $res->geometry->location->lat);

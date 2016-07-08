@@ -67,15 +67,35 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
             echo '<a href="#" class="accept button-primary ' . $first . '" postid="' . $postId . '">' . __('Accept') . '</a>
             <a href="#" class="deny button-primary ' . $second . '" postid="' . $postId . '">' . __('Deny') . '</a>';
         });
-
-        $this->addPostAction();
-        add_action('admin_head-post.php', array($this, 'hide_publishing_actions'));
+        add_action('admin_head-post.php', array($this, 'hidePublishinActions'));
         add_action('publish_event', array($this, 'setAcceptedOnPublish'), 10, 2 );
-        // Only use if the function changeAdminMenuLink in CustomPostManager gets fixed
-        //add_filter('views_edit-event',array($this, 'removeFilterLink'));
+        add_filter('post_class', array($this, 'changeAcceptanceColor'));
 
     }
 
+    /**
+     * Change background color of event in list depending of it's meta_value 'accepted'
+     * @param  array $classes
+     * @return array $classes
+     */
+    public function changeAcceptanceColor($classes)
+    {
+        $postAndId = explode('-', $classes[3]);
+        if($postAndId[0] == 'post') {
+            $metaAccepted = get_post_meta($postAndId[1], 'accepted');
+            if($metaAccepted[0] == -1)
+                $classes[] = "red";
+            else if($metaAccepted[0] == 1)
+                $classes[] = "green";
+        }
+        return $classes;
+    }
+
+    /**
+     * When publish are clicked we are either creating the meta 'accepted' with value 1 or update it
+     * @param int $ID event post id
+     * @param $post wordpress post object
+     */
     public function setAcceptedOnPublish($ID, $post)
     {
         $metaAccepted = get_post_meta($ID, 'accepted');
@@ -85,7 +105,11 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
             update_post_meta($ID, 'accepted', 1);
     }
 
-    function hide_publishing_actions()
+    /**
+     * Hiding the option to change post_status on when in a event, instead use the buttons in event list
+     * @return void
+     */
+    function hidePublishinActions()
     {
         $my_post_type = 'event';
         global $post;
@@ -97,12 +121,6 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
                     }
                 </style>';
         }
-    }
-
-    public function removeFilterLink($views)
-    {
-        unset($views['all']);
-        return $views;
     }
 
     /**

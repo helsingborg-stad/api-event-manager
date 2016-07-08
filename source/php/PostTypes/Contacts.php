@@ -38,7 +38,7 @@ class Contacts extends \HbgEventImporter\Entity\CustomPostType
             echo get_post_meta($postId, 'email', true) ? get_post_meta($postId, 'email', true) : 'n/a';
         });
         $this->addTableColumn('phone', __('Phone'), true, function ($column, $postId) {
-            echo get_post_meta($postId, 'phone', true) ? get_post_meta($postId, 'phone', true) : 'n/a';
+            echo get_post_meta($postId, 'phone_number', true) ? get_post_meta($postId, 'phone_number', true) : 'n/a';
         });
         $this->addTableColumn('date', __('Date'));
     }

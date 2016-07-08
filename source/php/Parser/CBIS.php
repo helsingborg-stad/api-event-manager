@@ -177,8 +177,6 @@ class CBIS extends \HbgEventImporter\Parser
             $this->saveEvent($eventData);
         }
 
-        //die('The end!');
-
         return true;
     }
 
@@ -313,11 +311,8 @@ class CBIS extends \HbgEventImporter\Parser
             );
             $locationId = $location->save();
 
-            //echo "New location : " . $newPostTitle . "\n";
             $this->levenshteinTitles['location'][] = array('ID' => $locationId, 'post_title' => $newPostTitle);
         }
-        //else
-            //echo "Location already exists: " . $newPostTitle . "\n";
     }
 
     /**
@@ -359,13 +354,8 @@ class CBIS extends \HbgEventImporter\Parser
             );
 
             $locationId = $location->save();
-
-            //echo "New location : " . $newPostTitle . "\n";
-
             $this->levenshteinTitles['location'][] = array('ID' => $locationId, 'post_title' => $newPostTitle);
         }
-        //else
-            //echo "Location already exists: " . $newPostTitle . "\n";
 
         $newPostTitle = $this->getAttributeValue(self::ATTRIBUTE_CONTACT_PERSON, $attributes) != null ? $this->getAttributeValue(self::ATTRIBUTE_CONTACT_PERSON, $attributes) : '';
 
@@ -389,19 +379,14 @@ class CBIS extends \HbgEventImporter\Parser
                     array(
                         'name'                  =>  $this->getAttributeValue(self::ATTRIBUTE_CONTACT_PERSON, $attributes),
                         'email'                 =>  strtolower($this->getAttributeValue(self::ATTRIBUTE_CONTACT_EMAIL, $attributes)),
-                        'phone_number'          =>  null,
+                        'phone_number'          =>  $this->getAttributeValue(self::ATTRIBUTE_PHONE_NUMBER, $attributes),
                         '_event_manager_uid'    =>  $this->getAttributeValue(self::ATTRIBUTE_CONTACT_PERSON, $attributes) . ': ' . strtolower($this->getAttributeValue(self::ATTRIBUTE_CONTACT_EMAIL, $attributes))
                     )
                 );
 
                 $contactId = $contact->save();
-
-                //echo "New contact : " . $newPostTitle . "\n";
-
                 $this->levenshteinTitles['contact'][] = array('ID' => $contactId, 'post_title' => $newPostTitle);
             }
-            //else
-                //echo "Contact already exists: " . $newPostTitle . "\n";
         }
 
         $postContent = $this->getAttributeValue(self::ATTRIBUTE_DESCRIPTION, $attributes);
@@ -442,22 +427,17 @@ class CBIS extends \HbgEventImporter\Parser
                     'price_information'     => $this->getAttributeValue(self::ATTRIBUTE_PRICE_INFORMATION, $attributes),
                     'price_adult'           => $this->getAttributeValue(self::ATTRIBUTE_PRICE_ADULT, $attributes),
                     'price_children'        => $this->getAttributeValue(self::ATTRIBUTE_PRICE_CHILD, $attributes),
-                    'accepted'              => 0
+                    'accepted'              => 1
                 )
             );
 
             $eventId = $event->save();
-
-            //echo "New event : " . $newPostTitle . "\n";
-
             $this->levenshteinTitles['event'][] = array('ID' => $eventId, 'post_title' => $newPostTitle);
 
             if (!is_null($event->image)) {
                 $event->setFeaturedImageFromUrl($event->image);
             }
         }
-        //else
-            //echo "Event already exists: " . $newPostTitle . "\n";
     }
 
     /**

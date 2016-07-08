@@ -26,11 +26,21 @@ class DataCleaner
         return $phoneUtil->format($number, $numberFormat);
     }
 
+    /**
+     * Removing all non numbers from a number
+     * @param  int $number
+     * @return int
+     */
     public static function number($number)
     {
         return preg_replace('/\D/', '', $number);
     }
 
+    /**
+     * Check if $email is an correct edited email
+     * @param  string $email
+     * @return if ok $email otherwise null
+     */
     public static function email($email)
     {
         if(is_null($email) || preg_match("/\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b/i", $email) != 1)
@@ -38,6 +48,11 @@ class DataCleaner
         return $email;
     }
 
+    /**
+     * Removing ' (copy)', html tags and shortcodes from a string, keeping the <!--more-->
+     * @param  string $string
+     * @return string edited $string
+     */
     public static function string($string)
     {
         $count = 0;
@@ -47,8 +62,7 @@ class DataCleaner
 
         // Replace all comment tags so we save them from the strip_tags function
         $changedComments = preg_replace("/<![^>]*>/", '[HTMLCOMMENT]', $removedCopy, -1 , $count);
-        if($count > 0)
-        {
+        if($count > 0) {
             // Remove all tags except those passed as argument 2 in strip_tags
             $commentBefore = $changedComments;
             $changedComments = strip_tags($changedComments, '<h1><h2><h3><h4><h5><h6><strong><ul><li><b>');
