@@ -29,7 +29,6 @@ class Contacts extends \HbgEventImporter\Entity\CustomPostType
         );
 
         $this->addTableColumn('cb', '<input type="checkbox">');
-
         $this->addTableColumn('title', __('Title'));
         $this->addTableColumn('name', __('Name'), true, function ($column, $postId) {
             echo get_post_meta($postId, 'name', true) ? get_post_meta($postId, 'name', true) : 'n/a';
