@@ -80,7 +80,7 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
     {
         $metaAccepted = get_post_meta($ID, 'accepted');
         if(!isset($metaAccepted[0]))
-            add_post_meta($ID, 'accepted', 0);
+            add_post_meta($ID, 'accepted', 1);
         else
             update_post_meta($ID, 'accepted', 1);
     }
