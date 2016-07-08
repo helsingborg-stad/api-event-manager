@@ -69,9 +69,34 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
         });
 
         $this->addPostAction();
+        add_action('admin_head-post.php', array($this, 'hide_publishing_actions'));
+        add_action('publish_event', array($this, 'setAcceptedOnPublish'), 10, 2 );
         // Only use if the function changeAdminMenuLink in CustomPostManager gets fixed
         //add_filter('views_edit-event',array($this, 'removeFilterLink'));
 
+    }
+
+    public function setAcceptedOnPublish($ID, $post)
+    {
+        $metaAccepted = get_post_meta($ID, 'accepted');
+        if(!isset($metaAccepted[0]))
+            add_post_meta($ID, 'accepted', 0);
+        else
+            update_post_meta($ID, 'accepted', 1);
+    }
+
+    function hide_publishing_actions()
+    {
+        $my_post_type = 'event';
+        global $post;
+        if($post->post_type == $my_post_type) {
+            echo '<style type="text/css">
+                    #misc-publishing-actions .misc-pub-section.misc-pub-post-status,#minor-publishing-actions
+                    {
+                        display:none;
+                    }
+                </style>';
+        }
     }
 
     public function removeFilterLink($views)
