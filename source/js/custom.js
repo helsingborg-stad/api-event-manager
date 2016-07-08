@@ -20,8 +20,10 @@ function changeAccepted(newValue, postId) {
 
     var postElement = jQuery('#post-' + postId);
 
+    toggleClasses(postElement, newValue);
+
     jQuery.post(ajaxurl, data, function(response) {
-        toggleClasses(postElement, response);
+        console.log(response);
     });
 }
 

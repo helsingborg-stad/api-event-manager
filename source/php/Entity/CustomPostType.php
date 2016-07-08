@@ -36,9 +36,45 @@ abstract class CustomPostType
 
         add_action('wp_ajax_my_action', array($this, 'acceptOrDeny'));
         add_action('admin_enqueue_scripts', array($this, 'addCustomJS'));
+
     }
 
-    public function testing($classes)
+    public function changeAdminMenuLink()
+    {
+        // Here is an attempt to make published events as the default view when clicked in admin panel
+        // Everything works except showing the submenu when on the event page
+        global $menu;
+        global $submenu;
+        $oldMenu = $menu;
+        $oldKey = null;
+        $newKey = null;
+
+        foreach($menu as &$object) {
+            if($object[2] == 'edit.php?post_type=event') {
+                $oldKey = $object[2];
+                $newKey = $oldKey . '&post_status=publish';
+                $object[2] = $newKey;
+                break;
+            }
+        }
+
+        $newSubmenu = null;
+        foreach($submenu as $key => &$object) {
+            if($key == $oldKey) {
+                $oldData = $object;
+                foreach($oldData as &$data) {
+                    if($data[2] == $oldKey)
+                        $data[2] = $newKey;
+                }
+                $newSubmenu[$newKey] = $oldData;
+            }
+            else
+                $newSubmenu[$key] = $object;
+        }
+        $submenu = $newSubmenu;
+    }
+
+    public function changeAcceptanceColor($classes)
     {
         $postAndId = explode('-', $classes[3]);
         if($postAndId[0] == 'post')
@@ -54,7 +90,9 @@ abstract class CustomPostType
 
     public function addPostAction()
     {
-        add_filter('post_class', array($this, 'testing'));
+        add_filter('post_class', array($this, 'changeAcceptanceColor'));
+        // This is not working as I wanted it so disabled for now
+        //add_action('admin_menu', array($this, 'changeAdminMenuLink'));
     }
 
     public function acceptOrDeny()
@@ -64,18 +102,22 @@ abstract class CustomPostType
 
         $postAccepted = get_post_meta($postId, 'accepted');
 
-        if($postAccepted == false)
-        {
+        $post = get_post($postId);
+        if($newValue == -1)
+            $post->post_status = 'draft';
+        if($newValue == 1)
+            $post->post_status = 'publish';
+
+        wp_update_post($post);
+
+        if($postAccepted == false) {
             add_post_meta($postId, 'accepted', $newValue);
 
             ob_clean();
             echo $newValue;
             wp_die();
-        }
-        else
-        {
-            if($postAccepted[0] == $newValue)
-            {
+        } else {
+            if($postAccepted[0] == $newValue) {
                 ob_clean();
                 echo $postAccepted[0];
                 wp_die();

@@ -19,7 +19,7 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
                 'show_in_nav_menus'    =>   true,
                 'has_archive'          =>   true,
                 'rewrite'              =>   array(
-                    'slug'       => 'event',
+                    'slug'       => 'poop',
                     'with_front' => false
                 ),
                 'hierarchical'          =>  false,
@@ -53,8 +53,6 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
 
         $this->addTableColumn('acceptAndDeny', __('Accepted/Denied'), true, function($column, $postId) {
             $metaAccepted = get_post_meta($postId, 'accepted');
-            //var_dump($metaAccepted);
-            //die();
             if(!isset($metaAccepted[0]))
             {
                 add_post_meta($postId, 'accepted', 0);
@@ -71,6 +69,15 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
         });
 
         $this->addPostAction();
+        // Only use if the function changeAdminMenuLink in CustomPostManager gets fixed
+        //add_filter('views_edit-event',array($this, 'removeFilterLink'));
+
+    }
+
+    public function removeFilterLink($views)
+    {
+        unset($views['all']);
+        return $views;
     }
 
     /**

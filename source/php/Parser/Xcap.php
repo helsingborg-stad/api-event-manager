@@ -102,8 +102,8 @@ class Xcap extends \HbgEventImporter\Parser
 
                 $this->levenshteinTitles['location'][] = array('ID' => $locationId, 'post_title' => $address);
             }
-            else
-                echo "Location already exists: " . $locationId . "\n";
+            //else
+                //echo "Location already exists: " . $locationId . "\n";
         }
 
         // Check if the event passes the filter

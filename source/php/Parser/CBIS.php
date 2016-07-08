@@ -177,7 +177,7 @@ class CBIS extends \HbgEventImporter\Parser
             $this->saveEvent($eventData);
         }
 
-        //die();
+        //die('The end!');
 
         return true;
     }
@@ -411,6 +411,7 @@ class CBIS extends \HbgEventImporter\Parser
 
         $newPostTitle = $this->getAttributeValue(self::ATTRIBUTE_NAME, $attributes, ($eventData->Name != null ? $eventData->Name : null));
 
+        $newImage = (isset($eventData->Image->Url) ? $eventData->Image->Url : null);
         $eventId = $this->checkIfPostExists('event', $newPostTitle);
         if ($eventId == null) {
             // Creates the event object
@@ -424,7 +425,7 @@ class CBIS extends \HbgEventImporter\Parser
                     '_event_manager_uid'    => 'cbis-' . $eventData->Id,
                     'sync'                  => true,
                     'status'                => isset($eventData->Status) && !empty($eventData->Status) ? $eventData->Status : null,
-                    'image'                 => (isset($eventData->Image->Url) ? $eventData->Image->Url : null),
+                    'image'                 => $newImage,
                     'alternate_name'        => isset($eventData->SystemName) && !empty($eventData->SystemName) ? $eventData->SystemName : null,
                     'event_link'            => $this->getAttributeValue(self::ATTRIBUTE_EVENT_LINK, $attributes),
                     'categories'            => $categories,
