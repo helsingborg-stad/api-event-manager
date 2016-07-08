@@ -371,6 +371,7 @@ class CBIS extends \HbgEventImporter\Parser
         if (!empty($newPostTitle)) {
             $contactId = $this->checkIfPostExists('contact', $newPostTitle);
             if ($contactId == null) {
+                $phoneNumber = $this->getAttributeValue(self::ATTRIBUTE_PHONE_NUMBER, $attributes);
                 // Save contact
                 $contact = new Contact(
                     array(
@@ -379,7 +380,7 @@ class CBIS extends \HbgEventImporter\Parser
                     array(
                         'name'                  =>  $this->getAttributeValue(self::ATTRIBUTE_CONTACT_PERSON, $attributes),
                         'email'                 =>  strtolower($this->getAttributeValue(self::ATTRIBUTE_CONTACT_EMAIL, $attributes)),
-                        'phone_number'          =>  $this->getAttributeValue(self::ATTRIBUTE_PHONE_NUMBER, $attributes),
+                        'phone_number'          =>  $phoneNumber == null ? $phoneNumber : (strlen($phoneNumber) > 5 ? $phoneNumber : null),
                         '_event_manager_uid'    =>  $this->getAttributeValue(self::ATTRIBUTE_CONTACT_PERSON, $attributes) . ': ' . strtolower($this->getAttributeValue(self::ATTRIBUTE_CONTACT_EMAIL, $attributes))
                     )
                 );
