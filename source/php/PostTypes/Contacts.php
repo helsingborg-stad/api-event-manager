@@ -40,5 +40,13 @@ class Contacts extends \HbgEventImporter\Entity\CustomPostType
             echo get_post_meta($postId, 'phone_number', true) ? get_post_meta($postId, 'phone_number', true) : 'n/a';
         });
         $this->addTableColumn('date', __('Date'));
+
+        add_action('do_meta_boxes', array($this, 'change_image_box'));
+    }
+
+    function change_image_box()
+    {
+        remove_meta_box( 'postimagediv', 'contact', 'side' );
+        add_meta_box('postimagediv', __('Profile image'), 'post_thumbnail_meta_box', 'contact', 'side');
     }
 }

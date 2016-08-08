@@ -67,10 +67,9 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
             echo '<a href="#" class="accept button-primary ' . $first . '" postid="' . $postId . '">' . __('Accept') . '</a>
             <a href="#" class="deny button-primary ' . $second . '" postid="' . $postId . '">' . __('Deny') . '</a>';
         });
-        add_action('admin_head-post.php', array($this, 'hidePublishinActions'));
+        add_action('admin_head-post.php', array($this, 'hidePublishingActions'));
         add_action('publish_event', array($this, 'setAcceptedOnPublish'), 10, 2 );
         add_filter('post_class', array($this, 'changeAcceptanceColor'));
-
     }
 
     /**
@@ -109,7 +108,7 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
      * Hiding the option to change post_status on when in a event, instead use the buttons in event list
      * @return void
      */
-    function hidePublishinActions()
+    function hidePublishingActions()
     {
         $my_post_type = 'event';
         global $post;
