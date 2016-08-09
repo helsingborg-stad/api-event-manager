@@ -393,6 +393,31 @@
                 "return_format": "object"
             },
             {
+                "key": "field_57a9d5f3804e1",
+                "label": "Supporters",
+                "name": "supporters",
+                "type": "relationship",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "post_type": [
+                    "sponsor"
+                ],
+                "taxonomy": [],
+                "filters": [
+                    "search"
+                ],
+                "elements": "",
+                "min": "",
+                "max": "",
+                "return_format": "object"
+            },
+            {
                 "key": "field_57611b73acf19",
                 "label": "Booking",
                 "name": "",
@@ -569,6 +594,102 @@
                 "max_height": "",
                 "max_size": "",
                 "mime_types": ""
+            },
+            {
+                "key": "field_57a9d7f655152",
+                "label": "Links",
+                "name": "",
+                "type": "tab",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "placement": "left",
+                "endpoint": 0
+            },
+            {
+                "key": "field_57a9d81f55153",
+                "label": "Facebook",
+                "name": "facebook",
+                "type": "url",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "placeholder": ""
+            },
+            {
+                "key": "field_57a9d82b55154",
+                "label": "Twitter",
+                "name": "twitter",
+                "type": "url",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "placeholder": ""
+            },
+            {
+                "key": "field_57a9d83355155",
+                "label": "Instagram",
+                "name": "instagram",
+                "type": "url",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "placeholder": ""
+            },
+            {
+                "key": "field_57a9d84055156",
+                "label": "Youtube",
+                "name": "youtube",
+                "type": "url",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "placeholder": ""
+            },
+            {
+                "key": "field_57a9d84955157",
+                "label": "Vimeo",
+                "name": "vimeo",
+                "type": "url",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "placeholder": ""
             }
         ],
         "location": [

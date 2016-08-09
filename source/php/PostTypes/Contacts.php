@@ -41,12 +41,16 @@ class Contacts extends \HbgEventImporter\Entity\CustomPostType
         });
         $this->addTableColumn('date', __('Date'));
 
-        add_action('do_meta_boxes', array($this, 'change_image_box'));
+        add_action('do_meta_boxes', array($this, 'changeImageBox'), 10, 3);
     }
 
-    function change_image_box()
+    public function changeImageBox($page, $context, $object)
     {
-        remove_meta_box( 'postimagediv', 'contact', 'side' );
-        add_meta_box('postimagediv', __('Profile image'), 'post_thumbnail_meta_box', 'contact', 'side');
+        if($page == 'contact')
+        {
+            remove_meta_box( 'postimagediv', 'contact', 'side' );
+            add_meta_box('postimagediv', __('Profile image'), 'post_thumbnail_meta_box', 'contact', 'side');
+            remove_action('do_meta_boxes', array($this, 'changeImageBox'));
+        }
     }
 }
