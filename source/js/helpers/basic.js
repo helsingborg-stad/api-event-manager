@@ -1,10 +1,10 @@
 var ImportEvents = ImportEvents || {};
 
 jQuery(document).ready(function ($) {
-    if($('#acf-field_574d6f51c5204').length)
+    if($('#acf-field_576116fd23a4f').length)
     {
         //add this class for a button instead of link 'page-title-action'
-        $('#acf-field_574d6f51c5204').append('<a class="createContact" href="http://' + window.location.host + '/wp/wp-admin/post-new.php?post_type=contact&lightbox=true">Create new contact</a>');
+        $('#acf-field_576116fd23a4f').append('<a class="createContact button button-primary" href="http://' + window.location.host + '/wp/wp-admin/post-new.php?post_type=contact&lightbox=true">Create new contact</a>');
     }
 
     $('.openContact').click(function(event) {

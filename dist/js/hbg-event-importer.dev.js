@@ -1,3 +1,5 @@
+var ImportEvents = ImportEvents || {};
+
 jQuery(document).ready(function ($) {
     $('.accept').click(function() {
         var postId = $(this).attr('postid');
@@ -8,6 +10,50 @@ jQuery(document).ready(function ($) {
         var postId = $(this).attr('postid');
         changeAccepted(-1, postId);
     });
+    var oldInput = '';
+    $('input[name="post_title"]').on('change paste keyup', function() {
+        var input = $(this).val();
+
+        if(input == oldInput)
+            return;
+
+        oldInput = input;
+        if(input.length > 3)
+        {
+            var data = {
+                'action'    : 'check_existing_title',
+                'value'     : input,
+                'postType'  : pagenow
+            };
+
+            jQuery.get('/json/wp/v2/' + pagenow + '?search=' + input, function(response) {
+                $('#suggestionList').empty();
+                for(var i in response) {
+                    var id = response[i].id;
+                    var title = response[i].title.rendered;
+                    console.log('Id: ' + id + ', Title: ' + title);
+                    $('#suggestionList').append('<li><a href="/wp/wp-admin/post.php?post=' + id + '&action=edit&lightbox=true" class="suggestion">' + title + '</a></li>');
+                }
+                if($('.suggestion').length == 0)
+                    $('#suggestionContainer').hide();
+                else
+                {
+                    $('#suggestionContainer').show();
+                    $('.suggestion').click(function(event) {
+                        event.preventDefault();
+                        ImportEvents.Prompt.Modal.open($(this).attr('href'));
+                    });
+                }
+            });
+        }
+        else
+            $('#suggestionContainer').hide();
+
+    });
+    if(pagenow == 'contact' || pagenow == 'location' || pagenow == 'event' || pagenow == 'sponsor')
+    {
+        $('#titlewrap').after('<div id="suggestionContainer"><ul id="suggestionList"></ul></div>');
+    }
 });
 
 /**
@@ -18,9 +64,9 @@ jQuery(document).ready(function ($) {
  */
 function changeAccepted(newValue, postId) {
     var data = {
-        'action' : 'my_action',
-        'value' : newValue,
-        'postId': postId
+        'action'    : 'my_action',
+        'value'     : newValue,
+        'postId'    : postId
     };
 
     var postElement = jQuery('#post-' + postId);
@@ -62,27 +108,6 @@ jQuery(document).ready(function ($) {
 
 });
 
-var ImportEvents = ImportEvents || {};
-
-jQuery(document).ready(function ($) {
-    if($('#acf-field_574d6f51c5204').length)
-    {
-        //add this class for a button instead of link 'page-title-action'
-        $('#acf-field_574d6f51c5204').append('<a class="createContact" href="http://' + window.location.host + '/wp/wp-admin/post-new.php?post_type=contact&lightbox=true">Create new contact</a>');
-    }
-
-    $('.openContact').click(function(event) {
-        event.preventDefault();
-        ImportEvents.Prompt.Modal.open($(this).attr('href'));
-    });
-
-    $('.createContact').click(function(event) {
-        var parentId = $('#post_ID').val();
-        event.preventDefault();
-        ImportEvents.Prompt.Modal.open($(this).attr('href'), parentId);
-    });
-});
-
 ImportEvents = ImportEvents || {};
 ImportEvents.Prompt = ImportEvents.Prompt || {};
 
@@ -119,7 +144,6 @@ ImportEvents.Prompt.Modal = (function ($) {
     };
 
     Modal.prototype.close = function () {
-        console.log("closing");
         $('body').removeClass('modularity-modal-open');
         $('#modularity-modal').remove();
         isOpen = false;
@@ -128,7 +152,6 @@ ImportEvents.Prompt.Modal = (function ($) {
 
     Modal.prototype.handleEvents = function () {
         $(document).on('click', '[data-modularity-modal-action="close"]', function (e) {
-            console.log(e);
             e.preventDefault();
             this.close();
         }.bind(this));
@@ -137,3 +160,24 @@ ImportEvents.Prompt.Modal = (function ($) {
     return new Modal();
 
 })(jQuery);
+
+var ImportEvents = ImportEvents || {};
+
+jQuery(document).ready(function ($) {
+    if($('#acf-field_576116fd23a4f').length)
+    {
+        //add this class for a button instead of link 'page-title-action'
+        $('#acf-field_576116fd23a4f').append('<a class="createContact button button-primary" href="http://' + window.location.host + '/wp/wp-admin/post-new.php?post_type=contact&lightbox=true">Create new contact</a>');
+    }
+
+    $('.openContact').click(function(event) {
+        event.preventDefault();
+        ImportEvents.Prompt.Modal.open($(this).attr('href'));
+    });
+
+    $('.createContact').click(function(event) {
+        var parentId = $('#post_ID').val();
+        event.preventDefault();
+        ImportEvents.Prompt.Modal.open($(this).attr('href'), parentId);
+    });
+});

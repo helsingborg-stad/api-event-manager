@@ -29,14 +29,10 @@ abstract class CustomPostType
 
         // Register post type on init
         add_action('init', array($this, 'registerPostType'));
-
         add_filter('manage_edit-' . $this->slug . '_columns', array($this, 'tableColumns'));
         add_filter('manage_edit-' . $this->slug . '_sortable_columns', array($this, 'tableSortableColumns'));
         add_action('manage_' . $this->slug . '_posts_custom_column', array($this, 'tableColumnsContent'), 10, 2);
-
         add_action('wp_ajax_my_action', array($this, 'acceptOrDeny'));
-        add_action('admin_enqueue_scripts', array($this, 'addCustomFiles'));
-
     }
 
     /**
@@ -75,16 +71,6 @@ abstract class CustomPostType
             echo $newValue;
             wp_die();
         }
-    }
-
-    /**
-     * Adding a custom js file and css file
-     * @param $hook, default param for action admin_enqueue_scripts
-     */
-    public function addCustomFiles($hook)
-    {
-        wp_enqueue_script('addCustomJS', HBGEVENTIMPORTER_URL . "/source/js/custom.js");
-        wp_enqueue_style('addCustomCss', HBGEVENTIMPORTER_URL . "/dist/css/hbg-event-importer.min.css");
     }
 
     /**

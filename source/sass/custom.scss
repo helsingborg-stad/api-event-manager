@@ -9,3 +9,21 @@ tbody .type-event.green {
 .acceptAndDeny .hiddenElement {
     display: none;
 }
+
+#suggestionContainer {
+    width: 100%;
+    max-height: 75px;
+    background-color: white;
+    padding: 3px 8px;
+    box-sizing: border-box;
+    overflow-y: auto;
+    display: none;
+}
+
+#suggestionList {
+    margin: 0;
+}
+
+#suggestionList a.suggestion {
+    text-decoration: underline;
+}

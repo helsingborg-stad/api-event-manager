@@ -102,6 +102,10 @@ class App
         if ($current_screen->id == 'event' && $current_screen->action == '') {
             wp_enqueue_style('hbg-event-importer', HBGEVENTIMPORTER_URL . '/dist/css/hbg-event-importer.min.css');
         }
+
+        if ($current_screen->id == 'contact' && $current_screen->action == 'add') {
+            wp_enqueue_style('hbg-event-importer', HBGEVENTIMPORTER_URL . '/dist/css/hbg-event-importer.min.css');
+        }
     }
 
     /**
@@ -113,6 +117,10 @@ class App
         global $current_screen;
 
         if ($current_screen->id == 'event' && $current_screen->action == '') {
+            wp_enqueue_script('hbg-event-importer', HBGEVENTIMPORTER_URL . '/dist/js/hbg-event-importer.min.js');
+        }
+
+        if ($current_screen->id == 'contact' && $current_screen->action == 'add') {
             wp_enqueue_script('hbg-event-importer', HBGEVENTIMPORTER_URL . '/dist/js/hbg-event-importer.min.js');
         }
     }

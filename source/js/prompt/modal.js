@@ -34,7 +34,6 @@ ImportEvents.Prompt.Modal = (function ($) {
     };
 
     Modal.prototype.close = function () {
-        console.log("closing");
         $('body').removeClass('modularity-modal-open');
         $('#modularity-modal').remove();
         isOpen = false;
@@ -43,7 +42,6 @@ ImportEvents.Prompt.Modal = (function ($) {
 
     Modal.prototype.handleEvents = function () {
         $(document).on('click', '[data-modularity-modal-action="close"]', function (e) {
-            console.log(e);
             e.preventDefault();
             this.close();
         }.bind(this));
