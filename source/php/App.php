@@ -22,6 +22,10 @@ class App
                 require_once HBGEVENTIMPORTER_PATH . 'source/php/Helper/AcfImportCleaner.php';
             }
         });
+        //Remove auto empty of trash
+        add_action( 'init', function () {
+            remove_action( 'wp_scheduled_delete', 'wp_scheduled_delete' );
+        });
 
         //Activations hooks
         register_activation_hook(plugin_basename(__FILE__), '\HbgEventImporter\App::addCronJob');
