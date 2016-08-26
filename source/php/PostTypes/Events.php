@@ -114,11 +114,11 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
         global $post;
         if($post->post_type == $my_post_type) {
             echo '<style type="text/css">
-                    #misc-publishing-actions .misc-pub-section.misc-pub-post-status,#minor-publishing-actions
-                    {
-                        display:none;
-                    }
-                </style>';
+                #misc-publishing-actions .misc-pub-section.misc-pub-post-status,#minor-publishing-actions
+                {
+                    display:none;
+                }
+            </style>';
         }
     }
 
@@ -134,13 +134,16 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
             return;
         }
 
-        echo '<div class="alignleft actions">';
-            echo '<a href="' . admin_url('options.php?page=import-events')
-                    . '" class="button-primary" id="post-query-submit">Import XCAP</a>';
-            echo '<a href="' . admin_url('options.php?page=import-cbis-events')
-                    . '" class="button-primary" id="post-query-submit">Import CBIS</a>';
-        echo '</div>';
+        if(current_user_can('manage_options'))
+        {
+            echo '<div class="alignleft actions" style="position: relative;">';
+                //echo '<a href="' . admin_url('options.php?page=import-events') . '" class="button-primary" id="post-query-submit">Import XCAP</a>';
+                //echo '<a href="' . admin_url('options.php?page=import-cbis-events') . '" class="button-primary" id="post-query-submit">Import CBIS</a>';
+                echo '<div class="button-primary extraspace" id="xcap">' . __('Import XCAP') . '</div>';
+                echo '<div class="button-primary extraspace" id="cbis">' . __('Import CBIS') . '</div>';
+                echo '<div class="button-primary extraspace" id="occasions">Collect event timestamps</div>';
+                //echo '<div id="importResponse"></div>';
+            echo '</div>';
+        }
     }
-
-
 }

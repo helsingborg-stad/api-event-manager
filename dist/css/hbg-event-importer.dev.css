@@ -7,6 +7,9 @@ tbody .type-event.green {
 .acceptAndDeny .hiddenElement {
   display: none; }
 
+.extraspace {
+  margin: 1px 8px 0 0 !important; }
+
 #suggestionContainer {
   width: 100%;
   max-height: 75px;
@@ -21,6 +24,102 @@ tbody .type-event.green {
 
 #suggestionList a.suggestion {
   text-decoration: underline; }
+
+#lightbox {
+  position: fixed;
+  z-index: 9999;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(241, 241, 241, 0.9);
+  opacity: 0;
+  animation: 200ms modal-fade-in forwards; }
+
+#lightbox .lightbox-close {
+  position: absolute;
+  top: 0;
+  right: 6%;
+  font-size: 12pt;
+  padding: 5px 20px;
+  border: none;
+  cursor: pointer;
+  background-color: #c00b0b;
+  color: #fff; }
+
+#lightbox .lightbox-close:hover {
+  padding-top: 10px; }
+
+#lightbox .lightbox-wrapper {
+  position: relaitve;
+  width: 100%;
+  height: 100%;
+  margin: 0 auto; }
+
+#lightbox .lightbox-iframe {
+  box-sizing: border-box;
+  width: 100vw;
+  height: 100%; }
+
+.lightbox-open {
+  overflow: hidden; }
+
+.lightbox-open #wpwrap {
+  -webkit-filter: blur(10px);
+  filter: blur(10px); }
+
+#importResponse {
+  display: none;
+  line-height: 0;
+  width: 400px;
+  height: 300px;
+  background-color: #0085ba;
+  z-index: 10000;
+  position: absolute;
+  top: 25%;
+  left: 50%;
+  transform: translate(-50%);
+  color: white;
+  border-radius: 20px; }
+
+#importResponse .button {
+  background-color: #76f578;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 0;
+  left: 0;
+  text-align: center; }
+
+#importResponse div {
+  height: 20%;
+  position: relative;
+  margin: 0; }
+
+#importResponse div.inline {
+  width: 33.3%;
+  display: inline-block; }
+
+#importResponse div p {
+  width: 100%;
+  text-align: center;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  margin: 0; }
+
+#importResponse #untilReload {
+  border-radius: 0px 0px 20px 20px;
+  overflow: hidden; }
+
+#importResponse #untilReload #meter {
+  background-color: red;
+  position: absolute;
+  width: 0%;
+  height: 100%; }
+
+#importResponse #event, #importResponse #location, #importResponse #contact {
+  visibility: hidden; }
 
 .wp-admin.post-type-event.post-php.no-sync .postbox:not(#submitdiv):not(.acf-postbox),
 .wp-admin.post-type-event.post-php.no-sync .postarea,
@@ -54,3 +153,70 @@ tbody .type-event.green {
     background-position: center center;
     background-size: cover;
     opacity: .5; }
+
+tbody .type-event.red {
+  background-color: #fb7171; }
+
+tbody .type-event.green {
+  background-color: #76f578; }
+
+.acceptAndDeny .hiddenElement {
+  display: none; }
+
+#suggestionContainer {
+  width: 100%;
+  max-height: 75px;
+  background-color: white;
+  padding: 3px 8px;
+  box-sizing: border-box;
+  overflow-y: auto;
+  display: none; }
+
+#suggestionList {
+  margin: 0; }
+
+#suggestionList a.suggestion {
+  text-decoration: underline; }
+
+#lightbox {
+  position: fixed;
+  z-index: 9999;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(241, 241, 241, 0.9);
+  opacity: 0;
+  animation: 200ms modal-fade-in forwards; }
+
+#lightbox .lightbox-close {
+  position: absolute;
+  top: 0;
+  right: 6%;
+  font-size: 12pt;
+  padding: 5px 20px;
+  border: none;
+  cursor: pointer;
+  background-color: #c00b0b;
+  color: #fff; }
+
+#lightbox .lightbox-close:hover {
+  padding-top: 10px; }
+
+#lightbox .lightbox-wrapper {
+  position: relaitve;
+  width: 100%;
+  height: 100%;
+  margin: 0 auto; }
+
+#lightbox .lightbox-iframe {
+  box-sizing: border-box;
+  width: 100vw;
+  height: 100%; }
+
+.lightbox-open {
+  overflow: hidden; }
+
+.lightbox-open #wpwrap {
+  -webkit-filter: blur(10px);
+  filter: blur(10px); }

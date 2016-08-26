@@ -72,8 +72,6 @@ class Xcap extends \HbgEventImporter\Parser
         $contactId = null;
         $locationId = null;
 
-        $derp = false;
-
         // $eventData->{'x-xcap-address'} can return an object instead of a string, then we just want to ignore the location
         if(is_string($address)) {
             // Checking if there is a location already with this title or similar enough
@@ -97,9 +95,13 @@ class Xcap extends \HbgEventImporter\Parser
                     )
                 );
 
-                $locationId = $location->save();
-
-                $this->levenshteinTitles['location'][] = array('ID' => $locationId, 'post_title' => $address);
+                $creatSuccess = $location->save();
+                $locationId = $location->ID;
+                if($creatSuccess)
+                {
+                    ++$this->nrOfNewLocations;
+                    $this->levenshteinTitles['location'][] = array('ID' => $location->ID, 'post_title' => $address);
+                }
             }
         }
 
@@ -144,9 +146,12 @@ class Xcap extends \HbgEventImporter\Parser
                 )
             );
 
-            $eventId = $event->save();
-
-            $this->levenshteinTitles['event'][] = array('ID' => $eventId, 'post_title' => $newPostTitle);
+            $creatSuccess = $event->save();
+            if($creatSuccess)
+            {
+                ++$this->nrOfNewEvents;
+                $this->levenshteinTitles['event'][] = array('ID' => $event->ID, 'post_title' => $newPostTitle);
+            }
 
             if (!is_null($event->image)) {
                 $event->setFeaturedImageFromUrl($event->image);

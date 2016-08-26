@@ -21,7 +21,7 @@
             {
                 "key": "field_5761103c83966",
                 "label": "Event",
-                "name": "event",
+                "name": "",
                 "type": "tab",
                 "instructions": "",
                 "required": 0,
@@ -113,7 +113,8 @@
                         "other_choice": 0,
                         "save_other_choice": 0,
                         "default_value": "scheduled",
-                        "layout": "horizontal"
+                        "layout": "horizontal",
+                        "return_format": "value"
                     },
                     {
                         "key": "field_5761109a83968",
@@ -124,17 +125,13 @@
                         "required": 1,
                         "conditional_logic": 0,
                         "wrapper": {
-                            "width": 33,
+                            "width": "33",
                             "class": "",
                             "id": ""
                         },
-                        "show_date": "true",
-                        "date_format": "yy-mm-dd",
-                        "time_format": "hh:mm",
-                        "show_week_number": "true",
-                        "picker": "select",
-                        "save_as_timestamp": "true",
-                        "get_as_timestamp": "false"
+                        "display_format": "Y-m-d H:i",
+                        "return_format": "Y-m-d H:i",
+                        "first_day": 1
                     },
                     {
                         "key": "field_576110e583969",
@@ -145,17 +142,13 @@
                         "required": 1,
                         "conditional_logic": 0,
                         "wrapper": {
-                            "width": 33,
+                            "width": "33",
                             "class": "",
                             "id": ""
                         },
-                        "show_date": "true",
-                        "date_format": "yy-mm-dd",
-                        "time_format": "hh:mm",
-                        "show_week_number": "true",
-                        "picker": "select",
-                        "save_as_timestamp": "true",
-                        "get_as_timestamp": "false"
+                        "display_format": "Y-m-d H:i",
+                        "return_format": "Y-m-d H:i",
+                        "first_day": 1
                     },
                     {
                         "key": "field_5761169e07309",
@@ -166,17 +159,13 @@
                         "required": 0,
                         "conditional_logic": 0,
                         "wrapper": {
-                            "width": 33,
+                            "width": "33",
                             "class": "",
                             "id": ""
                         },
-                        "show_date": "true",
-                        "date_format": "yy-mm-dd",
-                        "time_format": "hh:mm",
-                        "show_week_number": "true",
-                        "picker": "select",
-                        "save_as_timestamp": "true",
-                        "get_as_timestamp": "false"
+                        "display_format": "Y-m-d H:i",
+                        "return_format": "Y-m-d H:i",
+                        "first_day": 1
                     },
                     {
                         "key": "field_57611277ef032",
@@ -199,7 +188,8 @@
                         "other_choice": 0,
                         "save_other_choice": 0,
                         "default_value": "",
-                        "layout": "horizontal"
+                        "layout": "horizontal",
+                        "return_format": "value"
                     },
                     {
                         "key": "field_576110fb8396a",
@@ -273,7 +263,7 @@
             {
                 "key": "field_57611356d9415",
                 "label": "Organizer",
-                "name": "organizer",
+                "name": "",
                 "type": "tab",
                 "instructions": "",
                 "required": 0,
@@ -495,7 +485,7 @@
                 "key": "field_57611bd8acf1b",
                 "label": "Price information",
                 "name": "price_information",
-                "type": "text",
+                "type": "textarea",
                 "instructions": "",
                 "required": 0,
                 "conditional_logic": 0,
@@ -506,11 +496,28 @@
                 },
                 "default_value": "",
                 "placeholder": "",
-                "prepend": "",
-                "append": "",
                 "maxlength": "",
-                "readonly": 0,
-                "disabled": 0
+                "rows": 3,
+                "new_lines": "wpautop"
+            },
+            {
+                "key": "field_57b70267e1f32",
+                "label": "Ticket includes",
+                "name": "ticket_includes",
+                "type": "textarea",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "placeholder": "",
+                "maxlength": "",
+                "rows": 3,
+                "new_lines": "wpautop"
             },
             {
                 "key": "field_57611c0cacf1e",
@@ -555,9 +562,47 @@
                 "disabled": 0
             },
             {
+                "key": "field_57b6fe18e65c4",
+                "label": "Price student",
+                "name": "price_student",
+                "type": "text",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "50",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "placeholder": "",
+                "prepend": "",
+                "append": "",
+                "maxlength": ""
+            },
+            {
+                "key": "field_57b6fe5ee65c5",
+                "label": "Price senior",
+                "name": "price_senior",
+                "type": "text",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "50",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "placeholder": "",
+                "prepend": "",
+                "append": "",
+                "maxlength": ""
+            },
+            {
                 "key": "field_577a326b71ba8",
                 "label": "Gallery",
-                "name": "gallery",
+                "name": "",
                 "type": "tab",
                 "instructions": "",
                 "required": 0,
@@ -593,7 +638,8 @@
                 "max_width": "",
                 "max_height": "",
                 "max_size": "",
-                "mime_types": ""
+                "mime_types": "",
+                "insert": "append"
             },
             {
                 "key": "field_57a9d7f655152",

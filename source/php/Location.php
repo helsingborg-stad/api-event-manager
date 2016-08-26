@@ -40,7 +40,7 @@ class Location extends \HbgEventImporter\Entity\PostManager
 
             if (!isset($res->geometry->location) || !is_object($res)) {
                 wp_delete_post($this->ID, true);
-                return;
+                return false;
             }
 
             update_post_meta($this->ID, 'map', array(
@@ -78,7 +78,7 @@ class Location extends \HbgEventImporter\Entity\PostManager
             $res = Helper\Address::gmapsGetAddressComponents($this->street_address . ' ' . $this->postal_code . ' ' . $this->city . ' ' . $this->country);
 
             if (!isset($res->geometry->location)) {
-                return;
+                return true;
             }
 
             update_post_meta($this->ID, 'map', array(
@@ -89,5 +89,6 @@ class Location extends \HbgEventImporter\Entity\PostManager
 
             update_post_meta($this->ID, 'formatted_address', $res->formatted_address);
         }
+        return true;
     }
 }

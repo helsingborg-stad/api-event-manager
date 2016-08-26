@@ -40,12 +40,13 @@ class Event extends \HbgEventImporter\Entity\PostManager
 
     /**
      * Stuff to do after save
-     * @return void
+     * @return bool ,used if post got removed or not
      */
     public function afterSave()
     {
         $this->saveCategories();
         $this->saveOccasions();
+        return true;
     }
 
     /**
@@ -63,6 +64,30 @@ class Event extends \HbgEventImporter\Entity\PostManager
      */
     public function saveOccasions()
     {
+        foreach($this->occasions as $o) {
+            $this->extractEventOccasion($o['start_date']);
+        }
         update_field('field_5761106783967', $this->occasions, $this->ID);
+    }
+
+    public function extractEventOccasion($startDate)
+    {
+        global $wpdb;
+        $eventId = $this->ID;
+        $timestamp = strtotime($startDate);
+        if($timestamp <= 0)
+            return;
+        //var_dump($timestamp);
+        $testQuery = $wpdb->prepare("SELECT ID,event,timestamp FROM event_occasions WHERE event = %d AND timestamp = %d", $eventId, $timestamp);
+        $existing = $wpdb->get_results($testQuery);
+        //var_dump($existing);
+        $resultString = '';
+        if(empty($existing))
+        {
+            $wpdb->insert('event_occasions', array('event' => $eventId, 'timestamp' => $timestamp));
+            $resultString .= "New event occasions inserted with event id: " . $eventId . ', and timestamp: ' . $timestamp . "\n";
+        }
+        else
+            $resultString .= "Already exists! Event: " . $existing[0]->event . ', timestamp: ' . $existing[0]->timestamp . "\n";
     }
 }

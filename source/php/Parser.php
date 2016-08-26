@@ -5,6 +5,9 @@ namespace HbgEventImporter;
 abstract class Parser
 {
     protected $url;
+    protected $nrOfNewEvents;
+    protected $nrOfNewLocations;
+    protected $nrOfNewContacts;
 
     /**
      * Holds all titles of existing locations, contacts and events in wordpress
@@ -37,7 +40,7 @@ abstract class Parser
     public function checkIfPostExists($postType, $postTitle)
     {
         foreach($this->levenshteinTitles[$postType] as $title) {
-            if($this->isSimilarEnough($postTitle, $title['post_title'], $postType == 'location' ? 0 : 3))
+            if($this->isSimilarEnough($postTitle, $title['post_title'], $postType == 'location' ? 1 : 3))
                 return $title['ID'];
         }
         return null;
@@ -49,7 +52,9 @@ abstract class Parser
      */
     public function isSimilarEnough($newTitle, $existingTitle, $threshold)
     {
-        $steps = levenshtein($newTitle, $existingTitle);
+        $forTest1 = strtolower($newTitle);
+        $forTest2 = strtolower($existingTitle);
+        $steps = levenshtein($forTest1, $forTest2);
         if($steps <= $threshold)
             return true;
         return false;
@@ -60,8 +65,16 @@ abstract class Parser
         ini_set('max_execution_time', 300);
 
         $this->url = $url;
+        $this->nrOfNewEvents = 0;
+        $this->nrOfNewLocations = 0;
+        $this->nrOfNewContacts = 0;
         $this->start();
-        $this->done();
+        //$this->done();
+    }
+
+    public function getCreatedData()
+    {
+        return array('events' => $this->nrOfNewEvents, 'locations' => $this->nrOfNewLocations, 'contacts' => $this->nrOfNewContacts);
     }
 
     /**

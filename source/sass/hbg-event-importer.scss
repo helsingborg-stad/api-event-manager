@@ -43,3 +43,81 @@
         }
     }
 }
+
+tbody .type-event.red {
+    background-color: rgb(251,113,113)
+}
+
+tbody .type-event.green {
+    background-color: rgb(118,245,120)
+}
+
+.acceptAndDeny .hiddenElement {
+    display: none;
+}
+
+#suggestionContainer {
+    width: 100%;
+    max-height: 75px;
+    background-color: white;
+    padding: 3px 8px;
+    box-sizing: border-box;
+    overflow-y: auto;
+    display: none;
+}
+
+#suggestionList {
+    margin: 0;
+}
+
+#suggestionList a.suggestion {
+    text-decoration: underline;
+}
+
+#lightbox {
+  position: fixed;
+  z-index: 9999;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(241, 241, 241, 0.9);
+  opacity: 0;
+  animation: 200ms modal-fade-in forwards;
+}
+#lightbox .lightbox-close {
+    position: absolute;
+    top: 0;
+    right: 6%;
+    font-size: 12pt;
+    padding: 5px 20px;
+    border: none;
+    cursor: pointer;
+    background-color: #c00b0b;
+    color: #fff;
+}
+#lightbox .lightbox-close:hover {
+      padding-top: 10px;
+}
+#lightbox .lightbox-wrapper {
+    position: relaitve;
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
+}
+
+#lightbox .lightbox-iframe {
+    box-sizing: border-box;
+    width: 100vw;
+    height: 100%;
+}
+
+.lightbox-open {
+    overflow: hidden;
+}
+
+.lightbox-open #wpwrap {
+    -webkit-filter: blur(10px);
+    filter: blur(10px);
+}
+

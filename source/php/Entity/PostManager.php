@@ -75,7 +75,7 @@ abstract class PostManager
 
     public function afterSave()
     {
-
+        return true;
     }
 
     /**
@@ -179,16 +179,15 @@ abstract class PostManager
         if (isset($duplicate->ID)) {
             $post['ID'] = $duplicate->ID;
             $this->ID = wp_update_post($post);
-
-            $this->afterSave();
-            return $this->ID;
+            $isDuplicate = true;
+        }
+        else
+        {
+            // Create if not duplicate
+            $this->ID = wp_insert_post($post, true);
         }
 
-        // Create if not duplicate
-        $this->ID = wp_insert_post($post);
-
-        $this->afterSave();
-        return $this->ID;
+        return $this->afterSave();
     }
 
 

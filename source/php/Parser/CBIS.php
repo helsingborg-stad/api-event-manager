@@ -113,6 +113,15 @@ class CBIS extends \HbgEventImporter\Parser
      */
     public function start()
     {
+        global $wpdb;
+        $sql = 'CREATE TABLE IF NOT EXISTS event_occasions(
+        ID BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+        event BIGINT(20) UNSIGNED NOT NULL,
+        timestamp BIGINT(20) UNSIGNED NOT NULL,
+        PRIMARY KEY (ID))';
+
+        $wpdb->get_results($sql);
+
         $this->collectDataForLevenshtein();
 
         $this->client = new \SoapClient($this->url, array('keep_alive' => false));
@@ -176,8 +185,6 @@ class CBIS extends \HbgEventImporter\Parser
         foreach ($this->events as $eventData) {
             $this->saveEvent($eventData);
         }
-
-        return true;
     }
 
     /**
@@ -309,9 +316,14 @@ class CBIS extends \HbgEventImporter\Parser
                     '_event_manager_uid' => $this->getAttributeValue(self::ATTRIBUTE_ADDRESS, $attributes) ? $this->getAttributeValue(self::ATTRIBUTE_ADDRESS, $attributes) : $this->getAttributeValue(self::ATTRIBUTE_NAME, $attributes)
                 )
             );
-            $locationId = $location->save();
 
-            $this->levenshteinTitles['location'][] = array('ID' => $locationId, 'post_title' => $newPostTitle);
+            $creatSuccess = $location->save();
+            $locationId = $location->ID;
+            if($creatSuccess)
+            {
+                ++$this->nrOfNewLocations;
+                $this->levenshteinTitles['location'][] = array('ID' => $locationId, 'post_title' => $newPostTitle);
+            }
         }
     }
 
@@ -353,8 +365,13 @@ class CBIS extends \HbgEventImporter\Parser
                 )
             );
 
-            $locationId = $location->save();
-            $this->levenshteinTitles['location'][] = array('ID' => $locationId, 'post_title' => $newPostTitle);
+            $creatSuccess = $location->save();
+            $locationId = $location->ID;
+            if($creatSuccess)
+            {
+                ++$this->nrOfNewLocations;
+                $this->levenshteinTitles['location'][] = array('ID' => $location->ID, 'post_title' => $newPostTitle);
+            }
         }
 
         $newPostTitle = $this->getAttributeValue(self::ATTRIBUTE_CONTACT_PERSON, $attributes) != null ? $this->getAttributeValue(self::ATTRIBUTE_CONTACT_PERSON, $attributes) : '';
@@ -385,8 +402,13 @@ class CBIS extends \HbgEventImporter\Parser
                     )
                 );
 
-                $contactId = $contact->save();
-                $this->levenshteinTitles['contact'][] = array('ID' => $contactId, 'post_title' => $newPostTitle);
+                $creatSuccess = $contact->save();
+                $contactId = $contact->ID;
+                if($creatSuccess)
+                {
+                    ++$this->nrOfNewContacts;
+                    $this->levenshteinTitles['contact'][] = array('ID' => $contact->ID, 'post_title' => $newPostTitle);
+                }
             }
         }
 
@@ -416,7 +438,7 @@ class CBIS extends \HbgEventImporter\Parser
                     'event_link'            => $this->getAttributeValue(self::ATTRIBUTE_EVENT_LINK, $attributes),
                     'categories'            => $categories,
                     'occasions'             => $occasions,
-                    'location'              => (array) $locationId,
+                    'location'              => !is_null($locationId) ? (array) $locationId : null,
                     'organizer'             => '',
                     'organizer_phone'       => $this->getAttributeValue(self::ATTRIBUTE_PHONE_NUMBER, $attributes),
                     'organizer_email'       => $this->getAttributeValue(self::ATTRIBUTE_ORGANIZER_EMAIL, $attributes),
@@ -432,8 +454,13 @@ class CBIS extends \HbgEventImporter\Parser
                 )
             );
 
-            $eventId = $event->save();
-            $this->levenshteinTitles['event'][] = array('ID' => $eventId, 'post_title' => $newPostTitle);
+            $creatSuccess = $event->save();
+            $eventId = $event->ID;
+            if($creatSuccess)
+            {
+                ++$this->nrOfNewEvents;
+                $this->levenshteinTitles['event'][] = array('ID' => $event->ID, 'post_title' => $newPostTitle);
+            }
 
             if (!is_null($event->image)) {
                 $event->setFeaturedImageFromUrl($event->image);

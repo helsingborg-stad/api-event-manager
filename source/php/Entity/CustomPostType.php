@@ -33,6 +33,64 @@ abstract class CustomPostType
         add_filter('manage_edit-' . $this->slug . '_sortable_columns', array($this, 'tableSortableColumns'));
         add_action('manage_' . $this->slug . '_posts_custom_column', array($this, 'tableColumnsContent'), 10, 2);
         add_action('wp_ajax_my_action', array($this, 'acceptOrDeny'));
+        add_action('wp_ajax_collect_occasions', array($this, 'collectOccasions'));
+        add_action('wp_ajax_import_events', array($this, 'importEvents'));
+    }
+
+    public function importEvents()
+    {
+        if($_POST['value'] == 'cbis')
+        {
+            $importer = new \HbgEventImporter\Parser\CBIS('http://api.cbis.citybreak.com/Products.asmx?wsdl');
+            $data = $importer->getCreatedData();
+            wp_send_json($data);
+        }
+        else if($_POST['value'] == 'xcap')
+        {
+            $importer = new \HbgEventImporter\Parser\Xcap('http://mittkulturkort.se/calendar/listEvents.action?month=&date=&categoryPermaLink=&q=&p=&feedType=ICAL_XML');
+            $data = $importer->getCreatedData();
+            wp_send_json($data);
+        }
+    }
+
+    public function collectOccasions()
+    {
+        global $wpdb;
+
+        $sql = 'CREATE TABLE IF NOT EXISTS event_occasions(
+        ID BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+        event BIGINT(20) UNSIGNED NOT NULL,
+        timestamp BIGINT(20) UNSIGNED NOT NULL,
+        PRIMARY KEY (ID))';
+
+        $wpdb->get_results($sql);
+
+        $sql = $wpdb->prepare("SELECT ID FROM " . $wpdb->posts . " WHERE post_status = %s AND post_type = %s", 'publish', 'event');
+        $result = $wpdb->get_results($sql);
+
+        $resultString = "";
+
+        foreach ($result as $key => $event) {
+            $occasions = get_field('occasions', $event->ID);
+            foreach($occasions as $newKey => $value) {
+                $timestamp = strtotime($value['start_date']);
+                if($timestamp <= 0)
+                    continue;
+                $testQuery = $wpdb->prepare("SELECT ID,event,timestamp FROM event_occasions WHERE event = %d AND timestamp = %d", $event->ID, $timestamp);
+                $existing = $wpdb->get_results($testQuery);
+                if(empty($existing))
+                {
+                    $newId = $wpdb->insert('event_occasions', array('event' => $event->ID, 'timestamp' => $timestamp));
+                    $resultString .= "New event occasions inserted with event id: " . $event->ID . ', and timestamp: ' . $timestamp . "\n";
+                }
+                else
+                    $resultString .= "Already exists! Event: " . $existing[0]->event . ', timestamp: ' . $existing[0]->timestamp . "\n";
+            }
+
+        }
+        ob_clean();
+        echo $resultString;
+        wp_die();
     }
 
     /**
@@ -52,7 +110,7 @@ abstract class CustomPostType
         if($newValue == 1)
             $post->post_status = 'publish';
 
-        wp_update_post($post);
+        $error = wp_update_post($post, true);
 
         if($postAccepted == false) {
             add_post_meta($postId, 'accepted', $newValue);
@@ -61,6 +119,7 @@ abstract class CustomPostType
             echo $newValue;
             wp_die();
         } else {
+
             if($postAccepted[0] == $newValue) {
                 ob_clean();
                 echo $postAccepted[0];

@@ -12,11 +12,11 @@ class App
     {
 
         //Load third party componets
-        add_action('plugins_loaded', function () {
+        /*add_action('plugins_loaded', function () {
             if (!class_exists('acf_field_date_time_picker_plugin')) {
                 require_once(HBGEVENTIMPORTER_PATH . 'source/php/Vendor/acf-field-date-time-picker/acf-date_time_picker.php');
             }
-        });
+        });*/
         add_action('init', function () {
             if (!file_exists(WP_CONTENT_DIR . '/mu-plugins/AcfImportCleaner.php') && !class_exists('\\AcfImportCleaner\\AcfImportCleaner')) {
                 require_once HBGEVENTIMPORTER_PATH . 'source/php/Helper/AcfImportCleaner.php';
@@ -45,6 +45,8 @@ class App
         // Register cron action
         add_action('import_events_daily', array($this, 'startImport'));
 
+        //add_action('delete_post', array($this, 'checkItOut'), 10);
+
         //Check referer (popup box)
         $referer = (isset($_SERVER['HTTP_REFERER'])) ? $_SERVER['HTTP_REFERER'] : null;
         if ((isset($_GET['lightbox']) && $_GET['lightbox'] == 'true') || strpos($referer, 'lightbox=true') > -1) {
@@ -69,6 +71,12 @@ class App
         new Api\LocationFields();
         new Api\ContactFields();
         new Api\EventFields();
+    }
+
+    public function checkItOut()
+    {
+        debug_print_backtrace();
+        die();
     }
 
     public function enqueuStyleSheets()
@@ -110,6 +118,8 @@ class App
         if ($current_screen->id == 'contact' && $current_screen->action == 'add') {
             wp_enqueue_style('hbg-event-importer', HBGEVENTIMPORTER_URL . '/dist/css/hbg-event-importer.min.css');
         }
+
+        wp_enqueue_style('hbg-event-importer', HBGEVENTIMPORTER_URL . '/source/sass/custom.css');
     }
 
     /**
@@ -127,6 +137,8 @@ class App
         if ($current_screen->id == 'contact' && $current_screen->action == 'add') {
             wp_enqueue_script('hbg-event-importer', HBGEVENTIMPORTER_URL . '/dist/js/hbg-event-importer.min.js');
         }
+
+        wp_enqueue_script('hbg-event-importer', HBGEVENTIMPORTER_URL . '/source/js/custom.js');
     }
 
     /**

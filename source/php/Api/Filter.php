@@ -26,7 +26,7 @@ class Filter
 
     /**
      * Rename /wp-json/ to /json/.
-     * @return string Returning an empty string.
+     * @return string Returning "json".
      */
     public function apiBasePrefix($prefix)
     {
