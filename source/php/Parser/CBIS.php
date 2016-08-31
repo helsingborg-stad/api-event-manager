@@ -8,6 +8,8 @@ use \HbgEventImporter\Contact as Contact;
 
 class CBIS extends \HbgEventImporter\Parser
 {
+    //API for cbis
+    //http://api.cbis.citybreak.com/
     /**
      * Holds the Soap client
      * @var SoapClient
@@ -117,7 +119,8 @@ class CBIS extends \HbgEventImporter\Parser
         $sql = 'CREATE TABLE IF NOT EXISTS event_occasions(
         ID BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
         event BIGINT(20) UNSIGNED NOT NULL,
-        timestamp BIGINT(20) UNSIGNED NOT NULL,
+        timestamp_start BIGINT(20) UNSIGNED NOT NULL,
+        timestamp_end BIGINT(20) UNSIGNED NOT NULL,
         PRIMARY KEY (ID))';
 
         $wpdb->get_results($sql);
@@ -172,12 +175,13 @@ class CBIS extends \HbgEventImporter\Parser
         $this->arenas = $this->client->ListAll($requestParams)->ListAllResult->Items->Product;
 
         foreach($this->arenas as $key => $arenaData) {
+            break;
             $this->saveArena($arenaData);
         }
 
         // Adjust request parameters for getting products, 1500 itemsPerPage to get all events
         $requestParams['filter']['ProductType'] = "Product";
-        $requestParams['itemsPerPage'] = 1500;
+        $requestParams['itemsPerPage'] = 15;
 
         // Get and save the events
         $this->events = $this->client->ListAll($requestParams)->ListAllResult->Items->Product;
@@ -299,7 +303,7 @@ class CBIS extends \HbgEventImporter\Parser
             $country = $this->getAttributeValue(self::ATTRIBUTE_COUNTRY, $attributes);
             if(is_numeric($country))
                 $country = "Sweden";
-            // Create the location
+            // Create the location, found in api-event-manager/source/php/PostTypes/Locations.php
             $location = new Location(
                 array(
                     'post_title' => $newPostTitle

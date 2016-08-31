@@ -253,7 +253,7 @@ jQuery(document).ready(function ($) {
     $('.openContact').click(function(event) {
         event.preventDefault();
         ImportEvents.Prompt.Modal.open($(this).attr('href'));
-    });
+    });dfyrdys
 
     $('.createContact').click(function(event) {
         var parentId = $('#post_ID').val();
@@ -307,11 +307,6 @@ ImportEvents.Prompt.Modal = (function ($) {
         console.log(modalElement.find('#post_ID').val());
         console.log(modalElement.contents().find('#post').find('#post_ID').val());
         return;
-
-        /*$('#modularity-modal').remove();
-        isOpen = false;
-        location.reload();
-        $('body').removeClass('modularity-modal-open');*/
     };
 
     Modal.prototype.handleEvents = function () {

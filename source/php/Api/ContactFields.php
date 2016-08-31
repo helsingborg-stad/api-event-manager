@@ -8,7 +8,6 @@ namespace HbgEventImporter\Api;
 
 class ContactFields extends Fields
 {
-
     private $postType = 'contact';
 
     public function __construct()
@@ -23,7 +22,6 @@ class ContactFields extends Fields
      */
     public static function registerRestFields()
     {
-
         //Name
         register_rest_field($this->postType,
             'name',

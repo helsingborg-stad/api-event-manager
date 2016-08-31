@@ -39,7 +39,7 @@ class App
         add_action('admin_enqueue_scripts', array($this, 'enqueueScripts'));
 
         //Admin components
-        add_action('admin_menu', array($this, 'createParsePage'));
+        //add_action('admin_menu', array($this, 'createParsePage'));
         add_action('admin_notices', array($this, 'adminNotices'));
 
         // Register cron action
@@ -143,6 +143,7 @@ class App
 
     /**
      * Creates a admin page to trigger update data function
+     * ARE NOT USED ANYMORE
      * @return void
      */
     public function createParsePage()

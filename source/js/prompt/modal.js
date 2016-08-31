@@ -43,11 +43,6 @@ ImportEvents.Prompt.Modal = (function ($) {
         console.log(modalElement.find('#post_ID').val());
         console.log(modalElement.contents().find('#post').find('#post_ID').val());
         return;
-
-        /*$('#modularity-modal').remove();
-        isOpen = false;
-        location.reload();
-        $('body').removeClass('modularity-modal-open');*/
     };
 
     Modal.prototype.handleEvents = function () {

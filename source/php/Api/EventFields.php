@@ -8,12 +8,91 @@ namespace HbgEventImporter\Api;
 
 class EventFields extends Fields
 {
-
     private $postType = 'event';
 
     public function __construct()
     {
         add_action('rest_api_init', array($this, 'registerRestFields'));
+        add_action('rest_api_init', array($this, 'registerRestRoute'));
+    }
+
+    public static function registerRestRoute()
+    {
+        $response = register_rest_route('/wp/v2/event', '/time/', array(
+            'methods' => 'GET',
+            'callback' => array($this, 'getEventsByTimestamp'),
+        ));
+    }
+
+    public function errorMessage($message, array $texts)
+    {
+        $examples = array(rest_url('/wp/v2/event/time?start=1462060800'),
+            rest_url('/wp/v2/event/time?start=2016-05-01'),
+            rest_url('/wp/v2/event/time?starttime=1462060800&end=1470009600'),
+            rest_url('/wp/v2/event/time?starttime=2016-05-01&end=2016-08-01'));
+        $returnArray = array('error' => $message);
+        foreach($texts as $text) {
+            $returnArray['Example ' . ($text+1)] = $examples[$text];
+        }
+
+        $returnArray['Format examples'] = 'http://php.net/manual/en/datetime.formats.php';
+        return $returnArray;
+    }
+
+    /**
+     * http://v2.wp-api.org/
+     * @return [type] [description]
+     */
+    public function getEventsByTimestamp()
+    {
+        global $wpdb;
+        $week = 604800;
+        if(!isset($_GET['start']))
+            return $this->errorMessage('No variable supplied', array(0,1));
+
+        $time1 = $_GET['start'];
+        $timestamp = $time1;
+
+        if(!is_numeric($time1))
+            $timestamp = strtotime($timestamp);
+
+        if($timestamp == false)
+            return $this->errorMessage('Format not ok', array(0,1));
+
+        $query = "SELECT event FROM event_occasions WHERE timestamp_start BETWEEN %d AND %d OR timestamp_end BETWEEN %d AND %d";
+        $timePlusWeek = 0;
+
+        if(isset($_GET['end']))
+        {
+            $time2 = $_GET['end'];
+            $timestamp2 = $time2;
+            if(!is_numeric($time2))
+                $timestamp2 = strtotime($timestamp2);
+
+            if($timestamp2 == false)
+                return $this->errorMessage('Format not ok', array(2,3));
+
+            $timePlusWeek = $timestamp2;
+        }
+        else
+            $timePlusWeek = $timestamp + $week;
+
+        $completeQuery = $wpdb->prepare($query, $timestamp, $timePlusWeek, $timestamp, $timePlusWeek);
+
+        $result = $wpdb->get_results($completeQuery);
+
+        if(empty($result))
+            return array('Error' => 'There are no events');
+        $allEventIds = array();
+
+        foreach($result as $key => $value) {
+            $allEventIds[] = $value->event;
+        }
+
+        $allEventIds = array_unique($allEventIds);
+        $allEvents = $wpdb->get_results("SELECT * FROM event_posts WHERE post_type = '" . $this->postType . "' AND post_status = 'publish' AND ID IN(" . implode(',', $allEventIds) . ")");
+        //$response = new \WP_REST_Response($allEvents);
+        return $allEvents;
     }
 
     /**
@@ -23,7 +102,6 @@ class EventFields extends Fields
      */
     public static function registerRestFields()
     {
-
         //Alternative name
         register_rest_field($this->postType,
             'alternative_name',
