@@ -66,7 +66,6 @@ class Event extends \HbgEventImporter\Entity\PostManager
     {
         $occasionError = false;
         foreach($this->occasions as $o) {
-            $this->extractEventOccasion($o['start_date']);
             $occasionError = $this->extractEventOccasion($o['start_date'], $o['end_date']);
 
         }
