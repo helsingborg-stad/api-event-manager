@@ -64,30 +64,38 @@ class Event extends \HbgEventImporter\Entity\PostManager
      */
     public function saveOccasions()
     {
+        $occasionError = false;
         foreach($this->occasions as $o) {
             $this->extractEventOccasion($o['start_date']);
+            $occasionError = $this->extractEventOccasion($o['start_date'], $o['end_date']);
+
         }
         update_field('field_5761106783967', $this->occasions, $this->ID);
+        return $occasionError;
     }
 
-    public function extractEventOccasion($startDate)
+    public function extractEventOccasion($startDate, $endDate)
     {
         global $wpdb;
         $eventId = $this->ID;
         $timestamp = strtotime($startDate);
-        if($timestamp <= 0)
-            return;
-        //var_dump($timestamp);
-        $testQuery = $wpdb->prepare("SELECT ID,event,timestamp FROM event_occasions WHERE event = %d AND timestamp = %d", $eventId, $timestamp);
+        $timestamp2 = strtotime($endDate);
+        if($timestamp <= 0 || $timestamp2 <= 0 || $timestamp == false || $timestamp2 == false || $timestamp2 < $timestamp)
+            return true;
+
+        // We do not need to get all fields, they are just for debugging
+        $testQuery = $wpdb->prepare("SELECT * FROM event_occasions WHERE event = %d AND timestamp_start = %d AND timestamp_end = %d", $eventId, $timestamp, $timestamp2);
         $existing = $wpdb->get_results($testQuery);
         //var_dump($existing);
         $resultString = '';
         if(empty($existing))
         {
-            $wpdb->insert('event_occasions', array('event' => $eventId, 'timestamp' => $timestamp));
-            $resultString .= "New event occasions inserted with event id: " . $eventId . ', and timestamp: ' . $timestamp . "\n";
+            $wpdb->insert('event_occasions', array('event' => $eventId, 'timestamp_start' => $timestamp, 'timestamp_end' => $timestamp2));
+            $resultString .= "New event occasions inserted with event id: " . $eventId . ', and timestamp_start: ' . $timestamp . ", timestamp_end: " . $timestamp2 . "\n";
         }
         else
-            $resultString .= "Already exists! Event: " . $existing[0]->event . ', timestamp: ' . $existing[0]->timestamp . "\n";
+            $resultString .= "Already exists! Event: " . $existing[0]->event . ', timestamp: ' . $existing[0]->timestamp_start . ", timestamp_end: " . $existing[0]->timestamp_end . "\n";
+
+        return false;
     }
 }

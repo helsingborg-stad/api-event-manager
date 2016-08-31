@@ -60,7 +60,8 @@ abstract class CustomPostType
         $sql = 'CREATE TABLE IF NOT EXISTS event_occasions(
         ID BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
         event BIGINT(20) UNSIGNED NOT NULL,
-        timestamp BIGINT(20) UNSIGNED NOT NULL,
+        timestamp_start BIGINT(20) UNSIGNED NOT NULL,
+        timestamp_end BIGINT(20) UNSIGNED NOT NULL,
         PRIMARY KEY (ID))';
 
         $wpdb->get_results($sql);
@@ -74,17 +75,18 @@ abstract class CustomPostType
             $occasions = get_field('occasions', $event->ID);
             foreach($occasions as $newKey => $value) {
                 $timestamp = strtotime($value['start_date']);
-                if($timestamp <= 0)
+                $timestamp2 = strtotime($value['end_date']);
+                if($timestamp <= 0 || $timestamp2 <= 0 || $timestamp == false || $timestamp2 == false || $timestamp2 < $timestamp)
                     continue;
-                $testQuery = $wpdb->prepare("SELECT ID,event,timestamp FROM event_occasions WHERE event = %d AND timestamp = %d", $event->ID, $timestamp);
+                $testQuery = $wpdb->prepare("SELECT * FROM event_occasions WHERE event = %d AND timestamp_start = %d AND timestamp_end = %d", $event->ID, $timestamp, $timestamp2);
                 $existing = $wpdb->get_results($testQuery);
                 if(empty($existing))
                 {
-                    $newId = $wpdb->insert('event_occasions', array('event' => $event->ID, 'timestamp' => $timestamp));
-                    $resultString .= "New event occasions inserted with event id: " . $event->ID . ', and timestamp: ' . $timestamp . "\n";
+                    $newId = $wpdb->insert('event_occasions', array('event' => $event->ID, 'timestamp_start' => $timestamp, 'timestamp_end' => $timestamp2));
+                    $resultString .= "New event occasions inserted with event id: " . $event->ID . ', and timestamp_start: ' . $timestamp . ", timestamp_end: " . $timestamp2 . "\n";
                 }
                 else
-                    $resultString .= "Already exists! Event: " . $existing[0]->event . ', timestamp: ' . $existing[0]->timestamp . "\n";
+                    $resultString .= "Already exists! Event: " . $existing[0]->event . ', timestamp_start: ' . $existing[0]->timestamp_start . ", timestamp_end: " . $existing[0]->timestamp_end . "\n";
             }
 
         }
@@ -99,6 +101,13 @@ abstract class CustomPostType
      */
     public function acceptOrDeny()
     {
+        if(!isset($_POST['postId']) || !isset($_POST['value']))
+        {
+            ob_clean();
+            echo "Something went wrong!";
+            wp_die();
+        }
+
         $postId =  $_POST['postId'];
         $newValue = $_POST['value'];
 
