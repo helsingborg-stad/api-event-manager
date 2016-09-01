@@ -68,6 +68,14 @@ tbody .type-event.green {
   -webkit-filter: blur(10px);
   filter: blur(10px); }
 
+#blackOverlay {
+  display: none;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  position: absolute;
+  top: 0; }
+
 #importResponse {
   display: none;
   line-height: 0;
@@ -80,7 +88,7 @@ tbody .type-event.green {
   left: 50%;
   transform: translate(-50%);
   color: white;
-  border-radius: 20px; }
+  border-radius: 22px; }
 
 #importResponse .button {
   background-color: #76f578;
@@ -103,7 +111,7 @@ tbody .type-event.green {
 #importResponse div p {
   width: 100%;
   text-align: center;
-  position: relative;
+  position: absolute;
   top: 50%;
   transform: translateY(-50%);
   margin: 0; }
@@ -119,7 +127,7 @@ tbody .type-event.green {
   height: 100%; }
 
 #importResponse #event, #importResponse #location, #importResponse #contact {
-  visibility: hidden; }
+  opacity: 0; }
 
 .wp-admin.post-type-event.post-php.no-sync .postbox:not(#submitdiv):not(.acf-postbox),
 .wp-admin.post-type-event.post-php.no-sync .postarea,
