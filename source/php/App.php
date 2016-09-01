@@ -23,8 +23,8 @@ class App
             }
         });
         //Remove auto empty of trash
-        add_action( 'init', function () {
-            remove_action( 'wp_scheduled_delete', 'wp_scheduled_delete' );
+        add_action('init', function () {
+            remove_action('wp_scheduled_delete', 'wp_scheduled_delete');
         });
 
         //Activations hooks
@@ -61,6 +61,7 @@ class App
 
         //Init functions
         new Taxonomy\EventCategories();
+        new Taxonomy\LocationCategories();
 
         new Admin\Options();
         new Admin\UI();

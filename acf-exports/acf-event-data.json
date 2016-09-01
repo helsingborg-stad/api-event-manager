@@ -1,4 +1,4 @@
-{
+    {
         "key": "group_57610ebadcee8",
         "title": "Event",
         "fields": [
@@ -72,6 +72,43 @@
                 "placeholder": ""
             },
             {
+                "key": "field_57c7fbbee9d7b",
+                "label": "Additional links",
+                "name": "additional_links",
+                "type": "repeater",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "collapsed": "",
+                "min": "",
+                "max": "",
+                "layout": "block",
+                "button_label": "Add",
+                "sub_fields": [
+                    {
+                        "key": "field_57c7fd2381ffb",
+                        "label": "Link",
+                        "name": "link",
+                        "type": "url",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": "",
+                        "placeholder": ""
+                    }
+                ]
+            },
+            {
                 "key": "field_5761106783967",
                 "label": "Occasions",
                 "name": "occasions",
@@ -126,8 +163,8 @@
                         "conditional_logic": 0,
                         "wrapper": {
                             "width": "33",
-                            "class": "",
-                            "id": ""
+                            "class": "start_date",
+                            "id": "start_date_id"
                         },
                         "display_format": "Y-m-d H:i",
                         "return_format": "Y-m-d H:i",
@@ -143,8 +180,8 @@
                         "conditional_logic": 0,
                         "wrapper": {
                             "width": "33",
-                            "class": "",
-                            "id": ""
+                            "class": "end_date",
+                            "id": "end_date_id"
                         },
                         "display_format": "Y-m-d H:i",
                         "return_format": "Y-m-d H:i",
@@ -160,8 +197,8 @@
                         "conditional_logic": 0,
                         "wrapper": {
                             "width": "33",
-                            "class": "",
-                            "id": ""
+                            "class": "door_time",
+                            "id": "door_time_id"
                         },
                         "display_format": "Y-m-d H:i",
                         "return_format": "Y-m-d H:i",
@@ -285,7 +322,7 @@
                 "required": 0,
                 "conditional_logic": 0,
                 "wrapper": {
-                    "width": "",
+                    "width": "50",
                     "class": "",
                     "id": ""
                 },
@@ -293,9 +330,23 @@
                 "placeholder": "",
                 "prepend": "",
                 "append": "",
-                "maxlength": "",
-                "readonly": 0,
-                "disabled": 0
+                "maxlength": ""
+            },
+            {
+                "key": "field_57c808631942c",
+                "label": "Organizer link",
+                "name": "organizer_link",
+                "type": "url",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "50",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "placeholder": ""
             },
             {
                 "key": "field_57611391d9417",
@@ -482,6 +533,30 @@
                 "disabled": 0
             },
             {
+                "key": "field_57c7ed92054e6",
+                "label": "Included in annual pass",
+                "name": "annual_pass",
+                "type": "radio",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "choices": [
+                    "No",
+                    "Yes"
+                ],
+                "allow_null": 0,
+                "other_choice": 0,
+                "save_other_choice": 0,
+                "default_value": 0,
+                "layout": "horizontal",
+                "return_format": "value"
+            },
+            {
                 "key": "field_57611bd8acf1b",
                 "label": "Price information",
                 "name": "price_information",
@@ -666,7 +741,7 @@
                 "required": 0,
                 "conditional_logic": 0,
                 "wrapper": {
-                    "width": "",
+                    "width": "50",
                     "class": "",
                     "id": ""
                 },
@@ -682,7 +757,7 @@
                 "required": 0,
                 "conditional_logic": 0,
                 "wrapper": {
-                    "width": "",
+                    "width": "50",
                     "class": "",
                     "id": ""
                 },
@@ -698,7 +773,87 @@
                 "required": 0,
                 "conditional_logic": 0,
                 "wrapper": {
-                    "width": "",
+                    "width": "50",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "placeholder": ""
+            },
+            {
+                "key": "field_57c82373297f1",
+                "label": "Google Music",
+                "name": "google_music",
+                "type": "url",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "50",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "placeholder": ""
+            },
+            {
+                "key": "field_57c82396297f2",
+                "label": "Apple Music",
+                "name": "apple_music",
+                "type": "url",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "50",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "placeholder": ""
+            },
+            {
+                "key": "field_57c823a8297f3",
+                "label": "Spotify",
+                "name": "spotify",
+                "type": "url",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "50",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "placeholder": ""
+            },
+            {
+                "key": "field_57c826af782b0",
+                "label": "Soundcloud",
+                "name": "soundcloud",
+                "type": "url",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "50",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "placeholder": ""
+            },
+            {
+                "key": "field_57c823d7297f4",
+                "label": "Deezer",
+                "name": "deezer",
+                "type": "url",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "50",
                     "class": "",
                     "id": ""
                 },
@@ -707,9 +862,9 @@
             },
             {
                 "key": "field_57a9d84055156",
-                "label": "Youtube",
+                "label": "YouTube",
                 "name": "youtube",
-                "type": "url",
+                "type": "repeater",
                 "instructions": "",
                 "required": 0,
                 "conditional_logic": 0,
@@ -718,14 +873,35 @@
                     "class": "",
                     "id": ""
                 },
-                "default_value": "",
-                "placeholder": ""
+                "collapsed": "",
+                "min": 1,
+                "max": "",
+                "layout": "block",
+                "button_label": "Add",
+                "sub_fields": [
+                    {
+                        "key": "field_57c8153ecca56",
+                        "label": "YouTube link",
+                        "name": "youtube_link",
+                        "type": "url",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": "",
+                        "placeholder": ""
+                    }
+                ]
             },
             {
                 "key": "field_57a9d84955157",
                 "label": "Vimeo",
                 "name": "vimeo",
-                "type": "url",
+                "type": "repeater",
                 "instructions": "",
                 "required": 0,
                 "conditional_logic": 0,
@@ -734,8 +910,29 @@
                     "class": "",
                     "id": ""
                 },
-                "default_value": "",
-                "placeholder": ""
+                "collapsed": "",
+                "min": 1,
+                "max": "",
+                "layout": "block",
+                "button_label": "Add",
+                "sub_fields": [
+                    {
+                        "key": "field_57c817b7a3395",
+                        "label": "Vimeo link",
+                        "name": "vimeo_link",
+                        "type": "url",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": "",
+                        "placeholder": ""
+                    }
+                ]
             }
         ],
         "location": [

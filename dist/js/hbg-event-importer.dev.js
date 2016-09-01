@@ -228,6 +228,7 @@ function toggleClasses(element, responseValue) {
     }
 }
 
+
 jQuery(document).ready(function ($) {
 
     $('.acf-field[data-name="sync"] input[type="checkbox"]').on('change', function () {
@@ -253,7 +254,7 @@ jQuery(document).ready(function ($) {
     $('.openContact').click(function(event) {
         event.preventDefault();
         ImportEvents.Prompt.Modal.open($(this).attr('href'));
-    });dfyrdys
+    });
 
     $('.createContact').click(function(event) {
         var parentId = $('#post_ID').val();

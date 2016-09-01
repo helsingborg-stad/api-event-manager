@@ -19,7 +19,7 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
                 'show_in_nav_menus'    =>   true,
                 'has_archive'          =>   true,
                 'rewrite'              =>   array(
-                    'slug'       => 'poop',
+                    'slug'       => 'event',
                     'with_front' => false
                 ),
                 'hierarchical'          =>  false,
