@@ -58,6 +58,7 @@ class App
         $this->locationsPostType = new PostTypes\Locations();
         $this->contactsPostType = new PostTypes\Contacts();
         $this->sponsorsPostType = new PostTypes\Sponsors();
+        $this->packagesPostType = new PostTypes\Packages();
 
         //Init functions
         new Taxonomy\EventCategories();

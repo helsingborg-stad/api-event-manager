@@ -109,6 +109,27 @@
                 ]
             },
             {
+                "key": "field_57c97ba976b20",
+                "label": "Related events",
+                "name": "related_events",
+                "type": "page_link",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "post_type": [
+                    "event"
+                ],
+                "taxonomy": [],
+                "allow_null": 0,
+                "allow_archives": 1,
+                "multiple": 1
+            },
+            {
                 "key": "field_5761106783967",
                 "label": "Occasions",
                 "name": "occasions",

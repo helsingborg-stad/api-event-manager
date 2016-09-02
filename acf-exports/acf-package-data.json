@@ -1,0 +1,237 @@
+    {
+        "key": "group_57c94757c2169",
+        "title": "Package",
+        "fields": [
+            {
+                "key": "field_57c94b88d8030",
+                "label": "Events included",
+                "name": "events_included",
+                "type": "post_object",
+                "instructions": "Choose events included in the package.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "post_type": [
+                    "event"
+                ],
+                "taxonomy": [],
+                "allow_null": 0,
+                "multiple": 1,
+                "return_format": "object",
+                "ui": 1
+            },
+            {
+                "key": "field_57c949391d1b8",
+                "label": "Booking link",
+                "name": "booking_link",
+                "type": "url",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "placeholder": ""
+            },
+            {
+                "key": "field_57c949a4829ef",
+                "label": "Booking phone",
+                "name": "booking_phone",
+                "type": "text",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "placeholder": "",
+                "prepend": "",
+                "append": "",
+                "maxlength": ""
+            },
+            {
+                "key": "field_57c949ad829f0",
+                "label": "Age restriction",
+                "name": "age_restriction",
+                "type": "text",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "placeholder": "",
+                "prepend": "",
+                "append": "",
+                "maxlength": ""
+            },
+            {
+                "key": "field_57c9479000761",
+                "label": "Included in annual pass",
+                "name": "annual_pass",
+                "type": "radio",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "choices": [
+                    "No",
+                    "Yes"
+                ],
+                "allow_null": 0,
+                "other_choice": 0,
+                "save_other_choice": 0,
+                "default_value": "",
+                "layout": "horizontal",
+                "return_format": "value"
+            },
+            {
+                "key": "field_57c949b4829f1",
+                "label": "Price information",
+                "name": "price_information",
+                "type": "textarea",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "placeholder": "",
+                "maxlength": "",
+                "rows": 3,
+                "new_lines": "wpautop"
+            },
+            {
+                "key": "field_57c949b9829f2",
+                "label": "Ticket includes",
+                "name": "ticket_includes",
+                "type": "textarea",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "placeholder": "",
+                "maxlength": "",
+                "rows": 3,
+                "new_lines": "wpautop"
+            },
+            {
+                "key": "field_57c949bf829f3",
+                "label": "Price adult",
+                "name": "price_adult",
+                "type": "text",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "50",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "placeholder": "",
+                "prepend": "",
+                "append": "",
+                "maxlength": ""
+            },
+            {
+                "key": "field_57c949c3829f4",
+                "label": "Price children",
+                "name": "price_children",
+                "type": "text",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "50",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "placeholder": "",
+                "prepend": "",
+                "append": "",
+                "maxlength": ""
+            },
+            {
+                "key": "field_57c949c7829f5",
+                "label": "Price student",
+                "name": "price_student",
+                "type": "text",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "50",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "placeholder": "",
+                "prepend": "",
+                "append": "",
+                "maxlength": ""
+            },
+            {
+                "key": "field_57c949cb829f6",
+                "label": "Price senior",
+                "name": "price_senior",
+                "type": "text",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "50",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "placeholder": "",
+                "prepend": "",
+                "append": "",
+                "maxlength": ""
+            }
+        ],
+        "location": [
+            [
+                {
+                    "param": "post_type",
+                    "operator": "==",
+                    "value": "package"
+                }
+            ]
+        ],
+        "menu_order": 0,
+        "position": "normal",
+        "style": "default",
+        "label_placement": "top",
+        "instruction_placement": "label",
+        "hide_on_screen": "",
+        "active": 1,
+        "description": ""
+    }
