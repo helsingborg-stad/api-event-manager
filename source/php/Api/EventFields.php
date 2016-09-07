@@ -28,8 +28,8 @@ class EventFields extends Fields
     {
         $examples = array(rest_url('/wp/v2/event/time?start=1462060800'),
             rest_url('/wp/v2/event/time?start=2016-05-01'),
-            rest_url('/wp/v2/event/time?starttime=1462060800&end=1470009600'),
-            rest_url('/wp/v2/event/time?starttime=2016-05-01&end=2016-08-01'));
+            rest_url('/wp/v2/event/time?start=1462060800&end=1470009600'),
+            rest_url('/wp/v2/event/time?start=2016-05-01&end=2016-08-01'));
         $returnArray = array('error' => $message);
         foreach($texts as $text) {
             $returnArray['Example ' . ($text+1)] = $examples[$text];
@@ -123,7 +123,7 @@ class EventFields extends Fields
                 'get_callback' => array($this, 'stringGetCallBack'),
                 'update_callback' => array($this, 'stringUpdateCallBack'),
                 'schema' => array(
-                    'description' => 'Field contianing string value with external link.',
+                    'description' => 'Field containing string value with external link.',
                     'type' => 'string',
                     'context' => array('view', 'edit')
                 )
@@ -137,7 +137,7 @@ class EventFields extends Fields
                 'get_callback' => array($this, 'objectGetCallBack'),
                 'update_callback' => array($this, 'objectUpdateCallBack'),
                 'schema' => array(
-                    'description' => 'Field contianing array with occasions data.',
+                    'description' => 'Field containing array with occasions data.',
                     'type' => 'object',
                     'context' => array('view', 'edit')
                 )
@@ -153,7 +153,7 @@ class EventFields extends Fields
                 'get_callback' => array($this, 'stringGetCallBack'),
                 'update_callback' => array($this, 'stringUpdateCallBack'),
                 'schema' => array(
-                    'description' => 'Field contianing array with occation data.',
+                    'description' => 'Field containing array with occation data.',
                     'type' => 'string',
                     'context' => array('view', 'edit')
                 )
@@ -167,7 +167,7 @@ class EventFields extends Fields
                 'get_callback' => array($this, 'stringGetCallBack'),
                 'update_callback' => array($this, 'stringUpdateCallBack'),
                 'schema' => array(
-                    'description' => 'Field contianing array with organizer phone number.',
+                    'description' => 'Field containing array with organizer phone number.',
                     'type' => 'string',
                     'context' => array('view', 'edit')
                 )
@@ -181,7 +181,7 @@ class EventFields extends Fields
                 'get_callback' => array($this, 'stringGetCallBack'),
                 'update_callback' => array($this, 'stringUpdateCallBack'),
                 'schema' => array(
-                    'description' => 'Field contianing array with organizer email.',
+                    'description' => 'Field containing array with organizer email.',
                     'type' => 'string',
                     'context' => array('view', 'edit')
                 )
@@ -195,7 +195,7 @@ class EventFields extends Fields
                 'get_callback' => array($this, 'stringGetCallBack'),
                 'update_callback' => array($this, 'stringUpdateCallBack'),
                 'schema' => array(
-                    'description' => 'Field contianing array with co-organizer name.',
+                    'description' => 'Field containing array with co-organizer name.',
                     'type' => 'string',
                     'context' => array('view', 'edit')
                 )
@@ -209,7 +209,7 @@ class EventFields extends Fields
                 'get_callback' => array($this, 'stringGetCallBack'),
                 'update_callback' => array($this, 'stringUpdateCallBack'),
                 'schema' => array(
-                    'description' => 'Field contianing string with link to external booking service.',
+                    'description' => 'Field containing string with link to external booking service.',
                     'type' => 'string',
                     'context' => array('view', 'edit')
                 )
@@ -223,7 +223,7 @@ class EventFields extends Fields
                 'get_callback' => array($this, 'stringGetCallBack'),
                 'update_callback' => array($this, 'stringUpdateCallBack'),
                 'schema' => array(
-                    'description' => 'Field contianing string with phone number to external booking service.',
+                    'description' => 'Field containing string with phone number to external booking service.',
                     'type' => 'string',
                     'context' => array('view', 'edit')
                 )
@@ -237,7 +237,7 @@ class EventFields extends Fields
                 'get_callback' => array($this, 'stringGetCallBack'),
                 'update_callback' => array($this, 'stringUpdateCallBack'),
                 'schema' => array(
-                    'description' => 'Field contianing string with age restriction details.',
+                    'description' => 'Field containing string with age restriction details.',
                     'type' => 'string',
                     'context' => array('view', 'edit')
                 )
@@ -251,7 +251,7 @@ class EventFields extends Fields
                 'get_callback' => array($this, 'stringGetCallBack'),
                 'update_callback' => array($this, 'stringUpdateCallBack'),
                 'schema' => array(
-                    'description' => 'Field contianing string with price details.',
+                    'description' => 'Field containing string with price details.',
                     'type' => 'string',
                     'context' => array('view', 'edit')
                 )
@@ -265,7 +265,7 @@ class EventFields extends Fields
                 'get_callback' => array($this, 'stringGetCallBack'),
                 'update_callback' => array($this, 'stringUpdateCallBack'),
                 'schema' => array(
-                    'description' => 'Field contianing string with price details.',
+                    'description' => 'Field containing string with price details.',
                     'type' => 'string',
                     'context' => array('view', 'edit')
                 )
@@ -279,7 +279,7 @@ class EventFields extends Fields
                 'get_callback' => array($this, 'stringGetCallBack'),
                 'update_callback' => array($this, 'stringUpdateCallBack'),
                 'schema' => array(
-                    'description' => 'Field contianing string with price details.',
+                    'description' => 'Field containing string with price details.',
                     'type' => 'string',
                     'context' => array('view', 'edit')
                 )

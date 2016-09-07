@@ -71,31 +71,45 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
         add_action('publish_event', array($this, 'setAcceptedOnPublish'), 10, 2);
         add_filter('post_class', array($this, 'changeAcceptanceColor'));
         add_action('save_post', array($this, 'updateEventOccasions'), 10, 3);
+        add_action('delete_post', array($this, 'deleteEventOccasions'), 10);
     }
 
     /**
-     * Update event_occasions table when a post is saved.
+     * Delete event_occasions when an event is deleted.
+     */
+    public function deleteEventOccasions($post_id)
+    {
+        global $wpdb;
+        if ($wpdb->get_var($wpdb->prepare('SELECT event FROM event_occasions WHERE event = %d', $post_id))) {
+            $wpdb->query($wpdb->prepare('DELETE FROM event_occasions WHERE event = %d', $post_id));
+        }
+    }
+
+    /**
+     * Update event_occasions table when an event is saved.
      */
     public function updateEventOccasions($post_id, $post, $update)
     {
-        global $wpdb;
-        $post_type = 'event';
-        if ($post_type != $post->post_type) {
+        $slug = 'event';
+        if ($slug != $post->post_type) {
             return;
         }
-
-        $wpdb->delete('event_occasions', array( 'event' => $post_id ), array( '%d' ));
-        $repeater  = 'occasions';
-        $count = intval(get_post_meta($post_id, $repeater, true));
-
-        for ($i=0; $i<$count; $i++) {
-            $getField = $repeater.'_'.$i.'_'.'start_date';
-            $value1    = get_post_meta($post_id, $getField, true);
-            $timestamp = strtotime($value1);
-            $getField2 = $repeater.'_'.$i.'_'.'end_date';
-            $value1    = get_post_meta($post_id, $getField2, true);
-            $timestamp2 = strtotime($value1);
-            $wpdb->insert('event_occasions', array('event' => $post_id, 'timestamp_start' => $timestamp, 'timestamp_end' => $timestamp2));
+        if ($update) {
+            global $wpdb;
+            $wpdb->delete('event_occasions', array( 'event' => $post_id ), array( '%d' ));
+            $repeater  = 'occasions';
+            $count = intval(get_post_meta($post_id, $repeater, true));
+            for ($i=0; $i<$count; $i++) {
+                $getField   = $repeater.'_'.$i.'_'.'start_date';
+                $value1     = get_post_meta($post_id, $getField, true);
+                $timestamp  = strtotime($value1);
+                $getField2  = $repeater.'_'.$i.'_'.'end_date';
+                $value1     = get_post_meta($post_id, $getField2, true);
+                $timestamp2 = strtotime($value1);
+                $wpdb->insert('event_occasions', array('event' => $post_id, 'timestamp_start' => $timestamp, 'timestamp_end' => $timestamp2));
+            }
+        } else {
+            return;
         }
     }
 
