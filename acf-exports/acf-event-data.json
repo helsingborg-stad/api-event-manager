@@ -315,6 +315,31 @@
                 ],
                 "elements": "",
                 "min": "",
+                "max": 1,
+                "return_format": "object"
+            },
+            {
+                "key": "field_57ce8cbf9fe55",
+                "label": "Additional locations",
+                "name": "additional_locations",
+                "type": "relationship",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "post_type": [
+                    "location"
+                ],
+                "taxonomy": [],
+                "filters": [
+                    "search"
+                ],
+                "elements": "",
+                "min": "",
                 "max": "",
                 "return_format": "object"
             },

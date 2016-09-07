@@ -51,25 +51,52 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
             echo '<a href="' . get_edit_post_link($contactId[0]) . '">' . get_the_title($contactId[0]) . '</a>';
         });
 
-        $this->addTableColumn('acceptAndDeny', __('Accepted/Denied'), true, function($column, $postId) {
+        $this->addTableColumn('acceptAndDeny', __('Accepted/Denied'), true, function ($column, $postId) {
             $metaAccepted = get_post_meta($postId, 'accepted');
-            if(!isset($metaAccepted[0]))
-            {
+            if (!isset($metaAccepted[0])) {
                 add_post_meta($postId, 'accepted', 0);
                 $metaAccepted[0] = 0;
             }
             $first = '';
             $second = '';
-            if($metaAccepted[0] == 1)
+            if ($metaAccepted[0] == 1) {
                 $first = 'hiddenElement';
-            else if($metaAccepted[0] == -1)
+            } elseif ($metaAccepted[0] == -1) {
                 $second = 'hiddenElement';
+            }
             echo '<a href="#" class="accept button-primary ' . $first . '" postid="' . $postId . '">' . __('Accept') . '</a>
             <a href="#" class="deny button-primary ' . $second . '" postid="' . $postId . '">' . __('Deny') . '</a>';
         });
         add_action('admin_head-post.php', array($this, 'hidePublishingActions'));
-        add_action('publish_event', array($this, 'setAcceptedOnPublish'), 10, 2 );
+        add_action('publish_event', array($this, 'setAcceptedOnPublish'), 10, 2);
         add_filter('post_class', array($this, 'changeAcceptanceColor'));
+        add_action('save_post', array($this, 'updateEventOccasions'), 10, 3);
+    }
+
+    /**
+     * Update event_occasions table when a post is saved.
+     */
+    public function updateEventOccasions($post_id, $post, $update)
+    {
+        global $wpdb;
+        $post_type = 'event';
+        if ($post_type != $post->post_type) {
+            return;
+        }
+
+        $wpdb->delete('event_occasions', array( 'event' => $post_id ), array( '%d' ));
+        $repeater  = 'occasions';
+        $count = intval(get_post_meta($post_id, $repeater, true));
+
+        for ($i=0; $i<$count; $i++) {
+            $getField = $repeater.'_'.$i.'_'.'start_date';
+            $value1    = get_post_meta($post_id, $getField, true);
+            $timestamp = strtotime($value1);
+            $getField2 = $repeater.'_'.$i.'_'.'end_date';
+            $value1    = get_post_meta($post_id, $getField2, true);
+            $timestamp2 = strtotime($value1);
+            $wpdb->insert('event_occasions', array('event' => $post_id, 'timestamp_start' => $timestamp, 'timestamp_end' => $timestamp2));
+        }
     }
 
     /**
@@ -80,12 +107,13 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
     public function changeAcceptanceColor($classes)
     {
         $postAndId = explode('-', $classes[3]);
-        if($postAndId[0] == 'post') {
+        if ($postAndId[0] == 'post') {
             $metaAccepted = get_post_meta($postAndId[1], 'accepted');
-            if($metaAccepted[0] == -1)
+            if ($metaAccepted[0] == -1) {
                 $classes[] = "red";
-            else if($metaAccepted[0] == 1)
+            } elseif ($metaAccepted[0] == 1) {
                 $classes[] = "green";
+            }
         }
         return $classes;
     }
@@ -98,21 +126,22 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
     public function setAcceptedOnPublish($ID, $post)
     {
         $metaAccepted = get_post_meta($ID, 'accepted');
-        if(!isset($metaAccepted[0]))
+        if (!isset($metaAccepted[0])) {
             add_post_meta($ID, 'accepted', 1);
-        else
+        } else {
             update_post_meta($ID, 'accepted', 1);
+        }
     }
 
     /**
      * Hiding the option to change post_status on when in a event, instead use the buttons in event list
      * @return void
      */
-    function hidePublishingActions()
+    public function hidePublishingActions()
     {
         $my_post_type = 'event';
         global $post;
-        if($post->post_type == $my_post_type) {
+        if ($post->post_type == $my_post_type) {
             echo '<style type="text/css">
                 #misc-publishing-actions .misc-pub-section.misc-pub-post-status,#minor-publishing-actions
                 {
@@ -134,14 +163,13 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
             return;
         }
 
-        if(current_user_can('manage_options'))
-        {
+        if (current_user_can('manage_options')) {
             echo '<div class="alignleft actions" style="position: relative;">';
                 //echo '<a href="' . admin_url('options.php?page=import-events') . '" class="button-primary" id="post-query-submit">Import XCAP</a>';
                 //echo '<a href="' . admin_url('options.php?page=import-cbis-events') . '" class="button-primary" id="post-query-submit">Import CBIS</a>';
                 echo '<div class="button-primary extraspace" id="xcap">' . __('Import XCAP') . '</div>';
-                echo '<div class="button-primary extraspace" id="cbis">' . __('Import CBIS') . '</div>';
-                echo '<div class="button-primary extraspace" id="occasions">Collect event timestamps</div>';
+            echo '<div class="button-primary extraspace" id="cbis">' . __('Import CBIS') . '</div>';
+            echo '<div class="button-primary extraspace" id="occasions">Collect event timestamps</div>';
                 //echo '<div id="importResponse"></div>';
             echo '</div>';
         }

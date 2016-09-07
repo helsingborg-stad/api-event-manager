@@ -34,7 +34,7 @@ class App
         //Json load files
         add_filter('acf/settings/load_json', array($this, 'acfJsonLoadPath'));
 
-        //Admin scriots
+        //Admin scripts
         add_action('admin_enqueue_scripts', array($this, 'enqueueStyles'));
         add_action('admin_enqueue_scripts', array($this, 'enqueueScripts'));
 
@@ -66,6 +66,7 @@ class App
 
         new Admin\Options();
         new Admin\UI();
+        new Admin\FilterRestrictions();
 
         new Api\Filter();
         new Api\PostTypes();

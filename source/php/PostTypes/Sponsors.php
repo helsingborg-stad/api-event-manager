@@ -37,9 +37,8 @@ class Sponsors extends \HbgEventImporter\Entity\CustomPostType
 
     public function changeImageBox($page, $context, $object)
     {
-        if($page == 'sponsor')
-        {
-            remove_meta_box( 'postimagediv', 'sponsor', 'side' );
+        if ($page == 'sponsor') {
+            remove_meta_box('postimagediv', 'sponsor', 'side');
             add_meta_box('postimagediv', __('Logo'), 'post_thumbnail_meta_box', 'sponsor', 'side');
             remove_action('do_meta_boxes', array($this, 'changeImageBox'));
         }
