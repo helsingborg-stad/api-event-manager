@@ -72,6 +72,47 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
         add_filter('post_class', array($this, 'changeAcceptanceColor'));
         add_action('save_post', array($this, 'updateEventOccasions'), 10, 3);
         add_action('delete_post', array($this, 'deleteEventOccasions'), 10);
+        add_filter('acf/validate_value/name=end_date', array($this, 'validateEndDate'), 10, 4);
+        add_filter('acf/validate_value/name=door_time', array($this, 'validateDoorTime'), 10, 4);
+    }
+
+    /**
+     * Validate end date to be less than start date.
+     */
+    public function validateEndDate($valid, $value, $field, $input)
+    {
+        if (!$valid) {
+            return $valid;
+        }
+        $repeater_key = 'field_5761106783967';
+        $start_key = 'field_5761109a83968';
+        // $end_key = 'field_576110e583969';
+        $row = preg_replace('/^\s*acf\[[^\]]+\]\[([^\]]+)\].*$/', '\1', $input);
+        $start_value = $_POST['acf'][$repeater_key][$row][$start_key];
+        $end_value = $value;
+        if ($end_value <= $start_value) {
+            $valid = 'End date must be after start date';
+        }
+        return $valid;
+    }
+
+    /**
+     * Validate door time to be equal or greater than start date.
+     */
+    public function validateDoorTime($valid, $value, $field, $input)
+    {
+        if (!$valid) {
+            return $valid;
+        }
+        $repeater_key = 'field_5761106783967';
+        $start_key = 'field_5761109a83968';
+        $row = preg_replace('/^\s*acf\[[^\]]+\]\[([^\]]+)\].*$/', '\1', $input);
+        $start_value = $_POST['acf'][$repeater_key][$row][$start_key];
+        $door_value = $value;
+        if ($door_value > $start_value) {
+            $valid = 'Door time cannot be after start date';
+        }
+        return $valid;
     }
 
     /**

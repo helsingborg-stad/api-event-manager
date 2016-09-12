@@ -31,7 +31,7 @@ class EventFields extends Fields
             rest_url('/wp/v2/event/time?start=1462060800&end=1470009600'),
             rest_url('/wp/v2/event/time?start=2016-05-01&end=2016-08-01'));
         $returnArray = array('error' => $message);
-        foreach($texts as $text) {
+        foreach ($texts as $text) {
             $returnArray['Example ' . ($text+1)] = $examples[$text];
         }
 
@@ -47,50 +47,60 @@ class EventFields extends Fields
     {
         global $wpdb;
         $week = 604800;
-        if(!isset($_GET['start']))
-            return $this->errorMessage('No variable supplied', array(0,1));
+        if (!isset($_GET['start'])) {
+            return $this->errorMessage('No variable supplied', array(0, 1));
+        }
 
         $time1 = $_GET['start'];
         $timestamp = $time1;
 
-        if(!is_numeric($time1))
+        if (!is_numeric($time1)) {
             $timestamp = strtotime($timestamp);
+        }
 
-        if($timestamp == false)
-            return $this->errorMessage('Format not ok', array(0,1));
+        if ($timestamp == false) {
+            return $this->errorMessage('Format not ok', array(0, 1));
+        }
 
         $query = "SELECT event FROM event_occasions WHERE timestamp_start BETWEEN %d AND %d OR timestamp_end BETWEEN %d AND %d";
         $timePlusWeek = 0;
 
-        if(isset($_GET['end']))
-        {
+        if (isset($_GET['end'])) {
             $time2 = $_GET['end'];
             $timestamp2 = $time2;
-            if(!is_numeric($time2))
+            if (!is_numeric($time2)) {
                 $timestamp2 = strtotime($timestamp2);
+            }
 
-            if($timestamp2 == false)
-                return $this->errorMessage('Format not ok', array(2,3));
+            if ($timestamp2 == false) {
+                return $this->errorMessage('Format not ok', array(2, 3));
+            }
 
             $timePlusWeek = $timestamp2;
-        }
-        else
+        } else {
             $timePlusWeek = $timestamp + $week;
+        }
 
         $completeQuery = $wpdb->prepare($query, $timestamp, $timePlusWeek, $timestamp, $timePlusWeek);
 
         $result = $wpdb->get_results($completeQuery);
 
-        if(empty($result))
+        if (empty($result)) {
             return array('Error' => 'There are no events');
+        }
         $allEventIds = array();
 
-        foreach($result as $key => $value) {
+        foreach ($result as $key => $value) {
             $allEventIds[] = $value->event;
         }
 
-        $allEventIds = array_unique($allEventIds);
-        $allEvents = $wpdb->get_results("SELECT * FROM event_posts WHERE post_type = '" . $this->postType . "' AND post_status = 'publish' AND ID IN(" . implode(',', $allEventIds) . ")");
+        //$allEventIds = array_unique($allEventIds);
+        $allEventIds = implode(',', $allEventIds);
+        //wp_die(print_r($allEventIds));
+        $allEvents = $wpdb->get_results("SELECT * FROM event_posts WHERE post_type = '" . $this->postType . "' AND post_status = 'publish' AND ID IN(" . $allEventIds . ")");
+
+        //wp_die(print_r($allEvents));
+
         //$response = new \WP_REST_Response($allEvents);
         return $allEvents;
     }
@@ -109,7 +119,7 @@ class EventFields extends Fields
                 'get_callback' => array($this, 'stringGetCallBack'),
                 'update_callback' => array($this, 'stringUpdateCallBack'),
                 'schema' => array(
-                    'description' => 'Field contianing string value with an alternative name.',
+                    'description' => 'Field containing string value with an alternative name.',
                     'type' => 'string',
                     'context' => array('view', 'edit')
                 )

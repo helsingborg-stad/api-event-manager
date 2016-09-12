@@ -981,8 +981,8 @@
                 ]
             },
             {
-                "key": "field_57cfba1b54b27",
-                "label": "Open hours",
+                "key": "field_57d274173bf4c",
+                "label": "Recurring event",
                 "name": "",
                 "type": "tab",
                 "instructions": "",
@@ -997,11 +997,11 @@
                 "endpoint": 0
             },
             {
-                "key": "field_57cfba70697e1",
-                "label": "Exceptions",
-                "name": "oph_exeptions",
+                "key": "field_57d2749e3bf4d",
+                "label": "Reccurence rules",
+                "name": "rcr_rules",
                 "type": "repeater",
-                "instructions": "Add one or more exceptions to this scheme.",
+                "instructions": "",
                 "required": 0,
                 "conditional_logic": 0,
                 "wrapper": {
@@ -1012,179 +1012,146 @@
                 "collapsed": "",
                 "min": "",
                 "max": "",
-                "layout": "table",
-                "button_label": "Add",
+                "layout": "row",
+                "button_label": "L\u00e4gg till rad",
                 "sub_fields": [
                     {
-                        "key": "field_57cfbb60697e2",
-                        "label": "Date",
-                        "name": "exception_date",
-                        "type": "date_picker",
+                        "key": "field_57d275713bf4e",
+                        "label": "Day",
+                        "name": "rcr_week_day",
+                        "type": "select",
                         "instructions": "",
-                        "required": 1,
+                        "required": 0,
                         "conditional_logic": 0,
                         "wrapper": {
-                            "width": "30",
+                            "width": "",
                             "class": "",
                             "id": ""
                         },
-                        "display_format": "F j, Y",
-                        "return_format": "d\/m\/Y",
+                        "choices": {
+                            "1": "Monday",
+                            "2": "Tuesday",
+                            "3": "Wednesday",
+                            "4": "Thursday",
+                            "5": "Friday",
+                            "6": "Saturday",
+                            "7": "Sunday"
+                        },
+                        "default_value": [],
+                        "allow_null": 0,
+                        "multiple": 0,
+                        "ui": 0,
+                        "ajax": 0,
+                        "return_format": "value",
+                        "placeholder": ""
+                    },
+                    {
+                        "key": "field_57d277153bf4f",
+                        "label": "Start time",
+                        "name": "rcr_start_time",
+                        "type": "time_picker",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "display_format": "H:i",
+                        "return_format": "H:i"
+                    },
+                    {
+                        "key": "field_57d2777b3bf50",
+                        "label": "End time",
+                        "name": "rcr_end_time",
+                        "type": "time_picker",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "display_format": "H:i",
+                        "return_format": "H:i"
+                    },
+                    {
+                        "key": "field_57d2787b3bf51",
+                        "label": "Time period",
+                        "name": "rcr_time_period",
+                        "type": "date_picker",
+                        "instructions": "When the reccurring event period ends",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "display_format": "Y-m-d",
+                        "return_format": "Y-m-d",
                         "first_day": 1
                     },
                     {
-                        "key": "field_57cfbbb9697e3",
-                        "label": "Exeption information",
-                        "name": "exeption_information",
-                        "type": "text",
+                        "key": "field_57d279addb0cb",
+                        "label": "Exceptions",
+                        "name": "rcr_exceptions",
+                        "type": "repeater",
                         "instructions": "",
-                        "required": 1,
+                        "required": 0,
                         "conditional_logic": 0,
                         "wrapper": {
-                            "width": "70",
+                            "width": "",
                             "class": "",
                             "id": ""
                         },
-                        "default_value": "",
-                        "placeholder": "eg. 08:00 - 16:00",
-                        "prepend": "",
-                        "append": "",
-                        "maxlength": ""
+                        "collapsed": "",
+                        "min": "",
+                        "max": "",
+                        "layout": "table",
+                        "button_label": "L\u00e4gg till rad",
+                        "sub_fields": [
+                            {
+                                "key": "field_57d27c10a376d",
+                                "label": "Exception note",
+                                "name": "rcr_exc_note",
+                                "type": "text",
+                                "instructions": "",
+                                "required": 0,
+                                "conditional_logic": 0,
+                                "wrapper": {
+                                    "width": "",
+                                    "class": "",
+                                    "id": ""
+                                },
+                                "default_value": "",
+                                "placeholder": "eg. closed for holiday",
+                                "prepend": "",
+                                "append": "",
+                                "maxlength": ""
+                            },
+                            {
+                                "key": "field_57d279f8db0cc",
+                                "label": "Exception date",
+                                "name": "rcr_exc_date",
+                                "type": "date_picker",
+                                "instructions": "",
+                                "required": 0,
+                                "conditional_logic": 0,
+                                "wrapper": {
+                                    "width": "",
+                                    "class": "",
+                                    "id": ""
+                                },
+                                "display_format": "Y-m-d",
+                                "return_format": "Y-m-d",
+                                "first_day": 1
+                            }
+                        ]
                     }
                 ]
-            },
-            {
-                "key": "field_57cfbd7c71de3",
-                "label": "Hours monday",
-                "name": "oph_mon",
-                "type": "text",
-                "instructions": "",
-                "required": 0,
-                "conditional_logic": 0,
-                "wrapper": {
-                    "width": "",
-                    "class": "",
-                    "id": ""
-                },
-                "default_value": "",
-                "placeholder": "eg. 08:00 - 15:00",
-                "prepend": "",
-                "append": "",
-                "maxlength": ""
-            },
-            {
-                "key": "field_57cfbdf771de4",
-                "label": "Hours tuesday",
-                "name": "oph_tue",
-                "type": "text",
-                "instructions": "",
-                "required": 0,
-                "conditional_logic": 0,
-                "wrapper": {
-                    "width": "",
-                    "class": "",
-                    "id": ""
-                },
-                "default_value": "",
-                "placeholder": "eg. 08:00 - 15:00",
-                "prepend": "",
-                "append": "",
-                "maxlength": ""
-            },
-            {
-                "key": "field_57cfbf5bc7013",
-                "label": "Hours wednesday",
-                "name": "oph_wed",
-                "type": "text",
-                "instructions": "",
-                "required": 0,
-                "conditional_logic": 0,
-                "wrapper": {
-                    "width": "",
-                    "class": "",
-                    "id": ""
-                },
-                "default_value": "",
-                "placeholder": "eg. 08:00 - 15:00",
-                "prepend": "",
-                "append": "",
-                "maxlength": ""
-            },
-            {
-                "key": "field_57cfbf73c7015",
-                "label": "Hours thursday",
-                "name": "oph_thu",
-                "type": "text",
-                "instructions": "",
-                "required": 0,
-                "conditional_logic": 0,
-                "wrapper": {
-                    "width": "",
-                    "class": "",
-                    "id": ""
-                },
-                "default_value": "",
-                "placeholder": "eg. 08:00 - 15:00",
-                "prepend": "",
-                "append": "",
-                "maxlength": ""
-            },
-            {
-                "key": "field_57cfbf91c7016",
-                "label": "Hours friday",
-                "name": "oph_fri",
-                "type": "text",
-                "instructions": "",
-                "required": 0,
-                "conditional_logic": 0,
-                "wrapper": {
-                    "width": "",
-                    "class": "",
-                    "id": ""
-                },
-                "default_value": "",
-                "placeholder": "eg. 08:00 - 15:00",
-                "prepend": "",
-                "append": "",
-                "maxlength": ""
-            },
-            {
-                "key": "field_57cfbfca99681",
-                "label": "Hours saturday",
-                "name": "oph_sat",
-                "type": "text",
-                "instructions": "",
-                "required": 0,
-                "conditional_logic": 0,
-                "wrapper": {
-                    "width": "",
-                    "class": "",
-                    "id": ""
-                },
-                "default_value": "",
-                "placeholder": "eg. 08:00 - 15:00",
-                "prepend": "",
-                "append": "",
-                "maxlength": ""
-            },
-            {
-                "key": "field_57cfbfd899682",
-                "label": "Hours sunday",
-                "name": "oph_sun",
-                "type": "text",
-                "instructions": "",
-                "required": 0,
-                "conditional_logic": 0,
-                "wrapper": {
-                    "width": "",
-                    "class": "",
-                    "id": ""
-                },
-                "default_value": "",
-                "placeholder": "eg. 08:00 - 15:00",
-                "prepend": "",
-                "append": "",
-                "maxlength": ""
             }
         ],
         "location": [
