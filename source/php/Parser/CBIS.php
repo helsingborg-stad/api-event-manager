@@ -116,19 +116,8 @@ class CBIS extends \HbgEventImporter\Parser
     public function start()
     {
         global $wpdb;
-        $db_occasions = $wpdb->prefix . "occasions";
-        $sql = "CREATE TABLE IF NOT EXISTS $db_occasions(
-        ID BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-        event BIGINT(20) UNSIGNED NOT NULL,
-        timestamp_start BIGINT(20) UNSIGNED NOT NULL,
-        timestamp_end BIGINT(20) UNSIGNED NOT NULL,
-        timestamp_door BIGINT(20) UNSIGNED DEFAULT NULL,
-        PRIMARY KEY (ID))";
-
-        $wpdb->get_results($sql);
 
         $this->collectDataForLevenshtein();
-
         $this->client = new \SoapClient($this->url, array('keep_alive' => false));
 
         $cbisKey = get_option('options_cbis_api_key');

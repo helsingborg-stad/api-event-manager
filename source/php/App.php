@@ -10,6 +10,8 @@ class App
 
     public function __construct()
     {
+        global $event_db_version;
+        $event_db_version = '1.0';
 
         //Load third party componets
         /*add_action('plugins_loaded', function () {
@@ -30,6 +32,8 @@ class App
         //Activations hooks
         register_activation_hook(plugin_basename(__FILE__), '\HbgEventImporter\App::addCronJob');
         register_deactivation_hook(plugin_basename(__FILE__), '\HbgEventImporter\App::removeCronJob');
+
+
 
         //Json load files
         add_filter('acf/settings/load_json', array($this, 'acfJsonLoadPath'));
@@ -201,4 +205,24 @@ class App
     {
         wp_clear_scheduled_hook('import_events_daily');
     }
+
+    public static function database_creation()
+    {
+        global $wpdb;
+        global $event_db_version;
+        $table_name = $wpdb->prefix . 'occasions';
+        $charset_collate = $wpdb->get_charset_collate();
+        $sql = "CREATE TABLE $table_name (
+        ID BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+        event BIGINT(20) UNSIGNED NOT NULL,
+        timestamp_start BIGINT(20) UNSIGNED NOT NULL,
+        timestamp_end BIGINT(20) UNSIGNED NOT NULL,
+        timestamp_door BIGINT(20) UNSIGNED DEFAULT NULL,
+        PRIMARY KEY  (ID)
+        ) $charset_collate;";
+        require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+        dbDelta($sql);
+        add_option('event_db_version', $event_db_version);
+    }
+
 }

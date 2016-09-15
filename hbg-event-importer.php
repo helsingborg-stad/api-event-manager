@@ -23,7 +23,7 @@ if (file_exists(__DIR__ . '/vendor/autoload.php')) {
     require_once __DIR__ . '/vendor/autoload.php';
 }
 
-//Include vendor files
+// Include vendor files
 if (file_exists(dirname(ABSPATH) . '/vendor/autoload.php')) {
     require_once dirname(ABSPATH) . '/vendor/autoload.php';
 }
@@ -42,6 +42,9 @@ $loader = new HbgEventImporter\Vendor\Psr4ClassLoader();
 $loader->addPrefix('HbgEventImporter', HBGEVENTIMPORTER_PATH);
 $loader->addPrefix('HbgEventImporter', HBGEVENTIMPORTER_PATH . 'source/php/');
 $loader->register();
+
+// Create necessary database tables when plugin is activated
+register_activation_hook(plugin_basename(__FILE__), '\HbgEventImporter\App::database_creation');
 
 // Start application
 new HbgEventImporter\App();
