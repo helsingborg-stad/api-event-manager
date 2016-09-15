@@ -70,14 +70,145 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
         add_action('admin_head-post.php', array($this, 'hidePublishingActions'));
         add_action('publish_event', array($this, 'setAcceptedOnPublish'), 10, 2);
         add_filter('post_class', array($this, 'changeAcceptanceColor'));
-        add_action('save_post', array($this, 'updateEventOccasions'), 10, 3);
+        add_action('save_post', array($this, 'saveEventOccasions'), 10, 3);
+        add_action('save_post', array($this, 'saveRecurringEvents'), 10, 3);
         add_action('delete_post', array($this, 'deleteEventOccasions'), 10);
         add_filter('acf/validate_value/name=end_date', array($this, 'validateEndDate'), 10, 4);
         add_filter('acf/validate_value/name=door_time', array($this, 'validateDoorTime'), 10, 4);
+        add_filter('acf/validate_value/name=occasions', array($this, 'validateOccasion'), 10, 4);
+        add_filter('acf/validate_value/name=rcr_rules', array($this, 'validateOccasion'), 10, 4);
+        add_filter('acf/validate_value/name=rcr_end_time', array($this, 'validateRcrEndTime'), 10, 4);
+        add_filter('acf/validate_value/name=rcr_door_time', array($this, 'validateRcrDoorTime'), 10, 4);
+        add_filter('acf/validate_value/name=rcr_end_date', array($this, 'validateRcrEndDate'), 10, 4);
     }
 
     /**
-     * Validate end date to be less than start date.
+     * Save event_occasions table when an event is published or updated.
+     * @param  int  $post_id event post id
+     * @param  post $post The post object.
+     * @param  bool $update Whether this is an existing post being updated or not.
+     */
+    public function saveEventOccasions($post_id, $post, $update)
+    {
+        $slug = 'event';
+        if ($slug != $post->post_type) {
+            return;
+        }
+        if ($update) {
+            global $wpdb;
+            $db_occasions = $wpdb->prefix . "occasions";
+            $wpdb->delete($db_occasions, array( 'event' => $post_id ), array( '%d' ));
+            $repeater  = 'occasions';
+            $count = intval(get_post_meta($post_id, $repeater, true));
+            for ($i=0; $i<$count; $i++) {
+                $getField   = $repeater.'_'.$i.'_'.'start_date';
+                $value1     = get_post_meta($post_id, $getField, true);
+                $timestamp  = strtotime($value1);
+                $getField2  = $repeater.'_'.$i.'_'.'end_date';
+                $value2     = get_post_meta($post_id, $getField2, true);
+                $timestamp2 = strtotime($value2);
+                $getField3  = $repeater.'_'.$i.'_'.'door_time';
+                $value3     = get_post_meta($post_id, $getField3, true);
+                if (empty($value3)) {
+                    $timestamp3 = null;
+                } else {
+                    $timestamp3 = strtotime($value3);
+                }
+
+                $wpdb->insert($db_occasions, array('event' => $post_id, 'timestamp_start' => $timestamp, 'timestamp_end' => $timestamp2, 'timestamp_door' => $timestamp3));
+            }
+        } else {
+            return;
+        }
+    }
+
+    /**
+     * Save recurring events to event_occasions table.
+     * @param  int  $post_id event post id
+     * @param  post $post The post object.
+     * @param  bool $update Whether this is an existing post being updated or not.
+     */
+    public function saveRecurringEvents($post_id, $post, $update)
+    {
+        $slug = 'event';
+        if ($slug != $post->post_type) {
+            return;
+        }
+        if ($update) {
+            $repeater  = 'rcr_rules';
+            $rcr_count = intval(get_post_meta($post_id, $repeater, true));
+            if ($rcr_count > 0) {
+                global $wpdb;
+                $db_occasions = $wpdb->prefix . "occasions";
+                for ($i=0; $i < $rcr_count; $i++) {
+                    $startTime = $repeater.'_'.$i.'_'.'rcr_start_time';
+                    $startTimeValue = get_post_meta($post_id, $startTime, true);
+                    $endTime  = $repeater.'_'.$i.'_'.'rcr_end_time';
+                    $endTimeValue = get_post_meta($post_id, $endTime, true);
+                    $doorTime  = $repeater.'_'.$i.'_'.'rcr_door_time';
+                    $doorTimeValue = get_post_meta($post_id, $doorTime, true);
+                    $weekDay  = $repeater.'_'.$i.'_'.'rcr_week_day';
+                    $weekDayValue = get_post_meta($post_id, $weekDay, true);
+                    $startDate  = $repeater.'_'.$i.'_'.'rcr_start_date';
+                    $startDateValue = get_post_meta($post_id, $startDate, true);
+                    $endDate  = $repeater.'_'.$i.'_'.'rcr_end_date';
+                    $endDateValue = get_post_meta($post_id, $endDate, true);
+                    // Save recurring dates to array
+                    $recurringDates = array();
+                    for ($j = strtotime($weekDayValue, strtotime($startDateValue)); $j <= strtotime($endDateValue); $j = strtotime('+1 week', $j)) {
+                        $recurringDates[] = $j;
+                    }
+                    // Save exceptions to array
+                    $exceptionDates = array();
+                    $exc_count = intval(get_post_meta($post_id, $repeater.'_'.$i.'_'.'rcr_exceptions', true));
+                    if ($exc_count > 0) {
+                        for ($k=0; $k < $exc_count; $k++) {
+                            $exceptionDates[] = strtotime(get_post_meta($post_id, $repeater.'_'.$i.'_'.'rcr_exceptions'.'_'.$k.'_'.'rcr_exc_date', true));
+                        }
+                    }
+                    // Remove all exception dates from array
+                    $filteredDates = array_diff($recurringDates, $exceptionDates);
+
+                    // Save to event_occasions
+                    foreach ($filteredDates as $key => $val) {
+                        $timestampStart = strtotime(date('Y:m:d', $val).' '.$startTimeValue);
+                        $timestampEnd = strtotime(date('Y:m:d', $val).' '.$endTimeValue);
+                        if (empty($doorTimeValue)) {
+                            $timestampDoor = null;
+                        } else {
+                            $timestampDoor = strtotime(date('Y:m:d', $val).' '.$doorTimeValue);
+                        }
+
+                        $wpdb->insert($db_occasions, array('event' => $post_id, 'timestamp_start' => $timestampStart, 'timestamp_end' => $timestampEnd, 'timestamp_door' => $timestampDoor));
+                    }
+                }
+            }
+        } else {
+            return;
+        }
+    }
+
+    /**
+     * Delete event_occasions when an event is permanently deleted.
+     * @param  int $post_id event post id
+     */
+
+    public function deleteEventOccasions($post_id)
+    {
+        global $wpdb;
+        $db_occasions = $wpdb->prefix . "occasions";
+        if ($wpdb->get_var($wpdb->prepare("SELECT event FROM $db_occasions WHERE event = %d", $post_id))) {
+            $wpdb->query($wpdb->prepare("DELETE FROM $db_occasions WHERE event = %d", $post_id));
+        }
+    }
+
+    /**
+     * Validate end date to be 'greater' than start date.
+     * @param  mixed  $valid Whether or not the value is valid (true / false).
+     * @param  mixed  $value The value to be saved
+     * @param  array  $field An array containing all the field settings for the field which was used to upload the attachment
+     * @param  string $input the DOM element’s name attribute
+     * @return mixed  $valid Return if true or false
      */
     public function validateEndDate($valid, $value, $field, $input)
     {
@@ -98,6 +229,11 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
 
     /**
      * Validate door time to be equal or greater than start date.
+     * @param  mixed  $valid Whether or not the value is valid (true / false).
+     * @param  mixed  $value The value to be saved
+     * @param  array  $field An array containing all the field settings for the field which was used to upload the attachment
+     * @param  string $input the DOM element’s name attribute
+     * @return mixed  $valid Return if true or false
      */
     public function validateDoorTime($valid, $value, $field, $input)
     {
@@ -116,43 +252,78 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
     }
 
     /**
-     * Delete event_occasions when an event is deleted.
+     * Check if occasion och recurrence rules are set.
      */
-    public function deleteEventOccasions($post_id)
+    public function validateOccasion($valid, $value, $field, $input)
     {
-        global $wpdb;
-        if ($wpdb->get_var($wpdb->prepare('SELECT event FROM event_occasions WHERE event = %d', $post_id))) {
-            $wpdb->query($wpdb->prepare('DELETE FROM event_occasions WHERE event = %d', $post_id));
+        if (!$valid) {
+            return $valid;
         }
+        $occasions = $_POST['acf']['field_5761106783967'];
+        $rcr_rules = $_POST['acf']['field_57d2749e3bf4d'];
+        if (empty($occasions) && empty($rcr_rules)) {
+            $valid = 'Please add occasion or recurrence rule';
+        }
+        return $valid;
     }
 
     /**
-     * Update event_occasions table when an event is saved.
+     * Validate recurring rules "end time" to be 'greater' than start time.
      */
-    public function updateEventOccasions($post_id, $post, $update)
+    public function validateRcrEndTime($valid, $value, $field, $input)
     {
-        $slug = 'event';
-        if ($slug != $post->post_type) {
-            return;
+        if (!$valid) {
+            return $valid;
         }
-        if ($update) {
-            global $wpdb;
-            $wpdb->delete('event_occasions', array( 'event' => $post_id ), array( '%d' ));
-            $repeater  = 'occasions';
-            $count = intval(get_post_meta($post_id, $repeater, true));
-            for ($i=0; $i<$count; $i++) {
-                $getField   = $repeater.'_'.$i.'_'.'start_date';
-                $value1     = get_post_meta($post_id, $getField, true);
-                $timestamp  = strtotime($value1);
-                $getField2  = $repeater.'_'.$i.'_'.'end_date';
-                $value1     = get_post_meta($post_id, $getField2, true);
-                $timestamp2 = strtotime($value1);
-                $wpdb->insert('event_occasions', array('event' => $post_id, 'timestamp_start' => $timestamp, 'timestamp_end' => $timestamp2));
-            }
-        } else {
-            return;
+        $repeater_key = 'field_57d2749e3bf4d';
+        $start_key = 'field_57d277153bf4f';
+        $row = preg_replace('/^\s*acf\[[^\]]+\]\[([^\]]+)\].*$/', '\1', $input);
+        $start_value = $_POST['acf'][$repeater_key][$row][$start_key];
+        $end_value = $value;
+        if ($end_value <= $start_value) {
+            $valid = 'End time must be after start time';
         }
+        return $valid;
     }
+
+    /**
+     * Validate recurring rules "door time" to be 'greater' than start time.
+     */
+    public function validateRcrDoorTime($valid, $value, $field, $input)
+    {
+        if (!$valid) {
+            return $valid;
+        }
+        $repeater_key = 'field_57d2749e3bf4d';
+        $start_key = 'field_57d277153bf4f';
+        $row = preg_replace('/^\s*acf\[[^\]]+\]\[([^\]]+)\].*$/', '\1', $input);
+        $start_value = $_POST['acf'][$repeater_key][$row][$start_key];
+        $door_value = $value;
+        if ($door_value > $start_value) {
+            $valid = 'Door time cannot be after start time';
+        }
+        return $valid;
+    }
+
+    /**
+     * Validate recurring rules interval "end date" to be 'greater' than start date.
+     */
+    public function validateRcrEndDate($valid, $value, $field, $input)
+    {
+        if (!$valid) {
+            return $valid;
+        }
+        $repeater_key = 'field_57d2749e3bf4d';
+        $start_key = 'field_57d660a687234';
+        $row = preg_replace('/^\s*acf\[[^\]]+\]\[([^\]]+)\].*$/', '\1', $input);
+        $start_value = $_POST['acf'][$repeater_key][$row][$start_key];
+        $end_value = $value;
+        if ($end_value <= $start_value) {
+            $valid = 'End date must be after start time';
+        }
+        return $valid;
+    }
+
 
     /**
      * Change background color of event in list depending of it's meta_value 'accepted'

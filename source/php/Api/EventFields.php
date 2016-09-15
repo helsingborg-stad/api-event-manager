@@ -18,7 +18,7 @@ class EventFields extends Fields
 
     public static function registerRestRoute()
     {
-        $response = register_rest_route('/wp/v2/event', '/time/', array(
+        $response = register_rest_route('wp/v2', '/event/time', array(
             'methods' => 'GET',
             'callback' => array($this, 'getEventsByTimestamp'),
         ));
@@ -62,7 +62,21 @@ class EventFields extends Fields
             return $this->errorMessage('Format not ok', array(0, 1));
         }
 
-        $query = "SELECT event FROM event_occasions WHERE timestamp_start BETWEEN %d AND %d OR timestamp_end BETWEEN %d AND %d";
+        $db_occasions = $wpdb->prefix . "occasions";
+        $query =
+        "
+        SELECT      *
+        FROM        $wpdb->posts
+        LEFT JOIN   $db_occasions
+                    ON $wpdb->posts.ID = $db_occasions.event
+        WHERE       $wpdb->posts.post_type = %s
+                    AND $wpdb->posts.post_status = %s
+                    AND $db_occasions.timestamp_start BETWEEN %d AND %d
+                    OR $db_occasions.timestamp_end BETWEEN %d AND %d
+                    ORDER BY $db_occasions.timestamp_start ASC
+        "
+        ;
+
         $timePlusWeek = 0;
 
         if (isset($_GET['end'])) {
@@ -71,38 +85,106 @@ class EventFields extends Fields
             if (!is_numeric($time2)) {
                 $timestamp2 = strtotime($timestamp2);
             }
-
             if ($timestamp2 == false) {
                 return $this->errorMessage('Format not ok', array(2, 3));
             }
-
             $timePlusWeek = $timestamp2;
         } else {
             $timePlusWeek = $timestamp + $week;
         }
 
-        $completeQuery = $wpdb->prepare($query, $timestamp, $timePlusWeek, $timestamp, $timePlusWeek);
+        $completeQuery = $wpdb->prepare($query, $this->postType, "publish", $timestamp, $timePlusWeek, $timestamp, $timePlusWeek);
+        $allEvents = $wpdb->get_results($completeQuery);
 
-        $result = $wpdb->get_results($completeQuery);
-
-        if (empty($result)) {
+        $data = array();
+        if (! empty($allEvents)) {
+            foreach ($allEvents as $post) {
+                $data = $this->make_data($post, $data);
+            }
+        } else {
             return array('Error' => 'There are no events');
         }
-        $allEventIds = array();
-
-        foreach ($result as $key => $value) {
-            $allEventIds[] = $value->event;
-        }
-
-        //$allEventIds = array_unique($allEventIds);
-        $allEventIds = implode(',', $allEventIds);
-        //wp_die(print_r($allEventIds));
-        $allEvents = $wpdb->get_results("SELECT * FROM event_posts WHERE post_type = '" . $this->postType . "' AND post_status = 'publish' AND ID IN(" . $allEventIds . ")");
-
-        //wp_die(print_r($allEvents));
 
         //$response = new \WP_REST_Response($allEvents);
-        return $allEvents;
+        return $data;
+    }
+
+
+    /**
+     * Add current post to response data for this route.
+     * @param \WP_Post $post Current post object.
+     * @param array $data Current collection of data
+     * @return array
+     */
+    public function make_data($post, $data)
+    {
+        $image = get_post_thumbnail_id($post->ID);
+        if ($image) {
+            $_image = wp_get_attachment_image_src($image, 'large');
+            if (is_array($_image)) {
+                $image = $_image[0];
+            }
+        }
+
+        $id = $post->event;
+        $occ_start = date('Y-m-d H:i', $post->timestamp_start);
+        $occ_end = date('Y-m-d H:i', $post->timestamp_end);
+        $occ_door = null;
+        if (!is_null($post->timestamp_door)) {
+            $occ_door = date('Y-m-d H:i', $post->timestamp_door);
+        }
+        $data[ $post->ID ] = array(
+            'event_id'                  => $id,
+            'post_title'                => $post->post_title,
+            'post_author'               => $post->post_author,
+            'post_date'                 => $post->post_date,
+            'post_date_gmt'             => $post->post_date_gmt,
+            'post_content'              => $post->post_content,
+            'start_time'                => $occ_start,
+            'end_time'                  => $occ_end,
+            'door_time'                 => $occ_door,
+            'post_status'               => $post->post_status,
+            'slug'                      => $post->post_name,
+            'post_type'                 => $post->post_type,
+            'image_src'                 => $image,
+            'alternative_name'          => get_field('alternative_name', $id),
+            'event_link'                => get_field('event_link', $id),
+            'additional_links'          => get_field('additional_links', $id),
+            'related_events'            => get_field('related_events', $id),
+            //'occasions'                 => get_field('occasions', $id),
+            //'rcr_rules'                 => get_field('rcr_rules', $id),
+            'location'                  => get_field('location', $id),
+            'additional_locations'      => get_field('additional_locations', $id),
+            'organizer'                 => get_field('organizer', $id),
+            'organizer_link'            => get_field('organizer_link', $id),
+            'organizer_phone'           => get_field('organizer_phone', $id),
+            'organizer_email'           => get_field('organizer_email', $id),
+            'coorganizer'               => get_field('coorganizer', $id),
+            'contacts'                  => get_field('contacts', $id),
+            'supporters'                => get_field('supporters', $id),
+            'booking_link'              => get_field('booking_link', $id),
+            'booking_phone'             => get_field('booking_phone', $id),
+            'age_restriction'           => get_field('age_restriction', $id),
+            'annual_pass'               => get_field('annual_pass', $id),
+            'price_information'         => get_field('price_information', $id),
+            'ticket_includes'           => get_field('ticket_includes', $id),
+            'price_adult'               => get_field('price_adult', $id),
+            'price_children'            => get_field('price_children', $id),
+            'price_student'             => get_field('price_student', $id),
+            'price_senior'              => get_field('price_senior', $id),
+            'gallery'                   => get_field('gallery', $id),
+            'facebook'                  => get_field('facebook', $id),
+            'twitter'                   => get_field('twitter', $id),
+            'instagram'                 => get_field('instagram', $id),
+            'google_music'              => get_field('google_music', $id),
+            'apple_music'               => get_field('apple_music', $id),
+            'spotify'                   => get_field('spotify', $id),
+            'soundcloud'                => get_field('soundcloud', $id),
+            'deezer'                    => get_field('deezer', $id),
+            'youtube'                   => get_field('youtube', $id),
+            'vimeo'                     => get_field('vimeo', $id),
+        );
+        return $data;
     }
 
     /**

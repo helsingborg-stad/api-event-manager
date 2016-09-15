@@ -57,13 +57,14 @@ abstract class CustomPostType
     public function collectOccasions()
     {
         global $wpdb;
-
-        $sql = 'CREATE TABLE IF NOT EXISTS event_occasions(
+        $db_occasions = $wpdb->prefix . "occasions";
+        $sql = "CREATE TABLE IF NOT EXISTS $db_occasions(
         ID BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
         event BIGINT(20) UNSIGNED NOT NULL,
         timestamp_start BIGINT(20) UNSIGNED NOT NULL,
         timestamp_end BIGINT(20) UNSIGNED NOT NULL,
-        PRIMARY KEY (ID))';
+        timestamp_door BIGINT(20) UNSIGNED DEFAULT NULL,
+        PRIMARY KEY (ID))";
 
         $wpdb->get_results($sql);
 
@@ -77,13 +78,14 @@ abstract class CustomPostType
             foreach($occasions as $newKey => $value) {
                 $timestamp = strtotime($value['start_date']);
                 $timestamp2 = strtotime($value['end_date']);
+                $timestamp3 = strtotime($value['door_time']);
                 if($timestamp <= 0 || $timestamp2 <= 0 || $timestamp == false || $timestamp2 == false || $timestamp2 < $timestamp)
                     continue;
-                $testQuery = $wpdb->prepare("SELECT * FROM event_occasions WHERE event = %d AND timestamp_start = %d AND timestamp_end = %d", $event->ID, $timestamp, $timestamp2);
+                $testQuery = $wpdb->prepare("SELECT * FROM $db_occasions WHERE event = %d AND timestamp_start = %d AND timestamp_end = %d", $event->ID, $timestamp, $timestamp2);
                 $existing = $wpdb->get_results($testQuery);
                 if(empty($existing))
                 {
-                    $newId = $wpdb->insert('event_occasions', array('event' => $event->ID, 'timestamp_start' => $timestamp, 'timestamp_end' => $timestamp2));
+                    $newId = $wpdb->insert($db_occasions, array('event' => $event->ID, 'timestamp_start' => $timestamp, 'timestamp_end' => $timestamp2, 'timestamp_door' => $timestamp3));
                     $resultString .= "New event occasions inserted with event id: " . $event->ID . ', and timestamp_start: ' . $timestamp . ", timestamp_end: " . $timestamp2 . "\n";
                 }
                 else

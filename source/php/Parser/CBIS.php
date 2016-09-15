@@ -116,12 +116,14 @@ class CBIS extends \HbgEventImporter\Parser
     public function start()
     {
         global $wpdb;
-        $sql = 'CREATE TABLE IF NOT EXISTS event_occasions(
+        $db_occasions = $wpdb->prefix . "occasions";
+        $sql = "CREATE TABLE IF NOT EXISTS $db_occasions(
         ID BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
         event BIGINT(20) UNSIGNED NOT NULL,
         timestamp_start BIGINT(20) UNSIGNED NOT NULL,
         timestamp_end BIGINT(20) UNSIGNED NOT NULL,
-        PRIMARY KEY (ID))';
+        timestamp_door BIGINT(20) UNSIGNED DEFAULT NULL,
+        PRIMARY KEY (ID))";
 
         $wpdb->get_results($sql);
 
@@ -181,7 +183,7 @@ class CBIS extends \HbgEventImporter\Parser
 
         // Adjust request parameters for getting products, 1500 itemsPerPage to get all events
         $requestParams['filter']['ProductType'] = "Product";
-        $requestParams['itemsPerPage'] = 66;
+        $requestParams['itemsPerPage'] = 15;
 
         // Get and save the events
         $this->events = $this->client->ListAll($requestParams)->ListAllResult->Items->Product;
