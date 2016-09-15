@@ -227,3 +227,4 @@ function toggleClasses(element, responseValue) {
         element.find('.deny').addClass('hiddenElement');
     }
 }
+

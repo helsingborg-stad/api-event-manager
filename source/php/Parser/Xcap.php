@@ -43,7 +43,7 @@ class Xcap extends \HbgEventImporter\Parser
     {
         $address = isset($eventData->{'x-xcap-address'}) && !empty($eventData->{'x-xcap-address'}) ? $eventData->{'x-xcap-address'} : null;
         $alternateName = isset($eventData->uid) && !empty($eventData->uid) ? $eventData->uid : null;
-        $categories = isset($eventData->categories) && !empty($eventData->categories) ? array_map('trim', explode(',', $eventData->categories)) : null;
+        $categories = isset($eventData->categories) && !empty($eventData->categories) ? array_map('ucwords', array_map('trim', explode(',', $eventData->categories))) : null;
         $description = isset($eventData->description) && !empty($eventData->description) ? $eventData->description : null;
         $doorTime = isset($eventData->dtstart) && !empty($eventData->dtstart) ? $eventData->dtstart : null;
         $doorTime = $this->formatDate($doorTime);
@@ -56,10 +56,11 @@ class Xcap extends \HbgEventImporter\Parser
         $startDate = $this->formatDate($startDate);
         $ticketUrl = isset($eventData->{'x-xcap-ticketlink'}) && !empty($eventData->{'x-xcap-ticketlink'}) ? $eventData->{'x-xcap-ticketlink'} : null;
 
-        if(!is_string($name))
+        if (!is_string($name)) {
             return;
+        }
         $occasions = array();
-        if($startDate != null && $endDate != null && $doorTime != null) {
+        if ($startDate != null && $endDate != null && $doorTime != null) {
             $occasions[] = array(
                 'start_date' => $startDate,
                 'end_date' => $endDate,
@@ -73,10 +74,10 @@ class Xcap extends \HbgEventImporter\Parser
         $locationId = null;
 
         // $eventData->{'x-xcap-address'} can return an object instead of a string, then we just want to ignore the location
-        if(is_string($address)) {
+        if (is_string($address)) {
             // Checking if there is a location already with this title or similar enough
             $locationId = $this->checkIfPostExists('location', $address);
-            if($locationId == null) {
+            if ($locationId == null) {
                 // Create the location
                 $location = new Location(
                     array(
@@ -97,8 +98,7 @@ class Xcap extends \HbgEventImporter\Parser
 
                 $creatSuccess = $location->save();
                 $locationId = $location->ID;
-                if($creatSuccess)
-                {
+                if ($creatSuccess) {
                     ++$this->nrOfNewLocations;
                     $this->levenshteinTitles['location'][] = array('ID' => $location->ID, 'post_title' => $address);
                 }
@@ -147,8 +147,7 @@ class Xcap extends \HbgEventImporter\Parser
             );
 
             $creatSuccess = $event->save();
-            if($creatSuccess)
-            {
+            if ($creatSuccess) {
                 ++$this->nrOfNewEvents;
                 $this->levenshteinTitles['event'][] = array('ID' => $event->ID, 'post_title' => $newPostTitle);
             }
@@ -189,8 +188,9 @@ class Xcap extends \HbgEventImporter\Parser
      */
     public function formatDate($date)
     {
-        if($date == null)
+        if ($date == null) {
             return $date;
+        }
         // Format the date string corretly
         $dateParts = explode("T", $date);
         $dateString = substr($dateParts[0], 0, 4) . '-' . substr($dateParts[0], 4, 2) . '-' . substr($dateParts[0], 6, 2);

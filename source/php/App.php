@@ -10,6 +10,8 @@ class App
 
     public function __construct()
     {
+        global $event_db_version;
+        $event_db_version = '1.0';
 
         //Load third party componets
         /*add_action('plugins_loaded', function () {
@@ -23,23 +25,25 @@ class App
             }
         });
         //Remove auto empty of trash
-        add_action( 'init', function () {
-            remove_action( 'wp_scheduled_delete', 'wp_scheduled_delete' );
+        add_action('init', function () {
+            remove_action('wp_scheduled_delete', 'wp_scheduled_delete');
         });
 
         //Activations hooks
         register_activation_hook(plugin_basename(__FILE__), '\HbgEventImporter\App::addCronJob');
         register_deactivation_hook(plugin_basename(__FILE__), '\HbgEventImporter\App::removeCronJob');
 
+
+
         //Json load files
         add_filter('acf/settings/load_json', array($this, 'acfJsonLoadPath'));
 
-        //Admin scriots
+        //Admin scripts
         add_action('admin_enqueue_scripts', array($this, 'enqueueStyles'));
         add_action('admin_enqueue_scripts', array($this, 'enqueueScripts'));
 
         //Admin components
-        add_action('admin_menu', array($this, 'createParsePage'));
+        //add_action('admin_menu', array($this, 'createParsePage'));
         add_action('admin_notices', array($this, 'adminNotices'));
 
         // Register cron action
@@ -58,12 +62,15 @@ class App
         $this->locationsPostType = new PostTypes\Locations();
         $this->contactsPostType = new PostTypes\Contacts();
         $this->sponsorsPostType = new PostTypes\Sponsors();
+        $this->packagesPostType = new PostTypes\Packages();
 
         //Init functions
         new Taxonomy\EventCategories();
+        new Taxonomy\LocationCategories();
 
         new Admin\Options();
         new Admin\UI();
+        new Admin\FilterRestrictions();
 
         new Api\Filter();
         new Api\PostTypes();
@@ -143,6 +150,7 @@ class App
 
     /**
      * Creates a admin page to trigger update data function
+     * ARE NOT USED ANYMORE
      * @return void
      */
     public function createParsePage()
@@ -197,4 +205,24 @@ class App
     {
         wp_clear_scheduled_hook('import_events_daily');
     }
+
+    public static function database_creation()
+    {
+        global $wpdb;
+        global $event_db_version;
+        $table_name = $wpdb->prefix . 'occasions';
+        $charset_collate = $wpdb->get_charset_collate();
+        $sql = "CREATE TABLE $table_name (
+        ID BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+        event BIGINT(20) UNSIGNED NOT NULL,
+        timestamp_start BIGINT(20) UNSIGNED NOT NULL,
+        timestamp_end BIGINT(20) UNSIGNED NOT NULL,
+        timestamp_door BIGINT(20) UNSIGNED DEFAULT NULL,
+        PRIMARY KEY  (ID)
+        ) $charset_collate;";
+        require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+        dbDelta($sql);
+        add_option('event_db_version', $event_db_version);
+    }
+
 }

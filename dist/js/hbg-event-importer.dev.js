@@ -228,6 +228,7 @@ function toggleClasses(element, responseValue) {
     }
 }
 
+
 jQuery(document).ready(function ($) {
 
     $('.acf-field[data-name="sync"] input[type="checkbox"]').on('change', function () {

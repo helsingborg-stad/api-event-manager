@@ -51,26 +51,279 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
             echo '<a href="' . get_edit_post_link($contactId[0]) . '">' . get_the_title($contactId[0]) . '</a>';
         });
 
-        $this->addTableColumn('acceptAndDeny', __('Accepted/Denied'), true, function($column, $postId) {
+        $this->addTableColumn('acceptAndDeny', __('Accepted/Denied'), true, function ($column, $postId) {
             $metaAccepted = get_post_meta($postId, 'accepted');
-            if(!isset($metaAccepted[0]))
-            {
+            if (!isset($metaAccepted[0])) {
                 add_post_meta($postId, 'accepted', 0);
                 $metaAccepted[0] = 0;
             }
             $first = '';
             $second = '';
-            if($metaAccepted[0] == 1)
+            if ($metaAccepted[0] == 1) {
                 $first = 'hiddenElement';
-            else if($metaAccepted[0] == -1)
+            } elseif ($metaAccepted[0] == -1) {
                 $second = 'hiddenElement';
+            }
             echo '<a href="#" class="accept button-primary ' . $first . '" postid="' . $postId . '">' . __('Accept') . '</a>
             <a href="#" class="deny button-primary ' . $second . '" postid="' . $postId . '">' . __('Deny') . '</a>';
         });
         add_action('admin_head-post.php', array($this, 'hidePublishingActions'));
-        add_action('publish_event', array($this, 'setAcceptedOnPublish'), 10, 2 );
+        add_action('publish_event', array($this, 'setAcceptedOnPublish'), 10, 2);
         add_filter('post_class', array($this, 'changeAcceptanceColor'));
+        add_action('save_post', array($this, 'saveEventOccasions'), 10, 3);
+        add_action('save_post', array($this, 'saveRecurringEvents'), 10, 3);
+        add_action('delete_post', array($this, 'deleteEventOccasions'), 10);
+        add_filter('acf/validate_value/name=end_date', array($this, 'validateEndDate'), 10, 4);
+        add_filter('acf/validate_value/name=door_time', array($this, 'validateDoorTime'), 10, 4);
+        add_filter('acf/validate_value/name=occasions', array($this, 'validateOccasion'), 10, 4);
+        add_filter('acf/validate_value/name=rcr_rules', array($this, 'validateOccasion'), 10, 4);
+        add_filter('acf/validate_value/name=rcr_end_time', array($this, 'validateRcrEndTime'), 10, 4);
+        add_filter('acf/validate_value/name=rcr_door_time', array($this, 'validateRcrDoorTime'), 10, 4);
+        add_filter('acf/validate_value/name=rcr_end_date', array($this, 'validateRcrEndDate'), 10, 4);
     }
+
+    /**
+     * Save event_occasions table when an event is published or updated.
+     * @param  int  $post_id event post id
+     * @param  post $post The post object.
+     * @param  bool $update Whether this is an existing post being updated or not.
+     */
+    public function saveEventOccasions($post_id, $post, $update)
+    {
+        $slug = 'event';
+        if ($slug != $post->post_type) {
+            return;
+        }
+        if ($update) {
+            global $wpdb;
+            $db_occasions = $wpdb->prefix . "occasions";
+            $wpdb->delete($db_occasions, array( 'event' => $post_id ), array( '%d' ));
+            $repeater  = 'occasions';
+            $count = intval(get_post_meta($post_id, $repeater, true));
+            for ($i=0; $i<$count; $i++) {
+                $getField   = $repeater.'_'.$i.'_'.'start_date';
+                $value1     = get_post_meta($post_id, $getField, true);
+                $timestamp  = strtotime($value1);
+                $getField2  = $repeater.'_'.$i.'_'.'end_date';
+                $value2     = get_post_meta($post_id, $getField2, true);
+                $timestamp2 = strtotime($value2);
+                $getField3  = $repeater.'_'.$i.'_'.'door_time';
+                $value3     = get_post_meta($post_id, $getField3, true);
+                if (empty($value3)) {
+                    $timestamp3 = null;
+                } else {
+                    $timestamp3 = strtotime($value3);
+                }
+
+                $wpdb->insert($db_occasions, array('event' => $post_id, 'timestamp_start' => $timestamp, 'timestamp_end' => $timestamp2, 'timestamp_door' => $timestamp3));
+            }
+        } else {
+            return;
+        }
+    }
+
+    /**
+     * Save recurring events to event_occasions table.
+     * @param  int  $post_id event post id
+     * @param  post $post The post object.
+     * @param  bool $update Whether this is an existing post being updated or not.
+     */
+    public function saveRecurringEvents($post_id, $post, $update)
+    {
+        $slug = 'event';
+        if ($slug != $post->post_type) {
+            return;
+        }
+        if ($update) {
+            $repeater  = 'rcr_rules';
+            $rcr_count = intval(get_post_meta($post_id, $repeater, true));
+            if ($rcr_count > 0) {
+                global $wpdb;
+                $db_occasions = $wpdb->prefix . "occasions";
+                for ($i=0; $i < $rcr_count; $i++) {
+                    $startTime = $repeater.'_'.$i.'_'.'rcr_start_time';
+                    $startTimeValue = get_post_meta($post_id, $startTime, true);
+                    $endTime  = $repeater.'_'.$i.'_'.'rcr_end_time';
+                    $endTimeValue = get_post_meta($post_id, $endTime, true);
+                    $doorTime  = $repeater.'_'.$i.'_'.'rcr_door_time';
+                    $doorTimeValue = get_post_meta($post_id, $doorTime, true);
+                    $weekDay  = $repeater.'_'.$i.'_'.'rcr_week_day';
+                    $weekDayValue = get_post_meta($post_id, $weekDay, true);
+                    $startDate  = $repeater.'_'.$i.'_'.'rcr_start_date';
+                    $startDateValue = get_post_meta($post_id, $startDate, true);
+                    $endDate  = $repeater.'_'.$i.'_'.'rcr_end_date';
+                    $endDateValue = get_post_meta($post_id, $endDate, true);
+                    // Save recurring dates to array
+                    $recurringDates = array();
+                    for ($j = strtotime($weekDayValue, strtotime($startDateValue)); $j <= strtotime($endDateValue); $j = strtotime('+1 week', $j)) {
+                        $recurringDates[] = $j;
+                    }
+                    // Save exceptions to array
+                    $exceptionDates = array();
+                    $exc_count = intval(get_post_meta($post_id, $repeater.'_'.$i.'_'.'rcr_exceptions', true));
+                    if ($exc_count > 0) {
+                        for ($k=0; $k < $exc_count; $k++) {
+                            $exceptionDates[] = strtotime(get_post_meta($post_id, $repeater.'_'.$i.'_'.'rcr_exceptions'.'_'.$k.'_'.'rcr_exc_date', true));
+                        }
+                    }
+                    // Remove all exception dates from array
+                    $filteredDates = array_diff($recurringDates, $exceptionDates);
+
+                    // Save to event_occasions
+                    foreach ($filteredDates as $key => $val) {
+                        $timestampStart = strtotime(date('Y:m:d', $val).' '.$startTimeValue);
+                        $timestampEnd = strtotime(date('Y:m:d', $val).' '.$endTimeValue);
+                        if (empty($doorTimeValue)) {
+                            $timestampDoor = null;
+                        } else {
+                            $timestampDoor = strtotime(date('Y:m:d', $val).' '.$doorTimeValue);
+                        }
+
+                        $wpdb->insert($db_occasions, array('event' => $post_id, 'timestamp_start' => $timestampStart, 'timestamp_end' => $timestampEnd, 'timestamp_door' => $timestampDoor));
+                    }
+                }
+            }
+        } else {
+            return;
+        }
+    }
+
+    /**
+     * Delete event_occasions when an event is permanently deleted.
+     * @param  int $post_id event post id
+     */
+
+    public function deleteEventOccasions($post_id)
+    {
+        global $wpdb;
+        $db_occasions = $wpdb->prefix . "occasions";
+        if ($wpdb->get_var($wpdb->prepare("SELECT event FROM $db_occasions WHERE event = %d", $post_id))) {
+            $wpdb->query($wpdb->prepare("DELETE FROM $db_occasions WHERE event = %d", $post_id));
+        }
+    }
+
+    /**
+     * Validate end date to be 'greater' than start date.
+     * @param  mixed  $valid Whether or not the value is valid (true / false).
+     * @param  mixed  $value The value to be saved
+     * @param  array  $field An array containing all the field settings for the field which was used to upload the attachment
+     * @param  string $input the DOM element’s name attribute
+     * @return mixed  $valid Return if true or false
+     */
+    public function validateEndDate($valid, $value, $field, $input)
+    {
+        if (!$valid) {
+            return $valid;
+        }
+        $repeater_key = 'field_5761106783967';
+        $start_key = 'field_5761109a83968';
+        // $end_key = 'field_576110e583969';
+        $row = preg_replace('/^\s*acf\[[^\]]+\]\[([^\]]+)\].*$/', '\1', $input);
+        $start_value = $_POST['acf'][$repeater_key][$row][$start_key];
+        $end_value = $value;
+        if ($end_value <= $start_value) {
+            $valid = 'End date must be after start date';
+        }
+        return $valid;
+    }
+
+    /**
+     * Validate door time to be equal or greater than start date.
+     * @param  mixed  $valid Whether or not the value is valid (true / false).
+     * @param  mixed  $value The value to be saved
+     * @param  array  $field An array containing all the field settings for the field which was used to upload the attachment
+     * @param  string $input the DOM element’s name attribute
+     * @return mixed  $valid Return if true or false
+     */
+    public function validateDoorTime($valid, $value, $field, $input)
+    {
+        if (!$valid) {
+            return $valid;
+        }
+        $repeater_key = 'field_5761106783967';
+        $start_key = 'field_5761109a83968';
+        $row = preg_replace('/^\s*acf\[[^\]]+\]\[([^\]]+)\].*$/', '\1', $input);
+        $start_value = $_POST['acf'][$repeater_key][$row][$start_key];
+        $door_value = $value;
+        if ($door_value > $start_value) {
+            $valid = 'Door time cannot be after start date';
+        }
+        return $valid;
+    }
+
+    /**
+     * Check if occasion och recurrence rules are set.
+     */
+    public function validateOccasion($valid, $value, $field, $input)
+    {
+        if (!$valid) {
+            return $valid;
+        }
+        $occasions = $_POST['acf']['field_5761106783967'];
+        $rcr_rules = $_POST['acf']['field_57d2749e3bf4d'];
+        if (empty($occasions) && empty($rcr_rules)) {
+            $valid = 'Please add occasion or recurrence rule';
+        }
+        return $valid;
+    }
+
+    /**
+     * Validate recurring rules "end time" to be 'greater' than start time.
+     */
+    public function validateRcrEndTime($valid, $value, $field, $input)
+    {
+        if (!$valid) {
+            return $valid;
+        }
+        $repeater_key = 'field_57d2749e3bf4d';
+        $start_key = 'field_57d277153bf4f';
+        $row = preg_replace('/^\s*acf\[[^\]]+\]\[([^\]]+)\].*$/', '\1', $input);
+        $start_value = $_POST['acf'][$repeater_key][$row][$start_key];
+        $end_value = $value;
+        if ($end_value <= $start_value) {
+            $valid = 'End time must be after start time';
+        }
+        return $valid;
+    }
+
+    /**
+     * Validate recurring rules "door time" to be 'greater' than start time.
+     */
+    public function validateRcrDoorTime($valid, $value, $field, $input)
+    {
+        if (!$valid) {
+            return $valid;
+        }
+        $repeater_key = 'field_57d2749e3bf4d';
+        $start_key = 'field_57d277153bf4f';
+        $row = preg_replace('/^\s*acf\[[^\]]+\]\[([^\]]+)\].*$/', '\1', $input);
+        $start_value = $_POST['acf'][$repeater_key][$row][$start_key];
+        $door_value = $value;
+        if ($door_value > $start_value) {
+            $valid = 'Door time cannot be after start time';
+        }
+        return $valid;
+    }
+
+    /**
+     * Validate recurring rules interval "end date" to be 'greater' than start date.
+     */
+    public function validateRcrEndDate($valid, $value, $field, $input)
+    {
+        if (!$valid) {
+            return $valid;
+        }
+        $repeater_key = 'field_57d2749e3bf4d';
+        $start_key = 'field_57d660a687234';
+        $row = preg_replace('/^\s*acf\[[^\]]+\]\[([^\]]+)\].*$/', '\1', $input);
+        $start_value = $_POST['acf'][$repeater_key][$row][$start_key];
+        $end_value = $value;
+        if ($end_value <= $start_value) {
+            $valid = 'End date must be after start time';
+        }
+        return $valid;
+    }
+
 
     /**
      * Change background color of event in list depending of it's meta_value 'accepted'
@@ -80,12 +333,13 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
     public function changeAcceptanceColor($classes)
     {
         $postAndId = explode('-', $classes[3]);
-        if($postAndId[0] == 'post') {
+        if ($postAndId[0] == 'post') {
             $metaAccepted = get_post_meta($postAndId[1], 'accepted');
-            if($metaAccepted[0] == -1)
+            if ($metaAccepted[0] == -1) {
                 $classes[] = "red";
-            else if($metaAccepted[0] == 1)
+            } elseif ($metaAccepted[0] == 1) {
                 $classes[] = "green";
+            }
         }
         return $classes;
     }
@@ -98,21 +352,22 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
     public function setAcceptedOnPublish($ID, $post)
     {
         $metaAccepted = get_post_meta($ID, 'accepted');
-        if(!isset($metaAccepted[0]))
+        if (!isset($metaAccepted[0])) {
             add_post_meta($ID, 'accepted', 1);
-        else
+        } else {
             update_post_meta($ID, 'accepted', 1);
+        }
     }
 
     /**
      * Hiding the option to change post_status on when in a event, instead use the buttons in event list
      * @return void
      */
-    function hidePublishingActions()
+    public function hidePublishingActions()
     {
         $my_post_type = 'event';
         global $post;
-        if($post->post_type == $my_post_type) {
+        if ($post->post_type == $my_post_type) {
             echo '<style type="text/css">
                 #misc-publishing-actions .misc-pub-section.misc-pub-post-status,#minor-publishing-actions
                 {
@@ -134,14 +389,13 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
             return;
         }
 
-        if(current_user_can('manage_options'))
-        {
+        if (current_user_can('manage_options')) {
             echo '<div class="alignleft actions" style="position: relative;">';
                 //echo '<a href="' . admin_url('options.php?page=import-events') . '" class="button-primary" id="post-query-submit">Import XCAP</a>';
                 //echo '<a href="' . admin_url('options.php?page=import-cbis-events') . '" class="button-primary" id="post-query-submit">Import CBIS</a>';
                 echo '<div class="button-primary extraspace" id="xcap">' . __('Import XCAP') . '</div>';
-                echo '<div class="button-primary extraspace" id="cbis">' . __('Import CBIS') . '</div>';
-                echo '<div class="button-primary extraspace" id="occasions">Collect event timestamps</div>';
+            echo '<div class="button-primary extraspace" id="cbis">' . __('Import CBIS') . '</div>';
+            echo '<div class="button-primary extraspace" id="occasions">Collect event timestamps</div>';
                 //echo '<div id="importResponse"></div>';
             echo '</div>';
         }

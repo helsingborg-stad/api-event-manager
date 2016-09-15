@@ -8,7 +8,6 @@ namespace HbgEventImporter\Api;
 
 class LocationFields extends Fields
 {
-
     private $postType = 'location';
 
     public function __construct()
@@ -23,7 +22,6 @@ class LocationFields extends Fields
      */
     public static function registerRestFields()
     {
-
         //Street adress
         register_rest_field($this->postType,
             'street_address',

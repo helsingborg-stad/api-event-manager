@@ -8,7 +8,6 @@ namespace HbgEventImporter\Api;
 
 class Filter
 {
-
     private $removeFields;
 
     public function __construct()
@@ -47,7 +46,6 @@ class Filter
 
     public function removeResponseKeys($response, $post, $request)
     {
-
         //Common keys
         $keys = array('author','acf','guid','type','link');
 
