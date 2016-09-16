@@ -54,6 +54,8 @@ class EventFields extends Fields
         $time1 = $_GET['start'];
         $timestamp = $time1;
 
+        $post_status = 'publish';
+
         if (!is_numeric($time1)) {
             $timestamp = strtotime($timestamp);
         }
@@ -71,8 +73,7 @@ class EventFields extends Fields
                     ON $wpdb->posts.ID = $db_occasions.event
         WHERE       $wpdb->posts.post_type = %s
                     AND $wpdb->posts.post_status = %s
-                    AND $db_occasions.timestamp_start BETWEEN %d AND %d
-                    OR $db_occasions.timestamp_end BETWEEN %d AND %d
+                    AND ($db_occasions.timestamp_start BETWEEN %d AND %d OR $db_occasions.timestamp_end BETWEEN %d AND %d)
                     ORDER BY $db_occasions.timestamp_start ASC
         "
         ;
@@ -93,7 +94,7 @@ class EventFields extends Fields
             $timePlusWeek = $timestamp + $week;
         }
 
-        $completeQuery = $wpdb->prepare($query, $this->postType, "publish", $timestamp, $timePlusWeek, $timestamp, $timePlusWeek);
+        $completeQuery = $wpdb->prepare($query, $this->postType, $post_status, $timestamp, $timePlusWeek, $timestamp, $timePlusWeek);
         $allEvents = $wpdb->get_results($completeQuery);
 
         $data = array();
@@ -118,15 +119,14 @@ class EventFields extends Fields
      */
     public function make_data($post, $data)
     {
-        $image = get_post_thumbnail_id($post->ID);
+        $id = $post->event;
+        $image = get_post_thumbnail_id($id);
         if ($image) {
             $_image = wp_get_attachment_image_src($image, 'large');
             if (is_array($_image)) {
                 $image = $_image[0];
             }
         }
-
-        $id = $post->event;
         $occ_start = date('Y-m-d H:i', $post->timestamp_start);
         $occ_end = date('Y-m-d H:i', $post->timestamp_end);
         $occ_door = null;
@@ -146,6 +146,7 @@ class EventFields extends Fields
             'post_status'               => $post->post_status,
             'slug'                      => $post->post_name,
             'post_type'                 => $post->post_type,
+            'import_client'             => get_post_meta( $id, 'import_client', true ),
             'image_src'                 => $image,
             'alternative_name'          => get_field('alternative_name', $id),
             'event_link'                => get_field('event_link', $id),
@@ -182,7 +183,7 @@ class EventFields extends Fields
             'soundcloud'                => get_field('soundcloud', $id),
             'deezer'                    => get_field('deezer', $id),
             'youtube'                   => get_field('youtube', $id),
-            'vimeo'                     => get_field('vimeo', $id),
+            'vimeo'                     => get_field('vimeo', $id)
         );
         return $data;
     }

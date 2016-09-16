@@ -50,8 +50,15 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
 
             echo '<a href="' . get_edit_post_link($contactId[0]) . '">' . get_the_title($contactId[0]) . '</a>';
         });
+        $this->addTableColumn('import_client', __('Import client'), true, function ($column, $postId) {
+            $contactId = get_post_meta($postId, 'import_client', true);
+            if (!isset($contactId[0])) {
+                return;
+            }
 
-        $this->addTableColumn('acceptAndDeny', __('Accepted/Denied'), true, function ($column, $postId) {
+            echo ucfirst(get_post_meta($postId, 'import_client', true));
+        });
+        $this->addTableColumn('acceptAndDeny', __('Public'), true, function ($column, $postId) {
             $metaAccepted = get_post_meta($postId, 'accepted');
             if (!isset($metaAccepted[0])) {
                 add_post_meta($postId, 'accepted', 0);

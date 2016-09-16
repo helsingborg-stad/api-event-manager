@@ -3,13 +3,37 @@
         "title": "Event",
         "fields": [
             {
+                "key": "field_57dbf55ed522a",
+                "label": "Imported",
+                "name": "imported_event",
+                "type": "true_false",
+                "instructions": "If this is an imported event or not.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "imported_event",
+                    "id": ""
+                },
+                "message": "",
+                "default_value": 0
+            },
+            {
                 "key": "field_57610ebe83965",
-                "label": "",
+                "label": "API synchronization",
                 "name": "sync",
                 "type": "true_false",
                 "instructions": "Unchecking this box will disable API updates sync for this particular event.",
                 "required": 0,
-                "conditional_logic": 0,
+                "conditional_logic": [
+                    [
+                        {
+                            "field": "field_57dbf55ed522a",
+                            "operator": "==",
+                            "value": "1"
+                        }
+                    ]
+                ],
                 "wrapper": {
                     "width": "",
                     "class": "",
@@ -458,7 +482,7 @@
                         "min": "",
                         "max": "",
                         "layout": "table",
-                        "button_label": "L\u00e4gg till rad",
+                        "button_label": "Add",
                         "sub_fields": [
                             {
                                 "key": "field_57d279f8db0cc",
@@ -476,25 +500,6 @@
                                 "display_format": "Y-m-d",
                                 "return_format": "Y-m-d",
                                 "first_day": 1
-                            },
-                            {
-                                "key": "field_57d27c10a376d",
-                                "label": "Exception note",
-                                "name": "rcr_exc_note",
-                                "type": "text",
-                                "instructions": "",
-                                "required": 0,
-                                "conditional_logic": 0,
-                                "wrapper": {
-                                    "width": "",
-                                    "class": "",
-                                    "id": ""
-                                },
-                                "default_value": "",
-                                "placeholder": "eg. closed for holiday",
-                                "prepend": "",
-                                "append": "",
-                                "maxlength": ""
                             }
                         ]
                     }
