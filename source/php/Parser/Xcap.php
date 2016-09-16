@@ -142,7 +142,9 @@ class Xcap extends \HbgEventImporter\Parser
                     'price_information'     => null,
                     'price_adult'           => null,
                     'price_children'        => null,
-                    'accepted'              => 0
+                    'accepted'              => 0,
+                    'import_client'         => 'xcap',
+                    'imported_event'        => true
                 )
             );
 
