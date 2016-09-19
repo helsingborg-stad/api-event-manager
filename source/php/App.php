@@ -66,6 +66,7 @@ class App
 
         //Init functions
         new Taxonomy\EventCategories();
+        new Taxonomy\EventTags();
         new Taxonomy\LocationCategories();
 
         new Admin\Options();

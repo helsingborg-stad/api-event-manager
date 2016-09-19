@@ -24,7 +24,7 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
                 ),
                 'hierarchical'          =>  false,
                 'exclude_from_search'   =>  false,
-                'taxonomies'            =>  array('event-categories'),
+                'taxonomies'            =>  array('event-categories','event-tags'),
                 'supports'              =>  array('title', 'revisions', 'editor', 'thumbnail'),
             )
         );
@@ -70,6 +70,10 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
                 $first = 'hiddenElement';
             } elseif ($metaAccepted[0] == -1) {
                 $second = 'hiddenElement';
+            } elseif ($metaAccepted[0] == 0) {
+                $first = 'hiddenElement';
+                $second = 'hiddenElement';
+                echo '<a href="'.get_edit_post_link( $postId ).'" title="This event needs to be edited before it can be published" class="button" postid="' . $postId . '">' . __('Edit draft') . '</a>';
             }
             echo '<a href="#" class="accept button-primary ' . $first . '" postid="' . $postId . '">' . __('Accept') . '</a>
             <a href="#" class="deny button-primary ' . $second . '" postid="' . $postId . '">' . __('Deny') . '</a>';

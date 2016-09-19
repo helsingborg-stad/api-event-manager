@@ -91,23 +91,26 @@ jQuery(document).ready(function ($) {
                 'postType'  : pagenow
             };
 
-            jQuery.get('/json/wp/v2/' + pagenow + '?search=' + input, function(response) {
+            //jQuery.get('/json/wp/v2/' + pagenow + '?search=' + input, function(response) {
+            jQuery.get('/json/wp/v2/' + pagenow + '/search?term=' + input, function(response) {
+
                 $('#suggestionList').empty();
                 for(var i in response) {
-                    var id = response[i].id;
-                    var title = response[i].title.rendered;
-                    //console.log('Id: ' + id + ', Title: ' + title);
-                    $('#suggestionList').append('<li><a href="/wp/wp-admin/post.php?post=' + id + '&action=edit&lightbox=true" class="suggestion">' + title + '</a></li>');
+                    var id = response[i].ID;
+                    var title = response[i].post_title;
+                    console.log('Id: ' + id + ', Title: ' + title);
+                    // $('#suggestionList').append('<li><a href="/wp/wp-admin/post.php?post=' + id + '&action=edit&lightbox=true" class="suggestion">' + title + '</a></li>');
+                    $('#suggestionList').append('<li><a href="/wp/wp-admin/post.php?post=' + id + '&action=edit" class="suggestion">' + title + '</a></li>');
                 }
                 if($('.suggestion').length == 0)
                     $('#suggestionContainer').hide();
                 else
                 {
                     $('#suggestionContainer').show();
-                    $('.suggestion').click(function(event) {
-                        event.preventDefault();
-                        ImportEvents.Prompt.Modal.open($(this).attr('href'));
-                    });
+                    // $('.suggestion').click(function(event) {
+                    //     event.preventDefault();
+                    //     ImportEvents.Prompt.Modal.open($(this).attr('href'));
+                    // });
                 }
             });
         }
@@ -154,6 +157,7 @@ function redLoadingButton(button, callback)
     button.fadeOut(500, function() {
         var texts = ['Loading&nbsp;&nbsp;&nbsp;', 'Loading.&nbsp;&nbsp;', 'Loading..&nbsp;', 'Loading...'];
         button.css('background-color', 'rgb(251,113,113)');
+        button.css('border', '1px solid rgb(251,113,113)');
         button.css('color', 'black');
         button.css('text-shadow', 'none');
         button.css('box-shadow', 'none');
