@@ -157,7 +157,7 @@ function redLoadingButton(button, callback)
     button.fadeOut(500, function() {
         var texts = ['Loading&nbsp;&nbsp;&nbsp;', 'Loading.&nbsp;&nbsp;', 'Loading..&nbsp;', 'Loading...'];
         button.css('background-color', 'rgb(251,113,113)');
-        button.css('border', '1px solid rgb(251,113,113)');
+        button.css('border', 'none');
         button.css('color', 'black');
         button.css('text-shadow', 'none');
         button.css('box-shadow', 'none');

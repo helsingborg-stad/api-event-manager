@@ -24,13 +24,12 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
                 ),
                 'hierarchical'          =>  false,
                 'exclude_from_search'   =>  false,
-                'taxonomies'            =>  array('event-categories','event-tags'),
+                'taxonomies'            =>  array('event-categories', 'event-tags'),
                 'supports'              =>  array('title', 'revisions', 'editor', 'thumbnail'),
             )
         );
 
         add_action('manage_posts_extra_tablenav', array($this, 'tablenavButtons'));
-
         $this->addTableColumn('cb', '<input type="checkbox">');
         $this->addTableColumn('title', __('Title'));
         $this->addTableColumn('location', __('Location'), true, function ($column, $postId) {
@@ -73,7 +72,7 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
             } elseif ($metaAccepted[0] == 0) {
                 $first = 'hiddenElement';
                 $second = 'hiddenElement';
-                echo '<a href="'.get_edit_post_link( $postId ).'" title="This event needs to be edited before it can be published" class="button" postid="' . $postId . '">' . __('Edit draft') . '</a>';
+                echo '<a href="'.get_edit_post_link($postId).'" title="This event needs to be edited before it can be published" class="button" postid="' . $postId . '">' . __('Edit draft') . '</a>';
             }
             echo '<a href="#" class="accept button-primary ' . $first . '" postid="' . $postId . '">' . __('Accept') . '</a>
             <a href="#" class="deny button-primary ' . $second . '" postid="' . $postId . '">' . __('Deny') . '</a>';
@@ -91,6 +90,10 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
         add_filter('acf/validate_value/name=rcr_end_time', array($this, 'validateRcrEndTime'), 10, 4);
         add_filter('acf/validate_value/name=rcr_door_time', array($this, 'validateRcrDoorTime'), 10, 4);
         add_filter('acf/validate_value/name=rcr_end_date', array($this, 'validateRcrEndDate'), 10, 4);
+        add_action('edit_form_advanced', array($this, 'requireEventTitle'));
+        add_action('admin_notices', array($this, 'duplicateNotice'));
+        add_action('admin_action_duplicate_post', array($this, 'duplicate_post'));
+        add_filter('post_row_actions', array($this, 'duplicate_post_link'), 10, 2);
     }
 
     /**
@@ -410,5 +413,151 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
                 //echo '<div id="importResponse"></div>';
             echo '</div>';
         }
+    }
+
+    /**
+     * Script for require event title.
+     */
+    public function requireEventTitle()
+    {
+        echo "<script type='text/javascript'>\n";
+        echo "
+        jQuery('#publish').click(function() {
+                var testervar = jQuery('[id^=\"titlediv\"]').find('#title');
+                if (testervar.val().length < 1) {
+                    setTimeout(\"jQuery('#ajax-loading').css('visibility', 'hidden');\", 100);
+                    if (!jQuery(\".require-post\").length) {
+                        jQuery(\"#post\").before('<div class=\"error require-post\"><p>Please enter event title</p></div>');
+                    }
+                        setTimeout(\"jQuery('#publish').removeClass('button-primary-disabled');\", 100);
+                        return false;
+                    } else {
+                        jQuery(\".require-post\").remove();
+                    }
+            });
+            jQuery('#title').keypress(function(e) {
+                if(e.which == 13) {
+                var testervar = jQuery('[id^=\"titlediv\"]').find('#title');
+                if (testervar.val().length < 1) {
+                    setTimeout(\"jQuery('#ajax-loading').css('visibility', 'hidden');\", 100);
+                    if (!jQuery(\".require-post\").length) {
+                        jQuery(\"#post\").before('<div class=\"error require-post\"><p>Please enter event title</p></div>');
+                    }
+                        setTimeout(\"jQuery('#publish').removeClass('button-primary-disabled');\", 100);
+                        return false;
+                    } else {
+                        jQuery(\".require-post\").remove();
+                    }
+                }
+            });
+        ";
+        echo "</script>\n";
+    }
+
+    /*
+     * Clone event as a draft and redirects to edit post
+     */
+    public function duplicate_post()
+    {
+        global $wpdb;
+        if (! (isset($_GET['post']) || isset($_POST['post'])  || (isset($_REQUEST['action']) && 'duplicate_post' == $_REQUEST['action']))) {
+            wp_die('No post to duplicate has been supplied!');
+        }
+
+        $post_id = (isset($_GET['post']) ? absint($_GET['post']) : absint($_POST['post']));
+        $post = get_post($post_id);
+
+        $current_user = wp_get_current_user();
+        $new_post_author = $current_user->ID;
+
+        if (isset($post) && $post != null) {
+            $args = array(
+                'comment_status' => $post->comment_status,
+                'ping_status'    => $post->ping_status,
+                'post_author'    => $new_post_author,
+                'post_content'   => '',
+                'post_excerpt'   => $post->post_excerpt,
+                'post_name'      => '',
+                'post_parent'    => $post->post_parent,
+                'post_password'  => $post->post_password,
+                'post_status'    => 'draft',
+                'post_title'     => '',
+                'post_type'      => $post->post_type,
+                'to_ping'        => $post->to_ping,
+                'menu_order'     => $post->menu_order
+            );
+
+            $new_post_id = wp_insert_post($args);
+
+            // get current post terms and set them to the new event draft
+            $taxonomies = get_object_taxonomies($post->post_type);
+            foreach ($taxonomies as $taxonomy) {
+                $post_terms = wp_get_object_terms($post_id, $taxonomy, array('fields' => 'slugs'));
+                wp_set_object_terms($new_post_id, $post_terms, $taxonomy, false);
+            }
+
+            // duplicate all post meta just in two SQL queries
+            $post_meta_infos = $wpdb->get_results("SELECT meta_key, meta_value FROM $wpdb->postmeta WHERE post_id=$post_id");
+            if (count($post_meta_infos)!=0) {
+                $sql_query = "INSERT INTO $wpdb->postmeta (post_id, meta_key, meta_value) ";
+                foreach ($post_meta_infos as $meta_info) {
+                    $meta_key = $meta_info->meta_key;
+                    switch ($meta_key) {
+                    case 'import_client':
+                        continue 2;
+                    case 'imported_event':
+                        $meta_value = addslashes(0);
+                        break;
+                    case 'sync':
+                        $meta_value = addslashes(0);
+                        break;
+                    case 'accepted':
+                        $meta_value = addslashes(0);
+                        break;
+                    default:
+                        $meta_value = addslashes($meta_info->meta_value);
+                    }
+                    $sql_query_sel[]= "SELECT $new_post_id, '$meta_key', '$meta_value'";
+                }
+                $sql_query.= implode(" UNION ALL ", $sql_query_sel);
+                $wpdb->query($sql_query);
+            }
+            wp_redirect(admin_url('post.php?action=edit&post=' . $new_post_id.'&duplicate=' . $post_id));
+            exit;
+        } else {
+            wp_die('Event creation failed, could not find original event: ' . $post_id);
+        }
+    }
+
+    /**
+     * Adds "clone" link to events.
+     * @param  array   $actions An array of row action links
+     * @param  WP_Post $post    The post object.
+     * @return array
+     */
+    public function duplicate_post_link($actions, $post)
+    {
+        $post_type = $_GET['post_type'];
+        if ($post_type == 'event' && current_user_can('edit_posts')) {
+            $actions['duplicate'] = '<a href="admin.php?action=duplicate_post&amp;post=' . $post->ID . '" title="Create similar item" rel="permalink" onclick="return confirm(\'Are you sure you want to clone this event?\');">Clone</a>';
+        }
+        return $actions;
+    }
+
+    /**
+     * Show admin notification after cloning an event.
+     */
+    public function duplicateNotice()
+    {
+        if (!isset($_GET['duplicate'])) {
+            return;
+        }
+        $id = $_GET['duplicate'];
+        ?>
+        <div class="notice notice-warning is-dismissible">
+        <p><?php _e('This is a duplicate of the event: <strong>"' . get_the_title($id) . '"</strong>. If this is a new occasion for the same event, please <a href="' . esc_url( get_edit_post_link($id))  .'">edit</a> and republish the original event.', 'text-domain');
+        ?></p>
+        </div>
+        <?php
     }
 }

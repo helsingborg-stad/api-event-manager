@@ -207,7 +207,7 @@ abstract class CustomPostType
             $columns = $this->tableColumns;
         }
 
-        return $columns;
+        return array_map('strtolower', $columns);
     }
 
     /**

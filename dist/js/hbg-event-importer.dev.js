@@ -157,7 +157,7 @@ function redLoadingButton(button, callback)
     button.fadeOut(500, function() {
         var texts = ['Loading&nbsp;&nbsp;&nbsp;', 'Loading.&nbsp;&nbsp;', 'Loading..&nbsp;', 'Loading...'];
         button.css('background-color', 'rgb(251,113,113)');
-        button.css('border', '1px solid rgb(251,113,113)');
+        button.css('border', 'none');
         button.css('color', 'black');
         button.css('text-shadow', 'none');
         button.css('box-shadow', 'none');
@@ -246,27 +246,6 @@ jQuery(document).ready(function ($) {
     }).trigger('change');
 });
 
-var ImportEvents = ImportEvents || {};
-
-jQuery(document).ready(function ($) {
-    if($('#acf-field_576116fd23a4f').length)
-    {
-        //add this class for a button instead of link 'page-title-action'
-        $('#acf-field_576116fd23a4f').append('<a class="createContact button button-primary" href="http://' + window.location.host + '/wp/wp-admin/post-new.php?post_type=contact&lightbox=true">Create new contact</a>');
-    }
-
-    $('.openContact').click(function(event) {
-        event.preventDefault();
-        ImportEvents.Prompt.Modal.open($(this).attr('href'));
-    });
-
-    $('.createContact').click(function(event) {
-        var parentId = $('#post_ID').val();
-        event.preventDefault();
-        ImportEvents.Prompt.Modal.open($(this).attr('href'), parentId);
-    });
-});
-
 ImportEvents = ImportEvents || {};
 ImportEvents.Prompt = ImportEvents.Prompt || {};
 
@@ -326,3 +305,24 @@ ImportEvents.Prompt.Modal = (function ($) {
     return new Modal();
 
 })(jQuery);
+
+var ImportEvents = ImportEvents || {};
+
+jQuery(document).ready(function ($) {
+    if($('#acf-field_576116fd23a4f').length)
+    {
+        //add this class for a button instead of link 'page-title-action'
+        $('#acf-field_576116fd23a4f').append('<a class="createContact button button-primary" href="http://' + window.location.host + '/wp/wp-admin/post-new.php?post_type=contact&lightbox=true">Create new contact</a>');
+    }
+
+    $('.openContact').click(function(event) {
+        event.preventDefault();
+        ImportEvents.Prompt.Modal.open($(this).attr('href'));
+    });
+
+    $('.createContact').click(function(event) {
+        var parentId = $('#post_ID').val();
+        event.preventDefault();
+        ImportEvents.Prompt.Modal.open($(this).attr('href'), parentId);
+    });
+});
