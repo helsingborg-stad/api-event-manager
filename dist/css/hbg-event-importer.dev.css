@@ -25,8 +25,8 @@ tbody .type-event.green {
   color: #fff;
   background-color: #5cb85c;
   border-color: #5cb85c;
-  text-shadow: none;
-  box-shadow: none; }
+  text-shadow: 0 -1px 1px #398439,1px 0 1px #398439,0 1px 1px #398439,-1px 0 1px #398439;
+  box-shadow: 0 1px 0 #398439; }
 
 .accept.button-primary:hover, .accept.button-primary:focus, .accept.button-primary:active {
   color: #fff;
@@ -40,8 +40,8 @@ tbody .type-event.green {
   color: #fff;
   background-color: #d9534f;
   border-color: #d9534f;
-  text-shadow: none;
-  box-shadow: none; }
+  text-shadow: 0 -1px 1px #ac2925,1px 0 1px #ac2925,0 1px 1px #ac2925,-1px 0 1px #ac2925;
+  box-shadow: 0 1px 0 #ac2925; }
 
 .deny.button-primary:hover, .deny.button-primary:focus, .deny.button-primary:active {
   color: #fff;
@@ -128,7 +128,7 @@ tbody .type-event.green {
   background-color: #0085ba;
   z-index: 10000;
   position: absolute;
-  top: 25%;
+  top: 200px;
   left: 50%;
   transform: translate(-50%);
   color: white;

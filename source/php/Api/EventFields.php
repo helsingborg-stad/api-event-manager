@@ -40,7 +40,7 @@ class EventFields extends Fields
             return array('Error' => 'Missing search query');
         }
         $search = $_GET['term'];
-        $query = "SELECT ID, post_title, post_type FROM $wpdb->posts WHERE post_title LIKE %s AND post_type = %s AND post_status = %s ORDER BY post_title ASC";
+        $query = "SELECT ID as id, post_title as title, post_type FROM $wpdb->posts WHERE post_title LIKE %s AND post_type = %s AND post_status = %s ORDER BY post_title ASC";
         $completeQuery = $wpdb->prepare($query, $search.'%', $this->postType, 'publish');
         $allEvents = $wpdb->get_results($completeQuery);
         return $allEvents;
