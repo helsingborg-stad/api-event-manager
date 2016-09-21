@@ -75,6 +75,7 @@ jQuery(document).ready(function ($) {
         var postId = $(this).attr('postid');
         changeAccepted(-1, postId);
     });
+
     var oldInput = '';
     $('input[name="post_title"]').on('change paste keyup', function() {
         var input = $(this).val();
@@ -91,31 +92,38 @@ jQuery(document).ready(function ($) {
                 'postType'  : pagenow
             };
 
-            jQuery.get('/json/wp/v2/' + pagenow + '?search=' + input, function(response) {
+            var isevent = (pagenow === 'event') ? true : false;
+            var geturl = (isevent) ? '/json/wp/v2/' + pagenow + '/search?term=' + input : '/json/wp/v2/' + pagenow + '?search=' + input;
+
+            console.log(geturl);
+
+            //jQuery.get('/json/wp/v2/' + pagenow + '?search=' + input, function(response) {
+            jQuery.get(geturl, function(response) {
                 $('#suggestionList').empty();
                 for(var i in response) {
                     var id = response[i].id;
-                    var title = response[i].title.rendered;
-                    //console.log('Id: ' + id + ', Title: ' + title);
-                    $('#suggestionList').append('<li><a href="/wp/wp-admin/post.php?post=' + id + '&action=edit&lightbox=true" class="suggestion">' + title + '</a></li>');
+                    var title = (isevent) ? response[i].title : response[i].title.rendered;
+                    console.log('Id: ' + id + ', Title: ' + title);
+                    // $('#suggestionList').append('<li><a href="/wp/wp-admin/post.php?post=' + id + '&action=edit&lightbox=true" class="suggestion">' + title + '</a></li>');
+                    $('#suggestionList').append('<li><a href="/wp/wp-admin/post.php?post=' + id + '&action=edit" class="suggestion">' + title + '</a></li>');
                 }
                 if($('.suggestion').length == 0)
                     $('#suggestionContainer').hide();
                 else
                 {
                     $('#suggestionContainer').show();
-                    $('.suggestion').click(function(event) {
-                        event.preventDefault();
-                        ImportEvents.Prompt.Modal.open($(this).attr('href'));
-                    });
+                    // $('.suggestion').click(function(event) {
+                    //     event.preventDefault();
+                    //     ImportEvents.Prompt.Modal.open($(this).attr('href'));
+                    // });
                 }
             });
         }
         else
             $('#suggestionContainer').hide();
-
     });
-    if(pagenow == 'contact' || pagenow == 'location' || pagenow == 'event' || pagenow == 'sponsor')
+
+    if(pagenow == 'contact' || pagenow == 'location' || pagenow == 'event' || pagenow == 'sponsor' || pagenow == 'package')
     {
         $('#titlewrap').after('<div id="suggestionContainer"><ul id="suggestionList"></ul></div>');
     }
@@ -142,6 +150,7 @@ function collectCssFromButton(button)
     return {
         bgColor: button.css('background-color'),
         textColor: button.css('color'),
+        borderColor: button.css('border-color'),
         textShadow: button.css('text-shadow'),
         boxShadow: button.css('box-shadow'),
         width: button.css('width'),
@@ -153,9 +162,10 @@ function redLoadingButton(button, callback)
 {
     button.fadeOut(500, function() {
         var texts = ['Loading&nbsp;&nbsp;&nbsp;', 'Loading.&nbsp;&nbsp;', 'Loading..&nbsp;', 'Loading...'];
-        button.css('background-color', 'rgb(251,113,113)');
-        button.css('color', 'black');
-        button.css('text-shadow', 'none');
+        button.css('background-color', 'rgb(255, 210, 77)');
+        button.css('border-color', 'rgb(255, 191, 0)');
+        button.css('color', 'white');
+        button.css('text-shadow', '0 -1px 1px rgb(230, 172, 0),1px 0 1px rgb(230, 172, 0),0 1px 1px rgb(230, 172, 0),-1px 0 1px rgb(230, 172, 0)');
         button.css('box-shadow', 'none');
         button.css('width', '85px');
         button.html(texts[0]);
@@ -179,6 +189,7 @@ function restoreButton(button, storedCss)
     button.fadeOut(500, function() {
         button.css('background-color', storedCss.bgColor);
         button.css('color', storedCss.textColor);
+        button.css('border-color', storedCss.borderColor);
         button.css('text-shadow', storedCss.textShadow);
         button.css('box-shadow', storedCss.boxShadow);
         button.css('width', storedCss.width);

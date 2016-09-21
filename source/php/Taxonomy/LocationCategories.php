@@ -25,7 +25,7 @@ class LocationCategories
             'new_item_name'         => __('New Location Category', 'hbg-event-importer'),
             'add_or_remove_items'   => __('Add or remove Location Categories', 'hbg-event-importer'),
             'choose_from_most_used' => __('Choose from most used Location Categories', 'hbg-event-importer'),
-            'menu_name'             => __('Location Category', 'hbg-event-importer'),
+            'menu_name'             => __('Categories', 'hbg-event-importer'),
         );
 
         $args = array(

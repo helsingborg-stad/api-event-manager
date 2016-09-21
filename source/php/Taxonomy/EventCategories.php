@@ -25,7 +25,7 @@ class EventCategories
             'new_item_name'         => __('New Event Category', 'hbg-event-importer'),
             'add_or_remove_items'   => __('Add or remove Event Categories', 'hbg-event-importer'),
             'choose_from_most_used' => __('Choose from most used Event Categories', 'hbg-event-importer'),
-            'menu_name'             => __('Event Category', 'hbg-event-importer'),
+            'menu_name'             => __('Categories', 'hbg-event-importer'),
         );
 
         $args = array(
@@ -33,7 +33,7 @@ class EventCategories
             'public'                => true,
             'show_in_nav_menus'     => true,
             'show_admin_column'     => true,
-            'hierarchical'          => false,
+            'hierarchical'          => true,
             'show_tagcloud'         => true,
             'show_ui'               => true,
             'query_var'             => true,
