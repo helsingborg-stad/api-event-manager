@@ -34,6 +34,7 @@ class FilterRestrictions
                 'depth'           =>  3,
                 'show_count'      =>  true,
                 'hide_empty'      =>  true,
+                'hide_if_empty'   =>  true,
             ));
         }
     }
@@ -50,34 +51,15 @@ class FilterRestrictions
 
     public function restrictEventsByInterval($post_type)
     {
-        if (isset($_GET['time_interval'])) {
-            switch ($_GET['time_interval']) {
-            case '1':
-                $value1 = ' selected';
-            break;
-            case '2':
-                $value2 = ' selected';
-            break;
-            case '3':
-                $value3 = ' selected';
-            break;
-            case '4':
-                $value4 = ' selected';
-            break;
-            case '3':
-                $value5 = ' selected';
-            break;
-          }
-        }
-
+        $timeInterval = (isset($_GET['time_interval'])) ? $_GET['time_interval'] : '';
         if ($post_type == 'event') {
             echo '<select name="time_interval">';
             echo '<option value>Time interval</option>';
-            echo '<option value="1"' . $value1 . '>Today</option>';
-            echo '<option value="2"' . $value2 . '>Tomorrow</option>';
-            echo '<option value="3"' . $value3 . '>This week</option>';
-            echo '<option value="4"' . $value4 . '>This month</option>';
-            echo '<option value="5"' . $value5 . '>Passed events</option>';
+            echo '<option value="1"' . (($timeInterval == 1)?' selected':'') . '>Today</option>';
+            echo '<option value="2"' . (($timeInterval == 2)?' selected':'') . '>Tomorrow</option>';
+            echo '<option value="3"' . (($timeInterval == 3)?' selected':'') . '>This week</option>';
+            echo '<option value="4"' . (($timeInterval == 4)?' selected':'') . '>This month</option>';
+            echo '<option value="5"' . (($timeInterval == 5)?' selected':'') . '>Passed events</option>';
             echo '</select>';
         }
     }
@@ -85,7 +67,71 @@ class FilterRestrictions
     public function applyIntervalRestriction($query)
     {
         global $pagenow;
+        global $wpdb;
 
+        if ($query->is_admin && $pagenow == 'edit.php' && isset($_GET['time_interval']) && $_GET['time_interval'] != '' && $_GET['post_type'] == 'event') {
+        $time_now = strtotime("midnight now");
+        switch (esc_attr($_GET['time_interval'])) {
+        case '1':
+            $date_begin = strtotime("midnight now");
+            $date_end = strtotime("tomorrow", $time_now) - 1;
+        break;
+        case '2';
+            $date_begin = strtotime('tomorrow', $time_now);
+            $date_end = strtotime("midnight tomorrow", $date_begin) - 1;
+        break;
+        case '3':
+            $date_begin = strtotime('midnight monday this week', $time_now);
+            $date_end = strtotime("+ 1 week", $date_begin) - 1;
+        break;
+        case '4':
+            $date_begin = strtotime('midnight first day of this month', $time_now);
+            $date_end = strtotime('midnight first day of next month', $date_begin) - 1;
+        break;
+        case '5':
+            $date_begin = 0;
+            $date_end = strtotime("today", $time_now) - 1;
+        break;
+        }
+
+        $db_occasions = $wpdb->prefix . "occasions";
+        $joinquery =
+        "
+        SELECT      $wpdb->posts.ID
+        FROM        $wpdb->posts
+        LEFT JOIN   $db_occasions
+                    ON $wpdb->posts.ID = $db_occasions.event
+        WHERE       $wpdb->posts.post_type = %s
+                    AND ($db_occasions.timestamp_start BETWEEN %d AND %d OR $db_occasions.timestamp_end BETWEEN %d AND %d)
+                    ORDER BY $db_occasions.timestamp_start ASC
+        "
+        ;
+
+        $completeQuery = $wpdb->prepare($joinquery, 'event', $date_begin, $date_end, $date_begin, $date_end);
+        $results = $wpdb->get_results($completeQuery);
+
+
+
+        $allEventIds = array();
+        foreach ($results as $key => $value) {
+            $allEventIds[] = $value->ID;
+        }
+
+        //$allEventIds = array_unique($allEventIds);
+
+        if (!empty($allEventIds)) {
+            $query->set( 'post__in', $allEventIds );
+        } else {
+            $query->set( 'post__in',  array(0) );
+        }
+
+
+        }
+    }
+
+    public function applyIntervalRestrictionNY($query)
+    {
+        global $pagenow;
         if (isset($_GET['time_interval'])) {
             $time_now = strtotime("midnight now");
             $date_begin = date('Y-m-d H:i:s', $time_now);
@@ -119,7 +165,6 @@ class FilterRestrictions
             break;
             }
         }
-
         if ($query->is_admin && $pagenow == 'edit.php' && isset($_GET['time_interval']) && $_GET['time_interval'] != '' && $_GET['post_type'] == 'event') {
             $meta_key_query = array(
                 'meta_query'    => array(

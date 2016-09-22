@@ -86,7 +86,8 @@ class Event extends \HbgEventImporter\Entity\PostManager
             $timestamp3 = strtotime($doorTime);
         }
 
-        if ($timestamp <= 0 || $timestamp2 <= 0 || $timestamp == false || $timestamp2 == false || $timestamp2 < $timestamp) {
+        if ($timestamp <= 0 || $timestamp2 <= 0 || $timestamp == false || $timestamp2 == false) {
+        //if ($timestamp <= 0 || $timestamp2 <= 0 || $timestamp == false || $timestamp2 == false || $timestamp2 < $timestamp) {
             return true;
         }
 
