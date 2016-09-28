@@ -255,10 +255,21 @@ class CBIS extends \HbgEventImporter\Parser
 
             if (isset($occasion->EndDate)) {
                 $endDate = explode('T', $occasion->EndDate)[0] . 'T' . explode('T', $occasion->EndTime)[1];
+                if (strtotime($endDate) <= strtotime($startDate)) {
+                    $newEndTime = null;
+                    if (isset($occasion->StartDate)) {
+                        $date = strtotime($startDate);
+                        $newEndTime = date('Y-m-d H:i:s', strtotime("+ 1 hour", $date));
+                    }
+                    $endDate = str_replace(' ', 'T', $newEndTime);
+                }
             }
 
             if (isset($occasion->EntryTime)) {
                 $doorTime = explode('T', $occasion->StartDate)[0] . 'T' . explode('T', $occasion->EntryTime)[1];
+                if (explode('T', $occasion->EntryTime)[1]=='00:00:00' && isset($occasion->StartDate)) {
+                    $doorTime = $startDate;
+                }
             }
 
             $occasionsToRegister[] = array(
