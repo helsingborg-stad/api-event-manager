@@ -14,6 +14,7 @@ class EventFields extends Fields
     {
         add_action('rest_api_init', array($this, 'registerRestFields'));
         add_action('rest_api_init', array($this, 'registerRestRoute'));
+        add_action('rest_api_init', array($this, 'registerRestRouteSearch'));
     }
 
     public static function registerRestRoute()
@@ -22,6 +23,27 @@ class EventFields extends Fields
             'methods' => 'GET',
             'callback' => array($this, 'getEventsByTimestamp'),
         ));
+    }
+
+    public static function registerRestRouteSearch()
+    {
+        register_rest_route( 'wp/v2','/event/search', array(
+            'methods' => 'GET',
+            'callback' => array($this, 'getEventsSearch'),
+        ));
+    }
+
+    public function getEventsSearch($data)
+    {
+        global $wpdb;
+        if (!isset($_GET['term'])) {
+            return array('Error' => 'Missing search query');
+        }
+        $search = $_GET['term'];
+        $query = "SELECT ID as id, post_title as title, post_type FROM $wpdb->posts WHERE post_title LIKE %s AND post_type = %s AND post_status = %s ORDER BY post_title ASC";
+        $completeQuery = $wpdb->prepare($query, $search.'%', $this->postType, 'publish');
+        $allEvents = $wpdb->get_results($completeQuery);
+        return $allEvents;
     }
 
     public function errorMessage($message, array $texts)
@@ -54,6 +76,8 @@ class EventFields extends Fields
         $time1 = $_GET['start'];
         $timestamp = $time1;
 
+        $post_status = 'publish';
+
         if (!is_numeric($time1)) {
             $timestamp = strtotime($timestamp);
         }
@@ -71,8 +95,7 @@ class EventFields extends Fields
                     ON $wpdb->posts.ID = $db_occasions.event
         WHERE       $wpdb->posts.post_type = %s
                     AND $wpdb->posts.post_status = %s
-                    AND $db_occasions.timestamp_start BETWEEN %d AND %d
-                    OR $db_occasions.timestamp_end BETWEEN %d AND %d
+                    AND ($db_occasions.timestamp_start BETWEEN %d AND %d OR $db_occasions.timestamp_end BETWEEN %d AND %d)
                     ORDER BY $db_occasions.timestamp_start ASC
         "
         ;
@@ -93,13 +116,13 @@ class EventFields extends Fields
             $timePlusWeek = $timestamp + $week;
         }
 
-        $completeQuery = $wpdb->prepare($query, $this->postType, "publish", $timestamp, $timePlusWeek, $timestamp, $timePlusWeek);
+        $completeQuery = $wpdb->prepare($query, $this->postType, $post_status, $timestamp, $timePlusWeek, $timestamp, $timePlusWeek);
         $allEvents = $wpdb->get_results($completeQuery);
 
         $data = array();
         if (! empty($allEvents)) {
             foreach ($allEvents as $post) {
-                $data = $this->make_data($post, $data);
+                $data = $this->makeData($post, $data);
             }
         } else {
             return array('Error' => 'There are no events');
@@ -116,17 +139,16 @@ class EventFields extends Fields
      * @param array $data Current collection of data
      * @return array
      */
-    public function make_data($post, $data)
+    public function makeData($post, $data)
     {
-        $image = get_post_thumbnail_id($post->ID);
+        $id = $post->event;
+        $image = get_post_thumbnail_id($id);
         if ($image) {
             $_image = wp_get_attachment_image_src($image, 'large');
             if (is_array($_image)) {
                 $image = $_image[0];
             }
         }
-
-        $id = $post->event;
         $occ_start = date('Y-m-d H:i', $post->timestamp_start);
         $occ_end = date('Y-m-d H:i', $post->timestamp_end);
         $occ_door = null;
@@ -146,13 +168,12 @@ class EventFields extends Fields
             'post_status'               => $post->post_status,
             'slug'                      => $post->post_name,
             'post_type'                 => $post->post_type,
+            'import_client'             => get_post_meta($id, 'import_client', true),
             'image_src'                 => $image,
             'alternative_name'          => get_field('alternative_name', $id),
             'event_link'                => get_field('event_link', $id),
             'additional_links'          => get_field('additional_links', $id),
             'related_events'            => get_field('related_events', $id),
-            //'occasions'                 => get_field('occasions', $id),
-            //'rcr_rules'                 => get_field('rcr_rules', $id),
             'location'                  => get_field('location', $id),
             'additional_locations'      => get_field('additional_locations', $id),
             'organizer'                 => get_field('organizer', $id),
@@ -182,7 +203,7 @@ class EventFields extends Fields
             'soundcloud'                => get_field('soundcloud', $id),
             'deezer'                    => get_field('deezer', $id),
             'youtube'                   => get_field('youtube', $id),
-            'vimeo'                     => get_field('vimeo', $id),
+            'vimeo'                     => get_field('vimeo', $id)
         );
         return $data;
     }
