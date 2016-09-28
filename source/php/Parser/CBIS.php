@@ -10,7 +10,6 @@ class CBIS extends \HbgEventImporter\Parser
 {
     //API for cbis
     //http://api.cbis.citybreak.com/
-
     /**
      * Holds the Soap client
      * @var SoapClient
@@ -117,17 +116,8 @@ class CBIS extends \HbgEventImporter\Parser
     public function start()
     {
         global $wpdb;
-        $sql = 'CREATE TABLE IF NOT EXISTS event_occasions(
-        ID BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-        event BIGINT(20) UNSIGNED NOT NULL,
-        timestamp_start BIGINT(20) UNSIGNED NOT NULL,
-        timestamp_end BIGINT(20) UNSIGNED NOT NULL,
-        PRIMARY KEY (ID))';
-
-        $wpdb->get_results($sql);
 
         $this->collectDataForLevenshtein();
-
         $this->client = new \SoapClient($this->url, array('keep_alive' => false));
 
         $cbisKey = get_option('options_cbis_api_key');
