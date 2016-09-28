@@ -65,35 +65,43 @@ class Event extends \HbgEventImporter\Entity\PostManager
     public function saveOccasions()
     {
         $occasionError = false;
-        foreach($this->occasions as $o) {
-            $occasionError = $this->extractEventOccasion($o['start_date'], $o['end_date']);
-
+        foreach ($this->occasions as $o) {
+            $occasionError = $this->extractEventOccasion($o['start_date'], $o['end_date'], $o['door_time']);
         }
         update_field('field_5761106783967', $this->occasions, $this->ID);
+        //Use this to say something is wrong with occasions and someone need to see over the data
         return $occasionError;
     }
 
-    public function extractEventOccasion($startDate, $endDate)
+    public function extractEventOccasion($startDate, $endDate, $doorTime)
     {
         global $wpdb;
+        $db_occasions = $wpdb->prefix . "occasions";
         $eventId = $this->ID;
         $timestamp = strtotime($startDate);
         $timestamp2 = strtotime($endDate);
-        if($timestamp <= 0 || $timestamp2 <= 0 || $timestamp == false || $timestamp2 == false || $timestamp2 < $timestamp)
+        if (empty($doorTime)) {
+            $timestamp3 = NULL;
+        } else {
+            $timestamp3 = strtotime($doorTime);
+        }
+
+        if ($timestamp <= 0 || $timestamp2 <= 0 || $timestamp == false || $timestamp2 == false) {
+        //if ($timestamp <= 0 || $timestamp2 <= 0 || $timestamp == false || $timestamp2 == false || $timestamp2 < $timestamp) {
             return true;
+        }
 
         // We do not need to get all fields, they are just for debugging
-        $testQuery = $wpdb->prepare("SELECT * FROM event_occasions WHERE event = %d AND timestamp_start = %d AND timestamp_end = %d", $eventId, $timestamp, $timestamp2);
+        $testQuery = $wpdb->prepare("SELECT * FROM $db_occasions WHERE event = %d AND timestamp_start = %d AND timestamp_end = %d", $eventId, $timestamp, $timestamp2);
         $existing = $wpdb->get_results($testQuery);
-        //var_dump($existing);
+
         $resultString = '';
-        if(empty($existing))
-        {
-            $wpdb->insert('event_occasions', array('event' => $eventId, 'timestamp_start' => $timestamp, 'timestamp_end' => $timestamp2));
+        if (empty($existing)) {
+            $wpdb->insert($db_occasions, array('event' => $eventId, 'timestamp_start' => $timestamp, 'timestamp_end' => $timestamp2, 'timestamp_door' => $timestamp3));
             $resultString .= "New event occasions inserted with event id: " . $eventId . ', and timestamp_start: ' . $timestamp . ", timestamp_end: " . $timestamp2 . "\n";
-        }
-        else
+        } else {
             $resultString .= "Already exists! Event: " . $existing[0]->event . ', timestamp: ' . $existing[0]->timestamp_start . ", timestamp_end: " . $existing[0]->timestamp_end . "\n";
+        }
 
         return false;
     }

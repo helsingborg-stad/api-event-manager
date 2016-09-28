@@ -20,6 +20,7 @@ abstract class CustomPostType
      * @param string $slug         Post type slug
      * @param array  $args         Post type arguments
      */
+
     public function __construct($namePlural, $nameSingular, $slug, $args = array())
     {
         $this->namePlural = $namePlural;
@@ -57,15 +58,6 @@ abstract class CustomPostType
     {
         global $wpdb;
 
-        $sql = 'CREATE TABLE IF NOT EXISTS event_occasions(
-        ID BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-        event BIGINT(20) UNSIGNED NOT NULL,
-        timestamp_start BIGINT(20) UNSIGNED NOT NULL,
-        timestamp_end BIGINT(20) UNSIGNED NOT NULL,
-        PRIMARY KEY (ID))';
-
-        $wpdb->get_results($sql);
-
         $sql = $wpdb->prepare("SELECT ID FROM " . $wpdb->posts . " WHERE post_status = %s AND post_type = %s", 'publish', 'event');
         $result = $wpdb->get_results($sql);
 
@@ -73,17 +65,20 @@ abstract class CustomPostType
 
         foreach ($result as $key => $event) {
             $occasions = get_field('occasions', $event->ID);
+            $db_occasions = $wpdb->prefix . "occasions";
             foreach($occasions as $newKey => $value) {
                 $timestamp = strtotime($value['start_date']);
                 $timestamp2 = strtotime($value['end_date']);
-                if($timestamp <= 0 || $timestamp2 <= 0 || $timestamp == false || $timestamp2 == false || $timestamp2 < $timestamp)
+                $timestamp3 = (empty($value['door_time'])) ? null : strtotime($value['door_time']);
+                if($timestamp <= 0 || $timestamp2 <= 0 || $timestamp == false || $timestamp2 == false)
+                //if($timestamp <= 0 || $timestamp2 <= 0 || $timestamp == false || $timestamp2 == false || $timestamp2 < $timestamp)
                     continue;
-                $testQuery = $wpdb->prepare("SELECT * FROM event_occasions WHERE event = %d AND timestamp_start = %d AND timestamp_end = %d", $event->ID, $timestamp, $timestamp2);
+                $testQuery = $wpdb->prepare("SELECT * FROM $db_occasions WHERE event = %d AND timestamp_start = %d AND timestamp_end = %d", $event->ID, $timestamp, $timestamp2);
                 $existing = $wpdb->get_results($testQuery);
                 if(empty($existing))
                 {
-                    $newId = $wpdb->insert('event_occasions', array('event' => $event->ID, 'timestamp_start' => $timestamp, 'timestamp_end' => $timestamp2));
-                    $resultString .= "New event occasions inserted with event id: " . $event->ID . ', and timestamp_start: ' . $timestamp . ", timestamp_end: " . $timestamp2 . "\n";
+                    $newId = $wpdb->insert($db_occasions, array('event' => $event->ID, 'timestamp_start' => $timestamp, 'timestamp_end' => $timestamp2, 'timestamp_door' => $timestamp3));
+                    $resultString .= "New event occasions inserted with event id: " . $event->ID . ', and timestamp_start: ' . $timestamp . ", timestamp_end: " . $timestamp2 . ", timestamp_door: " . $timestamp3 ."\n";
                 }
                 else
                     $resultString .= "Already exists! Event: " . $existing[0]->event . ', timestamp_start: ' . $existing[0]->timestamp_start . ", timestamp_end: " . $existing[0]->timestamp_end . "\n";
@@ -107,7 +102,6 @@ abstract class CustomPostType
             echo "Something went wrong!";
             wp_die();
         }
-
         $postId =  $_POST['postId'];
         $newValue = $_POST['value'];
 

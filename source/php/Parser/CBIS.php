@@ -166,13 +166,12 @@ class CBIS extends \HbgEventImporter\Parser
         $this->arenas = $this->client->ListAll($requestParams)->ListAllResult->Items->Product;
 
         foreach($this->arenas as $key => $arenaData) {
-            break;
             $this->saveArena($arenaData);
         }
 
         // Adjust request parameters for getting products, 1500 itemsPerPage to get all events
         $requestParams['filter']['ProductType'] = "Product";
-        $requestParams['itemsPerPage'] = 100;
+        $requestParams['itemsPerPage'] = 1500;
 
         // Get and save the events
         $this->events = $this->client->ListAll($requestParams)->ListAllResult->Items->Product;
@@ -256,10 +255,21 @@ class CBIS extends \HbgEventImporter\Parser
 
             if (isset($occasion->EndDate)) {
                 $endDate = explode('T', $occasion->EndDate)[0] . 'T' . explode('T', $occasion->EndTime)[1];
+                if (strtotime($endDate) <= strtotime($startDate)) {
+                    $newEndTime = null;
+                    if (isset($occasion->StartDate)) {
+                        $date = strtotime($startDate);
+                        $newEndTime = date('Y-m-d H:i:s', strtotime("+ 1 hour", $date));
+                    }
+                    $endDate = str_replace(' ', 'T', $newEndTime);
+                }
             }
 
             if (isset($occasion->EntryTime)) {
                 $doorTime = explode('T', $occasion->StartDate)[0] . 'T' . explode('T', $occasion->EntryTime)[1];
+                if (explode('T', $occasion->EntryTime)[1]=='00:00:00' && isset($occasion->StartDate)) {
+                    $doorTime = $startDate;
+                }
             }
 
             $occasionsToRegister[] = array(

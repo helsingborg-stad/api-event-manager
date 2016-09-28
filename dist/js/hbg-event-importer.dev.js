@@ -91,19 +91,15 @@ jQuery(document).ready(function ($) {
                 'value'     : input,
                 'postType'  : pagenow
             };
-
             var isevent = (pagenow === 'event') ? true : false;
             var geturl = (isevent) ? '/json/wp/v2/' + pagenow + '/search?term=' + input : '/json/wp/v2/' + pagenow + '?search=' + input;
-
-            console.log(geturl);
-
             //jQuery.get('/json/wp/v2/' + pagenow + '?search=' + input, function(response) {
             jQuery.get(geturl, function(response) {
                 $('#suggestionList').empty();
                 for(var i in response) {
                     var id = response[i].id;
                     var title = (isevent) ? response[i].title : response[i].title.rendered;
-                    console.log('Id: ' + id + ', Title: ' + title);
+                    //console.log('Id: ' + id + ', Title: ' + title);
                     // $('#suggestionList').append('<li><a href="/wp/wp-admin/post.php?post=' + id + '&action=edit&lightbox=true" class="suggestion">' + title + '</a></li>');
                     $('#suggestionList').append('<li><a href="/wp/wp-admin/post.php?post=' + id + '&action=edit" class="suggestion">' + title + '</a></li>');
                 }

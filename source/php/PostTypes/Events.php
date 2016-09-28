@@ -79,7 +79,7 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
         });
         add_action('admin_head-post.php', array($this, 'hidePublishingActions'));
         add_action('publish_event', array($this, 'setAcceptedOnPublish'), 10, 2);
-        add_filter('post_class', array($this, 'changeAcceptanceColor'));
+        //add_filter('post_class', array($this, 'changeAcceptanceColor'));
         add_action('save_post', array($this, 'saveEventOccasions'), 10, 3);
         add_action('save_post', array($this, 'saveRecurringEvents'), 10, 3);
         add_action('delete_post', array($this, 'deleteEventOccasions'), 10);
@@ -235,7 +235,7 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
         $row = preg_replace('/^\s*acf\[[^\]]+\]\[([^\]]+)\].*$/', '\1', $input);
         $start_value = $_POST['acf'][$repeater_key][$row][$start_key];
         $end_value = $value;
-        if ($end_value <= $start_value) {
+        if (strtotime($end_value) <= strtotime($start_value)) {
             $valid = 'End date must be after start date';
         }
         return $valid;
@@ -259,7 +259,7 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
         $row = preg_replace('/^\s*acf\[[^\]]+\]\[([^\]]+)\].*$/', '\1', $input);
         $start_value = $_POST['acf'][$repeater_key][$row][$start_key];
         $door_value = $value;
-        if ($door_value > $start_value) {
+        if (strtotime($door_value) > strtotime($start_value)) {
             $valid = 'Door time cannot be after start date';
         }
         return $valid;
@@ -332,7 +332,7 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
         $row = preg_replace('/^\s*acf\[[^\]]+\]\[([^\]]+)\].*$/', '\1', $input);
         $start_value = $_POST['acf'][$repeater_key][$row][$start_key];
         $end_value = $value;
-        if ($end_value <= $start_value) {
+        if (strtotime($end_value) <= strtotime($start_value)) {
             $valid = 'End date must be after start time';
         }
         return $valid;
@@ -344,19 +344,19 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
      * @param  array $classes
      * @return array $classes
      */
-    public function changeAcceptanceColor($classes)
-    {
-        $postAndId = explode('-', $classes[3]);
-        if ($postAndId[0] == 'post') {
-            $metaAccepted = get_post_meta($postAndId[1], 'accepted');
-            if ($metaAccepted[0] == -1) {
-                $classes[] = "red";
-            } elseif ($metaAccepted[0] == 1) {
-                $classes[] = "green";
-            }
-        }
-        return $classes;
-    }
+    // public function changeAcceptanceColor($classes)
+    // {
+    //     $postAndId = explode('-', $classes[3]);
+    //     if ($postAndId[0] == 'post') {
+    //         $metaAccepted = get_post_meta($postAndId[1], 'accepted');
+    //         if ($metaAccepted[0] == -1) {
+    //             $classes[] = "red";
+    //         } elseif ($metaAccepted[0] == 1) {
+    //             $classes[] = "green";
+    //         }
+    //     }
+    //     return $classes;
+    // }
 
     /**
      * When publish are clicked we are either creating the meta 'accepted' with value 1 or update it
