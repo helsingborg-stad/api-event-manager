@@ -150,7 +150,7 @@
                 ],
                 "taxonomy": [],
                 "allow_null": 0,
-                "allow_archives": 1,
+                "allow_archives": 0,
                 "multiple": 1
             },
             {
@@ -526,7 +526,7 @@
                 "label": "Location",
                 "name": "location",
                 "type": "relationship",
-                "instructions": "",
+                "instructions": "Location or address for the event.",
                 "required": 0,
                 "conditional_logic": 0,
                 "wrapper": {
@@ -547,11 +547,11 @@
                 "return_format": "object"
             },
             {
-                "key": "field_57ce8cbf9fe55",
+                "key": "field_57ee2a23bd0b5",
                 "label": "Additional locations",
                 "name": "additional_locations",
-                "type": "relationship",
-                "instructions": "",
+                "type": "repeater",
+                "instructions": "Add additional locations if the event takes place on more than one address.",
                 "required": 0,
                 "conditional_logic": 0,
                 "wrapper": {
@@ -559,17 +559,38 @@
                     "class": "",
                     "id": ""
                 },
-                "post_type": [
-                    "location"
-                ],
-                "taxonomy": [],
-                "filters": [
-                    "search"
-                ],
-                "elements": "",
+                "collapsed": "",
                 "min": "",
-                "max": "",
-                "return_format": "object"
+                "max": 1,
+                "layout": "block",
+                "button_label": "Add",
+                "sub_fields": [
+                    {
+                        "key": "field_57ee2a56bd0b6",
+                        "label": "Locations",
+                        "name": "add_locations",
+                        "type": "relationship",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "post_type": [
+                            "location"
+                        ],
+                        "taxonomy": [],
+                        "filters": [
+                            "search"
+                        ],
+                        "elements": "",
+                        "min": "",
+                        "max": "",
+                        "return_format": "object"
+                    }
+                ]
             },
             {
                 "key": "field_57611356d9415",
@@ -588,84 +609,10 @@
                 "endpoint": 0
             },
             {
-                "key": "field_57611367d9416",
-                "label": "Organizer",
-                "name": "organizer",
-                "type": "text",
-                "instructions": "",
-                "required": 0,
-                "conditional_logic": 0,
-                "wrapper": {
-                    "width": "50",
-                    "class": "",
-                    "id": ""
-                },
-                "default_value": "",
-                "placeholder": "",
-                "prepend": "",
-                "append": "",
-                "maxlength": ""
-            },
-            {
-                "key": "field_57c808631942c",
-                "label": "Organizer link",
-                "name": "organizer_link",
-                "type": "url",
-                "instructions": "",
-                "required": 0,
-                "conditional_logic": 0,
-                "wrapper": {
-                    "width": "50",
-                    "class": "",
-                    "id": ""
-                },
-                "default_value": "",
-                "placeholder": ""
-            },
-            {
-                "key": "field_57611391d9417",
-                "label": "Organizer phone",
-                "name": "organizer_phone",
-                "type": "text",
-                "instructions": "",
-                "required": 0,
-                "conditional_logic": 0,
-                "wrapper": {
-                    "width": 50,
-                    "class": "",
-                    "id": ""
-                },
-                "default_value": "",
-                "placeholder": "",
-                "prepend": "",
-                "append": "",
-                "maxlength": "",
-                "readonly": 0,
-                "disabled": 0
-            },
-            {
-                "key": "field_5761139bd9418",
-                "label": "Organizer email",
-                "name": "organizer_email",
-                "type": "email",
-                "instructions": "",
-                "required": 0,
-                "conditional_logic": 0,
-                "wrapper": {
-                    "width": 50,
-                    "class": "",
-                    "id": ""
-                },
-                "default_value": "",
-                "placeholder": "",
-                "prepend": "",
-                "append": ""
-            },
-            {
-                "key": "field_576113b3d9419",
-                "label": "Coorganizer",
-                "name": "coorganizer",
-                "type": "text",
+                "key": "field_57ebb36142843",
+                "label": "Organizers",
+                "name": "organizers",
+                "type": "repeater",
                 "instructions": "",
                 "required": 0,
                 "conditional_logic": 0,
@@ -674,42 +621,130 @@
                     "class": "",
                     "id": ""
                 },
-                "default_value": "",
-                "placeholder": "",
-                "prepend": "",
-                "append": "",
-                "maxlength": "",
-                "readonly": 0,
-                "disabled": 0
-            },
-            {
-                "key": "field_576116fd23a4f",
-                "label": "Kontakter",
-                "name": "contacts",
-                "type": "relationship",
-                "instructions": "",
-                "required": 0,
-                "conditional_logic": 0,
-                "wrapper": {
-                    "width": "",
-                    "class": "",
-                    "id": ""
-                },
-                "post_type": [
-                    "contact"
-                ],
-                "taxonomy": [],
-                "filters": [
-                    "search"
-                ],
-                "elements": "",
+                "collapsed": "",
                 "min": "",
                 "max": "",
-                "return_format": "object"
+                "layout": "block",
+                "button_label": "L\u00e4gg till rad",
+                "sub_fields": [
+                    {
+                        "key": "field_57ecf8598ff0d",
+                        "label": "Main organizer",
+                        "name": "main_organizer",
+                        "type": "true_false",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "message": "Fill in if this is the main organizer of the event.",
+                        "default_value": 0
+                    },
+                    {
+                        "key": "field_57ebb3a242844",
+                        "label": "Organizer (Name or Company)",
+                        "name": "organizer",
+                        "type": "text",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "50",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": "",
+                        "placeholder": "",
+                        "prepend": "",
+                        "append": "",
+                        "maxlength": ""
+                    },
+                    {
+                        "key": "field_57ebb41742845",
+                        "label": "Organizer link",
+                        "name": "organizer_link",
+                        "type": "url",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "50",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": "",
+                        "placeholder": ""
+                    },
+                    {
+                        "key": "field_57ebb45142846",
+                        "label": "Organizer Phone",
+                        "name": "organizer_phone",
+                        "type": "text",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "50",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": "",
+                        "placeholder": "",
+                        "prepend": "",
+                        "append": "",
+                        "maxlength": ""
+                    },
+                    {
+                        "key": "field_57ebb51d42847",
+                        "label": "Organizer Email",
+                        "name": "organizer_email",
+                        "type": "email",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "50",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": "",
+                        "placeholder": "",
+                        "prepend": "",
+                        "append": ""
+                    },
+                    {
+                        "key": "field_57ebb807988f8",
+                        "label": "Kontakter",
+                        "name": "contacts",
+                        "type": "relationship",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "post_type": [
+                            "contact"
+                        ],
+                        "taxonomy": [],
+                        "filters": [
+                            "search"
+                        ],
+                        "elements": "",
+                        "min": "",
+                        "max": "",
+                        "return_format": "object"
+                    }
+                ]
             },
             {
                 "key": "field_57a9d5f3804e1",
-                "label": "Supporters",
+                "label": "Sponsors",
                 "name": "supporters",
                 "type": "relationship",
                 "instructions": "",
@@ -1227,3 +1262,4 @@
         "active": 1,
         "description": ""
     }
+g

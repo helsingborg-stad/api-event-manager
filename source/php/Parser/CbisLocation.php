@@ -6,7 +6,7 @@ use \HbgEventImporter\Event as Event;
 use \HbgEventImporter\Location as Location;
 use \HbgEventImporter\Contact as Contact;
 
-class CBIS extends \HbgEventImporter\Parser
+class CbisLocation extends \HbgEventImporter\Parser
 {
     //API for cbis
     //http://api.cbis.citybreak.com/
@@ -26,7 +26,7 @@ class CBIS extends \HbgEventImporter\Parser
      * Holds a list of all found events
      * @var array
      */
-    private $events = array();
+    private $products = array();
 
     /**
      * Holds a list of all found arenas
@@ -117,19 +117,47 @@ class CBIS extends \HbgEventImporter\Parser
     {
         global $wpdb;
 
-        $this->collectDataForLevenshtein();
+        //$this->collectDataForLevenshtein();
         $this->client = new \SoapClient($this->url, array('keep_alive' => false));
 
         $cbisKey = get_option('options_cbis_api_key');
         $cbisId = intval(get_option('options_cbis_api_id'));
-        $cbisCategory = 14086;
+        // 65072
+
+        // Evenemang, events
+            // Arenas: 110
+            // Products: 1450 resp 1463. 1578
+        // $cbisCategory = 14086;
+
+// Göra, to do
+            // WithOccasionsOnly
+            // Arenas:3 resp 3
+            // Products:6 resp 11
+// ska finnas 150+
+//$cbisCategory = 14085;
+
+// Shopping
+//$cbisCategory = 14110;
+
+// Custom id
+$cbisCategory = 14085;
+
+
+        // Bo, accomodation
+// $cbisCategory = 14067;
+
+        // Hotell
+        //$cbisCategory = 14072;
+
+
+        // Parent ID till alla huvudkategorier
+            // Arenas:110
+            // Products:1450
+ //$cbisCategory = 14066;
 
         if (!isset($cbisKey) || empty($cbisKey) || !isset($cbisId) || empty($cbisId)) {
             throw new \Exception('Needed authorization information (CBIS API id and/or CBIS API key) is missing.');
         }
-
-        // Number of arenas to get, 200 to get all
-        $getLength = 200;
 
         $requestParams = array(
             'apiKey' => $cbisKey,
@@ -137,50 +165,60 @@ class CBIS extends \HbgEventImporter\Parser
             'categoryId' => $cbisCategory,
             'templateId' => 0,
             'pageOffset' => 0,
-            'itemsPerPage' => $getLength,
+        'itemsPerPage' => 5000,
             'filter' => array(
                 'GeoNodeIds' => array($cbisId),
-                'StartDate' => date('c'),
-                'Highlights' => 0,
-                'OrderBy' => 'Date',
-                'SortOrder' => 'Descending',
-                'MaxLatitude' => null,
-                'MinLatitude' => null,
-                'MaxLongitude' => null,
-                'MinLongitude' => null,
-                'SubCategoryId' => 0,
-                'ProductType' => $this->productType,
-                'WithOccasionsOnly' => true,
-                'ExcludeProductsWithoutOccasions' => true,
-                'ExcludeProductsNotInCurrentLanguage' => false,
-                'IncludeArchivedProducts' => false,
-                'IncludeInactiveProducts' => false,
-                'BookableProductsFirst' => false,
+                'Highlights' => FALSE,
+                'OrderBy' => 'None',
+                'SortOrder' => 'None',
+        'SubCategoryId' => 0,
+        'ProductType' => 'Product',
+
+                'WithOccasionsOnly' => FALSE,
+                'ExcludeProductsWithoutOccasions' => FALSE,
+                'ExcludeProductsNotInCurrentLanguage' => FALSE,
+                'IncludeArchivedProducts' => TRUE,
+                'BookableProductsFirst' => FALSE,
                 'RandomSortSeed' => 0,
-                'ExcludeProductsWhereNameNotInCurrentLanguage' => false,
-                'IncludePendingPublish' => false
+                'ExcludeProductsWhereNameNotInCurrentLanguage' => FALSE,
             )
         );
 
-        // Get and save the arenas
-        $this->arenas = $this->client->ListAll($requestParams)->ListAllResult->Items->Product;
 
-        foreach($this->arenas as $key => $arenaData) {
-// TA BORT
-break;
-            $this->saveArena($arenaData);
+        // WithIds
+        // $requestParams = array(
+        //     'apiKey' => $cbisKey,
+        //     'languageId' => 1,
+        //     'ids' => array(1176319, 335598, 561690, 842815, 1125847),
+        //     'pageOffset' => 0,
+        //     'itemsPerPage' => 1800,
+        // );
+
+
+        $this->products = $this->client->ListIds($requestParams)->ListIdsResult->ProductMapItem;
+
+        if (get_field('xcap_daily_cron', 'option') == true) {
+            echo "true";
+        } else {
+            echo "false";
         }
 
-        // Adjust request parameters for getting products, 1500 itemsPerPage to get all events
-        $requestParams['filter']['ProductType'] = "Product";
-        $requestParams['itemsPerPage'] = 1500;
 
-        // Get and save the events
-        $this->events = $this->client->ListAll($requestParams)->ListAllResult->Items->Product;
+        echo "<br>";
+        echo("Antal produkter: ".count($this->products));
+        echo "<br>";
+        echo "<br>";
 
-        foreach ($this->events as $eventData) {
-            $this->saveEvent($eventData);
-        }
+        print_r($this->products);
+
+        echo "\n";
+        echo "\n";
+        //var_dump($this->arenas);
+        //var_dump($this->events);
+
+        // foreach ($this->events as $eventData) {
+        //     $this->saveEvent($eventData);
+        // }
     }
 
     /**
@@ -257,21 +295,10 @@ break;
 
             if (isset($occasion->EndDate)) {
                 $endDate = explode('T', $occasion->EndDate)[0] . 'T' . explode('T', $occasion->EndTime)[1];
-                if (strtotime($endDate) <= strtotime($startDate)) {
-                    $newEndTime = null;
-                    if (isset($occasion->StartDate)) {
-                        $date = strtotime($startDate);
-                        $newEndTime = date('Y-m-d H:i:s', strtotime("+ 1 hour", $date));
-                    }
-                    $endDate = str_replace(' ', 'T', $newEndTime);
-                }
             }
 
             if (isset($occasion->EntryTime)) {
                 $doorTime = explode('T', $occasion->StartDate)[0] . 'T' . explode('T', $occasion->EntryTime)[1];
-                if (explode('T', $occasion->EntryTime)[1]=='00:00:00' && isset($occasion->StartDate)) {
-                    $doorTime = $startDate;
-                }
             }
 
             $occasionsToRegister[] = array(
@@ -419,30 +446,6 @@ break;
             }
         }
 
-        $organizers = array();
-        if (!empty($this->getAttributeValue(self::ATTRIBUTE_PHONE_NUMBER, $attributes)) || !empty($this->getAttributeValue(self::ATTRIBUTE_ORGANIZER_EMAIL, $attributes)) || !is_null($contactId)) {
-            $organizers[] = array(
-                'organizer'       => '',
-                'organizer_link'  => '',
-                'organizer_phone' => $this->getAttributeValue(self::ATTRIBUTE_PHONE_NUMBER, $attributes),
-                'organizer_email' => $this->getAttributeValue(self::ATTRIBUTE_ORGANIZER_EMAIL, $attributes),
-                'contacts'        => !is_null($contactId) ? (array) $contactId : null,
-                'main_organizer'  => true
-            );
-
-            if (!empty($this->getAttributeValue(self::ATTRIBUTE_CO_ORGANIZER, $attributes))) {
-                $organizers[] = array(
-                'organizer'       => $this->getAttributeValue(self::ATTRIBUTE_CO_ORGANIZER, $attributes),
-                'organizer_link'  => '',
-                'organizer_phone' => '',
-                'organizer_email' => '',
-                'contacts'        => '',
-                'main_organizer'  => false
-                );
-            }
-        }
-
-
         $postContent = $this->getAttributeValue(self::ATTRIBUTE_DESCRIPTION, $attributes);
         if ($this->getAttributeValue(self::ATTRIBUTE_INGRESS, $attributes) && !empty($this->getAttributeValue(self::ATTRIBUTE_INGRESS, $attributes))) {
             $postContent = $this->getAttributeValue(self::ATTRIBUTE_INGRESS, $attributes) . "<!--more-->\n\n" . $postContent;
@@ -452,7 +455,6 @@ break;
 
         $newImage = (isset($eventData->Image->Url) ? $eventData->Image->Url : null);
         $eventId = $this->checkIfPostExists('event', $newPostTitle);
-
         if ($eventId == null) {
             // Creates the event object
             $event = new Event(
@@ -471,7 +473,11 @@ break;
                     'categories'            => $categories,
                     'occasions'             => $occasions,
                     'location'              => !is_null($locationId) ? (array) $locationId : null,
-                    'organizers'            => $organizers,
+                    'organizer'             => '',
+                    'organizer_phone'       => $this->getAttributeValue(self::ATTRIBUTE_PHONE_NUMBER, $attributes),
+                    'organizer_email'       => $this->getAttributeValue(self::ATTRIBUTE_ORGANIZER_EMAIL, $attributes),
+                    'coorganizer'           => $this->getAttributeValue(self::ATTRIBUTE_CO_ORGANIZER, $attributes),
+                    'contacts'              => !is_null($contactId) ? (array) $contactId : null,
                     'booking_link'          => $this->getAttributeValue(self::ATTRIBUTE_BOOKING_LINK, $attributes),
                     'booking_phone'         => $this->getAttributeValue(self::ATTRIBUTE_BOOKING_PHONE_NUMBER, $attributes),
                     'age_restriction'       => $this->getAttributeValue(self::ATTRIBUTE_AGE_RESTRICTION, $attributes),

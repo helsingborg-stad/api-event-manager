@@ -247,6 +247,20 @@ jQuery(document).ready(function ($) {
             $(this).parent().removeClass('check_active');
         }
     }).trigger('change');
+
+
+    $('.acf-field[data-name="main_organizer"] input[type="checkbox"]').on('change', function () {
+
+        if ($(this).is(':checked')) {
+        	console.log("checkad");
+            $('.acf-field[data-name="main_organizer"]').addClass('main_organizer_hidden');
+            $(this).closest('.acf-field[data-name="main_organizer"]').removeClass('main_organizer_hidden');
+        } else {
+            $('.acf-field[data-name="main_organizer"]').removeClass('main_organizer_hidden');
+        }
+    }).trigger('change');
+
+
 });
 
 var ImportEvents = ImportEvents || {};

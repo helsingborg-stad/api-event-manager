@@ -15,11 +15,14 @@ class Event extends \HbgEventImporter\Entity\PostManager
     public function beforeSave()
     {
         // Format phone number
-        $this->organizer_phone = DataCleaner::phoneNumber($this->organizer_phone);
         $this->booking_phone = DataCleaner::phoneNumber($this->booking_phone);
 
-        // Validate email
-        $this->organizer_email = DataCleaner::email($this->organizer_email);
+        // Format and validate organizers phone and email
+        foreach ($this->organizers as $key => $value) {
+            $this->organizers[$key]['organizer_phone'] = DataCleaner::phoneNumber($this->organizers[$key]['organizer_phone']);
+            $this->organizers[$key]['organizer_email'] = DataCleaner::email($this->organizers[$key]['organizer_email']);
+            $this->organizers[$key]['organizer'] = !is_string($this->organizers[$key]['organizer']) ? $this->organizers[$key]['organizer'] : DataCleaner::string($this->organizers[$key]['organizer']);
+        }
 
         // clean strings
         $this->post_title = !is_string($this->post_title) ? $this->post_title : DataCleaner::string($this->post_title);
@@ -29,7 +32,6 @@ class Event extends \HbgEventImporter\Entity\PostManager
         $this->status = !is_string($this->status) ? $this->status : DataCleaner::string($this->status);
         $this->alternate_name = !is_string($this->alternate_name) ? $this->alternate_name : DataCleaner::string($this->alternate_name);
         $this->event_link = !is_string($this->event_link) ? $this->event_link : DataCleaner::string($this->event_link);
-        $this->coorganizer = !is_string($this->coorganizer) ? $this->coorganizer : DataCleaner::string($this->coorganizer);
         $this->booking_link = !is_string($this->booking_link) ? $this->booking_link : DataCleaner::string($this->booking_link);
         $this->age_restriction = !is_string($this->age_restriction) ? $this->age_restriction : DataCleaner::string($this->age_restriction);
         $this->price_information = !is_string($this->price_information) ? $this->price_information : DataCleaner::string($this->price_information);
@@ -46,6 +48,7 @@ class Event extends \HbgEventImporter\Entity\PostManager
     {
         $this->saveCategories();
         $this->saveOccasions();
+        $this->saveOrganizers();
         return true;
     }
 
@@ -71,6 +74,15 @@ class Event extends \HbgEventImporter\Entity\PostManager
         update_field('field_5761106783967', $this->occasions, $this->ID);
         //Use this to say something is wrong with occasions and someone need to see over the data
         return $occasionError;
+    }
+
+    /**
+     * Saves Organizers to the organizers repeater
+     * @return void
+     */
+    public function saveOrganizers()
+    {
+        update_field('field_57ebb36142843', $this->organizers, $this->ID);
     }
 
     public function extractEventOccasion($startDate, $endDate, $doorTime)

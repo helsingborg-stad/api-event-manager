@@ -72,6 +72,7 @@ class Xcap extends \HbgEventImporter\Parser
         $newPostTitle = $name;
         $contactId = null;
         $locationId = null;
+        $organizers = null;
 
         // $eventData->{'x-xcap-address'} can return an object instead of a string, then we just want to ignore the location
         if (is_string($address)) {
@@ -131,11 +132,7 @@ class Xcap extends \HbgEventImporter\Parser
                     'categories'            => $categories,
                     'occasions'             => $occasions,
                     'location'              => $locationId != null ? (array) $locationId : null,
-                    'organizer'             => null,
-                    'organizer_phone'       => null,
-                    'organizer_email'       => null,
-                    'coorganizer'           => null,
-                    'contacts'              => !is_null($contactId) ? (array) $contactId : null,
+                    'organizers'            => $organizers,
                     'booking_link'          => is_string($ticketUrl) ? $ticketUrl : null,
                     'booking_phone'         => null,
                     'age_restriction'       => null,

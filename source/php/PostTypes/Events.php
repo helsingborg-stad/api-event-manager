@@ -41,17 +41,24 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
             echo '<a href="' . get_edit_post_link($locationId[0]) . '">' . get_the_title($locationId[0]) . '</a>';
         });
         $this->addTableColumn('contact', __('Contact'), true, function ($column, $postId) {
-            $contactId = get_field('contacts', $postId);
-            if (!isset($contactId[0])) {
+
+        if (have_rows('organizers')):
+            while (have_rows('organizers')) : the_row();
+                $value = get_sub_field('contacts');
+            endwhile;
+        endif;
+
+            //$contactId = get_field('contacts', $postId);
+            if (!isset($value[0]->ID)) {
                 echo 'n/a';
                 return;
             }
 
-            echo '<a href="' . get_edit_post_link($contactId[0]) . '">' . get_the_title($contactId[0]) . '</a>';
+            echo '<a href="' . get_edit_post_link($value[0]->ID) . '">' . get_the_title($value[0]->ID) . '</a>';
         });
         $this->addTableColumn('import_client', __('Import client'), true, function ($column, $postId) {
-            $contactId = get_post_meta($postId, 'import_client', true);
-            if (!isset($contactId[0])) {
+            $eventId = get_post_meta($postId, 'import_client', true);
+            if (!isset($eventId[0])) {
                 return;
             }
 
@@ -77,12 +84,20 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
             echo '<a href="#" class="accept button-primary ' . $first . '" postid="' . $postId . '">' . __('Accept') . '</a>
             <a href="#" class="deny button-primary ' . $second . '" postid="' . $postId . '">' . __('Deny') . '</a>';
         });
+        $this->addTableColumn('date', __('Date'));
         add_action('admin_head-post.php', array($this, 'hidePublishingActions'));
         add_action('publish_event', array($this, 'setAcceptedOnPublish'), 10, 2);
         //add_filter('post_class', array($this, 'changeAcceptanceColor'));
         add_action('save_post', array($this, 'saveEventOccasions'), 10, 3);
         add_action('save_post', array($this, 'saveRecurringEvents'), 10, 3);
         add_action('delete_post', array($this, 'deleteEventOccasions'), 10);
+        add_action('edit_form_advanced', array($this, 'requireEventTitle'));
+        add_action('admin_notices', array($this, 'duplicateNotice'));
+        add_action('admin_action_duplicate_post', array($this, 'duplicate_post'));
+
+// TA BORT
+//add_filter('acf/validate_value/name=main_organizer', array($this, 'validateMainOrganizer'), 10, 4);
+
         add_filter('acf/validate_value/name=end_date', array($this, 'validateEndDate'), 10, 4);
         add_filter('acf/validate_value/name=door_time', array($this, 'validateDoorTime'), 10, 4);
         add_filter('acf/validate_value/name=occasions', array($this, 'validateOccasion'), 10, 4);
@@ -90,10 +105,20 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
         add_filter('acf/validate_value/name=rcr_end_time', array($this, 'validateRcrEndTime'), 10, 4);
         add_filter('acf/validate_value/name=rcr_door_time', array($this, 'validateRcrDoorTime'), 10, 4);
         add_filter('acf/validate_value/name=rcr_end_date', array($this, 'validateRcrEndDate'), 10, 4);
-        add_action('edit_form_advanced', array($this, 'requireEventTitle'));
-        add_action('admin_notices', array($this, 'duplicateNotice'));
-        add_action('admin_action_duplicate_post', array($this, 'duplicate_post'));
         add_filter('post_row_actions', array($this, 'duplicate_post_link'), 10, 2);
+        add_filter('get_sample_permalink_html', array($this,'replacePermalink') );
+    }
+
+    /**
+     * Replaces permalink on edit event with API-url
+     * @return string
+     */
+    function replacePermalink() {
+        global $post;
+        $id = $post->ID;
+        $jsonUrl = home_url().'/json/wp/v2/event/';
+        $apiUrl = $jsonUrl.$id;
+        return '<strong>API-url:</strong> <a href="'.$apiUrl.'" target="_blank">'.$apiUrl.'</a>';
     }
 
     /**
@@ -282,6 +307,39 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
     }
 
     /**
+     * Validate main organizer to be unique.
+     */
+    public function validateMainOrganizer($valid, $value, $field, $input)
+    {
+        global $post;
+
+        if (!$valid) {
+            return $valid;
+        }
+
+        $post_id = $post->ID;
+
+        if ($this->countMainOrganizers($post_id) > 1) {
+            $valid = 'You can only have one main organizer';
+        }
+
+        return $valid;
+    }
+
+    public function countMainOrganizers($post_id)
+    {
+        $i = 0;
+        if (have_rows('organizers', $post_id)) {
+            while (have_rows('organizers', $post_id)) : the_row();
+            if (get_sub_field('main_organizer')) {
+                $i++;
+            }
+            endwhile;
+        }
+        return $i;
+    }
+
+    /**
      * Validate recurring rules "end time" to be 'greater' than start time.
      */
     public function validateRcrEndTime($valid, $value, $field, $input)
@@ -407,7 +465,8 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
             echo '<div class="alignleft actions" style="position: relative;">';
                 //echo '<a href="' . admin_url('options.php?page=import-events') . '" class="button-primary" id="post-query-submit">Import XCAP</a>';
                 //echo '<a href="' . admin_url('options.php?page=import-cbis-events') . '" class="button-primary" id="post-query-submit">Import CBIS</a>';
-                echo '<div class="button-primary extraspace" id="xcap">' . __('Import XCAP') . '</div>';
+                echo '<a href="' . admin_url('options.php?page=delete-all-events') . '" class="button-primary" id="post-query-submit">DELETE</a>';
+            echo '<div class="button-primary extraspace" id="xcap">' . __('Import XCAP') . '</div>';
             echo '<div class="button-primary extraspace" id="cbis">' . __('Import CBIS') . '</div>';
             echo '<div class="button-primary extraspace" id="occasions">Collect event timestamps</div>';
                 //echo '<div id="importResponse"></div>';
@@ -555,9 +614,10 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
         $id = $_GET['duplicate'];
         ?>
         <div class="notice notice-warning is-dismissible">
-        <p><?php _e('This is a duplicate of the event: <strong>"' . get_the_title($id) . '"</strong>. If this is a new occasion for the same event, please <a href="' . esc_url( get_edit_post_link($id))  .'">edit</a> and republish the original event.', 'text-domain');
+        <p><?php _e('This is a duplicate of the event: <strong>"' . get_the_title($id) . '"</strong>. If this is a new occasion for the same event, please <a href="' . esc_url(get_edit_post_link($id))  .'">edit</a> and republish the original event.', 'text-domain');
         ?></p>
         </div>
         <?php
+
     }
 }

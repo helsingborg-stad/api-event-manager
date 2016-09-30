@@ -5,6 +5,9 @@
 tbody .type-event.green {
   background-color: rgb(118,245,120)
 }*/
+.main_organizer_hidden {
+  display: none !important; }
+
 .acf-field[data-name="imported_event"] {
   display: none !important; }
 
