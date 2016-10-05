@@ -127,7 +127,7 @@ class CbisLocation extends \HbgEventImporter\Parser
         // Evenemang, events
             // Arenas: 110
             // Products: 1450 resp 1463. 1578
-        // $cbisCategory = 14086;
+        //$cbisCategory = 14086;
 
 // Göra, to do
             // WithOccasionsOnly
@@ -139,12 +139,15 @@ class CbisLocation extends \HbgEventImporter\Parser
 // Shopping
 //$cbisCategory = 14110;
 
-// Custom id
-$cbisCategory = 14085;
+// Mat & Dryck
+//$cbisCategory = 14158;
+
+// Restaurang
+$cbisCategory = 14164;
 
 
-        // Bo, accomodation
-// $cbisCategory = 14067;
+// Bo, accomodation
+//$cbisCategory = 14067;
 
         // Hotell
         //$cbisCategory = 14072;
@@ -165,43 +168,57 @@ $cbisCategory = 14085;
             'categoryId' => $cbisCategory,
             'templateId' => 0,
             'pageOffset' => 0,
-        'itemsPerPage' => 5000,
+            'itemsPerPage' => 1500,
             'filter' => array(
+                'ArenaIds' => array(),
                 'GeoNodeIds' => array($cbisId),
-                'Highlights' => FALSE,
+                'StartDate' => date('c'),
+                'EndDate' => null,
+                'Name' => null,
+                'Highlights' => 0,
                 'OrderBy' => 'None',
                 'SortOrder' => 'None',
-        'SubCategoryId' => 0,
-        'ProductType' => 'Product',
-
-                'WithOccasionsOnly' => FALSE,
-                'ExcludeProductsWithoutOccasions' => FALSE,
-                'ExcludeProductsNotInCurrentLanguage' => FALSE,
-                'IncludeArchivedProducts' => TRUE,
-                'BookableProductsFirst' => FALSE,
+                'MaxLatitude' => null,
+                'MinLatitude' => null,
+                'MaxLongitude' => null,
+                'MinLongitude' => null,
+                'InterestsIds' => array(),
+                'SubCategoryId' => 0,
+                'ProductType' => 'Product',
+                'WithOccasionsOnly' => false,
+                'MultiAttributes' => array(),
+                'ExcludeProductsWithoutOccasions' => true,
+                'ExcludeProductsNotInCurrentLanguage' => false,
+                'IncludeArchivedProducts' => false,
+                'BookableProductsFirst' => false,
                 'RandomSortSeed' => 0,
-                'ExcludeProductsWhereNameNotInCurrentLanguage' => FALSE,
+                'ExcludeProductsWhereNameNotInCurrentLanguage' => false,
+                'RandomSortSeed' => array(),
+                'ParentProductIds' => array(),
             )
         );
 
 
-        // WithIds
-        // $requestParams = array(
-        //     'apiKey' => $cbisKey,
-        //     'languageId' => 1,
-        //     'ids' => array(1176319, 335598, 561690, 842815, 1125847),
-        //     'pageOffset' => 0,
-        //     'itemsPerPage' => 1800,
-        // );
+        $this->products = $this->client->ListAll($requestParams)->ListAllResult->Items->Product;
 
 
-        $this->products = $this->client->ListIds($requestParams)->ListIdsResult->ProductMapItem;
+        //$result = $client->SomeFunction();
+        //echo "REQUEST:\n" . $this->products->__getLastRequest() . "\n";
 
-        if (get_field('xcap_daily_cron', 'option') == true) {
-            echo "true";
-        } else {
-            echo "false";
-        }
+        //echo "Response:\n" . $this->products->__getLastResponse() . "\n";
+
+
+        // if (get_field('cbis_daily_cron', 'option') == true) {
+        //     echo "cbis true";
+        // } else {
+        //     echo "cbis false";
+        // }
+
+        // if (get_field('xcap_daily_cron', 'option') == true) {
+        //     echo "xcap true";
+        // } else {
+        //     echo "xcap false";
+        // }
 
 
         echo "<br>";

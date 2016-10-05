@@ -162,13 +162,13 @@ class CBIS extends \HbgEventImporter\Parser
             )
         );
 
-        // Get and save the arenas
+        // Get and save event "arenas" to locations
         $this->arenas = $this->client->ListAll($requestParams)->ListAllResult->Items->Product;
-
+        $productCategory = 'arena';
         foreach($this->arenas as $key => $arenaData) {
 // TA BORT
-break;
-            $this->saveArena($arenaData);
+//break;
+        $this->saveArena($arenaData, $productCategory);
         }
 
         // Adjust request parameters for getting products, 1500 itemsPerPage to get all events
@@ -179,8 +179,43 @@ break;
         $this->events = $this->client->ListAll($requestParams)->ListAllResult->Items->Product;
 
         foreach ($this->events as $eventData) {
+// TA BORT
+//break;
             $this->saveEvent($eventData);
         }
+
+        // Get and save "accomodations" to locations
+        $requestParams['itemsPerPage'] = 1000;
+        $requestParams['categoryId'] = 14067;
+        $requestParams['filter']['WithOccasionsOnly'] = false;
+        $requestParams['filter']['ExcludeProductsWithoutOccasions'] = false;
+        $requestParams['filter']['StartDate'] = null;
+        $productCategory = 'accommodation';
+        $this->accommodations = $this->client->ListAll($requestParams)->ListAllResult->Items->Product;
+
+        foreach ($this->accommodations as $accommodationData) {
+// TA BORT
+//break;
+            $this->saveArena($accommodationData, $productCategory);
+        }
+
+        // Get and save "shopping" to locations
+        // $requestParams['categoryId'] = 14110;
+        // $productCategory = 'shopping';
+        // $this->shopping = $this->client->ListAll($requestParams)->ListAllResult->Items->Product;
+        // foreach ($this->shopping as $shoppingData) {
+        //     $this->saveArena($shoppingData, $productCategory);
+        // }
+
+        // Get and save "eat" to locations
+        // $requestParams['categoryId'] = 14158;
+        // $productCategory = 'to do';
+        // $this->todo = $this->client->ListAll($requestParams)->ListAllResult->Items->Product;
+
+        // foreach($this->todo as $key => $todoData) {
+        //     $this->saveArena($todoData, $productCategory);
+        // }
+
     }
 
     /**
@@ -290,14 +325,15 @@ break;
      * @return void
      */
     //This function is not the same as the part in saveEvent that looks almost like this, there are no GeoNode when getting arenas from CBIS
-    public function saveArena($arenaData)
+    public function saveArena($arenaData, $productCategory)
     {
         $attributes = $this->getAttributes($arenaData);
-
+        $import_client = 'CBIS: '.ucfirst($productCategory);
         if($this->getAttributeValue(self::ATTRIBUTE_ADDRESS, $attributes) == null && $this->getAttributeValue(self::ATTRIBUTE_NAME, $attributes) == null)
             return;
 
-        $newPostTitle = $this->getAttributeValue(self::ATTRIBUTE_ADDRESS, $attributes) != null ? $this->getAttributeValue(self::ATTRIBUTE_ADDRESS, $attributes) : $this->getAttributeValue(self::ATTRIBUTE_NAME, $attributes);
+        // TA BORT $newPostTitle = $this->getAttributeValue(self::ATTRIBUTE_ADDRESS, $attributes) != null ? $this->getAttributeValue(self::ATTRIBUTE_ADDRESS, $attributes) : $this->getAttributeValue(self::ATTRIBUTE_NAME, $attributes);
+        $newPostTitle = $this->getAttributeValue(self::ATTRIBUTE_NAME, $attributes) != null ? $this->getAttributeValue(self::ATTRIBUTE_NAME, $attributes) : $this->getAttributeValue(self::ATTRIBUTE_ADDRESS, $attributes);
 
         // Checking if there is a post already with this title or similar enough
         $locationId = $this->checkIfPostExists('location', $newPostTitle);
@@ -319,7 +355,7 @@ break;
                     'country'            => $country,
                     'latitude'           => $this->getAttributeValue(self::ATTRIBUTE_LATITUDE, $attributes),
                     'longitude'          => $this->getAttributeValue(self::ATTRIBUTE_LONGITUDE, $attributes),
-
+                    'import_client'      => $import_client,
                     '_event_manager_uid' => $this->getAttributeValue(self::ATTRIBUTE_ADDRESS, $attributes) ? $this->getAttributeValue(self::ATTRIBUTE_ADDRESS, $attributes) : $this->getAttributeValue(self::ATTRIBUTE_NAME, $attributes)
                 )
             );
@@ -354,6 +390,7 @@ break;
             if(is_numeric($country))
                 $country = "Sweden";
 
+            $import_client = 'CBIS: Event';
             // Create the location
             $location = new Location(
                 array(
@@ -367,7 +404,7 @@ break;
                     'country'               =>  $country,
                     'latitude'              =>  $this->getAttributeValue(self::ATTRIBUTE_LATITUDE, $attributes),
                     'longitude'             =>  $this->getAttributeValue(self::ATTRIBUTE_LONGITUDE, $attributes),
-
+                    'import_client'         =>  $import_client,
                     '_event_manager_uid'    =>  $this->getAttributeValue(self::ATTRIBUTE_ADDRESS, $attributes) ? $this->getAttributeValue(self::ATTRIBUTE_ADDRESS, $attributes) : $eventData->GeoNode->Name
                 )
             );

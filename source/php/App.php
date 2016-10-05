@@ -174,7 +174,7 @@ add_action('admin_menu', array($this, 'createParsePage'));
     {
         global $current_screen;
 
-        if ($current_screen->id == 'event' && $current_screen->action == '') {
+        if ($current_screen->id == 'event' && ($current_screen->action == '' || $current_screen->action == 'add')) {
             wp_enqueue_script('hbg-event-importer', HBGEVENTIMPORTER_URL . '/dist/js/hbg-event-importer.min.js');
         }
 
@@ -212,7 +212,7 @@ add_action('admin_menu', array($this, 'createParsePage'));
             function () {
                 new \HbgEventImporter\Parser\CBIS('http://api.cbis.citybreak.com/Products.asmx?wsdl');
             });
-
+// TA BORT
         add_submenu_page(
             null,
             __('Import CBIS locations', 'hbg-event-importer'),
@@ -251,11 +251,9 @@ add_action('admin_menu', array($this, 'createParsePage'));
     public function startImport()
     {
         if (get_field('cbis_daily_cron', 'option') == true) {
-            $cbisUrl = '';
+            $cbisUrl = 'http://api.cbis.citybreak.com/Products.asmx?wsdl';
             new \HbgEventImporter\Parser\CBIS($cbisUrl);
-            file_put_contents(dirname(__FILE__)."/Log/cbis_cron_events.log", "CBIS Events, Last run: ".date("Y-m-d H:i:s"));
-            new \HbgEventImporter\Parser\CbisLocation($cbisUrl);
-            file_put_contents(dirname(__FILE__)."/Log/cbis_cron_locations.log", "CBIS Locations, Last run: ".date("Y-m-d H:i:s"));
+            file_put_contents(dirname(__FILE__)."/Log/cbis_cron.log", "CBIS, Last run: ".date("Y-m-d H:i:s"));
         }
         if (get_field('xcap_daily_cron', 'option') == true) {
             $xcapUrl = 'http://mittkulturkort.se/calendar/listEvents.action' .

@@ -6,8 +6,13 @@ tbody .type-event.green {
   background-color: rgb(118,245,120)
 }*/
 
-.main_organizer_hidden {
+/* Hide meta box content from publish */
+.misc-pub-visibility, .misc-pub-curtime, #preview-action {
   display: none !important;
+}
+
+.main_organizer_hidden {
+  display: none;
 }
 
 .acf-field[data-name="imported_event"] {

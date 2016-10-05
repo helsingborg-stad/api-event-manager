@@ -12,6 +12,8 @@ class UI
     {
         add_action('admin_menu', array($this, 'removeAdminMenuItems'), 100);
         add_action('wp_before_admin_bar_render', array($this, 'removeAdminBarItems'), 100);
+        add_action('admin_menu', array($this, 'removeMetaBox'));
+        add_filter('admin_post_thumbnail_html', array($this, 'editFeaturedImageInstruction'));
     }
 
     public function removeAdminMenuItems()
@@ -37,4 +39,17 @@ class UI
         $wp_admin_bar->remove_menu('comments');             // Remove the comments link
         $wp_admin_bar->remove_menu('new-content');          // Remove the content link
     }
+
+    // Remove Permalink meta box on edit posts
+    function removeMetaBox() {
+        remove_meta_box('slugdiv', array('event', 'location', 'contact', 'sponsor', 'package'), 'normal');
+    }
+
+    // Add instructions to Feayured Image meta box
+    function editFeaturedImageInstruction( $content ) {
+        return $content .= '<p>Please upload images that are as large as possible and that are not sensitive to cropping (eg. images with text overlay).</p>';
+    }
+
+
+
 }

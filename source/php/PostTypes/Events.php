@@ -62,7 +62,7 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
                 return;
             }
 
-            echo ucfirst(get_post_meta($postId, 'import_client', true));
+            echo strtoupper(get_post_meta($postId, 'import_client', true));
         });
         $this->addTableColumn('acceptAndDeny', __('Public'), true, function ($column, $postId) {
             $metaAccepted = get_post_meta($postId, 'accepted');
@@ -87,17 +87,12 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
         $this->addTableColumn('date', __('Date'));
         add_action('admin_head-post.php', array($this, 'hidePublishingActions'));
         add_action('publish_event', array($this, 'setAcceptedOnPublish'), 10, 2);
-        //add_filter('post_class', array($this, 'changeAcceptanceColor'));
         add_action('save_post', array($this, 'saveEventOccasions'), 10, 3);
         add_action('save_post', array($this, 'saveRecurringEvents'), 10, 3);
         add_action('delete_post', array($this, 'deleteEventOccasions'), 10);
         add_action('edit_form_advanced', array($this, 'requireEventTitle'));
         add_action('admin_notices', array($this, 'duplicateNotice'));
         add_action('admin_action_duplicate_post', array($this, 'duplicate_post'));
-
-// TA BORT
-//add_filter('acf/validate_value/name=main_organizer', array($this, 'validateMainOrganizer'), 10, 4);
-
         add_filter('acf/validate_value/name=end_date', array($this, 'validateEndDate'), 10, 4);
         add_filter('acf/validate_value/name=door_time', array($this, 'validateDoorTime'), 10, 4);
         add_filter('acf/validate_value/name=occasions', array($this, 'validateOccasion'), 10, 4);
@@ -106,19 +101,6 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
         add_filter('acf/validate_value/name=rcr_door_time', array($this, 'validateRcrDoorTime'), 10, 4);
         add_filter('acf/validate_value/name=rcr_end_date', array($this, 'validateRcrEndDate'), 10, 4);
         add_filter('post_row_actions', array($this, 'duplicate_post_link'), 10, 2);
-        add_filter('get_sample_permalink_html', array($this,'replacePermalink') );
-    }
-
-    /**
-     * Replaces permalink on edit event with API-url
-     * @return string
-     */
-    function replacePermalink() {
-        global $post;
-        $id = $post->ID;
-        $jsonUrl = home_url().'/json/wp/v2/event/';
-        $apiUrl = $jsonUrl.$id;
-        return '<strong>API-url:</strong> <a href="'.$apiUrl.'" target="_blank">'.$apiUrl.'</a>';
     }
 
     /**
@@ -395,26 +377,6 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
         }
         return $valid;
     }
-
-
-    /**
-     * Change background color of event in list depending of it's meta_value 'accepted'
-     * @param  array $classes
-     * @return array $classes
-     */
-    // public function changeAcceptanceColor($classes)
-    // {
-    //     $postAndId = explode('-', $classes[3]);
-    //     if ($postAndId[0] == 'post') {
-    //         $metaAccepted = get_post_meta($postAndId[1], 'accepted');
-    //         if ($metaAccepted[0] == -1) {
-    //             $classes[] = "red";
-    //         } elseif ($metaAccepted[0] == 1) {
-    //             $classes[] = "green";
-    //         }
-    //     }
-    //     return $classes;
-    // }
 
     /**
      * When publish are clicked we are either creating the meta 'accepted' with value 1 or update it

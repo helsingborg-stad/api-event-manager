@@ -232,6 +232,33 @@
                         "return_format": "value"
                     },
                     {
+                        "key": "field_57f3c0670c4a9",
+                        "label": "Exeption information",
+                        "name": "occ_exeption_information",
+                        "type": "text",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": [
+                            [
+                                {
+                                    "field": "field_5761164591649",
+                                    "operator": "!=",
+                                    "value": "scheduled"
+                                }
+                            ]
+                        ],
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": "",
+                        "placeholder": "",
+                        "prepend": "",
+                        "append": "",
+                        "maxlength": ""
+                    },
+                    {
                         "key": "field_5761109a83968",
                         "label": "Start date",
                         "name": "start_date",
@@ -481,7 +508,7 @@
                         "collapsed": "",
                         "min": "",
                         "max": "",
-                        "layout": "table",
+                        "layout": "block",
                         "button_label": "Add",
                         "sub_fields": [
                             {
@@ -500,6 +527,59 @@
                                 "display_format": "Y-m-d",
                                 "return_format": "Y-m-d",
                                 "first_day": 1
+                            },
+                            {
+                                "key": "field_57f3bb9c82f5e",
+                                "label": "Status",
+                                "name": "status_rcr_exc",
+                                "type": "radio",
+                                "instructions": "",
+                                "required": 1,
+                                "conditional_logic": 0,
+                                "wrapper": {
+                                    "width": "",
+                                    "class": "",
+                                    "id": ""
+                                },
+                                "choices": {
+                                    "default": "Default",
+                                    "rescheduled": "Rescheduled",
+                                    "postponed": "Postponed",
+                                    "cancelled": "Cancelled"
+                                },
+                                "allow_null": 0,
+                                "other_choice": 0,
+                                "save_other_choice": 0,
+                                "default_value": "scheduled",
+                                "layout": "horizontal",
+                                "return_format": "value"
+                            },
+                            {
+                                "key": "field_57f3becaf31a5",
+                                "label": "Exeption information",
+                                "name": "rcr_exception_info",
+                                "type": "text",
+                                "instructions": "",
+                                "required": 0,
+                                "conditional_logic": [
+                                    [
+                                        {
+                                            "field": "field_57f3bb9c82f5e",
+                                            "operator": "!=",
+                                            "value": "default"
+                                        }
+                                    ]
+                                ],
+                                "wrapper": {
+                                    "width": "",
+                                    "class": "",
+                                    "id": ""
+                                },
+                                "default_value": "",
+                                "placeholder": "",
+                                "prepend": "",
+                                "append": "",
+                                "maxlength": ""
                             }
                         ]
                     }
@@ -622,7 +702,7 @@
                     "id": ""
                 },
                 "collapsed": "",
-                "min": "",
+                "min": 0,
                 "max": "",
                 "layout": "block",
                 "button_label": "L\u00e4gg till rad",
@@ -1004,7 +1084,7 @@
                 "label": "Gallery",
                 "name": "gallery",
                 "type": "gallery",
-                "instructions": "",
+                "instructions": "Please upload images that are as large as possible and that are not sensitive to cropping (eg. images with text overlay).",
                 "required": 0,
                 "conditional_logic": 0,
                 "wrapper": {
@@ -1014,7 +1094,7 @@
                 },
                 "min": "",
                 "max": "",
-                "preview_size": "thumbnail",
+                "insert": "append",
                 "library": "all",
                 "min_width": "",
                 "min_height": "",
@@ -1022,8 +1102,7 @@
                 "max_width": "",
                 "max_height": "",
                 "max_size": "",
-                "mime_types": "",
-                "insert": "append"
+                "mime_types": ""
             },
             {
                 "key": "field_57a9d7f655152",
@@ -1262,4 +1341,3 @@
         "active": 1,
         "description": ""
     }
-g

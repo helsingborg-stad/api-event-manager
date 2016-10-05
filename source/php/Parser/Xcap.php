@@ -73,6 +73,7 @@ class Xcap extends \HbgEventImporter\Parser
         $contactId = null;
         $locationId = null;
         $organizers = null;
+        $import_client = 'XCAP';
 
         // $eventData->{'x-xcap-address'} can return an object instead of a string, then we just want to ignore the location
         if (is_string($address)) {
@@ -92,7 +93,7 @@ class Xcap extends \HbgEventImporter\Parser
                         'country'               =>  null,
                         'latitude'              =>  null,
                         'longitude'             =>  null,
-
+                        'import_client'         =>  $import_client,
                         '_event_manager_uid'    =>  null
                     )
                 );

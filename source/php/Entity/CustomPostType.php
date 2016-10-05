@@ -37,6 +37,24 @@ abstract class CustomPostType
         add_action('wp_ajax_collect_occasions', array($this, 'collectOccasions'));
         add_action('wp_ajax_import_events', array($this, 'importEvents'));
         add_action('admin_head', array($this, 'removeMedia'));
+        add_filter('get_sample_permalink_html', array($this, 'replacePermalink'), 10, 5);
+    }
+
+    /**
+     * Replaces permalink on edit post with API-url
+     * @return string
+     */
+    public function replacePermalink($return, $post_id, $new_title, $new_slug, $post)
+    {
+        global $current_screen;
+        if ($current_screen->post_type == 'page') {
+            return $return;
+        }
+        global $post;
+        $postType = $post->post_type;
+        $jsonUrl = home_url().'/json/wp/v2/'.$postType.'/';
+        $apiUrl = $jsonUrl.$post_id;
+        return '<strong>API-url:</strong> <a href="'.$apiUrl.'" target="_blank">'.$apiUrl.'</a>';
     }
 
     /**

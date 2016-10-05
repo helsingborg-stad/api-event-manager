@@ -36,6 +36,14 @@ class Locations extends \HbgEventImporter\Entity\CustomPostType
             echo get_post_meta($postId, 'formatted_address', true) ? get_post_meta($postId, 'formatted_address', true) : 'n/a';
         });
         $this->addTableColumn('date', __('Date'));
+
+        $this->addTableColumn('import_client', __('Import client'), true, function ($column, $postId) {
+            $eventId = get_post_meta($postId, 'import_client', true);
+            if (!isset($eventId[0])) {
+                return;
+            }
+            echo get_post_meta($postId, 'import_client', true);
+        });
     }
 
     /**
