@@ -14,6 +14,10 @@ class Event extends \HbgEventImporter\Entity\PostManager
      */
     public function beforeSave()
     {
+        // Format price
+        $this->price_adult = DataCleaner::price($this->price_adult);
+        $this->price_children = DataCleaner::price($this->price_children);
+
         // Format phone number
         $this->booking_phone = DataCleaner::phoneNumber($this->booking_phone);
 
@@ -35,8 +39,6 @@ class Event extends \HbgEventImporter\Entity\PostManager
         $this->booking_link = !is_string($this->booking_link) ? $this->booking_link : DataCleaner::string($this->booking_link);
         $this->age_restriction = !is_string($this->age_restriction) ? $this->age_restriction : DataCleaner::string($this->age_restriction);
         $this->price_information = !is_string($this->price_information) ? $this->price_information : DataCleaner::string($this->price_information);
-        $this->price_adult = !is_string($this->price_adult) ? $this->price_adult : DataCleaner::string($this->price_adult);
-        $this->price_children = !is_string($this->price_children) ? $this->price_children : DataCleaner::string($this->price_children);
         $this->image = !is_string($this->image) ? $this->image : DataCleaner::string($this->image);
     }
 

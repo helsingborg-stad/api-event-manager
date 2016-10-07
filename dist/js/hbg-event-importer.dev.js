@@ -262,6 +262,8 @@ jQuery(document).ready(function ($) {
         }
     });
 
+    $('.acf-gallery-add').text("Add images");
+
 });
 
 var ImportEvents = ImportEvents || {};

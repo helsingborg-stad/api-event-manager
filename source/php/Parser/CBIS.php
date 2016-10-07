@@ -173,7 +173,7 @@ class CBIS extends \HbgEventImporter\Parser
 
         // Adjust request parameters for getting products, 1500 itemsPerPage to get all events
         $requestParams['filter']['ProductType'] = "Product";
-        $requestParams['itemsPerPage'] = 1500;
+        $requestParams['itemsPerPage'] = 500;
 
         // Get and save the events
         $this->events = $this->client->ListAll($requestParams)->ListAllResult->Items->Product;
@@ -199,7 +199,7 @@ class CBIS extends \HbgEventImporter\Parser
             $this->saveArena($accommodationData, $productCategory);
         }
 
-        // Get and save "shopping" to locations
+        // // Get and save "shopping" to locations
         // $requestParams['categoryId'] = 14110;
         // $productCategory = 'shopping';
         // $this->shopping = $this->client->ListAll($requestParams)->ListAllResult->Items->Product;
@@ -207,7 +207,7 @@ class CBIS extends \HbgEventImporter\Parser
         //     $this->saveArena($shoppingData, $productCategory);
         // }
 
-        // Get and save "eat" to locations
+        // //Get and save "eat" to locations
         // $requestParams['categoryId'] = 14158;
         // $productCategory = 'to do';
         // $this->todo = $this->client->ListAll($requestParams)->ListAllResult->Items->Product;
@@ -335,6 +335,21 @@ class CBIS extends \HbgEventImporter\Parser
         // TA BORT $newPostTitle = $this->getAttributeValue(self::ATTRIBUTE_ADDRESS, $attributes) != null ? $this->getAttributeValue(self::ATTRIBUTE_ADDRESS, $attributes) : $this->getAttributeValue(self::ATTRIBUTE_NAME, $attributes);
         $newPostTitle = $this->getAttributeValue(self::ATTRIBUTE_NAME, $attributes) != null ? $this->getAttributeValue(self::ATTRIBUTE_NAME, $attributes) : $this->getAttributeValue(self::ATTRIBUTE_ADDRESS, $attributes);
 
+
+        $defualt_location = get_option('options_google_default_city');
+        if (!isset($defualt_location) || empty($defualt_location)) {
+            $defaultCity = null;
+        } else {
+            $defaultCity = $defualt_location['address'];
+        }
+
+        $location = null;
+        if ($this->getAttributeValue(self::ATTRIBUTE_POSTAL_ADDRESS, $attributes) != null) {
+            $location = $this->getAttributeValue(self::ATTRIBUTE_POSTAL_ADDRESS, $attributes);
+        } elseif($defaultCity != null) {
+            $location = $defaultCity;
+        }
+
         // Checking if there is a post already with this title or similar enough
         $locationId = $this->checkIfPostExists('location', $newPostTitle);
         if($locationId == null)
@@ -343,6 +358,8 @@ class CBIS extends \HbgEventImporter\Parser
             if(is_numeric($country))
                 $country = "Sweden";
             // Create the location, found in api-event-manager/source/php/PostTypes/Locations.php
+            $latitude = $this->getAttributeValue(self::ATTRIBUTE_LATITUDE, $attributes) != '0' ? $this->getAttributeValue(self::ATTRIBUTE_LATITUDE, $attributes) : null;
+            $longitude = $this->getAttributeValue(self::ATTRIBUTE_LONGITUDE, $attributes) != '0' ? $this->getAttributeValue(self::ATTRIBUTE_LONGITUDE, $attributes) : null;
             $location = new Location(
                 array(
                     'post_title' => $newPostTitle
@@ -353,8 +370,8 @@ class CBIS extends \HbgEventImporter\Parser
                     'city'               => $this->getAttributeValue(self::ATTRIBUTE_POSTAL_ADDRESS, $attributes),
                     'municipality'       => $this->getAttributeValue(self::ATTRIBUTE_MUNICIPALITY, $attributes),
                     'country'            => $country,
-                    'latitude'           => $this->getAttributeValue(self::ATTRIBUTE_LATITUDE, $attributes),
-                    'longitude'          => $this->getAttributeValue(self::ATTRIBUTE_LONGITUDE, $attributes),
+                    'latitude'           => $latitude,
+                    'longitude'          => $longitude,
                     'import_client'      => $import_client,
                     '_event_manager_uid' => $this->getAttributeValue(self::ATTRIBUTE_ADDRESS, $attributes) ? $this->getAttributeValue(self::ATTRIBUTE_ADDRESS, $attributes) : $this->getAttributeValue(self::ATTRIBUTE_NAME, $attributes)
                 )
@@ -392,6 +409,9 @@ class CBIS extends \HbgEventImporter\Parser
 
             $import_client = 'CBIS: Event';
             // Create the location
+            $latitude = $this->getAttributeValue(self::ATTRIBUTE_LATITUDE, $attributes) != '0' ? $this->getAttributeValue(self::ATTRIBUTE_LATITUDE, $attributes) : null;
+            $longitude = $this->getAttributeValue(self::ATTRIBUTE_LONGITUDE, $attributes) != '0' ? $this->getAttributeValue(self::ATTRIBUTE_LONGITUDE, $attributes) : null;
+
             $location = new Location(
                 array(
                     'post_title'            =>  $newPostTitle
@@ -402,8 +422,8 @@ class CBIS extends \HbgEventImporter\Parser
                     'city'                  =>  $eventData->GeoNode->Name,
                     'municipality'          =>  $this->getAttributeValue(self::ATTRIBUTE_MUNICIPALITY, $attributes),
                     'country'               =>  $country,
-                    'latitude'              =>  $this->getAttributeValue(self::ATTRIBUTE_LATITUDE, $attributes),
-                    'longitude'             =>  $this->getAttributeValue(self::ATTRIBUTE_LONGITUDE, $attributes),
+                    'latitude'              =>  $latitude,
+                    'longitude'             =>  $longitude,
                     'import_client'         =>  $import_client,
                     '_event_manager_uid'    =>  $this->getAttributeValue(self::ATTRIBUTE_ADDRESS, $attributes) ? $this->getAttributeValue(self::ATTRIBUTE_ADDRESS, $attributes) : $eventData->GeoNode->Name
                 )

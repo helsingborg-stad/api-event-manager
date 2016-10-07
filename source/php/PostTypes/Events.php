@@ -2,6 +2,8 @@
 
 namespace HbgEventImporter\PostTypes;
 
+use \HbgEventImporter\Helper\DataCleaner as DataCleaner;
+
 class Events extends \HbgEventImporter\Entity\CustomPostType
 {
     public function __construct()
@@ -93,6 +95,8 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
         add_action('edit_form_advanced', array($this, 'requireEventTitle'));
         add_action('admin_notices', array($this, 'duplicateNotice'));
         add_action('admin_action_duplicate_post', array($this, 'duplicate_post'));
+        add_filter('post_row_actions', array($this, 'duplicate_post_link'), 10, 2);
+        // ACF validation and sanitization filters
         add_filter('acf/validate_value/name=end_date', array($this, 'validateEndDate'), 10, 4);
         add_filter('acf/validate_value/name=door_time', array($this, 'validateDoorTime'), 10, 4);
         add_filter('acf/validate_value/name=occasions', array($this, 'validateOccasion'), 10, 4);
@@ -100,7 +104,16 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
         add_filter('acf/validate_value/name=rcr_end_time', array($this, 'validateRcrEndTime'), 10, 4);
         add_filter('acf/validate_value/name=rcr_door_time', array($this, 'validateRcrDoorTime'), 10, 4);
         add_filter('acf/validate_value/name=rcr_end_date', array($this, 'validateRcrEndDate'), 10, 4);
-        add_filter('post_row_actions', array($this, 'duplicate_post_link'), 10, 2);
+        add_filter('acf/validate_value/name=price_adult', array($this, 'validatePrice'), 10, 4);
+        add_filter('acf/validate_value/name=price_children', array($this, 'validatePrice'), 10, 4);
+        add_filter('acf/validate_value/name=price_student', array($this, 'validatePrice'), 10, 4);
+        add_filter('acf/validate_value/name=price_senior', array($this, 'validatePrice'), 10, 4);
+        add_filter('acf/validate_value/name=price_group', array($this, 'validatePrice'), 10, 4);
+        add_filter('acf/update_value/name=price_adult', array($this, 'acfUpdatePrices'), 10, 3);
+        add_filter('acf/update_value/name=price_children', array($this, 'acfUpdatePrices'), 10, 3);
+        add_filter('acf/update_value/name=price_student', array($this, 'acfUpdatePrices'), 10, 3);
+        add_filter('acf/update_value/name=price_senior', array($this, 'acfUpdatePrices'), 10, 3);
+        add_filter('acf/update_value/key=field_57f4f6dc747a1', array($this, 'acfUpdatePrices'), 10, 3);
     }
 
     /**
@@ -289,36 +302,19 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
     }
 
     /**
-     * Validate main organizer to be unique.
+     * Validate price to be numeric.
      */
-    public function validateMainOrganizer($valid, $value, $field, $input)
+    public function validatePrice($valid, $value, $field, $input)
     {
-        global $post;
-
-        if (!$valid) {
+        if (!$valid || empty($value)) {
             return $valid;
         }
-
-        $post_id = $post->ID;
-
-        if ($this->countMainOrganizers($post_id) > 1) {
-            $valid = 'You can only have one main organizer';
+        $value1 = str_replace(',', '.', $value);
+        $value2 = str_replace(' ', '', $value1);
+        if (!is_numeric($value2)) {
+            $valid = 'Not a valid number';
         }
-
         return $valid;
-    }
-
-    public function countMainOrganizers($post_id)
-    {
-        $i = 0;
-        if (have_rows('organizers', $post_id)) {
-            while (have_rows('organizers', $post_id)) : the_row();
-            if (get_sub_field('main_organizer')) {
-                $i++;
-            }
-            endwhile;
-        }
-        return $i;
     }
 
     /**
@@ -379,6 +375,19 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
     }
 
     /**
+     * Sanitize prices before save to dabtabase
+     * @param  string $value   the value of the field
+     * @param  int    $post_id the post id to save against
+     * @param  array  $field   the field object
+     * @return string          the new value
+     */
+    public function acfUpdatePrices($value, $post_id, $field)
+    {
+        $value = DataCleaner::price($value);
+        return $value;
+    }
+
+    /**
      * When publish are clicked we are either creating the meta 'accepted' with value 1 or update it
      * @param int $ID event post id
      * @param $post wordpress post object
@@ -425,8 +434,9 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
 
         if (current_user_can('manage_options')) {
             echo '<div class="alignleft actions" style="position: relative;">';
-                //echo '<a href="' . admin_url('options.php?page=import-events') . '" class="button-primary" id="post-query-submit">Import XCAP</a>';
-                //echo '<a href="' . admin_url('options.php?page=import-cbis-events') . '" class="button-primary" id="post-query-submit">Import CBIS</a>';
+// TA BORT DEBUG
+                echo '<a href="' . admin_url('options.php?page=import-events') . '" class="button-primary" id="post-query-submit">debug XCAP</a>';
+                echo '<a href="' . admin_url('options.php?page=import-cbis-events') . '" class="button-primary" id="post-query-submit">debug CBIS</a>';
                 echo '<a href="' . admin_url('options.php?page=delete-all-events') . '" class="button-primary" id="post-query-submit">DELETE</a>';
             echo '<div class="button-primary extraspace" id="xcap">' . __('Import XCAP') . '</div>';
             echo '<div class="button-primary extraspace" id="cbis">' . __('Import CBIS') . '</div>';

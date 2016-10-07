@@ -56,6 +56,22 @@ class Xcap extends \HbgEventImporter\Parser
         $startDate = $this->formatDate($startDate);
         $ticketUrl = isset($eventData->{'x-xcap-ticketlink'}) && !empty($eventData->{'x-xcap-ticketlink'}) ? $eventData->{'x-xcap-ticketlink'} : null;
 
+
+        $defualt_location = get_option('options_google_default_city');
+        if (!isset($defualt_location) || empty($defualt_location)) {
+            $defaultCity = null;
+        } else {
+            $defaultCity = $defualt_location['address'];
+        }
+
+        if ($location != null) {
+            $location = $location;
+        } elseif($defaultCity != null) {
+            $location = $defaultCity;
+        } else {
+            $location = null;
+        }
+
         if (!is_string($name)) {
             return;
         }
@@ -72,11 +88,11 @@ class Xcap extends \HbgEventImporter\Parser
         $newPostTitle = $name;
         $contactId = null;
         $locationId = null;
-        $organizers = null;
+        $organizers = array();
         $import_client = 'XCAP';
 
         // $eventData->{'x-xcap-address'} can return an object instead of a string, then we just want to ignore the location
-        if (is_string($address)) {
+        if (is_string($address) && $location != null) {
             // Checking if there is a location already with this title or similar enough
             $locationId = $this->checkIfPostExists('location', $address);
             if ($locationId == null) {
@@ -88,7 +104,7 @@ class Xcap extends \HbgEventImporter\Parser
                     array(
                         'street_address'        =>  null,
                         'postal_code'           =>  null,
-                        'city'                  =>  $location != null ? $location : null,
+                        'city'                  =>  $location,
                         'municipality'          =>  null,
                         'country'               =>  null,
                         'latitude'              =>  null,

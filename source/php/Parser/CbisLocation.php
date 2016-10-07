@@ -134,7 +134,7 @@ class CbisLocation extends \HbgEventImporter\Parser
             // Arenas:3 resp 3
             // Products:6 resp 11
 // ska finnas 150+
-//$cbisCategory = 14085;
+$cbisCategory = 14085;
 
 // Shopping
 //$cbisCategory = 14110;
@@ -143,7 +143,7 @@ class CbisLocation extends \HbgEventImporter\Parser
 //$cbisCategory = 14158;
 
 // Restaurang
-$cbisCategory = 14164;
+//$cbisCategory = 14164;
 
 
 // Bo, accomodation
@@ -172,8 +172,8 @@ $cbisCategory = 14164;
             'filter' => array(
                 'ArenaIds' => array(),
                 'GeoNodeIds' => array($cbisId),
-                'StartDate' => date('c'),
-                'EndDate' => null,
+            //'StartDate' => '2016-01-01T09:00:00',
+            //'EndDate'   => '2017-01-01T09:00:00',
                 'Name' => null,
                 'Highlights' => 0,
                 'OrderBy' => 'None',
@@ -187,7 +187,7 @@ $cbisCategory = 14164;
                 'ProductType' => 'Product',
                 'WithOccasionsOnly' => false,
                 'MultiAttributes' => array(),
-                'ExcludeProductsWithoutOccasions' => true,
+                'ExcludeProductsWithoutOccasions' => false,
                 'ExcludeProductsNotInCurrentLanguage' => false,
                 'IncludeArchivedProducts' => false,
                 'BookableProductsFirst' => false,
@@ -199,7 +199,8 @@ $cbisCategory = 14164;
         );
 
 
-        $this->products = $this->client->ListAll($requestParams)->ListAllResult->Items->Product;
+        //$this->products = $this->client->ListAll($requestParams)->ListAllResult->Items->Product;
+
 
 
         //$result = $client->SomeFunction();
@@ -219,15 +220,23 @@ $cbisCategory = 14164;
         // } else {
         //     echo "xcap false";
         // }
+        //
+        $defualt_location = get_option('options_google_default_city');
+
+        if (!isset($defualt_location) || empty($defualt_location)) {
+         echo "empty";
+        } else {
+        print_r($defualt_location);
+        echo $defualt_location['lat'];
+        echo $defualt_location['lng'];
+        }
 
 
         echo "<br>";
-        echo("Antal produkter: ".count($this->products));
+        //echo("Antal produkter: ".count($this->products));
         echo "<br>";
         echo "<br>";
-
-        print_r($this->products);
-
+        //print_r($this->products);
         echo "\n";
         echo "\n";
         //var_dump($this->arenas);
