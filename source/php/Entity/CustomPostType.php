@@ -36,19 +36,50 @@ abstract class CustomPostType
         add_action('wp_ajax_my_action', array($this, 'acceptOrDeny'));
         add_action('wp_ajax_collect_occasions', array($this, 'collectOccasions'));
         add_action('wp_ajax_import_events', array($this, 'importEvents'));
+        add_action('admin_head', array($this, 'removeMedia'));
+        add_filter('get_sample_permalink_html', array($this, 'replacePermalink'), 10, 5);
+    }
+
+    /**
+     * Replaces permalink on edit post with API-url
+     * @return string
+     */
+    public function replacePermalink($return, $post_id, $new_title, $new_slug, $post)
+    {
+        global $current_screen;
+        if ($current_screen->post_type == 'page') {
+            return $return;
+        }
+        global $post;
+        $postType = $post->post_type;
+        $jsonUrl = home_url().'/json/wp/v2/'.$postType.'/';
+        $apiUrl = $jsonUrl.$post_id;
+        return '<strong>API-url:</strong> <a href="'.$apiUrl.'" target="_blank">'.$apiUrl.'</a>';
+    }
+
+    /**
+     * Remove "Add media" button from posts
+     */
+    public function removeMedia()
+    {
+        global $current_screen;
+        if ($current_screen->post_type != 'page') {
+            remove_action('media_buttons', 'media_buttons');
+        }
     }
 
     public function importEvents()
     {
-        if($_POST['value'] == 'cbis')
-        {
+        if ($_POST['value'] == 'cbis') {
             $importer = new \HbgEventImporter\Parser\CBIS('http://api.cbis.citybreak.com/Products.asmx?wsdl');
             $data = $importer->getCreatedData();
             wp_send_json($data);
-        }
-        else if($_POST['value'] == 'xcap')
-        {
+        } elseif ($_POST['value'] == 'xcap') {
             $importer = new \HbgEventImporter\Parser\Xcap('http://mittkulturkort.se/calendar/listEvents.action?month=&date=&categoryPermaLink=&q=&p=&feedType=ICAL_XML');
+            $data = $importer->getCreatedData();
+            wp_send_json($data);
+        } elseif ($_POST['value'] == 'cbislocations') {
+            $importer = new \HbgEventImporter\Parser\CbisLocation('http://api.cbis.citybreak.com/Products.asmx?WSDL');
             $data = $importer->getCreatedData();
             wp_send_json($data);
         }
@@ -66,24 +97,23 @@ abstract class CustomPostType
         foreach ($result as $key => $event) {
             $occasions = get_field('occasions', $event->ID);
             $db_occasions = $wpdb->prefix . "occasions";
-            foreach($occasions as $newKey => $value) {
+            foreach ($occasions as $newKey => $value) {
                 $timestamp = strtotime($value['start_date']);
                 $timestamp2 = strtotime($value['end_date']);
                 $timestamp3 = (empty($value['door_time'])) ? null : strtotime($value['door_time']);
-                if($timestamp <= 0 || $timestamp2 <= 0 || $timestamp == false || $timestamp2 == false)
-                //if($timestamp <= 0 || $timestamp2 <= 0 || $timestamp == false || $timestamp2 == false || $timestamp2 < $timestamp)
+                if ($timestamp <= 0 || $timestamp2 <= 0 || $timestamp == false || $timestamp2 == false) {
+                    //if($timestamp <= 0 || $timestamp2 <= 0 || $timestamp == false || $timestamp2 == false || $timestamp2 < $timestamp)
                     continue;
+                }
                 $testQuery = $wpdb->prepare("SELECT * FROM $db_occasions WHERE event = %d AND timestamp_start = %d AND timestamp_end = %d", $event->ID, $timestamp, $timestamp2);
                 $existing = $wpdb->get_results($testQuery);
-                if(empty($existing))
-                {
+                if (empty($existing)) {
                     $newId = $wpdb->insert($db_occasions, array('event' => $event->ID, 'timestamp_start' => $timestamp, 'timestamp_end' => $timestamp2, 'timestamp_door' => $timestamp3));
                     $resultString .= "New event occasions inserted with event id: " . $event->ID . ', and timestamp_start: ' . $timestamp . ", timestamp_end: " . $timestamp2 . ", timestamp_door: " . $timestamp3 ."\n";
-                }
-                else
+                } else {
                     $resultString .= "Already exists! Event: " . $existing[0]->event . ', timestamp_start: ' . $existing[0]->timestamp_start . ", timestamp_end: " . $existing[0]->timestamp_end . "\n";
+                }
             }
-
         }
         ob_clean();
         echo $resultString;
@@ -96,8 +126,7 @@ abstract class CustomPostType
      */
     public function acceptOrDeny()
     {
-        if(!isset($_POST['postId']) || !isset($_POST['value']))
-        {
+        if (!isset($_POST['postId']) || !isset($_POST['value'])) {
             ob_clean();
             echo "Something went wrong!";
             wp_die();
@@ -108,22 +137,23 @@ abstract class CustomPostType
         $postAccepted = get_post_meta($postId, 'accepted');
 
         $post = get_post($postId);
-        if($newValue == -1)
+        if ($newValue == -1) {
             $post->post_status = 'draft';
-        if($newValue == 1)
+        }
+        if ($newValue == 1) {
             $post->post_status = 'publish';
+        }
 
         $error = wp_update_post($post, true);
 
-        if($postAccepted == false) {
+        if ($postAccepted == false) {
             add_post_meta($postId, 'accepted', $newValue);
 
             ob_clean();
             echo $newValue;
             wp_die();
         } else {
-
-            if($postAccepted[0] == $newValue) {
+            if ($postAccepted[0] == $newValue) {
                 ob_clean();
                 echo $postAccepted[0];
                 wp_die();
@@ -209,7 +239,8 @@ abstract class CustomPostType
             $columns = $this->tableColumns;
         }
 
-        function arraytolower(array $columns, $round = 0){
+        function arraytolower(array $columns, $round = 0)
+        {
             return unserialize(strtolower(serialize($columns)));
         }
 

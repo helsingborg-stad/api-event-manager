@@ -29,14 +29,64 @@ class Locations extends \HbgEventImporter\Entity\CustomPostType
             )
         );
 
+        add_action('manage_posts_extra_tablenav', array($this, 'tablenavButtons'));
         $this->addTableColumn('cb', '<input type="checkbox">');
-
         $this->addTableColumn('title', __('Title'));
         $this->addTableColumn('name', __('Address'), true, function ($column, $postId) {
             echo get_post_meta($postId, 'formatted_address', true) ? get_post_meta($postId, 'formatted_address', true) : 'n/a';
         });
+
+        $this->addTableColumn('coordinates', __('Coordinates'), true, function ($column, $postId) {
+            $lat = get_post_meta($postId, 'latitude', true);
+            $lng = get_post_meta($postId, 'longitude', true);
+            if (!isset($lat[0]) || !isset($lng[0])) {
+                return;
+            }
+            echo get_post_meta($postId, 'latitude', true).', '.get_post_meta($postId, 'longitude', true);
+        });
+
         $this->addTableColumn('date', __('Date'));
+
+        $this->addTableColumn('import_client', __('Import client'), true, function ($column, $postId) {
+            $eventId = get_post_meta($postId, 'import_client', true);
+            if (!isset($eventId[0])) {
+                return;
+            }
+            echo get_post_meta($postId, 'import_client', true);
+        });
+
+// TA BORT
+        $this->addTableColumn('debug_flag', __('Debug Flag'), true, function ($column, $postId) {
+            $eventId = get_post_meta($postId, 'debug_flag', true);
+            if (!isset($eventId[0])) {
+                return;
+            }
+            echo get_post_meta($postId, 'debug_flag', true);
+        });
+
     }
+
+    /**
+     * Add buttons to start parsing CBIS Locations
+     * @return void
+     */
+    public function tablenavButtons($which)
+    {
+        global $current_screen;
+
+        if ($current_screen->id != 'edit-location' || $which != 'top') {
+            return;
+        }
+
+        if (current_user_can('manage_options')) {
+            echo '<div class="alignleft actions" style="position: relative;">';
+            //echo '<div class="button-primary extraspace" id="cbislocations">' . __('Import CBIS locations ajax') . '</div>';
+// TA BORT
+            echo '<a href="' . admin_url('options.php?page=import-cbis-locations') . '" class="button-primary" id="post-query-submit">Import CBIS locations</a>';
+            echo '</div>';
+        }
+    }
+
 
 
 }

@@ -4,7 +4,7 @@
         "fields": [
             {
                 "key": "field_57d26cffc2f68",
-                "label": "Address",
+                "label": "Adress",
                 "name": "",
                 "type": "tab",
                 "instructions": "",
@@ -124,6 +124,44 @@
                 "maxlength": "",
                 "readonly": 0,
                 "disabled": 0
+            },
+            {
+                "key": "field_57f60a66dc607",
+                "label": "Latitude",
+                "name": "latitude",
+                "type": "text",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "50",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "placeholder": "",
+                "prepend": "",
+                "append": "",
+                "maxlength": ""
+            },
+            {
+                "key": "field_57f60a78dc608",
+                "label": "Longitude",
+                "name": "longitude",
+                "type": "text",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "50",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "placeholder": "",
+                "prepend": "",
+                "append": "",
+                "maxlength": ""
             },
             {
                 "key": "field_57613008d4000",
@@ -366,5 +404,6 @@
         "instruction_placement": "label",
         "hide_on_screen": "",
         "active": 1,
-        "description": ""
+        "description": "",
+        "local": "json"
     }

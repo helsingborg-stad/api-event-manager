@@ -2,6 +2,8 @@
 
 namespace HbgEventImporter\PostTypes;
 
+use \HbgEventImporter\Helper\DataCleaner as DataCleaner;
+
 class Events extends \HbgEventImporter\Entity\CustomPostType
 {
     public function __construct()
@@ -41,21 +43,28 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
             echo '<a href="' . get_edit_post_link($locationId[0]) . '">' . get_the_title($locationId[0]) . '</a>';
         });
         $this->addTableColumn('contact', __('Contact'), true, function ($column, $postId) {
-            $contactId = get_field('contacts', $postId);
-            if (!isset($contactId[0])) {
+
+        if (have_rows('organizers')):
+            while (have_rows('organizers')) : the_row();
+                $value = get_sub_field('contacts');
+            endwhile;
+        endif;
+
+            //$contactId = get_field('contacts', $postId);
+            if (!isset($value[0]->ID)) {
                 echo 'n/a';
                 return;
             }
 
-            echo '<a href="' . get_edit_post_link($contactId[0]) . '">' . get_the_title($contactId[0]) . '</a>';
+            echo '<a href="' . get_edit_post_link($value[0]->ID) . '">' . get_the_title($value[0]->ID) . '</a>';
         });
         $this->addTableColumn('import_client', __('Import client'), true, function ($column, $postId) {
-            $contactId = get_post_meta($postId, 'import_client', true);
-            if (!isset($contactId[0])) {
+            $eventId = get_post_meta($postId, 'import_client', true);
+            if (!isset($eventId[0])) {
                 return;
             }
 
-            echo ucfirst(get_post_meta($postId, 'import_client', true));
+            echo strtoupper(get_post_meta($postId, 'import_client', true));
         });
         $this->addTableColumn('acceptAndDeny', __('Public'), true, function ($column, $postId) {
             $metaAccepted = get_post_meta($postId, 'accepted');
@@ -77,12 +86,17 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
             echo '<a href="#" class="accept button-primary ' . $first . '" postid="' . $postId . '">' . __('Accept') . '</a>
             <a href="#" class="deny button-primary ' . $second . '" postid="' . $postId . '">' . __('Deny') . '</a>';
         });
+        $this->addTableColumn('date', __('Date'));
         add_action('admin_head-post.php', array($this, 'hidePublishingActions'));
         add_action('publish_event', array($this, 'setAcceptedOnPublish'), 10, 2);
-        //add_filter('post_class', array($this, 'changeAcceptanceColor'));
         add_action('save_post', array($this, 'saveEventOccasions'), 10, 3);
         add_action('save_post', array($this, 'saveRecurringEvents'), 10, 3);
         add_action('delete_post', array($this, 'deleteEventOccasions'), 10);
+        add_action('edit_form_advanced', array($this, 'requireEventTitle'));
+        add_action('admin_notices', array($this, 'duplicateNotice'));
+        add_action('admin_action_duplicate_post', array($this, 'duplicate_post'));
+        add_filter('post_row_actions', array($this, 'duplicate_post_link'), 10, 2);
+        // ACF validation and sanitization filters
         add_filter('acf/validate_value/name=end_date', array($this, 'validateEndDate'), 10, 4);
         add_filter('acf/validate_value/name=door_time', array($this, 'validateDoorTime'), 10, 4);
         add_filter('acf/validate_value/name=occasions', array($this, 'validateOccasion'), 10, 4);
@@ -90,10 +104,16 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
         add_filter('acf/validate_value/name=rcr_end_time', array($this, 'validateRcrEndTime'), 10, 4);
         add_filter('acf/validate_value/name=rcr_door_time', array($this, 'validateRcrDoorTime'), 10, 4);
         add_filter('acf/validate_value/name=rcr_end_date', array($this, 'validateRcrEndDate'), 10, 4);
-        add_action('edit_form_advanced', array($this, 'requireEventTitle'));
-        add_action('admin_notices', array($this, 'duplicateNotice'));
-        add_action('admin_action_duplicate_post', array($this, 'duplicate_post'));
-        add_filter('post_row_actions', array($this, 'duplicate_post_link'), 10, 2);
+        add_filter('acf/validate_value/name=price_adult', array($this, 'validatePrice'), 10, 4);
+        add_filter('acf/validate_value/name=price_children', array($this, 'validatePrice'), 10, 4);
+        add_filter('acf/validate_value/name=price_student', array($this, 'validatePrice'), 10, 4);
+        add_filter('acf/validate_value/name=price_senior', array($this, 'validatePrice'), 10, 4);
+        add_filter('acf/validate_value/name=price_group', array($this, 'validatePrice'), 10, 4);
+        add_filter('acf/update_value/name=price_adult', array($this, 'acfUpdatePrices'), 10, 3);
+        add_filter('acf/update_value/name=price_children', array($this, 'acfUpdatePrices'), 10, 3);
+        add_filter('acf/update_value/name=price_student', array($this, 'acfUpdatePrices'), 10, 3);
+        add_filter('acf/update_value/name=price_senior', array($this, 'acfUpdatePrices'), 10, 3);
+        add_filter('acf/update_value/key=field_57f4f6dc747a1', array($this, 'acfUpdatePrices'), 10, 3);
     }
 
     /**
@@ -282,6 +302,22 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
     }
 
     /**
+     * Validate price to be numeric.
+     */
+    public function validatePrice($valid, $value, $field, $input)
+    {
+        if (!$valid || empty($value)) {
+            return $valid;
+        }
+        $value1 = str_replace(',', '.', $value);
+        $value2 = str_replace(' ', '', $value1);
+        if (!is_numeric($value2)) {
+            $valid = 'Not a valid number';
+        }
+        return $valid;
+    }
+
+    /**
      * Validate recurring rules "end time" to be 'greater' than start time.
      */
     public function validateRcrEndTime($valid, $value, $field, $input)
@@ -338,25 +374,18 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
         return $valid;
     }
 
-
     /**
-     * Change background color of event in list depending of it's meta_value 'accepted'
-     * @param  array $classes
-     * @return array $classes
+     * Sanitize prices before save to dabtabase
+     * @param  string $value   the value of the field
+     * @param  int    $post_id the post id to save against
+     * @param  array  $field   the field object
+     * @return string          the new value
      */
-    // public function changeAcceptanceColor($classes)
-    // {
-    //     $postAndId = explode('-', $classes[3]);
-    //     if ($postAndId[0] == 'post') {
-    //         $metaAccepted = get_post_meta($postAndId[1], 'accepted');
-    //         if ($metaAccepted[0] == -1) {
-    //             $classes[] = "red";
-    //         } elseif ($metaAccepted[0] == 1) {
-    //             $classes[] = "green";
-    //         }
-    //     }
-    //     return $classes;
-    // }
+    public function acfUpdatePrices($value, $post_id, $field)
+    {
+        $value = DataCleaner::price($value);
+        return $value;
+    }
 
     /**
      * When publish are clicked we are either creating the meta 'accepted' with value 1 or update it
@@ -405,9 +434,11 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
 
         if (current_user_can('manage_options')) {
             echo '<div class="alignleft actions" style="position: relative;">';
-                //echo '<a href="' . admin_url('options.php?page=import-events') . '" class="button-primary" id="post-query-submit">Import XCAP</a>';
-                //echo '<a href="' . admin_url('options.php?page=import-cbis-events') . '" class="button-primary" id="post-query-submit">Import CBIS</a>';
-                echo '<div class="button-primary extraspace" id="xcap">' . __('Import XCAP') . '</div>';
+// TA BORT DEBUG
+                echo '<a href="' . admin_url('options.php?page=import-events') . '" class="button-primary" id="post-query-submit">debug XCAP</a>';
+                echo '<a href="' . admin_url('options.php?page=import-cbis-events') . '" class="button-primary" id="post-query-submit">debug CBIS</a>';
+                echo '<a href="' . admin_url('options.php?page=delete-all-events') . '" class="button-primary" id="post-query-submit">DELETE</a>';
+            echo '<div class="button-primary extraspace" id="xcap">' . __('Import XCAP') . '</div>';
             echo '<div class="button-primary extraspace" id="cbis">' . __('Import CBIS') . '</div>';
             echo '<div class="button-primary extraspace" id="occasions">Collect event timestamps</div>';
                 //echo '<div id="importResponse"></div>';
@@ -555,9 +586,10 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
         $id = $_GET['duplicate'];
         ?>
         <div class="notice notice-warning is-dismissible">
-        <p><?php _e('This is a duplicate of the event: <strong>"' . get_the_title($id) . '"</strong>. If this is a new occasion for the same event, please <a href="' . esc_url( get_edit_post_link($id))  .'">edit</a> and republish the original event.', 'text-domain');
+        <p><?php _e('This is a duplicate of the event: <strong>"' . get_the_title($id) . '"</strong>. If this is a new occasion for the same event, please <a href="' . esc_url(get_edit_post_link($id))  .'">edit</a> and republish the original event.', 'text-domain');
         ?></p>
         </div>
         <?php
+
     }
 }
