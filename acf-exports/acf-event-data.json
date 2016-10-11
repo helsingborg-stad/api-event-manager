@@ -150,7 +150,7 @@
                 ],
                 "taxonomy": [],
                 "allow_null": 0,
-                "allow_archives": 1,
+                "allow_archives": 0,
                 "multiple": 1
             },
             {
@@ -230,6 +230,33 @@
                         "default_value": "scheduled",
                         "layout": "horizontal",
                         "return_format": "value"
+                    },
+                    {
+                        "key": "field_57f3c0670c4a9",
+                        "label": "Exeption information",
+                        "name": "occ_exeption_information",
+                        "type": "text",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": [
+                            [
+                                {
+                                    "field": "field_5761164591649",
+                                    "operator": "!=",
+                                    "value": "scheduled"
+                                }
+                            ]
+                        ],
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": "",
+                        "placeholder": "",
+                        "prepend": "",
+                        "append": "",
+                        "maxlength": ""
                     },
                     {
                         "key": "field_5761109a83968",
@@ -481,7 +508,7 @@
                         "collapsed": "",
                         "min": "",
                         "max": "",
-                        "layout": "table",
+                        "layout": "block",
                         "button_label": "Add",
                         "sub_fields": [
                             {
@@ -500,6 +527,59 @@
                                 "display_format": "Y-m-d",
                                 "return_format": "Y-m-d",
                                 "first_day": 1
+                            },
+                            {
+                                "key": "field_57f3bb9c82f5e",
+                                "label": "Status",
+                                "name": "status_rcr_exc",
+                                "type": "radio",
+                                "instructions": "",
+                                "required": 1,
+                                "conditional_logic": 0,
+                                "wrapper": {
+                                    "width": "",
+                                    "class": "",
+                                    "id": ""
+                                },
+                                "choices": {
+                                    "default": "Default",
+                                    "rescheduled": "Rescheduled",
+                                    "postponed": "Postponed",
+                                    "cancelled": "Cancelled"
+                                },
+                                "allow_null": 0,
+                                "other_choice": 0,
+                                "save_other_choice": 0,
+                                "default_value": "scheduled",
+                                "layout": "horizontal",
+                                "return_format": "value"
+                            },
+                            {
+                                "key": "field_57f3becaf31a5",
+                                "label": "Exeption information",
+                                "name": "rcr_exception_info",
+                                "type": "text",
+                                "instructions": "",
+                                "required": 0,
+                                "conditional_logic": [
+                                    [
+                                        {
+                                            "field": "field_57f3bb9c82f5e",
+                                            "operator": "!=",
+                                            "value": "default"
+                                        }
+                                    ]
+                                ],
+                                "wrapper": {
+                                    "width": "",
+                                    "class": "",
+                                    "id": ""
+                                },
+                                "default_value": "",
+                                "placeholder": "",
+                                "prepend": "",
+                                "append": "",
+                                "maxlength": ""
                             }
                         ]
                     }
@@ -526,7 +606,7 @@
                 "label": "Location",
                 "name": "location",
                 "type": "relationship",
-                "instructions": "",
+                "instructions": "Location or address for the event.",
                 "required": 0,
                 "conditional_logic": 0,
                 "wrapper": {
@@ -547,11 +627,11 @@
                 "return_format": "object"
             },
             {
-                "key": "field_57ce8cbf9fe55",
+                "key": "field_57ee2a23bd0b5",
                 "label": "Additional locations",
                 "name": "additional_locations",
-                "type": "relationship",
-                "instructions": "",
+                "type": "repeater",
+                "instructions": "Add additional locations if the event takes place on more than one address.",
                 "required": 0,
                 "conditional_logic": 0,
                 "wrapper": {
@@ -559,17 +639,38 @@
                     "class": "",
                     "id": ""
                 },
-                "post_type": [
-                    "location"
-                ],
-                "taxonomy": [],
-                "filters": [
-                    "search"
-                ],
-                "elements": "",
+                "collapsed": "",
                 "min": "",
-                "max": "",
-                "return_format": "object"
+                "max": 1,
+                "layout": "block",
+                "button_label": "Add",
+                "sub_fields": [
+                    {
+                        "key": "field_57ee2a56bd0b6",
+                        "label": "Locations",
+                        "name": "add_locations",
+                        "type": "relationship",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "post_type": [
+                            "location"
+                        ],
+                        "taxonomy": [],
+                        "filters": [
+                            "search"
+                        ],
+                        "elements": "",
+                        "min": "",
+                        "max": "",
+                        "return_format": "object"
+                    }
+                ]
             },
             {
                 "key": "field_57611356d9415",
@@ -588,84 +689,10 @@
                 "endpoint": 0
             },
             {
-                "key": "field_57611367d9416",
-                "label": "Organizer",
-                "name": "organizer",
-                "type": "text",
-                "instructions": "",
-                "required": 0,
-                "conditional_logic": 0,
-                "wrapper": {
-                    "width": "50",
-                    "class": "",
-                    "id": ""
-                },
-                "default_value": "",
-                "placeholder": "",
-                "prepend": "",
-                "append": "",
-                "maxlength": ""
-            },
-            {
-                "key": "field_57c808631942c",
-                "label": "Organizer link",
-                "name": "organizer_link",
-                "type": "url",
-                "instructions": "",
-                "required": 0,
-                "conditional_logic": 0,
-                "wrapper": {
-                    "width": "50",
-                    "class": "",
-                    "id": ""
-                },
-                "default_value": "",
-                "placeholder": ""
-            },
-            {
-                "key": "field_57611391d9417",
-                "label": "Organizer phone",
-                "name": "organizer_phone",
-                "type": "text",
-                "instructions": "",
-                "required": 0,
-                "conditional_logic": 0,
-                "wrapper": {
-                    "width": 50,
-                    "class": "",
-                    "id": ""
-                },
-                "default_value": "",
-                "placeholder": "",
-                "prepend": "",
-                "append": "",
-                "maxlength": "",
-                "readonly": 0,
-                "disabled": 0
-            },
-            {
-                "key": "field_5761139bd9418",
-                "label": "Organizer email",
-                "name": "organizer_email",
-                "type": "email",
-                "instructions": "",
-                "required": 0,
-                "conditional_logic": 0,
-                "wrapper": {
-                    "width": 50,
-                    "class": "",
-                    "id": ""
-                },
-                "default_value": "",
-                "placeholder": "",
-                "prepend": "",
-                "append": ""
-            },
-            {
-                "key": "field_576113b3d9419",
-                "label": "Coorganizer",
-                "name": "coorganizer",
-                "type": "text",
+                "key": "field_57ebb36142843",
+                "label": "Organizers",
+                "name": "organizers",
+                "type": "repeater",
                 "instructions": "",
                 "required": 0,
                 "conditional_logic": 0,
@@ -674,42 +701,130 @@
                     "class": "",
                     "id": ""
                 },
-                "default_value": "",
-                "placeholder": "",
-                "prepend": "",
-                "append": "",
-                "maxlength": "",
-                "readonly": 0,
-                "disabled": 0
-            },
-            {
-                "key": "field_576116fd23a4f",
-                "label": "Kontakter",
-                "name": "contacts",
-                "type": "relationship",
-                "instructions": "",
-                "required": 0,
-                "conditional_logic": 0,
-                "wrapper": {
-                    "width": "",
-                    "class": "",
-                    "id": ""
-                },
-                "post_type": [
-                    "contact"
-                ],
-                "taxonomy": [],
-                "filters": [
-                    "search"
-                ],
-                "elements": "",
-                "min": "",
+                "collapsed": "",
+                "min": 0,
                 "max": "",
-                "return_format": "object"
+                "layout": "block",
+                "button_label": "L\u00e4gg till rad",
+                "sub_fields": [
+                    {
+                        "key": "field_57ecf8598ff0d",
+                        "label": "Main organizer",
+                        "name": "main_organizer",
+                        "type": "true_false",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "message": "Fill in if this is the main organizer of the event.",
+                        "default_value": 0
+                    },
+                    {
+                        "key": "field_57ebb3a242844",
+                        "label": "Organizer (Name or Company)",
+                        "name": "organizer",
+                        "type": "text",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "50",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": "",
+                        "placeholder": "",
+                        "prepend": "",
+                        "append": "",
+                        "maxlength": ""
+                    },
+                    {
+                        "key": "field_57ebb41742845",
+                        "label": "Organizer link",
+                        "name": "organizer_link",
+                        "type": "url",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "50",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": "",
+                        "placeholder": ""
+                    },
+                    {
+                        "key": "field_57ebb45142846",
+                        "label": "Organizer Phone",
+                        "name": "organizer_phone",
+                        "type": "text",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "50",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": "",
+                        "placeholder": "",
+                        "prepend": "",
+                        "append": "",
+                        "maxlength": ""
+                    },
+                    {
+                        "key": "field_57ebb51d42847",
+                        "label": "Organizer Email",
+                        "name": "organizer_email",
+                        "type": "email",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "50",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": "",
+                        "placeholder": "",
+                        "prepend": "",
+                        "append": ""
+                    },
+                    {
+                        "key": "field_57ebb807988f8",
+                        "label": "Kontakter",
+                        "name": "contacts",
+                        "type": "relationship",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "post_type": [
+                            "contact"
+                        ],
+                        "taxonomy": [],
+                        "filters": [
+                            "search"
+                        ],
+                        "elements": "",
+                        "min": "",
+                        "max": "",
+                        "return_format": "object"
+                    }
+                ]
             },
             {
                 "key": "field_57a9d5f3804e1",
-                "label": "Supporters",
+                "label": "Sponsors",
                 "name": "supporters",
                 "type": "relationship",
                 "instructions": "",
@@ -757,7 +872,7 @@
                 "required": 0,
                 "conditional_logic": 0,
                 "wrapper": {
-                    "width": "",
+                    "width": "50",
                     "class": "",
                     "id": ""
                 },
@@ -773,7 +888,7 @@
                 "required": 0,
                 "conditional_logic": 0,
                 "wrapper": {
-                    "width": "",
+                    "width": "50",
                     "class": "",
                     "id": ""
                 },
@@ -781,9 +896,7 @@
                 "placeholder": "",
                 "prepend": "",
                 "append": "",
-                "maxlength": "",
-                "readonly": 0,
-                "disabled": 0
+                "maxlength": ""
             },
             {
                 "key": "field_57611befacf1c",
@@ -802,9 +915,7 @@
                 "placeholder": "",
                 "prepend": "",
                 "append": "",
-                "maxlength": "",
-                "readonly": 0,
-                "disabled": 0
+                "maxlength": ""
             },
             {
                 "key": "field_57c7ed92054e6",
@@ -839,7 +950,7 @@
                 "required": 0,
                 "conditional_logic": 0,
                 "wrapper": {
-                    "width": "",
+                    "width": "50",
                     "class": "",
                     "id": ""
                 },
@@ -858,7 +969,7 @@
                 "required": 0,
                 "conditional_logic": 0,
                 "wrapper": {
-                    "width": "",
+                    "width": "50",
                     "class": "",
                     "id": ""
                 },
@@ -870,45 +981,22 @@
             },
             {
                 "key": "field_57611c0cacf1e",
-                "label": "Price adult",
+                "label": "Default price \/ Adult",
                 "name": "price_adult",
                 "type": "text",
                 "instructions": "",
                 "required": 0,
                 "conditional_logic": 0,
                 "wrapper": {
-                    "width": 50,
+                    "width": "50",
                     "class": "",
                     "id": ""
                 },
                 "default_value": "",
                 "placeholder": "",
                 "prepend": "",
-                "append": "",
-                "maxlength": "",
-                "readonly": 0,
-                "disabled": 0
-            },
-            {
-                "key": "field_57611c23acf1f",
-                "label": "Price children",
-                "name": "price_children",
-                "type": "text",
-                "instructions": "",
-                "required": 0,
-                "conditional_logic": 0,
-                "wrapper": {
-                    "width": 50,
-                    "class": "",
-                    "id": ""
-                },
-                "default_value": "",
-                "placeholder": "",
-                "prepend": "",
-                "append": "",
-                "maxlength": "",
-                "readonly": 0,
-                "disabled": 0
+                "append": "kr",
+                "maxlength": ""
             },
             {
                 "key": "field_57b6fe18e65c4",
@@ -926,8 +1014,78 @@
                 "default_value": "",
                 "placeholder": "",
                 "prepend": "",
-                "append": "",
+                "append": "kr",
                 "maxlength": ""
+            },
+            {
+                "key": "field_57611c23acf1f",
+                "label": "Price children",
+                "name": "price_children",
+                "type": "text",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "50",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "placeholder": "",
+                "prepend": "",
+                "append": "kr",
+                "maxlength": ""
+            },
+            {
+                "key": "field_57f4fe8866a2d",
+                "label": "Children age",
+                "name": "children_age",
+                "type": "select",
+                "instructions": "Children price is valid up to this age.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "50",
+                    "class": "",
+                    "id": ""
+                },
+                "choices": [
+                    "0",
+                    "1",
+                    "2",
+                    "3",
+                    "4",
+                    "5",
+                    "6",
+                    "7",
+                    "8",
+                    "9",
+                    "10",
+                    "11",
+                    "12",
+                    "13",
+                    "14",
+                    "15",
+                    "16",
+                    "17",
+                    "18",
+                    "19",
+                    "20",
+                    "21",
+                    "22",
+                    "23",
+                    "24",
+                    "25"
+                ],
+                "default_value": [
+                    18
+                ],
+                "allow_null": 0,
+                "multiple": 0,
+                "ui": 0,
+                "ajax": 0,
+                "return_format": "value",
+                "placeholder": ""
             },
             {
                 "key": "field_57b6fe5ee65c5",
@@ -945,8 +1103,151 @@
                 "default_value": "",
                 "placeholder": "",
                 "prepend": "",
-                "append": "",
+                "append": "kr",
                 "maxlength": ""
+            },
+            {
+                "key": "field_57f4fbaa4365e",
+                "label": "Senior age",
+                "name": "senior_age",
+                "type": "select",
+                "instructions": "Senior price is valid from this age.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "50",
+                    "class": "",
+                    "id": ""
+                },
+                "choices": {
+                    "50": "50",
+                    "51": "51",
+                    "52": "52",
+                    "53": "53",
+                    "54": "54",
+                    "55": "55",
+                    "56": "56",
+                    "57": "57",
+                    "58": "58",
+                    "59": "59",
+                    "60": "60",
+                    "61": "61",
+                    "62": "62",
+                    "63": "63",
+                    "64": "64",
+                    "65": "65",
+                    "66": "66",
+                    "67": "67",
+                    "68": "68",
+                    "69": "69",
+                    "70": "70",
+                    "71": "71",
+                    "72": "72",
+                    "73": "73",
+                    "74": "74",
+                    "75": "75",
+                    "76": "76",
+                    "77": "77",
+                    "78": "78",
+                    "79": "79",
+                    "80": "80",
+                    "81": "81",
+                    "82": "82",
+                    "83": "83",
+                    "84": "84",
+                    "85": "85"
+                },
+                "default_value": [
+                    65
+                ],
+                "allow_null": 0,
+                "multiple": 0,
+                "ui": 0,
+                "ajax": 0,
+                "return_format": "value",
+                "placeholder": ""
+            },
+            {
+                "key": "field_57f4f4ac7479f",
+                "label": "Price group",
+                "name": "booking_group",
+                "type": "repeater",
+                "instructions": "Add prices for groups",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "collapsed": "",
+                "min": "",
+                "max": "",
+                "layout": "block",
+                "button_label": "Add",
+                "sub_fields": [
+                    {
+                        "key": "field_57f4f6dc747a1",
+                        "label": "Price group",
+                        "name": "price_group",
+                        "type": "text",
+                        "instructions": "",
+                        "required": 1,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "33",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": "",
+                        "placeholder": "",
+                        "prepend": "",
+                        "append": "kr",
+                        "maxlength": ""
+                    },
+                    {
+                        "key": "field_57f4f74e747a2",
+                        "label": "Min persons",
+                        "name": "min_persones",
+                        "type": "number",
+                        "instructions": "",
+                        "required": 1,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "33",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": "",
+                        "placeholder": "",
+                        "prepend": "",
+                        "append": "",
+                        "min": "",
+                        "max": "",
+                        "step": ""
+                    },
+                    {
+                        "key": "field_57f4f765747a3",
+                        "label": "Max persons",
+                        "name": "max_persons",
+                        "type": "number",
+                        "instructions": "",
+                        "required": 1,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "33",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": "",
+                        "placeholder": "",
+                        "prepend": "",
+                        "append": "",
+                        "min": "",
+                        "max": "",
+                        "step": ""
+                    }
+                ]
             },
             {
                 "key": "field_577a326b71ba8",
@@ -969,7 +1270,7 @@
                 "label": "Gallery",
                 "name": "gallery",
                 "type": "gallery",
-                "instructions": "",
+                "instructions": "Please upload images that are as large as possible and that are not sensitive to cropping (eg. images with text overlay).",
                 "required": 0,
                 "conditional_logic": 0,
                 "wrapper": {
@@ -979,7 +1280,7 @@
                 },
                 "min": "",
                 "max": "",
-                "preview_size": "thumbnail",
+                "insert": "append",
                 "library": "all",
                 "min_width": "",
                 "min_height": "",
@@ -987,8 +1288,7 @@
                 "max_width": "",
                 "max_height": "",
                 "max_size": "",
-                "mime_types": "",
-                "insert": "append"
+                "mime_types": ""
             },
             {
                 "key": "field_57a9d7f655152",

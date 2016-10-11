@@ -4,10 +4,10 @@
         "fields": [
             {
                 "key": "field_575fe34355309",
-                "label": "Google Geocode Api key",
+                "label": "Google Api key",
                 "name": "google_geocode_api_key",
                 "type": "text",
-                "instructions": "",
+                "instructions": "API-services required:<br> Google Maps Geocoding API<br> Google Places API Web Service",
                 "required": 1,
                 "conditional_logic": 0,
                 "wrapper": {
@@ -19,9 +19,26 @@
                 "placeholder": "",
                 "prepend": "",
                 "append": "",
-                "maxlength": "",
-                "readonly": 0,
-                "disabled": 0
+                "maxlength": ""
+            },
+            {
+                "key": "field_57fb3d55d2535",
+                "label": "Default city",
+                "name": "default_city",
+                "type": "text",
+                "instructions": "If essential adress components are missing during import, this city will be used as default.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "placeholder": "",
+                "prepend": "",
+                "append": "",
+                "maxlength": ""
             }
         ],
         "location": [

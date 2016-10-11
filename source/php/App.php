@@ -33,8 +33,6 @@ class App
         register_activation_hook(plugin_basename(__FILE__), '\HbgEventImporter\App::addCronJob');
         register_deactivation_hook(plugin_basename(__FILE__), '\HbgEventImporter\App::removeCronJob');
 
-
-
         //Json load files
         add_filter('acf/settings/load_json', array($this, 'acfJsonLoadPath'));
 
@@ -43,13 +41,18 @@ class App
         add_action('admin_enqueue_scripts', array($this, 'enqueueScripts'));
 
         //Admin components
-        //add_action('admin_menu', array($this, 'createParsePage'));
+// TA BORT
+add_action('admin_menu', array($this, 'createParsePage'));
         add_action('admin_notices', array($this, 'adminNotices'));
 
         // Register cron action
         add_action('import_events_daily', array($this, 'startImport'));
 
         //add_action('delete_post', array($this, 'checkItOut'), 10);
+
+        // Redirects
+        add_filter('login_redirect', array($this, 'loginRedirect'), 10, 3);
+        add_action('admin_init', array($this, 'dashboardRedirect'));
 
         //Check referer (popup box)
         $referer = (isset($_SERVER['HTTP_REFERER'])) ? $_SERVER['HTTP_REFERER'] : null;
@@ -79,6 +82,39 @@ class App
         new Api\LocationFields();
         new Api\ContactFields();
         new Api\EventFields();
+    }
+
+    /**
+     * Redirect user after successful login.
+     *
+     * @param string $redirect_to URL to redirect to.
+     * @param string $request URL the user is coming from.
+     * @param object $user Logged user's data.
+     * @return string
+     */
+    public function loginRedirect($redirect_to, $request, $user)
+    {
+        if (! is_wp_error($user)) {
+            if (is_array($user->roles)) {
+                $urlAdmin = admin_url('edit.php?post_type=event');
+                return $urlAdmin;
+            }
+        } else {
+            return $redirect_to;
+        }
+    }
+
+    /**
+     * Redirect user when entering dashboard.
+     * @return [type] [description]
+     */
+    public function dashboardRedirect()
+    {
+        global $pagenow;
+        if ($pagenow == 'index.php') {
+            wp_redirect(admin_url('edit.php?post_type=event'), 301);
+            exit;
+        }
     }
 
     public function checkItOut()
@@ -138,7 +174,7 @@ class App
     {
         global $current_screen;
 
-        if ($current_screen->id == 'event' && $current_screen->action == '') {
+        if ($current_screen->id == 'event' && ($current_screen->action == '' || $current_screen->action == 'add')) {
             wp_enqueue_script('hbg-event-importer', HBGEVENTIMPORTER_URL . '/dist/js/hbg-event-importer.min.js');
         }
 
@@ -150,6 +186,7 @@ class App
     }
 
     /**
+     * TA BORT
      * Creates a admin page to trigger update data function
      * ARE NOT USED ANYMORE
      * @return void
@@ -176,25 +213,56 @@ class App
             function () {
                 new \HbgEventImporter\Parser\CBIS('http://api.cbis.citybreak.com/Products.asmx?wsdl');
             });
+// TA BORT
+        add_submenu_page(
+            null,
+            __('Import CBIS locations', 'hbg-event-importer'),
+            __('Import CBIS events', 'hbg-event-importer'),
+            'edit_posts',
+            'import-cbis-locations',
+            function () {
+                new \HbgEventImporter\Parser\CbisLocation('http://api.info.citybreak.com/Products.asmx?WSDL');
+            });
+        add_submenu_page(
+            null,
+            __('Delete all events', 'hbg-event-importer'),
+            __('Delete all events', 'hbg-event-importer'),
+            'edit_posts',
+            'delete-all-events',
+            function () {
+                global $wpdb;
+                $delete = $wpdb->query("TRUNCATE TABLE `cbis_data`");
+                $delete = $wpdb->query("TRUNCATE TABLE `event_occasions`");
+                $delete = $wpdb->query("TRUNCATE TABLE `event_postmeta`");
+                $delete = $wpdb->query("TRUNCATE TABLE `event_posts`");
+                $delete = $wpdb->query("TRUNCATE TABLE `event_stream`");
+                $delete = $wpdb->query("TRUNCATE TABLE `event_stream_meta`");
+                $delete = $wpdb->query("TRUNCATE TABLE `event_term_relationships`");
+                $delete = $wpdb->query("TRUNCATE TABLE `event_term_taxonomy`");
+                $delete = $wpdb->query("TRUNCATE TABLE `event_termmeta`");
+                $delete = $wpdb->query("TRUNCATE TABLE `event_terms`");
+            });
     }
 
     /**
+     *
      * Starts the data import
      * @return void
      */
     public function startImport()
     {
-        if (get_field('xcap_daily_cron', 'option') === true || empty(get_field('xcap_daily_cron', 'option'))) {
+        if (get_field('cbis_daily_cron', 'option') == true) {
+            $cbisUrl = 'http://api.cbis.citybreak.com/Products.asmx?wsdl';
+            new \HbgEventImporter\Parser\CBIS($cbisUrl);
+            file_put_contents(dirname(__FILE__)."/Log/cbis_cron.log", "CBIS, Last run: ".date("Y-m-d H:i:s"));
+        }
+        if (get_field('xcap_daily_cron', 'option') == true) {
             $xcapUrl = 'http://mittkulturkort.se/calendar/listEvents.action' .
                        '?month=&date=&categoryPermaLink=&q=&p=&feedType=ICAL_XML';
             new \HbgEventImporter\Parser\Xcap($xcapUrl);
+            file_put_contents(dirname(__FILE__)."/Log/xcap_cron_events.log", "XCAP, Last run: ".date("Y-m-d H:i:s"));
         }
-    }
-
-    public function acfJsonLoadPath($paths)
-    {
-        $paths[] = HBGEVENTIMPORTER_PATH . '/acf-exports';
-        return $paths;
+        file_put_contents(dirname(__FILE__)."/Log/cron_log.log", "Cron Last run: ".date("Y-m-d H:i:s"));
     }
 
     public static function addCronJob()
@@ -205,6 +273,12 @@ class App
     public static function removeCronJob()
     {
         wp_clear_scheduled_hook('import_events_daily');
+    }
+
+    public function acfJsonLoadPath($paths)
+    {
+        $paths[] = HBGEVENTIMPORTER_PATH . '/acf-exports';
+        return $paths;
     }
 
     public static function database_creation()
@@ -225,5 +299,4 @@ class App
         dbDelta($sql);
         add_option('event_db_version', $event_db_version);
     }
-
 }

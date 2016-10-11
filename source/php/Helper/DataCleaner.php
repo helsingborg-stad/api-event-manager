@@ -77,4 +77,28 @@ class DataCleaner
 
         return $removedShortcodes;
     }
+
+    /**
+     * Format prices
+     *
+     * @param  string $number Phone number to format
+     * @return array          Formatted phone number (international and national)
+     */
+    public static function price($price)
+    {
+        if (is_null($price)) {
+            return $price;
+        }
+
+        $price1 = str_replace(',', '.', $price);
+        $price2 = preg_replace('/[^0-9.]+/', '', $price1);
+        if (!is_numeric($price2)) {
+            return null;
+        }
+
+        setlocale(LC_MONETARY, 'sv_SE');
+        $money_format = money_format('%!n', $price2);
+
+        return $money_format;
+    }
 }
