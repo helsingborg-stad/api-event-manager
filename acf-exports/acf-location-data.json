@@ -164,24 +164,6 @@
                 "maxlength": ""
             },
             {
-                "key": "field_57613008d4000",
-                "label": "Map",
-                "name": "map",
-                "type": "google_map",
-                "instructions": "",
-                "required": 0,
-                "conditional_logic": 0,
-                "wrapper": {
-                    "width": "",
-                    "class": "",
-                    "id": ""
-                },
-                "center_lat": "",
-                "center_lng": "",
-                "zoom": "",
-                "height": ""
-            },
-            {
                 "key": "field_57cfba1b54b27",
                 "label": "Open hours",
                 "name": "",
@@ -404,6 +386,5 @@
         "instruction_placement": "label",
         "hide_on_screen": "",
         "active": 1,
-        "description": "",
-        "local": "json"
+        "description": ""
     }

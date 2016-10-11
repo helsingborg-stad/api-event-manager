@@ -2,6 +2,8 @@
 
 namespace HbgEventImporter\PostTypes;
 
+use \HbgEventImporter\Helper\Address as Address;
+
 class Locations extends \HbgEventImporter\Entity\CustomPostType
 {
     public function __construct()
@@ -28,8 +30,9 @@ class Locations extends \HbgEventImporter\Entity\CustomPostType
                 'supports'             => array('title', 'revisions', 'editor', 'thumbnail')
             )
         );
-
-        add_action('manage_posts_extra_tablenav', array($this, 'tablenavButtons'));
+        // TA BORT
+        //add_action('manage_posts_extra_tablenav', array($this, 'tablenavButtons'));
+        add_action('acf/save_post', array($this, 'updateAddressData'), 20);
         $this->addTableColumn('cb', '<input type="checkbox">');
         $this->addTableColumn('title', __('Title'));
         $this->addTableColumn('name', __('Address'), true, function ($column, $postId) {
@@ -55,38 +58,83 @@ class Locations extends \HbgEventImporter\Entity\CustomPostType
             echo get_post_meta($postId, 'import_client', true);
         });
 
-// TA BORT
-        $this->addTableColumn('debug_flag', __('Debug Flag'), true, function ($column, $postId) {
-            $eventId = get_post_meta($postId, 'debug_flag', true);
-            if (!isset($eventId[0])) {
-                return;
-            }
-            echo get_post_meta($postId, 'debug_flag', true);
-        });
-
+        // TA BORT
+        // $this->addTableColumn('debug_flag', __('Debug Flag'), true, function ($column, $postId) {
+        //     $eventId = get_post_meta($postId, 'debug_flag', true);
+        //     if (!isset($eventId[0])) {
+        //         return;
+        //     }
+        //     echo get_post_meta($postId, 'debug_flag', true);
+        // });
     }
 
-    /**
-     * Add buttons to start parsing CBIS Locations
-     * @return void
-     */
-    public function tablenavButtons($which)
+    public function updateAddressData($post_id)
     {
-        global $current_screen;
-
-        if ($current_screen->id != 'edit-location' || $which != 'top') {
+        if (get_post_type($post_id) != 'location') {
             return;
         }
 
-        if (current_user_can('manage_options')) {
-            echo '<div class="alignleft actions" style="position: relative;">';
-            //echo '<div class="button-primary extraspace" id="cbislocations">' . __('Import CBIS locations ajax') . '</div>';
-// TA BORT
-            echo '<a href="' . admin_url('options.php?page=import-cbis-locations') . '" class="button-primary" id="post-query-submit">Import CBIS locations</a>';
-            echo '</div>';
+        $defaultLocation = get_option('options_default_city');
+        $defaultLocation = (!isset($defaultLocation) || empty($defaultLocation)) ? null : $defaultLocation;
+        $formatted = get_field('street_address') != null ? get_field('street_address') : '';
+        $formatted .= get_field('postal_code') != null ? ', ' . get_field('postal_code') : '';
+        $formatted .= get_field('city') != null ? ', ' . get_field('city') : ', ' . $defaultLocation;
+        $formatted .= get_field('country') != null ? ', ' . get_field('country') : '';
+        update_field('formatted_address', $formatted);
+
+        // Get coordinates from address
+        if (get_field('street_address') != null && get_field('postal_code') != null && get_field('city') != null && (get_field('latitude') == null || get_field('longitude') == null)) {
+            $address = Address::gmapsGetAddressComponents($formatted, true);
+            if ($address) {
+                update_field('latitude', $address->latitude);
+                update_field('longitude', $address->longitude);
+            }
+        }
+        // Get address from coordinates
+        elseif (get_field('street_address') == null && get_field('postal_code') == null && get_field('city') == null && get_field('latitude') != null || get_field('longitude') != null) {
+            $address = Address::gmapsGetAddressByCoordinates(get_field('latitude'),  get_field('longitude'));
+            if ($address) {
+                update_field('street_address', $address->street);
+                update_field('city', $address->city);
+                update_field('postal_code', str_replace(' ', '', $address->postalcode));
+                update_field('country', $address->country);
+                update_field('formatted_address', $address->formatted_address);
+            }
+        }
+        // Get address and coordinates from post title
+        elseif (get_field('street_address') == null && get_field('postal_code') == null && get_field('city') == null && (get_field('latitude') == null || get_field('longitude') == null)) {
+            $title = get_the_title($post_id);
+            $title .= $defaultLocation != null ? ', ' . $defaultLocation : '';
+            $address = Address::gmapsGetAddressComponents($title, false);
+            if ($address) {
+                update_field('street_address', $address->street);
+                update_field('city', $address->city);
+                update_field('postal_code', str_replace(' ', '', $address->postalcode));
+                update_field('country', $address->country);
+                update_field('formatted_address', $address->formatted_address);
+                update_field('latitude', $address->latitude);
+                update_field('longitude', $address->longitude);
+            }
         }
     }
 
+    /**
+     * TA BORT
+     * Add buttons to start parsing CBIS Locations
+     * @return void
+     */
+    // public function tablenavButtons($which)
+    // {
+    //     global $current_screen;
 
+    //     if ($current_screen->id != 'edit-location' || $which != 'top') {
+    //         return;
+    //     }
 
+    //     if (current_user_can('manage_options')) {
+    //         echo '<div class="alignleft actions" style="position: relative;">';
+    //         echo '<a href="' . admin_url('options.php?page=import-cbis-locations') . '" class="button-primary" id="post-query-submit">Import CBIS locations</a>';
+    //         echo '</div>';
+    //     }
+    // }
 }

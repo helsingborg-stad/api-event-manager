@@ -31,122 +31,55 @@ class Location extends \HbgEventImporter\Entity\PostManager
      */
     public function afterSave()
     {
+        // Get address and coordinates from post title.
         if(!isset($this->_event_manager_uid) || ($this->street_address == null && ($this->latitude == null || $this->longitude == null)))
         {
             $type = $this->street_address != null ? true : false;
             $wholeAddress = $this->street_address != null ? $this->street_address : $this->post_title;
             $wholeAddress .= $this->city != null ? ', ' . $this->city : '';
-
             $res = Helper\Address::gmapsGetAddressComponents($wholeAddress, $type);
-
-            if (!isset($res->geometry->location) || !is_object($res)) {
+            if(!$res) {
                 wp_delete_post($this->ID, true);
                 return false;
             }
-
-            // TA BORT
-            update_post_meta($this->ID, 'map', array(
-                'address' => $res->formatted_address,
-                'lat' => $res->geometry->location->lat,
-                'lng' => $res->geometry->location->lng
-            ));
-
-            $street = '';
-            $streetNumber = '';
-            foreach($res->address_components as $key => $component) {
-                if($component->types[0] == 'postal_code')
-                    update_post_meta($this->ID, 'postal_code', DataCleaner::number($component->long_name));
-                if (!empty($component->types[0] == 'locality')) {
-                    update_post_meta($this->ID, 'city', $component->long_name);
-                } elseif($component->types[0] == 'postal_town') {
-                    update_post_meta($this->ID, 'city', $component->long_name);
-                }
-                if($component->types[0] == 'country')
-                    update_post_meta($this->ID, 'country', $component->long_name);
-                if($component->types[0] == 'route')
-                    $street = $component->long_name;
-                if($component->types[0] == 'street_number')
-                    $streetNumber = $component->long_name;
-            }
-
-            if(!empty($street)) {
-                if(!empty($streetNumber))
-                    $street .= ' ' . $streetNumber;
-                update_post_meta($this->ID, 'street_address', $street);
-            }
-// TA BORT
-update_post_meta($this->ID, 'debug_flag', 'Case 1');
-
+            update_post_meta($this->ID, 'street_address', $res->street);
+            update_post_meta($this->ID, 'postal_code', $res->postalcode);
+            update_post_meta($this->ID, 'city', $res->city);
+            update_post_meta($this->ID, 'country', $res->country);
             update_post_meta($this->ID, 'formatted_address', $res->formatted_address);
-            update_post_meta($this->ID, 'latitude', $res->geometry->location->lat);
-            update_post_meta($this->ID, 'longitude', $res->geometry->location->lng);
+            update_post_meta($this->ID, 'latitude', $res->latitude);
+            update_post_meta($this->ID, 'longitude', $res->longitude);
             update_post_meta($this->ID, '_event_manager_uid', $this->post_title);
-        }
-            // Om gatuadress finns men inte koordinater. Sök med Geocoding och spara koordinater.
-            elseif ($this->street_address != null && ($this->latitude == null || $this->longitude == null)) {
-                $res = Helper\Address::gmapsGetAddressComponents($this->street_address . ' ' . $this->postal_code . ' ' . $this->city . ' ' . $this->country, true);
-                if (!isset($res->geometry->location)) {
-                    return true;
-                }
-                // TA BORT "map"
-                update_post_meta($this->ID, 'map', array(
-                    'address' => $res->formatted_address,
-                    'lat' => $res->geometry->location->lat,
-                    'lng' => $res->geometry->location->lng
-                ));
-                update_post_meta($this->ID, 'formatted_address', $res->formatted_address);
-                update_post_meta($this->ID, 'latitude', $res->geometry->location->lat);
-                update_post_meta($this->ID, 'longitude', $res->geometry->location->lng);
 
-// TA BORT
-update_post_meta($this->ID, 'debug_flag', 'Case 2 = has address, missing cords');
+        // Get coordinates from address.
+        } elseif ($this->street_address != null && ($this->latitude == null || $this->longitude == null)) {
+            $res = Helper\Address::gmapsGetAddressComponents($this->street_address . ' ' . $this->postal_code . ' ' . $this->city . ' ' . $this->country, true);
+            if (!isset($res->latitude)) {
+                return true;
             }
+            update_post_meta($this->ID, 'formatted_address', $res->formatted_address);
+            update_post_meta($this->ID, 'latitude', $res->latitude);
+            update_post_meta($this->ID, 'longitude', $res->longitude);
 
-            // Om gatuadress inte finns men koordinater finns. Sök med Geocoding och hämta rätt address.
-            elseif ($this->street_address == null && $this->latitude != null && $this->longitude != null) {
-                $res = Helper\Address::gmapsGetAddressByCoordinates($this->latitude, $this->longitude);
-                if (!$res) {
-                    return true;
-                }
-
-                // TA BORT "map"
-                update_post_meta($this->ID, 'map', array(
-                    'address' => $res->formatted_address,
-                    'lat' => $this->latitude,
-                    'lng' => $this->longitude
-                ));
-
-                update_post_meta($this->ID, 'street_address', $res->street);
-                update_post_meta($this->ID, 'postal_code', $res->postalcode);
-                update_post_meta($this->ID, 'city', $res->city);
-                update_post_meta($this->ID, 'country', $res->country);
-                update_post_meta($this->ID, 'formatted_address', $res->formatted_address);
-// TA BORT
-update_post_meta($this->ID, 'debug_flag', 'Case 3 = missing address, has cords');
+        // Get address from coordinates.
+        } elseif ($this->street_address == null && $this->latitude != null && $this->longitude != null) {
+            $res = Helper\Address::gmapsGetAddressByCoordinates($this->latitude, $this->longitude);
+            if (!isset($res->street)) {
+                return true;
             }
+            update_post_meta($this->ID, 'street_address', $res->street);
+            update_post_meta($this->ID, 'postal_code', $res->postalcode);
+            update_post_meta($this->ID, 'city', $res->city);
+            update_post_meta($this->ID, 'country', $res->country);
+            update_post_meta($this->ID, 'formatted_address', $res->formatted_address);
 
-            // Om gatuadress finns och koordinater. Hämta bara formatted_address och spara som vanligt.
-            else {
-
-            //$res = Helper\Address::gmapsGetAddressComponents($this->street_address . ' ' . $this->postal_code . ' ' . $this->city . ' ' . $this->country, true);
-            //if (!isset($res->geometry->location)) {
-// TA BORT
-//update_post_meta($this->ID, 'debug_flag', 'Case 5 = Couldnt find address');
-            //    return true;
-            //}
-            // TA BORT "map"
-
+        // If address and coordinates exist, save formatted address.
+        } else {
             $wholeAddress = $this->street_address;
             $wholeAddress .= $this->postal_code != null ? ', ' . $this->postal_code : '';
             $wholeAddress .= $this->city != null ? ', ' . $this->city : '';
             $wholeAddress .= $this->country != null ? ', ' . $this->country : '';
-
             update_post_meta($this->ID, 'formatted_address', $wholeAddress);
-            // update_post_meta($this->ID, 'latitude', $res->geometry->location->lat);
-            // update_post_meta($this->ID, 'longitude', $res->geometry->location->lng);
-// TA BORT
-update_post_meta($this->ID, 'debug_flag', 'Case 4 = has address and coords');
-
         }
         return true;
     }

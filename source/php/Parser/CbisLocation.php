@@ -199,46 +199,24 @@ $cbisCategory = 14085;
         );
 
 
-        //$this->products = $this->client->ListAll($requestParams)->ListAllResult->Items->Product;
+        $this->products = $this->client->ListAll($requestParams)->ListAllResult->Items->Product;
 
-
-
-        //$result = $client->SomeFunction();
-        //echo "REQUEST:\n" . $this->products->__getLastRequest() . "\n";
-
-        //echo "Response:\n" . $this->products->__getLastResponse() . "\n";
-
-
-        // if (get_field('cbis_daily_cron', 'option') == true) {
-        //     echo "cbis true";
-        // } else {
-        //     echo "cbis false";
-        // }
-
-        // if (get_field('xcap_daily_cron', 'option') == true) {
-        //     echo "xcap true";
-        // } else {
-        //     echo "xcap false";
-        // }
-        //
-        $defualt_location = get_option('options_google_default_city');
-
-        if (!isset($defualt_location) || empty($defualt_location)) {
-         echo "empty";
-        } else {
-        print_r($defualt_location);
-        echo $defualt_location['lat'];
-        echo $defualt_location['lng'];
-        }
+        $filtered = array_filter($this->products, function($obj){
+            if (isset($obj->ExpirationDate) && strtotime($obj->ExpirationDate) < strtotime("now")) {
+                return false;
+            }
+            return true;
+        });
 
 
         echo "<br>";
-        //echo("Antal produkter: ".count($this->products));
+        echo("Antal produkter: ".count($this->products));
         echo "<br>";
         echo "<br>";
-        //print_r($this->products);
-        echo "\n";
-        echo "\n";
+        echo("Antal produkter: ".count($filtered));
+
+        print_r($filtered);
+
         //var_dump($this->arenas);
         //var_dump($this->events);
 

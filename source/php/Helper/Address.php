@@ -16,7 +16,7 @@ class Address
             return false;
         }
 
-        // If $type == false, address is missing and uses the Google Places API instead.
+        // If $type == false, address is missing and uses Google Places API instead.
         if ($type) {
             $url = 'https://maps.googleapis.com/maps/api/geocode/json?address=' . urlencode($address) . '&key=' . get_option('options_google_geocode_api_key');
             $data = json_decode(file_get_contents($url));
@@ -33,9 +33,42 @@ class Address
         }
 
         if (isset($data->status) && $data->status == 'OK') {
-            return $data->results[0];
-        }
+            $addressArray = (object)array();
+            $street = '';
+            $streetNumber = '';
+            $addressArray->street = '';
+            foreach ($data->results[0]->address_components as $key => $component) {
+                if ($component->types[0] == 'postal_code') {
+                    $addressArray->postalcode = $component->long_name;
+                }
+                if (!empty($component->types[0] == 'locality')) {
+                    $addressArray->city = $component->long_name;
+                } elseif ($component->types[0] == 'postal_town') {
+                    $addressArray->city = $component->long_name;
+                }
+                if ($component->types[0] == 'country') {
+                    $addressArray->country = $component->long_name;
+                }
+                if ($component->types[0] == 'route') {
+                    $street = $component->long_name;
+                }
+                if ($component->types[0] == 'street_number') {
+                    $streetNumber = $component->long_name;
+                }
+            }
 
+            if (!empty($street)) {
+                if (!empty($streetNumber)) {
+                    $street .= ' ' . $streetNumber;
+                }
+                $addressArray->street = $street;
+            }
+            $addressArray->formatted_address = $data->results[0]->formatted_address;
+            $addressArray->latitude = $data->results[0]->geometry->location->lat;
+            $addressArray->longitude = $data->results[0]->geometry->location->lng;
+
+            return $addressArray;
+        }
         return false;
     }
 
@@ -54,15 +87,38 @@ class Address
         $data = json_decode(file_get_contents($url));
 
         if (isset($data->status) && $data->status == 'OK') {
-            return (object)array(
-                'street' => $data->results[0]->address_components[1]->long_name . ' ' . $data->results[0]->address_components[0]->long_name,
-                'city' => (isset($data->results[0]->address_components[3]->long_name)) ? $data->results[0]->address_components[3]->long_name : null,
-                'postalcode' => (isset($data->results[0]->address_components[6]->long_name)) ? $data->results[0]->address_components[6]->long_name : null,
-                'country' => (isset($data->results[0]->address_components[5]->long_name)) ? $data->results[0]->address_components[5]->long_name : null,
-                'formatted_address' => $data->results[0]->formatted_address
-            );
-        }
+            $addressArray = (object)array();
+            $street = '';
+            $streetNumber = '';
+            foreach ($data->results[0]->address_components as $key => $component) {
+                if ($component->types[0] == 'postal_code') {
+                    $addressArray->postalcode = $component->long_name;
+                }
+                if (!empty($component->types[0] == 'locality')) {
+                    $addressArray->city = $component->long_name;
+                } elseif ($component->types[0] == 'postal_town') {
+                    $addressArray->city = $component->long_name;
+                }
+                if ($component->types[0] == 'country') {
+                    $addressArray->country = $component->long_name;
+                }
+                if ($component->types[0] == 'route') {
+                    $street = $component->long_name;
+                }
+                if ($component->types[0] == 'street_number') {
+                    $streetNumber = $component->long_name;
+                }
+            }
 
+            if (!empty($street)) {
+                if (!empty($streetNumber)) {
+                    $street .= ' ' . $streetNumber;
+                }
+                $addressArray->street = $street;
+            }
+            $addressArray->formatted_address = $data->results[0]->formatted_address;
+            return $addressArray;
+        }
         return false;
     }
 }
