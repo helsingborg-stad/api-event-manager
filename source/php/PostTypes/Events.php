@@ -457,7 +457,7 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
                 if (testervar.val().length < 1) {
                     setTimeout(\"jQuery('#ajax-loading').css('visibility', 'hidden');\", 100);
                     if (!jQuery(\".require-post\").length) {
-                        jQuery(\"#post\").before('<div class=\"error require-post\"><p>Please enter event title</p></div>');
+                        jQuery(\"#post\").before('<div class=\"error require-post\"><p>Please enter a title</p></div>');
                     }
                         setTimeout(\"jQuery('#publish').removeClass('button-primary-disabled');\", 100);
                         return false;
@@ -471,7 +471,7 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
                 if (testervar.val().length < 1) {
                     setTimeout(\"jQuery('#ajax-loading').css('visibility', 'hidden');\", 100);
                     if (!jQuery(\".require-post\").length) {
-                        jQuery(\"#post\").before('<div class=\"error require-post\"><p>Please enter event title</p></div>');
+                        jQuery(\"#post\").before('<div class=\"error require-post\"><p>Please enter a title</p></div>');
                     }
                         setTimeout(\"jQuery('#publish').removeClass('button-primary-disabled');\", 100);
                         return false;

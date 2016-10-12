@@ -5,11 +5,8 @@
 tbody .type-event.green {
   background-color: rgb(118,245,120)
 }*/
-.clear-right {
-  clear: right; }
-
-.clear-left {
-  clear: left; }
+.createContact {
+  margin-top: 15px !important; }
 
 /* Hide meta box content from publish */
 .misc-pub-visibility, .misc-pub-curtime, #preview-action {
@@ -97,15 +94,24 @@ tbody .type-event.green {
   position: absolute;
   top: 0;
   right: 6%;
-  font-size: 12pt;
+  font-size: 14px !important;
   padding: 5px 20px;
-  border: none;
   cursor: pointer;
-  background-color: #c00b0b;
+  border-radius: 0px 0px 4px 4px;
+  background-color: #d9534f !important;
+  border-color: #d9534f !important;
+  text-shadow: 0 -1px 1px #ac2925,1px 0 1px #ac2925,0 1px 1px #ac2925,-1px 0 1px #ac2925;
+  box-shadow: 0 1px 0 #ac2925;
   color: #fff; }
 
 #lightbox .lightbox-close:hover {
-  padding-top: 10px; }
+  padding-top: 10px;
+  color: #fff;
+  background-color: #c9302c !important;
+  border-color: #ac2925 !important; }
+
+#lightbox .lightbox-close:active {
+  box-shadow: inset 0 2px 0 #ac2925; }
 
 #lightbox .lightbox-wrapper {
   position: relaitve;
@@ -186,13 +192,33 @@ tbody .type-event.green {
 #importResponse #event, #importResponse #location, #importResponse #contact {
   opacity: 0; }
 
-.wp-admin.post-type-event.post-php.no-sync .postbox:not(#submitdiv):not(.acf-postbox),
+.wp-admin.post-type-event.post-php.no-sync .postbox:not(#submitdiv):not(.acf-postbox):not(#lix-calculator):not(#revisionsdiv):not(#tagsdiv-event-tags),
 .wp-admin.post-type-event.post-php.no-sync .postarea,
-.wp-admin.post-type-event.post-php.no-sync .acf-field:not([data-name="sync"]) {
+.wp-admin.post-type-event.post-php.no-sync #titlewrap,
+.wp-admin.post-type-event.post-php.no-sync .acf-field[data-name="event_link"],
+.wp-admin.post-type-event.post-php.no-sync .acf-field[data-name="occasions"],
+.wp-admin.post-type-event.post-php.no-sync .acf-field[data-name="location"],
+.wp-admin.post-type-event.post-php.no-sync .acf-field[data-name="organizers"],
+.wp-admin.post-type-event.post-php.no-sync .acf-field[data-name="booking_link"],
+.wp-admin.post-type-event.post-php.no-sync .acf-field[data-name="booking_phone"],
+.wp-admin.post-type-event.post-php.no-sync .acf-field[data-name="age_restriction"],
+.wp-admin.post-type-event.post-php.no-sync .acf-field[data-name="price_information"],
+.wp-admin.post-type-event.post-php.no-sync .acf-field[data-name="price_adult"],
+.wp-admin.post-type-event.post-php.no-sync .acf-field[data-name="price_children"] {
   position: relative; }
-  .wp-admin.post-type-event.post-php.no-sync .postbox:not(#submitdiv):not(.acf-postbox)::after,
+  .wp-admin.post-type-event.post-php.no-sync .postbox:not(#submitdiv):not(.acf-postbox):not(#lix-calculator):not(#revisionsdiv):not(#tagsdiv-event-tags)::after,
   .wp-admin.post-type-event.post-php.no-sync .postarea::after,
-  .wp-admin.post-type-event.post-php.no-sync .acf-field:not([data-name="sync"])::after {
+  .wp-admin.post-type-event.post-php.no-sync #titlewrap::after,
+  .wp-admin.post-type-event.post-php.no-sync .acf-field[data-name="event_link"]::after,
+  .wp-admin.post-type-event.post-php.no-sync .acf-field[data-name="occasions"]::after,
+  .wp-admin.post-type-event.post-php.no-sync .acf-field[data-name="location"]::after,
+  .wp-admin.post-type-event.post-php.no-sync .acf-field[data-name="organizers"]::after,
+  .wp-admin.post-type-event.post-php.no-sync .acf-field[data-name="booking_link"]::after,
+  .wp-admin.post-type-event.post-php.no-sync .acf-field[data-name="booking_phone"]::after,
+  .wp-admin.post-type-event.post-php.no-sync .acf-field[data-name="age_restriction"]::after,
+  .wp-admin.post-type-event.post-php.no-sync .acf-field[data-name="price_information"]::after,
+  .wp-admin.post-type-event.post-php.no-sync .acf-field[data-name="price_adult"]::after,
+  .wp-admin.post-type-event.post-php.no-sync .acf-field[data-name="price_children"]::after {
     display: block;
     content: '';
     position: absolute;
@@ -202,9 +228,19 @@ tbody .type-event.green {
     left: 0;
     right: 0;
     background-color: rgba(255, 255, 255, 0.9); }
-  .wp-admin.post-type-event.post-php.no-sync .postbox:not(#submitdiv):not(.acf-postbox)::before,
+  .wp-admin.post-type-event.post-php.no-sync .postbox:not(#submitdiv):not(.acf-postbox):not(#lix-calculator):not(#revisionsdiv):not(#tagsdiv-event-tags)::before,
   .wp-admin.post-type-event.post-php.no-sync .postarea::before,
-  .wp-admin.post-type-event.post-php.no-sync .acf-field:not([data-name="sync"])::before {
+  .wp-admin.post-type-event.post-php.no-sync #titlewrap::before,
+  .wp-admin.post-type-event.post-php.no-sync .acf-field[data-name="event_link"]::before,
+  .wp-admin.post-type-event.post-php.no-sync .acf-field[data-name="occasions"]::before,
+  .wp-admin.post-type-event.post-php.no-sync .acf-field[data-name="location"]::before,
+  .wp-admin.post-type-event.post-php.no-sync .acf-field[data-name="organizers"]::before,
+  .wp-admin.post-type-event.post-php.no-sync .acf-field[data-name="booking_link"]::before,
+  .wp-admin.post-type-event.post-php.no-sync .acf-field[data-name="booking_phone"]::before,
+  .wp-admin.post-type-event.post-php.no-sync .acf-field[data-name="age_restriction"]::before,
+  .wp-admin.post-type-event.post-php.no-sync .acf-field[data-name="price_information"]::before,
+  .wp-admin.post-type-event.post-php.no-sync .acf-field[data-name="price_adult"]::before,
+  .wp-admin.post-type-event.post-php.no-sync .acf-field[data-name="price_children"]::before {
     display: block;
     content: '';
     width: 25px;

@@ -23,7 +23,4 @@ jQuery(document).ready(function ($) {
             $('.acf-field[data-name="main_organizer"]').removeClass('main_organizer_hidden');
         }
     });
-
-    $('.acf-gallery-add').text("Add images");
-
 });

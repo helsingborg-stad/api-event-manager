@@ -1,10 +1,22 @@
 var ImportEvents = ImportEvents || {};
 
 jQuery(document).ready(function ($) {
-    if($('#acf-field_576116fd23a4f').length)
+    if($('.acf-field-57ebb807988f8').length)
     {
         //add this class for a button instead of link 'page-title-action'
-        $('#acf-field_576116fd23a4f').append('<a class="createContact button button-primary" href="http://' + window.location.host + '/wp/wp-admin/post-new.php?post_type=contact&lightbox=true">Create new contact</a>');
+        $('.acf-field-57ebb807988f8').append('<a class="createContact button" href="http://' + window.location.host + '/wp/wp-admin/post-new.php?post_type=contact&lightbox=true">Create new contact</a>');
+    }
+
+    if($('.acf-field-57a9d5f3804e1').length)
+    {
+        //add this class for a button instead of link 'page-title-action'
+        $('.acf-field-57a9d5f3804e1').append('<a class="createContact button" href="http://' + window.location.host + '/wp/wp-admin/post-new.php?post_type=sponsor&lightbox=true">Create new sponsor</a>');
+    }
+
+    if($('.acf-field-576117c423a52').length)
+    {
+        //add this class for a button instead of link 'page-title-action'
+        $('.acf-field-576117c423a52').append('<a class="createContact button" href="http://' + window.location.host + '/wp/wp-admin/post-new.php?post_type=location&lightbox=true">Create new location</a>');
     }
 
     $('.openContact').click(function(event) {

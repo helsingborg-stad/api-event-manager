@@ -76,6 +76,8 @@ jQuery(document).ready(function ($) {
         changeAccepted(-1, postId);
     });
 
+    $('.acf-gallery-add').text("Add images");
+
     var oldInput = '';
     $('input[name="post_title"]').on('change paste keyup', function() {
         var input = $(this).val();

@@ -4,6 +4,11 @@ html {
     padding: 5%;
 }
 
+// body {
+// 	background: transparent;
+//     background: none;
+// }
+
 html.wp-toolbar {
 
 }
@@ -12,10 +17,15 @@ html.wp-toolbar {
     padding-bottom: 0;
 }
 
+// #wp-content-editor-tools {
+//     background-color: transparent;
+// }
+
 #wpadminbar,
 #adminmenumain,
 #wpfooter,
-#screen-meta-links {
+#screen-meta-links,
+#edit-slug-box {
     display:none;
 }
 

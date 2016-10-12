@@ -76,6 +76,8 @@ jQuery(document).ready(function ($) {
         changeAccepted(-1, postId);
     });
 
+    $('.acf-gallery-add').text("Add images");
+
     var oldInput = '';
     $('input[name="post_title"]').on('change paste keyup', function() {
         var input = $(this).val();
@@ -261,18 +263,27 @@ jQuery(document).ready(function ($) {
             $('.acf-field[data-name="main_organizer"]').removeClass('main_organizer_hidden');
         }
     });
-
-    $('.acf-gallery-add').text("Add images");
-
 });
 
 var ImportEvents = ImportEvents || {};
 
 jQuery(document).ready(function ($) {
-    if($('#acf-field_576116fd23a4f').length)
+    if($('.acf-field-57ebb807988f8').length)
     {
         //add this class for a button instead of link 'page-title-action'
-        $('#acf-field_576116fd23a4f').append('<a class="createContact button button-primary" href="http://' + window.location.host + '/wp/wp-admin/post-new.php?post_type=contact&lightbox=true">Create new contact</a>');
+        $('.acf-field-57ebb807988f8').append('<a class="createContact button" href="http://' + window.location.host + '/wp/wp-admin/post-new.php?post_type=contact&lightbox=true">Create new contact</a>');
+    }
+
+    if($('.acf-field-57a9d5f3804e1').length)
+    {
+        //add this class for a button instead of link 'page-title-action'
+        $('.acf-field-57a9d5f3804e1').append('<a class="createContact button" href="http://' + window.location.host + '/wp/wp-admin/post-new.php?post_type=sponsor&lightbox=true">Create new sponsor</a>');
+    }
+
+    if($('.acf-field-576117c423a52').length)
+    {
+        //add this class for a button instead of link 'page-title-action'
+        $('.acf-field-576117c423a52').append('<a class="createContact button" href="http://' + window.location.host + '/wp/wp-admin/post-new.php?post_type=location&lightbox=true">Create new location</a>');
     }
 
     $('.openContact').click(function(event) {
@@ -303,8 +314,7 @@ ImportEvents.Prompt.Modal = (function ($) {
     }
 
     Modal.prototype.open = function (url, parentId) {
-
-        console.log('Open');
+        console.log('Open iframe');
         $('body').addClass('lightbox-open').append('\
             <div id="lightbox">\
                 <div class="lightbox-wrapper">\
@@ -317,9 +327,10 @@ ImportEvents.Prompt.Modal = (function ($) {
         if(typeof(parentId) != 'undefined')
         {
             console.log('Parent id set');
+            console.log(parentId);
             $(".lightbox-iframe").bind("load",function() {
                 var newContactForm = $(this).contents().find('#post');
-                newContactForm.append('<input type="hidden" id="parentId" name="parentId" value="' + parentId + '" />')
+                newContactForm.append('<input type="hidden" id="parentId" name="parentId" value="' + parentId + '" />');
             });
         }
 
@@ -331,6 +342,9 @@ ImportEvents.Prompt.Modal = (function ($) {
         var modalElement = $('.lightbox-iframe');
         console.log(modalElement.find('#post_ID').val());
         console.log(modalElement.contents().find('#post').find('#post_ID').val());
+        $('.lightbox-iframe').remove();
+        $('#lightbox').remove();
+        $('body').removeClass('lightbox-open');
         return;
     };
 
@@ -341,6 +355,15 @@ ImportEvents.Prompt.Modal = (function ($) {
             e.preventDefault();
             this.close();
         }.bind(this));
+
+        // $(document).keydown(function(e) {
+        //     if (e.key == "Escape") {
+        //         console.log('Esc pressed');
+        //         $('[data-lightbox-action="close"]').click();
+        //         return false;
+        //     }
+        // }.bind(this));
+
     };
 
     return new Modal();

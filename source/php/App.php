@@ -66,6 +66,7 @@ add_action('admin_menu', array($this, 'createParsePage'));
         $this->contactsPostType = new PostTypes\Contacts();
         $this->sponsorsPostType = new PostTypes\Sponsors();
         $this->packagesPostType = new PostTypes\Packages();
+        $this->sponsorsPostType = new PostTypes\MembershipCards();
 
         //Init functions
         new Taxonomy\EventCategories();
@@ -125,8 +126,7 @@ add_action('admin_menu', array($this, 'createParsePage'));
 
     public function enqueuStyleSheets()
     {
-        wp_register_style('lightbox', plugins_url(
-            ) . '/import-event/dist/css/lightbox.dev.css', false, '1.0.0');
+        wp_register_style('lightbox', plugins_url() . '/api-event-manager/dist/css/lightbox.min.css', false, '1.0.0');
         //if ((isset($_GET['lightbox']) && $_GET['lightbox'] == 'true') || strpos($referer, 'lightbox=true') > -1) {
             //wp_register_style('lightbox', plugins_url('', __FILE__) . '/dist/css/lightbox.' . \Modularity\App::$assetSuffix . '.css', false, '1.0.0');
 
@@ -174,11 +174,7 @@ add_action('admin_menu', array($this, 'createParsePage'));
     {
         global $current_screen;
 
-        if ($current_screen->id == 'event' && ($current_screen->action == '' || $current_screen->action == 'add')) {
-            wp_enqueue_script('hbg-event-importer', HBGEVENTIMPORTER_URL . '/dist/js/hbg-event-importer.min.js');
-        }
-
-        if ($current_screen->id == 'contact' && $current_screen->action == 'add') {
+        if (($current_screen->id == 'event' || $current_screen->id == 'contact' || $current_screen->id == 'location'|| $current_screen->id == 'sponsor') && ($current_screen->action == '' || $current_screen->action == 'add' || $current_screen->action == 'edit')) {
             wp_enqueue_script('hbg-event-importer', HBGEVENTIMPORTER_URL . '/dist/js/hbg-event-importer.min.js');
         }
 
@@ -262,12 +258,11 @@ add_action('admin_menu', array($this, 'createParsePage'));
             new \HbgEventImporter\Parser\Xcap($xcapUrl);
             file_put_contents(dirname(__FILE__)."/Log/xcap_cron_events.log", "XCAP, Last run: ".date("Y-m-d H:i:s"));
         }
-        file_put_contents(dirname(__FILE__)."/Log/cron_log.log", "Cron Last run: ".date("Y-m-d H:i:s"));
     }
 
     public static function addCronJob()
     {
-        wp_schedule_event(time(), 'daily', 'import_events_daily');
+        wp_schedule_event(time(), 'hourly', 'import_events_daily');
     }
 
     public static function removeCronJob()

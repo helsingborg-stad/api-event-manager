@@ -9,7 +9,8 @@ html {
 #wpadminbar,
 #adminmenumain,
 #wpfooter,
-#screen-meta-links {
+#screen-meta-links,
+#edit-slug-box {
   display: none; }
 
 .auto-fold #wpcontent,

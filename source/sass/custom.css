@@ -6,6 +6,10 @@ tbody .type-event.green {
   background-color: rgb(118,245,120)
 }*/
 
+.createContact {
+  margin-top: 15px !important;
+}
+
 /* Hide meta box content from publish */
 .misc-pub-visibility, .misc-pub-curtime, #preview-action {
   display: none !important;
@@ -110,15 +114,25 @@ tbody .type-event.green {
   position: absolute;
   top: 0;
   right: 6%;
-  font-size: 12pt;
+  font-size: 14px !important;
   padding: 5px 20px;
-  border: none;
   cursor: pointer;
-  background-color: #c00b0b;
+  border-radius: 0px 0px 4px 4px;
+  background-color: #d9534f !important;
+  border-color: #d9534f !important;
+  text-shadow: 0 -1px 1px #ac2925,1px 0 1px #ac2925,0 1px 1px #ac2925,-1px 0 1px #ac2925;
+  box-shadow: 0 1px 0 #ac2925;
   color: #fff;
 }
 #lightbox .lightbox-close:hover {
   padding-top: 10px;
+  color: #fff;
+  background-color:#c9302c !important;
+  border-color:#ac2925 !important;
+}
+#lightbox .lightbox-close:active {
+    -webkit-box-shadow:inset 0 2px 0 #ac2925;
+    box-shadow:inset 0 2px 0 #ac2925;
 }
 #lightbox .lightbox-wrapper {
   position: relaitve;

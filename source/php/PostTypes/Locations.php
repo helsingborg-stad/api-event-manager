@@ -68,6 +68,9 @@ class Locations extends \HbgEventImporter\Entity\CustomPostType
         // });
     }
 
+
+
+
     public function updateAddressData($post_id)
     {
         if (get_post_type($post_id) != 'location') {
@@ -80,7 +83,9 @@ class Locations extends \HbgEventImporter\Entity\CustomPostType
         $formatted .= get_field('postal_code') != null ? ', ' . get_field('postal_code') : '';
         $formatted .= get_field('city') != null ? ', ' . get_field('city') : ', ' . $defaultLocation;
         $formatted .= get_field('country') != null ? ', ' . get_field('country') : '';
-        update_field('formatted_address', $formatted);
+        if (get_field('street_address') != null) {
+            update_field('formatted_address', $formatted);
+        }
 
         // Get coordinates from address
         if (get_field('street_address') != null && get_field('postal_code') != null && get_field('city') != null && (get_field('latitude') == null || get_field('longitude') == null)) {

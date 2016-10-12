@@ -14,8 +14,7 @@ ImportEvents.Prompt.Modal = (function ($) {
     }
 
     Modal.prototype.open = function (url, parentId) {
-
-        console.log('Open');
+        console.log('Open iframe');
         $('body').addClass('lightbox-open').append('\
             <div id="lightbox">\
                 <div class="lightbox-wrapper">\
@@ -28,9 +27,10 @@ ImportEvents.Prompt.Modal = (function ($) {
         if(typeof(parentId) != 'undefined')
         {
             console.log('Parent id set');
+            console.log(parentId);
             $(".lightbox-iframe").bind("load",function() {
                 var newContactForm = $(this).contents().find('#post');
-                newContactForm.append('<input type="hidden" id="parentId" name="parentId" value="' + parentId + '" />')
+                newContactForm.append('<input type="hidden" id="parentId" name="parentId" value="' + parentId + '" />');
             });
         }
 
@@ -42,6 +42,9 @@ ImportEvents.Prompt.Modal = (function ($) {
         var modalElement = $('.lightbox-iframe');
         console.log(modalElement.find('#post_ID').val());
         console.log(modalElement.contents().find('#post').find('#post_ID').val());
+        $('.lightbox-iframe').remove();
+        $('#lightbox').remove();
+        $('body').removeClass('lightbox-open');
         return;
     };
 
@@ -52,6 +55,15 @@ ImportEvents.Prompt.Modal = (function ($) {
             e.preventDefault();
             this.close();
         }.bind(this));
+
+        // $(document).keydown(function(e) {
+        //     if (e.key == "Escape") {
+        //         console.log('Esc pressed');
+        //         $('[data-lightbox-action="close"]').click();
+        //         return false;
+        //     }
+        // }.bind(this));
+
     };
 
     return new Modal();
