@@ -13,7 +13,7 @@ class Contacts extends \HbgEventImporter\Entity\CustomPostType
             array(
                 'description'          => 'Contacts',
                 'menu_icon'            => 'dashicons-admin-users',
-                'public'               => true,
+                'public'               => false,
                 'publicly_queriable'   => true,
                 'show_ui'              => true,
                 'show_in_nav_menus'    => true,
@@ -40,7 +40,6 @@ class Contacts extends \HbgEventImporter\Entity\CustomPostType
             echo get_post_meta($postId, 'phone_number', true) ? get_post_meta($postId, 'phone_number', true) : 'n/a';
         });
         $this->addTableColumn('date', __('Date'));
-
         add_action('do_meta_boxes', array($this, 'changeImageBox'), 10, 3);
     }
 
@@ -53,4 +52,5 @@ class Contacts extends \HbgEventImporter\Entity\CustomPostType
             remove_action('do_meta_boxes', array($this, 'changeImageBox'));
         }
     }
+
 }

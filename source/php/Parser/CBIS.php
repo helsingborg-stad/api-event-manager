@@ -132,7 +132,6 @@ class CBIS extends \HbgEventImporter\Parser
         }
 
         // Number of arenas to get, 200 to get all
-// TA BORT
         $getLength = 200;
 
         $requestParams = array(

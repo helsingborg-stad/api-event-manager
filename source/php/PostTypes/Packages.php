@@ -13,7 +13,7 @@ class Packages extends \HbgEventImporter\Entity\CustomPostType
             array(
                 'description'          => 'Packages',
                 'menu_icon'            => 'dashicons-screenoptions',
-                'public'               => true,
+                'public'               => false,
                 'publicly_queriable'   => true,
                 'show_ui'              => true,
                 'show_in_nav_menus'    => true,

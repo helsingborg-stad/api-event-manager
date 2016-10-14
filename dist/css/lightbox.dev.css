@@ -3,13 +3,23 @@ html {
   background: none;
   padding: 5%; }
 
+body {
+  background: transparent;
+  background: none; }
+
 #wpbody-content {
   padding-bottom: 0; }
+
+#wp-content-editor-tools {
+  background-color: transparent; }
 
 #wpadminbar,
 #adminmenumain,
 #wpfooter,
-#screen-meta-links {
+#screen-meta-links,
+#edit-slug-box,
+#delete-action,
+#minor-publishing {
   display: none; }
 
 .auto-fold #wpcontent,

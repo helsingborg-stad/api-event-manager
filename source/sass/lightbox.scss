@@ -4,18 +4,27 @@ html {
     padding: 5%;
 }
 
-html.wp-toolbar {
-
+body {
+	background: transparent;
+    background: none;
 }
 
 #wpbody-content {
     padding-bottom: 0;
 }
 
+#wp-content-editor-tools {
+    background-color: transparent;
+}
+
 #wpadminbar,
 #adminmenumain,
 #wpfooter,
-#screen-meta-links {
+#screen-meta-links,
+#edit-slug-box,
+#delete-action,
+#minor-publishing,
+{
     display:none;
 }
 

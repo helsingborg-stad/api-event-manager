@@ -2,24 +2,24 @@
 
 namespace HbgEventImporter\PostTypes;
 
-class Sponsors extends \HbgEventImporter\Entity\CustomPostType
+class MembershipCards extends \HbgEventImporter\Entity\CustomPostType
 {
     public function __construct()
     {
         parent::__construct(
-            __('Sponsors', 'event-manager'),
-            __('Sponsor', 'event-manager'),
-            'sponsor',
+            __('Membership Cards', 'event-manager'),
+            __('Membership Card', 'event-manager'),
+            'membership-card',
             array(
-                'description'          => 'Sponsors',
-                'menu_icon'            => 'dashicons-businessman',
+                'description'          => 'Membership Cards',
+                'menu_icon'            => 'dashicons-tickets-alt',
                 'public'               => false,
                 'publicly_queriable'   => true,
                 'show_ui'              => true,
                 'show_in_nav_menus'    => true,
                 'has_archive'          => true,
                 'rewrite'              => array(
-                    'slug'       => 'sponsor',
+                    'slug'       => 'membership-card',
                     'with_front' => false
                 ),
                 'hierarchical'         => false,
@@ -36,9 +36,9 @@ class Sponsors extends \HbgEventImporter\Entity\CustomPostType
 
     public function changeImageBox($page, $context, $object)
     {
-        if ($page == 'sponsor') {
-            remove_meta_box('postimagediv', 'sponsor', 'side');
-            add_meta_box('postimagediv', __('Logo'), 'post_thumbnail_meta_box', 'sponsor', 'side');
+        if ($page == 'membership-card') {
+            remove_meta_box('postimagediv', 'membership-card', 'side');
+            add_meta_box('postimagediv', __('Image'), 'post_thumbnail_meta_box', 'membership-card', 'side');
             remove_action('do_meta_boxes', array($this, 'changeImageBox'));
         }
     }
