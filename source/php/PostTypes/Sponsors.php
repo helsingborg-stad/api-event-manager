@@ -13,7 +13,7 @@ class Sponsors extends \HbgEventImporter\Entity\CustomPostType
             array(
                 'description'          => 'Sponsors',
                 'menu_icon'            => 'dashicons-businessman',
-                'public'               => true,
+                'public'               => false,
                 'publicly_queriable'   => true,
                 'show_ui'              => true,
                 'show_in_nav_menus'    => true,

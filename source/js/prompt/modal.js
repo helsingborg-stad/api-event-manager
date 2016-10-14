@@ -18,7 +18,7 @@ ImportEvents.Prompt.Modal = (function ($) {
         $('body').addClass('lightbox-open').append('\
             <div id="lightbox">\
                 <div class="lightbox-wrapper">\
-                    <button class="lightbox-close" data-lightbox-action="close">&times; ' + modularityAdminLanguage.close + '</button>\
+                    <button class="lightbox-close" data-lightbox-action="close">&times; Close</button>\
                     <iframe class="lightbox-iframe" src="' + url + '" frameborder="0" allowtransparency></iframe>\
                 </div>\
             </div>\
@@ -42,10 +42,9 @@ ImportEvents.Prompt.Modal = (function ($) {
         var modalElement = $('.lightbox-iframe');
         console.log(modalElement.find('#post_ID').val());
         console.log(modalElement.contents().find('#post').find('#post_ID').val());
-        $('.lightbox-iframe').remove();
-        $('#lightbox').remove();
         $('body').removeClass('lightbox-open');
-        return;
+        $('#lightbox').remove();
+        isOpen = false;
     };
 
     Modal.prototype.handleEvents = function () {
@@ -55,15 +54,6 @@ ImportEvents.Prompt.Modal = (function ($) {
             e.preventDefault();
             this.close();
         }.bind(this));
-
-        // $(document).keydown(function(e) {
-        //     if (e.key == "Escape") {
-        //         console.log('Esc pressed');
-        //         $('[data-lightbox-action="close"]').click();
-        //         return false;
-        //     }
-        // }.bind(this));
-
     };
 
     return new Modal();

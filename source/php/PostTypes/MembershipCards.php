@@ -13,7 +13,7 @@ class MembershipCards extends \HbgEventImporter\Entity\CustomPostType
             array(
                 'description'          => 'Membership Cards',
                 'menu_icon'            => 'dashicons-tickets-alt',
-                'public'               => true,
+                'public'               => false,
                 'publicly_queriable'   => true,
                 'show_ui'              => true,
                 'show_in_nav_menus'    => true,

@@ -38,6 +38,7 @@ abstract class CustomPostType
         add_action('wp_ajax_import_events', array($this, 'importEvents'));
         add_action('admin_head', array($this, 'removeMedia'));
         add_filter('get_sample_permalink_html', array($this, 'replacePermalink'), 10, 5);
+        add_filter('redirect_post_location', array($this, 'redirectLightboxLocation'), 10, 2);
     }
 
     /**
@@ -50,7 +51,6 @@ abstract class CustomPostType
         if ($current_screen->post_type == 'page') {
             return $return;
         }
-        global $post;
         $postType = $post->post_type;
         $jsonUrl = home_url().'/json/wp/v2/'.$postType.'/';
         $apiUrl = $jsonUrl.$post_id;
@@ -260,5 +260,21 @@ abstract class CustomPostType
         }
 
         call_user_func_array($this->tableColumnsContentCallback[$column], array($column, $postId));
+    }
+
+    /**
+     * Redirect post if created within iframe.
+     * @param  string  $location redirection url
+     * @param  int     $post_id event post id
+     */
+    public function redirectLightboxLocation($location, $post_id)
+    {
+        $referer = (isset($_SERVER['HTTP_REFERER'])) ? $_SERVER['HTTP_REFERER'] : null;
+        if ((isset($_GET['lightbox']) && $_GET['lightbox'] == 'true') || strpos($referer, 'lightbox=true') > -1) {
+            if (isset($_POST['save']) || isset($_POST['publish'])) {
+                return $location.'&lightbox=true';
+            }
+        }
+        return $location;
     }
 }

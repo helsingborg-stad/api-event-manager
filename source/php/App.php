@@ -127,10 +127,7 @@ add_action('admin_menu', array($this, 'createParsePage'));
     public function enqueuStyleSheets()
     {
         wp_register_style('lightbox', plugins_url() . '/api-event-manager/dist/css/lightbox.min.css', false, '1.0.0');
-        //if ((isset($_GET['lightbox']) && $_GET['lightbox'] == 'true') || strpos($referer, 'lightbox=true') > -1) {
-            //wp_register_style('lightbox', plugins_url('', __FILE__) . '/dist/css/lightbox.' . \Modularity\App::$assetSuffix . '.css', false, '1.0.0');
 
-        //}
         wp_enqueue_style('lightbox');
     }
 
@@ -155,13 +152,13 @@ add_action('admin_menu', array($this, 'createParsePage'));
     {
         global $current_screen;
 
-        if ($current_screen->id == 'event' && $current_screen->action == '') {
+        if ($current_screen->id == 'event' && ($current_screen->action == '' || $current_screen->action == 'add')) {
             wp_enqueue_style('hbg-event-importer', HBGEVENTIMPORTER_URL . '/dist/css/hbg-event-importer.min.css');
         }
 
-        if ($current_screen->id == 'contact' && $current_screen->action == 'add') {
-            wp_enqueue_style('hbg-event-importer', HBGEVENTIMPORTER_URL . '/dist/css/hbg-event-importer.min.css');
-        }
+        // if ($current_screen->id == 'contact' && ($current_screen->action == '' || $current_screen->action == 'add')) {
+        //     wp_enqueue_style('hbg-event-importer', HBGEVENTIMPORTER_URL . '/dist/css/hbg-event-importer.min.css');
+        // }
 
         wp_enqueue_style('hbg-event-importer', HBGEVENTIMPORTER_URL . '/source/sass/custom.css');
     }

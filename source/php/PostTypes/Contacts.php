@@ -13,7 +13,7 @@ class Contacts extends \HbgEventImporter\Entity\CustomPostType
             array(
                 'description'          => 'Contacts',
                 'menu_icon'            => 'dashicons-admin-users',
-                'public'               => true,
+                'public'               => false,
                 'publicly_queriable'   => true,
                 'show_ui'              => true,
                 'show_in_nav_menus'    => true,
@@ -40,9 +40,7 @@ class Contacts extends \HbgEventImporter\Entity\CustomPostType
             echo get_post_meta($postId, 'phone_number', true) ? get_post_meta($postId, 'phone_number', true) : 'n/a';
         });
         $this->addTableColumn('date', __('Date'));
-
         add_action('do_meta_boxes', array($this, 'changeImageBox'), 10, 3);
-        add_action('save_post', array($this, 'redirectLightbox'), 10, 3);
     }
 
     public function changeImageBox($page, $context, $object)
@@ -54,27 +52,5 @@ class Contacts extends \HbgEventImporter\Entity\CustomPostType
             remove_action('do_meta_boxes', array($this, 'changeImageBox'));
         }
     }
-
-    /**
-     * Redirect if contact is created in iframe.
-     * @param  int  $post_id event post id
-     * @param  post $post The post object.
-     * @param  bool $update Whether this is an existing post being updated or not.
-     */
-    public function redirectLightbox($post_id, $post, $update)
-    {
-        $slug = 'contact';
-        if ($slug != $post->post_type) {
-            return;
-        }
-        $referer = (isset($_SERVER['HTTP_REFERER'])) ? $_SERVER['HTTP_REFERER'] : null;
-        if ((isset($_GET['lightbox']) && $_GET['lightbox'] == 'true') || strpos($referer, 'lightbox=true') > -1) {
-            wp_die("iframe");
-        }
-
-
-    }
-
-
 
 }
