@@ -66,6 +66,10 @@ jQuery(document).ready(function ($) {
         }
     });
 
+    $('.notice.is-dismissible').on('click', '.notice-dismiss', function(event){
+        dismissInstructions();
+    });
+
     $('.accept').click(function() {
         var postId = $(this).attr('postid');
         changeAccepted(1, postId);
@@ -235,6 +239,18 @@ function toggleClasses(element, responseValue) {
         element.find('.accept').removeClass('hiddenElement');
         element.find('.deny').addClass('hiddenElement');
     }
+}
+
+/**
+ * Hides event instructions if clicked.
+ * @return void
+ */
+function dismissInstructions() {
+    var data = {
+        'action'    : 'dismiss'
+    };
+    
+    jQuery.post(ajaxurl, data);
 }
 
 

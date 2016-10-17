@@ -101,4 +101,37 @@ class DataCleaner
 
         return $money_format;
     }
+
+    /**
+     *  Get #hashtags from post content and save as taxonomy.
+     * @param  int  $post_id event post id
+     * @param  post $post The post object.
+     * @param  bool $update Whether this is an existing post being updated or not.
+     */
+    public static function hashtags($post_id, $taxonomy)
+    {
+        $post_content = get_post($post_id);
+        $content = $post_content->post_content;
+        preg_match_all("/(#[A-Za-zåäöÅÄÖ][-\w_åäöÅÄÖ]+)/", $content, $hashtags, PREG_PATTERN_ORDER);
+    
+        if (empty($hashtags[0])) {
+            return;
+        }
+
+        $termIds = array();
+        foreach ($hashtags[0] as $key => $value) {
+            $value = str_replace('#', '', $value);
+            $value = mb_strtolower($value, 'UTF-8');
+            $term = term_exists($value, $taxonomy);
+            if ($term == 0 && $term == null) {
+                wp_insert_term($value, $taxonomy, array('slug' => $value));
+                $termIds[] = $value;
+            } else {
+                $termIds[] = (int)$term['term_id'];
+            }
+        }
+        wp_set_object_terms($post_id, $termIds, $taxonomy, false);
+        return;
+    }
+
 }

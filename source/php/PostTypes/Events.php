@@ -91,10 +91,11 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
         add_action('publish_event', array($this, 'setAcceptedOnPublish'), 10, 2);
         add_action('save_post', array($this, 'saveEventOccasions'), 10, 3);
         add_action('save_post', array($this, 'saveRecurringEvents'), 10, 3);
-        add_action('save_post', array($this, 'extractTags'), 10, 3);
+        add_action('save_post', array($this, 'extractEventTags'), 10, 3);
         add_action('delete_post', array($this, 'deleteEventOccasions'), 10);
         add_action('edit_form_advanced', array($this, 'requireEventTitle'));
         add_action('admin_notices', array($this, 'duplicateNotice'));
+        add_action('admin_notices', array($this, 'eventInstructions'));
         add_action('admin_action_duplicate_post', array($this, 'duplicate_post'));
         add_filter('post_row_actions', array($this, 'duplicate_post_link'), 10, 2);
         // ACF validation and sanitize filters
@@ -436,7 +437,8 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
             echo '<div class="alignleft actions" style="position: relative;">';
                 //echo '<a href="' . admin_url('options.php?page=import-events') . '" class="button-primary" id="post-query-submit">debug XCAP</a>';
                 //echo '<a href="' . admin_url('options.php?page=import-cbis-events') . '" class="button-primary" id="post-query-submit">debug CBIS</a>';
-                //echo '<a href="' . admin_url('options.php?page=delete-all-events') . '" class="button-primary" id="post-query-submit">DELETE</a>';
+                // TA BORT
+                echo '<a href="' . admin_url('options.php?page=delete-all-events') . '" class="button-primary" id="post-query-submit">DELETE</a>';
             echo '<div class="button-primary extraspace" id="xcap">' . __('Import XCAP') . '</div>';
             echo '<div class="button-primary extraspace" id="cbis">' . __('Import CBIS') . '</div>';
             echo '<div class="button-primary extraspace" id="occasions">Collect event timestamps</div>';
@@ -590,36 +592,32 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
         </div>
         <?php
     }
+
+    /**
+     * Show post instructions as a dismissable notification.
+     */
+    public function eventInstructions()
+    {
+        $screen = get_current_screen();
+        $current_user = wp_get_current_user();
+        $user_id = $current_user->ID;
+        if ($screen->post_type !== 'event' || $screen->base !== 'post' || get_user_meta($user_id, 'dismissed_instr', true) == 1) {
+             return;
+        }
+        ?>
+        <div class="notice notice-success dismissable is-dismissible">
+        <p><?php _e('Please do not enter information that refers to information in another text field. It is not certain that all fields will be presented to the consumer and would thefore be missguiding.', 'text-domain');
+        ?></p>
+        </div>
+        <?php
+    }
     
     /**
-     *  Get #hashtags from post content and save as taxonomy -> tags
-     * @param  int  $post_id event post id
-     * @param  post $post The post object.
-     * @param  bool $update Whether this is an existing post being updated or not.
+     * Saves hashtags from content as event-tags
+     * @return void
      */
-    public function extractTags($post_id, $post, $update)
+    public function extractEventTags($post_id) 
     {
-        $post_content = get_post($post_id);
-        $content = $post_content->post_content;
-        preg_match_all("/(#[\w_-]+)/", $content, $hashtags, PREG_PATTERN_ORDER);
-    
-        if (empty($hashtags[0])) {
-            return;
-        }
-
-        $eventTags = 'event-tags';
-        $termIds = array();
-        foreach ($hashtags[0] as $key => $value) {
-            $value = ucfirst(str_replace('#', '', $value));
-            $slug = strtolower($value);
-            $term = term_exists($value, $eventTags);
-            if ($term == 0 && $term == null) {
-                wp_insert_term($value, $eventTags, array('slug' => $slug));
-                $termIds[] = $slug;
-            } else {
-                $termIds[] = (int)$term['term_id'];
-            }
-        }
-        wp_set_object_terms( $post_id, $termIds, $eventTags, false );
+        DataCleaner::hashtags($post_id, 'event-tags');
     }
 }

@@ -50,6 +50,7 @@ class Event extends \HbgEventImporter\Entity\PostManager
     {
         $this->saveCategories();
         $this->saveOccasions();
+        $this->saveTags();
         $this->saveOrganizers();
         return true;
     }
@@ -61,6 +62,15 @@ class Event extends \HbgEventImporter\Entity\PostManager
     public function saveCategories()
     {
         wp_set_object_terms($this->ID, $this->categories, 'event-categories', true);
+    }
+
+    /**
+     * Saves hashtags from content as event-tags
+     * @return void
+     */
+    public function saveTags()
+    {
+        DataCleaner::hashtags($this->ID, 'event-tags');
     }
 
     /**
