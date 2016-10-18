@@ -132,7 +132,7 @@
 }
 
 #importResponse div {
-  height: 20%;
+  height: 25%;
   position: relative;
   margin: 0;
 }
@@ -161,7 +161,7 @@
 }
 
 #importResponse #untilReload #meter {
-  background-color: red;
+  background-color: #ff3333;
   position: absolute;
   width: 0%;
   height: 100%;

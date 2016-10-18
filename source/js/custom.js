@@ -131,16 +131,12 @@ jQuery(document).ready(function ($) {
     }
     if(pagenow == 'edit-event')
     {
-        var eventUrl = admin_url + 'edit.php?post_type=event'
-        var locationUrl = admin_url + 'edit.php?post_type=location'
-        var contactUrl = admin_url + 'edit.php?post_type=contact'
         $('#wpwrap').append('<div id="blackOverlay"></div>');
         $('.wrap').append('\
             <div id="importResponse">\
-                <div><p>New data created</p></div>\
+                <div><p>New data imported</p></div>\
                 <div class="inline"><p>Events</p></div><div class="inline"><p>Locations</p></div><div class="inline"><p>Contacts</p></div>\
                 <div class="inline"><p id="event">0</p></div><div class="inline"><p id="location">0</p></div><div class="inline"><p id="contact">0</p></div>\
-                <div class="inline"><a class="button button-primary" href="' + eventUrl + '">Go to events</a></div><div class="inline"><a class="button button-primary" href="' + locationUrl + '">Go to locations</a></div><div class="inline"><a class="button button-primary" href="' + contactUrl + '">Go to contacts</a></div>\
                 <div id="untilReload"><div id="meter"></div><p>Time until reload</p></div>\
             </div>\
         ');

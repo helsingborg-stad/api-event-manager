@@ -69,17 +69,6 @@ abstract class CustomPostType
         }
     }
 
-
-    /**
-     * Hides instruction notice if dismissed.
-     */
-    public function dismissInstructions()
-    {
-        $current_user = wp_get_current_user();
-        $user_id = $current_user->ID;
-        add_user_meta( $user_id, 'dismissed_instr', 1, true );
-    }
-
     public function importEvents()
     {
         if ($_POST['value'] == 'cbis') {
@@ -91,6 +80,7 @@ abstract class CustomPostType
             $data = $importer->getCreatedData();
             wp_send_json($data);
         } elseif ($_POST['value'] == 'cbislocations') {
+            // TA BORT
             $importer = new \HbgEventImporter\Parser\CbisLocation('http://api.cbis.citybreak.com/Products.asmx?WSDL');
             $data = $importer->getCreatedData();
             wp_send_json($data);
@@ -130,6 +120,16 @@ abstract class CustomPostType
         ob_clean();
         echo $resultString;
         wp_die();
+    }
+
+    /**
+     * Hides instruction notice if dismissed.
+     */
+    public function dismissInstructions()
+    {
+        $current_user = wp_get_current_user();
+        $user_id = $current_user->ID;
+        add_user_meta( $user_id, 'dismissed_instr', 1, true );
     }
 
     /**

@@ -438,7 +438,7 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
                 //echo '<a href="' . admin_url('options.php?page=import-events') . '" class="button-primary" id="post-query-submit">debug XCAP</a>';
                 //echo '<a href="' . admin_url('options.php?page=import-cbis-events') . '" class="button-primary" id="post-query-submit">debug CBIS</a>';
                 // TA BORT
-                echo '<a href="' . admin_url('options.php?page=delete-all-events') . '" class="button-primary" id="post-query-submit">DELETE</a>';
+                //echo '<a href="' . admin_url('options.php?page=delete-all-events') . '" class="button-primary" id="post-query-submit">DELETE</a>';
             echo '<div class="button-primary extraspace" id="xcap">' . __('Import XCAP') . '</div>';
             echo '<div class="button-primary extraspace" id="cbis">' . __('Import CBIS') . '</div>';
             echo '<div class="button-primary extraspace" id="occasions">Collect event timestamps</div>';
@@ -528,7 +528,7 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
                 wp_set_object_terms($new_post_id, $post_terms, $taxonomy, false);
             }
 
-            // duplicate all post meta just in two SQL queries
+            // duplicate all post meta in two SQL queries
             $post_meta_infos = $wpdb->get_results("SELECT meta_key, meta_value FROM $wpdb->postmeta WHERE post_id=$post_id");
             if (count($post_meta_infos)!=0) {
                 $sql_query = "INSERT INTO $wpdb->postmeta (post_id, meta_key, meta_value) ";
