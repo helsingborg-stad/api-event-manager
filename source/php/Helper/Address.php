@@ -38,9 +38,8 @@ class Address
             $streetNumber = '';
             $addressArray->street = '';
             foreach ($data->results[0]->address_components as $key => $component) {
-                if ($component->types[0] == 'postal_code') {
-                    $addressArray->postalcode = $component->long_name;
-                }
+                $addressArray->postalcode = ($component->types[0] == 'postal_code') ? $component->long_name : '';
+
                 if (!empty($component->types[0] == 'locality')) {
                     $addressArray->city = $component->long_name;
                 } elseif ($component->types[0] == 'postal_town') {
@@ -91,9 +90,7 @@ class Address
             $street = '';
             $streetNumber = '';
             foreach ($data->results[0]->address_components as $key => $component) {
-                if ($component->types[0] == 'postal_code') {
-                    $addressArray->postalcode = $component->long_name;
-                }
+                $addressArray->postalcode = (!empty($component->types[0] == 'postal_code')) ? $component->long_name : '';
                 if (!empty($component->types[0] == 'locality')) {
                     $addressArray->city = $component->long_name;
                 } elseif ($component->types[0] == 'postal_town') {

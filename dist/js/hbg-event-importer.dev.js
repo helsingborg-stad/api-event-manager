@@ -66,6 +66,10 @@ jQuery(document).ready(function ($) {
         }
     });
 
+    $('.notice.is-dismissible').on('click', '.notice-dismiss', function(event){
+        dismissInstructions();
+    });
+
     $('.accept').click(function() {
         var postId = $(this).attr('postid');
         changeAccepted(1, postId);
@@ -127,16 +131,12 @@ jQuery(document).ready(function ($) {
     }
     if(pagenow == 'edit-event')
     {
-        var eventUrl = admin_url + 'edit.php?post_type=event'
-        var locationUrl = admin_url + 'edit.php?post_type=location'
-        var contactUrl = admin_url + 'edit.php?post_type=contact'
         $('#wpwrap').append('<div id="blackOverlay"></div>');
         $('.wrap').append('\
             <div id="importResponse">\
-                <div><p>New data created</p></div>\
+                <div><p>New data imported</p></div>\
                 <div class="inline"><p>Events</p></div><div class="inline"><p>Locations</p></div><div class="inline"><p>Contacts</p></div>\
                 <div class="inline"><p id="event">0</p></div><div class="inline"><p id="location">0</p></div><div class="inline"><p id="contact">0</p></div>\
-                <div class="inline"><a class="button button-primary" href="' + eventUrl + '">Go to events</a></div><div class="inline"><a class="button button-primary" href="' + locationUrl + '">Go to locations</a></div><div class="inline"><a class="button button-primary" href="' + contactUrl + '">Go to contacts</a></div>\
                 <div id="untilReload"><div id="meter"></div><p>Time until reload</p></div>\
             </div>\
         ');
@@ -237,6 +237,18 @@ function toggleClasses(element, responseValue) {
     }
 }
 
+/**
+ * Hides event instructions if clicked.
+ * @return void
+ */
+function dismissInstructions() {
+    var data = {
+        'action'    : 'dismiss'
+    };
+    
+    jQuery.post(ajaxurl, data);
+}
+
 
 jQuery(document).ready(function ($) {
 
@@ -308,18 +320,18 @@ ImportEvents.Prompt = ImportEvents.Prompt || {};
 
 ImportEvents.Prompt.Modal = (function ($) {
 
-    console.log('First');
+    //console.log('First');
     var isOpen = false;
 
     function Modal() {
-        console.log('new Modal!');
+        //console.log('new Modal!');
         $(function() {
             this.handleEvents();
         }.bind(this));
     }
 
     Modal.prototype.open = function (url, parentId) {
-        console.log('Open iframe');
+        //console.log('Open iframe');
         $('body').addClass('lightbox-open').append('\
             <div id="lightbox">\
                 <div class="lightbox-wrapper">\
@@ -331,8 +343,8 @@ ImportEvents.Prompt.Modal = (function ($) {
 
         if(typeof(parentId) != 'undefined')
         {
-            console.log('Parent id set');
-            console.log(parentId);
+            //console.log('Parent id set');
+            //console.log(parentId);
             $(".lightbox-iframe").bind("load",function() {
                 var newContactForm = $(this).contents().find('#post');
                 newContactForm.append('<input type="hidden" id="parentId" name="parentId" value="' + parentId + '" />');
@@ -343,19 +355,18 @@ ImportEvents.Prompt.Modal = (function ($) {
     };
 
     Modal.prototype.close = function () {
-        console.log('Close');
+        //console.log('Close');
         var modalElement = $('.lightbox-iframe');
-        console.log(modalElement.find('#post_ID').val());
-        console.log(modalElement.contents().find('#post').find('#post_ID').val());
+        //console.log(modalElement.find('#post_ID').val());
+        //console.log(modalElement.contents().find('#post').find('#post_ID').val());
         $('body').removeClass('lightbox-open');
         $('#lightbox').remove();
         isOpen = false;
     };
 
     Modal.prototype.handleEvents = function () {
-        console.log('Handle events');
+        //console.log('Handle events');
         $(document).on('click', '[data-lightbox-action="close"]', function (e) {
-            console.log('Should not happen');
             e.preventDefault();
             this.close();
         }.bind(this));

@@ -259,6 +259,7 @@ add_action('admin_menu', array($this, 'createParsePage'));
 
     public static function addCronJob()
     {
+        // TA BORT ändra till daily
         wp_schedule_event(time(), 'hourly', 'import_events_daily');
     }
 

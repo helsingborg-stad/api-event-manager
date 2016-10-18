@@ -36,6 +36,7 @@ abstract class CustomPostType
         add_action('wp_ajax_my_action', array($this, 'acceptOrDeny'));
         add_action('wp_ajax_collect_occasions', array($this, 'collectOccasions'));
         add_action('wp_ajax_import_events', array($this, 'importEvents'));
+        add_action('wp_ajax_dismiss', array($this, 'dismissInstructions'));
         add_action('admin_head', array($this, 'removeMedia'));
         add_filter('get_sample_permalink_html', array($this, 'replacePermalink'), 10, 5);
         add_filter('redirect_post_location', array($this, 'redirectLightboxLocation'), 10, 2);
@@ -79,6 +80,7 @@ abstract class CustomPostType
             $data = $importer->getCreatedData();
             wp_send_json($data);
         } elseif ($_POST['value'] == 'cbislocations') {
+            // TA BORT
             $importer = new \HbgEventImporter\Parser\CbisLocation('http://api.cbis.citybreak.com/Products.asmx?WSDL');
             $data = $importer->getCreatedData();
             wp_send_json($data);
@@ -118,6 +120,16 @@ abstract class CustomPostType
         ob_clean();
         echo $resultString;
         wp_die();
+    }
+
+    /**
+     * Hides instruction notice if dismissed.
+     */
+    public function dismissInstructions()
+    {
+        $current_user = wp_get_current_user();
+        $user_id = $current_user->ID;
+        add_user_meta( $user_id, 'dismissed_instr', 1, true );
     }
 
     /**
