@@ -198,7 +198,7 @@ class CBIS extends \HbgEventImporter\Parser
         }
 
         // Get and save "To do" to locations
-        $requestParams['itemsPerPage'] = 800;
+        $requestParams['itemsPerPage'] = 600;
         $requestParams['categoryId'] = 14085;
         $productCategory = 'to do';
         $this->todo = $this->client->ListAll($requestParams)->ListAllResult->Items->Product;

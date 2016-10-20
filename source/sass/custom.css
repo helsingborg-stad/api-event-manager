@@ -73,24 +73,6 @@
   margin: 1px 8px 0 0 !important;
 }
 
-#suggestionContainer {
-  width: 100%;
-  max-height: 75px;
-  background-color: white;
-  padding: 3px 8px;
-  box-sizing: border-box;
-  overflow-y: auto;
-  display: none;
-}
-
-#suggestionList {
-  margin: 0;
-}
-
-#suggestionList a.suggestion {
-  text-decoration: underline;
-}
-
 #blackOverlay {
   display: none;
   width: 100%;
@@ -132,7 +114,7 @@
 }
 
 #importResponse div {
-  height: 20%;
+  height: 25%;
   position: relative;
   margin: 0;
 }
@@ -161,7 +143,7 @@
 }
 
 #importResponse #untilReload #meter {
-  background-color: red;
+  background-color: #ff3333;
   position: absolute;
   width: 0%;
   height: 100%;
