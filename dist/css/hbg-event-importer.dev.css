@@ -57,21 +57,6 @@
 .extraspace {
   margin: 1px 8px 0 0 !important; }
 
-#suggestionContainer {
-  width: 100%;
-  max-height: 75px;
-  background-color: white;
-  padding: 3px 8px;
-  box-sizing: border-box;
-  overflow-y: auto;
-  display: none; }
-
-#suggestionList {
-  margin: 0; }
-
-#suggestionList a.suggestion {
-  text-decoration: underline; }
-
 #blackOverlay {
   display: none;
   width: 100%;
@@ -207,7 +192,7 @@ tbody .type-event.green {
 
 #suggestionContainer {
   width: 100%;
-  max-height: 75px;
+  max-height: 171px;
   background-color: white;
   padding: 3px 8px;
   box-sizing: border-box;
@@ -218,7 +203,19 @@ tbody .type-event.green {
   margin: 0; }
 
 #suggestionList a.suggestion {
+  color: #264973;
   text-decoration: underline; }
+
+#suggestionList a.suggestion:hover {
+  color: #4079bf;
+  text-decoration: underline; }
+
+#suggestionList a.suggestion span {
+  background-color: #dbeff8; }
+
+.suggestion-hide {
+  position: static;
+  float: right; }
 
 #lightbox {
   position: fixed !important;

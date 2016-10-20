@@ -350,7 +350,7 @@
                 "conditional_logic": 0,
                 "wrapper": {
                     "width": "",
-                    "class": "",
+                    "class": "rcr_rules",
                     "id": ""
                 },
                 "collapsed": "",
@@ -369,7 +369,7 @@
                         "conditional_logic": 0,
                         "wrapper": {
                             "width": "",
-                            "class": "",
+                            "class": "rcr_day",
                             "id": ""
                         },
                         "choices": {
@@ -447,7 +447,7 @@
                         "conditional_logic": 0,
                         "wrapper": {
                             "width": "",
-                            "class": "",
+                            "class": "rcr_start_date",
                             "id": ""
                         },
                         "display_format": "Y-m-d",
@@ -464,7 +464,7 @@
                         "conditional_logic": 0,
                         "wrapper": {
                             "width": "",
-                            "class": "",
+                            "class": "rcr_end_date",
                             "id": ""
                         },
                         "display_format": "Y-m-d",
@@ -481,7 +481,7 @@
                         "conditional_logic": 0,
                         "wrapper": {
                             "width": "",
-                            "class": "",
+                            "class": "rcr_rules_exc",
                             "id": ""
                         },
                         "collapsed": "",
@@ -500,7 +500,7 @@
                                 "conditional_logic": 0,
                                 "wrapper": {
                                     "width": "",
-                                    "class": "",
+                                    "class": "rcr_exc_date",
                                     "id": ""
                                 },
                                 "display_format": "Y-m-d",

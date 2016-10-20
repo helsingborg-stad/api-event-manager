@@ -370,7 +370,7 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
         $start_value = $_POST['acf'][$repeater_key][$row][$start_key];
         $end_value = $value;
         if (strtotime($end_value) <= strtotime($start_value)) {
-            $valid = 'End date must be after start time';
+            $valid = 'End date must be after start date';
         }
         return $valid;
     }
