@@ -117,7 +117,7 @@ jQuery(document).ready(function ($) {
                     $('#suggestionContainer').fadeOut(200);
                 else
                 {
-                    $('#suggestionList').prepend('<li><strong>Similar events: <button class="notice-dismiss suggestion-hide" suggestion-hide-action="close"> </strong></li>');
+                    $('#suggestionList').prepend('<li><strong>Similar posts: <button class="notice-dismiss suggestion-hide" suggestion-hide-action="close"> </strong></li>');
                     $('#suggestionContainer').fadeIn(200);
                     // $('.suggestion').click(function(event) {
                     //     event.preventDefault();
@@ -135,7 +135,7 @@ jQuery(document).ready(function ($) {
         $('#suggestionContainer').fadeOut(200);
     });
 
-    if(pagenow == 'contact' || pagenow == 'location' || pagenow == 'event' || pagenow == 'sponsor' || pagenow == 'package')
+    if(pagenow == 'contact' || pagenow == 'location' || pagenow == 'event' || pagenow == 'sponsor' || pagenow == 'package' || pagenow == 'membership-card')
     {
         $('#titlewrap').after('<div id="suggestionContainer"><ul id="suggestionList"></ul></div>');
     }
@@ -205,6 +205,9 @@ jQuery(document).ready(function ($) {
 
 });
 
+/**
+ * Format date object to yy-mm-dd
+ */
 function formattedDate (date){
     var curr_date = ("0" + date.getDate()).slice(-2);
     var curr_month = ("0" + (date.getMonth() + 1)).slice(-2)
@@ -213,6 +216,9 @@ function formattedDate (date){
     return fulldate;
 }
 
+/**
+ * Convert week days to digits
+ */
 function convertDays(dayOfTheWeek) {
     var weekday = new Array(7);
     weekday["Monday"] = 1;
@@ -226,6 +232,9 @@ function convertDays(dayOfTheWeek) {
     return n;
 }
 
+/**
+ * Get week day that are closest to a choosen date.
+ */
 function getClosestDay(date, dayOfWeek) {
     var resultDate = new Date(date.getTime());
     resultDate.setDate(date.getDate() + (7 + dayOfWeek - date.getDay()) % 7);
@@ -409,18 +418,15 @@ ImportEvents.Prompt = ImportEvents.Prompt || {};
 
 ImportEvents.Prompt.Modal = (function ($) {
 
-    //console.log('First');
     var isOpen = false;
-
+    
     function Modal() {
-        //console.log('new Modal!');
         $(function() {
             this.handleEvents();
         }.bind(this));
     }
 
     Modal.prototype.open = function (url, parentId) {
-        //console.log('Open iframe');
         $('body').addClass('lightbox-open').append('\
             <div id="lightbox">\
                 <div class="lightbox-wrapper">\
@@ -432,8 +438,6 @@ ImportEvents.Prompt.Modal = (function ($) {
 
         if(typeof(parentId) != 'undefined')
         {
-            //console.log('Parent id set');
-            //console.log(parentId);
             $(".lightbox-iframe").bind("load",function() {
                 var newContactForm = $(this).contents().find('#post');
                 newContactForm.append('<input type="hidden" id="parentId" name="parentId" value="' + parentId + '" />');
@@ -444,17 +448,13 @@ ImportEvents.Prompt.Modal = (function ($) {
     };
 
     Modal.prototype.close = function () {
-        //console.log('Close');
         var modalElement = $('.lightbox-iframe');
-        //console.log(modalElement.find('#post_ID').val());
-        //console.log(modalElement.contents().find('#post').find('#post_ID').val());
         $('body').removeClass('lightbox-open');
         $('#lightbox').remove();
         isOpen = false;
     };
 
     Modal.prototype.handleEvents = function () {
-        //console.log('Handle events');
         $(document).on('click', '[data-lightbox-action="close"]', function (e) {
             e.preventDefault();
             this.close();

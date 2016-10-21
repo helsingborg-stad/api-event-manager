@@ -42,7 +42,7 @@ class UI
 
     // Remove Permalink meta box on edit posts
     function removeMetaBox() {
-        remove_meta_box('slugdiv', array('event', 'location', 'contact', 'sponsor', 'package'), 'normal');
+        remove_meta_box('slugdiv', array('event', 'location', 'contact', 'sponsor', 'package', 'membership-card'), 'normal');
     }
 
     // Add instructions to Feayured Image meta box

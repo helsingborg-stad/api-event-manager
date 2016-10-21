@@ -123,7 +123,7 @@ class DataCleaner
             $value = str_replace('#', '', $value);
             $value = mb_strtolower($value, 'UTF-8');
             $term = term_exists($value, $taxonomy);
-            if ($term == 0 && $term == null) {
+            if ($term == 0 || $term == null) {
                 wp_insert_term($value, $taxonomy, array('slug' => $value));
                 $termIds[] = $value;
             } else {

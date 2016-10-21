@@ -3,18 +3,15 @@ ImportEvents.Prompt = ImportEvents.Prompt || {};
 
 ImportEvents.Prompt.Modal = (function ($) {
 
-    //console.log('First');
     var isOpen = false;
-
+    
     function Modal() {
-        //console.log('new Modal!');
         $(function() {
             this.handleEvents();
         }.bind(this));
     }
 
     Modal.prototype.open = function (url, parentId) {
-        //console.log('Open iframe');
         $('body').addClass('lightbox-open').append('\
             <div id="lightbox">\
                 <div class="lightbox-wrapper">\
@@ -26,8 +23,6 @@ ImportEvents.Prompt.Modal = (function ($) {
 
         if(typeof(parentId) != 'undefined')
         {
-            //console.log('Parent id set');
-            //console.log(parentId);
             $(".lightbox-iframe").bind("load",function() {
                 var newContactForm = $(this).contents().find('#post');
                 newContactForm.append('<input type="hidden" id="parentId" name="parentId" value="' + parentId + '" />');
@@ -38,17 +33,13 @@ ImportEvents.Prompt.Modal = (function ($) {
     };
 
     Modal.prototype.close = function () {
-        //console.log('Close');
         var modalElement = $('.lightbox-iframe');
-        //console.log(modalElement.find('#post_ID').val());
-        //console.log(modalElement.contents().find('#post').find('#post_ID').val());
         $('body').removeClass('lightbox-open');
         $('#lightbox').remove();
         isOpen = false;
     };
 
     Modal.prototype.handleEvents = function () {
-        //console.log('Handle events');
         $(document).on('click', '[data-lightbox-action="close"]', function (e) {
             e.preventDefault();
             this.close();

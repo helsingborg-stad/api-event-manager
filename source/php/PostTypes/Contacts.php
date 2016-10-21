@@ -13,7 +13,7 @@ class Contacts extends \HbgEventImporter\Entity\CustomPostType
             array(
                 'description'          => 'Contacts',
                 'menu_icon'            => 'dashicons-admin-users',
-                'public'               => false,
+                'public'               => true,
                 'publicly_queriable'   => true,
                 'show_ui'              => true,
                 'show_in_nav_menus'    => true,

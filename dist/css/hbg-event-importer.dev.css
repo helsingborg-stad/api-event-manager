@@ -118,7 +118,7 @@
 #importResponse #event, #importResponse #location, #importResponse #contact {
   opacity: 0; }
 
-.wp-admin.post-type-event.post-php.no-sync .postbox:not(#submitdiv):not(.acf-postbox):not(#lix-calculator):not(#revisionsdiv):not(#tagsdiv-event-tags),
+.wp-admin.post-type-event.post-php.no-sync .postbox:not(#submitdiv):not(.acf-postbox):not(#lix-calculator):not(#revisionsdiv),
 .wp-admin.post-type-event.post-php.no-sync .postarea,
 .wp-admin.post-type-event.post-php.no-sync #titlewrap,
 .wp-admin.post-type-event.post-php.no-sync .acf-field[data-name="event_link"],
@@ -132,7 +132,7 @@
 .wp-admin.post-type-event.post-php.no-sync .acf-field[data-name="price_adult"],
 .wp-admin.post-type-event.post-php.no-sync .acf-field[data-name="price_children"] {
   position: relative; }
-  .wp-admin.post-type-event.post-php.no-sync .postbox:not(#submitdiv):not(.acf-postbox):not(#lix-calculator):not(#revisionsdiv):not(#tagsdiv-event-tags)::after,
+  .wp-admin.post-type-event.post-php.no-sync .postbox:not(#submitdiv):not(.acf-postbox):not(#lix-calculator):not(#revisionsdiv)::after,
   .wp-admin.post-type-event.post-php.no-sync .postarea::after,
   .wp-admin.post-type-event.post-php.no-sync #titlewrap::after,
   .wp-admin.post-type-event.post-php.no-sync .acf-field[data-name="event_link"]::after,
@@ -154,7 +154,7 @@
     left: 0;
     right: 0;
     background-color: rgba(255, 255, 255, 0.9); }
-  .wp-admin.post-type-event.post-php.no-sync .postbox:not(#submitdiv):not(.acf-postbox):not(#lix-calculator):not(#revisionsdiv):not(#tagsdiv-event-tags)::before,
+  .wp-admin.post-type-event.post-php.no-sync .postbox:not(#submitdiv):not(.acf-postbox):not(#lix-calculator):not(#revisionsdiv)::before,
   .wp-admin.post-type-event.post-php.no-sync .postarea::before,
   .wp-admin.post-type-event.post-php.no-sync #titlewrap::before,
   .wp-admin.post-type-event.post-php.no-sync .acf-field[data-name="event_link"]::before,
@@ -193,7 +193,7 @@ tbody .type-event.green {
 #suggestionContainer {
   width: 100%;
   max-height: 171px;
-  background-color: white;
+  background-color: #fff;
   padding: 3px 8px;
   box-sizing: border-box;
   overflow-y: auto;

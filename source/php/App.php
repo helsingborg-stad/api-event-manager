@@ -4,9 +4,12 @@ namespace HbgEventImporter;
 
 class App
 {
-    public $eventPostType       = null;
-    public $locationsPostType   = null;
-    public $contactsPostType    = null;
+    public $eventsPostType          = null;
+    public $locationsPostType       = null;
+    public $contactsPostType        = null;
+    public $sponsorsPostType        = null;
+    public $packagesPostType        = null;
+    public $membershipCardsPostType = null;
 
     public function __construct()
     {
@@ -66,7 +69,7 @@ add_action('admin_menu', array($this, 'createParsePage'));
         $this->contactsPostType = new PostTypes\Contacts();
         $this->sponsorsPostType = new PostTypes\Sponsors();
         $this->packagesPostType = new PostTypes\Packages();
-        $this->sponsorsPostType = new PostTypes\MembershipCards();
+        $this->membershipCardsPostType = new PostTypes\MembershipCards();
 
         //Init functions
         new Taxonomy\EventCategories();
@@ -151,8 +154,8 @@ add_action('admin_menu', array($this, 'createParsePage'));
     public function enqueueStyles()
     {
         global $current_screen;
-
-        if ($current_screen->id == 'event' && ($current_screen->action == '' || $current_screen->action == 'add')) {
+        $currId = $current_screen->id;
+        if ($currId == 'event' || $currId == 'location' || $currId == 'contact' || $currId == 'sponsor' || $currId == 'package' || $currId == 'membership-card' && ($current_screen->action == '' || $current_screen->action == 'add')) {
             wp_enqueue_style('hbg-event-importer', HBGEVENTIMPORTER_URL . '/dist/css/hbg-event-importer.min.css');
         }
 
@@ -170,8 +173,8 @@ add_action('admin_menu', array($this, 'createParsePage'));
     public function enqueueScripts()
     {
         global $current_screen;
-
-        if (($current_screen->id == 'event' || $current_screen->id == 'contact' || $current_screen->id == 'location'|| $current_screen->id == 'sponsor') && ($current_screen->action == '' || $current_screen->action == 'add' || $current_screen->action == 'edit')) {
+        $currId = $current_screen->id;
+        if ($currId == 'event' || $currId == 'location' || $currId == 'contact' || $currId == 'sponsor' || $currId == 'package' || $currId == 'membership-card' && ($current_screen->action == '' || $current_screen->action == 'add')) {
             wp_enqueue_script('hbg-event-importer', HBGEVENTIMPORTER_URL . '/dist/js/hbg-event-importer.min.js');
         }
 
