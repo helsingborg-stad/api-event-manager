@@ -493,8 +493,19 @@ class CBIS extends \HbgEventImporter\Parser
 
         $newImage = (isset($eventData->Image->Url) ? $eventData->Image->Url : null);
         $eventId = $this->checkIfPostExists('event', $newPostTitle);
+        
+        $uid = 'cbis-' . $eventData->Id;  
+        $isUpdate = false;
 
-        if ($eventId == null) {
+        // Check: if event is a duplicate and if "sync" option is set.
+        if ($eventId && get_post_meta( $eventId, '_event_manager_uid', true)) {
+            $existingUid = get_post_meta( $eventId, '_event_manager_uid', true);
+            $sync = get_post_meta( $eventId, 'sync', true);
+            $isUpdate = ($existingUid == $uid && $sync == 1 ) ? true : false;
+        }
+
+        // Save event if it doesn't exist or is an update and "sync" option is set. Continues if event is an older duplicate.
+        if ($eventId == null || $isUpdate == true) {
             // Creates the event object
             $event = new Event(
                 array(
@@ -529,7 +540,9 @@ class CBIS extends \HbgEventImporter\Parser
             $eventId = $event->ID;
             if($creatSuccess)
             {
-                ++$this->nrOfNewEvents;
+                if ($isUpdate == false) {
+                    ++$this->nrOfNewEvents;
+                }
                 $this->levenshteinTitles['event'][] = array('ID' => $event->ID, 'post_title' => $newPostTitle);
             }
 

@@ -25,7 +25,6 @@ class Xcap extends \HbgEventImporter\Parser
         $events = $xml->iCal->vevent;
 
         $this->collectDataForLevenshtein();
-
         foreach ($events as $key => $event) {
             if (!isset($event->uid) || empty($event->uid)) {
                 continue;
@@ -118,7 +117,18 @@ class Xcap extends \HbgEventImporter\Parser
         }
 
         $eventId = $this->checkIfPostExists('event', $newPostTitle);
-        if ($eventId == null) {
+
+        $isUpdate = false;
+
+        // Check: if event is a duplicate and if "sync" option is set.
+        if ($eventId && get_post_meta( $eventId, '_event_manager_uid', true)) {
+            $existingUid = get_post_meta( $eventId, '_event_manager_uid', true);
+            $sync = get_post_meta( $eventId, 'sync', true);
+            $isUpdate = ($existingUid == $eventData->uid && $sync == 1 ) ? true : false;
+        }
+
+        // Save event if it doesn't exist or is an update and "sync" option is set. Continues if event is an older duplicate.
+        if ($eventId == null || $isUpdate == true) {
             // Creates the event object
             $event = new Event(
                 array(
@@ -151,7 +161,9 @@ class Xcap extends \HbgEventImporter\Parser
 
             $creatSuccess = $event->save();
             if ($creatSuccess) {
-                ++$this->nrOfNewEvents;
+                if ($isUpdate == false) {
+                    ++$this->nrOfNewEvents;
+                }
                 $this->levenshteinTitles['event'][] = array('ID' => $event->ID, 'post_title' => $newPostTitle);
             }
 

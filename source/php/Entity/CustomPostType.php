@@ -40,6 +40,7 @@ abstract class CustomPostType
         add_action('admin_head', array($this, 'removeMedia'));
         add_filter('get_sample_permalink_html', array($this, 'replacePermalink'), 10, 5);
         add_filter('redirect_post_location', array($this, 'redirectLightboxLocation'), 10, 2);
+        add_filter( 'post_updated_messages', array($this, 'post_published') );
     }
 
     /**
@@ -48,11 +49,10 @@ abstract class CustomPostType
      */
     public function replacePermalink($return, $post_id, $new_title, $new_slug, $post)
     {
-        global $current_screen;
-        if ($current_screen->post_type == 'page') {
+        $postType = $post->post_type;        
+        if ($postType == 'page') {
             return $return;
         }
-        $postType = $post->post_type;
         $jsonUrl = home_url().'/json/wp/v2/'.$postType.'/';
         $apiUrl = $jsonUrl.$post_id;
         return '<strong>API-url:</strong> <a href="'.$apiUrl.'" target="_blank">'.$apiUrl.'</a>';
@@ -288,5 +288,21 @@ abstract class CustomPostType
             }
         }
         return $location;
+    }
+
+    /**
+     * Update admin notice messages. Removes public links.
+     * @return array
+     */
+    function post_published( $messages )
+    {
+        foreach($messages as $key => $value)
+        {
+            $messages['post'][1] = __('Post updated.');
+            $messages['post'][6] = __('Post published.');
+            $messages['post'][8] = __('Post submitted.');
+            $messages['post'][10] = __('Post draft updated.');
+        }
+        return $messages;
     }
 }
