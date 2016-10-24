@@ -30,8 +30,6 @@ class Locations extends \HbgEventImporter\Entity\CustomPostType
                 'supports'             => array('title', 'revisions', 'editor', 'thumbnail')
             )
         );
-        // TA BORT
-        //add_action('manage_posts_extra_tablenav', array($this, 'tablenavButtons'));
         add_action('acf/save_post', array($this, 'updateAddressData'), 20);
         $this->addTableColumn('cb', '<input type="checkbox">');
         $this->addTableColumn('title', __('Title'));
