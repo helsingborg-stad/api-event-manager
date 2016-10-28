@@ -80,7 +80,6 @@ class DataCleaner
 
     /**
      * Format prices
-     *
      * @param  string $number Phone number to format
      * @return array          Formatted phone number (international and national)
      */
@@ -113,7 +112,7 @@ class DataCleaner
         $post_content = get_post($post_id);
         $content = $post_content->post_content;
         preg_match_all("/(#[A-Za-zåäöÅÄÖ][-\w_åäöÅÄÖ]+)/", $content, $hashtags, PREG_PATTERN_ORDER);
-    
+
         if (empty($hashtags[0])) {
             return;
         }

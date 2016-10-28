@@ -27,10 +27,6 @@
   background-color: #0085ba !important;
 }
 
-.acceptAndDeny .hiddenElement {
-  display: none;
-}
-
 .accept.button-primary {
     color: #fff;
     background-color: #5cb85c;
@@ -151,4 +147,9 @@
 
 #importResponse #event, #importResponse #location, #importResponse #contact {
   opacity: 0;
+}
+
+#misc-publishing-actions .misc-pub-section.misc-pub-post-status,#minor-publishing-actions
+{
+  display:none;
 }

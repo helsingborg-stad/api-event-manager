@@ -49,13 +49,13 @@ abstract class CustomPostType
      */
     public function replacePermalink($return, $post_id, $new_title, $new_slug, $post)
     {
-        $postType = $post->post_type;        
+        $postType = $post->post_type;
         if ($postType == 'page') {
             return $return;
         }
         $jsonUrl = home_url().'/json/wp/v2/'.$postType.'/';
         $apiUrl = $jsonUrl.$post_id;
-        return '<strong>API-url:</strong> <a href="'.$apiUrl.'" target="_blank">'.$apiUrl.'</a>';
+        return '<strong>'.__('API-url', 'event-manager').':</strong> <a href="'.$apiUrl.'" target="_blank">'.$apiUrl.'</a>';
     }
 
     /**
@@ -69,6 +69,9 @@ abstract class CustomPostType
         }
     }
 
+    /**
+     * Start parsing event importer
+     */
     public function importEvents()
     {
         if ($_POST['value'] == 'cbis') {
@@ -79,14 +82,16 @@ abstract class CustomPostType
             $importer = new \HbgEventImporter\Parser\Xcap('http://mittkulturkort.se/calendar/listEvents.action?month=&date=&categoryPermaLink=&q=&p=&feedType=ICAL_XML');
             $data = $importer->getCreatedData();
             wp_send_json($data);
-        } elseif ($_POST['value'] == 'cbislocations') {
-            // TA BORT
-            $importer = new \HbgEventImporter\Parser\CbisLocation('http://api.cbis.citybreak.com/Products.asmx?WSDL');
+        } elseif ($_POST['value'] == 'cbislocation') {
+            $importer = new \HbgEventImporter\Parser\CbisLocation('http://api.cbis.citybreak.com/Products.asmx?wsdl');
             $data = $importer->getCreatedData();
             wp_send_json($data);
         }
     }
 
+    /**
+     * Saves event occasions to database if missing
+     */
     public function collectOccasions()
     {
         global $wpdb;
@@ -104,7 +109,6 @@ abstract class CustomPostType
                 $timestamp2 = strtotime($value['end_date']);
                 $timestamp3 = (empty($value['door_time'])) ? null : strtotime($value['door_time']);
                 if ($timestamp <= 0 || $timestamp2 <= 0 || $timestamp == false || $timestamp2 == false) {
-                    //if($timestamp <= 0 || $timestamp2 <= 0 || $timestamp == false || $timestamp2 == false || $timestamp2 < $timestamp)
                     continue;
                 }
                 $testQuery = $wpdb->prepare("SELECT * FROM $db_occasions WHERE event = %d AND timestamp_start = %d AND timestamp_end = %d", $event->ID, $timestamp, $timestamp2);
@@ -118,7 +122,8 @@ abstract class CustomPostType
             }
         }
         ob_clean();
-        echo $resultString;
+        // Print results to console
+        // echo $resultString;
         wp_die();
     }
 
@@ -140,7 +145,7 @@ abstract class CustomPostType
     {
         if (!isset($_POST['postId']) || !isset($_POST['value'])) {
             ob_clean();
-            echo "Something went wrong!";
+            echo _e('Something went wrong!', 'event-manager');
             wp_die();
         }
         $postId =  $_POST['postId'];
@@ -186,14 +191,14 @@ abstract class CustomPostType
         $labels = array(
             'name'                => $this->nameSingular,
             'singular_name'       => $this->nameSingular,
-            'add_new'             => sprintf(__('Add New %s', 'event-manager'), $this->nameSingular),
-            'add_new_item'        => sprintf(__('Add New %s', 'event-manager'), $this->nameSingular),
+            'add_new'             => sprintf(__('Add new %s', 'event-manager'), $this->nameSingular),
+            'add_new_item'        => sprintf(__('Add new %s', 'event-manager'), $this->nameSingular),
             'edit_item'           => sprintf(__('Edit %s', 'event-manager'), $this->nameSingular),
             'new_item'            => sprintf(__('New %s', 'event-manager'), $this->nameSingular),
             'view_item'           => sprintf(__('View %s', 'event-manager'), $this->nameSingular),
             'search_items'        => sprintf(__('Search %s', 'event-manager'), $this->namePlural),
             'not_found'           => sprintf(__('No %s found', 'event-manager'), $this->namePlural),
-            'not_found_in_trash'  => sprintf(__('No %s found in Trash', 'event-manager'), $this->namePlural),
+            'not_found_in_trash'  => sprintf(__('No %s found in trash', 'event-manager'), $this->namePlural),
             'parent_item_colon'   => sprintf(__('Parent %s:', 'event-manager'), $this->nameSingular),
             'menu_name'           => $this->namePlural,
         );
@@ -298,11 +303,26 @@ abstract class CustomPostType
     {
         foreach($messages as $key => $value)
         {
-            $messages['post'][1] = __('Post updated.');
-            $messages['post'][6] = __('Post published.');
-            $messages['post'][8] = __('Post submitted.');
-            $messages['post'][10] = __('Post draft updated.');
+            $messages['post'][1]  = __('Post updated.', 'event-manager');
+            $messages['post'][6]  = __('Post published.', 'event-manager');
+            $messages['post'][8]  = __('Post submitted.', 'event-manager');
+            $messages['post'][10] = __('Post draft updated.', 'event-manager');
         }
         return $messages;
+    }
+
+    /**
+     * When publish are clicked we are either creating the meta 'accepted' with value 1 or update it
+     * @param int $ID event post id
+     * @param $post wordpress post object
+     */
+    public function setAcceptedOnPublish($ID, $post)
+    {
+        $metaAccepted = get_post_meta($ID, 'accepted', true);
+        if (!isset($metaAccepted)) {
+            add_post_meta($ID, 'accepted', 1);
+        } else {
+            update_post_meta($ID, 'accepted', 1);
+        }
     }
 }

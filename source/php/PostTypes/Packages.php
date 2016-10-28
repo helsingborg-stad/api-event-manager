@@ -29,8 +29,8 @@ class Packages extends \HbgEventImporter\Entity\CustomPostType
         );
 
         $this->addTableColumn('cb', '<input type="checkbox">');
-        $this->addTableColumn('title', __('Title'));
-        $this->addTableColumn('events', __('Events included'), true, function ($column, $postId) {
+        $this->addTableColumn('title', __('Title', 'event-manager'));
+        $this->addTableColumn('events', __('Includes', 'event-manager'), true, function ($column, $postId) {
             $events = get_post_meta($postId, 'events_included', true);
             if ($events) {
                 $end = end($events);
@@ -43,6 +43,6 @@ class Packages extends \HbgEventImporter\Entity\CustomPostType
             }
         }
         );
-        $this->addTableColumn('date', __('Date'));
+        $this->addTableColumn('date', __('Date', 'event-manager'));
     }
 }

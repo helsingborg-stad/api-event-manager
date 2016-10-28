@@ -29,8 +29,8 @@ class Sponsors extends \HbgEventImporter\Entity\CustomPostType
         );
 
         $this->addTableColumn('cb', '<input type="checkbox">');
-        $this->addTableColumn('title', __('Title'));
-        $this->addTableColumn('date', __('Date'));
+        $this->addTableColumn('title', __('Title', 'event-manager'));
+        $this->addTableColumn('date', __('Date', 'event-manager'));
         add_action('do_meta_boxes', array($this, 'changeImageBox'), 10, 3);
     }
 

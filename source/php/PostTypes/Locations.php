@@ -30,14 +30,13 @@ class Locations extends \HbgEventImporter\Entity\CustomPostType
                 'supports'             => array('title', 'revisions', 'editor', 'thumbnail')
             )
         );
-        add_action('acf/save_post', array($this, 'updateAddressData'), 20);
         $this->addTableColumn('cb', '<input type="checkbox">');
-        $this->addTableColumn('title', __('Title'));
-        $this->addTableColumn('name', __('Address'), true, function ($column, $postId) {
+        $this->addTableColumn('title', __('Title', 'event-manager'));
+        $this->addTableColumn('name', __('Address', 'event-manager'), true, function ($column, $postId) {
             echo get_post_meta($postId, 'formatted_address', true) ? get_post_meta($postId, 'formatted_address', true) : 'n/a';
         });
 
-        $this->addTableColumn('coordinates', __('Coordinates'), true, function ($column, $postId) {
+        $this->addTableColumn('coordinates', __('Coordinates', 'event-manager'), true, function ($column, $postId) {
             $lat = get_post_meta($postId, 'latitude', true);
             $lng = get_post_meta($postId, 'longitude', true);
             if (!isset($lat[0]) || !isset($lng[0])) {
@@ -45,18 +44,62 @@ class Locations extends \HbgEventImporter\Entity\CustomPostType
             }
             echo get_post_meta($postId, 'latitude', true).', '.get_post_meta($postId, 'longitude', true);
         });
-
-        $this->addTableColumn('date', __('Date'));
-
-        $this->addTableColumn('import_client', __('Import client'), true, function ($column, $postId) {
+        $this->addTableColumn('import_client', __('Import client', 'event-manager'), true, function ($column, $postId) {
             $eventId = get_post_meta($postId, 'import_client', true);
             if (!isset($eventId[0])) {
                 return;
             }
             echo get_post_meta($postId, 'import_client', true);
         });
+        $this->addTableColumn('acceptAndDeny', __('Public', 'event-manager'), true, function ($column, $postId) {
+            $metaAccepted = get_post_meta($postId, 'accepted');
+            if (!isset($metaAccepted[0])) {
+                add_post_meta($postId, 'accepted', 0);
+                $metaAccepted[0] = 0;
+            }
+            $first = '';
+            $second = '';
+            if ($metaAccepted[0] == 1) {
+                $first = 'hiddenElement';
+            } elseif ($metaAccepted[0] == -1) {
+                $second = 'hiddenElement';
+            } elseif ($metaAccepted[0] == 0) {
+                $first = 'hiddenElement';
+                $second = 'hiddenElement';
+                echo '<a href="'.get_edit_post_link($postId).'" title="'.__('This post needs to be edited before it can be published', 'event-manager').'" class="button" postid="' . $postId . '">' . __('Edit draft') . '</a>';
+            }
+            echo '<a href="#" class="accept button-primary ' . $first . '" postid="' . $postId . '">' . __('Accept', 'event-manager') . '</a>
+            <a href="#" class="deny button-primary ' . $second . '" postid="' . $postId . '">' . __('Deny', 'event-manager') . '</a>';
+        });
+        $this->addTableColumn('date', __('Date', 'event-manager'));
+        add_action('manage_posts_extra_tablenav', array($this, 'tablenavButtons'));
+        add_action('acf/save_post', array($this, 'updateAddressData'), 20);
+        add_action('publish_location', array($this, 'setAcceptedOnPublish'), 10, 2);
     }
 
+    /**
+     * Add buttons to start parsing locations from Cbis
+     * @return void
+     */
+    public function tablenavButtons($which)
+    {
+        global $current_screen;
+
+        if ($current_screen->id != 'edit-location' || $which != 'top') {
+            return;
+        }
+
+        if (current_user_can('manage_options')) {
+            echo '<div class="alignleft actions" style="position: relative;">';
+            echo '<div class="button-primary extraspace" id="cbislocation">' . __('Import CBIS locations', 'event-manager') . '</div>';
+            echo '</div>';
+        }
+    }
+
+    /**
+     * Automatically updates missing address components when saving location
+     * @param  int $post_id post id
+     */
     public function updateAddressData($post_id)
     {
         if (get_post_type($post_id) != $this->slug) {

@@ -12,21 +12,20 @@ class LocationCategories
     public function registerTaxonomy()
     {
         $labels = array(
-            'name'                  => _x('Location categories', 'Taxonomy plural name', 'hbg-event-importer'),
-            'singular_name'         => _x('Location category', 'Taxonomy singular name', 'hbg-event-importer'),
-            'search_items'          => __('Search Location Categories', 'hbg-event-importer'),
-            'popular_items'         => __('Popular Location Categories', 'hbg-event-importer'),
-            'all_items'             => __('All Location Categories', 'hbg-event-importer'),
-            'parent_item'           => __('Parent Location Category', 'hbg-event-importer'),
-            'parent_item_colon'     => __('Parent Location Category', 'hbg-event-importer'),
-            'edit_item'             => __('Edit Location Category', 'hbg-event-importer'),
-            'update_item'           => __('Update Location Category', 'hbg-event-importer'),
-            'add_new_item'          => __('Add New Location Category', 'hbgevent-importer'),
-            'new_item_name'         => __('New Location Category', 'hbg-event-importer'),
-            'add_or_remove_items'   => __('Add or remove Location Categories', 'hbg-event-importer'),
-            'choose_from_most_used' => __('Choose from most used Location Categories', 'hbg-event-importer'),
-            'menu_name'             => __('Categories', 'hbg-event-importer'),
-        );
+            'name'                  => _x('Location categories', 'Taxonomy plural name', 'event-manager'),
+            'singular_name'         => _x('Location category', 'Taxonomy singular name', 'event-manager'),
+            'search_items'          => __('Search categories', 'event-manager'),
+            'popular_items'         => __('Popular categories', 'event-manager'),
+            'all_items'             => __('All categories', 'event-manager'),
+            'parent_item'           => __('Parent category', 'event-manager'),
+            'parent_item_colon'     => __('Parent category', 'event-manager'),
+            'edit_item'             => __('Edit category', 'event-manager'),
+            'update_item'           => __('Update category', 'event-manager'),
+            'add_new_item'          => __('Add new category', 'event-manager'),
+            'new_item_name'         => __('New category', 'event-manager'),
+            'add_or_remove_items'   => __('Add or remove categories', 'event-manager'),
+            'choose_from_most_used' => __('Choose from most used categories', 'event-manager'),
+            'menu_name'             => __('Categories', 'event-manager'),        );
 
         $args = array(
             'labels'                => $labels,

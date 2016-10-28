@@ -47,7 +47,7 @@ class UI
 
     // Add instructions to Feayured Image meta box
     function editFeaturedImageInstruction( $content ) {
-        return $content .= '<p>Please upload images that are as large as possible and that are not sensitive to cropping (eg. images with text overlay).</p>';
+        return $content .= '<p>'.__('Please upload images that are as large as possible and that are not sensitive to cropping (eg. images with text overlay).', 'event-manager').'</p>';
     }
 
 

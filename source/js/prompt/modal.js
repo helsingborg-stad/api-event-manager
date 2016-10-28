@@ -4,7 +4,7 @@ ImportEvents.Prompt = ImportEvents.Prompt || {};
 ImportEvents.Prompt.Modal = (function ($) {
 
     var isOpen = false;
-    
+
     function Modal() {
         $(function() {
             this.handleEvents();
@@ -15,7 +15,7 @@ ImportEvents.Prompt.Modal = (function ($) {
         $('body').addClass('lightbox-open').append('\
             <div id="lightbox">\
                 <div class="lightbox-wrapper">\
-                    <button class="lightbox-close" data-lightbox-action="close">&times; Close</button>\
+                    <button class="lightbox-close" data-lightbox-action="close">&times; ' + eventmanager.close + '</button>\
                     <iframe class="lightbox-iframe" src="' + url + '" frameborder="0" allowtransparency></iframe>\
                 </div>\
             </div>\

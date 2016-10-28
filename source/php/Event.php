@@ -28,7 +28,7 @@ class Event extends \HbgEventImporter\Entity\PostManager
             $this->organizers[$key]['organizer'] = !is_string($this->organizers[$key]['organizer']) ? $this->organizers[$key]['organizer'] : DataCleaner::string($this->organizers[$key]['organizer']);
         }
 
-        // clean strings
+        // Clean strings
         $this->post_title = !is_string($this->post_title) ? $this->post_title : DataCleaner::string($this->post_title);
         $this->post_content = !is_string($this->post_content) ? $this->post_content : DataCleaner::string($this->post_content);
         $this->uniqueId = !is_string($this->uniqueId) ? $this->uniqueId : DataCleaner::string($this->uniqueId);
@@ -43,7 +43,7 @@ class Event extends \HbgEventImporter\Entity\PostManager
     }
 
     /**
-     * Stuff to do after save
+     * Do after save
      * @return bool ,used if post got removed or not
      */
     public function afterSave()

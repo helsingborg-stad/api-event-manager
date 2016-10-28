@@ -25,7 +25,7 @@ abstract class Parser
         $types = array('event', 'location', 'contact');
 
         foreach($types as $type) {
-            $sql = $wpdb->prepare("SELECT ID,post_title FROM " . $wpdb->posts . " WHERE post_status = %s AND post_type = %s", 'publish', $type);
+            $sql = $wpdb->prepare("SELECT ID,post_title FROM " . $wpdb->posts . " WHERE (post_status = %s OR post_status = %s) AND post_type = %s", 'publish', 'draft', $type);
             $allOfCertainType = $wpdb->get_results($sql);
             foreach ($allOfCertainType as $post) {
                 $this->levenshteinTitles[$type][] = array('ID' => $post->ID, 'post_title' => $post->post_title);
@@ -40,7 +40,7 @@ abstract class Parser
     public function checkIfPostExists($postType, $postTitle)
     {
         foreach($this->levenshteinTitles[$postType] as $title) {
-            if($this->isSimilarEnough($postTitle, $title['post_title'], $postType == 'location' ? 1 : 3))
+            if($this->isSimilarEnough(trim($postTitle), $title['post_title'], $postType == 'location' ? 1 : 3))
                 return $title['ID'];
         }
         return null;
@@ -84,7 +84,7 @@ abstract class Parser
 
     public function done()
     {
-        echo 'Parser done.';
+        echo __('Parser done.', 'event-manager');
         echo '<script>location.href = "' . admin_url('edit.php?post_type=event&msg=import-complete') . '";</script>';
     }
 }

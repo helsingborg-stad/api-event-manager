@@ -86,7 +86,7 @@ abstract class PostManager
      * @param  array|string   $postStatus  Post status
      * @return array                       Found posts
      */
-    public static function get($count, $metaQuery, $postType, $postStatus = 'publish')
+    public static function get($count, $metaQuery, $postType, $postStatus = array('publish', 'draft'))
     {
         $args = array(
             'posts_per_page' => $count,
@@ -133,6 +133,7 @@ abstract class PostManager
         // Arrays for holding save data
         $post = array();
         $meta = array();
+        $post['post_status'] = $this->post_status;
 
         // Get the default class variables and set it's keys to forbiddenKeys
         $defaultData = get_class_vars(get_class($this));
@@ -155,7 +156,6 @@ abstract class PostManager
         // Do not include null values in meta
         $meta = array_filter($meta, array($this, 'removeEmpty'));
 
-        $post['post_status'] = $this->post_status;
         $post['post_type'] = $this->post_type;
         $post['meta_input'] = $meta;
 
@@ -213,7 +213,7 @@ abstract class PostManager
 
         if (!is_dir($uploadDir)) {
             if (!mkdir($uploadDir, 0776)) {
-                return new WP_Error('event', __('Could not create folder "' . $uploadDir . '", please go ahead and create it manually and rerun the import.'));
+                return new WP_Error('event', __('Could not create folder', 'event-manager').' "' . $uploadDir . '", '. __('please go ahead and create it manually and rerun the import.', 'event-manager'));
             }
         }
 

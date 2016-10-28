@@ -1,0 +1,704 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Event Manager\n"
+"POT-Creation-Date: 2016-10-28 16:00+0200\n"
+"PO-Revision-Date: 2016-10-28 16:00+0200\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: sv\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.11\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-WPHeader: hbg-event-importer.php\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
+"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-SearchPathExcluded-0: *.js\n"
+
+#: source/php/Admin/FilterRestrictions.php:28
+#: source/php/Taxonomy/EventCategories.php:19
+#: source/php/Taxonomy/LocationCategories.php:19
+msgid "All categories"
+msgstr "Alla kategorier"
+
+#: source/php/Admin/FilterRestrictions.php:57
+msgid "Time interval"
+msgstr "Tidsperiod"
+
+#: source/php/Admin/FilterRestrictions.php:58
+msgid "Today"
+msgstr "Idag"
+
+#: source/php/Admin/FilterRestrictions.php:59
+msgid "Tomorrow"
+msgstr "I morgon"
+
+#: source/php/Admin/FilterRestrictions.php:60
+msgid "This week"
+msgstr "Denna veckan"
+
+#: source/php/Admin/FilterRestrictions.php:61
+msgid "This month"
+msgstr "Denna månaden"
+
+#: source/php/Admin/FilterRestrictions.php:62
+msgid "Passed events"
+msgstr "Passerade evenemang"
+
+#: source/php/Admin/Options.php:11
+msgid "Event manager options"
+msgstr ""
+
+#: source/php/Admin/Options.php:12
+msgctxt "Event manager options"
+msgid "Options"
+msgstr "Inställningar"
+
+#: source/php/Admin/UI.php:50
+msgid ""
+"Please upload images that are as large as possible and that are not "
+"sensitive to cropping (eg. images with text overlay)."
+msgstr ""
+"Vänligen ladda upp bilder som är så stora som möjligt och som kan beskäras "
+"utan att förstöra det bilden vill förmedla (t.ex. bilder med text)."
+
+#: source/php/App.php:174
+msgid "Title is missing"
+msgstr "Titel saknas"
+
+#: source/php/App.php:175
+msgid "Create new contact"
+msgstr "Skapa ny kontakt"
+
+#: source/php/App.php:176
+msgid "Create new sponsor"
+msgstr "Skapa ny sponsor"
+
+#: source/php/App.php:177
+msgid "Create new location"
+msgstr "Skapa ny plats"
+
+#: source/php/App.php:178
+msgid "Create new membership card"
+msgstr "Skapa nytt medlemskort"
+
+#: source/php/App.php:179
+msgid "Close"
+msgstr "Stäng"
+
+#: source/php/App.php:180
+msgid "Add images"
+msgstr "Lägg till bilder"
+
+#: source/php/App.php:181
+msgid "Similar posts"
+msgstr "Liknande inlägg"
+
+#: source/php/App.php:182
+msgid "New data imported"
+msgstr "Importerad data"
+
+#: source/php/App.php:183
+msgid "Events"
+msgstr "Evenemang"
+
+#: source/php/App.php:184 source/php/PostTypes/Locations.php:12
+msgid "Locations"
+msgstr "Platser"
+
+#: source/php/App.php:185 source/php/PostTypes/Contacts.php:10
+msgid "Contacts"
+msgstr "Kontakter"
+
+#: source/php/App.php:186
+msgid "Time until reload"
+msgstr "Laddar om sidan"
+
+#: source/php/App.php:187
+msgid "Loading"
+msgstr "Hämtar"
+
+#: source/php/App.php:201 source/php/App.php:202
+msgid "Import events"
+msgstr "Importera evenemang"
+
+#: source/php/App.php:212 source/php/App.php:213 source/php/App.php:223
+msgid "Import CBIS events"
+msgstr "Importera CBIS evenemang"
+
+#: source/php/App.php:222 source/php/PostTypes/Locations.php:94
+msgid "Import CBIS locations"
+msgstr "Importera CBIS platser"
+
+#: source/php/App.php:232 source/php/App.php:233
+msgid "Delete all events"
+msgstr "Ta bort alla evenemang"
+
+#: source/php/Entity/CustomPostType.php:58
+msgid "API-url"
+msgstr "API-url"
+
+#: source/php/Entity/CustomPostType.php:148
+msgid "Something went wrong!"
+msgstr "Något gick fel!"
+
+#: source/php/Entity/CustomPostType.php:194
+#: source/php/Entity/CustomPostType.php:195
+#, php-format
+msgid "Add new %s"
+msgstr "Lägg till %s"
+
+#: source/php/Entity/CustomPostType.php:196
+#, php-format
+msgid "Edit %s"
+msgstr "Redigera %s"
+
+#: source/php/Entity/CustomPostType.php:197
+#, php-format
+msgid "New %s"
+msgstr "Nytt %s"
+
+#: source/php/Entity/CustomPostType.php:198
+#, php-format
+msgid "View %s"
+msgstr "Visa %s"
+
+#: source/php/Entity/CustomPostType.php:199
+#, php-format
+msgid "Search %s"
+msgstr "Sök %s"
+
+#: source/php/Entity/CustomPostType.php:200
+#, php-format
+msgid "No %s found"
+msgstr "Inga %s hittades"
+
+#: source/php/Entity/CustomPostType.php:201
+#, php-format
+msgid "No %s found in trash"
+msgstr "Inga %s hittades i papperskorgen"
+
+#: source/php/Entity/CustomPostType.php:202
+#, php-format
+msgid "Parent %s:"
+msgstr "Förälder %s:"
+
+#: source/php/Entity/CustomPostType.php:306
+msgid "Post updated."
+msgstr "Inlägget uppdaterades."
+
+#: source/php/Entity/CustomPostType.php:307
+msgid "Post published."
+msgstr "Inlägget publicerades."
+
+#: source/php/Entity/CustomPostType.php:308
+msgid "Post submitted."
+msgstr "Inlägget uppdaterades."
+
+#: source/php/Entity/CustomPostType.php:309
+msgid "Post draft updated."
+msgstr "Utkast uppdaterades."
+
+#: source/php/Entity/PostManager.php:216
+msgid "Could not create folder"
+msgstr "Kunde inte skapa mappen"
+
+#: source/php/Entity/PostManager.php:216
+msgid "please go ahead and create it manually and rerun the import."
+msgstr "vänligen skapa den manuellt och gör om importen."
+
+#: source/php/Parser.php:87
+msgid "Parser done."
+msgstr ""
+
+#: source/php/PostTypes/Contacts.php:11 source/php/PostTypes/Events.php:45
+msgid "Contact"
+msgstr "Kontakt"
+
+#: source/php/PostTypes/Contacts.php:32 source/php/PostTypes/Events.php:36
+#: source/php/PostTypes/Locations.php:34
+#: source/php/PostTypes/MembershipCards.php:32
+#: source/php/PostTypes/Packages.php:32 source/php/PostTypes/Sponsors.php:32
+msgid "Title"
+msgstr "Titel"
+
+#: source/php/PostTypes/Contacts.php:33
+msgid "Name"
+msgstr "Namn"
+
+#: source/php/PostTypes/Contacts.php:36
+msgid "Email"
+msgstr "E-post"
+
+#: source/php/PostTypes/Contacts.php:39
+msgid "Phone"
+msgstr "Telefon"
+
+#: source/php/PostTypes/Contacts.php:42 source/php/PostTypes/Events.php:89
+#: source/php/PostTypes/Locations.php:74
+#: source/php/PostTypes/MembershipCards.php:33
+#: source/php/PostTypes/Packages.php:46 source/php/PostTypes/Sponsors.php:33
+msgid "Date"
+msgstr "Datum"
+
+#: source/php/PostTypes/Contacts.php:51
+msgid "Profile image"
+msgstr "Profilbild"
+
+#: source/php/PostTypes/Events.php:12
+msgctxt "Post type plural"
+msgid "Events"
+msgstr "Evenemang"
+
+#: source/php/PostTypes/Events.php:13
+msgctxt "Post type singular"
+msgid "Event"
+msgstr "Evenemang"
+
+#: source/php/PostTypes/Events.php:37 source/php/PostTypes/Locations.php:13
+msgid "Location"
+msgstr "Plats"
+
+#: source/php/PostTypes/Events.php:61 source/php/PostTypes/Locations.php:47
+msgid "Import client"
+msgstr "Klient"
+
+#: source/php/PostTypes/Events.php:69 source/php/PostTypes/Locations.php:54
+msgid "Public"
+msgstr "Offentlig"
+
+#: source/php/PostTypes/Events.php:84
+msgid "This event needs to be edited before it can be published"
+msgstr "Evenemanget behöver uppdateras innan det kan publiceras"
+
+#: source/php/PostTypes/Events.php:84 source/php/PostTypes/Locations.php:69
+msgid "Edit draft"
+msgstr "Redigera utkast"
+
+#: source/php/PostTypes/Events.php:86 source/php/PostTypes/Locations.php:71
+msgid "Accept"
+msgstr "Godkänn"
+
+#: source/php/PostTypes/Events.php:87 source/php/PostTypes/Locations.php:72
+msgid "Deny"
+msgstr "Neka"
+
+#: source/php/PostTypes/Events.php:258 source/php/PostTypes/Events.php:396
+msgid "End date must be after start date"
+msgstr "Slutdatum får inte vara före eller lika med startdatum"
+
+#: source/php/PostTypes/Events.php:282
+msgid "Door time cannot be after start date"
+msgstr "Dörrtid får inte vara efter starttid"
+
+#: source/php/PostTypes/Events.php:303
+msgid "Please add occasion or recurrence rule"
+msgstr "Vänligen lägg till tidpunkt för evenemanget"
+
+#: source/php/PostTypes/Events.php:324
+msgid "Not a valid number"
+msgstr "Inte ett giltigt tal"
+
+#: source/php/PostTypes/Events.php:348
+msgid "End time must be after start time"
+msgstr "Sluttid får inte vara före starttid"
+
+#: source/php/PostTypes/Events.php:372
+msgid "Door time cannot be after start time"
+msgstr "Dörrtid får inte vara efter starttid"
+
+#: source/php/PostTypes/Events.php:433
+msgid "Import XCAP"
+msgstr "Importera XCAP"
+
+#: source/php/PostTypes/Events.php:434
+msgid "Import CBIS"
+msgstr "Importera CBIS"
+
+#: source/php/PostTypes/Events.php:435
+msgid "Collect event timestamps"
+msgstr "Spara tidsstämplar"
+
+#: source/php/PostTypes/Events.php:448
+msgid "No post to duplicate has been supplied!"
+msgstr "Post att duplicera saknas!"
+
+#: source/php/PostTypes/Events.php:512
+msgid "Event creation failed, could not find original event"
+msgstr "Dupliceringen misslyckades, kunde inte hitta originalevenemanget"
+
+#: source/php/PostTypes/Events.php:526
+msgid "Create similar item"
+msgstr "Skapa ett liknande evenemang"
+
+#: source/php/PostTypes/Events.php:526
+msgid "Are you sure you want to clone this event?"
+msgstr "Är du säker på att du vill skapa en dubblett av evenemanget?"
+
+#: source/php/PostTypes/Events.php:526
+msgid "Clone"
+msgstr "Duplicera"
+
+#: source/php/PostTypes/Events.php:541
+#, php-format
+msgid ""
+"This is a duplicate of the event: %s. If this is a new occasion for the same "
+"event, please %s and republish the original event"
+msgstr ""
+"Detta är en dubblett av evenemanget: %s. Om du vill lägga till en ny "
+"tidpunkt för ett redan existerande evenemang, vänligen %s och publicera "
+"originalversionen."
+
+#: source/php/PostTypes/Events.php:541
+msgid "edit"
+msgstr "uppdatera"
+
+#: source/php/PostTypes/Events.php:564
+msgid ""
+"Please do not enter information that refers to information in another text "
+"field. It is not certain that all fields will be presented to the consumer "
+"and would thefore be missguiding."
+msgstr ""
+"Vänligen skriv inte in information i ett textfält som hänvisar till andra "
+"textfält. Det är inte säkert att alla fält kommer att presenteras för "
+"konsumenten och kan därför bli missledande."
+
+#: source/php/PostTypes/Events.php:586
+msgid ""
+"CBIS have not imported any events for atleast 7 days. Please control the "
+"importer."
+msgstr ""
+"Inga evenemang från CBIS har importerats de senaste 7 dagarna. Vänligen "
+"kontrollera inställningarna och importen."
+
+#: source/php/PostTypes/Events.php:608
+msgid ""
+"XCAP have not imported any events for atleast 7 days. Please control the "
+"importer."
+msgstr ""
+"Inga evenemang från XCAP har importerats de senaste 7 dagarna. Vänligen "
+"kontrollera inställningarna och importen."
+
+#: source/php/PostTypes/Locations.php:35
+msgid "Address"
+msgstr "Adress"
+
+#: source/php/PostTypes/Locations.php:39
+msgid "Coordinates"
+msgstr "Koordinater"
+
+#: source/php/PostTypes/Locations.php:69
+msgid "This post needs to be edited before it can be published"
+msgstr "Evenemanget behöver uppdateras innan det kan publiceras"
+
+#: source/php/PostTypes/MembershipCards.php:10
+msgid "Membership Cards"
+msgstr "Medlemskort"
+
+#: source/php/PostTypes/MembershipCards.php:11
+msgid "Membership Card"
+msgstr "Medlemskort"
+
+#: source/php/PostTypes/MembershipCards.php:41
+msgid "Image"
+msgstr "Bild"
+
+#: source/php/PostTypes/Packages.php:10
+msgid "Packages"
+msgstr "Paket"
+
+#: source/php/PostTypes/Packages.php:11
+msgid "Package"
+msgstr "Paket"
+
+#: source/php/PostTypes/Packages.php:33
+msgid "Includes"
+msgstr "Innehåller"
+
+#: source/php/PostTypes/Sponsors.php:10
+msgid "Sponsors"
+msgstr "Sponsorer"
+
+#: source/php/PostTypes/Sponsors.php:11
+msgid "Sponsor"
+msgstr "Sponsor"
+
+#: source/php/PostTypes/Sponsors.php:41
+msgid "Logo"
+msgstr "Logotyp"
+
+#: source/php/Taxonomy/EventCategories.php:15
+msgctxt "Taxonomy plural name"
+msgid "Event categories"
+msgstr "Evenemangskategorier"
+
+#: source/php/Taxonomy/EventCategories.php:16
+msgctxt "Taxonomy singular name"
+msgid "Event category"
+msgstr "Evenemangskategori"
+
+#: source/php/Taxonomy/EventCategories.php:17
+#: source/php/Taxonomy/LocationCategories.php:17
+msgid "Search categories"
+msgstr "Sök kategori"
+
+#: source/php/Taxonomy/EventCategories.php:18
+#: source/php/Taxonomy/LocationCategories.php:18
+msgid "Popular categories"
+msgstr "Populära kategorier"
+
+#: source/php/Taxonomy/EventCategories.php:20
+#: source/php/Taxonomy/EventCategories.php:21
+#: source/php/Taxonomy/LocationCategories.php:20
+#: source/php/Taxonomy/LocationCategories.php:21
+msgid "Parent category"
+msgstr "Huvudkategori"
+
+#: source/php/Taxonomy/EventCategories.php:22
+#: source/php/Taxonomy/LocationCategories.php:22
+msgid "Edit category"
+msgstr "Redigera kategori"
+
+#: source/php/Taxonomy/EventCategories.php:23
+#: source/php/Taxonomy/LocationCategories.php:23
+msgid "Update category"
+msgstr "Uppdatera kategori"
+
+#: source/php/Taxonomy/EventCategories.php:24
+#: source/php/Taxonomy/LocationCategories.php:24
+msgid "Add new category"
+msgstr "Lägg till ny kategori"
+
+#: source/php/Taxonomy/EventCategories.php:25
+#: source/php/Taxonomy/LocationCategories.php:25
+msgid "New category"
+msgstr "Ny kategori"
+
+#: source/php/Taxonomy/EventCategories.php:26
+#: source/php/Taxonomy/LocationCategories.php:26
+msgid "Add or remove categories"
+msgstr "Lägg till eller ta bort kategorier"
+
+#: source/php/Taxonomy/EventCategories.php:27
+#: source/php/Taxonomy/LocationCategories.php:27
+msgid "Choose from most used categories"
+msgstr "Välj bland de mest använda kategorierna"
+
+#: source/php/Taxonomy/EventCategories.php:28
+#: source/php/Taxonomy/LocationCategories.php:28
+msgid "Categories"
+msgstr "Kategorier"
+
+#: source/php/Taxonomy/EventTags.php:15
+msgctxt "Taxonomy plural name"
+msgid "Tags"
+msgstr "Taggar"
+
+#: source/php/Taxonomy/EventTags.php:16
+msgctxt "Taxonomy singular name"
+msgid "Tag"
+msgstr "Tagg"
+
+#: source/php/Taxonomy/EventTags.php:17
+msgid "Search tags"
+msgstr "Sök tagg"
+
+#: source/php/Taxonomy/EventTags.php:18
+msgid "Popular tags"
+msgstr "Populära taggar"
+
+#: source/php/Taxonomy/EventTags.php:19
+msgid "All tags"
+msgstr "Alla taggar"
+
+#: source/php/Taxonomy/EventTags.php:20 source/php/Taxonomy/EventTags.php:21
+msgid "Parent"
+msgstr "Förälder"
+
+#: source/php/Taxonomy/EventTags.php:22
+msgid "Edit tag"
+msgstr "Redigera tagg"
+
+#: source/php/Taxonomy/EventTags.php:23
+msgid "Update tag"
+msgstr "Uppdatera tagg"
+
+#: source/php/Taxonomy/EventTags.php:24
+msgid "Add new tag"
+msgstr "Lägg till ny tagg"
+
+#: source/php/Taxonomy/EventTags.php:25
+msgid "New tag"
+msgstr "Ny tagg"
+
+#: source/php/Taxonomy/EventTags.php:26
+msgid "Add or remove tags"
+msgstr "Lägg till eller ta bort taggar"
+
+#: source/php/Taxonomy/EventTags.php:27
+msgid "Choose from most used tags"
+msgstr "Välj från de mest använda taggarna"
+
+#: source/php/Taxonomy/EventTags.php:28
+msgid "Tags"
+msgstr "Taggar"
+
+#: source/php/Taxonomy/LocationCategories.php:15
+msgctxt "Taxonomy plural name"
+msgid "Location categories"
+msgstr "Platskategorier"
+
+#: source/php/Taxonomy/LocationCategories.php:16
+msgctxt "Taxonomy singular name"
+msgid "Location category"
+msgstr "Platskategori"
+
+#. Plugin Name of the plugin/theme
+msgid "Event Manager"
+msgstr ""
+
+#. Plugin URI of the plugin/theme
+msgid "http://github.com/helsingborg-stad/api-event-manager/"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid "Manage events locally, and import from XCAP & CBIS."
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "Kristoffer Svanmark, Sebastian Thulin, Tommy Morberg"
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "http://www.helsingborg.se"
+msgstr ""
+
+#~ msgctxt "CBIS arena"
+#~ msgid "arena"
+#~ msgstr "Arena"
+
+#~ msgctxt "CBIS accomodation"
+#~ msgid "accommodation"
+#~ msgstr "Boenden"
+
+#~ msgctxt "CBIS to do"
+#~ msgid "to do"
+#~ msgstr "Att göra"
+
+#~ msgid "Options"
+#~ msgstr "Inställningar"
+
+#~ msgctxt "URL slug"
+#~ msgid "event"
+#~ msgstr "evenemang"
+
+#~ msgid "Event"
+#~ msgstr "Evenemang"
+
+#~ msgid "contact"
+#~ msgstr "kontakt"
+
+#~ msgid "This is a duplicate of the event"
+#~ msgstr "Detta är en dubblett av evenemanget"
+
+#~ msgid "If this is a new occasion for the same event, please"
+#~ msgstr ""
+#~ "Om du vill lägga till en ny tidpunkt för ett redan existerande evenemang, "
+#~ "vänligen"
+
+#~ msgid "and republish the original event"
+#~ msgstr "och publicera originalversionen"
+
+#~ msgctxt "package plural "
+#~ msgid "Packages"
+#~ msgstr "Paket"
+
+#~ msgctxt "package singular"
+#~ msgid "Package"
+#~ msgstr "Paket"
+
+#~ msgctxt "package lower case"
+#~ msgid "package"
+#~ msgstr "paket"
+
+#~ msgid "Events included"
+#~ msgstr "Inkluderade evenemang"
+
+#~ msgid "locations"
+#~ msgstr "platser"
+
+#~ msgid "Please enter a title"
+#~ msgstr "Titel saknas"
+
+#~ msgctxt "event-manager"
+#~ msgid "Location"
+#~ msgstr "Plats"
+
+#~ msgid "phone"
+#~ msgstr "telefon"
+
+#~ msgid "Yes"
+#~ msgstr "Ja"
+
+#~ msgid "No"
+#~ msgstr "Nej"
+
+#~ msgid "Done"
+#~ msgstr "Klart"
+
+#~ msgid "Prev"
+#~ msgstr "Föregående"
+
+#~ msgid "Next"
+#~ msgstr "Nästa"
+
+#~ msgid "Time"
+#~ msgstr "Tid"
+
+#~ msgctxt "post type name"
+#~ msgid "Contact"
+#~ msgstr "Telefonlista"
+
+#~ msgid "Add or remove Event Categories"
+#~ msgstr "Lägg till eller ta bort kategorier"
+
+#~ msgid "Choose from most used Event Categories"
+#~ msgstr "Välj bland de mest använda kategorierna"
+
+#~ msgid "Event Category"
+#~ msgstr "Evenemangskategori"
+
+#~ msgid "Start date"
+#~ msgstr "Startdatum"
+
+#~ msgid "End date"
+#~ msgstr "Slutdatum"
+
+#~ msgid "Could not create folder \""
+#~ msgstr "Kunde inte skapa katalog"
+
+#~ msgid "No events from CBIS found. Click \"Import CBIS\" to import events."
+#~ msgstr ""
+#~ "Inga evenemang från CBIS hittades. Klicka på \"Importera CBIS\" för att "
+#~ "starta importen."
+
+#~ msgid "No events from XCAP found. Click \"Import XCAP\" to import events."
+#~ msgstr ""
+#~ "Inga evenemang från XCAP hittades. Klicka på \"Importera XCAP\" för att "
+#~ "starta importen."
+
+#~ msgid "event"
+#~ msgstr "evenemang"
+
+#~ msgid "location"
+#~ msgstr "plats"
+
+#~ msgid "Add New %s"
+#~ msgstr "Nytt %s"
+
+#~ msgid "No %s found in Trash"
+#~ msgstr "Inga %s hittades i papperskorgen"

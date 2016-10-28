@@ -1,0 +1,570 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"Project-Id-Version: Event Manager\n"
+"POT-Creation-Date: 2016-10-28 16:00+0200\n"
+"PO-Revision-Date: 2016-10-26 08:27+0200\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.11\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-WPHeader: hbg-event-importer.php\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;"
+"_n_noop:1,2;_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.js\n"
+"X-Poedit-SearchPathExcluded-1: source/php/Old\n"
+"X-Poedit-SearchPathExcluded-2: node_modules\n"
+"X-Poedit-SearchPathExcluded-3: source/php/Vendor\n"
+
+#: source/php/Admin/FilterRestrictions.php:28
+#: source/php/Taxonomy/EventCategories.php:19
+#: source/php/Taxonomy/LocationCategories.php:19
+msgid "All categories"
+msgstr ""
+
+#: source/php/Admin/FilterRestrictions.php:57
+msgid "Time interval"
+msgstr ""
+
+#: source/php/Admin/FilterRestrictions.php:58
+msgid "Today"
+msgstr ""
+
+#: source/php/Admin/FilterRestrictions.php:59
+msgid "Tomorrow"
+msgstr ""
+
+#: source/php/Admin/FilterRestrictions.php:60
+msgid "This week"
+msgstr ""
+
+#: source/php/Admin/FilterRestrictions.php:61
+msgid "This month"
+msgstr ""
+
+#: source/php/Admin/FilterRestrictions.php:62
+msgid "Passed events"
+msgstr ""
+
+#: source/php/Admin/Options.php:11
+msgid "Event manager options"
+msgstr ""
+
+#: source/php/Admin/Options.php:12
+msgctxt "Event manager options"
+msgid "Options"
+msgstr ""
+
+#: source/php/Admin/UI.php:50
+msgid ""
+"Please upload images that are as large as possible and that are not "
+"sensitive to cropping (eg. images with text overlay)."
+msgstr ""
+
+#: source/php/App.php:174
+msgid "Title is missing"
+msgstr ""
+
+#: source/php/App.php:175
+msgid "Create new contact"
+msgstr ""
+
+#: source/php/App.php:176
+msgid "Create new sponsor"
+msgstr ""
+
+#: source/php/App.php:177
+msgid "Create new location"
+msgstr ""
+
+#: source/php/App.php:178
+msgid "Create new membership card"
+msgstr ""
+
+#: source/php/App.php:179
+msgid "Close"
+msgstr ""
+
+#: source/php/App.php:180
+msgid "Add images"
+msgstr ""
+
+#: source/php/App.php:181
+msgid "Similar posts"
+msgstr ""
+
+#: source/php/App.php:182
+msgid "New data imported"
+msgstr ""
+
+#: source/php/App.php:183
+msgid "Events"
+msgstr ""
+
+#: source/php/App.php:184 source/php/PostTypes/Locations.php:12
+msgid "Locations"
+msgstr ""
+
+#: source/php/App.php:185 source/php/PostTypes/Contacts.php:10
+msgid "Contacts"
+msgstr ""
+
+#: source/php/App.php:186
+msgid "Time until reload"
+msgstr ""
+
+#: source/php/App.php:187
+msgid "Loading"
+msgstr ""
+
+#: source/php/App.php:201 source/php/App.php:202
+msgid "Import events"
+msgstr ""
+
+#: source/php/App.php:212 source/php/App.php:213 source/php/App.php:223
+msgid "Import CBIS events"
+msgstr ""
+
+#: source/php/App.php:222 source/php/PostTypes/Locations.php:94
+msgid "Import CBIS locations"
+msgstr ""
+
+#: source/php/App.php:232 source/php/App.php:233
+msgid "Delete all events"
+msgstr ""
+
+#: source/php/Entity/CustomPostType.php:58
+msgid "API-url"
+msgstr ""
+
+#: source/php/Entity/CustomPostType.php:148
+msgid "Something went wrong!"
+msgstr ""
+
+#: source/php/Entity/CustomPostType.php:194
+#: source/php/Entity/CustomPostType.php:195
+#, php-format
+msgid "Add new %s"
+msgstr ""
+
+#: source/php/Entity/CustomPostType.php:196
+#, php-format
+msgid "Edit %s"
+msgstr ""
+
+#: source/php/Entity/CustomPostType.php:197
+#, php-format
+msgid "New %s"
+msgstr ""
+
+#: source/php/Entity/CustomPostType.php:198
+#, php-format
+msgid "View %s"
+msgstr ""
+
+#: source/php/Entity/CustomPostType.php:199
+#, php-format
+msgid "Search %s"
+msgstr ""
+
+#: source/php/Entity/CustomPostType.php:200
+#, php-format
+msgid "No %s found"
+msgstr ""
+
+#: source/php/Entity/CustomPostType.php:201
+#, php-format
+msgid "No %s found in trash"
+msgstr ""
+
+#: source/php/Entity/CustomPostType.php:202
+#, php-format
+msgid "Parent %s:"
+msgstr ""
+
+#: source/php/Entity/CustomPostType.php:306
+msgid "Post updated."
+msgstr ""
+
+#: source/php/Entity/CustomPostType.php:307
+msgid "Post published."
+msgstr ""
+
+#: source/php/Entity/CustomPostType.php:308
+msgid "Post submitted."
+msgstr ""
+
+#: source/php/Entity/CustomPostType.php:309
+msgid "Post draft updated."
+msgstr ""
+
+#: source/php/Entity/PostManager.php:216
+msgid "Could not create folder"
+msgstr ""
+
+#: source/php/Entity/PostManager.php:216
+msgid "please go ahead and create it manually and rerun the import."
+msgstr ""
+
+#: source/php/Parser.php:87
+msgid "Parser done."
+msgstr ""
+
+#: source/php/PostTypes/Contacts.php:11 source/php/PostTypes/Events.php:45
+msgid "Contact"
+msgstr ""
+
+#: source/php/PostTypes/Contacts.php:32 source/php/PostTypes/Events.php:36
+#: source/php/PostTypes/Locations.php:34
+#: source/php/PostTypes/MembershipCards.php:32
+#: source/php/PostTypes/Packages.php:32 source/php/PostTypes/Sponsors.php:32
+msgid "Title"
+msgstr ""
+
+#: source/php/PostTypes/Contacts.php:33
+msgid "Name"
+msgstr ""
+
+#: source/php/PostTypes/Contacts.php:36
+msgid "Email"
+msgstr ""
+
+#: source/php/PostTypes/Contacts.php:39
+msgid "Phone"
+msgstr ""
+
+#: source/php/PostTypes/Contacts.php:42 source/php/PostTypes/Events.php:89
+#: source/php/PostTypes/Locations.php:74
+#: source/php/PostTypes/MembershipCards.php:33
+#: source/php/PostTypes/Packages.php:46 source/php/PostTypes/Sponsors.php:33
+msgid "Date"
+msgstr ""
+
+#: source/php/PostTypes/Contacts.php:51
+msgid "Profile image"
+msgstr ""
+
+#: source/php/PostTypes/Events.php:12
+msgctxt "Post type plural"
+msgid "Events"
+msgstr ""
+
+#: source/php/PostTypes/Events.php:13
+msgctxt "Post type singular"
+msgid "Event"
+msgstr ""
+
+#: source/php/PostTypes/Events.php:37 source/php/PostTypes/Locations.php:13
+msgid "Location"
+msgstr ""
+
+#: source/php/PostTypes/Events.php:61 source/php/PostTypes/Locations.php:47
+msgid "Import client"
+msgstr ""
+
+#: source/php/PostTypes/Events.php:69 source/php/PostTypes/Locations.php:54
+msgid "Public"
+msgstr ""
+
+#: source/php/PostTypes/Events.php:84
+msgid "This event needs to be edited before it can be published"
+msgstr ""
+
+#: source/php/PostTypes/Events.php:84 source/php/PostTypes/Locations.php:69
+msgid "Edit draft"
+msgstr ""
+
+#: source/php/PostTypes/Events.php:86 source/php/PostTypes/Locations.php:71
+msgid "Accept"
+msgstr ""
+
+#: source/php/PostTypes/Events.php:87 source/php/PostTypes/Locations.php:72
+msgid "Deny"
+msgstr ""
+
+#: source/php/PostTypes/Events.php:258 source/php/PostTypes/Events.php:396
+msgid "End date must be after start date"
+msgstr ""
+
+#: source/php/PostTypes/Events.php:282
+msgid "Door time cannot be after start date"
+msgstr ""
+
+#: source/php/PostTypes/Events.php:303
+msgid "Please add occasion or recurrence rule"
+msgstr ""
+
+#: source/php/PostTypes/Events.php:324
+msgid "Not a valid number"
+msgstr ""
+
+#: source/php/PostTypes/Events.php:348
+msgid "End time must be after start time"
+msgstr ""
+
+#: source/php/PostTypes/Events.php:372
+msgid "Door time cannot be after start time"
+msgstr ""
+
+#: source/php/PostTypes/Events.php:433
+msgid "Import XCAP"
+msgstr ""
+
+#: source/php/PostTypes/Events.php:434
+msgid "Import CBIS"
+msgstr ""
+
+#: source/php/PostTypes/Events.php:435
+msgid "Collect event timestamps"
+msgstr ""
+
+#: source/php/PostTypes/Events.php:448
+msgid "No post to duplicate has been supplied!"
+msgstr ""
+
+#: source/php/PostTypes/Events.php:512
+msgid "Event creation failed, could not find original event"
+msgstr ""
+
+#: source/php/PostTypes/Events.php:526
+msgid "Create similar item"
+msgstr ""
+
+#: source/php/PostTypes/Events.php:526
+msgid "Are you sure you want to clone this event?"
+msgstr ""
+
+#: source/php/PostTypes/Events.php:526
+msgid "Clone"
+msgstr ""
+
+#: source/php/PostTypes/Events.php:541
+#, php-format
+msgid ""
+"This is a duplicate of the event: %s. If this is a new occasion for the "
+"same event, please %s and republish the original event"
+msgstr ""
+
+#: source/php/PostTypes/Events.php:541
+msgid "edit"
+msgstr ""
+
+#: source/php/PostTypes/Events.php:564
+msgid ""
+"Please do not enter information that refers to information in another text "
+"field. It is not certain that all fields will be presented to the consumer "
+"and would thefore be missguiding."
+msgstr ""
+
+#: source/php/PostTypes/Events.php:586
+msgid ""
+"CBIS have not imported any events for atleast 7 days. Please control the "
+"importer."
+msgstr ""
+
+#: source/php/PostTypes/Events.php:608
+msgid ""
+"XCAP have not imported any events for atleast 7 days. Please control the "
+"importer."
+msgstr ""
+
+#: source/php/PostTypes/Locations.php:35
+msgid "Address"
+msgstr ""
+
+#: source/php/PostTypes/Locations.php:39
+msgid "Coordinates"
+msgstr ""
+
+#: source/php/PostTypes/Locations.php:69
+msgid "This post needs to be edited before it can be published"
+msgstr ""
+
+#: source/php/PostTypes/MembershipCards.php:10
+msgid "Membership Cards"
+msgstr ""
+
+#: source/php/PostTypes/MembershipCards.php:11
+msgid "Membership Card"
+msgstr ""
+
+#: source/php/PostTypes/MembershipCards.php:41
+msgid "Image"
+msgstr ""
+
+#: source/php/PostTypes/Packages.php:10
+msgid "Packages"
+msgstr ""
+
+#: source/php/PostTypes/Packages.php:11
+msgid "Package"
+msgstr ""
+
+#: source/php/PostTypes/Packages.php:33
+msgid "Includes"
+msgstr ""
+
+#: source/php/PostTypes/Sponsors.php:10
+msgid "Sponsors"
+msgstr ""
+
+#: source/php/PostTypes/Sponsors.php:11
+msgid "Sponsor"
+msgstr ""
+
+#: source/php/PostTypes/Sponsors.php:41
+msgid "Logo"
+msgstr ""
+
+#: source/php/Taxonomy/EventCategories.php:15
+msgctxt "Taxonomy plural name"
+msgid "Event categories"
+msgstr ""
+
+#: source/php/Taxonomy/EventCategories.php:16
+msgctxt "Taxonomy singular name"
+msgid "Event category"
+msgstr ""
+
+#: source/php/Taxonomy/EventCategories.php:17
+#: source/php/Taxonomy/LocationCategories.php:17
+msgid "Search categories"
+msgstr ""
+
+#: source/php/Taxonomy/EventCategories.php:18
+#: source/php/Taxonomy/LocationCategories.php:18
+msgid "Popular categories"
+msgstr ""
+
+#: source/php/Taxonomy/EventCategories.php:20
+#: source/php/Taxonomy/EventCategories.php:21
+#: source/php/Taxonomy/LocationCategories.php:20
+#: source/php/Taxonomy/LocationCategories.php:21
+msgid "Parent category"
+msgstr ""
+
+#: source/php/Taxonomy/EventCategories.php:22
+#: source/php/Taxonomy/LocationCategories.php:22
+msgid "Edit category"
+msgstr ""
+
+#: source/php/Taxonomy/EventCategories.php:23
+#: source/php/Taxonomy/LocationCategories.php:23
+msgid "Update category"
+msgstr ""
+
+#: source/php/Taxonomy/EventCategories.php:24
+#: source/php/Taxonomy/LocationCategories.php:24
+msgid "Add new category"
+msgstr ""
+
+#: source/php/Taxonomy/EventCategories.php:25
+#: source/php/Taxonomy/LocationCategories.php:25
+msgid "New category"
+msgstr ""
+
+#: source/php/Taxonomy/EventCategories.php:26
+#: source/php/Taxonomy/LocationCategories.php:26
+msgid "Add or remove categories"
+msgstr ""
+
+#: source/php/Taxonomy/EventCategories.php:27
+#: source/php/Taxonomy/LocationCategories.php:27
+msgid "Choose from most used categories"
+msgstr ""
+
+#: source/php/Taxonomy/EventCategories.php:28
+#: source/php/Taxonomy/LocationCategories.php:28
+msgid "Categories"
+msgstr ""
+
+#: source/php/Taxonomy/EventTags.php:15
+msgctxt "Taxonomy plural name"
+msgid "Tags"
+msgstr ""
+
+#: source/php/Taxonomy/EventTags.php:16
+msgctxt "Taxonomy singular name"
+msgid "Tag"
+msgstr ""
+
+#: source/php/Taxonomy/EventTags.php:17
+msgid "Search tags"
+msgstr ""
+
+#: source/php/Taxonomy/EventTags.php:18
+msgid "Popular tags"
+msgstr ""
+
+#: source/php/Taxonomy/EventTags.php:19
+msgid "All tags"
+msgstr ""
+
+#: source/php/Taxonomy/EventTags.php:20 source/php/Taxonomy/EventTags.php:21
+msgid "Parent"
+msgstr ""
+
+#: source/php/Taxonomy/EventTags.php:22
+msgid "Edit tag"
+msgstr ""
+
+#: source/php/Taxonomy/EventTags.php:23
+msgid "Update tag"
+msgstr ""
+
+#: source/php/Taxonomy/EventTags.php:24
+msgid "Add new tag"
+msgstr ""
+
+#: source/php/Taxonomy/EventTags.php:25
+msgid "New tag"
+msgstr ""
+
+#: source/php/Taxonomy/EventTags.php:26
+msgid "Add or remove tags"
+msgstr ""
+
+#: source/php/Taxonomy/EventTags.php:27
+msgid "Choose from most used tags"
+msgstr ""
+
+#: source/php/Taxonomy/EventTags.php:28
+msgid "Tags"
+msgstr ""
+
+#: source/php/Taxonomy/LocationCategories.php:15
+msgctxt "Taxonomy plural name"
+msgid "Location categories"
+msgstr ""
+
+#: source/php/Taxonomy/LocationCategories.php:16
+msgctxt "Taxonomy singular name"
+msgid "Location category"
+msgstr ""
+
+#. Plugin Name of the plugin/theme
+msgid "Event Manager"
+msgstr ""
+
+#. Plugin URI of the plugin/theme
+msgid "http://github.com/helsingborg-stad/api-event-manager/"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid "Manage events locally, and import from XCAP & CBIS."
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "Kristoffer Svanmark, Sebastian Thulin, Tommy Morberg"
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "http://www.helsingborg.se"
+msgstr ""
