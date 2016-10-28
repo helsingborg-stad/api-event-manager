@@ -9,8 +9,8 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
     public function __construct()
     {
         parent::__construct(
-            __('Events', 'event-manager'),
-            __('Event', 'event-manager'),
+            _x('Events', 'Post type plural', 'event-manager'),
+            _x('Event', 'Post type singular', 'event-manager'),
             'event',
             array(
                 'description'          =>   'Events',
@@ -21,8 +21,8 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
                 'show_in_nav_menus'    =>   true,
                 'has_archive'          =>   true,
                 'rewrite'              =>   array(
-                    'slug'       => 'event',
-                    'with_front' => false
+                    'slug'       =>   'event',
+                    'with_front' =>   false
                 ),
                 'hierarchical'          =>  false,
                 'exclude_from_search'   =>  false,
@@ -33,8 +33,8 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
 
         add_action('manage_posts_extra_tablenav', array($this, 'tablenavButtons'));
         $this->addTableColumn('cb', '<input type="checkbox">');
-        $this->addTableColumn('title', __('Title'));
-        $this->addTableColumn('location', __('Location'), true, function ($column, $postId) {
+        $this->addTableColumn('title', __('Title', 'event-manager'));
+        $this->addTableColumn('location', __('Location', 'event-manager'), true, function ($column, $postId) {
             $locationId = get_field('location', $postId);
             if (!isset($locationId[0])) {
                 echo 'n/a';
@@ -42,7 +42,7 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
             }
             echo '<a href="' . get_edit_post_link($locationId[0]) . '">' . get_the_title($locationId[0]) . '</a>';
         });
-        $this->addTableColumn('contact', __('Contact'), true, function ($column, $postId) {
+        $this->addTableColumn('contact', __('Contact', 'event-manager'), true, function ($column, $postId) {
 
         if (have_rows('organizers')):
             while (have_rows('organizers')) : the_row();
@@ -58,7 +58,7 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
 
             echo '<a href="' . get_edit_post_link($value[0]->ID) . '">' . get_the_title($value[0]->ID) . '</a>';
         });
-        $this->addTableColumn('import_client', __('Import client'), true, function ($column, $postId) {
+        $this->addTableColumn('import_client', __('Import client', 'event-manager'), true, function ($column, $postId) {
             $eventId = get_post_meta($postId, 'import_client', true);
             if (!isset($eventId[0])) {
                 return;
@@ -66,7 +66,7 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
 
             echo strtoupper(get_post_meta($postId, 'import_client', true));
         });
-        $this->addTableColumn('acceptAndDeny', __('Public'), true, function ($column, $postId) {
+        $this->addTableColumn('acceptAndDeny', __('Public', 'event-manager'), true, function ($column, $postId) {
             $metaAccepted = get_post_meta($postId, 'accepted');
             if (!isset($metaAccepted[0])) {
                 add_post_meta($postId, 'accepted', 0);
@@ -81,24 +81,23 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
             } elseif ($metaAccepted[0] == 0) {
                 $first = 'hiddenElement';
                 $second = 'hiddenElement';
-                echo '<a href="'.get_edit_post_link($postId).'" title="This event needs to be edited before it can be published" class="button" postid="' . $postId . '">' . __('Edit draft') . '</a>';
+                echo '<a href="'.get_edit_post_link($postId).'" title="'.__('This event needs to be edited before it can be published', 'event-manager').'" class="button" postid="' . $postId . '">' . __('Edit draft', 'event-manager') . '</a>';
             }
-            echo '<a href="#" class="accept button-primary ' . $first . '" postid="' . $postId . '">' . __('Accept') . '</a>
-            <a href="#" class="deny button-primary ' . $second . '" postid="' . $postId . '">' . __('Deny') . '</a>';
+            echo '<a href="#" class="accept button-primary ' . $first . '" postid="' . $postId . '">' . __('Accept', 'event-manager') . '</a>
+            <a href="#" class="deny button-primary ' . $second . '" postid="' . $postId . '">' . __('Deny', 'event-manager') . '</a>';
         });
-        $this->addTableColumn('date', __('Date'));
-        add_action('admin_head-post.php', array($this, 'hidePublishingActions'));
+        $this->addTableColumn('date', __('Date', 'event-manager'));
         add_action('publish_event', array($this, 'setAcceptedOnPublish'), 10, 2);
         add_action('save_post', array($this, 'saveEventOccasions'), 10, 3);
         add_action('save_post', array($this, 'saveRecurringEvents'), 10, 3);
         add_action('save_post', array($this, 'extractEventTags'), 10, 3);
         add_action('delete_post', array($this, 'deleteEventOccasions'), 10);
-        add_action('edit_form_advanced', array($this, 'requireEventTitle'));
         add_action('admin_notices', array($this, 'duplicateNotice'));
+        add_action('admin_notices', array($this, 'importCbisWarning'));
+        add_action('admin_notices', array($this, 'importXcapWarning'));
         add_action('admin_notices', array($this, 'eventInstructions'));
-        add_action('admin_action_duplicate_post', array($this, 'duplicate_post'));
-        add_filter('post_row_actions', array($this, 'duplicate_post_link'), 10, 2);
-        // ACF validation and sanitize filters
+        add_action('admin_action_duplicate_post', array($this, 'duplicatePost'));
+        add_filter('post_row_actions', array($this, 'duplicatePostLink'), 10, 2);
         add_filter('acf/validate_value/name=end_date', array($this, 'validateEndDate'), 10, 4);
         add_filter('acf/validate_value/name=door_time', array($this, 'validateDoorTime'), 10, 4);
         add_filter('acf/validate_value/name=occasions', array($this, 'validateOccasion'), 10, 4);
@@ -256,7 +255,7 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
         $start_value = $_POST['acf'][$repeater_key][$row][$start_key];
         $end_value = $value;
         if (strtotime($end_value) <= strtotime($start_value)) {
-            $valid = 'End date must be after start date';
+            $valid = __('End date must be after start date', 'event-manager');
         }
         return $valid;
     }
@@ -280,13 +279,18 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
         $start_value = $_POST['acf'][$repeater_key][$row][$start_key];
         $door_value = $value;
         if (strtotime($door_value) > strtotime($start_value)) {
-            $valid = 'Door time cannot be after start date';
+            $valid = __('Door time cannot be after start date', 'event-manager');
         }
         return $valid;
     }
 
     /**
      * Check if occasion och recurrence rules are set.
+     * @param  mixed  $valid Whether or not the value is valid (true / false).
+     * @param  mixed  $value The value to be saved
+     * @param  array  $field An array containing all the field settings for the field which was used to upload the attachment
+     * @param  string $input the DOM element’s name attribute
+     * @return mixed  $valid Return if true or false
      */
     public function validateOccasion($valid, $value, $field, $input)
     {
@@ -296,13 +300,18 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
         $occasions = $_POST['acf']['field_5761106783967'];
         $rcr_rules = $_POST['acf']['field_57d2749e3bf4d'];
         if (empty($occasions) && empty($rcr_rules)) {
-            $valid = 'Please add occasion or recurrence rule';
+            $valid = __('Please add occasion or recurrence rule', 'event-manager');
         }
         return $valid;
     }
 
     /**
-     * Validate price to be numeric.
+     * Validate price to be numeric
+     * @param  mixed  $valid Whether or not the value is valid (true / false).
+     * @param  mixed  $value The value to be saved
+     * @param  array  $field An array containing all the field settings for the field which was used to upload the attachment
+     * @param  string $input the DOM element’s name attribute
+     * @return mixed  $valid Return if true or false
      */
     public function validatePrice($valid, $value, $field, $input)
     {
@@ -312,13 +321,18 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
         $value1 = str_replace(',', '.', $value);
         $value2 = str_replace(' ', '', $value1);
         if (!is_numeric($value2)) {
-            $valid = 'Not a valid number';
+            $valid = __('Not a valid number', 'event-manager');
         }
         return $valid;
     }
 
     /**
      * Validate recurring rules "end time" to be 'greater' than start time.
+     * @param  mixed  $valid Whether or not the value is valid (true / false).
+     * @param  mixed  $value The value to be saved
+     * @param  array  $field An array containing all the field settings for the field which was used to upload the attachment
+     * @param  string $input the DOM element’s name attribute
+     * @return mixed  $valid Return if true or false
      */
     public function validateRcrEndTime($valid, $value, $field, $input)
     {
@@ -331,13 +345,18 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
         $start_value = $_POST['acf'][$repeater_key][$row][$start_key];
         $end_value = $value;
         if ($end_value <= $start_value) {
-            $valid = 'End time must be after start time';
+            $valid = __('End time must be after start time', 'event-manager');
         }
         return $valid;
     }
 
     /**
      * Validate recurring rules "door time" to be 'greater' than start time.
+     * @param  mixed  $valid Whether or not the value is valid (true / false).
+     * @param  mixed  $value The value to be saved
+     * @param  array  $field An array containing all the field settings for the field which was used to upload the attachment
+     * @param  string $input the DOM element’s name attribute
+     * @return mixed  $valid Return if true or false
      */
     public function validateRcrDoorTime($valid, $value, $field, $input)
     {
@@ -350,13 +369,18 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
         $start_value = $_POST['acf'][$repeater_key][$row][$start_key];
         $door_value = $value;
         if ($door_value > $start_value) {
-            $valid = 'Door time cannot be after start time';
+            $valid = __('Door time cannot be after start time', 'event-manager');
         }
         return $valid;
     }
 
     /**
      * Validate recurring rules interval "end date" to be 'greater' than start date.
+     * @param  mixed  $valid Whether or not the value is valid (true / false).
+     * @param  mixed  $value The value to be saved
+     * @param  array  $field An array containing all the field settings for the field which was used to upload the attachment
+     * @param  string $input the DOM element’s name attribute
+     * @return mixed  $valid Return if true or false
      */
     public function validateRcrEndDate($valid, $value, $field, $input)
     {
@@ -369,7 +393,7 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
         $start_value = $_POST['acf'][$repeater_key][$row][$start_key];
         $end_value = $value;
         if (strtotime($end_value) <= strtotime($start_value)) {
-            $valid = 'End date must be after start date';
+            $valid = __('End date must be after start date', 'event-manager');
         }
         return $valid;
     }
@@ -388,39 +412,6 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
     }
 
     /**
-     * When publish are clicked we are either creating the meta 'accepted' with value 1 or update it
-     * @param int $ID event post id
-     * @param $post wordpress post object
-     */
-    public function setAcceptedOnPublish($ID, $post)
-    {
-        $metaAccepted = get_post_meta($ID, 'accepted');
-        if (!isset($metaAccepted[0])) {
-            add_post_meta($ID, 'accepted', 1);
-        } else {
-            update_post_meta($ID, 'accepted', 1);
-        }
-    }
-
-    /**
-     * Hiding the option to change post_status on when in a event, instead use the buttons in event list
-     * @return void
-     */
-    public function hidePublishingActions()
-    {
-        $my_post_type = 'event';
-        global $post;
-        if ($post->post_type == $my_post_type) {
-            echo '<style type="text/css">
-                #misc-publishing-actions .misc-pub-section.misc-pub-post-status,#minor-publishing-actions
-                {
-                    display:none;
-                }
-            </style>';
-        }
-    }
-
-    /**
      * Add buttons to start parsing xcap and Cbis
      * @return void
      */
@@ -435,65 +426,26 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
         if (current_user_can('manage_options')) {
             echo '<div class="alignleft actions" style="position: relative;">';
                 // TA BORT
-                // echo '<a href="' . admin_url('options.php?page=import-events') . '" class="button-primary" id="post-query-submit">debug XCAP</a>';
-                // echo '<a href="' . admin_url('options.php?page=import-cbis-events') . '" class="button-primary" id="post-query-submit">debug CBIS</a>';
-                // echo '<a href="' . admin_url('options.php?page=import-cbis-locations') . '" class="button-primary" id="post-query-submit">Custom</a>';
-                // echo '<a href="' . admin_url('options.php?page=delete-all-events') . '" class="button-primary" id="post-query-submit">DELETE</a>';
-            echo '<div class="button-primary extraspace" id="xcap">' . __('Import XCAP') . '</div>';
-            echo '<div class="button-primary extraspace" id="cbis">' . __('Import CBIS') . '</div>';
-            echo '<div class="button-primary extraspace" id="occasions">Collect event timestamps</div>';
+            // echo '<a href="' . admin_url('options.php?page=import-events') . '" class="button-primary" id="post-query-submit">debug XCAP</a>';
+            // echo '<a href="' . admin_url('options.php?page=import-cbis-events') . '" class="button-primary" id="post-query-submit">debug CBIS</a>';
+            // echo '<a href="' . admin_url('options.php?page=import-cbis-locations') . '" class="button-primary" id="post-query-submit">Custom</a>';
+                //echo '<a href="' . admin_url('options.php?page=delete-all-events') . '" class="button-primary" id="post-query-submit">DELETE</a>';
+            echo '<div class="button-primary extraspace" id="xcap">' . __('Import XCAP', 'event-manager') . '</div>';
+            echo '<div class="button-primary extraspace" id="cbis">' . __('Import CBIS', 'event-manager') . '</div>';
+            echo '<div class="button-primary extraspace" id="occasions">'.__('Collect event timestamps', 'event-manager').'</div>';
                 //echo '<div id="importResponse"></div>';
             echo '</div>';
         }
     }
 
-    /**
-     * Script for require event title.
-     */
-    public function requireEventTitle()
-    {
-        echo "<script type='text/javascript'>\n";
-        echo "
-        jQuery('#publish').click(function() {
-                var testervar = jQuery('[id^=\"titlediv\"]').find('#title');
-                if (testervar.val().length < 1) {
-                    setTimeout(\"jQuery('#ajax-loading').css('visibility', 'hidden');\", 100);
-                    if (!jQuery(\".require-post\").length) {
-                        jQuery(\"#post\").before('<div class=\"error require-post\"><p>Please enter a title</p></div>');
-                    }
-                        setTimeout(\"jQuery('#publish').removeClass('button-primary-disabled');\", 100);
-                        return false;
-                    } else {
-                        jQuery(\".require-post\").remove();
-                    }
-            });
-            jQuery('#title').keypress(function(e) {
-                if(e.which == 13) {
-                var testervar = jQuery('[id^=\"titlediv\"]').find('#title');
-                if (testervar.val().length < 1) {
-                    setTimeout(\"jQuery('#ajax-loading').css('visibility', 'hidden');\", 100);
-                    if (!jQuery(\".require-post\").length) {
-                        jQuery(\"#post\").before('<div class=\"error require-post\"><p>Please enter a title</p></div>');
-                    }
-                        setTimeout(\"jQuery('#publish').removeClass('button-primary-disabled');\", 100);
-                        return false;
-                    } else {
-                        jQuery(\".require-post\").remove();
-                    }
-                }
-            });
-        ";
-        echo "</script>\n";
-    }
-
     /*
      * Clone event as a draft and redirects to edit post
      */
-    public function duplicate_post()
+    public function duplicatePost()
     {
         global $wpdb;
         if (! (isset($_GET['post']) || isset($_POST['post'])  || (isset($_REQUEST['action']) && 'duplicate_post' == $_REQUEST['action']))) {
-            wp_die('No post to duplicate has been supplied!');
+            wp_die(__('No post to duplicate has been supplied!', 'event-manager'));
         }
 
         $post_id = (isset($_GET['post']) ? absint($_GET['post']) : absint($_POST['post']));
@@ -528,7 +480,7 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
                 wp_set_object_terms($new_post_id, $post_terms, $taxonomy, false);
             }
 
-            // duplicate all post meta in two SQL queries
+            // duplicate all post meta
             $post_meta_infos = $wpdb->get_results("SELECT meta_key, meta_value FROM $wpdb->postmeta WHERE post_id=$post_id");
             if (count($post_meta_infos)!=0) {
                 $sql_query = "INSERT INTO $wpdb->postmeta (post_id, meta_key, meta_value) ";
@@ -557,7 +509,7 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
             wp_redirect(admin_url('post.php?action=edit&post=' . $new_post_id.'&duplicate=' . $post_id));
             exit;
         } else {
-            wp_die('Event creation failed, could not find original event: ' . $post_id);
+            wp_die(__('Event creation failed, could not find original event', 'event-manager').': ' . $post_id);
         }
     }
 
@@ -567,11 +519,11 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
      * @param  WP_Post $post    The post object.
      * @return array
      */
-    public function duplicate_post_link($actions, $post)
+    public function duplicatePostLink($actions, $post)
     {
         $post_type = $_GET['post_type'];
         if ($post_type == 'event' && current_user_can('edit_posts')) {
-            $actions['duplicate'] = '<a href="admin.php?action=duplicate_post&amp;post=' . $post->ID . '" title="Create similar item" rel="permalink" onclick="return confirm(\'Are you sure you want to clone this event?\');">Clone</a>';
+            $actions['duplicate'] = '<a href="admin.php?action=duplicate_post&amp;post=' . $post->ID . '" title="'.__('Create similar item', 'event-manager').'" rel="permalink" onclick="return confirm(\''.__('Are you sure you want to clone this event?', 'event-manager').'\');">'.__('Clone', 'event-manager').'</a>';
         }
         return $actions;
     }
@@ -585,16 +537,19 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
             return;
         }
         $id = $_GET['duplicate'];
+
+        $msg = sprintf(__('This is a duplicate of the event: %s. If this is a new occasion for the same event, please %s and republish the original event', 'event-manager'), '<strong>"' . get_the_title($id) . '"</strong>', '<a href="' . esc_url(get_edit_post_link($id))  .'">'.__('edit', 'event-manager').'</a>');
+
         ?>
         <div class="notice notice-warning is-dismissible">
-        <p><?php _e('This is a duplicate of the event: <strong>"' . get_the_title($id) . '"</strong>. If this is a new occasion for the same event, please <a href="' . esc_url(get_edit_post_link($id))  .'">edit</a> and republish the original event.', 'text-domain');
+        <p><?php echo $msg;
         ?></p>
         </div>
         <?php
     }
 
     /**
-     * Show post instructions as a dismissable notification.
+     * Show initial instructions as a dismissable notification.
      */
     public function eventInstructions()
     {
@@ -606,17 +561,61 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
         }
         ?>
         <div class="notice notice-success dismissable is-dismissible">
-        <p><?php _e('Please do not enter information that refers to information in another text field. It is not certain that all fields will be presented to the consumer and would thefore be missguiding.', 'text-domain');
+        <p><?php _e('Please do not enter information that refers to information in another text field. It is not certain that all fields will be presented to the consumer and would thefore be missguiding.', 'event-manager');
         ?></p>
         </div>
         <?php
     }
-    
+
+    /**
+     * Show warning if CBIS haven't imported any events the last 7 days.
+     */
+    public function importCbisWarning()
+    {
+        $screen = get_current_screen();
+        $optionsChecked = (get_field('import_warning', 'option') == true && get_field('cbis_daily_cron', 'option') == true) ? true : false;
+        if ($screen->post_type != 'event' || $optionsChecked != true) {
+           return;
+        }
+        $latestPost = get_posts("post_type=event&numberposts=1&meta_key=import_client&meta_value=cbis");
+        if (empty($latestPost[0]) || strtotime($latestPost[0]->post_date) > strtotime('-1 week')) {
+            return;
+        }
+        ?>
+        <div class="notice notice-warning is-dismissible">
+        <p><?php _e('CBIS have not imported any events for atleast 7 days. Please control the importer.', 'event-manager');
+        ?></p>
+        </div>
+        <?php
+    }
+
+    /**
+     * Show warning if XCAP haven't imported any events the last 7 days.
+     */
+    public function importXcapWarning()
+    {
+        $screen = get_current_screen();
+        $optionsChecked = (get_field('import_warning', 'option') == true && get_field('xcap_daily_cron', 'option') == true) ? true : false;
+        if ($screen->post_type != 'event' || $optionsChecked != true) {
+           return;
+        }
+        $latestPost = get_posts("post_type=event&numberposts=1&meta_key=import_client&meta_value=xcap");
+        if (empty($latestPost[0]) || strtotime($latestPost[0]->post_date) > strtotime('-1 week')) {
+            return;
+        }
+        ?>
+        <div class="notice notice-warning is-dismissible">
+        <p><?php _e('XCAP have not imported any events for atleast 7 days. Please control the importer.', 'event-manager');
+        ?></p>
+        </div>
+        <?php
+    }
+
     /**
      * Saves hashtags from content as event-tags
      * @return void
      */
-    public function extractEventTags($post_id) 
+    public function extractEventTags($post_id)
     {
         DataCleaner::hashtags($post_id, 'event-tags');
     }

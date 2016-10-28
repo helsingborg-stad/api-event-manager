@@ -54,9 +54,9 @@ class Xcap extends \HbgEventImporter\Parser
         $startDate = isset($eventData->dtstart) && !empty($eventData->dtstart) ? $eventData->dtstart : null;
         $startDate = $this->formatDate($startDate);
         $ticketUrl = isset($eventData->{'x-xcap-ticketlink'}) && !empty($eventData->{'x-xcap-ticketlink'}) ? $eventData->{'x-xcap-ticketlink'} : null;
-        $defualt_location = get_option('options_default_city');
-        $defualt_location = (!isset($defualt_location) || empty($defualt_location)) ? null : $defualt_location;
+        $defaultLocation = get_field('cbis_post_status', 'option') ? get_field('cbis_post_status', 'option') : null;
         $city = ($location != null) ? $location : $defualt_location;
+        $postStatus = get_field('xcap_post_status', 'option') ? get_field('xcap_post_status', 'option') : 'publish';
 
         if (!is_string($name)) {
             return;
@@ -96,7 +96,8 @@ class Xcap extends \HbgEventImporter\Parser
                         'latitude'              =>  null,
                         'longitude'             =>  null,
                         'import_client'         =>  $import_client,
-                        '_event_manager_uid'    =>  null
+                        '_event_manager_uid'    =>  null,
+                        'accepted'              =>  1,
                     )
                 );
 
@@ -109,31 +110,27 @@ class Xcap extends \HbgEventImporter\Parser
             }
         }
 
-        // Check if the event passes the filter
-        if (!$this->filter($categories)) {
-            echo "Something went wrong with the categories:\n";
-            var_dump($categories);
-            var_dump($eventData);
-        }
-
         $eventId = $this->checkIfPostExists('event', $newPostTitle);
 
         $isUpdate = false;
-
+        $accepted = -1;
         // Check: if event is a duplicate and if "sync" option is set.
         if ($eventId && get_post_meta( $eventId, '_event_manager_uid', true)) {
             $existingUid = get_post_meta( $eventId, '_event_manager_uid', true);
             $sync = get_post_meta( $eventId, 'sync', true);
+            $accepted = get_post_meta($eventId, 'accepted', true);
             $isUpdate = ($existingUid == $eventData->uid && $sync == 1 ) ? true : false;
+            $postStatus = get_post_status($eventId);
         }
 
-        // Save event if it doesn't exist or is an update and "sync" option is set. Continues if event is an older duplicate.
-        if ($eventId == null || $isUpdate == true) {
+        // Save event if it doesn't exist or is an update and "sync" option is set. Continues if event is an older version of a duplicate.
+        if (($eventId == null || $isUpdate == true) && $this->filter($categories) == true) {
             // Creates the event object
             $event = new Event(
                 array(
                     'post_title'            => $newPostTitle,
-                    'post_content'          => $postContent
+                    'post_content'          => $postContent,
+                    'post_status'           => $postStatus,
                 ),
                 array(
                     'uniqueId'              => $eventData->uid,
@@ -153,7 +150,7 @@ class Xcap extends \HbgEventImporter\Parser
                     'price_information'     => null,
                     'price_adult'           => null,
                     'price_children'        => null,
-                    'accepted'              => 0,
+                    'accepted'              => $accepted,
                     'import_client'         => 'xcap',
                     'imported_event'        => true
                 )
@@ -184,15 +181,13 @@ class Xcap extends \HbgEventImporter\Parser
         if (get_field('xcap_filter_categories', 'options')) {
             $filters = array_map('trim', explode(',', get_field('xcap_filter_categories', 'options')));
             $categoriesLower = array_map('strtolower', $categories);
-            $passes = false;
 
             foreach ($filters as $filter) {
                 if (in_array(strtolower($filter), $categoriesLower)) {
-                    $passes = true;
+                    $passes = false;
                 }
             }
         }
-
         return $passes;
     }
 

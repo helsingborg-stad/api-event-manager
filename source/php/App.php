@@ -110,7 +110,6 @@ add_action('admin_menu', array($this, 'createParsePage'));
 
     /**
      * Redirect user when entering dashboard.
-     * @return [type] [description]
      */
     public function dashboardRedirect()
     {
@@ -130,7 +129,6 @@ add_action('admin_menu', array($this, 'createParsePage'));
     public function enqueuStyleSheets()
     {
         wp_register_style('lightbox', plugins_url() . '/api-event-manager/dist/css/lightbox.min.css', false, '1.0.0');
-
         wp_enqueue_style('lightbox');
     }
 
@@ -154,16 +152,10 @@ add_action('admin_menu', array($this, 'createParsePage'));
     public function enqueueStyles()
     {
         global $current_screen;
-        $currId = $current_screen->id;
-        if ($currId == 'event' || $currId == 'location' || $currId == 'contact' || $currId == 'sponsor' || $currId == 'package' || $currId == 'membership-card' && ($current_screen->action == '' || $current_screen->action == 'add')) {
+        $type = $current_screen->post_type;
+        if ($type == 'event' || $type == 'location' || $type == 'contact' || $type == 'sponsor' || $type == 'package' || $type == 'membership-card') {
             wp_enqueue_style('hbg-event-importer', HBGEVENTIMPORTER_URL . '/dist/css/hbg-event-importer.min.css');
         }
-
-        // if ($current_screen->id == 'contact' && ($current_screen->action == '' || $current_screen->action == 'add')) {
-        //     wp_enqueue_style('hbg-event-importer', HBGEVENTIMPORTER_URL . '/dist/css/hbg-event-importer.min.css');
-        // }
-
-        wp_enqueue_style('hbg-event-importer', HBGEVENTIMPORTER_URL . '/source/sass/custom.css');
     }
 
     /**
@@ -173,12 +165,27 @@ add_action('admin_menu', array($this, 'createParsePage'));
     public function enqueueScripts()
     {
         global $current_screen;
-        $currId = $current_screen->id;
-        if ($currId == 'event' || $currId == 'location' || $currId == 'contact' || $currId == 'sponsor' || $currId == 'package' || $currId == 'membership-card' && ($current_screen->action == '' || $current_screen->action == 'add')) {
+        $type = $current_screen->post_type;
+        if ($type == 'event' || $type == 'location' || $type == 'contact' || $type == 'sponsor' || $type == 'package' || $type == 'membership-card') {
             wp_enqueue_script('hbg-event-importer', HBGEVENTIMPORTER_URL . '/dist/js/hbg-event-importer.min.js');
         }
 
-        wp_enqueue_script('hbg-event-importer', HBGEVENTIMPORTER_URL . '/source/js/custom.js');
+        wp_localize_script( 'hbg-event-importer', 'eventmanager', array(
+            'require_title'     => __( "Title is missing", 'event-manager' ),
+            'new_contact'       => __( "Create new contact", 'event-manager' ),
+            'new_sponsor'       => __( "Create new sponsor", 'event-manager' ),
+            'new_location'      => __( "Create new location", 'event-manager' ),
+            'new_card'          => __( "Create new membership card", 'event-manager' ),
+            'close'             => __( "Close", 'event-manager' ),
+            'add_images'        => __( "Add images", 'event-manager' ),
+            'similar_posts'     => __( "Similar posts", 'event-manager' ),
+            'new_data_imported' => __( "New data imported", 'event-manager' ),
+            'events'            => __( "Events", 'event-manager' ),
+            'locations'         => __( "Locations", 'event-manager' ),
+            'contacts'          => __( "Contacts", 'event-manager' ),
+            'time_until_reload' => __( "Time until reload", 'event-manager' ),
+            'loading'           => __( "Loading", 'event-manager' ),
+        ));
     }
 
     /**
@@ -219,6 +226,7 @@ add_action('admin_menu', array($this, 'createParsePage'));
             function () {
                 new \HbgEventImporter\Parser\CbisLocation('http://api.info.citybreak.com/Products.asmx?WSDL');
             });
+// TA BORT
         add_submenu_page(
             null,
             __('Delete all events', 'hbg-event-importer'),
@@ -247,16 +255,17 @@ add_action('admin_menu', array($this, 'createParsePage'));
      */
     public function startImport()
     {
-        if (get_field('cbis_daily_cron', 'option') == true) {
-            $cbisUrl = 'http://api.cbis.citybreak.com/Products.asmx?wsdl';
-            new \HbgEventImporter\Parser\CBIS($cbisUrl);
-            file_put_contents(dirname(__FILE__)."/Log/cbis_cron.log", "CBIS, Last run: ".date("Y-m-d H:i:s"));
-        }
         if (get_field('xcap_daily_cron', 'option') == true) {
             $xcapUrl = 'http://mittkulturkort.se/calendar/listEvents.action' .
                        '?month=&date=&categoryPermaLink=&q=&p=&feedType=ICAL_XML';
             new \HbgEventImporter\Parser\Xcap($xcapUrl);
             file_put_contents(dirname(__FILE__)."/Log/xcap_cron_events.log", "XCAP, Last run: ".date("Y-m-d H:i:s"));
+        }
+        if (get_field('cbis_daily_cron', 'option') == true) {
+            $cbisUrl = 'http://api.cbis.citybreak.com/Products.asmx?wsdl';
+            new \HbgEventImporter\Parser\CBIS($cbisUrl);
+            new \HbgEventImporter\Parser\CbisLocation($cbisUrl);
+            file_put_contents(dirname(__FILE__)."/Log/cbis_cron.log", "CBIS, Last run: ".date("Y-m-d H:i:s"));
         }
     }
 
@@ -277,6 +286,9 @@ add_action('admin_menu', array($this, 'createParsePage'));
         return $paths;
     }
 
+    /**
+     * Creates necessary database table on plugin activation
+     */
     public static function database_creation()
     {
         global $wpdb;

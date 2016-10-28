@@ -4,7 +4,7 @@
         "fields": [
             {
                 "key": "field_56b055179e151",
-                "label": "Daglig inl\u00e4sning",
+                "label": "Daily import",
                 "name": "xcap_daily_cron",
                 "type": "true_false",
                 "instructions": "",
@@ -15,7 +15,7 @@
                     "class": "",
                     "id": ""
                 },
-                "message": "Aktivera daglig automatisk inl\u00e4sning fr\u00e5n Xcap",
+                "message": "Enable daily automatic import from XCAP",
                 "default_value": 1
             },
             {
@@ -23,7 +23,7 @@
                 "label": "Post status",
                 "name": "xcap_post_status",
                 "type": "radio",
-                "instructions": "Status p\u00e5 nyimporterade evenemang.",
+                "instructions": "Status of imported events.",
                 "required": 1,
                 "conditional_logic": 0,
                 "wrapper": {
@@ -32,21 +32,22 @@
                     "id": ""
                 },
                 "choices": {
-                    "draft": "Utkast",
-                    "pending": "V\u00e4ntar p\u00e5 granskning",
-                    "publish": "Publicerad"
+                    "draft": "Draft",
+                    "publish": "Published"
                 },
+                "allow_null": 0,
                 "other_choice": 0,
                 "save_other_choice": 0,
                 "default_value": "publish",
-                "layout": "vertical"
+                "layout": "vertical",
+                "return_format": "value"
             },
             {
                 "key": "field_56af508abf6de",
-                "label": "Filtrera p\u00e5 kategori\/taggar",
+                "label": "Exclude categories",
                 "name": "xcap_filter_categories",
                 "type": "text",
-                "instructions": "Skriv in namn p\u00e5 de kategorier\/taggar som du vill importera. Separera med kommatecken",
+                "instructions": "Enter the name of the categories that you want to exclude from the import. Separate with commas.",
                 "required": 0,
                 "conditional_logic": 0,
                 "wrapper": {
@@ -58,9 +59,7 @@
                 "placeholder": "",
                 "prepend": "",
                 "append": "",
-                "maxlength": "",
-                "readonly": 0,
-                "disabled": 0
+                "maxlength": ""
             }
         ],
         "location": [

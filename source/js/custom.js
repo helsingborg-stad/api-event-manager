@@ -6,7 +6,7 @@ ImportEvents.long = 400;
 ImportEvents.timerId = null;
 
 jQuery(document).ready(function ($) {
-    $('#cbis, #xcap').click(function() {
+    $('#cbis, #xcap, #cbislocation').click(function() {
         if(!ImportEvents.loadingOccasions)
         {
             ImportEvents.loadingOccasions = true;
@@ -80,7 +80,7 @@ jQuery(document).ready(function ($) {
         changeAccepted(-1, postId);
     });
 
-    $('.acf-gallery-add').text("Add images");
+    $('.acf-gallery-add').text(eventmanager.add_images);
 
     var oldInput = '';
     $('input[name="post_title"]').on('change paste keyup', function() {
@@ -117,7 +117,7 @@ jQuery(document).ready(function ($) {
                     $('#suggestionContainer').fadeOut(200);
                 else
                 {
-                    $('#suggestionList').prepend('<li><strong>Similar posts: <button class="notice-dismiss suggestion-hide" suggestion-hide-action="close"> </strong></li>');
+                    $('#suggestionList').prepend('<li><strong>' + eventmanager.similar_posts + ': <button class="notice-dismiss suggestion-hide" suggestion-hide-action="close"> </strong></li>');
                     $('#suggestionContainer').fadeIn(200);
                     // $('.suggestion').click(function(event) {
                     //     event.preventDefault();
@@ -139,15 +139,15 @@ jQuery(document).ready(function ($) {
     {
         $('#titlewrap').after('<div id="suggestionContainer"><ul id="suggestionList"></ul></div>');
     }
-    if(pagenow == 'edit-event')
+    if(pagenow == 'edit-event' || pagenow == 'edit-location')
     {
         $('#wpwrap').append('<div id="blackOverlay"></div>');
         $('.wrap').append('\
             <div id="importResponse">\
-                <div><p>New data imported</p></div>\
-                <div class="inline"><p>Events</p></div><div class="inline"><p>Locations</p></div><div class="inline"><p>Contacts</p></div>\
+                <div><p>'+ eventmanager.new_data_imported +'</p></div>\
+                <div class="inline"><p>'+ eventmanager.events +'</p></div><div class="inline"><p>'+ eventmanager.locations +'</p></div><div class="inline"><p>'+ eventmanager.contacts +'</p></div>\
                 <div class="inline"><p id="event">0</p></div><div class="inline"><p id="location">0</p></div><div class="inline"><p id="contact">0</p></div>\
-                <div id="untilReload"><div id="meter"></div><p>Time until reload</p></div>\
+                <div id="untilReload"><div id="meter"></div><p>'+ eventmanager.time_until_reload +'</p></div>\
             </div>\
         ');
     }
@@ -155,7 +155,7 @@ jQuery(document).ready(function ($) {
     // TA BORT
     // $('body').on('click','.rcr_start_date .hasDatepicker', function() {
     //     //$(this).datepicker('destroy').datepicker({showOn:'focus'}).focus();
-    //     $(this).datepicker("show");        
+    //     $(this).datepicker("show");
     //     $(this).datepicker( "option", "dateFormat", "yy-mm-dd" );
     //     $(this).datepicker( "option", "minDate", "-1y" );
     //     $(this).datepicker( "option", "maxDate", "+3y" );
@@ -164,16 +164,16 @@ jQuery(document).ready(function ($) {
 
     // $('body').on('click','.rcr_end_date .hasDatepicker', function() {
     //     //$(this).datepicker('destroy').datepicker({showOn:'focus'}).focus();
-    //     //$(this).datepicker("show");        
+    //     //$(this).datepicker("show");
     //     $(this).datepicker( "option", "dateFormat", "yy-mm-dd" );
     //     $(this).datepicker( "option", "minDate", "-1y" );
     //     $(this).datepicker( "option", "maxDate", "+3y" );
     //     $(this).datepicker({showOn:'focus'}).focus();
     // });
 
-    $('body').on('click','.acf-field-57d279f8db0cc .hasDatepicker', function() {        
+    $('body').on('click','.acf-field-57d279f8db0cc .hasDatepicker', function() {
         $(this).datepicker( "option", "dateFormat", "yy-mm-dd" );
-       
+
        var weekDay = $(this).parents('.acf-field-57d279addb0cb')
             .siblings('.acf-field-57d275713bf4e')
                .find(':selected').val();
@@ -183,7 +183,7 @@ jQuery(document).ready(function ($) {
         var endDate = $(this).parents('.acf-field-57d279addb0cb')
             .siblings('.acf-field-57d2787b3bf51')
                .find('.hasDatepicker').val();
-        
+
         $(this).datepicker( "option", "defaultDate", startDate );
 
         if (startDate && endDate) {
@@ -203,6 +203,35 @@ jQuery(document).ready(function ($) {
         $(this).datepicker({showOn:'focus'}).focus();
     });
 
+    // Require post title when publish posts
+    $('#publish').click(function() {
+        var testervar = jQuery('[id^="titlediv"]').find('#title');
+        if (testervar.length && testervar.val().length < 1) {
+            setTimeout("jQuery('#ajax-loading').css('visibility', 'hidden');", 100);
+            if (!jQuery('.require-post').length) {
+                jQuery('#post').before('<div class="error require-post"><p>' + eventmanager.require_title + '</p></div>');
+            }
+                setTimeout("jQuery('#publish').removeClass('button-primary-disabled');", 100);
+                return false;
+            } else {
+                jQuery('.require-post').remove();
+            }
+    });
+    $('#title').keypress(function(e) {
+        if(e.which == 13) {
+        var testervar = jQuery('[id^=\"titlediv\"]').find('#title');
+        if (testervar.val().length < 1) {
+            setTimeout("jQuery('#ajax-loading').css('visibility', 'hidden');", 100);
+            if (!jQuery(".require-post").length) {
+                jQuery('#post').before('<div class="error require-post"><p>' + eventmanager.require_title + '</p></div>');
+            }
+                setTimeout("jQuery('#publish').removeClass('button-primary-disabled');", 100);
+                return false;
+            } else {
+                jQuery('.require-post').remove();
+            }
+        }
+    });
 });
 
 /**
@@ -257,7 +286,7 @@ function collectCssFromButton(button)
 function redLoadingButton(button, callback)
 {
     button.fadeOut(500, function() {
-        var texts = ['Loading&nbsp;&nbsp;&nbsp;', 'Loading.&nbsp;&nbsp;', 'Loading..&nbsp;', 'Loading...'];
+        var texts = [eventmanager.loading + '&nbsp;&nbsp;&nbsp;', eventmanager.loading + '.&nbsp;&nbsp;', eventmanager.loading + '..&nbsp;', eventmanager.loading + '...'];
         button.css('background-color', 'rgb(255, 210, 77)');
         button.css('border-color', 'rgb(255, 191, 0)');
         button.css('color', 'white');
@@ -343,7 +372,7 @@ function dismissInstructions() {
     var data = {
         'action'    : 'dismiss'
     };
-    
+
     jQuery.post(ajaxurl, data);
 }
 

@@ -12,20 +12,20 @@ class EventTags
     public function registerEventTags()
     {
         $labels = array(
-            'name'                  => _x('Event tags', 'Taxonomy plural name', 'hbg-event-importer'),
-            'singular_name'         => _x('Event tag', 'Taxonomy singular name', 'hbg-event-importer'),
-            'search_items'          => __('Search Event Tags', 'hbg-event-importer'),
-            'popular_items'         => __('Popular Event Tags', 'hbg-event-importer'),
-            'all_items'             => __('All Event Tags', 'hbg-event-importer'),
-            'parent_item'           => __('Parent Event Tag', 'hbg-event-importer'),
-            'parent_item_colon'     => __('Parent Event Tag', 'hbg-event-importer'),
-            'edit_item'             => __('Edit Event Tag', 'hbg-event-importer'),
-            'update_item'           => __('Update Event Tag', 'hbg-event-importer'),
-            'add_new_item'          => __('Add New Event Tag', 'hbg-event-importer'),
-            'new_item_name'         => __('New Event Tag', 'hbg-event-importer'),
-            'add_or_remove_items'   => __('Add or remove Event Tags', 'hbg-event-importer'),
-            'choose_from_most_used' => __('Choose from most used Event Tags', 'hbg-event-importer'),
-            'menu_name'             => __('Tags', 'hbg-event-importer'),
+            'name'                  => _x('Tags', 'Taxonomy plural name', 'event-manager'),
+            'singular_name'         => _x('Tag', 'Taxonomy singular name', 'event-manager'),
+            'search_items'          => __('Search tags', 'event-manager'),
+            'popular_items'         => __('Popular tags', 'event-manager'),
+            'all_items'             => __('All tags', 'event-manager'),
+            'parent_item'           => __('Parent', 'event-manager'),
+            'parent_item_colon'     => __('Parent', 'event-manager'),
+            'edit_item'             => __('Edit tag', 'event-manager'),
+            'update_item'           => __('Update tag', 'event-manager'),
+            'add_new_item'          => __('Add new tag', 'event-manager'),
+            'new_item_name'         => __('New tag', 'event-manager'),
+            'add_or_remove_items'   => __('Add or remove tags', 'event-manager'),
+            'choose_from_most_used' => __('Choose from most used tags', 'event-manager'),
+            'menu_name'             => __('Tags', 'event-manager'),
         );
 
         $args = array(

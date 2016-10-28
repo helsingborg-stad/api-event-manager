@@ -124,8 +124,8 @@ class CBIS extends \HbgEventImporter\Parser
         $cbisId = intval(get_option('options_cbis_api_id'));
         $cbisCategory = 14086;
 
-        $defaultLocation = get_option('options_default_city');
-        $defaultLocation = (!isset($defualt_location) || empty($defualt_location)) ? null : $defualt_location;
+        $defaultLocation = get_field('cbis_post_status', 'option') ? get_field('cbis_post_status', 'option') : null;
+        $postStatus = get_field('cbis_post_status', 'option') ? get_field('cbis_post_status', 'option') : 'publish';
 
         if (!isset($cbisKey) || empty($cbisKey) || !isset($cbisId) || empty($cbisId)) {
             throw new \Exception('Needed authorization information (CBIS API id and/or CBIS API key) is missing.');
@@ -166,54 +166,62 @@ class CBIS extends \HbgEventImporter\Parser
         );
 
         // Get and save event "arenas" to locations
-        $this->arenas = $this->client->ListAll($requestParams)->ListAllResult->Items->Product;
-        $productCategory = 'arena';
+        // $this->arenas = $this->client->ListAll($requestParams)->ListAllResult->Items->Product;
+        // $productCategory = 'arena';
 
-        foreach($this->arenas as $key => $arenaData) {
-            $this->saveArena($arenaData, $productCategory, $defaultLocation);
-        }
+        // foreach($this->arenas as $key => $arenaData) {
+        //     $this->saveArena($arenaData, $productCategory, $defaultLocation);
+        // }
 
-        // Adjust request parameters for getting products, 1500 itemsPerPage to get all events
+        // // Adjust request parameters for getting products, 1500 itemsPerPage to get all events
         $requestParams['filter']['ProductType'] = "Product";
         $requestParams['itemsPerPage'] = 1500;
 
         // Get and save "Events"
         $this->events = $this->client->ListAll($requestParams)->ListAllResult->Items->Product;
 
-        foreach ($this->events as $eventData) {
-            $this->saveEvent($eventData);
-        }
-
-        // Get and save "Accomodations" to locations
-        $requestParams['itemsPerPage'] = 300;
-        $requestParams['categoryId'] = 14067;
-        $requestParams['filter']['WithOccasionsOnly'] = false;
-        $requestParams['filter']['ExcludeProductsWithoutOccasions'] = false;
-        $requestParams['filter']['StartDate'] = null;
-        $productCategory = 'accommodation';
-        $this->accommodations = $this->client->ListAll($requestParams)->ListAllResult->Items->Product;
-
-        foreach ($this->accommodations as $accommodationData) {
-            $this->saveArena($accommodationData, $productCategory, $defaultLocation);
-        }
-
-        // Get and save "To do" to locations
-        $requestParams['itemsPerPage'] = 600;
-        $requestParams['categoryId'] = 14085;
-        $productCategory = 'to do';
-        $this->todo = $this->client->ListAll($requestParams)->ListAllResult->Items->Product;
-
-        // Filter expired products
-        $filteredProducts = array_filter($this->todo, function($obj){
-            if (isset($obj->ExpirationDate) && strtotime($obj->ExpirationDate) < strtotime("now")) {
+        // Filter expired products older than 2 years
+        $filteredProducts = array_filter($this->events, function($obj){
+            if (isset($obj->ExpirationDate) && strtotime($obj->ExpirationDate) < strtotime("-2 years")) {
                 return false;
             }
             return true;
         });
 
-        foreach($filteredProducts as $key => $todoData) {
-            $this->saveArena($todoData, $productCategory, $defaultLocation);
+        foreach ($filteredProducts as $key => $eventData) {
+            $this->saveEvent($eventData, $postStatus);
         }
+
+        // //Get and save "Accomodations" to locations
+        // $requestParams['itemsPerPage'] = 300;
+        // $requestParams['categoryId'] = 14067;
+        // $requestParams['filter']['WithOccasionsOnly'] = false;
+        // $requestParams['filter']['ExcludeProductsWithoutOccasions'] = false;
+        // $requestParams['filter']['StartDate'] = null;
+        // $productCategory = 'accommodation';
+        // $this->accommodations = $this->client->ListAll($requestParams)->ListAllResult->Items->Product;
+
+        // foreach ($this->accommodations as $accommodationData) {
+        //     $this->saveArena($accommodationData, $productCategory, $defaultLocation);
+        // }
+
+        // // Get and save "To do" to locations
+        // $requestParams['itemsPerPage'] = 500;
+        // $requestParams['categoryId'] = 14085;
+        // $productCategory = 'to do';
+        // $this->todo = $this->client->ListAll($requestParams)->ListAllResult->Items->Product;
+
+        // // Filter expired products
+        // $filteredProducts = array_filter($this->todo, function($obj){
+        //     if (isset($obj->ExpirationDate) && strtotime($obj->ExpirationDate) < strtotime("now")) {
+        //         return false;
+        //     }
+        //     return true;
+        // });
+
+        // foreach($filteredProducts as $key => $todoData) {
+        //     $this->saveArena($todoData, $productCategory, $defaultLocation);
+        // }
 
     }
 
@@ -265,7 +273,7 @@ class CBIS extends \HbgEventImporter\Parser
     /**
      * Get occasions from the event data
      * @param  object $eventData Event data object
-     * @return array            Occasions
+     * @return array             Occasions
      */
     public function getOccasions($eventData)
     {
@@ -357,7 +365,8 @@ class CBIS extends \HbgEventImporter\Parser
                     'latitude'           => $latitude,
                     'longitude'          => $longitude,
                     'import_client'      => $import_client,
-                    '_event_manager_uid' => $this->getAttributeValue(self::ATTRIBUTE_NAME, $attributes) ? $this->getAttributeValue(self::ATTRIBUTE_NAME, $attributes) : $this->getAttributeValue(self::ATTRIBUTE_ADDRESS, $attributes)
+                    '_event_manager_uid' => $this->getAttributeValue(self::ATTRIBUTE_NAME, $attributes) ? $this->getAttributeValue(self::ATTRIBUTE_NAME, $attributes) : $this->getAttributeValue(self::ATTRIBUTE_ADDRESS, $attributes),
+                    'accepted'           => 1,
                 )
             );
 
@@ -376,7 +385,7 @@ class CBIS extends \HbgEventImporter\Parser
      * @param  object $eventData  Event data
      * @return void
      */
-    public function saveEvent($eventData)
+    public function saveEvent($eventData, $postStatus)
     {
         $attributes = $this->getAttributes($eventData);
         $categories = $this->getCategories($eventData);
@@ -409,7 +418,8 @@ class CBIS extends \HbgEventImporter\Parser
                     'latitude'              =>  $latitude,
                     'longitude'             =>  $longitude,
                     'import_client'         =>  $import_client,
-                    '_event_manager_uid'    =>  $this->getAttributeValue(self::ATTRIBUTE_ADDRESS, $attributes) ? $this->getAttributeValue(self::ATTRIBUTE_ADDRESS, $attributes) : $eventData->GeoNode->Name
+                    '_event_manager_uid'    =>  $this->getAttributeValue(self::ATTRIBUTE_ADDRESS, $attributes) ? $this->getAttributeValue(self::ATTRIBUTE_ADDRESS, $attributes) : $eventData->GeoNode->Name,
+                    'accepted'              =>  1,
                 )
             );
 
@@ -490,27 +500,29 @@ class CBIS extends \HbgEventImporter\Parser
         }
 
         $newPostTitle = $this->getAttributeValue(self::ATTRIBUTE_NAME, $attributes, ($eventData->Name != null ? $eventData->Name : null));
-
         $newImage = (isset($eventData->Image->Url) ? $eventData->Image->Url : null);
         $eventId = $this->checkIfPostExists('event', $newPostTitle);
-        
-        $uid = 'cbis-' . $eventData->Id;  
+        $uid = 'cbis-' . $eventData->Id;
         $isUpdate = false;
+        $accepted = -1;
 
         // Check: if event is a duplicate and if "sync" option is set.
-        if ($eventId && get_post_meta( $eventId, '_event_manager_uid', true)) {
+        if ($eventId != null && get_post_meta($eventId, '_event_manager_uid', true) != null) {
             $existingUid = get_post_meta( $eventId, '_event_manager_uid', true);
             $sync = get_post_meta( $eventId, 'sync', true);
+            $accepted = get_post_meta($eventId, 'accepted', true);
             $isUpdate = ($existingUid == $uid && $sync == 1 ) ? true : false;
+            $postStatus = get_post_status($eventId);
         }
 
         // Save event if it doesn't exist or is an update and "sync" option is set. Continues if event is an older duplicate.
-        if ($eventId == null || $isUpdate == true) {
+        if (($eventId == null || $isUpdate == true) && $this->filter($categories) == true) {
             // Creates the event object
             $event = new Event(
                 array(
                     'post_title'            => $newPostTitle,
-                    'post_content'          => $postContent
+                    'post_content'          => $postContent,
+                    'post_status'           => $postStatus
                 ),
                 array(
                     'uniqueId'              => 'cbis-' . $eventData->Id,
@@ -530,7 +542,7 @@ class CBIS extends \HbgEventImporter\Parser
                     'price_information'     => $this->getAttributeValue(self::ATTRIBUTE_PRICE_INFORMATION, $attributes),
                     'price_adult'           => $this->getAttributeValue(self::ATTRIBUTE_PRICE_ADULT, $attributes),
                     'price_children'        => $this->getAttributeValue(self::ATTRIBUTE_PRICE_CHILD, $attributes),
-                    'accepted'              => 1,
+                    'accepted'              => $accepted,
                     'import_client'         => 'cbis',
                     'imported_event'        => true
                 )
@@ -550,6 +562,27 @@ class CBIS extends \HbgEventImporter\Parser
                 $event->setFeaturedImageFromUrl($event->image);
             }
         }
+    }
+
+    /**
+     * Filter, if add or not to add
+     * @param  array $categories All categories
+     * @return bool
+     */
+    public function filter($categories)
+    {
+        $passes = true;
+        if (get_field('cbis_filter_categories', 'options')) {
+            $filters = array_map('trim', explode(',', get_field('cbis_filter_categories', 'options')));
+            $categoriesLower = array_map('strtolower', $categories);
+
+            foreach ($filters as $filter) {
+                if (in_array(strtolower($filter), $categoriesLower)) {
+                    $passes = false;
+                }
+            }
+        }
+        return $passes;
     }
 
     /**

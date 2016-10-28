@@ -5,10 +5,10 @@ namespace HbgEventImporter\Helper;
 class Address
 {
     /**
-     * Get coordinates from address
+     * Get cooridnates and complete address from address or place name
      * @param  string $address Address
-     * @param  boolean $type   is true if address exists
-     * @return array           Lat and long
+     * @param  boolean $type   is true if address exists, is false if only place name exist
+     * @return object          Address components
      */
     public static function gmapsGetAddressComponents($address, $type)
     {
@@ -16,7 +16,7 @@ class Address
             return false;
         }
 
-        // If $type == false, address is missing and uses Google Places API instead.
+        // If $type equals false, address is missing will use Google Places API instead.
         if ($type) {
             $url = 'https://maps.googleapis.com/maps/api/geocode/json?address=' . urlencode($address) . '&key=' . get_option('options_google_geocode_api_key');
             $data = json_decode(file_get_contents($url));
@@ -32,6 +32,7 @@ class Address
             }
         }
 
+        // Save address components to address object
         if (isset($data->status) && $data->status == 'OK') {
             $addressArray = (object)array();
             $street = '';
@@ -72,9 +73,10 @@ class Address
     }
 
     /**
-     * Get coordinates from address
-     * @param  string $address Address
-     * @return array          Lat and long
+     * Get address from coordinates
+     * @param  string $lat latitude coordinate
+     * @param  string $lng longitude coordinate
+     * @return object      address components
      */
     public static function gmapsGetAddressByCoordinates($lat, $lng)
     {
@@ -85,6 +87,7 @@ class Address
         $url = 'http://maps.googleapis.com/maps/api/geocode/json?latlng=' . urlencode($coordinates);
         $data = json_decode(file_get_contents($url));
 
+        // Save address components to address object
         if (isset($data->status) && $data->status == 'OK') {
             $addressArray = (object)array();
             $street = '';
