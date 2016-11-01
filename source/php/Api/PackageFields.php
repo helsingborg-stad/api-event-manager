@@ -6,9 +6,9 @@ namespace HbgEventImporter\Api;
  * Adding meta fields to location post type
  */
 
-class LocationFields extends Fields
+class PackageFields extends Fields
 {
-    private $postType = 'location';
+    private $postType = 'package';
 
     public function __construct()
     {
@@ -22,231 +22,196 @@ class LocationFields extends Fields
      */
     public static function registerRestFields()
     {
-        //Street adress
+        // Included events in the package
         register_rest_field($this->postType,
-            'street_address',
-            array(
-                'get_callback' => array($this, 'stringGetCallBack'),
-                'update_callback' => array($this, 'stringUpdateCallBack'),
-                'schema' => array(
-                    'description' => 'Field containing string value with street adress.',
-                    'type' => 'string',
-                    'context' => array('view', 'edit')
-                )
-            )
-        );
-
-        //Postal code
-        register_rest_field($this->postType,
-            'postal_code',
-            array(
-                'get_callback' => array($this, 'stringGetCallBack'),
-                'update_callback' => array($this, 'stringUpdateCallBack'),
-                'schema' => array(
-                    'description' => 'Field containing string value with postal code.',
-                    'type' => 'string',
-                    'context' => array('view', 'edit')
-                )
-            )
-        );
-
-         //Street adress
-        register_rest_field($this->postType,
-            'city',
-            array(
-                'get_callback' => array($this, 'stringGetCallBack'),
-                'update_callback' => array($this, 'stringUpdateCallBack'),
-                'schema' => array(
-                    'description' => 'Field containing string value with city.',
-                    'type' => 'string',
-                    'context' => array('view', 'edit')
-                )
-            )
-        );
-
-        //Municipality
-        register_rest_field($this->postType,
-            'municipality',
-            array(
-                'get_callback' => array($this, 'stringGetCallBack'),
-                'update_callback' => array($this, 'stringUpdateCallBack'),
-                'schema' => array(
-                    'description' => 'Field containing string value with municipality.',
-                    'type' => 'string',
-                    'context' => array('view', 'edit')
-                )
-            )
-        );
-
-        //Country
-        register_rest_field($this->postType,
-            'country',
-            array(
-                'get_callback' => array($this, 'stringGetCallBack'),
-                'update_callback' => array($this, 'stringUpdateCallBack'),
-                'schema' => array(
-                    'description' => 'Field containing string value with country.',
-                    'type' => 'string',
-                    'context' => array('view', 'edit')
-                )
-            )
-        );
-
-        //Latitude
-        register_rest_field($this->postType,
-            'latitude',
-            array(
-                'get_callback' => array($this, 'stringGetCallBack'),
-                'update_callback' => array($this, 'stringUpdateCallBack'),
-                'schema' => array(
-                    'description' => 'Field containing string value with coordinates.',
-                    'type' => 'string',
-                    'context' => array('view', 'edit')
-                )
-            )
-        );
-
-        //Latitude
-        register_rest_field($this->postType,
-            'longitude',
-            array(
-                'get_callback' => array($this, 'stringGetCallBack'),
-                'update_callback' => array($this, 'stringUpdateCallBack'),
-                'schema' => array(
-                    'description' => 'Field containing string value with coordinates.',
-                    'type' => 'string',
-                    'context' => array('view', 'edit')
-                )
-            )
-        );
-
-        //Formatted address
-        register_rest_field($this->postType,
-            'formatted_address',
-            array(
-                'get_callback' => array($this, 'stringGetCallBack'),
-                'update_callback' => array($this, 'stringUpdateCallBack'),
-                'schema' => array(
-                    'description' => 'Field containing string value with formatted address.',
-                    'type' => 'string',
-                    'context' => array('view', 'edit')
-                )
-            )
-        );
-
-        //Open hours
-        register_rest_field($this->postType,
-            'oph_exceptions',
+            'events_included',
             array(
                 'get_callback' => array($this, 'objectGetCallBack'),
                 'update_callback' => array($this, 'objectUpdateCallBack'),
                 'schema' => array(
-                    'description' => 'Field containing object with open hour exceptions.',
+                    'description' => 'Field containing objects with included events.',
                     'type' => 'object',
                     'context' => array('view', 'edit')
                 )
             )
         );
 
+        // Link to booking services
         register_rest_field($this->postType,
-            'oph_mon',
+            'booking_link',
             array(
                 'get_callback' => array($this, 'stringGetCallBack'),
                 'update_callback' => array($this, 'stringUpdateCallBack'),
                 'schema' => array(
-                    'description' => 'Field containing object with open hours.',
+                    'description' => 'Field containing string with link to external booking service.',
                     'type' => 'string',
                     'context' => array('view', 'edit')
                 )
             )
         );
 
+        // Phone number to booking service
         register_rest_field($this->postType,
-            'oph_tue',
+            'booking_phone',
             array(
                 'get_callback' => array($this, 'stringGetCallBack'),
                 'update_callback' => array($this, 'stringUpdateCallBack'),
                 'schema' => array(
-                    'description' => 'Field containing object with open hours.',
+                    'description' => 'Field containing string with phone number to external booking service.',
                     'type' => 'string',
                     'context' => array('view', 'edit')
                 )
             )
         );
 
+        // Age restriction details
         register_rest_field($this->postType,
-            'oph_wed',
+            'age_restriction',
             array(
                 'get_callback' => array($this, 'stringGetCallBack'),
                 'update_callback' => array($this, 'stringUpdateCallBack'),
                 'schema' => array(
-                    'description' => 'Field containing object with open hours.',
+                    'description' => 'Field containing string with age restriction details.',
                     'type' => 'string',
                     'context' => array('view', 'edit')
                 )
             )
         );
 
+        // Included in member cards
         register_rest_field($this->postType,
-            'oph_thu',
+            'membership_cards',
+            array(
+                'get_callback' => array($this, 'objectGetCallBack'),
+                'update_callback' => array($this, 'objectGetCallBack'),
+                'schema' => array(
+                    'description' => 'Field containing array with membership cards.',
+                    'type' => 'object',
+                    'context' => array('view', 'edit')
+                )
+            )
+        );
+
+        //Price details
+        register_rest_field($this->postType,
+            'price_information',
             array(
                 'get_callback' => array($this, 'stringGetCallBack'),
                 'update_callback' => array($this, 'stringUpdateCallBack'),
                 'schema' => array(
-                    'description' => 'Field containing object with open hours.',
+                    'description' => 'Field containing string with price details.',
                     'type' => 'string',
                     'context' => array('view', 'edit')
                 )
             )
         );
 
+        // Ticket includes
         register_rest_field($this->postType,
-            'oph_fri',
+            'ticket_includes',
             array(
                 'get_callback' => array($this, 'stringGetCallBack'),
                 'update_callback' => array($this, 'stringUpdateCallBack'),
                 'schema' => array(
-                    'description' => 'Field containing object with open hours.',
+                    'description' => 'Field containing string with ticket includes information.',
                     'type' => 'string',
                     'context' => array('view', 'edit')
                 )
             )
         );
 
+        //Price details
         register_rest_field($this->postType,
-            'oph_sat',
+            'price_adult',
             array(
                 'get_callback' => array($this, 'stringGetCallBack'),
                 'update_callback' => array($this, 'stringUpdateCallBack'),
                 'schema' => array(
-                    'description' => 'Field containing object with open hours.',
+                    'description' => 'Field containing string with price details.',
                     'type' => 'string',
                     'context' => array('view', 'edit')
                 )
             )
         );
 
+        //Price details
         register_rest_field($this->postType,
-            'oph_sun',
+            'price_children',
             array(
                 'get_callback' => array($this, 'stringGetCallBack'),
                 'update_callback' => array($this, 'stringUpdateCallBack'),
                 'schema' => array(
-                    'description' => 'Field containing object with open hours.',
+                    'description' => 'Field containing string with price details.',
                     'type' => 'string',
                     'context' => array('view', 'edit')
                 )
             )
         );
 
-        // Gallery
+        //Price details
         register_rest_field($this->postType,
-            'gallery',
+            'children_age',
+            array(
+                'get_callback' => array($this, 'stringGetCallBack'),
+                'update_callback' => array($this, 'stringUpdateCallBack'),
+                'schema' => array(
+                    'description' => 'Field containing string with age restrictions.',
+                    'type' => 'string',
+                    'context' => array('view', 'edit')
+                )
+            )
+        );
+
+        //Price details
+        register_rest_field($this->postType,
+            'price_student',
+            array(
+                'get_callback' => array($this, 'stringGetCallBack'),
+                'update_callback' => array($this, 'stringUpdateCallBack'),
+                'schema' => array(
+                    'description' => 'Field containing string with price details.',
+                    'type' => 'string',
+                    'context' => array('view', 'edit')
+                )
+            )
+        );
+
+        //Price details
+        register_rest_field($this->postType,
+            'price_senior',
+            array(
+                'get_callback' => array($this, 'stringGetCallBack'),
+                'update_callback' => array($this, 'stringUpdateCallBack'),
+                'schema' => array(
+                    'description' => 'Field containing string with price details.',
+                    'type' => 'string',
+                    'context' => array('view', 'edit')
+                )
+            )
+        );
+
+        //Price details
+        register_rest_field($this->postType,
+            'senior_age',
+            array(
+                'get_callback' => array($this, 'numericGetCallBack'),
+                'update_callback' => array($this, 'numericUpdateCallBack'),
+                'schema' => array(
+                    'description' => 'Field containing numeric with age restrictions.',
+                    'type' => 'numeric',
+                    'context' => array('view', 'edit')
+                )
+            )
+        );
+
+        //Price details
+        register_rest_field($this->postType,
+            'booking_group',
             array(
                 'get_callback' => array($this, 'objectGetCallBack'),
                 'update_callback' => array($this, 'objectUpdateCallBack'),
                 'schema' => array(
-                    'description' => 'Field containing object with gallery.',
+                    'description' => 'Field containing object with group prices.',
                     'type' => 'object',
                     'context' => array('view', 'edit')
                 )

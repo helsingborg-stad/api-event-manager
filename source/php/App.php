@@ -86,6 +86,8 @@ add_action('admin_menu', array($this, 'createParsePage'));
         new Api\LocationFields();
         new Api\ContactFields();
         new Api\EventFields();
+        new Api\SponsorFields();
+        new Api\PackageFields();
     }
 
     /**

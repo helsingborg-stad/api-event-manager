@@ -175,7 +175,7 @@ class CBIS extends \HbgEventImporter\Parser
 
         // // Adjust request parameters for getting products, 1500 itemsPerPage to get all events
         $requestParams['filter']['ProductType'] = "Product";
-        $requestParams['itemsPerPage'] = 1500;
+        $requestParams['itemsPerPage'] = 1600;
 
         // Get and save "Events"
         $this->events = $this->client->ListAll($requestParams)->ListAllResult->Items->Product;

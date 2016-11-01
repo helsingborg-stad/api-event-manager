@@ -63,7 +63,7 @@
                 "label": "Event link",
                 "name": "event_link",
                 "type": "url",
-                "instructions": "",
+                "instructions": "External link to event website.",
                 "required": 0,
                 "conditional_logic": 0,
                 "wrapper": {
@@ -79,7 +79,7 @@
                 "label": "Additional links",
                 "name": "additional_links",
                 "type": "repeater",
-                "instructions": "",
+                "instructions": "Add additional external links to websites.",
                 "required": 0,
                 "conditional_logic": 0,
                 "wrapper": {
@@ -115,8 +115,8 @@
                 "key": "field_57c97ba976b20",
                 "label": "Related events",
                 "name": "related_events",
-                "type": "page_link",
-                "instructions": "",
+                "type": "post_object",
+                "instructions": "Add if there are other events related to this event.",
                 "required": 0,
                 "conditional_logic": 0,
                 "wrapper": {
@@ -129,8 +129,9 @@
                 ],
                 "taxonomy": [],
                 "allow_null": 0,
-                "allow_archives": 0,
-                "multiple": 1
+                "multiple": 1,
+                "return_format": "object",
+                "ui": 1
             },
             {
                 "key": "field_57d274173bf4c",
@@ -189,7 +190,7 @@
                         "label": "Status",
                         "name": "status",
                         "type": "radio",
-                        "instructions": "",
+                        "instructions": "Select if event is on schedule or not.",
                         "required": 1,
                         "conditional_logic": 0,
                         "wrapper": {
@@ -215,7 +216,7 @@
                         "label": "Exeption information",
                         "name": "occ_exeption_information",
                         "type": "text",
-                        "instructions": "",
+                        "instructions": "Information about why there have been an exception.",
                         "required": 0,
                         "conditional_logic": [
                             [
@@ -290,10 +291,10 @@
                     },
                     {
                         "key": "field_57611277ef032",
-                        "label": "Inneh\u00e5ll",
+                        "label": "Override content",
                         "name": "content_mode",
                         "type": "radio",
-                        "instructions": "",
+                        "instructions": "Use master or custom content for this occasion.",
                         "required": 1,
                         "conditional_logic": 0,
                         "wrapper": {
@@ -364,7 +365,7 @@
                         "label": "Day",
                         "name": "rcr_week_day",
                         "type": "select",
-                        "instructions": "",
+                        "instructions": "The event will occur on this weekday",
                         "required": 1,
                         "conditional_logic": 0,
                         "wrapper": {
@@ -584,7 +585,7 @@
                 "key": "field_576117c423a52",
                 "label": "Location",
                 "name": "location",
-                "type": "page_link",
+                "type": "post_object",
                 "instructions": "Location or address for the event.",
                 "required": 0,
                 "conditional_logic": 0,
@@ -598,14 +599,15 @@
                 ],
                 "taxonomy": [],
                 "allow_null": 0,
-                "allow_archives": 0,
-                "multiple": 0
+                "multiple": 0,
+                "return_format": "object",
+                "ui": 1
             },
             {
                 "key": "field_57ee2a23bd0b5",
                 "label": "Additional locations",
                 "name": "additional_locations",
-                "type": "page_link",
+                "type": "post_object",
                 "instructions": "Add additional locations if the event takes place on more than one address.",
                 "required": 0,
                 "conditional_logic": 0,
@@ -619,8 +621,9 @@
                 ],
                 "taxonomy": [],
                 "allow_null": 0,
-                "allow_archives": 0,
-                "multiple": 1
+                "multiple": 1,
+                "return_format": "object",
+                "ui": 1
             },
             {
                 "key": "field_57611356d9415",
@@ -670,15 +673,15 @@
                             "class": "",
                             "id": ""
                         },
-                        "message": "Fill in if this is the main organizer of the event.",
+                        "message": "If this is the main organizer for the event.",
                         "default_value": 0
                     },
                     {
                         "key": "field_57ebb3a242844",
-                        "label": "Organizer (Name or Company)",
+                        "label": "Organizer",
                         "name": "organizer",
                         "type": "text",
-                        "instructions": "",
+                        "instructions": "Company or name of the organizer.",
                         "required": 0,
                         "conditional_logic": 0,
                         "wrapper": {
@@ -697,7 +700,7 @@
                         "label": "Organizer link",
                         "name": "organizer_link",
                         "type": "url",
-                        "instructions": "",
+                        "instructions": "External link to the organizer.",
                         "required": 0,
                         "conditional_logic": 0,
                         "wrapper": {
@@ -749,8 +752,8 @@
                         "key": "field_57ebb807988f8",
                         "label": "Kontakter",
                         "name": "contacts",
-                        "type": "page_link",
-                        "instructions": "",
+                        "type": "post_object",
+                        "instructions": "Add contacts to the organizer.",
                         "required": 0,
                         "conditional_logic": 0,
                         "wrapper": {
@@ -763,8 +766,9 @@
                         ],
                         "taxonomy": [],
                         "allow_null": 0,
-                        "allow_archives": 0,
-                        "multiple": 1
+                        "multiple": 1,
+                        "return_format": "object",
+                        "ui": 1
                     }
                 ]
             },
@@ -772,8 +776,8 @@
                 "key": "field_57a9d5f3804e1",
                 "label": "Sponsors",
                 "name": "supporters",
-                "type": "page_link",
-                "instructions": "",
+                "type": "post_object",
+                "instructions": "Add sponsors to the event.",
                 "required": 0,
                 "conditional_logic": 0,
                 "wrapper": {
@@ -786,8 +790,9 @@
                 ],
                 "taxonomy": [],
                 "allow_null": 0,
-                "allow_archives": 0,
-                "multiple": 1
+                "multiple": 1,
+                "return_format": "object",
+                "ui": 1
             },
             {
                 "key": "field_57611b73acf19",
@@ -810,7 +815,7 @@
                 "label": "Booking link",
                 "name": "booking_link",
                 "type": "url",
-                "instructions": "",
+                "instructions": "External link to booking website.",
                 "required": 0,
                 "conditional_logic": 0,
                 "wrapper": {
@@ -826,7 +831,7 @@
                 "label": "Booking phone",
                 "name": "booking_phone",
                 "type": "text",
-                "instructions": "",
+                "instructions": "Phone number to make bookings.",
                 "required": 0,
                 "conditional_logic": 0,
                 "wrapper": {
@@ -845,7 +850,7 @@
                 "label": "Age restriction",
                 "name": "age_restriction",
                 "type": "text",
-                "instructions": "",
+                "instructions": "Enter age if this event is age restricted.",
                 "required": 0,
                 "conditional_logic": 0,
                 "wrapper": {
@@ -863,8 +868,8 @@
                 "key": "field_57c7ed92054e6",
                 "label": "Included in membership cards",
                 "name": "membership_cards",
-                "type": "page_link",
-                "instructions": "",
+                "type": "post_object",
+                "instructions": "Add membership card(s) where this event is included.",
                 "required": 0,
                 "conditional_logic": 0,
                 "wrapper": {
@@ -877,15 +882,16 @@
                 ],
                 "taxonomy": [],
                 "allow_null": 0,
-                "allow_archives": 0,
-                "multiple": 1
+                "multiple": 1,
+                "return_format": "object",
+                "ui": 1
             },
             {
                 "key": "field_57611bd8acf1b",
                 "label": "Price information",
                 "name": "price_information",
                 "type": "textarea",
-                "instructions": "",
+                "instructions": "Information about prices and booking.",
                 "required": 0,
                 "conditional_logic": 0,
                 "wrapper": {
@@ -904,7 +910,7 @@
                 "label": "Ticket includes",
                 "name": "ticket_includes",
                 "type": "textarea",
-                "instructions": "",
+                "instructions": "Specific information about what's included in one ticket.",
                 "required": 0,
                 "conditional_logic": 0,
                 "wrapper": {
@@ -1111,7 +1117,7 @@
                 "label": "Price group",
                 "name": "booking_group",
                 "type": "repeater",
-                "instructions": "Add prices for groups",
+                "instructions": "Add prices for group bookings.",
                 "required": 0,
                 "conditional_logic": 0,
                 "wrapper": {
@@ -1127,10 +1133,10 @@
                 "sub_fields": [
                     {
                         "key": "field_57f4f6dc747a1",
-                        "label": "Price group",
+                        "label": "Price",
                         "name": "price_group",
                         "type": "text",
-                        "instructions": "",
+                        "instructions": "Price for this group.",
                         "required": 1,
                         "conditional_logic": 0,
                         "wrapper": {
@@ -1149,7 +1155,7 @@
                         "label": "Min persons",
                         "name": "min_persones",
                         "type": "number",
-                        "instructions": "",
+                        "instructions": "Minimum number of people.",
                         "required": 1,
                         "conditional_logic": 0,
                         "wrapper": {
@@ -1170,7 +1176,7 @@
                         "label": "Max persons",
                         "name": "max_persons",
                         "type": "number",
-                        "instructions": "",
+                        "instructions": "Maximum number of people.",
                         "required": 1,
                         "conditional_logic": 0,
                         "wrapper": {
@@ -1209,7 +1215,7 @@
                 "label": "Gallery",
                 "name": "gallery",
                 "type": "gallery",
-                "instructions": "Please upload images that are as large as possible and that are not sensitive to cropping (eg. images with text overlay).",
+                "instructions": "Add images to this event.\r\nPlease upload images that are as large as possible and that are not sensitive to cropping (eg. images with text overlay).",
                 "required": 0,
                 "conditional_logic": 0,
                 "wrapper": {
@@ -1244,6 +1250,23 @@
                 },
                 "placement": "left",
                 "endpoint": 0
+            },
+            {
+                "key": "field_58188dfcfc3b9",
+                "label": "Links",
+                "name": "",
+                "type": "message",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "message": "Add external links to different social media and streaming services.",
+                "new_lines": "wpautop",
+                "esc_html": 0
             },
             {
                 "key": "field_57a9d81f55153",
@@ -1378,7 +1401,7 @@
                 "label": "YouTube",
                 "name": "youtube",
                 "type": "repeater",
-                "instructions": "",
+                "instructions": "Add one or multiple YouTube links.",
                 "required": 0,
                 "conditional_logic": 0,
                 "wrapper": {
@@ -1415,7 +1438,7 @@
                 "label": "Vimeo",
                 "name": "vimeo",
                 "type": "repeater",
-                "instructions": "",
+                "instructions": "Add one or multiple Vimeo links.",
                 "required": 0,
                 "conditional_logic": 0,
                 "wrapper": {

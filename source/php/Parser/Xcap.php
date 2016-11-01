@@ -55,7 +55,7 @@ class Xcap extends \HbgEventImporter\Parser
         $startDate = $this->formatDate($startDate);
         $ticketUrl = isset($eventData->{'x-xcap-ticketlink'}) && !empty($eventData->{'x-xcap-ticketlink'}) ? $eventData->{'x-xcap-ticketlink'} : null;
         $defaultLocation = get_field('cbis_post_status', 'option') ? get_field('cbis_post_status', 'option') : null;
-        $city = ($location != null) ? $location : $defualt_location;
+        $city = ($location != null) ? $location : $defaultLocation;
         $postStatus = get_field('xcap_post_status', 'option') ? get_field('xcap_post_status', 'option') : 'publish';
 
         if (!is_string($name)) {

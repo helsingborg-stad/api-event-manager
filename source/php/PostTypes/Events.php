@@ -36,27 +36,29 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
         $this->addTableColumn('title', __('Title', 'event-manager'));
         $this->addTableColumn('location', __('Location', 'event-manager'), true, function ($column, $postId) {
             $locationId = get_field('location', $postId);
-            if (!isset($locationId[0])) {
+            if (!isset($locationId)) {
                 echo 'n/a';
                 return;
             }
-            echo '<a href="' . get_edit_post_link($locationId[0]) . '">' . get_the_title($locationId[0]) . '</a>';
+            echo '<a href="' . get_edit_post_link($locationId) . '">' . get_the_title($locationId) . '</a>';
         });
-        $this->addTableColumn('contact', __('Contact', 'event-manager'), true, function ($column, $postId) {
+        $this->addTableColumn('organizer', _x('Main organizer', 'Main organizer column name', 'event-manager'), true, function ($column, $postId) {
+            $value = null;
+            if (have_rows('organizers')):
+                while (have_rows('organizers')) : the_row();
+                    if (get_sub_field('main_organizer')) {
+                        $value = (get_sub_field('organizer')) ? (get_sub_field('organizer')) : null;
+                    } elseif (count(get_field('organizers')) == 1) {
+                        $value = (get_sub_field('organizer')) ? (get_sub_field('organizer')) : null;
+                    }
+                endwhile;
+            endif;
 
-        if (have_rows('organizers')):
-            while (have_rows('organizers')) : the_row();
-                $value = get_sub_field('contacts');
-            endwhile;
-        endif;
-
-            //$contactId = get_field('contacts', $postId);
-            if (!isset($value[0]->ID)) {
+            if (!$value) {
                 echo 'n/a';
                 return;
             }
-
-            echo '<a href="' . get_edit_post_link($value[0]->ID) . '">' . get_the_title($value[0]->ID) . '</a>';
+            echo($value);
         });
         $this->addTableColumn('import_client', __('Import client', 'event-manager'), true, function ($column, $postId) {
             $eventId = get_post_meta($postId, 'import_client', true);
@@ -425,11 +427,11 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
 
         if (current_user_can('manage_options')) {
             echo '<div class="alignleft actions" style="position: relative;">';
-                // TA BORT
+            // TA BORT
             // echo '<a href="' . admin_url('options.php?page=import-events') . '" class="button-primary" id="post-query-submit">debug XCAP</a>';
             // echo '<a href="' . admin_url('options.php?page=import-cbis-events') . '" class="button-primary" id="post-query-submit">debug CBIS</a>';
             // echo '<a href="' . admin_url('options.php?page=import-cbis-locations') . '" class="button-primary" id="post-query-submit">Custom</a>';
-                //echo '<a href="' . admin_url('options.php?page=delete-all-events') . '" class="button-primary" id="post-query-submit">DELETE</a>';
+            // echo '<a href="' . admin_url('options.php?page=delete-all-events') . '" class="button-primary" id="post-query-submit">DELETE</a>';
             echo '<div class="button-primary extraspace" id="xcap">' . __('Import XCAP', 'event-manager') . '</div>';
             echo '<div class="button-primary extraspace" id="cbis">' . __('Import CBIS', 'event-manager') . '</div>';
             echo '<div class="button-primary extraspace" id="occasions">'.__('Collect event timestamps', 'event-manager').'</div>';
@@ -546,6 +548,7 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
         ?></p>
         </div>
         <?php
+
     }
 
     /**
@@ -557,7 +560,7 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
         $current_user = wp_get_current_user();
         $user_id = $current_user->ID;
         if ($screen->post_type !== 'event' || $screen->base !== 'post' || get_user_meta($user_id, 'dismissed_instr', true) == 1) {
-             return;
+            return;
         }
         ?>
         <div class="notice notice-success dismissable is-dismissible">
@@ -565,6 +568,7 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
         ?></p>
         </div>
         <?php
+
     }
 
     /**
@@ -575,7 +579,7 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
         $screen = get_current_screen();
         $optionsChecked = (get_field('import_warning', 'option') == true && get_field('cbis_daily_cron', 'option') == true) ? true : false;
         if ($screen->post_type != 'event' || $optionsChecked != true) {
-           return;
+            return;
         }
         $latestPost = get_posts("post_type=event&numberposts=1&meta_key=import_client&meta_value=cbis");
         if (empty($latestPost[0]) || strtotime($latestPost[0]->post_date) > strtotime('-1 week')) {
@@ -587,6 +591,7 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
         ?></p>
         </div>
         <?php
+
     }
 
     /**
@@ -597,7 +602,7 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
         $screen = get_current_screen();
         $optionsChecked = (get_field('import_warning', 'option') == true && get_field('xcap_daily_cron', 'option') == true) ? true : false;
         if ($screen->post_type != 'event' || $optionsChecked != true) {
-           return;
+            return;
         }
         $latestPost = get_posts("post_type=event&numberposts=1&meta_key=import_client&meta_value=xcap");
         if (empty($latestPost[0]) || strtotime($latestPost[0]->post_date) > strtotime('-1 week')) {
@@ -609,6 +614,7 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
         ?></p>
         </div>
         <?php
+
     }
 
     /**

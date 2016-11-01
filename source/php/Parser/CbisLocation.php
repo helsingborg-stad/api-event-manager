@@ -209,8 +209,10 @@ class CbisLocation extends \HbgEventImporter\Parser
         $locationId = $this->checkIfPostExists('location', $newPostTitle);
         if ($locationId == null) {
             $country = $this->getAttributeValue(self::ATTRIBUTE_COUNTRY, $attributes);
-            $defaultCity = ($productCategory == 'arena') ? $this->getAttributeValue(self::ATTRIBUTE_POSTAL_ADDRESS, $attributes) : $arenaData->GeoNode->Name;
-            $city = ($defaultCity != null) ? $defaultCity : $defaultLocation;
+        $arenaLocation = $this->getAttributeValue(self::ATTRIBUTE_POSTAL_ADDRESS, $attributes) != null ? $this->getAttributeValue(self::ATTRIBUTE_POSTAL_ADDRESS, $attributes) : $defaultLocation;
+        $city = ($productCategory == 'arena') ? $arenaLocation : $arenaData->GeoNode->Name;
+        echo $city.'<br><br>';
+
             if(is_numeric($country))
                 $country = "Sweden";
             // Create the location, found in api-event-manager/source/php/PostTypes/Locations.php
