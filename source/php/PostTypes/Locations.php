@@ -33,7 +33,7 @@ class Locations extends \HbgEventImporter\Entity\CustomPostType
         $this->addTableColumn('cb', '<input type="checkbox">');
         $this->addTableColumn('title', __('Title', 'event-manager'));
         $this->addTableColumn('name', __('Address', 'event-manager'), true, function ($column, $postId) {
-            echo get_post_meta($postId, 'formatted_address', true) ? get_post_meta($postId, 'formatted_address', true) : 'n/a';
+            echo get_post_meta($postId, 'formatted_address', true) ? get_post_meta($postId, 'formatted_address', true) :  __('n/a', 'event-manager');
         });
 
         $this->addTableColumn('coordinates', __('Coordinates', 'event-manager'), true, function ($column, $postId) {

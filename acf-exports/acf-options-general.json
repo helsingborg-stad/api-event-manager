@@ -42,7 +42,7 @@
             },
             {
                 "key": "field_580db5e4967d6",
-                "label": "Show import notification",
+                "label": "Import warning",
                 "name": "import_warning",
                 "type": "true_false",
                 "instructions": "",
@@ -53,7 +53,7 @@
                     "class": "",
                     "id": ""
                 },
-                "message": "Show notifications if no events have been imported for a week or more.",
+                "message": "Show notification if no events have been imported for a week or more.",
                 "default_value": 1
             }
         ],

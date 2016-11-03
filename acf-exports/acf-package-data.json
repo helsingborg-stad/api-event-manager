@@ -7,7 +7,7 @@
                 "label": "Events included",
                 "name": "events_included",
                 "type": "post_object",
-                "instructions": "Choose events included in the package.",
+                "instructions": "Select which events that are included in this package.",
                 "required": 0,
                 "conditional_logic": 0,
                 "wrapper": {
@@ -29,11 +29,11 @@
                 "label": "Booking link",
                 "name": "booking_link",
                 "type": "url",
-                "instructions": "",
+                "instructions": "External link to booking website.",
                 "required": 0,
                 "conditional_logic": 0,
                 "wrapper": {
-                    "width": "",
+                    "width": "50",
                     "class": "",
                     "id": ""
                 },
@@ -45,11 +45,11 @@
                 "label": "Booking phone",
                 "name": "booking_phone",
                 "type": "text",
-                "instructions": "",
+                "instructions": "Phone number to make bookings.",
                 "required": 0,
                 "conditional_logic": 0,
                 "wrapper": {
-                    "width": "",
+                    "width": "50",
                     "class": "",
                     "id": ""
                 },
@@ -64,7 +64,7 @@
                 "label": "Age restriction",
                 "name": "age_restriction",
                 "type": "text",
-                "instructions": "",
+                "instructions": "Enter age if this event is age restricted.",
                 "required": 0,
                 "conditional_logic": 0,
                 "wrapper": {
@@ -79,11 +79,11 @@
                 "maxlength": ""
             },
             {
-                "key": "field_57c9479000761",
-                "label": "Included in annual pass",
-                "name": "annual_pass",
-                "type": "radio",
-                "instructions": "",
+                "key": "field_581847f9642dc",
+                "label": "Included in membership cards",
+                "name": "membership_cards",
+                "type": "post_object",
+                "instructions": "Add membership cards where this package is included.",
                 "required": 0,
                 "conditional_logic": 0,
                 "wrapper": {
@@ -91,27 +91,25 @@
                     "class": "",
                     "id": ""
                 },
-                "choices": [
-                    "No",
-                    "Yes"
+                "post_type": [
+                    "membership-card"
                 ],
+                "taxonomy": [],
                 "allow_null": 0,
-                "other_choice": 0,
-                "save_other_choice": 0,
-                "default_value": "",
-                "layout": "horizontal",
-                "return_format": "value"
+                "multiple": 1,
+                "return_format": "object",
+                "ui": 1
             },
             {
                 "key": "field_57c949b4829f1",
                 "label": "Price information",
                 "name": "price_information",
                 "type": "textarea",
-                "instructions": "",
+                "instructions": "Information about prices.",
                 "required": 0,
                 "conditional_logic": 0,
                 "wrapper": {
-                    "width": "",
+                    "width": "50",
                     "class": "",
                     "id": ""
                 },
@@ -126,11 +124,11 @@
                 "label": "Ticket includes",
                 "name": "ticket_includes",
                 "type": "textarea",
-                "instructions": "",
+                "instructions": "Specific information about what's included in one ticket.",
                 "required": 0,
                 "conditional_logic": 0,
                 "wrapper": {
-                    "width": "",
+                    "width": "50",
                     "class": "",
                     "id": ""
                 },
@@ -142,7 +140,7 @@
             },
             {
                 "key": "field_57c949bf829f3",
-                "label": "Price adult",
+                "label": "Default price \/ Adult",
                 "name": "price_adult",
                 "type": "text",
                 "instructions": "",
@@ -156,26 +154,7 @@
                 "default_value": "",
                 "placeholder": "",
                 "prepend": "",
-                "append": "",
-                "maxlength": ""
-            },
-            {
-                "key": "field_57c949c3829f4",
-                "label": "Price children",
-                "name": "price_children",
-                "type": "text",
-                "instructions": "",
-                "required": 0,
-                "conditional_logic": 0,
-                "wrapper": {
-                    "width": "50",
-                    "class": "",
-                    "id": ""
-                },
-                "default_value": "",
-                "placeholder": "",
-                "prepend": "",
-                "append": "",
+                "append": "SEK",
                 "maxlength": ""
             },
             {
@@ -194,8 +173,78 @@
                 "default_value": "",
                 "placeholder": "",
                 "prepend": "",
-                "append": "",
+                "append": "SEK",
                 "maxlength": ""
+            },
+            {
+                "key": "field_57c949c3829f4",
+                "label": "Price children",
+                "name": "price_children",
+                "type": "text",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "50",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "placeholder": "",
+                "prepend": "",
+                "append": "SEK",
+                "maxlength": ""
+            },
+            {
+                "key": "field_58184887642dd",
+                "label": "Children age",
+                "name": "children_age",
+                "type": "select",
+                "instructions": "Children price is valid up to this age.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "50",
+                    "class": "",
+                    "id": ""
+                },
+                "choices": [
+                    "0",
+                    "1",
+                    "2",
+                    "3",
+                    "4",
+                    "5",
+                    "6",
+                    "7",
+                    "8",
+                    "9",
+                    "10",
+                    "11",
+                    "12",
+                    "13",
+                    "14",
+                    "15",
+                    "16",
+                    "17",
+                    "18",
+                    "19",
+                    "20",
+                    "21",
+                    "22",
+                    "23",
+                    "24",
+                    "25"
+                ],
+                "default_value": [
+                    18
+                ],
+                "allow_null": 0,
+                "multiple": 0,
+                "ui": 0,
+                "ajax": 0,
+                "return_format": "value",
+                "placeholder": ""
             },
             {
                 "key": "field_57c949cb829f6",
@@ -213,8 +262,151 @@
                 "default_value": "",
                 "placeholder": "",
                 "prepend": "",
-                "append": "",
+                "append": "SEK",
                 "maxlength": ""
+            },
+            {
+                "key": "field_58184909642de",
+                "label": "Senior age",
+                "name": "senior_age",
+                "type": "select",
+                "instructions": "Senior price is valid from this age.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "50",
+                    "class": "",
+                    "id": ""
+                },
+                "choices": {
+                    "50": "50",
+                    "51": "51",
+                    "52": "52",
+                    "53": "53",
+                    "54": "54",
+                    "55": "55",
+                    "56": "56",
+                    "57": "57",
+                    "58": "58",
+                    "59": "59",
+                    "60": "60",
+                    "61": "61",
+                    "62": "62",
+                    "63": "63",
+                    "64": "64",
+                    "65": "65",
+                    "66": "66",
+                    "67": "67",
+                    "68": "68",
+                    "69": "69",
+                    "70": "70",
+                    "71": "71",
+                    "72": "72",
+                    "73": "73",
+                    "74": "74",
+                    "75": "75",
+                    "76": "76",
+                    "77": "77",
+                    "78": "78",
+                    "79": "79",
+                    "80": "80",
+                    "81": "81",
+                    "82": "82",
+                    "83": "83",
+                    "84": "84",
+                    "85": "85"
+                },
+                "default_value": [
+                    65
+                ],
+                "allow_null": 0,
+                "multiple": 0,
+                "ui": 0,
+                "ajax": 0,
+                "return_format": "value",
+                "placeholder": ""
+            },
+            {
+                "key": "field_5818498849ea9",
+                "label": "Price group",
+                "name": "booking_group",
+                "type": "repeater",
+                "instructions": "Add prices for group bookings.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "collapsed": "",
+                "min": "",
+                "max": "",
+                "layout": "block",
+                "button_label": "Add",
+                "sub_fields": [
+                    {
+                        "key": "field_5818498949eaa",
+                        "label": "Price group",
+                        "name": "price_group",
+                        "type": "text",
+                        "instructions": "Price for this group.",
+                        "required": 1,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "33",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": "",
+                        "placeholder": "",
+                        "prepend": "",
+                        "append": "SEK",
+                        "maxlength": ""
+                    },
+                    {
+                        "key": "field_5818498949eab",
+                        "label": "Min persons",
+                        "name": "min_persones",
+                        "type": "number",
+                        "instructions": "Minimum number of people.",
+                        "required": 1,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "33",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": "",
+                        "placeholder": "",
+                        "prepend": "",
+                        "append": "",
+                        "min": "",
+                        "max": "",
+                        "step": ""
+                    },
+                    {
+                        "key": "field_5818498949eac",
+                        "label": "Max persons",
+                        "name": "max_persons",
+                        "type": "number",
+                        "instructions": "Maximum number of people.",
+                        "required": 1,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "33",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": "",
+                        "placeholder": "",
+                        "prepend": "",
+                        "append": "",
+                        "min": "",
+                        "max": "",
+                        "step": ""
+                    }
+                ]
             }
         ],
         "location": [

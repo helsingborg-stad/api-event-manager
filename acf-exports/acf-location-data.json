@@ -4,7 +4,7 @@
         "fields": [
             {
                 "key": "field_57d26cffc2f68",
-                "label": "Adress",
+                "label": "Address",
                 "name": "",
                 "type": "tab",
                 "instructions": "",
@@ -126,7 +126,7 @@
                 "label": "Latitude",
                 "name": "latitude",
                 "type": "text",
-                "instructions": "",
+                "instructions": "Latitude for GPS coordinates.",
                 "required": 0,
                 "conditional_logic": 0,
                 "wrapper": {
@@ -145,7 +145,7 @@
                 "label": "Longitude",
                 "name": "longitude",
                 "type": "text",
-                "instructions": "",
+                "instructions": "Longitude for GPS coordinates.",
                 "required": 0,
                 "conditional_logic": 0,
                 "wrapper": {
@@ -176,11 +176,11 @@
                 "endpoint": 0
             },
             {
-                "key": "field_57cfba70697e1",
-                "label": "Exceptions to opening hours",
-                "name": "oph_exceptions",
-                "type": "repeater",
-                "instructions": "Add one or more exceptions to this scheme.",
+                "key": "field_5819cb2eff36e",
+                "label": "Open hours",
+                "name": "",
+                "type": "message",
+                "instructions": "",
                 "required": 0,
                 "conditional_logic": 0,
                 "wrapper": {
@@ -188,49 +188,9 @@
                     "class": "",
                     "id": ""
                 },
-                "collapsed": "",
-                "min": "",
-                "max": "",
-                "layout": "table",
-                "button_label": "Add",
-                "sub_fields": [
-                    {
-                        "key": "field_57cfbb60697e2",
-                        "label": "Date",
-                        "name": "exception_date",
-                        "type": "date_picker",
-                        "instructions": "",
-                        "required": 1,
-                        "conditional_logic": 0,
-                        "wrapper": {
-                            "width": "30",
-                            "class": "",
-                            "id": ""
-                        },
-                        "display_format": "F j, Y",
-                        "return_format": "d\/m\/Y",
-                        "first_day": 1
-                    },
-                    {
-                        "key": "field_57cfbbb9697e3",
-                        "label": "Exeption information",
-                        "name": "exeption_information",
-                        "type": "text",
-                        "instructions": "",
-                        "required": 1,
-                        "conditional_logic": 0,
-                        "wrapper": {
-                            "width": "70",
-                            "class": "",
-                            "id": ""
-                        },
-                        "default_value": "",
-                        "placeholder": "eg. 08:00 - 16:00",
-                        "prepend": "",
-                        "append": "",
-                        "maxlength": ""
-                    }
-                ]
+                "message": "Open hours for this location.",
+                "new_lines": "wpautop",
+                "esc_html": 0
             },
             {
                 "key": "field_57cfbd7c71de3",
@@ -366,6 +326,63 @@
                 "maxlength": ""
             },
             {
+                "key": "field_57cfba70697e1",
+                "label": "Exceptions to opening hours",
+                "name": "oph_exceptions",
+                "type": "repeater",
+                "instructions": "Add one or more exceptions to this scheme.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "collapsed": "",
+                "min": "",
+                "max": "",
+                "layout": "table",
+                "button_label": "Add",
+                "sub_fields": [
+                    {
+                        "key": "field_57cfbb60697e2",
+                        "label": "Date",
+                        "name": "exception_date",
+                        "type": "date_picker",
+                        "instructions": "",
+                        "required": 1,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "30",
+                            "class": "",
+                            "id": ""
+                        },
+                        "display_format": "F j, Y",
+                        "return_format": "d\/m\/Y",
+                        "first_day": 1
+                    },
+                    {
+                        "key": "field_57cfbbb9697e3",
+                        "label": "Exeption information",
+                        "name": "exeption_information",
+                        "type": "text",
+                        "instructions": "",
+                        "required": 1,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "70",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": "",
+                        "placeholder": "",
+                        "prepend": "",
+                        "append": "",
+                        "maxlength": ""
+                    }
+                ]
+            },
+            {
                 "key": "field_57fca1e1dc2f0",
                 "label": "Gallery",
                 "name": "",
@@ -386,7 +403,7 @@
                 "label": "Gallery",
                 "name": "gallery",
                 "type": "gallery",
-                "instructions": "Please upload images that are as large as possible and that are not sensitive to cropping (eg. images with text overlay).",
+                "instructions": "Add images to this location. Please upload images that are as large as possible and that are not sensitive to cropping (eg. images with text overlay).",
                 "required": 0,
                 "conditional_logic": 0,
                 "wrapper": {

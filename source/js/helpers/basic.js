@@ -21,6 +21,11 @@ jQuery(document).ready(function ($) {
         $('.acf-field-57c7ed92054e6').append('<a class="createContact button" href="http://' + window.location.host + '/wp/wp-admin/post-new.php?post_type=membership-card&lightbox=true">' + eventmanager.new_card + '</a>');
     }
 
+    if($('.acf-field-581847f9642dc').length)
+    {
+        $('.acf-field-581847f9642dc').append('<a class="createContact button" href="http://' + window.location.host + '/wp/wp-admin/post-new.php?post_type=membership-card&lightbox=true">' + eventmanager.new_card + '</a>');
+    }
+
     $('.openContact').click(function(event) {
         event.preventDefault();
         ImportEvents.Prompt.Modal.open($(this).attr('href'));

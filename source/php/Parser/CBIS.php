@@ -124,7 +124,7 @@ class CBIS extends \HbgEventImporter\Parser
         $cbisId = intval(get_option('options_cbis_api_id'));
         $cbisCategory = 14086;
 
-        $defaultLocation = get_field('cbis_post_status', 'option') ? get_field('cbis_post_status', 'option') : null;
+        $defaultLocation = get_field('default_city', 'option') ? get_field('default_city', 'option') : null;
         $postStatus = get_field('cbis_post_status', 'option') ? get_field('cbis_post_status', 'option') : 'publish';
 
         if (!isset($cbisKey) || empty($cbisKey) || !isset($cbisId) || empty($cbisId)) {
@@ -175,7 +175,7 @@ class CBIS extends \HbgEventImporter\Parser
 
         // // Adjust request parameters for getting products, 1500 itemsPerPage to get all events
         $requestParams['filter']['ProductType'] = "Product";
-        $requestParams['itemsPerPage'] = 1500;
+        $requestParams['itemsPerPage'] = 1600;
 
         // Get and save "Events"
         $this->events = $this->client->ListAll($requestParams)->ListAllResult->Items->Product;
@@ -371,9 +371,9 @@ class CBIS extends \HbgEventImporter\Parser
             );
 
             $creatSuccess = $location->save();
-            $locationId = $location->ID;
             if($creatSuccess)
             {
+                $locationId = $location->ID;
                 ++$this->nrOfNewLocations;
                 $this->levenshteinTitles['location'][] = array('ID' => $locationId, 'post_title' => $newPostTitle);
             }
@@ -424,9 +424,9 @@ class CBIS extends \HbgEventImporter\Parser
             );
 
             $creatSuccess = $location->save();
-            $locationId = $location->ID;
             if($creatSuccess)
             {
+                $locationId = $location->ID;
                 ++$this->nrOfNewLocations;
                 $this->levenshteinTitles['location'][] = array('ID' => $location->ID, 'post_title' => $newPostTitle);
             }
@@ -534,7 +534,7 @@ class CBIS extends \HbgEventImporter\Parser
                     'event_link'            => $this->getAttributeValue(self::ATTRIBUTE_EVENT_LINK, $attributes),
                     'categories'            => $categories,
                     'occasions'             => $occasions,
-                    'location'              => !is_null($locationId) ? (array) $locationId : null,
+                    'location'              => !is_null($locationId) ? $locationId : null,
                     'organizers'            => $organizers,
                     'booking_link'          => $this->getAttributeValue(self::ATTRIBUTE_BOOKING_LINK, $attributes),
                     'booking_phone'         => $this->getAttributeValue(self::ATTRIBUTE_BOOKING_PHONE_NUMBER, $attributes),

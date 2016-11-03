@@ -37,15 +37,18 @@ class App
         register_deactivation_hook(plugin_basename(__FILE__), '\HbgEventImporter\App::removeCronJob');
 
         //Json load files
-        add_filter('acf/settings/load_json', array($this, 'acfJsonLoadPath'));
+        //Remove filter below if loading ACF fields with PHP.
+        //add_filter('acf/settings/load_json', array($this, 'acfJsonLoadPath'));
+        add_action('acf/init', array($this, 'acfSettings'));
+        add_filter('acf/translate_field', array($this, 'acfTranslationFilter'));
 
         //Admin scripts
         add_action('admin_enqueue_scripts', array($this, 'enqueueStyles'));
         add_action('admin_enqueue_scripts', array($this, 'enqueueScripts'));
 
         //Admin components
-// TA BORT
-add_action('admin_menu', array($this, 'createParsePage'));
+        // TA BORT
+        add_action('admin_menu', array($this, 'createParsePage'));
         add_action('admin_notices', array($this, 'adminNotices'));
 
         // Register cron action
@@ -80,12 +83,16 @@ add_action('admin_menu', array($this, 'createParsePage'));
         new Admin\UI();
         new Admin\FilterRestrictions();
 
+        new Acf\AcfFields();
+
         new Api\Filter();
         new Api\PostTypes();
         new Api\Linking();
         new Api\LocationFields();
         new Api\ContactFields();
         new Api\EventFields();
+        new Api\SponsorFields();
+        new Api\PackageFields();
     }
 
     /**
@@ -170,21 +177,21 @@ add_action('admin_menu', array($this, 'createParsePage'));
             wp_enqueue_script('hbg-event-importer', HBGEVENTIMPORTER_URL . '/dist/js/hbg-event-importer.min.js');
         }
 
-        wp_localize_script( 'hbg-event-importer', 'eventmanager', array(
-            'require_title'     => __( "Title is missing", 'event-manager' ),
-            'new_contact'       => __( "Create new contact", 'event-manager' ),
-            'new_sponsor'       => __( "Create new sponsor", 'event-manager' ),
-            'new_location'      => __( "Create new location", 'event-manager' ),
-            'new_card'          => __( "Create new membership card", 'event-manager' ),
-            'close'             => __( "Close", 'event-manager' ),
-            'add_images'        => __( "Add images", 'event-manager' ),
-            'similar_posts'     => __( "Similar posts", 'event-manager' ),
-            'new_data_imported' => __( "New data imported", 'event-manager' ),
-            'events'            => __( "Events", 'event-manager' ),
-            'locations'         => __( "Locations", 'event-manager' ),
-            'contacts'          => __( "Contacts", 'event-manager' ),
-            'time_until_reload' => __( "Time until reload", 'event-manager' ),
-            'loading'           => __( "Loading", 'event-manager' ),
+        wp_localize_script('hbg-event-importer', 'eventmanager', array(
+            'require_title'     => __("Title is missing", 'event-manager'),
+            'new_contact'       => __("Create new contact", 'event-manager'),
+            'new_sponsor'       => __("Create new sponsor", 'event-manager'),
+            'new_location'      => __("Create new location", 'event-manager'),
+            'new_card'          => __("Create new membership card", 'event-manager'),
+            'close'             => __("Close", 'event-manager'),
+            'add_images'        => __("Add images", 'event-manager'),
+            'similar_posts'     => __("Similar posts", 'event-manager'),
+            'new_data_imported' => __("New data imported", 'event-manager'),
+            'events'            => __("Events", 'event-manager'),
+            'locations'         => __("Locations", 'event-manager'),
+            'contacts'          => __("Contacts", 'event-manager'),
+            'time_until_reload' => __("Time until reload", 'event-manager'),
+            'loading'           => __("Loading", 'event-manager'),
         ));
     }
 
@@ -306,5 +313,32 @@ add_action('admin_menu', array($this, 'createParsePage'));
         require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
         dbDelta($sql);
         add_option('event_db_version', $event_db_version);
+    }
+
+    /**
+     * ACF settings action
+     */
+    public function acfSettings()
+    {
+        acf_update_setting('l10n', true);
+        acf_update_setting('l10n_textdomain', 'event-manager');
+    }
+
+    /**
+     * ACF filter to translate specific fields when exporting to PHP
+     * @param  array fields to be translated
+     * @return array updated fields list
+     */
+    public function acfTranslationFilter($field)
+    {
+        if ($field['type'] == 'text') {
+            $field['append'] = acf_translate($field['append']);
+            $field['placeholder'] = acf_translate($field['placeholder']);
+        }
+
+        if ($field['type'] == 'repeater') {
+            $field['button_label'] = acf_translate($field['button_label']);
+        }
+        return $field;
     }
 }

@@ -144,32 +144,13 @@ jQuery(document).ready(function ($) {
         $('#wpwrap').append('<div id="blackOverlay"></div>');
         $('.wrap').append('\
             <div id="importResponse">\
-                <div><p>'+ eventmanager.new_data_imported +'</p></div>\
-                <div class="inline"><p>'+ eventmanager.events +'</p></div><div class="inline"><p>'+ eventmanager.locations +'</p></div><div class="inline"><p>'+ eventmanager.contacts +'</p></div>\
+                <div><h3>'+ eventmanager.new_data_imported +'</h3></div>\
+                <div class="inline"><p><strong>'+ eventmanager.events +'</strong></p></div><div class="inline"><p><strong>'+ eventmanager.locations +'</strong></p></div><div class="inline"><p><strong>'+ eventmanager.contacts +'</strong></p></div>\
                 <div class="inline"><p id="event">0</p></div><div class="inline"><p id="location">0</p></div><div class="inline"><p id="contact">0</p></div>\
                 <div id="untilReload"><div id="meter"></div><p>'+ eventmanager.time_until_reload +'</p></div>\
             </div>\
         ');
     }
-
-    // TA BORT
-    // $('body').on('click','.rcr_start_date .hasDatepicker', function() {
-    //     //$(this).datepicker('destroy').datepicker({showOn:'focus'}).focus();
-    //     $(this).datepicker("show");
-    //     $(this).datepicker( "option", "dateFormat", "yy-mm-dd" );
-    //     $(this).datepicker( "option", "minDate", "-1y" );
-    //     $(this).datepicker( "option", "maxDate", "+3y" );
-    //     $(this).datepicker({showOn:'focus'}).focus();
-    // });
-
-    // $('body').on('click','.rcr_end_date .hasDatepicker', function() {
-    //     //$(this).datepicker('destroy').datepicker({showOn:'focus'}).focus();
-    //     //$(this).datepicker("show");
-    //     $(this).datepicker( "option", "dateFormat", "yy-mm-dd" );
-    //     $(this).datepicker( "option", "minDate", "-1y" );
-    //     $(this).datepicker( "option", "maxDate", "+3y" );
-    //     $(this).datepicker({showOn:'focus'}).focus();
-    // });
 
     $('body').on('click','.acf-field-57d279f8db0cc .hasDatepicker', function() {
         $(this).datepicker( "option", "dateFormat", "yy-mm-dd" );
@@ -425,6 +406,11 @@ jQuery(document).ready(function ($) {
     if($('.acf-field-57c7ed92054e6').length)
     {
         $('.acf-field-57c7ed92054e6').append('<a class="createContact button" href="http://' + window.location.host + '/wp/wp-admin/post-new.php?post_type=membership-card&lightbox=true">' + eventmanager.new_card + '</a>');
+    }
+
+    if($('.acf-field-581847f9642dc').length)
+    {
+        $('.acf-field-581847f9642dc').append('<a class="createContact button" href="http://' + window.location.host + '/wp/wp-admin/post-new.php?post_type=membership-card&lightbox=true">' + eventmanager.new_card + '</a>');
     }
 
     $('.openContact').click(function(event) {

@@ -1,4 +1,4 @@
-{
+    {
         "key": "group_57a9bf12ef1a3",
         "title": "Sponsor",
         "fields": [
@@ -7,7 +7,7 @@
                 "label": "Website",
                 "name": "website",
                 "type": "url",
-                "instructions": "",
+                "instructions": "External link to website.",
                 "required": 0,
                 "conditional_logic": 0,
                 "wrapper": {
@@ -19,6 +19,43 @@
                 "placeholder": ""
             },
             {
+                "key": "field_58183e709de27",
+                "label": "Phone",
+                "name": "phone",
+                "type": "text",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "50",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "placeholder": "",
+                "prepend": "",
+                "append": "",
+                "maxlength": ""
+            },
+            {
+                "key": "field_581766419de26",
+                "label": "Email",
+                "name": "email",
+                "type": "email",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "50",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "placeholder": "",
+                "prepend": "",
+                "append": ""
+            },
+            {
                 "key": "field_57a9bfbb0710f",
                 "label": "Instagram link",
                 "name": "instagram_link",
@@ -27,7 +64,7 @@
                 "required": 0,
                 "conditional_logic": 0,
                 "wrapper": {
-                    "width": "",
+                    "width": "50",
                     "class": "",
                     "id": ""
                 },
@@ -43,7 +80,7 @@
                 "required": 0,
                 "conditional_logic": 0,
                 "wrapper": {
-                    "width": "",
+                    "width": "50",
                     "class": "",
                     "id": ""
                 },
@@ -59,7 +96,7 @@
                 "required": 0,
                 "conditional_logic": 0,
                 "wrapper": {
-                    "width": "",
+                    "width": "50",
                     "class": "",
                     "id": ""
                 },
@@ -75,7 +112,7 @@
                 "required": 0,
                 "conditional_logic": 0,
                 "wrapper": {
-                    "width": "",
+                    "width": "50",
                     "class": "",
                     "id": ""
                 },

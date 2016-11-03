@@ -63,7 +63,7 @@
                 "label": "Post status",
                 "name": "cbis_post_status",
                 "type": "radio",
-                "instructions": "Status of imported events.",
+                "instructions": "Select status of imported events.",
                 "required": 1,
                 "conditional_logic": 0,
                 "wrapper": {
@@ -73,7 +73,7 @@
                 },
                 "choices": {
                     "draft": "Draft",
-                    "publish": "Published"
+                    "publish": "Publicerad"
                 },
                 "allow_null": 0,
                 "other_choice": 0,
@@ -111,7 +111,7 @@
                 }
             ]
         ],
-        "menu_order": 0,
+        "menu_order": 1,
         "position": "normal",
         "style": "default",
         "label_placement": "top",
