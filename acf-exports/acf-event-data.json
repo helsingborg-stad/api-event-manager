@@ -315,10 +315,10 @@
                     },
                     {
                         "key": "field_576110fb8396a",
-                        "label": "Description",
+                        "label": "Beskrivning",
                         "name": "content",
                         "type": "wysiwyg",
-                        "instructions": "Override the post content of the event, leave empty to keep the \"master content\".",
+                        "instructions": "Override the post content of the event.",
                         "required": 1,
                         "conditional_logic": [
                             [
@@ -362,7 +362,7 @@
                 "sub_fields": [
                     {
                         "key": "field_57d275713bf4e",
-                        "label": "Day",
+                        "label": "Weekday",
                         "name": "rcr_week_day",
                         "type": "select",
                         "instructions": "The event will occur on this weekday",
@@ -750,7 +750,7 @@
                     },
                     {
                         "key": "field_57ebb807988f8",
-                        "label": "Kontakter",
+                        "label": "Contacts",
                         "name": "contacts",
                         "type": "post_object",
                         "instructions": "Add contacts to the organizer.",
@@ -869,7 +869,7 @@
                 "label": "Included in membership cards",
                 "name": "membership_cards",
                 "type": "post_object",
-                "instructions": "Add membership card(s) where this event is included.",
+                "instructions": "Add membership cards where this event is included.",
                 "required": 0,
                 "conditional_logic": 0,
                 "wrapper": {
@@ -891,7 +891,7 @@
                 "label": "Price information",
                 "name": "price_information",
                 "type": "textarea",
-                "instructions": "Information about prices and booking.",
+                "instructions": "Information about prices.",
                 "required": 0,
                 "conditional_logic": 0,
                 "wrapper": {
@@ -940,7 +940,7 @@
                 "default_value": "",
                 "placeholder": "",
                 "prepend": "",
-                "append": "kr",
+                "append": "SEK",
                 "maxlength": ""
             },
             {
@@ -959,7 +959,7 @@
                 "default_value": "",
                 "placeholder": "",
                 "prepend": "",
-                "append": "kr",
+                "append": "SEK",
                 "maxlength": ""
             },
             {
@@ -978,7 +978,7 @@
                 "default_value": "",
                 "placeholder": "",
                 "prepend": "",
-                "append": "kr",
+                "append": "SEK",
                 "maxlength": ""
             },
             {
@@ -1048,7 +1048,7 @@
                 "default_value": "",
                 "placeholder": "",
                 "prepend": "",
-                "append": "kr",
+                "append": "SEK",
                 "maxlength": ""
             },
             {
@@ -1147,7 +1147,7 @@
                         "default_value": "",
                         "placeholder": "",
                         "prepend": "",
-                        "append": "kr",
+                        "append": "SEK",
                         "maxlength": ""
                     },
                     {
@@ -1215,7 +1215,7 @@
                 "label": "Gallery",
                 "name": "gallery",
                 "type": "gallery",
-                "instructions": "Add images to this event.\r\nPlease upload images that are as large as possible and that are not sensitive to cropping (eg. images with text overlay).",
+                "instructions": "Add images to this event.<br> Please upload images that are as large as possible and that are not sensitive to cropping (eg. images with text overlay).",
                 "required": 0,
                 "conditional_logic": 0,
                 "wrapper": {

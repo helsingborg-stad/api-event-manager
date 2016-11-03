@@ -83,7 +83,7 @@
                 "label": "Included in membership cards",
                 "name": "membership_cards",
                 "type": "post_object",
-                "instructions": "Add membership card(s) where this event is included.",
+                "instructions": "Add membership cards where this package is included.",
                 "required": 0,
                 "conditional_logic": 0,
                 "wrapper": {
@@ -105,7 +105,7 @@
                 "label": "Price information",
                 "name": "price_information",
                 "type": "textarea",
-                "instructions": "Information about prices and booking.",
+                "instructions": "Information about prices.",
                 "required": 0,
                 "conditional_logic": 0,
                 "wrapper": {
@@ -154,7 +154,7 @@
                 "default_value": "",
                 "placeholder": "",
                 "prepend": "",
-                "append": "",
+                "append": "SEK",
                 "maxlength": ""
             },
             {
@@ -173,7 +173,7 @@
                 "default_value": "",
                 "placeholder": "",
                 "prepend": "",
-                "append": "",
+                "append": "SEK",
                 "maxlength": ""
             },
             {
@@ -192,7 +192,7 @@
                 "default_value": "",
                 "placeholder": "",
                 "prepend": "",
-                "append": "",
+                "append": "SEK",
                 "maxlength": ""
             },
             {
@@ -262,7 +262,7 @@
                 "default_value": "",
                 "placeholder": "",
                 "prepend": "",
-                "append": "",
+                "append": "SEK",
                 "maxlength": ""
             },
             {
@@ -361,7 +361,7 @@
                         "default_value": "",
                         "placeholder": "",
                         "prepend": "",
-                        "append": "kr",
+                        "append": "SEK",
                         "maxlength": ""
                     },
                     {

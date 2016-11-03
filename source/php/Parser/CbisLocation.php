@@ -83,7 +83,7 @@ class CbisLocation extends \HbgEventImporter\Parser
         $cbisKey = get_option('options_cbis_api_key');
         $cbisId = intval(get_option('options_cbis_api_id'));
         $cbisCategory = 14086;
-        $defaultLocation = get_field('cbis_post_status', 'option') ? get_field('cbis_post_status', 'option') : null;
+        $defaultLocation = get_field('default_city', 'option') ? get_field('default_city', 'option') : null;
         $postStatus = get_field('cbis_post_status', 'option') ? get_field('cbis_post_status', 'option') : 'publish';
 
         if (!isset($cbisKey) || empty($cbisKey) || !isset($cbisId) || empty($cbisId)) {
@@ -211,7 +211,6 @@ class CbisLocation extends \HbgEventImporter\Parser
             $country = $this->getAttributeValue(self::ATTRIBUTE_COUNTRY, $attributes);
         $arenaLocation = $this->getAttributeValue(self::ATTRIBUTE_POSTAL_ADDRESS, $attributes) != null ? $this->getAttributeValue(self::ATTRIBUTE_POSTAL_ADDRESS, $attributes) : $defaultLocation;
         $city = ($productCategory == 'arena') ? $arenaLocation : $arenaData->GeoNode->Name;
-        echo $city.'<br><br>';
 
             if(is_numeric($country))
                 $country = "Sweden";

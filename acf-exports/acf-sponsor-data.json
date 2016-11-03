@@ -7,7 +7,7 @@
                 "label": "Website",
                 "name": "website",
                 "type": "url",
-                "instructions": "",
+                "instructions": "External link to website.",
                 "required": 0,
                 "conditional_logic": 0,
                 "wrapper": {

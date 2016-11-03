@@ -36,12 +36,13 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
         $this->addTableColumn('title', __('Title', 'event-manager'));
         $this->addTableColumn('location', __('Location', 'event-manager'), true, function ($column, $postId) {
             $locationId = get_field('location', $postId);
-            if (!isset($locationId)) {
-                echo 'n/a';
+            if (!$locationId) {
+                echo __('n/a', 'event-manager');
                 return;
             }
             echo '<a href="' . get_edit_post_link($locationId) . '">' . get_the_title($locationId) . '</a>';
         });
+
         $this->addTableColumn('organizer', _x('Main organizer', 'Main organizer column name', 'event-manager'), true, function ($column, $postId) {
             $value = null;
             if (have_rows('organizers')):
@@ -55,7 +56,7 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
             endif;
 
             if (!$value) {
-                echo 'n/a';
+                echo __('n/a', 'event-manager');
                 return;
             }
             echo($value);

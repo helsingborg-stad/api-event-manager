@@ -54,7 +54,7 @@ class Xcap extends \HbgEventImporter\Parser
         $startDate = isset($eventData->dtstart) && !empty($eventData->dtstart) ? $eventData->dtstart : null;
         $startDate = $this->formatDate($startDate);
         $ticketUrl = isset($eventData->{'x-xcap-ticketlink'}) && !empty($eventData->{'x-xcap-ticketlink'}) ? $eventData->{'x-xcap-ticketlink'} : null;
-        $defaultLocation = get_field('cbis_post_status', 'option') ? get_field('cbis_post_status', 'option') : null;
+        $defaultLocation = get_field('default_city', 'option') ? get_field('default_city', 'option') : null;
         $city = ($location != null) ? $location : $defaultLocation;
         $postStatus = get_field('xcap_post_status', 'option') ? get_field('xcap_post_status', 'option') : 'publish';
 
@@ -102,8 +102,8 @@ class Xcap extends \HbgEventImporter\Parser
                 );
 
                 $creatSuccess = $location->save();
-                $locationId = $location->ID;
                 if ($creatSuccess) {
+                    $locationId = $location->ID;
                     ++$this->nrOfNewLocations;
                     $this->levenshteinTitles['location'][] = array('ID' => $location->ID, 'post_title' => $address);
                 }
@@ -142,7 +142,7 @@ class Xcap extends \HbgEventImporter\Parser
                     'event_link'            => null,
                     'categories'            => $categories,
                     'occasions'             => $occasions,
-                    'location'              => $locationId != null ? (array) $locationId : null,
+                    'location'              => $locationId != null ? $locationId : null,
                     'organizers'            => $organizers,
                     'booking_link'          => is_string($ticketUrl) ? $ticketUrl : null,
                     'booking_phone'         => null,

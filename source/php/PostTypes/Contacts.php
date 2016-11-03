@@ -31,13 +31,14 @@ class Contacts extends \HbgEventImporter\Entity\CustomPostType
         $this->addTableColumn('cb', '<input type="checkbox">');
         $this->addTableColumn('title', __('Title', 'event-manager'));
         $this->addTableColumn('name', __('Name', 'event-manager'), true, function ($column, $postId) {
-            echo get_post_meta($postId, 'name', true) ? get_post_meta($postId, 'name', true) : 'n/a';
+            echo get_post_meta($postId, 'name', true) ? get_post_meta($postId, 'name', true) :  __('n/a', 'event-manager');
         });
         $this->addTableColumn('email', __('Email', 'event-manager'), true, function ($column, $postId) {
-            echo get_post_meta($postId, 'email', true) ? get_post_meta($postId, 'email', true) : 'n/a';
+            echo get_post_meta($postId, 'email', true) ? get_post_meta($postId, 'email', true) :  __('n/a', 'event-manager');
         });
         $this->addTableColumn('phone', __('Phone', 'event-manager'), true, function ($column, $postId) {
-            echo get_post_meta($postId, 'phone_number', true) ? get_post_meta($postId, 'phone_number', true) : 'n/a';
+            echo get_post_meta($postId, 'phone_number', true) ? get_post_meta($postId, 'phone_number', true) : __('n/a', 'event-manager');
+;
         });
         $this->addTableColumn('date', __('Date', 'event-manager'));
         add_action('do_meta_boxes', array($this, 'changeImageBox'), 10, 3);
