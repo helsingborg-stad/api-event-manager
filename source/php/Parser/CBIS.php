@@ -6,6 +6,8 @@ use \HbgEventImporter\Event as Event;
 use \HbgEventImporter\Location as Location;
 use \HbgEventImporter\Contact as Contact;
 
+ini_set('memory_limit','224M');
+
 class CBIS extends \HbgEventImporter\Parser
 {
     //API for cbis
@@ -493,13 +495,13 @@ class CBIS extends \HbgEventImporter\Parser
             }
         }
 
-
         $postContent = $this->getAttributeValue(self::ATTRIBUTE_DESCRIPTION, $attributes);
         if ($this->getAttributeValue(self::ATTRIBUTE_INGRESS, $attributes) && !empty($this->getAttributeValue(self::ATTRIBUTE_INGRESS, $attributes))) {
             $postContent = $this->getAttributeValue(self::ATTRIBUTE_INGRESS, $attributes) . "<!--more-->\n\n" . $postContent;
         }
 
-        $newPostTitle = $this->getAttributeValue(self::ATTRIBUTE_NAME, $attributes, ($eventData->Name != null ? $eventData->Name : null));
+        $postTitle = $this->getAttributeValue(self::ATTRIBUTE_NAME, $attributes, ($eventData->Name != null ? $eventData->Name : null));
+        $newPostTitle = str_replace(" (copy)", "", trim($postTitle), $count);
         $newImage = (isset($eventData->Image->Url) ? $eventData->Image->Url : null);
         $eventId = $this->checkIfPostExists('event', $newPostTitle);
         $uid = 'cbis-' . $eventData->Id;
@@ -515,7 +517,7 @@ class CBIS extends \HbgEventImporter\Parser
             $postStatus = get_post_status($eventId);
         }
 
-        // Save event if it doesn't exist or is an update and "sync" option is set. Continues if event is an older duplicate.
+        // Save event if it doesn't exist or is an update and "sync" option is set to true. Skips if event is an older duplicate.
         if (($eventId == null || $isUpdate == true) && $this->filter($categories) == true) {
             // Creates the event object
             $event = new Event(

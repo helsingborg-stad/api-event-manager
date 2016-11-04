@@ -33,7 +33,7 @@ jQuery(document).ready(function ($) {
                             locationNumber.animate({opacity: 1}, ImportEvents.long).animate({fontSize: bigTextSize}, ImportEvents.short).animate({fontSize: normalTextSize}, ImportEvents.short, function() {
                                 contactNumber.animate({opacity: 1}, ImportEvents.long).animate({fontSize: bigTextSize}, ImportEvents.short).animate({fontSize: normalTextSize}, ImportEvents.short, function() {
                                     var loadingBar = responsePopup.find('#untilReload #meter');
-                                    loadingBar.animate({width: '100%'}, 10000, function() {
+                                    loadingBar.animate({width: '100%'}, 7000, function() {
                                         location.reload();
                                     });
                                 });
