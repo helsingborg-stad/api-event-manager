@@ -31,7 +31,7 @@ class LocationFields extends Fields
                 'schema' => array(
                     'description' => 'Field containing string value with street adress.',
                     'type' => 'string',
-                    'context' => array('view', 'edit')
+                    'context' => array('view', 'edit', 'embed')
                 )
             )
         );
@@ -45,7 +45,7 @@ class LocationFields extends Fields
                 'schema' => array(
                     'description' => 'Field containing string value with postal code.',
                     'type' => 'string',
-                    'context' => array('view', 'edit')
+                    'context' => array('view', 'edit', 'embed')
                 )
             )
         );
@@ -59,7 +59,7 @@ class LocationFields extends Fields
                 'schema' => array(
                     'description' => 'Field containing string value with city.',
                     'type' => 'string',
-                    'context' => array('view', 'edit')
+                    'context' => array('view', 'edit', 'embed')
                 )
             )
         );
@@ -73,7 +73,7 @@ class LocationFields extends Fields
                 'schema' => array(
                     'description' => 'Field containing string value with municipality.',
                     'type' => 'string',
-                    'context' => array('view', 'edit')
+                    'context' => array('view', 'edit', 'embed')
                 )
             )
         );
@@ -87,7 +87,7 @@ class LocationFields extends Fields
                 'schema' => array(
                     'description' => 'Field containing string value with country.',
                     'type' => 'string',
-                    'context' => array('view', 'edit')
+                    'context' => array('view', 'edit', 'embed')
                 )
             )
         );
@@ -101,7 +101,7 @@ class LocationFields extends Fields
                 'schema' => array(
                     'description' => 'Field containing string value with coordinates.',
                     'type' => 'string',
-                    'context' => array('view', 'edit')
+                    'context' => array('view', 'edit', 'embed')
                 )
             )
         );
@@ -115,7 +115,7 @@ class LocationFields extends Fields
                 'schema' => array(
                     'description' => 'Field containing string value with coordinates.',
                     'type' => 'string',
-                    'context' => array('view', 'edit')
+                    'context' => array('view', 'edit', 'embed')
                 )
             )
         );
@@ -129,7 +129,7 @@ class LocationFields extends Fields
                 'schema' => array(
                     'description' => 'Field containing string value with formatted address.',
                     'type' => 'string',
-                    'context' => array('view', 'edit')
+                    'context' => array('view', 'edit', 'embed')
                 )
             )
         );

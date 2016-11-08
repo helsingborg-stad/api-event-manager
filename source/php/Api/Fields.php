@@ -138,4 +138,69 @@ class Fields
             return get_post_meta($object['id'], $field_name, true);
         }
     }
+
+    /**
+     * Get complete list of event occasions
+     *
+     * @param array $object Details of current post.
+     * @param string $field_name Name of field.
+     * @param WP_REST_Request $request Current request
+     *
+     * @return array
+     */
+    public function getCompleteOccasions($object, $field_name, $request)
+    {
+        global $wpdb;
+        $db_occasions = $wpdb->prefix . "occasions";
+        $id = $object['id'];
+        $data = array();
+        $query_results = $wpdb->get_results("SELECT * FROM $db_occasions WHERE event = $id", OBJECT);
+        // Get and save occasions from post meta
+        $return_value = self::getFieldGetMetaData($object, 'occasions', $request);
+        if (is_array($return_value)||is_object($return_value) && !empty($return_value)) {
+            foreach ($return_value as $key => $value) {
+                $data[] = array(
+                'start_date_time'          => ($value['start_date']) ? $value['start_date'] : null,
+                'end_date_time'            => ($value['end_date']) ? $value['end_date'] : null,
+                'door_time'                => ($value['door_time']) ? $value['door_time'] : null,
+                'status'                   => ($value['status']) ? $value['status'] : null,
+                'occ_exeption_information' => ($value['occ_exeption_information']) ? $value['occ_exeption_information'] : null,
+                'content_mode'             => ($value['content_mode']) ? $value['content_mode'] : null,
+                'content'                  => ($value['content']) ? $value['content'] : null,
+                );
+            }
+        }
+        // Save remaining occasions from occasions table to array
+        foreach ($query_results as $key => $value) {
+            $data[] = array(
+                'start_date_time'          => ($value->timestamp_start) ? date('Y-m-d H:i', $value->timestamp_start) : null,
+                'end_date_time'            => ($value->timestamp_end) ? date('Y-m-d H:i', $value->timestamp_end) : null,
+                'door_time'                => ($value->timestamp_door) ? date('Y-m-d H:i', $value->timestamp_door) : null,
+                'status'                   => null,
+                'occ_exeption_information' => null,
+                'content_mode'             => null,
+                'content'                  => null,
+                );
+        }
+        $temp = array();
+        $keys = array();
+        // Remove duplicates from multi-array
+        foreach ($data as $key => $val) {
+            unset($val['status'], $val['occ_exeption_information'], $val['content_mode'], $val['content']);
+            if (!in_array($val, $temp)) {
+                $temp[] = $val;
+                $keys[$key] = true;
+            }
+        }
+        $return_data = array_intersect_key($data, $keys);
+        // Sort array by start date
+        usort($return_data, function ($x, $y) {
+            return strcasecmp($x['start_date_time'], $y['start_date_time']);
+        });
+
+        if (empty($return_data)) {
+            return null;
+        }
+        return $return_data;
+    }
 }

@@ -18,7 +18,6 @@ class AcfFields
     /**
      * Sponsor group field
      */
-
     acf_add_local_field_group(array (
     'key' => 'group_57a9bf12ef1a3',
     'title' => __('Sponsor', 'event-manager'),
@@ -1336,7 +1335,6 @@ class AcfFields
                     'choices' => array (
                         'scheduled' => __('Scheduled', 'event-manager'),
                         'rescheduled' => __('Rescheduled', 'event-manager'),
-                        'postponed' => __('Postponed', 'event-manager'),
                         'cancelled' => __('Cancelled', 'event-manager'),
                     ),
                     'allow_null' => 0,
@@ -1660,7 +1658,6 @@ class AcfFields
                             'choices' => array (
                                 'default' => __('Default', 'event-manager'),
                                 'rescheduled' => __('Rescheduled', 'event-manager'),
-                                'postponed' => __('Postponed', 'event-manager'),
                                 'cancelled' => __('Cancelled', 'event-manager'),
                             ),
                             'allow_null' => 0,

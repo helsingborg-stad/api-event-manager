@@ -38,7 +38,7 @@ class App
 
         //Json load files
         //Remove filter below if loading ACF fields with PHP.
-        //add_filter('acf/settings/load_json', array($this, 'acfJsonLoadPath'));
+        add_filter('acf/settings/load_json', array($this, 'acfJsonLoadPath'));
         add_action('acf/init', array($this, 'acfSettings'));
         add_filter('acf/translate_field', array($this, 'acfTranslationFilter'));
 
@@ -87,6 +87,7 @@ class App
 
         new Api\Filter();
         new Api\PostTypes();
+        new Api\Taxonomies();
         new Api\Linking();
         new Api\LocationFields();
         new Api\ContactFields();

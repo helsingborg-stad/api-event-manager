@@ -17,10 +17,15 @@ class Filter
 
         //Filters
         add_filter('rest_url_prefix', array($this, 'apiBasePrefix'), 5000, 1);
-
         add_filter('rest_prepare_event', array($this, 'removeResponseKeys'), 5000, 3);
         add_filter('rest_prepare_location', array($this, 'removeResponseKeys'), 5000, 3);
         add_filter('rest_prepare_contact', array($this, 'removeResponseKeys'), 5000, 3);
+        add_filter('rest_prepare_sponsor', array($this, 'removeResponseKeys'), 5000, 3);
+        add_filter('rest_prepare_package', array($this, 'removeResponseKeys'), 5000, 3);
+        add_filter('rest_prepare_membership-card', array($this, 'removeResponseKeys'), 5000, 3);
+        add_filter('rest_prepare_event-categories', array($this, 'removeResponseKeys'), 5000, 3);
+        add_filter('rest_prepare_event-tags', array($this, 'removeResponseKeys'), 5000, 3);
+        add_filter('rest_prepare_location-categories', array($this, 'removeResponseKeys'), 5000, 3);
     }
 
     /**

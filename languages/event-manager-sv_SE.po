@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Event Manager\n"
-"POT-Creation-Date: 2016-11-03 15:20+0100\n"
-"PO-Revision-Date: 2016-11-03 15:20+0100\n"
+"POT-Creation-Date: 2016-11-04 11:28+0100\n"
+"PO-Revision-Date: 2016-11-04 11:28+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: sv\n"
@@ -1292,8 +1292,8 @@ msgid "Edit tag"
 msgstr "Redigera tagg"
 
 #: source/php/Taxonomy/EventTags.php:23
-msgid "Update tag"
-msgstr "Uppdatera tagg"
+msgid "Update"
+msgstr "Uppdatera"
 
 #: source/php/Taxonomy/EventTags.php:24
 msgid "Add new tag"
@@ -1344,6 +1344,9 @@ msgstr ""
 #. Author URI of the plugin/theme
 msgid "http://www.helsingborg.se"
 msgstr ""
+
+#~ msgid "Update tag"
+#~ msgstr "Uppdatera tagg"
 
 #~ msgctxt "ACF"
 #~ msgid "Name"

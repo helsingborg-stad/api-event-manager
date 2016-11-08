@@ -6,7 +6,7 @@ use \HbgEventImporter\Event as Event;
 use \HbgEventImporter\Location as Location;
 use \HbgEventImporter\Contact as Contact;
 
-ini_set('memory_limit','224M');
+ini_set('memory_limit','256M');
 
 class CBIS extends \HbgEventImporter\Parser
 {

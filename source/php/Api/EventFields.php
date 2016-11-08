@@ -12,15 +12,15 @@ class EventFields extends Fields
 
     public function __construct()
     {
-        add_action('rest_api_init', array($this, 'registerRestFields'));
         add_action('rest_api_init', array($this, 'registerRestRoute'));
         add_action('rest_api_init', array($this, 'registerRestRouteSearch'));
+        add_action('rest_api_init', array($this, 'registerRestFields'));
     }
 
     public static function registerRestRoute()
     {
-        $response = register_rest_route('wp/v2', '/event/time', array(
-            'methods' => 'GET',
+        $response = register_rest_route('wp/v2', '/'.$this->postType.'/'.'time', array(
+            'methods'  => \WP_REST_Server::READABLE,
             'callback' => array($this, 'getEventsByTimestamp'),
         ));
     }
@@ -28,7 +28,7 @@ class EventFields extends Fields
     public static function registerRestRouteSearch()
     {
         register_rest_route( 'wp/v2','/event/search', array(
-            'methods' => 'GET',
+            'methods'  => \WP_REST_Server::READABLE,
             'callback' => array($this, 'getEventsSearch'),
         ));
     }
@@ -65,7 +65,7 @@ class EventFields extends Fields
      * http://v2.wp-api.org/
      * @return [type] [description]
      */
-    public function getEventsByTimestamp()
+    public function getEventsByTimestamp($request)
     {
         global $wpdb;
         $week = 604800;
@@ -83,7 +83,7 @@ class EventFields extends Fields
         }
 
         if ($timestamp == false) {
-            return $this->errorMessage('Format not ok', array(0, 1));
+            return $this->errorMessage('Format not valid', array(0, 1));
         }
 
         $db_occasions = $wpdb->prefix . "occasions";
@@ -118,90 +118,18 @@ class EventFields extends Fields
 
         $completeQuery = $wpdb->prepare($query, $this->postType, $post_status, $timestamp, $timePlusWeek, $timestamp, $timePlusWeek);
         $allEvents = $wpdb->get_results($completeQuery);
+        $controller = new \WP_REST_Posts_Controller($this->postType);
 
         $data = array();
         if (! empty($allEvents)) {
-            foreach ($allEvents as $post) {
-                $data = $this->makeData($post, $data);
+            foreach($allEvents as $post) {
+                $posts  = $controller->prepare_item_for_response(get_post($post->event), $request);
+                $data[] = $controller->prepare_response_for_collection($posts);
             }
         } else {
-            return array('Error' => 'There are no events');
+            return new \WP_Error( 'Error', 'There are no events', array( 'status' => 404 ) );
         }
-
-        //$response = new \WP_REST_Response($allEvents);
-        return $data;
-    }
-
-
-    /**
-     * Add current post to response data for this route.
-     * @param \WP_Post $post Current post object.
-     * @param array $data Current collection of data
-     * @return array
-     */
-    public function makeData($post, $data)
-    {
-        $id = $post->event;
-        $image = get_post_thumbnail_id($id);
-        if ($image) {
-            $_image = wp_get_attachment_image_src($image, 'large');
-            if (is_array($_image)) {
-                $image = $_image[0];
-            }
-        }
-        $occ_start = date('Y-m-d H:i', $post->timestamp_start);
-        $occ_end = date('Y-m-d H:i', $post->timestamp_end);
-        $occ_door = (!is_null($post->timestamp_door)) ? $occ_door = date('Y-m-d H:i', $post->timestamp_door) : null;
-
-        $data[ $post->ID ] = array(
-            'event_id'                  => $id,
-            'api_url'                   => rest_url( '/wp/v2/event/' ).$id,
-            'post_title'                => $post->post_title,
-            'post_author'               => $post->post_author,
-            'post_date'                 => $post->post_date,
-            'post_date_gmt'             => $post->post_date_gmt,
-            'post_content'              => $post->post_content,
-            'start_time'                => $occ_start,
-            'end_time'                  => $occ_end,
-            'door_time'                 => $occ_door,
-            'post_status'               => $post->post_status,
-            'slug'                      => $post->post_name,
-            'post_type'                 => $post->post_type,
-            'import_client'             => get_post_meta($id, 'import_client', true),
-            'featured_image'            => $image,
-            'event_link'                => get_field('event_link', $id),
-            'additional_links'          => get_field('additional_links', $id),
-            'related_events'            => get_field('related_events', $id),
-            'location'                  => get_field('location', $id),
-            'additional_locations'      => get_field('additional_locations', $id),
-            'organizers'                => get_field('organizers', $id),
-            'supporters'                => get_field('supporters', $id),
-            'booking_link'              => get_field('booking_link', $id),
-            'booking_phone'             => get_field('booking_phone', $id),
-            'age_restriction'           => get_field('age_restriction', $id),
-            'membership_cards'          => get_field('membership_cards', $id),
-            'price_information'         => get_field('price_information', $id),
-            'ticket_includes'           => get_field('ticket_includes', $id),
-            'price_adult'               => get_field('price_adult', $id),
-            'price_children'            => get_field('price_children', $id),
-            'children_age'              => get_field('children_age', $id),
-            'price_student'             => get_field('price_student', $id),
-            'price_senior'              => get_field('price_senior', $id),
-            'senior_age'                => get_field('senior_age', $id),
-            'booking_group'             => get_field('booking_group', $id),
-            'gallery'                   => get_field('gallery', $id),
-            'facebook'                  => get_field('facebook', $id),
-            'twitter'                   => get_field('twitter', $id),
-            'instagram'                 => get_field('instagram', $id),
-            'google_music'              => get_field('google_music', $id),
-            'apple_music'               => get_field('apple_music', $id),
-            'spotify'                   => get_field('spotify', $id),
-            'soundcloud'                => get_field('soundcloud', $id),
-            'deezer'                    => get_field('deezer', $id),
-            'youtube'                   => get_field('youtube', $id),
-            'vimeo'                     => get_field('vimeo', $id),
-        );
-        return $data;
+        return new \WP_REST_Response( $data, 200 );
     }
 
     /**
@@ -281,6 +209,20 @@ class EventFields extends Fields
                     'description' => 'Field containing array with recurring event rules.',
                     'type' => 'object',
                     'context' => array('view', 'edit')
+                )
+            )
+        );
+
+        // Complete list with occasions
+        register_rest_field($this->postType,
+            'occasions_complete',
+            array(
+                'get_callback'    => array($this, 'getCompleteOccasions'),
+                'update_callback' => null,
+                'schema' => array(
+                    'description' => 'Field containing array with all event occasions.',
+                    'type' => null,
+                    'context' => array('view')
                 )
             )
         );

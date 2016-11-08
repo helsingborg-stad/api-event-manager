@@ -31,7 +31,7 @@ class ContactFields extends Fields
                 'schema' => array(
                     'description' => 'Field contianing string value with contact first last name.',
                     'type' => 'string',
-                    'context' => array('view', 'edit')
+                    'context' => array('view', 'edit', 'embed')
                 )
             )
         );
@@ -45,7 +45,7 @@ class ContactFields extends Fields
                 'schema' => array(
                     'description' => 'Field contianing string value with contact phone number.',
                     'type' => 'string',
-                    'context' => array('view', 'edit')
+                    'context' => array('view', 'edit', 'embed')
                 )
             )
         );
@@ -59,7 +59,7 @@ class ContactFields extends Fields
                 'schema' => array(
                     'description' => 'Field contianing string value with contact email.',
                     'type' => 'string',
-                    'context' => array('view', 'edit')
+                    'context' => array('view', 'edit', 'embed')
                 )
             )
         );

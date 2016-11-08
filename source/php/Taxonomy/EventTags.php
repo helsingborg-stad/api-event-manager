@@ -20,7 +20,7 @@ class EventTags
             'parent_item'           => __('Parent', 'event-manager'),
             'parent_item_colon'     => __('Parent', 'event-manager'),
             'edit_item'             => __('Edit tag', 'event-manager'),
-            'update_item'           => __('Update tag', 'event-manager'),
+            'update_item'           => __('Update', 'event-manager'),
             'add_new_item'          => __('Add new tag', 'event-manager'),
             'new_item_name'         => __('New tag', 'event-manager'),
             'add_or_remove_items'   => __('Add or remove tags', 'event-manager'),

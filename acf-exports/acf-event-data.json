@@ -201,7 +201,6 @@
                         "choices": {
                             "scheduled": "Scheduled",
                             "rescheduled": "Rescheduled",
-                            "postponed": "Postponed",
                             "cancelled": "Cancelled"
                         },
                         "allow_null": 0,
@@ -524,7 +523,6 @@
                                 "choices": {
                                     "default": "Default",
                                     "rescheduled": "Rescheduled",
-                                    "postponed": "Postponed",
                                     "cancelled": "Cancelled"
                                 },
                                 "allow_null": 0,

@@ -31,7 +31,7 @@ class SponsorFields extends Fields
                 'schema' => array(
                     'description' => 'Field contianing string value with sponsor website.',
                     'type' => 'string',
-                    'context' => array('view', 'edit')
+                    'context' => array('view', 'edit', 'embed')
                 )
             )
         );
@@ -45,7 +45,7 @@ class SponsorFields extends Fields
                 'schema' => array(
                     'description' => 'Field containing string value with phone number.',
                     'type' => 'string',
-                    'context' => array('view', 'edit')
+                    'context' => array('view', 'edit', 'embed')
                 )
             )
         );
@@ -59,7 +59,7 @@ class SponsorFields extends Fields
                 'schema' => array(
                     'description' => 'Field contianing string value with sponsor email.',
                     'type' => 'string',
-                    'context' => array('view', 'edit')
+                    'context' => array('view', 'edit', 'embed')
                 )
             )
         );
@@ -73,7 +73,7 @@ class SponsorFields extends Fields
                 'schema' => array(
                     'description' => 'Field containing string value with instagram link.',
                     'type' => 'string',
-                    'context' => array('view', 'edit')
+                    'context' => array('view', 'edit', 'embed')
                 )
             )
         );
@@ -87,7 +87,7 @@ class SponsorFields extends Fields
                 'schema' => array(
                     'description' => 'Field containing string value with youtube link.',
                     'type' => 'string',
-                    'context' => array('view', 'edit')
+                    'context' => array('view', 'edit', 'embed')
                 )
             )
         );
@@ -101,7 +101,7 @@ class SponsorFields extends Fields
                 'schema' => array(
                     'description' => 'Field containing string value with twitter link.',
                     'type' => 'string',
-                    'context' => array('view', 'edit')
+                    'context' => array('view', 'edit', 'embed')
                 )
             )
         );
@@ -115,7 +115,7 @@ class SponsorFields extends Fields
                 'schema' => array(
                     'description' => 'Field containing string value with facebook link.',
                     'type' => 'string',
-                    'context' => array('view', 'edit')
+                    'context' => array('view', 'edit', 'embed')
                 )
             )
         );
