@@ -27,7 +27,7 @@ class EventFields extends Fields
 
     public static function registerRestRouteSearch()
     {
-        register_rest_route( 'wp/v2','/event/search', array(
+        register_rest_route('wp/v2', '/event/search', array(
             'methods'  => \WP_REST_Server::READABLE,
             'callback' => array($this, 'getEventsSearch'),
         ));
@@ -122,14 +122,14 @@ class EventFields extends Fields
 
         $data = array();
         if (! empty($allEvents)) {
-            foreach($allEvents as $post) {
-                $posts  = $controller->prepare_item_for_response(get_post($post->event), $request);
+            foreach ($allEvents as $post) {
+                $posts = $controller->prepare_item_for_response(get_post($post->event), $request);
                 $data[] = $controller->prepare_response_for_collection($posts);
             }
         } else {
-            return new \WP_Error( 'Error', 'There are no events', array( 'status' => 404 ) );
+            return new \WP_Error('Error', 'There are no events', array( 'status' => 404 ));
         }
-        return new \WP_REST_Response( $data, 200 );
+        return new \WP_REST_Response($data, 200);
     }
 
     /**
@@ -615,7 +615,5 @@ class EventFields extends Fields
                 )
             )
         );
-
-
     }
 }

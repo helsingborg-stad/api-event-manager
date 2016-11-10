@@ -215,6 +215,32 @@ jQuery(document).ready(function ($) {
     });
 });
 
+// ACF date picker settings
+(function($) {
+    if (typeof acf != 'undefined') {
+        acf.add_filter('date_time_picker_args', function( args, $field ){
+        args.timeOnlyTitle = eventmanager.choose_time;
+        args.timeText = eventmanager.time;
+        args.hourText = eventmanager.hour;
+        args.minuteText = eventmanager.minute;
+        args.closeText = eventmanager.done;
+        args.currentText = eventmanager.now;
+        args.showSecond = false;
+        return args;
+    });
+    acf.add_filter('time_picker_args', function( args, $field ){
+        args.timeOnlyTitle = eventmanager.choose_time;
+        args.timeText = eventmanager.time;
+        args.hourText = eventmanager.hour;
+        args.minuteText = eventmanager.minute;
+        args.closeText = eventmanager.done;
+        args.currentText = eventmanager.now;
+        args.showSecond = false;
+        return args;
+    });
+    }
+})(jQuery);
+
 /**
  * Format date object to yy-mm-dd
  */

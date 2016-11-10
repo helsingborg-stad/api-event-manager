@@ -37,7 +37,7 @@ class App
         register_deactivation_hook(plugin_basename(__FILE__), '\HbgEventImporter\App::removeCronJob');
 
         //Json load files
-        //Remove filter below if loading ACF fields with PHP.
+        //Remove filter acfJsonLoadPath if load ACF fields with PHP.
         add_filter('acf/settings/load_json', array($this, 'acfJsonLoadPath'));
         add_action('acf/init', array($this, 'acfSettings'));
         add_filter('acf/translate_field', array($this, 'acfTranslationFilter'));
@@ -193,6 +193,12 @@ class App
             'contacts'          => __("Contacts", 'event-manager'),
             'time_until_reload' => __("Time until reload", 'event-manager'),
             'loading'           => __("Loading", 'event-manager'),
+            'choose_time'       => __("Choose time", 'event-manager'),
+            'time'              => __("Time", 'event-manager'),
+            'hour'              => __("Hour", 'event-manager'),
+            'minute'            => __("Minute", 'event-manager'),
+            'done'              => __("Done", 'event-manager'),
+            'now'               => __("Now", 'event-manager'),
         ));
     }
 

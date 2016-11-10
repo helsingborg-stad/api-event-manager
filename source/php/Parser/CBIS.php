@@ -7,6 +7,7 @@ use \HbgEventImporter\Location as Location;
 use \HbgEventImporter\Contact as Contact;
 
 ini_set('memory_limit','256M');
+ini_set('default_socket_timeout', 120);
 
 class CBIS extends \HbgEventImporter\Parser
 {
