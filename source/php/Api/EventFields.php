@@ -15,6 +15,7 @@ class EventFields extends Fields
         add_action('rest_api_init', array($this, 'registerRestRoute'));
         add_action('rest_api_init', array($this, 'registerRestRouteSearch'));
         add_action('rest_api_init', array($this, 'registerRestFields'));
+        add_filter('rest_prepare_event', array($this, 'addCurrentOccasion'), 10, 3 );
     }
 
     public static function registerRestRoute()
@@ -59,6 +60,17 @@ class EventFields extends Fields
 
         $returnArray['Format examples'] = 'http://php.net/manual/en/datetime.formats.php';
         return $returnArray;
+    }
+
+    /**
+     * Ads current occasion when getting multiple events from end point: getEventsByTimestamp
+     * @return object
+     */
+    function addCurrentOccasion( $data, $post, $context ) {
+        $data->data['this_occasion'] = (! empty($post->timestamp_start)) ? array( 'start_date' => date('Y-m-d H:i', $post->timestamp_start)) : array();
+        $data->data['this_occasion'] += (! empty($post->timestamp_end)) ? array( 'end_date' => date('Y-m-d H:i', $post->timestamp_end)) : $data->data['this_occasion'];
+        $data->data['this_occasion'] += (! empty($post->timestamp_door)) ? array( 'door_time' => date('Y-m-d H:i', $post->timestamp_door)) : $data->data['this_occasion'];
+        return $data;
     }
 
     /**
@@ -123,7 +135,14 @@ class EventFields extends Fields
         $data = array();
         if (! empty($allEvents)) {
             foreach ($allEvents as $post) {
-                $posts = $controller->prepare_item_for_response(get_post($post->event), $request);
+                // Get event as WP_Post
+                $post_object = get_post($post->event);
+                // Add current occasion data to post
+                $post_object->timestamp_start = $post->timestamp_start;
+                $post_object->timestamp_end   = $post->timestamp_end;
+                $post_object->timestamp_door  = $post->timestamp_door;
+                // Save WP_Post with WP API formatting
+                $posts = $controller->prepare_item_for_response($post_object, $request);
                 $data[] = $controller->prepare_response_for_collection($posts);
             }
         } else {

@@ -160,8 +160,8 @@ class Fields
         if (is_array($return_value)||is_object($return_value) && !empty($return_value)) {
             foreach ($return_value as $key => $value) {
                 $data[] = array(
-                'start_date_time'          => ($value['start_date']) ? $value['start_date'] : null,
-                'end_date_time'            => ($value['end_date']) ? $value['end_date'] : null,
+                'start_date'               => ($value['start_date']) ? $value['start_date'] : null,
+                'end_date'                 => ($value['end_date']) ? $value['end_date'] : null,
                 'door_time'                => ($value['door_time']) ? $value['door_time'] : null,
                 'status'                   => ($value['status']) ? $value['status'] : null,
                 'occ_exeption_information' => ($value['occ_exeption_information']) ? $value['occ_exeption_information'] : null,
@@ -173,8 +173,8 @@ class Fields
         // Save remaining occasions from occasions table to array
         foreach ($query_results as $key => $value) {
             $data[] = array(
-                'start_date_time'          => ($value->timestamp_start) ? date('Y-m-d H:i', $value->timestamp_start) : null,
-                'end_date_time'            => ($value->timestamp_end) ? date('Y-m-d H:i', $value->timestamp_end) : null,
+                'start_date'               => ($value->timestamp_start) ? date('Y-m-d H:i', $value->timestamp_start) : null,
+                'end_date'                 => ($value->timestamp_end) ? date('Y-m-d H:i', $value->timestamp_end) : null,
                 'door_time'                => ($value->timestamp_door) ? date('Y-m-d H:i', $value->timestamp_door) : null,
                 'status'                   => null,
                 'occ_exeption_information' => null,
@@ -195,7 +195,7 @@ class Fields
         $return_data = array_intersect_key($data, $keys);
         // Sort array by start date
         usort($return_data, function ($x, $y) {
-            return strcasecmp($x['start_date_time'], $y['start_date_time']);
+            return strcasecmp($x['start_date'], $y['start_date']);
         });
 
         if (empty($return_data)) {

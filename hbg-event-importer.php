@@ -32,9 +32,7 @@ define('HBGEVENTIMPORTER_PATH', plugin_dir_path(__FILE__));
 define('HBGEVENTIMPORTER_URL', plugins_url('', __FILE__));
 define('HBGEVENTIMPORTER_TEMPLATE_PATH', HBGEVENTIMPORTER_PATH . 'templates/');
 
-//add_action('plugins_loaded', function () {
 load_plugin_textdomain('event-manager', false, plugin_basename(dirname(__FILE__)) . '/languages');
-//});
 
 require_once HBGEVENTIMPORTER_PATH . 'source/php/Vendor/Psr4ClassLoader.php';
 require_once HBGEVENTIMPORTER_PATH . 'Public.php';
