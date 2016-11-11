@@ -615,7 +615,15 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
         ?></p>
         </div>
         <?php
+    }
 
+    /**
+     * Saves hashtags from content as event-tags
+     * @return void
+     */
+    public function extractEventTags($post_id)
+    {
+        DataCleaner::hashtags($post_id, 'event-tags');
     }
 
 }

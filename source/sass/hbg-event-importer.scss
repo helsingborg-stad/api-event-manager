@@ -56,14 +56,6 @@
     }
 }
 
-// tbody .type-event.red {
-//     background-color: rgb(251,113,113)
-// }
-
-// tbody .type-event.green {
-//     background-color: rgb(118,245,120)
-// }
-
 .acceptAndDeny .hiddenElement {
     display: none;
 }
@@ -103,7 +95,7 @@
 
 #lightbox {
   position: fixed !important;
-  z-index: 9999 !important;
+  z-index: 999999 !important;
   top: 0;
   bottom: 0;
   left: 0;
@@ -158,7 +150,11 @@
 
 .lightbox-open #wpwrap {
   -webkit-filter: blur(10px) !important;
+  -moz-filter: blur(10px) !important;
+  -o-filter: blur(10px) !important;
+  -ms-filter: blur(10px) !important;
   filter: blur(10px) !important;
+  filter:progid:DXImageTransform.Microsoft.Blur(PixelRadius='10');
 }
 
 @keyframes modal-fade-in {
