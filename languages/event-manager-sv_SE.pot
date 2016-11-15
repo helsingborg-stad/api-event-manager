@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "Project-Id-Version: Event Manager\n"
-"POT-Creation-Date: 2016-11-09 09:01+0100\n"
+"POT-Creation-Date: 2016-11-15 10:58+0100\n"
 "PO-Revision-Date: 2016-10-26 08:27+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -153,8 +153,7 @@ msgstr ""
 msgid "Senior price is valid from this age."
 msgstr ""
 
-#: source/php/Acf/AcfFields.php:498 source/php/Acf/AcfFields.php:517
-#: source/php/Acf/AcfFields.php:2255
+#: source/php/Acf/AcfFields.php:498 source/php/Acf/AcfFields.php:2255
 msgid "Price group"
 msgstr ""
 
@@ -168,6 +167,10 @@ msgstr ""
 #: source/php/Acf/AcfFields.php:2270 source/php/Acf/AcfFields.php:2554
 #: source/php/Acf/AcfFields.php:2591
 msgid "Add"
+msgstr ""
+
+#: source/php/Acf/AcfFields.php:517
+msgid "Price"
 msgstr ""
 
 #: source/php/Acf/AcfFields.php:520 source/php/Acf/AcfFields.php:2277
@@ -596,7 +599,7 @@ msgstr ""
 msgid "Organizer Email"
 msgstr ""
 
-#: source/php/Acf/AcfFields.php:1888 source/php/App.php:193
+#: source/php/Acf/AcfFields.php:1888 source/php/App.php:194
 #: source/php/PostTypes/Contacts.php:10
 msgid "Contacts"
 msgstr ""
@@ -855,95 +858,95 @@ msgid ""
 "sensitive to cropping (eg. images with text overlay)."
 msgstr ""
 
-#: source/php/App.php:182
+#: source/php/App.php:183
 msgid "Title is missing"
 msgstr ""
 
-#: source/php/App.php:183
+#: source/php/App.php:184
 msgid "Create new contact"
 msgstr ""
 
-#: source/php/App.php:184
+#: source/php/App.php:185
 msgid "Create new sponsor"
 msgstr ""
 
-#: source/php/App.php:185
+#: source/php/App.php:186
 msgid "Create new location"
 msgstr ""
 
-#: source/php/App.php:186
+#: source/php/App.php:187
 msgid "Create new membership card"
 msgstr ""
 
-#: source/php/App.php:187
+#: source/php/App.php:188
 msgid "Close"
 msgstr ""
 
-#: source/php/App.php:188
+#: source/php/App.php:189
 msgid "Add images"
 msgstr ""
 
-#: source/php/App.php:189
+#: source/php/App.php:190
 msgid "Similar posts"
 msgstr ""
 
-#: source/php/App.php:190
-msgid "New data imported"
+#: source/php/App.php:191
+msgid "New data imported or updated"
 msgstr ""
 
-#: source/php/App.php:191
+#: source/php/App.php:192
 msgid "Events"
 msgstr ""
 
-#: source/php/App.php:192 source/php/PostTypes/Locations.php:12
+#: source/php/App.php:193 source/php/PostTypes/Locations.php:12
 msgid "Locations"
 msgstr ""
 
-#: source/php/App.php:194
+#: source/php/App.php:195
 msgid "Time until reload"
 msgstr ""
 
-#: source/php/App.php:195
+#: source/php/App.php:196
 msgid "Loading"
 msgstr ""
 
-#: source/php/App.php:196
+#: source/php/App.php:197
 msgid "Choose time"
 msgstr ""
 
-#: source/php/App.php:197
+#: source/php/App.php:198
 msgid "Time"
 msgstr ""
 
-#: source/php/App.php:198
+#: source/php/App.php:199
 msgid "Hour"
 msgstr ""
 
-#: source/php/App.php:199
+#: source/php/App.php:200
 msgid "Minute"
 msgstr ""
 
-#: source/php/App.php:200
+#: source/php/App.php:201
 msgid "Done"
 msgstr ""
 
-#: source/php/App.php:201
+#: source/php/App.php:202
 msgid "Now"
 msgstr ""
 
-#: source/php/App.php:215 source/php/App.php:216
+#: source/php/App.php:216 source/php/App.php:217
 msgid "Import events"
 msgstr ""
 
-#: source/php/App.php:226 source/php/App.php:227 source/php/App.php:237
+#: source/php/App.php:227 source/php/App.php:228 source/php/App.php:238
 msgid "Import CBIS events"
 msgstr ""
 
-#: source/php/App.php:236 source/php/PostTypes/Locations.php:94
+#: source/php/App.php:237 source/php/PostTypes/Locations.php:94
 msgid "Import CBIS locations"
 msgstr ""
 
-#: source/php/App.php:246 source/php/App.php:247
+#: source/php/App.php:247 source/php/App.php:248
 msgid "Delete all events"
 msgstr ""
 
@@ -1080,87 +1083,87 @@ msgstr ""
 msgid "Deny"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:297 source/php/PostTypes/Events.php:435
+#: source/php/PostTypes/Events.php:261 source/php/PostTypes/Events.php:399
 msgid "End date must be after start date"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:321
+#: source/php/PostTypes/Events.php:285
 msgid "Door time cannot be after start date"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:342
+#: source/php/PostTypes/Events.php:306
 msgid "Please add occasion or recurrence rule"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:363
+#: source/php/PostTypes/Events.php:327
 msgid "Not a valid number"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:387
+#: source/php/PostTypes/Events.php:351
 msgid "End time must be after start time"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:411
+#: source/php/PostTypes/Events.php:375
 msgid "Door time cannot be after start time"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:472
+#: source/php/PostTypes/Events.php:436
 msgid "Import XCAP"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:473
+#: source/php/PostTypes/Events.php:437
 msgid "Import CBIS"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:474
+#: source/php/PostTypes/Events.php:438
 msgid "Collect event timestamps"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:487
+#: source/php/PostTypes/Events.php:451
 msgid "No post to duplicate has been supplied!"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:551
+#: source/php/PostTypes/Events.php:515
 msgid "Event creation failed, could not find original event"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:565
+#: source/php/PostTypes/Events.php:529
 msgid "Create similar item"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:565
+#: source/php/PostTypes/Events.php:529
 msgid "Are you sure you want to clone this event?"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:565
+#: source/php/PostTypes/Events.php:529
 msgid "Clone"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:580
+#: source/php/PostTypes/Events.php:544
 #, php-format
 msgid ""
 "This is a duplicate of the event: %s. If this is a new occasion for the "
 "same event, please %s and republish the original event"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:580
+#: source/php/PostTypes/Events.php:544
 msgid "edit"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:604
+#: source/php/PostTypes/Events.php:568
 msgid ""
 "Please do not enter information that refers to information in another text "
 "field. It is not certain that all fields will be presented to the consumer "
 "and would thefore be missguiding."
 msgstr ""
 
-#: source/php/PostTypes/Events.php:627
+#: source/php/PostTypes/Events.php:591
 msgid ""
 "CBIS have not imported any events for atleast 7 days. Please control the "
 "importer."
 msgstr ""
 
-#: source/php/PostTypes/Events.php:650
+#: source/php/PostTypes/Events.php:614
 msgid ""
 "XCAP have not imported any events for atleast 7 days. Please control the "
 "importer."

@@ -188,7 +188,7 @@ class App
             'close'             => __("Close", 'event-manager'),
             'add_images'        => __("Add images", 'event-manager'),
             'similar_posts'     => __("Similar posts", 'event-manager'),
-            'new_data_imported' => __("New data imported", 'event-manager'),
+            'new_data_imported' => __("New data imported or updated", 'event-manager'),
             'events'            => __("Events", 'event-manager'),
             'locations'         => __("Locations", 'event-manager'),
             'contacts'          => __("Contacts", 'event-manager'),
@@ -286,8 +286,7 @@ class App
 
     public static function addCronJob()
     {
-        // TA BORT ändra till daily
-        wp_schedule_event(time(), 'daily', 'import_events_daily');
+        wp_schedule_event(time(), 'hourly', 'import_events_daily');
     }
 
     public static function removeCronJob()

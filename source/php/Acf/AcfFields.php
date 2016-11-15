@@ -514,7 +514,7 @@ class AcfFields
             'sub_fields' => array (
                 array (
                     'key' => 'field_5818498949eaa',
-                    'label' => __('Price group', 'event-manager'),
+                    'label' => __('Price', 'event-manager'),
                     'name' => 'price_group',
                     'type' => 'text',
                     'instructions' => __('Price for this group.', 'event-manager'),

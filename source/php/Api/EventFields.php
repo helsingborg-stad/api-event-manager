@@ -634,5 +634,18 @@ class EventFields extends Fields
                 )
             )
         );
+
+        /* Add more data to Featured Media field */
+        register_rest_field($this->postType,
+            'featured_media',
+            array(
+                'get_callback' => array($this, 'featuredImageData'),
+                'schema' => array(
+                    'description' => 'Field containing object with featured image data.',
+                    'type' => 'object',
+                    'context' => array('view')
+                )
+            )
+        );
     }
 }

@@ -54,13 +54,8 @@ class Filter
         //Common keys
         $keys = array('author','acf','guid','type','link');
 
-        //Only for location
-        if ($post->post_type == "location") {
-            $keys[] = "content";
-        }
-
-        //Only for contact
-        if ($post->post_type == "contact") {
+        //Only for location and contact
+        if ($post->post_type == "location" || $post->post_type == "contact") {
             $keys[] = "content";
         }
 
