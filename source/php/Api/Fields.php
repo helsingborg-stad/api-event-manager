@@ -140,6 +140,25 @@ class Fields
     }
 
     /**
+     * Set current occasion when getting multiple events.
+     * @return object
+     */
+    public function setCurrentOccasion( $data, $post, $context ) {
+        $start_date = (! empty($post->timestamp_start)) ? date('Y-m-d H:i', $post->timestamp_start) : null;
+        $end_date = (! empty($post->timestamp_end)) ? date('Y-m-d H:i', $post->timestamp_end) : null;
+        $door_time = (! empty($post->timestamp_door)) ? date('Y-m-d H:i', $post->timestamp_door) : null;
+
+        if (! empty ($data->data['occasions'])) {
+            foreach ($data->data['occasions'] as $key => $val) {
+                if ($val['start_date'] == $start_date && $val['end_date'] == $end_date && $val['door_time'] == $door_time) {
+                    $data->data['occasions'][$key]['current_occasion'] = true;
+                }
+            }
+        }
+        return $data;
+    }
+
+    /**
      * Get complete list of event occasions
      *
      * @param array $object Details of current post.
@@ -148,6 +167,7 @@ class Fields
      *
      * @return array
      */
+
     public function getCompleteOccasions($object, $field_name, $request)
     {
         global $wpdb;
@@ -184,7 +204,7 @@ class Fields
         }
         $temp = array();
         $keys = array();
-        // Remove duplicates from multi-array
+        // Remove duplicates from $data array
         foreach ($data as $key => $val) {
             unset($val['status'], $val['occ_exeption_information'], $val['content_mode'], $val['content']);
             if (!in_array($val, $temp)) {
@@ -239,4 +259,32 @@ class Fields
 
         return apply_filters('featured_image_data', $featured_image, $image_id);
     }
+
+    /**
+     * Replace id with taxonomy name
+     *
+     * @param   object  $object      The response object.
+     * @param   string  $field_name  The name of the field to add.
+     * @param   object  $request     The WP_REST_Request object.
+     *
+     * @return  object|null
+     */
+
+    public function eventTaxonomies($object, $field_name, $request)
+    {
+        if (! empty($object[$field_name])) {
+            $taxonomies = $object[$field_name];
+        } else {
+            return null;
+        }
+
+        $taxArray = array();
+        foreach ($taxonomies as $val) {
+            $term = get_term($val, $field_name);
+            $taxArray[] .= $term->name;
+        }
+
+        return apply_filters('event_taxonomies', $taxArray);
+    }
+
 }

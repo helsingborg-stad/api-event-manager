@@ -17,7 +17,7 @@ class Taxonomies
     {
         global $wp_taxonomies;
 
-        $taxonomies=  array('event-categories', 'event-tags', 'location-categories');
+        $taxonomies=  array('event_categories', 'event_tags', 'location_categories');
 
         if (is_array($taxonomies) && !empty($taxonomies)) {
             foreach ($taxonomies as $taxonomy) {

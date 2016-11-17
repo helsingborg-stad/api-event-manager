@@ -40,6 +40,6 @@ class EventTags
             'rewrite'               => true
         );
 
-        register_taxonomy('event-tags', array('event'), $args);
+        register_taxonomy('event_tags', array('event'), $args);
     }
 }

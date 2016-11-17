@@ -56,21 +56,21 @@ class Event extends \HbgEventImporter\Entity\PostManager
     }
 
     /**
-     * Saves categories as event-categories taxonomy terms
+     * Saves categories as event_categories taxonomy terms
      * @return void
      */
     public function saveCategories()
     {
-        wp_set_object_terms($this->ID, $this->categories, 'event-categories', true);
+        wp_set_object_terms($this->ID, $this->categories, 'event_categories', true);
     }
 
     /**
-     * Saves hashtags from content as event-tags
+     * Saves hashtags from content as event_tags
      * @return void
      */
     public function saveTags()
     {
-        DataCleaner::hashtags($this->ID, 'event-tags');
+        DataCleaner::hashtags($this->ID, 'event_tags');
     }
 
     /**

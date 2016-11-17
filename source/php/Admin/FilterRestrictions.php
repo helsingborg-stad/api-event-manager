@@ -22,12 +22,12 @@ class FilterRestrictions
         global $post_type;
         global $wp_query;
         if ($post_type=='event') {
-            $taxonomy = 'event-categories';
-            $term = isset($wp_query->query['event-categories']) ? $wp_query->query['event-categories'] :'';
+            $taxonomy = 'event_categories';
+            $term = isset($wp_query->query['event_categories']) ? $wp_query->query['event_categories'] :'';
             wp_dropdown_categories(array(
                 'show_option_all' =>  __('All categories', 'event-manager'),
                 'taxonomy'        =>  $taxonomy,
-                'name'            =>  'event-categories',
+                'name'            =>  'event_categories',
                 'orderby'         =>  'name',
                 'selected'        =>  $term,
                 'hierarchical'    =>  true,
@@ -43,9 +43,9 @@ class FilterRestrictions
     {
         global $pagenow;
         $qv =& $query->query_vars;
-        if ($pagenow=='edit.php' && isset($qv['event-categories']) && is_numeric($qv['event-categories'])) {
-            $term = get_term_by('id', $qv['event-categories'], 'event-categories');
-            $qv['event-categories'] = ($term ? $term->slug : '');
+        if ($pagenow=='edit.php' && isset($qv['event_categories']) && is_numeric($qv['event_categories'])) {
+            $term = get_term_by('id', $qv['event_categories'], 'event_categories');
+            $qv['event_categories'] = ($term ? $term->slug : '');
         }
     }
 

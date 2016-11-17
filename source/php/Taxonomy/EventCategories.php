@@ -40,6 +40,6 @@ class EventCategories
             'rewrite'               => true
         );
 
-        register_taxonomy('event-categories', array('event'), $args);
+        register_taxonomy('event_categories', array('event'), $args);
     }
 }

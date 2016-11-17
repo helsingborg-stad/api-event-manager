@@ -26,7 +26,7 @@ class Locations extends \HbgEventImporter\Entity\CustomPostType
                 ),
                 'hierarchical'         => false,
                 'exclude_from_search'  => false,
-                'taxonomies'           => array('location-categories'),
+                'taxonomies'           => array('location_categories'),
                 'supports'             => array('title', 'revisions', 'editor', 'thumbnail')
             )
         );

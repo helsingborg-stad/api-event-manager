@@ -25,7 +25,8 @@ class LocationCategories
             'new_item_name'         => __('New category', 'event-manager'),
             'add_or_remove_items'   => __('Add or remove categories', 'event-manager'),
             'choose_from_most_used' => __('Choose from most used categories', 'event-manager'),
-            'menu_name'             => __('Categories', 'event-manager'),        );
+            'menu_name'             => __('Categories', 'event-manager'),
+        );
 
         $args = array(
             'labels'                => $labels,
@@ -39,6 +40,6 @@ class LocationCategories
             'rewrite'               => true
         );
 
-        register_taxonomy('location-categories', array('location'), $args);
+        register_taxonomy('location_categories', array('location'), $args);
     }
 }

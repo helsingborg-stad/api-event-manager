@@ -26,7 +26,7 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
                 ),
                 'hierarchical'          =>  false,
                 'exclude_from_search'   =>  false,
-                'taxonomies'            =>  array('event-categories', 'event-tags'),
+                'taxonomies'            =>  array('event_categories', 'event_tags'),
                 'supports'              =>  array('title', 'revisions', 'editor', 'thumbnail'),
             )
         );
@@ -118,6 +118,8 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
         add_filter('acf/update_value/name=price_student', array($this, 'acfUpdatePrices'), 10, 3);
         add_filter('acf/update_value/name=price_senior', array($this, 'acfUpdatePrices'), 10, 3);
         add_filter('acf/update_value/key=field_57f4f6dc747a1', array($this, 'acfUpdatePrices'), 10, 3);
+        add_filter('acf/update_value/name=booking_phone', array($this, 'acfUpdatePhone'), 10, 3);
+        add_filter('acf/update_value/key=field_57ebb45142846', array($this, 'acfUpdatePhone'), 10, 3);
     }
 
     /**
@@ -618,12 +620,12 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
     }
 
     /**
-     * Saves hashtags from content as event-tags
+     * Saves hashtags from content as event_tags
      * @return void
      */
     public function extractEventTags($post_id)
     {
-        DataCleaner::hashtags($post_id, 'event-tags');
+        DataCleaner::hashtags($post_id, 'event_tags');
     }
 
 }

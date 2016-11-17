@@ -23,9 +23,9 @@ class Filter
         add_filter('rest_prepare_sponsor', array($this, 'removeResponseKeys'), 5000, 3);
         add_filter('rest_prepare_package', array($this, 'removeResponseKeys'), 5000, 3);
         add_filter('rest_prepare_membership-card', array($this, 'removeResponseKeys'), 5000, 3);
-        add_filter('rest_prepare_event-categories', array($this, 'removeResponseKeys'), 5000, 3);
-        add_filter('rest_prepare_event-tags', array($this, 'removeResponseKeys'), 5000, 3);
-        add_filter('rest_prepare_location-categories', array($this, 'removeResponseKeys'), 5000, 3);
+        add_filter('rest_prepare_event_categories', array($this, 'removeResponseKeys'), 5000, 3);
+        add_filter('rest_prepare_event_tags', array($this, 'removeResponseKeys'), 5000, 3);
+        add_filter('rest_prepare_location_categories', array($this, 'removeResponseKeys'), 5000, 3);
     }
 
     /**

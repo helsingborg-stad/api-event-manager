@@ -2,6 +2,8 @@
 
 namespace HbgEventImporter\Entity;
 
+use \HbgEventImporter\Helper\DataCleaner as DataCleaner;
+
 abstract class CustomPostType
 {
     protected $namePlural;
@@ -40,7 +42,7 @@ abstract class CustomPostType
         add_action('admin_head', array($this, 'removeMedia'));
         add_filter('get_sample_permalink_html', array($this, 'replacePermalink'), 10, 5);
         add_filter('redirect_post_location', array($this, 'redirectLightboxLocation'), 10, 2);
-        add_filter( 'post_updated_messages', array($this, 'post_published') );
+        add_filter('post_updated_messages', array($this, 'postPublishedMsg'));
     }
 
     /**
@@ -299,7 +301,7 @@ abstract class CustomPostType
      * Update admin notice messages. Removes public links.
      * @return array
      */
-    function post_published( $messages )
+    function postPublishedMsg( $messages )
     {
         foreach($messages as $key => $value)
         {
@@ -324,5 +326,18 @@ abstract class CustomPostType
         } else {
             update_post_meta($ID, 'accepted', 1);
         }
+    }
+
+    /**
+     * Format phone number before save to dabtabase
+     * @param  string $value   the value of the field
+     * @param  int    $post_id the post id to save against
+     * @param  array  $field   the field object
+     * @return string          the new value
+     */
+    public function acfUpdatePhone($value, $post_id, $field)
+    {
+        $value = DataCleaner::phoneNumber($value);
+        return $value;
     }
 }
