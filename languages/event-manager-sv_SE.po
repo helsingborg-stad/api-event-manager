@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Event Manager\n"
-"POT-Creation-Date: 2016-11-15 10:59+0100\n"
-"PO-Revision-Date: 2016-11-15 11:00+0100\n"
+"POT-Creation-Date: 2016-11-17 15:41+0100\n"
+"PO-Revision-Date: 2016-11-17 15:42+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: sv\n"
@@ -23,20 +23,20 @@ msgstr ""
 msgid "Sponsor"
 msgstr "Sponsor"
 
-#: source/php/Acf/AcfFields.php:27
+#: source/php/Acf/AcfFields.php:27 source/php/Acf/AcfFields.php:1163
 msgid "Website"
-msgstr "Hemsida"
+msgstr "Webbplats"
 
 #: source/php/Acf/AcfFields.php:30
 msgid "External link to website."
 msgstr "Extern länk till hemsida."
 
-#: source/php/Acf/AcfFields.php:43 source/php/Acf/AcfFields.php:626
+#: source/php/Acf/AcfFields.php:43 source/php/Acf/AcfFields.php:630
 #: source/php/PostTypes/Contacts.php:39
 msgid "Phone"
 msgstr "Telefon"
 
-#: source/php/Acf/AcfFields.php:62 source/php/Acf/AcfFields.php:645
+#: source/php/Acf/AcfFields.php:62 source/php/Acf/AcfFields.php:649
 #: source/php/PostTypes/Contacts.php:36
 msgid "Email"
 msgstr "E-postadress"
@@ -57,265 +57,257 @@ msgstr "Twitter"
 msgid "Facebook link"
 msgstr "Facebook"
 
-#: source/php/Acf/AcfFields.php:168 source/php/PostTypes/Packages.php:11
+#: source/php/Acf/AcfFields.php:169 source/php/PostTypes/Packages.php:11
 msgid "Package"
 msgstr "Paket"
 
-#: source/php/Acf/AcfFields.php:172
+#: source/php/Acf/AcfFields.php:173
 msgid "Events included"
 msgstr "Inkluderade evenemang"
 
-#: source/php/Acf/AcfFields.php:175
+#: source/php/Acf/AcfFields.php:176
 msgid "Select which events that are included in this package."
 msgstr "Välj evenemang som ingår i paketet."
 
-#: source/php/Acf/AcfFields.php:195 source/php/Acf/AcfFields.php:1952
+#: source/php/Acf/AcfFields.php:196 source/php/Acf/AcfFields.php:1919
 msgid "Booking link"
 msgstr "Länk till bokning"
 
-#: source/php/Acf/AcfFields.php:198 source/php/Acf/AcfFields.php:1955
+#: source/php/Acf/AcfFields.php:199 source/php/Acf/AcfFields.php:1922
 msgid "External link to booking website."
 msgstr "Extern länk till bokningssida."
 
-#: source/php/Acf/AcfFields.php:211 source/php/Acf/AcfFields.php:1968
+#: source/php/Acf/AcfFields.php:212 source/php/Acf/AcfFields.php:1935
 msgid "Booking phone"
 msgstr "Telefon"
 
-#: source/php/Acf/AcfFields.php:214 source/php/Acf/AcfFields.php:1971
+#: source/php/Acf/AcfFields.php:215 source/php/Acf/AcfFields.php:1938
 msgid "Phone number to make bookings."
 msgstr "Telefonnummer för bokning."
 
-#: source/php/Acf/AcfFields.php:230 source/php/Acf/AcfFields.php:1987
-msgid "Age restriction"
-msgstr "Åldersgräns"
+#: source/php/Acf/AcfFields.php:231 source/php/Acf/AcfFields.php:1954
+msgid "Minimum age to attend the event"
+msgstr "Lägsta ålder för att delta i evenemanget"
 
-#: source/php/Acf/AcfFields.php:233 source/php/Acf/AcfFields.php:1990
+#: source/php/Acf/AcfFields.php:234 source/php/Acf/AcfFields.php:1957
 msgid "Enter age if this event is age restricted."
 msgstr "Skriv ålder om evenemanget har åldersgräns."
 
-#: source/php/Acf/AcfFields.php:249 source/php/Acf/AcfFields.php:2006
+#: source/php/Acf/AcfFields.php:252 source/php/Acf/AcfFields.php:1975
 msgid "Included in membership cards"
-msgstr "Ingår i medlemskort."
+msgstr "Ingår i medlemskort"
 
-#: source/php/Acf/AcfFields.php:252
+#: source/php/Acf/AcfFields.php:255
 msgid "Add membership cards where this package is included."
 msgstr "Välj medlemskort där paketet ingår."
 
-#: source/php/Acf/AcfFields.php:272 source/php/Acf/AcfFields.php:2029
-msgid "Price information"
-msgstr "Prisinformation"
-
-#: source/php/Acf/AcfFields.php:275 source/php/Acf/AcfFields.php:2032
-msgid "Information about prices."
-msgstr "Övrig information om priserna."
-
-#: source/php/Acf/AcfFields.php:291 source/php/Acf/AcfFields.php:2048
-msgid "Ticket includes"
-msgstr "Ingår i biljett"
-
-#: source/php/Acf/AcfFields.php:294 source/php/Acf/AcfFields.php:2051
-msgid "Specific information about what's included in one ticket."
-msgstr "Information om vad som ingår i en biljett."
-
-#: source/php/Acf/AcfFields.php:310 source/php/Acf/AcfFields.php:2067
+#: source/php/Acf/AcfFields.php:275 source/php/Acf/AcfFields.php:1998
 msgid "Default price / Adult"
 msgstr "Standardpris / Vuxen"
 
-#: source/php/Acf/AcfFields.php:329 source/php/Acf/AcfFields.php:2086
+#: source/php/Acf/AcfFields.php:289 source/php/Acf/AcfFields.php:308
+#: source/php/Acf/AcfFields.php:327 source/php/Acf/AcfFields.php:397
+#: source/php/Acf/AcfFields.php:496 source/php/Acf/AcfFields.php:2012
+#: source/php/Acf/AcfFields.php:2031 source/php/Acf/AcfFields.php:2050
+#: source/php/Acf/AcfFields.php:2120 source/php/Acf/AcfFields.php:2219
+msgid "SEK"
+msgstr "kr"
+
+#: source/php/Acf/AcfFields.php:294 source/php/Acf/AcfFields.php:2017
 msgid "Price student"
 msgstr "Studentpris"
 
-#: source/php/Acf/AcfFields.php:348 source/php/Acf/AcfFields.php:2105
+#: source/php/Acf/AcfFields.php:313 source/php/Acf/AcfFields.php:2036
 msgid "Price children"
 msgstr "Barnpris"
 
-#: source/php/Acf/AcfFields.php:367 source/php/Acf/AcfFields.php:2124
-msgid "Children age"
-msgstr "Åldersgräns barn"
+#: source/php/Acf/AcfFields.php:332 source/php/Acf/AcfFields.php:2055
+msgid "Age restriction for children price"
+msgstr "Åldersgräns för barnpris"
 
-#: source/php/Acf/AcfFields.php:370 source/php/Acf/AcfFields.php:2127
+#: source/php/Acf/AcfFields.php:335 source/php/Acf/AcfFields.php:2058
 msgid "Children price is valid up to this age."
 msgstr "Barnpris är giltigt upp till angiven ålder."
 
-#: source/php/Acf/AcfFields.php:418 source/php/Acf/AcfFields.php:2175
+#: source/php/Acf/AcfFields.php:383 source/php/Acf/AcfFields.php:2106
 msgid "Price senior"
 msgstr "Pensionärspris"
 
-#: source/php/Acf/AcfFields.php:437 source/php/Acf/AcfFields.php:2194
-msgid "Senior age"
-msgstr "Åldersgräns pensionär"
+#: source/php/Acf/AcfFields.php:402 source/php/Acf/AcfFields.php:2125
+msgid "Age restriction for senior price"
+msgstr "Åldersgräns för pensionärspris"
 
-#: source/php/Acf/AcfFields.php:440 source/php/Acf/AcfFields.php:2197
+#: source/php/Acf/AcfFields.php:405 source/php/Acf/AcfFields.php:2128
 msgid "Senior price is valid from this age."
 msgstr "Pensionärspris är giltigt från angiven ålder."
 
-#: source/php/Acf/AcfFields.php:498 source/php/Acf/AcfFields.php:2255
+#: source/php/Acf/AcfFields.php:463 source/php/Acf/AcfFields.php:482
+#: source/php/Acf/AcfFields.php:2186
 msgid "Price group"
 msgstr "Gruppriser"
 
-#: source/php/Acf/AcfFields.php:501 source/php/Acf/AcfFields.php:2258
+#: source/php/Acf/AcfFields.php:466 source/php/Acf/AcfFields.php:2189
 msgid "Add prices for group bookings."
 msgstr "Lägg till priser för grupper."
 
-#: source/php/Acf/AcfFields.php:513 source/php/Acf/AcfFields.php:1029
-#: source/php/Acf/AcfFields.php:1227 source/php/Acf/AcfFields.php:1320
-#: source/php/Acf/AcfFields.php:1494 source/php/Acf/AcfFields.php:1626
-#: source/php/Acf/AcfFields.php:2270 source/php/Acf/AcfFields.php:2554
-#: source/php/Acf/AcfFields.php:2591
-msgid "Add"
-msgstr "Lägg till"
+#: source/php/Acf/AcfFields.php:478
+msgid "Add group price"
+msgstr "Lägg till gruppris"
 
-#: source/php/Acf/AcfFields.php:517
-msgid "Price"
-msgstr "Pris"
-
-#: source/php/Acf/AcfFields.php:520 source/php/Acf/AcfFields.php:2277
+#: source/php/Acf/AcfFields.php:485 source/php/Acf/AcfFields.php:2208
 msgid "Price for this group."
 msgstr "Pris för grupp."
 
-#: source/php/Acf/AcfFields.php:536 source/php/Acf/AcfFields.php:2293
+#: source/php/Acf/AcfFields.php:501 source/php/Acf/AcfFields.php:2224
 msgid "Min persons"
 msgstr "Minimum antal"
 
-#: source/php/Acf/AcfFields.php:539 source/php/Acf/AcfFields.php:2296
+#: source/php/Acf/AcfFields.php:504 source/php/Acf/AcfFields.php:2227
 msgid "Minimum number of people."
 msgstr "Minimum antal personer för gruppen."
 
-#: source/php/Acf/AcfFields.php:557 source/php/Acf/AcfFields.php:2314
+#: source/php/Acf/AcfFields.php:522 source/php/Acf/AcfFields.php:2245
 msgid "Max persons"
 msgstr "Maximum antal"
 
-#: source/php/Acf/AcfFields.php:560 source/php/Acf/AcfFields.php:2317
+#: source/php/Acf/AcfFields.php:525 source/php/Acf/AcfFields.php:2248
 msgid "Maximum number of people."
 msgstr "Maximum antal personer för gruppen."
 
-#: source/php/Acf/AcfFields.php:603 source/php/PostTypes/Contacts.php:11
+#: source/php/Acf/AcfFields.php:545 source/php/Acf/AcfFields.php:2268
+msgid "Price information"
+msgstr "Prisinformation"
+
+#: source/php/Acf/AcfFields.php:548 source/php/Acf/AcfFields.php:2271
+msgid "Write additional information about prices."
+msgstr "Lägg till övrig eventuell information om priserna."
+
+#: source/php/Acf/AcfFields.php:564 source/php/Acf/AcfFields.php:2287
+msgid "Ticket includes"
+msgstr "Ingår i biljett"
+
+#: source/php/Acf/AcfFields.php:567 source/php/Acf/AcfFields.php:2290
+msgid ""
+"Does the ticket include more than entry? Then write what's included in one "
+"ticket."
+msgstr "Ingår mer i biljetten än inträde? Skriv då vad som ingår i en biljett."
+
+#: source/php/Acf/AcfFields.php:607 source/php/PostTypes/Contacts.php:11
 msgid "Contact"
 msgstr "Kontakt"
 
-#: source/php/Acf/AcfFields.php:607 source/php/PostTypes/Contacts.php:33
+#: source/php/Acf/AcfFields.php:611 source/php/PostTypes/Contacts.php:33
 msgid "Name"
 msgstr "Namn"
 
-#: source/php/Acf/AcfFields.php:610
+#: source/php/Acf/AcfFields.php:614
 msgid "Contact person or company name."
 msgstr "Kontaktperson eller företagsnamn."
 
-#: source/php/Acf/AcfFields.php:687 source/php/Acf/AcfFields.php:1703
-#: source/php/Acf/AcfFields.php:1719 source/php/PostTypes/Events.php:37
+#: source/php/Acf/AcfFields.php:692 source/php/Acf/AcfFields.php:1670
+#: source/php/Acf/AcfFields.php:1686 source/php/PostTypes/Events.php:37
 #: source/php/PostTypes/Locations.php:13
 msgid "Location"
 msgstr "Plats"
 
-#: source/php/Acf/AcfFields.php:691 source/php/PostTypes/Locations.php:35
+#: source/php/Acf/AcfFields.php:696 source/php/PostTypes/Locations.php:35
 msgid "Address"
 msgstr "Adress"
 
-#: source/php/Acf/AcfFields.php:707
+#: source/php/Acf/AcfFields.php:712
 msgid "Street address"
 msgstr "Gatuadress"
 
-#: source/php/Acf/AcfFields.php:728
+#: source/php/Acf/AcfFields.php:733
 msgid "Postal code"
 msgstr "Postnummer"
 
-#: source/php/Acf/AcfFields.php:747
+#: source/php/Acf/AcfFields.php:752
 msgid "City"
-msgstr "Postort"
+msgstr "Ort"
 
-#: source/php/Acf/AcfFields.php:768
+#: source/php/Acf/AcfFields.php:773
 msgid "Municipial"
 msgstr "Län"
 
-#: source/php/Acf/AcfFields.php:789
+#: source/php/Acf/AcfFields.php:794
 msgid "Country"
 msgstr "Land"
 
-#: source/php/Acf/AcfFields.php:810
-msgid "Latitude"
-msgstr "Latitud"
-
-#: source/php/Acf/AcfFields.php:813
-msgid "Latitude for GPS coordinates."
-msgstr "Latitud för GPS-koordinater."
-
-#: source/php/Acf/AcfFields.php:829
-msgid "Longitude"
-msgstr "Longitud"
-
-#: source/php/Acf/AcfFields.php:832
-msgid "Longitude for GPS coordinates."
-msgstr "Longitud för GPS-koordinater."
-
-#: source/php/Acf/AcfFields.php:848 source/php/Acf/AcfFields.php:864
+#: source/php/Acf/AcfFields.php:815 source/php/Acf/AcfFields.php:831
 msgid "Open hours"
 msgstr "Öppettider"
 
-#: source/php/Acf/AcfFields.php:875
+#: source/php/Acf/AcfFields.php:842
 msgid "Open hours for this location."
 msgstr "Lägg till öppettider för platsen."
 
-#: source/php/Acf/AcfFields.php:881
+#: source/php/Acf/AcfFields.php:848
 msgid "Hours monday"
 msgstr "Måndagar"
 
-#: source/php/Acf/AcfFields.php:893 source/php/Acf/AcfFields.php:912
-#: source/php/Acf/AcfFields.php:931 source/php/Acf/AcfFields.php:950
-#: source/php/Acf/AcfFields.php:969 source/php/Acf/AcfFields.php:988
-#: source/php/Acf/AcfFields.php:1007
+#: source/php/Acf/AcfFields.php:860 source/php/Acf/AcfFields.php:879
+#: source/php/Acf/AcfFields.php:898 source/php/Acf/AcfFields.php:917
+#: source/php/Acf/AcfFields.php:936 source/php/Acf/AcfFields.php:955
+#: source/php/Acf/AcfFields.php:974
 msgid "eg. 08:00 - 15:00"
 msgstr "t.ex. 08:00 - 15:00"
 
-#: source/php/Acf/AcfFields.php:900
+#: source/php/Acf/AcfFields.php:867
 msgid "Hours tuesday"
 msgstr "Tisdagar"
 
-#: source/php/Acf/AcfFields.php:919
+#: source/php/Acf/AcfFields.php:886
 msgid "Hours wednesday"
 msgstr "Onsdagar"
 
-#: source/php/Acf/AcfFields.php:938
+#: source/php/Acf/AcfFields.php:905
 msgid "Hours thursday"
 msgstr "Torsdagar"
 
-#: source/php/Acf/AcfFields.php:957
+#: source/php/Acf/AcfFields.php:924
 msgid "Hours friday"
 msgstr "Fredagar"
 
-#: source/php/Acf/AcfFields.php:976
+#: source/php/Acf/AcfFields.php:943
 msgid "Hours saturday"
 msgstr "Lördagar"
 
-#: source/php/Acf/AcfFields.php:995
+#: source/php/Acf/AcfFields.php:962
 msgid "Hours sunday"
 msgstr "Söndagar"
 
-#: source/php/Acf/AcfFields.php:1014
+#: source/php/Acf/AcfFields.php:981
 msgid "Exceptions to opening hours"
 msgstr "Undantag för öppettider"
 
-#: source/php/Acf/AcfFields.php:1017
+#: source/php/Acf/AcfFields.php:984
 msgid "Add one or more exceptions to this scheme."
 msgstr "Lägg till ett eller flera undantag."
 
-#: source/php/Acf/AcfFields.php:1033 source/php/PostTypes/Contacts.php:43
-#: source/php/PostTypes/Events.php:92 source/php/PostTypes/Locations.php:74
+#: source/php/Acf/AcfFields.php:996 source/php/Acf/AcfFields.php:1593
+msgid "Add exception"
+msgstr "Lägg till undantag"
+
+#: source/php/Acf/AcfFields.php:1000 source/php/Acf/AcfFields.php:1272
+#: source/php/PostTypes/Contacts.php:42 source/php/PostTypes/Events.php:92
+#: source/php/PostTypes/Locations.php:74
 #: source/php/PostTypes/MembershipCards.php:33
 #: source/php/PostTypes/Packages.php:46 source/php/PostTypes/Sponsors.php:33
 msgid "Date"
 msgstr "Datum"
 
-#: source/php/Acf/AcfFields.php:1050 source/php/Acf/AcfFields.php:1349
-#: source/php/Acf/AcfFields.php:1672
+#: source/php/Acf/AcfFields.php:1017 source/php/Acf/AcfFields.php:1316
+#: source/php/Acf/AcfFields.php:1639
 msgid "Exeption information"
 msgstr "Information"
 
-#: source/php/Acf/AcfFields.php:1071 source/php/Acf/AcfFields.php:1087
-#: source/php/Acf/AcfFields.php:2337 source/php/Acf/AcfFields.php:2353
+#: source/php/Acf/AcfFields.php:1038 source/php/Acf/AcfFields.php:1054
+#: source/php/Acf/AcfFields.php:2306 source/php/Acf/AcfFields.php:2322
 msgid "Gallery"
 msgstr "Bildgalleri"
 
-#: source/php/Acf/AcfFields.php:1090
+#: source/php/Acf/AcfFields.php:1057
 msgid ""
 "Add images to this location. Please upload images that are as large as "
 "possible and that are not sensitive to cropping (eg. images with text "
@@ -325,317 +317,338 @@ msgstr ""
 "möjligt och som kan beskäras utan att förstöra det bilden vill förmedla (t."
 "ex. bilder med text)."
 
-#: source/php/Acf/AcfFields.php:1136 source/php/Acf/AcfFields.php:1180
+#: source/php/Acf/AcfFields.php:1103 source/php/Acf/AcfFields.php:1147
 msgid "Event"
 msgstr "Evenemang"
 
-#: source/php/Acf/AcfFields.php:1140
+#: source/php/Acf/AcfFields.php:1107
 msgid "Imported"
 msgstr "Importerat"
 
-#: source/php/Acf/AcfFields.php:1143
+#: source/php/Acf/AcfFields.php:1110
 msgid "If this is an imported event or not."
 msgstr "Om evenemanget är importerat eller inte."
 
-#: source/php/Acf/AcfFields.php:1156
+#: source/php/Acf/AcfFields.php:1123
 msgid "API synchronization"
 msgstr "API synkronisering"
 
-#: source/php/Acf/AcfFields.php:1159
+#: source/php/Acf/AcfFields.php:1126
 msgid ""
 "Unchecking this box will disable API updates sync for this particular event."
 msgstr "Avmarkering av denna rutan stänger av automatiska API-uppdateringar."
 
-#: source/php/Acf/AcfFields.php:1175
+#: source/php/Acf/AcfFields.php:1142
 msgid "Sync event information with API"
 msgstr "Synkronisera information med API"
 
-#: source/php/Acf/AcfFields.php:1196
-msgid "Event link"
-msgstr "Hemsida"
+#: source/php/Acf/AcfFields.php:1166
+msgid "Link to event website."
+msgstr "Länk till evenemangets webbplats."
 
-#: source/php/Acf/AcfFields.php:1199
-msgid "External link to event website."
-msgstr "Extern länk till evenemangets hemsida."
-
-#: source/php/Acf/AcfFields.php:1212
+#: source/php/Acf/AcfFields.php:1179
 msgid "Additional links"
 msgstr "Extra länkar"
 
-#: source/php/Acf/AcfFields.php:1215
-msgid "Add additional external links to websites."
-msgstr "Lägg till ytterligare länkar för evenemanget."
+#: source/php/Acf/AcfFields.php:1182
+msgid "Additional links to websites."
+msgstr "Lägg till eventuella ytterligare länkar för evenemanget."
 
-#: source/php/Acf/AcfFields.php:1231
+#: source/php/Acf/AcfFields.php:1194 source/php/Acf/AcfFields.php:2523
+#: source/php/Acf/AcfFields.php:2560
+msgid "Add link"
+msgstr "Lägg till länk"
+
+#: source/php/Acf/AcfFields.php:1198
 msgid "Link"
 msgstr "Länk"
 
-#: source/php/Acf/AcfFields.php:1249
+#: source/php/Acf/AcfFields.php:1216
 msgid "Related events"
 msgstr "Relaterade evenemang"
 
-#: source/php/Acf/AcfFields.php:1252
-msgid "Add if there are other events related to this event."
-msgstr "Lägg till evenemang som är relaterade till detta evenemanget."
+#: source/php/Acf/AcfFields.php:1219
+msgid "Links to other events associated with this event."
+msgstr "Länkar till andra evenemang som hör ihop med eller liknar detta."
 
-#: source/php/Acf/AcfFields.php:1272 source/php/Acf/AcfFields.php:1305
+#: source/php/Acf/AcfFields.php:1239
 msgid "Occasions"
 msgstr "Tidpunkt"
 
-#: source/php/Acf/AcfFields.php:1288
+#: source/php/Acf/AcfFields.php:1255
 msgid "Event occasions"
 msgstr "Tidpunkter för evenemanget"
 
-#: source/php/Acf/AcfFields.php:1299
+#: source/php/Acf/AcfFields.php:1266
 msgid ""
-"Add occasions to this event. If this is a weekly recurring event, please add "
-"recurrence rules."
+"Add occasions to this event. Does the event occur each week? Then add a rule "
+"for recurring events."
 msgstr ""
-"Lägg till tidpunkter för evenemanget. Om evenemang är återkommande varje "
-"vecka, vänligen lägg till regel för återkommande evenemang."
+"Lägg till tidpunkter för evenemanget. Återkommer evenemanget varje vecka? "
+"Lägg då till en regel för återkommande evenemang."
 
-#: source/php/Acf/AcfFields.php:1308
+#: source/php/Acf/AcfFields.php:1275
 msgid "Start and end time of the event."
 msgstr "Start- och slutdatum för evenemanget."
 
-#: source/php/Acf/AcfFields.php:1324 source/php/Acf/AcfFields.php:1647
+#: source/php/Acf/AcfFields.php:1287
+msgid "Add occasion"
+msgstr "Lägg till tidpunkt"
+
+#: source/php/Acf/AcfFields.php:1291 source/php/Acf/AcfFields.php:1614
 msgid "Status"
 msgstr "Status"
 
-#: source/php/Acf/AcfFields.php:1327
+#: source/php/Acf/AcfFields.php:1294
 msgid "Select if event is on schedule or not."
 msgstr "Välj om evenemanget inträffar som planerat."
 
-#: source/php/Acf/AcfFields.php:1336
+#: source/php/Acf/AcfFields.php:1303
 msgid "Scheduled"
 msgstr "Enligt planering"
 
-#: source/php/Acf/AcfFields.php:1337 source/php/Acf/AcfFields.php:1660
+#: source/php/Acf/AcfFields.php:1304 source/php/Acf/AcfFields.php:1627
 msgid "Rescheduled"
 msgstr "Omplanerat"
 
-#: source/php/Acf/AcfFields.php:1338 source/php/Acf/AcfFields.php:1661
+#: source/php/Acf/AcfFields.php:1305 source/php/Acf/AcfFields.php:1628
 msgid "Cancelled"
 msgstr "Inställt"
 
-#: source/php/Acf/AcfFields.php:1352
+#: source/php/Acf/AcfFields.php:1319
 msgid "Information about why there have been an exception."
 msgstr "Information om orsak till undantaget."
 
-#: source/php/Acf/AcfFields.php:1376 source/php/Acf/AcfFields.php:1577
+#: source/php/Acf/AcfFields.php:1343 source/php/Acf/AcfFields.php:1544
 msgid "Start date"
 msgstr "Startdatum"
 
-#: source/php/Acf/AcfFields.php:1393 source/php/Acf/AcfFields.php:1594
+#: source/php/Acf/AcfFields.php:1360 source/php/Acf/AcfFields.php:1561
 msgid "End date"
 msgstr "Slutdatum"
 
-#: source/php/Acf/AcfFields.php:1410 source/php/Acf/AcfFields.php:1561
+#: source/php/Acf/AcfFields.php:1377 source/php/Acf/AcfFields.php:1528
 msgid "Door time"
 msgstr "Lokalen öppnar"
 
-#: source/php/Acf/AcfFields.php:1427
+#: source/php/Acf/AcfFields.php:1394
 msgid "Override content"
-msgstr "Överskrid beskrivning"
+msgstr "Skriv över med unik beskrivning"
 
-#: source/php/Acf/AcfFields.php:1430
+#: source/php/Acf/AcfFields.php:1397
 msgid "Use master or custom content for this occasion."
-msgstr "Använd evenemangets standardbeskrivning eller egen beskrivning."
+msgstr ""
+"Använd evenemangets standardbeskrivning eller skriv över med unik "
+"beskrivning för tidpunkten."
 
-#: source/php/Acf/AcfFields.php:1439
+#: source/php/Acf/AcfFields.php:1406
 msgid "Use master content"
 msgstr "Standardbeskrivning"
 
-#: source/php/Acf/AcfFields.php:1440
+#: source/php/Acf/AcfFields.php:1407
 msgid "Use custom content"
 msgstr "Egen beskrivning"
 
-#: source/php/Acf/AcfFields.php:1451
-msgid "Description"
-msgstr "Beskrivning"
+#: source/php/Acf/AcfFields.php:1418
+msgid "Content"
+msgstr "Innehåll"
 
-#: source/php/Acf/AcfFields.php:1454
+#: source/php/Acf/AcfFields.php:1421
 msgid "Override the post content of the event."
-msgstr "Överskrid standardbeskrivning med eget innehåll."
+msgstr "Skriv över standardbeskrivning med eget innehåll."
 
-#: source/php/Acf/AcfFields.php:1479
+#: source/php/Acf/AcfFields.php:1446
 msgid "Recurrence rules"
-msgstr "Återkommande evenemang."
+msgstr "Återkommande evenemang"
 
-#: source/php/Acf/AcfFields.php:1482
+#: source/php/Acf/AcfFields.php:1449
 msgid "Weekly recurring event."
 msgstr "Regler för återkommande evenemang."
 
-#: source/php/Acf/AcfFields.php:1498
+#: source/php/Acf/AcfFields.php:1461
+msgid "Add rule"
+msgstr "Lägg till regel"
+
+#: source/php/Acf/AcfFields.php:1465
 msgid "Weekday"
 msgstr "Veckodag"
 
-#: source/php/Acf/AcfFields.php:1501
+#: source/php/Acf/AcfFields.php:1468
 msgid "The event will occur on this weekday"
 msgstr "Evenemanget inträffar på vald veckodag."
 
-#: source/php/Acf/AcfFields.php:1510
+#: source/php/Acf/AcfFields.php:1477
 msgid "Monday"
 msgstr "Måndag"
 
-#: source/php/Acf/AcfFields.php:1511
+#: source/php/Acf/AcfFields.php:1478
 msgid "Tuesday"
 msgstr "Tisdag"
 
-#: source/php/Acf/AcfFields.php:1512
+#: source/php/Acf/AcfFields.php:1479
 msgid "Wednesday"
 msgstr "Onsdag"
 
-#: source/php/Acf/AcfFields.php:1513
+#: source/php/Acf/AcfFields.php:1480
 msgid "Thursday"
 msgstr "Torsdag"
 
-#: source/php/Acf/AcfFields.php:1514
+#: source/php/Acf/AcfFields.php:1481
 msgid "Friday"
 msgstr "Fredag"
 
-#: source/php/Acf/AcfFields.php:1515
+#: source/php/Acf/AcfFields.php:1482
 msgid "Saturday"
 msgstr "Lördag"
 
-#: source/php/Acf/AcfFields.php:1516
+#: source/php/Acf/AcfFields.php:1483
 msgid "Sunday"
 msgstr "Söndag"
 
-#: source/php/Acf/AcfFields.php:1529
+#: source/php/Acf/AcfFields.php:1496
 msgid "Start time"
 msgstr "Starttid"
 
-#: source/php/Acf/AcfFields.php:1532
+#: source/php/Acf/AcfFields.php:1499
 msgid "Start time of the event"
 msgstr "Evenemangets starttid"
 
-#: source/php/Acf/AcfFields.php:1545
+#: source/php/Acf/AcfFields.php:1512
 msgid "End time"
 msgstr "Sluttid"
 
-#: source/php/Acf/AcfFields.php:1548
+#: source/php/Acf/AcfFields.php:1515
 msgid "End time of the event"
 msgstr "Evenemangets sluttid"
 
-#: source/php/Acf/AcfFields.php:1564
+#: source/php/Acf/AcfFields.php:1531
 msgid "Door time of the event"
 msgstr "När lokalen öppnar till evenemanget"
 
-#: source/php/Acf/AcfFields.php:1580
+#: source/php/Acf/AcfFields.php:1547
 msgid "When the recurring event period starts."
 msgstr "Inträffar löpande fr.o.m. detta datum."
 
-#: source/php/Acf/AcfFields.php:1597
+#: source/php/Acf/AcfFields.php:1564
 msgid "When the reccurring event period ends"
 msgstr "Inträffar löpande t.o.m. detta datum."
 
-#: source/php/Acf/AcfFields.php:1611
+#: source/php/Acf/AcfFields.php:1578
 msgid "Exceptions"
 msgstr "Undantag"
 
-#: source/php/Acf/AcfFields.php:1614
+#: source/php/Acf/AcfFields.php:1581
 msgid "Add exceptions to this scheme."
 msgstr "Lägg till undantag."
 
-#: source/php/Acf/AcfFields.php:1630
+#: source/php/Acf/AcfFields.php:1597
 msgid "Exception date"
 msgstr "Datum för undantag"
 
-#: source/php/Acf/AcfFields.php:1659
+#: source/php/Acf/AcfFields.php:1626
 msgid "Default"
 msgstr "Standard"
 
-#: source/php/Acf/AcfFields.php:1722
+#: source/php/Acf/AcfFields.php:1689
 msgid "Location or address for the event."
 msgstr "Plats eller adress för evenemanget."
 
-#: source/php/Acf/AcfFields.php:1742
+#: source/php/Acf/AcfFields.php:1709
 msgid "Additional locations"
 msgstr "Fler platser"
 
-#: source/php/Acf/AcfFields.php:1745
+#: source/php/Acf/AcfFields.php:1712
 msgid ""
 "Add additional locations if the event takes place on more than one address."
 msgstr "Lägg till platser om evenemanget äger rum på flera platser."
 
-#: source/php/Acf/AcfFields.php:1765 source/php/Acf/AcfFields.php:1816
+#: source/php/Acf/AcfFields.php:1732 source/php/Acf/AcfFields.php:1783
 msgid "Organizer"
 msgstr "Arrangör"
 
-#: source/php/Acf/AcfFields.php:1781
+#: source/php/Acf/AcfFields.php:1748
 msgid "Organizers"
 msgstr "Arrangörer"
 
-#: source/php/Acf/AcfFields.php:1796
+#: source/php/Acf/AcfFields.php:1763
 msgid "Add organizer"
 msgstr "Lägg till arrangör"
 
-#: source/php/Acf/AcfFields.php:1800
+#: source/php/Acf/AcfFields.php:1767
 msgid "Main organizer"
 msgstr "Huvudarrangör"
 
-#: source/php/Acf/AcfFields.php:1811
-msgid "If this is the main organizer for the event."
-msgstr "Om detta är huvudarrangören för evenemanget."
+#: source/php/Acf/AcfFields.php:1778
+msgid "Check the box if this is the main organizer for the event."
+msgstr "Kryssa i rutan om detta är huvudarrangören för evenemanget."
 
-#: source/php/Acf/AcfFields.php:1819
-msgid "Company or name of the organizer."
-msgstr "Företag eller namn på arrangören."
+#: source/php/Acf/AcfFields.php:1786
+msgid "Company, organization or person that organizes the event."
+msgstr ""
+"Företaget, organisationen eller privatpersonen som står bakom evenemanget."
 
-#: source/php/Acf/AcfFields.php:1835
+#: source/php/Acf/AcfFields.php:1802
 msgid "Organizer link"
-msgstr "Hemsida"
+msgstr "Webbplats"
 
-#: source/php/Acf/AcfFields.php:1838
+#: source/php/Acf/AcfFields.php:1805
 msgid "External link to the organizer."
-msgstr "Extern länk till arrangörens hemsida."
+msgstr "Extern länk till arrangörens webbplats."
 
-#: source/php/Acf/AcfFields.php:1851
+#: source/php/Acf/AcfFields.php:1818
 msgid "Organizer Phone"
 msgstr "Telefon"
 
-#: source/php/Acf/AcfFields.php:1870
+#: source/php/Acf/AcfFields.php:1837
 msgid "Organizer Email"
 msgstr "E-postadress"
 
-#: source/php/Acf/AcfFields.php:1888 source/php/App.php:194
+#: source/php/Acf/AcfFields.php:1855 source/php/App.php:193
 #: source/php/PostTypes/Contacts.php:10
 msgid "Contacts"
 msgstr "Kontakter"
 
-#: source/php/Acf/AcfFields.php:1891
+#: source/php/Acf/AcfFields.php:1858
 msgid "Add contacts to the organizer."
 msgstr "Lägg till kontakter för arrangören."
 
-#: source/php/Acf/AcfFields.php:1913 source/php/PostTypes/Sponsors.php:10
+#: source/php/Acf/AcfFields.php:1880 source/php/PostTypes/Sponsors.php:10
 msgid "Sponsors"
 msgstr "Sponsorer"
 
-#: source/php/Acf/AcfFields.php:1916
+#: source/php/Acf/AcfFields.php:1883
 msgid "Add sponsors to the event."
 msgstr "Lägg till sponsorer till evenemanget."
 
-#: source/php/Acf/AcfFields.php:1936
+#: source/php/Acf/AcfFields.php:1903
 msgid "Booking"
 msgstr "Bokning"
 
-#: source/php/Acf/AcfFields.php:2009
+#: source/php/Acf/AcfFields.php:1966
+msgid "e.g. 15"
+msgstr "t.ex. 15"
+
+#: source/php/Acf/AcfFields.php:1968
+msgid "year"
+msgstr "år"
+
+#: source/php/Acf/AcfFields.php:1978
 msgid "Add membership cards where this event is included."
 msgstr "Välj medlemskort där evenemanget ingår."
 
-#: source/php/Acf/AcfFields.php:2081 source/php/Acf/AcfFields.php:2100
-#: source/php/Acf/AcfFields.php:2119 source/php/Acf/AcfFields.php:2189
-#: source/php/Acf/AcfFields.php:2288
-msgid "SEK"
-msgstr "kr"
+#: source/php/Acf/AcfFields.php:2201
+msgid "Add group"
+msgstr "Lägg till grupp"
 
-#: source/php/Acf/AcfFields.php:2274
-msgctxt "Same as cost or charge"
+#: source/php/Acf/AcfFields.php:2205
 msgid "Price"
 msgstr "Pris"
 
-#: source/php/Acf/AcfFields.php:2356
+#: source/php/Acf/AcfFields.php:2299
+msgid "e.g. entry, checkroom, meal"
+msgstr "t.ex. inträde, garderob, måltid"
+
+#: source/php/Acf/AcfFields.php:2325
 msgid ""
 "Add images to this event.<br> Please upload images that are as large as "
 "possible and that are not sensitive to cropping (eg. images with text "
@@ -645,81 +658,81 @@ msgstr ""
 "möjligt och som kan beskäras utan att förstöra det bilden vill förmedla (t."
 "ex. bilder med text)."
 
-#: source/php/Acf/AcfFields.php:2378 source/php/Acf/AcfFields.php:2394
+#: source/php/Acf/AcfFields.php:2347 source/php/Acf/AcfFields.php:2363
 msgid "Links"
 msgstr "Länkar"
 
-#: source/php/Acf/AcfFields.php:2405
+#: source/php/Acf/AcfFields.php:2374
 msgid "Add external links to different social media and streaming services."
 msgstr "Externa länkar till sociala medier och streaming-tjänster."
 
-#: source/php/Acf/AcfFields.php:2411
+#: source/php/Acf/AcfFields.php:2380
 msgid "Facebook"
 msgstr ""
 
-#: source/php/Acf/AcfFields.php:2427
+#: source/php/Acf/AcfFields.php:2396
 msgid "Twitter"
 msgstr ""
 
-#: source/php/Acf/AcfFields.php:2443
+#: source/php/Acf/AcfFields.php:2412
 msgid "Instagram"
 msgstr ""
 
-#: source/php/Acf/AcfFields.php:2459
+#: source/php/Acf/AcfFields.php:2428
 msgid "Google Music"
 msgstr ""
 
-#: source/php/Acf/AcfFields.php:2475
+#: source/php/Acf/AcfFields.php:2444
 msgid "Apple Music"
 msgstr ""
 
-#: source/php/Acf/AcfFields.php:2491
+#: source/php/Acf/AcfFields.php:2460
 msgid "Spotify"
 msgstr ""
 
-#: source/php/Acf/AcfFields.php:2507
+#: source/php/Acf/AcfFields.php:2476
 msgid "Soundcloud"
 msgstr ""
 
-#: source/php/Acf/AcfFields.php:2523
+#: source/php/Acf/AcfFields.php:2492
 msgid "Deezer"
 msgstr ""
 
-#: source/php/Acf/AcfFields.php:2539
+#: source/php/Acf/AcfFields.php:2508
 msgid "YouTube"
 msgstr ""
 
-#: source/php/Acf/AcfFields.php:2542
+#: source/php/Acf/AcfFields.php:2511
 msgid "Add one or multiple YouTube links."
 msgstr "Lägg till en eller flera YouTube-länkar"
 
-#: source/php/Acf/AcfFields.php:2558
+#: source/php/Acf/AcfFields.php:2527
 msgid "YouTube link"
 msgstr "YouTube-länk"
 
-#: source/php/Acf/AcfFields.php:2576
+#: source/php/Acf/AcfFields.php:2545
 msgid "Vimeo"
 msgstr ""
 
-#: source/php/Acf/AcfFields.php:2579
+#: source/php/Acf/AcfFields.php:2548
 msgid "Add one or multiple Vimeo links."
 msgstr "Lägg till en eller flera Vimero-länkar"
 
-#: source/php/Acf/AcfFields.php:2595
+#: source/php/Acf/AcfFields.php:2564
 msgid "Vimeo link"
 msgstr "Vimeo-länk"
 
-#: source/php/Acf/AcfFields.php:2637
+#: source/php/Acf/AcfFields.php:2606
 msgctxt "ACF"
 msgid "Settings"
 msgstr "Inställningar"
 
-#: source/php/Acf/AcfFields.php:2641
+#: source/php/Acf/AcfFields.php:2610
 msgctxt "ACF"
 msgid "Google Api key"
 msgstr "Google Api-nyckel"
 
-#: source/php/Acf/AcfFields.php:2644
+#: source/php/Acf/AcfFields.php:2613
 msgctxt "ACF"
 msgid ""
 "API-services required:<br> Google Maps Geocoding API<br> Google Places API "
@@ -728,12 +741,12 @@ msgstr ""
 "API-tjänster som krävs:<br> Google Maps Geocoding API<br> Google Places API "
 "Web Service."
 
-#: source/php/Acf/AcfFields.php:2660
+#: source/php/Acf/AcfFields.php:2629
 msgctxt "ACF"
 msgid "Default city"
 msgstr "Stad"
 
-#: source/php/Acf/AcfFields.php:2663
+#: source/php/Acf/AcfFields.php:2632
 msgctxt "ACF"
 msgid ""
 "If essential adress components are missing during import, this city will be "
@@ -742,67 +755,67 @@ msgstr ""
 "Om adressuppgifter saknas för en plats kommer angiven stad användas för att "
 "ge exaktare resultat."
 
-#: source/php/Acf/AcfFields.php:2679
+#: source/php/Acf/AcfFields.php:2648
 msgctxt "ACF"
 msgid "Import warning"
 msgstr "Visa varningar"
 
-#: source/php/Acf/AcfFields.php:2690
+#: source/php/Acf/AcfFields.php:2659
 msgctxt "ACF"
 msgid "Show notification if no events have been imported for a week or more."
 msgstr "Visar varning om inga evenemang har importerats senaste veckan."
 
-#: source/php/Acf/AcfFields.php:2718
+#: source/php/Acf/AcfFields.php:2687
 msgctxt "ACF"
 msgid "CBIS"
 msgstr ""
 
-#: source/php/Acf/AcfFields.php:2722
+#: source/php/Acf/AcfFields.php:2691
 msgctxt "ACF"
 msgid "API Key"
 msgstr "API-nyckel"
 
-#: source/php/Acf/AcfFields.php:2743
+#: source/php/Acf/AcfFields.php:2712
 msgctxt "ACF"
 msgid "API GeoNode Id"
 msgstr ""
 
-#: source/php/Acf/AcfFields.php:2762 source/php/Acf/AcfFields.php:2848
+#: source/php/Acf/AcfFields.php:2731 source/php/Acf/AcfFields.php:2817
 msgctxt "ACF"
 msgid "Daily import"
 msgstr "Daglig import"
 
-#: source/php/Acf/AcfFields.php:2773
+#: source/php/Acf/AcfFields.php:2742
 msgctxt "ACF"
 msgid "Enable daily automatic import from CBIS"
 msgstr "Daglig automatisk import från CBIS"
 
-#: source/php/Acf/AcfFields.php:2778 source/php/Acf/AcfFields.php:2864
+#: source/php/Acf/AcfFields.php:2747 source/php/Acf/AcfFields.php:2833
 msgctxt "ACF"
 msgid "Post status"
 msgstr "Poststatus"
 
-#: source/php/Acf/AcfFields.php:2781 source/php/Acf/AcfFields.php:2867
+#: source/php/Acf/AcfFields.php:2750 source/php/Acf/AcfFields.php:2836
 msgctxt "ACF"
 msgid "Select status of imported events."
 msgstr "Välj status för importerade evenemang."
 
-#: source/php/Acf/AcfFields.php:2790 source/php/Acf/AcfFields.php:2876
+#: source/php/Acf/AcfFields.php:2759 source/php/Acf/AcfFields.php:2845
 msgctxt "ACF"
 msgid "Draft"
 msgstr "Utkast"
 
-#: source/php/Acf/AcfFields.php:2791 source/php/Acf/AcfFields.php:2877
+#: source/php/Acf/AcfFields.php:2760 source/php/Acf/AcfFields.php:2846
 msgctxt "ACF"
 msgid "Publish"
 msgstr "Publicerad"
 
-#: source/php/Acf/AcfFields.php:2802 source/php/Acf/AcfFields.php:2888
+#: source/php/Acf/AcfFields.php:2771 source/php/Acf/AcfFields.php:2857
 msgctxt "ACF"
 msgid "Exclude categories"
 msgstr "Uteslut kategorier"
 
-#: source/php/Acf/AcfFields.php:2805 source/php/Acf/AcfFields.php:2891
+#: source/php/Acf/AcfFields.php:2774 source/php/Acf/AcfFields.php:2860
 msgctxt "ACF"
 msgid ""
 "Enter the name of the categories that you want to exclude from the import. "
@@ -811,12 +824,12 @@ msgstr ""
 "Skriv namnet på de kategorier ni vill utesluta från import. Separera med "
 "kommatecken."
 
-#: source/php/Acf/AcfFields.php:2844
+#: source/php/Acf/AcfFields.php:2813
 msgctxt "ACF"
 msgid "Xcap (Mittkulturkort.se)"
 msgstr ""
 
-#: source/php/Acf/AcfFields.php:2859
+#: source/php/Acf/AcfFields.php:2828
 msgctxt "ACF"
 msgid "Enable daily automatic import from XCAP"
 msgstr "Daglig automatisk import från XCAP"
@@ -869,160 +882,160 @@ msgstr ""
 "Vänligen ladda upp bilder som är så stora som möjligt och som kan beskäras "
 "utan att förstöra det bilden vill förmedla (t.ex. bilder med text)."
 
-#: source/php/App.php:183
+#: source/php/App.php:182
 msgid "Title is missing"
 msgstr "Titel saknas"
 
-#: source/php/App.php:184
+#: source/php/App.php:183
 msgid "Create new contact"
 msgstr "Skapa ny kontakt"
 
-#: source/php/App.php:185
+#: source/php/App.php:184
 msgid "Create new sponsor"
 msgstr "Skapa ny sponsor"
 
-#: source/php/App.php:186
+#: source/php/App.php:185
 msgid "Create new location"
 msgstr "Skapa ny plats"
 
-#: source/php/App.php:187
+#: source/php/App.php:186
 msgid "Create new membership card"
 msgstr "Skapa nytt medlemskort"
 
-#: source/php/App.php:188
+#: source/php/App.php:187
 msgid "Close"
 msgstr "Stäng"
 
-#: source/php/App.php:189
+#: source/php/App.php:188
 msgid "Add images"
 msgstr "Lägg till bilder"
 
-#: source/php/App.php:190
+#: source/php/App.php:189
 msgid "Similar posts"
 msgstr "Liknande inlägg"
 
-#: source/php/App.php:191
+#: source/php/App.php:190
 msgid "New data imported or updated"
 msgstr "Importerad eller uppdaterad data"
 
-#: source/php/App.php:192
+#: source/php/App.php:191
 msgid "Events"
 msgstr "Evenemang"
 
-#: source/php/App.php:193 source/php/PostTypes/Locations.php:12
+#: source/php/App.php:192 source/php/PostTypes/Locations.php:12
 msgid "Locations"
 msgstr "Platser"
 
-#: source/php/App.php:195
+#: source/php/App.php:194
 msgid "Time until reload"
 msgstr "Laddar om sidan"
 
-#: source/php/App.php:196
+#: source/php/App.php:195
 msgid "Loading"
 msgstr "Hämtar"
 
-#: source/php/App.php:197
+#: source/php/App.php:196
 msgid "Choose time"
 msgstr "Välj tidpunkt"
 
-#: source/php/App.php:198
+#: source/php/App.php:197
 msgid "Time"
 msgstr "Tid"
 
-#: source/php/App.php:199
+#: source/php/App.php:198
 msgid "Hour"
 msgstr "Timme"
 
-#: source/php/App.php:200
+#: source/php/App.php:199
 msgid "Minute"
 msgstr "Minut"
 
-#: source/php/App.php:201
+#: source/php/App.php:200
 msgid "Done"
 msgstr "Klar"
 
-#: source/php/App.php:202
+#: source/php/App.php:201
 msgid "Now"
 msgstr "Nu"
 
-#: source/php/App.php:216 source/php/App.php:217
+#: source/php/App.php:215 source/php/App.php:216
 msgid "Import events"
 msgstr "Importera evenemang"
 
-#: source/php/App.php:227 source/php/App.php:228 source/php/App.php:238
+#: source/php/App.php:226 source/php/App.php:227 source/php/App.php:237
 msgid "Import CBIS events"
 msgstr "Importera CBIS evenemang"
 
-#: source/php/App.php:237 source/php/PostTypes/Locations.php:94
+#: source/php/App.php:236 source/php/PostTypes/Locations.php:94
 msgid "Import CBIS locations"
 msgstr "Importera CBIS platser"
 
-#: source/php/App.php:247 source/php/App.php:248
+#: source/php/App.php:246 source/php/App.php:247
 msgid "Delete all events"
 msgstr "Ta bort alla evenemang"
 
-#: source/php/Entity/CustomPostType.php:58
+#: source/php/Entity/CustomPostType.php:60
 msgid "API-url"
 msgstr "API-url"
 
-#: source/php/Entity/CustomPostType.php:148
+#: source/php/Entity/CustomPostType.php:150
 msgid "Something went wrong!"
 msgstr "Något gick fel!"
 
-#: source/php/Entity/CustomPostType.php:194
-#: source/php/Entity/CustomPostType.php:195
+#: source/php/Entity/CustomPostType.php:196
+#: source/php/Entity/CustomPostType.php:197
 #, php-format
 msgid "Add new %s"
 msgstr "Lägg till %s"
 
-#: source/php/Entity/CustomPostType.php:196
+#: source/php/Entity/CustomPostType.php:198
 #, php-format
 msgid "Edit %s"
 msgstr "Redigera %s"
 
-#: source/php/Entity/CustomPostType.php:197
+#: source/php/Entity/CustomPostType.php:199
 #, php-format
 msgid "New %s"
 msgstr "Nytt %s"
 
-#: source/php/Entity/CustomPostType.php:198
+#: source/php/Entity/CustomPostType.php:200
 #, php-format
 msgid "View %s"
 msgstr "Visa %s"
 
-#: source/php/Entity/CustomPostType.php:199
+#: source/php/Entity/CustomPostType.php:201
 #, php-format
 msgid "Search %s"
 msgstr "Sök %s"
 
-#: source/php/Entity/CustomPostType.php:200
+#: source/php/Entity/CustomPostType.php:202
 #, php-format
 msgid "No %s found"
 msgstr "Inga %s hittades"
 
-#: source/php/Entity/CustomPostType.php:201
+#: source/php/Entity/CustomPostType.php:203
 #, php-format
 msgid "No %s found in trash"
 msgstr "Inga %s hittades i papperskorgen"
 
-#: source/php/Entity/CustomPostType.php:202
+#: source/php/Entity/CustomPostType.php:204
 #, php-format
 msgid "Parent %s:"
 msgstr "Förälder %s:"
 
-#: source/php/Entity/CustomPostType.php:306
+#: source/php/Entity/CustomPostType.php:308
 msgid "Post updated."
 msgstr "Inlägget uppdaterades."
 
-#: source/php/Entity/CustomPostType.php:307
+#: source/php/Entity/CustomPostType.php:309
 msgid "Post published."
 msgstr "Inlägget publicerades."
 
-#: source/php/Entity/CustomPostType.php:308
+#: source/php/Entity/CustomPostType.php:310
 msgid "Post submitted."
 msgstr "Inlägget uppdaterades."
 
-#: source/php/Entity/CustomPostType.php:309
+#: source/php/Entity/CustomPostType.php:311
 msgid "Post draft updated."
 msgstr "Utkast uppdaterades."
 
@@ -1094,63 +1107,63 @@ msgstr "Godkänn"
 msgid "Deny"
 msgstr "Neka"
 
-#: source/php/PostTypes/Events.php:261 source/php/PostTypes/Events.php:399
+#: source/php/PostTypes/Events.php:263 source/php/PostTypes/Events.php:401
 msgid "End date must be after start date"
 msgstr "Slutdatum får inte vara före eller lika med startdatum"
 
-#: source/php/PostTypes/Events.php:285
+#: source/php/PostTypes/Events.php:287
 msgid "Door time cannot be after start date"
 msgstr "Dörrtid får inte vara efter starttid"
 
-#: source/php/PostTypes/Events.php:306
+#: source/php/PostTypes/Events.php:308
 msgid "Please add occasion or recurrence rule"
 msgstr "Vänligen lägg till tidpunkt för evenemanget"
 
-#: source/php/PostTypes/Events.php:327
+#: source/php/PostTypes/Events.php:329
 msgid "Not a valid number"
 msgstr "Inte ett giltigt tal"
 
-#: source/php/PostTypes/Events.php:351
+#: source/php/PostTypes/Events.php:353
 msgid "End time must be after start time"
 msgstr "Sluttid får inte vara före starttid"
 
-#: source/php/PostTypes/Events.php:375
+#: source/php/PostTypes/Events.php:377
 msgid "Door time cannot be after start time"
 msgstr "Dörrtid får inte vara efter starttid"
 
-#: source/php/PostTypes/Events.php:436
+#: source/php/PostTypes/Events.php:438
 msgid "Import XCAP"
 msgstr "Importera XCAP"
 
-#: source/php/PostTypes/Events.php:437
+#: source/php/PostTypes/Events.php:439
 msgid "Import CBIS"
 msgstr "Importera CBIS"
 
-#: source/php/PostTypes/Events.php:438
+#: source/php/PostTypes/Events.php:440
 msgid "Collect event timestamps"
 msgstr "Spara tidsstämplar"
 
-#: source/php/PostTypes/Events.php:451
+#: source/php/PostTypes/Events.php:453
 msgid "No post to duplicate has been supplied!"
 msgstr "Post att duplicera saknas!"
 
-#: source/php/PostTypes/Events.php:515
+#: source/php/PostTypes/Events.php:517
 msgid "Event creation failed, could not find original event"
 msgstr "Dupliceringen misslyckades, kunde inte hitta originalevenemanget"
 
-#: source/php/PostTypes/Events.php:529
+#: source/php/PostTypes/Events.php:531
 msgid "Create similar item"
 msgstr "Skapa ett liknande evenemang"
 
-#: source/php/PostTypes/Events.php:529
+#: source/php/PostTypes/Events.php:531
 msgid "Are you sure you want to clone this event?"
 msgstr "Är du säker på att du vill skapa en dubblett av evenemanget?"
 
-#: source/php/PostTypes/Events.php:529
+#: source/php/PostTypes/Events.php:531
 msgid "Clone"
 msgstr "Duplicera"
 
-#: source/php/PostTypes/Events.php:544
+#: source/php/PostTypes/Events.php:546
 #, php-format
 msgid ""
 "This is a duplicate of the event: %s. If this is a new occasion for the same "
@@ -1160,11 +1173,11 @@ msgstr ""
 "tidpunkt för ett redan existerande evenemang, vänligen %s och publicera "
 "originalversionen."
 
-#: source/php/PostTypes/Events.php:544
+#: source/php/PostTypes/Events.php:546
 msgid "edit"
 msgstr "uppdatera"
 
-#: source/php/PostTypes/Events.php:568
+#: source/php/PostTypes/Events.php:570
 msgid ""
 "Please do not enter information that refers to information in another text "
 "field. It is not certain that all fields will be presented to the consumer "
@@ -1174,7 +1187,7 @@ msgstr ""
 "textfält. Det är inte säkert att alla fält kommer att presenteras för "
 "konsumenten och kan därför bli missledande."
 
-#: source/php/PostTypes/Events.php:591
+#: source/php/PostTypes/Events.php:593
 msgid ""
 "CBIS have not imported any events for atleast 7 days. Please control the "
 "importer."
@@ -1182,7 +1195,7 @@ msgstr ""
 "Inga evenemang från CBIS har importerats de senaste 7 dagarna. Vänligen "
 "kontrollera inställningarna och importen."
 
-#: source/php/PostTypes/Events.php:614
+#: source/php/PostTypes/Events.php:616
 msgid ""
 "XCAP have not imported any events for atleast 7 days. Please control the "
 "importer."
@@ -1218,7 +1231,7 @@ msgstr "Paket"
 msgid "Includes"
 msgstr "Innehåller"
 
-#: source/php/PostTypes/Sponsors.php:41
+#: source/php/PostTypes/Sponsors.php:42
 msgid "Logo"
 msgstr "Logotyp"
 
@@ -1367,6 +1380,68 @@ msgstr ""
 #. Author URI of the plugin/theme
 msgid "http://www.helsingborg.se"
 msgstr ""
+
+#~ msgid "Add"
+#~ msgstr "Lägg till"
+
+#~ msgid "Information about prices."
+#~ msgstr "Övrig information om priserna."
+
+#~ msgid "Latitude"
+#~ msgstr "Latitud"
+
+#~ msgid "Latitude for GPS coordinates."
+#~ msgstr "Latitud för GPS-koordinater."
+
+#~ msgid "Longitude"
+#~ msgstr "Longitud"
+
+#~ msgid "Longitude for GPS coordinates."
+#~ msgstr "Longitud för GPS-koordinater."
+
+#~ msgid "Age restriction"
+#~ msgstr "Åldersgräns"
+
+#~ msgid "Specific information about what's included in one ticket."
+#~ msgstr "Information om vad som ingår i en biljett."
+
+#~ msgid "Children age"
+#~ msgstr "Åldersgräns barn"
+
+#~ msgid "Senior age"
+#~ msgstr "Åldersgräns pensionär"
+
+#~ msgid "Event link"
+#~ msgstr "Hemsida"
+
+#~ msgid "External link to event website."
+#~ msgstr "Extern länk till evenemangets hemsida."
+
+#~ msgid "Add additional external links to websites."
+#~ msgstr "Lägg till ytterligare länkar för evenemanget."
+
+#~ msgid "Add if there are other events related to this event."
+#~ msgstr "Lägg till evenemang som är relaterade till detta evenemanget."
+
+#~ msgid ""
+#~ "Add occasions to this event. If this is a weekly recurring event, please "
+#~ "add recurrence rules."
+#~ msgstr ""
+#~ "Lägg till tidpunkter för evenemanget. Om evenemang är återkommande varje "
+#~ "vecka, vänligen lägg till regel för återkommande evenemang."
+
+#~ msgid "Description"
+#~ msgstr "Beskrivning"
+
+#~ msgid "If this is the main organizer for the event."
+#~ msgstr "Om detta är huvudarrangören för evenemanget."
+
+#~ msgid "Company or name of the organizer."
+#~ msgstr "Företag eller namn på arrangören."
+
+#~ msgctxt "Same as cost or charge"
+#~ msgid "Price"
+#~ msgstr "Pris"
 
 #~ msgid "New data imported"
 #~ msgstr "Importerad data"

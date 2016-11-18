@@ -48,7 +48,6 @@ class Xcap extends \HbgEventImporter\Parser
         $doorTime = $this->formatDate($doorTime);
         $endDate = isset($eventData->dtend) && !empty($eventData->dtend) ? $eventData->dtend : null;
         $endDate = $this->formatDate($endDate);
-        $image = isset($eventData->{'x-xcap-imageid'}) && !empty($eventData->{'x-xcap-imageid'}) ? $eventData->{'x-xcap-imageid'} : null;
         $location = isset($eventData->location) && !empty($eventData->location) ? $eventData->location : null;
         $name = isset($eventData->summary) && !empty($eventData->summary) ? $eventData->summary : null;
         $startDate = isset($eventData->dtstart) && !empty($eventData->dtstart) ? $eventData->dtstart : null;
@@ -57,6 +56,12 @@ class Xcap extends \HbgEventImporter\Parser
         $defaultLocation = get_field('default_city', 'option') ? get_field('default_city', 'option') : null;
         $city = ($location != null) ? $location : $defaultLocation;
         $postStatus = get_field('xcap_post_status', 'option') ? get_field('xcap_post_status', 'option') : 'publish';
+        $image = null;
+        if (isset($eventData->{'x-xcap-wideimageid'}) && !empty($eventData->{'x-xcap-wideimageid'})) {
+            $image = $eventData->{'x-xcap-wideimageid'};
+        } elseif (isset($eventData->{'x-xcap-imageid'}) && !empty($eventData->{'x-xcap-imageid'})) {
+            $image = $eventData->{'x-xcap-imageid'};
+        }
 
         if (!is_string($name)) {
             return;

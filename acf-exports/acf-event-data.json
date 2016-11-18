@@ -60,10 +60,10 @@
             },
             {
                 "key": "field_5761144d641f2",
-                "label": "Event link",
+                "label": "Website",
                 "name": "event_link",
                 "type": "url",
-                "instructions": "External link to event website.",
+                "instructions": "Link to event website.",
                 "required": 0,
                 "conditional_logic": 0,
                 "wrapper": {
@@ -79,7 +79,7 @@
                 "label": "Additional links",
                 "name": "additional_links",
                 "type": "repeater",
-                "instructions": "Add additional external links to websites.",
+                "instructions": "Additional links to websites.",
                 "required": 0,
                 "conditional_logic": 0,
                 "wrapper": {
@@ -91,7 +91,7 @@
                 "min": "",
                 "max": "",
                 "layout": "block",
-                "button_label": "Add",
+                "button_label": "Add link",
                 "sub_fields": [
                     {
                         "key": "field_57c7fd2381ffb",
@@ -116,7 +116,7 @@
                 "label": "Related events",
                 "name": "related_events",
                 "type": "post_object",
-                "instructions": "Add if there are other events related to this event.",
+                "instructions": "Links to other events associated with this event.",
                 "required": 0,
                 "conditional_logic": 0,
                 "wrapper": {
@@ -162,13 +162,13 @@
                     "class": "",
                     "id": ""
                 },
-                "message": "Add occasions to this event. If this is a weekly recurring event, please add recurrence rules.",
+                "message": "Add occasions to this event. Does the event occur each week? Then add a rule for recurring events.",
                 "new_lines": "wpautop",
                 "esc_html": 0
             },
             {
                 "key": "field_5761106783967",
-                "label": "Occasions",
+                "label": "Date",
                 "name": "occasions",
                 "type": "repeater",
                 "instructions": "Start and end time of the event.",
@@ -183,7 +183,7 @@
                 "min": "",
                 "max": "",
                 "layout": "block",
-                "button_label": "Add",
+                "button_label": "Add occasion",
                 "sub_fields": [
                     {
                         "key": "field_5761164591649",
@@ -314,7 +314,7 @@
                     },
                     {
                         "key": "field_576110fb8396a",
-                        "label": "Beskrivning",
+                        "label": "Content",
                         "name": "content",
                         "type": "wysiwyg",
                         "instructions": "Override the post content of the event.",
@@ -357,7 +357,7 @@
                 "min": "",
                 "max": "",
                 "layout": "row",
-                "button_label": "Add",
+                "button_label": "Add rule",
                 "sub_fields": [
                     {
                         "key": "field_57d275713bf4e",
@@ -488,7 +488,7 @@
                         "min": "",
                         "max": "",
                         "layout": "block",
-                        "button_label": "Add",
+                        "button_label": "Add exception",
                         "sub_fields": [
                             {
                                 "key": "field_57d279f8db0cc",
@@ -671,7 +671,7 @@
                             "class": "",
                             "id": ""
                         },
-                        "message": "If this is the main organizer for the event.",
+                        "message": "Check the box if this is the main organizer for the event.",
                         "default_value": 0
                     },
                     {
@@ -679,7 +679,7 @@
                         "label": "Organizer",
                         "name": "organizer",
                         "type": "text",
-                        "instructions": "Company or name of the organizer.",
+                        "instructions": "Company, organization or person that organizes the event.",
                         "required": 0,
                         "conditional_logic": 0,
                         "wrapper": {
@@ -817,7 +817,7 @@
                 "required": 0,
                 "conditional_logic": 0,
                 "wrapper": {
-                    "width": "50",
+                    "width": "",
                     "class": "",
                     "id": ""
                 },
@@ -845,22 +845,24 @@
             },
             {
                 "key": "field_57611befacf1c",
-                "label": "Age restriction",
+                "label": "Minimum age to attend the event",
                 "name": "age_restriction",
-                "type": "text",
+                "type": "number",
                 "instructions": "Enter age if this event is age restricted.",
                 "required": 0,
                 "conditional_logic": 0,
                 "wrapper": {
-                    "width": "",
+                    "width": "50",
                     "class": "",
                     "id": ""
                 },
                 "default_value": "",
-                "placeholder": "",
+                "placeholder": "e.g. 15",
                 "prepend": "",
-                "append": "",
-                "maxlength": ""
+                "append": "year",
+                "min": 0,
+                "max": "",
+                "step": ""
             },
             {
                 "key": "field_57c7ed92054e6",
@@ -883,44 +885,6 @@
                 "multiple": 1,
                 "return_format": "object",
                 "ui": 1
-            },
-            {
-                "key": "field_57611bd8acf1b",
-                "label": "Price information",
-                "name": "price_information",
-                "type": "textarea",
-                "instructions": "Information about prices.",
-                "required": 0,
-                "conditional_logic": 0,
-                "wrapper": {
-                    "width": "50",
-                    "class": "",
-                    "id": ""
-                },
-                "default_value": "",
-                "placeholder": "",
-                "maxlength": "",
-                "rows": 3,
-                "new_lines": "wpautop"
-            },
-            {
-                "key": "field_57b70267e1f32",
-                "label": "Ticket includes",
-                "name": "ticket_includes",
-                "type": "textarea",
-                "instructions": "Specific information about what's included in one ticket.",
-                "required": 0,
-                "conditional_logic": 0,
-                "wrapper": {
-                    "width": "50",
-                    "class": "",
-                    "id": ""
-                },
-                "default_value": "",
-                "placeholder": "",
-                "maxlength": "",
-                "rows": 3,
-                "new_lines": "wpautop"
             },
             {
                 "key": "field_57611c0cacf1e",
@@ -981,7 +945,7 @@
             },
             {
                 "key": "field_57f4fe8866a2d",
-                "label": "Children age",
+                "label": "Age restriction for children price",
                 "name": "children_age",
                 "type": "select",
                 "instructions": "Children price is valid up to this age.",
@@ -1051,7 +1015,7 @@
             },
             {
                 "key": "field_57f4fbaa4365e",
-                "label": "Senior age",
+                "label": "Age restriction for senior price",
                 "name": "senior_age",
                 "type": "select",
                 "instructions": "Senior price is valid from this age.",
@@ -1127,7 +1091,7 @@
                 "min": "",
                 "max": "",
                 "layout": "block",
-                "button_label": "Add",
+                "button_label": "Add group",
                 "sub_fields": [
                     {
                         "key": "field_57f4f6dc747a1",
@@ -1191,6 +1155,44 @@
                         "step": ""
                     }
                 ]
+            },
+            {
+                "key": "field_57611bd8acf1b",
+                "label": "Price information",
+                "name": "price_information",
+                "type": "textarea",
+                "instructions": "Write additional information about prices.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "50",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "placeholder": "",
+                "maxlength": "",
+                "rows": 3,
+                "new_lines": "wpautop"
+            },
+            {
+                "key": "field_57b70267e1f32",
+                "label": "Ticket includes",
+                "name": "ticket_includes",
+                "type": "textarea",
+                "instructions": "Does the ticket include more than entry? Then write what's included in one ticket.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "50",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "placeholder": "e.g. entry, checkroom, meal",
+                "maxlength": "",
+                "rows": 3,
+                "new_lines": "wpautop"
             },
             {
                 "key": "field_577a326b71ba8",
@@ -1411,7 +1413,7 @@
                 "min": 1,
                 "max": "",
                 "layout": "block",
-                "button_label": "Add",
+                "button_label": "Add link",
                 "sub_fields": [
                     {
                         "key": "field_57c8153ecca56",
@@ -1448,7 +1450,7 @@
                 "min": 1,
                 "max": "",
                 "layout": "block",
-                "button_label": "Add",
+                "button_label": "Add link",
                 "sub_fields": [
                     {
                         "key": "field_57c817b7a3395",

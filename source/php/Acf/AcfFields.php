@@ -163,6 +163,7 @@ class AcfFields
     /**
      * Package group field
      */
+
     acf_add_local_field_group(array (
     'key' => 'group_57c94757c2169',
     'title' => __('Package', 'event-manager'),
@@ -173,7 +174,7 @@ class AcfFields
             'name' => 'events_included',
             'type' => 'post_object',
             'instructions' => __('Select which events that are included in this package.', 'event-manager'),
-            'required' => 0,
+            'required' => 1,
             'conditional_logic' => 0,
             'wrapper' => array (
                 'width' => '',
@@ -199,7 +200,7 @@ class AcfFields
             'required' => 0,
             'conditional_logic' => 0,
             'wrapper' => array (
-                'width' => '50',
+                'width' => '',
                 'class' => '',
                 'id' => '',
             ),
@@ -227,22 +228,24 @@ class AcfFields
         ),
         array (
             'key' => 'field_57c949ad829f0',
-            'label' => __('Age restriction', 'event-manager'),
+            'label' => __('Minimum age to attend the event', 'event-manager'),
             'name' => 'age_restriction',
-            'type' => 'text',
+            'type' => 'number',
             'instructions' => __('Enter age if this event is age restricted.', 'event-manager'),
             'required' => 0,
             'conditional_logic' => 0,
             'wrapper' => array (
-                'width' => '',
+                'width' => '50',
                 'class' => '',
                 'id' => '',
             ),
             'default_value' => '',
-            'placeholder' => '',
+            'placeholder' => 'e.g. 15',
             'prepend' => '',
-            'append' => '',
-            'maxlength' => '',
+            'append' => 'year',
+            'min' => 0,
+            'max' => '',
+            'step' => '',
         ),
         array (
             'key' => 'field_581847f9642dc',
@@ -268,50 +271,12 @@ class AcfFields
             'ui' => 1,
         ),
         array (
-            'key' => 'field_57c949b4829f1',
-            'label' => __('Price information', 'event-manager'),
-            'name' => 'price_information',
-            'type' => 'textarea',
-            'instructions' => __('Information about prices.', 'event-manager'),
-            'required' => 0,
-            'conditional_logic' => 0,
-            'wrapper' => array (
-                'width' => '50',
-                'class' => '',
-                'id' => '',
-            ),
-            'default_value' => '',
-            'placeholder' => '',
-            'maxlength' => '',
-            'rows' => 3,
-            'new_lines' => 'wpautop',
-        ),
-        array (
-            'key' => 'field_57c949b9829f2',
-            'label' => __('Ticket includes', 'event-manager'),
-            'name' => 'ticket_includes',
-            'type' => 'textarea',
-            'instructions' => __('Specific information about what\'s included in one ticket.', 'event-manager'),
-            'required' => 0,
-            'conditional_logic' => 0,
-            'wrapper' => array (
-                'width' => '50',
-                'class' => '',
-                'id' => '',
-            ),
-            'default_value' => '',
-            'placeholder' => '',
-            'maxlength' => '',
-            'rows' => 3,
-            'new_lines' => 'wpautop',
-        ),
-        array (
             'key' => 'field_57c949bf829f3',
             'label' => __('Default price / Adult', 'event-manager'),
             'name' => 'price_adult',
             'type' => 'text',
             'instructions' => '',
-            'required' => 0,
+            'required' => 1,
             'conditional_logic' => 0,
             'wrapper' => array (
                 'width' => '50',
@@ -321,7 +286,7 @@ class AcfFields
             'default_value' => '',
             'placeholder' => '',
             'prepend' => '',
-            'append' => 'SEK',
+            'append' => __('SEK', 'event-manager'),
             'maxlength' => '',
         ),
         array (
@@ -340,7 +305,7 @@ class AcfFields
             'default_value' => '',
             'placeholder' => '',
             'prepend' => '',
-            'append' => 'SEK',
+            'append' => __('SEK', 'event-manager'),
             'maxlength' => '',
         ),
         array (
@@ -359,12 +324,12 @@ class AcfFields
             'default_value' => '',
             'placeholder' => '',
             'prepend' => '',
-            'append' => 'SEK',
+            'append' => __('SEK', 'event-manager'),
             'maxlength' => '',
         ),
         array (
             'key' => 'field_58184887642dd',
-            'label' => __('Children age', 'event-manager'),
+            'label' => __('Age restriction for children price', 'event-manager'),
             'name' => 'children_age',
             'type' => 'select',
             'instructions' => __('Children price is valid up to this age.', 'event-manager'),
@@ -429,12 +394,12 @@ class AcfFields
             'default_value' => '',
             'placeholder' => '',
             'prepend' => '',
-            'append' => 'SEK',
+            'append' => __('SEK', 'event-manager'),
             'maxlength' => '',
         ),
         array (
             'key' => 'field_58184909642de',
-            'label' => __('Senior age', 'event-manager'),
+            'label' => __('Age restriction for senior price', 'event-manager'),
             'name' => 'senior_age',
             'type' => 'select',
             'instructions' => __('Senior price is valid from this age.', 'event-manager'),
@@ -510,11 +475,11 @@ class AcfFields
             'min' => '',
             'max' => '',
             'layout' => 'block',
-            'button_label' => __('Add', 'event-manager'),
+            'button_label' => __('Add group', 'event-manager'),
             'sub_fields' => array (
                 array (
                     'key' => 'field_5818498949eaa',
-                    'label' => __('Price', 'event-manager'),
+                    'label' => __('Price group', 'event-manager'),
                     'name' => 'price_group',
                     'type' => 'text',
                     'instructions' => __('Price for this group.', 'event-manager'),
@@ -528,7 +493,7 @@ class AcfFields
                     'default_value' => '',
                     'placeholder' => '',
                     'prepend' => '',
-                    'append' => 'SEK',
+                    'append' => __('SEK', 'event-manager'),
                     'maxlength' => '',
                 ),
                 array (
@@ -575,6 +540,44 @@ class AcfFields
                 ),
             ),
         ),
+        array (
+            'key' => 'field_57c949b4829f1',
+            'label' => __('Price information', 'event-manager'),
+            'name' => 'price_information',
+            'type' => 'textarea',
+            'instructions' => __('Write additional information about prices.', 'event-manager'),
+            'required' => 0,
+            'conditional_logic' => 0,
+            'wrapper' => array (
+                'width' => '50',
+                'class' => '',
+                'id' => '',
+            ),
+            'default_value' => '',
+            'placeholder' => '',
+            'maxlength' => '',
+            'rows' => 3,
+            'new_lines' => 'wpautop',
+        ),
+        array (
+            'key' => 'field_57c949b9829f2',
+            'label' => __('Ticket includes', 'event-manager'),
+            'name' => 'ticket_includes',
+            'type' => 'textarea',
+            'instructions' => __('Does the ticket include more than entry? Then write what\'s included in one ticket.', 'event-manager'),
+            'required' => 0,
+            'conditional_logic' => 0,
+            'wrapper' => array (
+                'width' => '50',
+                'class' => '',
+                'id' => '',
+            ),
+            'default_value' => '',
+            'placeholder' => 'e.g. entry, checkroom, meal',
+            'maxlength' => '',
+            'rows' => 3,
+            'new_lines' => 'wpautop',
+        ),
     ),
     'location' => array (
         array (
@@ -594,6 +597,7 @@ class AcfFields
     'active' => 1,
     'description' => '',
     ));
+
 
     /**
      * Contact group field
@@ -682,6 +686,7 @@ class AcfFields
     /**
      * Location group field
      */
+
     acf_add_local_field_group(array (
     'key' => 'group_57612f9baa78b',
     'title' => __('Location', 'event-manager'),
@@ -806,44 +811,6 @@ class AcfFields
             'disabled' => 0,
         ),
         array (
-            'key' => 'field_57f60a66dc607',
-            'label' => __('Latitude', 'event-manager'),
-            'name' => 'latitude',
-            'type' => 'text',
-            'instructions' => __('Latitude for GPS coordinates.', 'event-manager'),
-            'required' => 0,
-            'conditional_logic' => 0,
-            'wrapper' => array (
-                'width' => '50',
-                'class' => '',
-                'id' => '',
-            ),
-            'default_value' => '',
-            'placeholder' => '',
-            'prepend' => '',
-            'append' => '',
-            'maxlength' => '',
-        ),
-        array (
-            'key' => 'field_57f60a78dc608',
-            'label' => __('Longitude', 'event-manager'),
-            'name' => 'longitude',
-            'type' => 'text',
-            'instructions' => __('Longitude for GPS coordinates.', 'event-manager'),
-            'required' => 0,
-            'conditional_logic' => 0,
-            'wrapper' => array (
-                'width' => '50',
-                'class' => '',
-                'id' => '',
-            ),
-            'default_value' => '',
-            'placeholder' => '',
-            'prepend' => '',
-            'append' => '',
-            'maxlength' => '',
-        ),
-        array (
             'key' => 'field_57cfba1b54b27',
             'label' => __('Open hours', 'event-manager'),
             'name' => '',
@@ -890,7 +857,7 @@ class AcfFields
                 'id' => '',
             ),
             'default_value' => '',
-            'placeholder' => __('eg. 08:00 - 15:00','event-manager'),
+            'placeholder' => __('eg. 08:00 - 15:00', 'event-manager'),
             'prepend' => '',
             'append' => '',
             'maxlength' => '',
@@ -909,7 +876,7 @@ class AcfFields
                 'id' => '',
             ),
             'default_value' => '',
-            'placeholder' => __('eg. 08:00 - 15:00','event-manager'),
+            'placeholder' => __('eg. 08:00 - 15:00', 'event-manager'),
             'prepend' => '',
             'append' => '',
             'maxlength' => '',
@@ -928,7 +895,7 @@ class AcfFields
                 'id' => '',
             ),
             'default_value' => '',
-            'placeholder' => __('eg. 08:00 - 15:00','event-manager'),
+            'placeholder' => __('eg. 08:00 - 15:00', 'event-manager'),
             'prepend' => '',
             'append' => '',
             'maxlength' => '',
@@ -947,7 +914,7 @@ class AcfFields
                 'id' => '',
             ),
             'default_value' => '',
-            'placeholder' => __('eg. 08:00 - 15:00','event-manager'),
+            'placeholder' => __('eg. 08:00 - 15:00', 'event-manager'),
             'prepend' => '',
             'append' => '',
             'maxlength' => '',
@@ -966,7 +933,7 @@ class AcfFields
                 'id' => '',
             ),
             'default_value' => '',
-            'placeholder' => __('eg. 08:00 - 15:00','event-manager'),
+            'placeholder' => __('eg. 08:00 - 15:00', 'event-manager'),
             'prepend' => '',
             'append' => '',
             'maxlength' => '',
@@ -985,7 +952,7 @@ class AcfFields
                 'id' => '',
             ),
             'default_value' => '',
-            'placeholder' => __('eg. 08:00 - 15:00','event-manager'),
+            'placeholder' => __('eg. 08:00 - 15:00', 'event-manager'),
             'prepend' => '',
             'append' => '',
             'maxlength' => '',
@@ -1004,7 +971,7 @@ class AcfFields
                 'id' => '',
             ),
             'default_value' => '',
-            'placeholder' => __('eg. 08:00 - 15:00','event-manager'),
+            'placeholder' => __('eg. 08:00 - 15:00', 'event-manager'),
             'prepend' => '',
             'append' => '',
             'maxlength' => '',
@@ -1026,7 +993,7 @@ class AcfFields
             'min' => '',
             'max' => '',
             'layout' => 'table',
-            'button_label' => __('Add', 'event-manager'),
+            'button_label' => __('Add exception', 'event-manager'),
             'sub_fields' => array (
                 array (
                     'key' => 'field_57cfbb60697e2',
@@ -1125,12 +1092,12 @@ class AcfFields
     'hide_on_screen' => '',
     'active' => 1,
     'description' => '',
-    'local' => 'json',
     ));
 
     /**
      * Event group field
      */
+
     acf_add_local_field_group(array (
     'key' => 'group_57610ebadcee8',
     'title' => __('Event', 'event-manager'),
@@ -1193,10 +1160,10 @@ class AcfFields
         ),
         array (
             'key' => 'field_5761144d641f2',
-            'label' => __('Event link', 'event-manager'),
+            'label' => __('Website', 'event-manager'),
             'name' => 'event_link',
             'type' => 'url',
-            'instructions' => __('External link to event website.', 'event-manager'),
+            'instructions' => __('Link to event website.', 'event-manager'),
             'required' => 0,
             'conditional_logic' => 0,
             'wrapper' => array (
@@ -1212,7 +1179,7 @@ class AcfFields
             'label' => __('Additional links', 'event-manager'),
             'name' => 'additional_links',
             'type' => 'repeater',
-            'instructions' => __('Add additional external links to websites.', 'event-manager'),
+            'instructions' => __('Additional links to websites.', 'event-manager'),
             'required' => 0,
             'conditional_logic' => 0,
             'wrapper' => array (
@@ -1224,7 +1191,7 @@ class AcfFields
             'min' => '',
             'max' => '',
             'layout' => 'block',
-            'button_label' => __('Add', 'event-manager'),
+            'button_label' => __('Add link', 'event-manager'),
             'sub_fields' => array (
                 array (
                     'key' => 'field_57c7fd2381ffb',
@@ -1249,7 +1216,7 @@ class AcfFields
             'label' => __('Related events', 'event-manager'),
             'name' => 'related_events',
             'type' => 'post_object',
-            'instructions' => __('Add if there are other events related to this event.', 'event-manager'),
+            'instructions' => __('Links to other events associated with this event.', 'event-manager'),
             'required' => 0,
             'conditional_logic' => 0,
             'wrapper' => array (
@@ -1296,13 +1263,13 @@ class AcfFields
                 'class' => '',
                 'id' => '',
             ),
-            'message' => __('Add occasions to this event. If this is a weekly recurring event, please add recurrence rules.', 'event-manager'),
+            'message' => __('Add occasions to this event. Does the event occur each week? Then add a rule for recurring events.', 'event-manager'),
             'new_lines' => 'wpautop',
             'esc_html' => 0,
         ),
         array (
             'key' => 'field_5761106783967',
-            'label' => __('Occasions', 'event-manager'),
+            'label' => __('Date', 'event-manager'),
             'name' => 'occasions',
             'type' => 'repeater',
             'instructions' => __('Start and end time of the event.', 'event-manager'),
@@ -1317,7 +1284,7 @@ class AcfFields
             'min' => '',
             'max' => '',
             'layout' => 'block',
-            'button_label' => __('Add', 'event-manager'),
+            'button_label' => __('Add occasion', 'event-manager'),
             'sub_fields' => array (
                 array (
                     'key' => 'field_5761164591649',
@@ -1448,7 +1415,7 @@ class AcfFields
                 ),
                 array (
                     'key' => 'field_576110fb8396a',
-                    'label' => __('Description', 'event-manager'),
+                    'label' => __('Content', 'event-manager'),
                     'name' => 'content',
                     'type' => 'wysiwyg',
                     'instructions' => __('Override the post content of the event.', 'event-manager'),
@@ -1491,7 +1458,7 @@ class AcfFields
             'min' => '',
             'max' => '',
             'layout' => 'row',
-            'button_label' => __('Add', 'event-manager'),
+            'button_label' => __('Add rule', 'event-manager'),
             'sub_fields' => array (
                 array (
                     'key' => 'field_57d275713bf4e',
@@ -1623,7 +1590,7 @@ class AcfFields
                     'min' => '',
                     'max' => '',
                     'layout' => 'block',
-                    'button_label' => __('Add', 'event-manager'),
+                    'button_label' => __('Add exception', 'event-manager'),
                     'sub_fields' => array (
                         array (
                             'key' => 'field_57d279f8db0cc',
@@ -1808,7 +1775,7 @@ class AcfFields
                         'class' => '',
                         'id' => '',
                     ),
-                    'message' => __('If this is the main organizer for the event.', 'event-manager'),
+                    'message' => __('Check the box if this is the main organizer for the event.', 'event-manager'),
                     'default_value' => 0,
                 ),
                 array (
@@ -1816,7 +1783,7 @@ class AcfFields
                     'label' => __('Organizer', 'event-manager'),
                     'name' => 'organizer',
                     'type' => 'text',
-                    'instructions' => __('Company or name of the organizer.', 'event-manager'),
+                    'instructions' => __('Company, organization or person that organizes the event.', 'event-manager'),
                     'required' => 0,
                     'conditional_logic' => 0,
                     'wrapper' => array (
@@ -1956,7 +1923,7 @@ class AcfFields
             'required' => 0,
             'conditional_logic' => 0,
             'wrapper' => array (
-                'width' => '50',
+                'width' => '',
                 'class' => '',
                 'id' => '',
             ),
@@ -1984,22 +1951,24 @@ class AcfFields
         ),
         array (
             'key' => 'field_57611befacf1c',
-            'label' => __('Age restriction', 'event-manager'),
+            'label' => __('Minimum age to attend the event', 'event-manager'),
             'name' => 'age_restriction',
-            'type' => 'text',
+            'type' => 'number',
             'instructions' => __('Enter age if this event is age restricted.', 'event-manager'),
             'required' => 0,
             'conditional_logic' => 0,
             'wrapper' => array (
-                'width' => '',
+                'width' => '50',
                 'class' => '',
                 'id' => '',
             ),
             'default_value' => '',
-            'placeholder' => '',
+            'placeholder' => __('e.g. 15', 'event-manager'),
             'prepend' => '',
-            'append' => '',
-            'maxlength' => '',
+            'append' => __('year', 'event-manager'),
+            'min' => 0,
+            'max' => '',
+            'step' => '',
         ),
         array (
             'key' => 'field_57c7ed92054e6',
@@ -2023,44 +1992,6 @@ class AcfFields
             'multiple' => 1,
             'return_format' => 'object',
             'ui' => 1,
-        ),
-        array (
-            'key' => 'field_57611bd8acf1b',
-            'label' => __('Price information', 'event-manager'),
-            'name' => 'price_information',
-            'type' => 'textarea',
-            'instructions' => __('Information about prices.', 'event-manager'),
-            'required' => 0,
-            'conditional_logic' => 0,
-            'wrapper' => array (
-                'width' => '50',
-                'class' => '',
-                'id' => '',
-            ),
-            'default_value' => '',
-            'placeholder' => '',
-            'maxlength' => '',
-            'rows' => 3,
-            'new_lines' => 'wpautop',
-        ),
-        array (
-            'key' => 'field_57b70267e1f32',
-            'label' => __('Ticket includes', 'event-manager'),
-            'name' => 'ticket_includes',
-            'type' => 'textarea',
-            'instructions' => __('Specific information about what\'s included in one ticket.', 'event-manager'),
-            'required' => 0,
-            'conditional_logic' => 0,
-            'wrapper' => array (
-                'width' => '50',
-                'class' => '',
-                'id' => '',
-            ),
-            'default_value' => '',
-            'placeholder' => '',
-            'maxlength' => '',
-            'rows' => 3,
-            'new_lines' => 'wpautop',
         ),
         array (
             'key' => 'field_57611c0cacf1e',
@@ -2121,7 +2052,7 @@ class AcfFields
         ),
         array (
             'key' => 'field_57f4fe8866a2d',
-            'label' => __('Children age', 'event-manager'),
+            'label' => __('Age restriction for children price', 'event-manager'),
             'name' => 'children_age',
             'type' => 'select',
             'instructions' => __('Children price is valid up to this age.', 'event-manager'),
@@ -2191,7 +2122,7 @@ class AcfFields
         ),
         array (
             'key' => 'field_57f4fbaa4365e',
-            'label' => __('Senior age', 'event-manager'),
+            'label' => __('Age restriction for senior price', 'event-manager'),
             'name' => 'senior_age',
             'type' => 'select',
             'instructions' => __('Senior price is valid from this age.', 'event-manager'),
@@ -2267,11 +2198,11 @@ class AcfFields
             'min' => '',
             'max' => '',
             'layout' => 'block',
-            'button_label' => __('Add', 'event-manager'),
+            'button_label' => __('Add group', 'event-manager'),
             'sub_fields' => array (
                 array (
                     'key' => 'field_57f4f6dc747a1',
-                    'label' => _x('Price', 'Same as cost or charge', 'event-manager'),
+                    'label' => __('Price', 'event-manager'),
                     'name' => 'price_group',
                     'type' => 'text',
                     'instructions' => __('Price for this group.', 'event-manager'),
@@ -2331,6 +2262,44 @@ class AcfFields
                     'step' => '',
                 ),
             ),
+        ),
+        array (
+            'key' => 'field_57611bd8acf1b',
+            'label' => __('Price information', 'event-manager'),
+            'name' => 'price_information',
+            'type' => 'textarea',
+            'instructions' => __('Write additional information about prices.', 'event-manager'),
+            'required' => 0,
+            'conditional_logic' => 0,
+            'wrapper' => array (
+                'width' => '50',
+                'class' => '',
+                'id' => '',
+            ),
+            'default_value' => '',
+            'placeholder' => '',
+            'maxlength' => '',
+            'rows' => 3,
+            'new_lines' => 'wpautop',
+        ),
+        array (
+            'key' => 'field_57b70267e1f32',
+            'label' => __('Ticket includes', 'event-manager'),
+            'name' => 'ticket_includes',
+            'type' => 'textarea',
+            'instructions' => __('Does the ticket include more than entry? Then write what\'s included in one ticket.', 'event-manager'),
+            'required' => 0,
+            'conditional_logic' => 0,
+            'wrapper' => array (
+                'width' => '50',
+                'class' => '',
+                'id' => '',
+            ),
+            'default_value' => '',
+            'placeholder' => __('e.g. entry, checkroom, meal', 'event-manager'),
+            'maxlength' => '',
+            'rows' => 3,
+            'new_lines' => 'wpautop',
         ),
         array (
             'key' => 'field_577a326b71ba8',
@@ -2551,7 +2520,7 @@ class AcfFields
             'min' => 1,
             'max' => '',
             'layout' => 'block',
-            'button_label' => __('Add', 'event-manager'),
+            'button_label' => __('Add link', 'event-manager'),
             'sub_fields' => array (
                 array (
                     'key' => 'field_57c8153ecca56',
@@ -2588,7 +2557,7 @@ class AcfFields
             'min' => 1,
             'max' => '',
             'layout' => 'block',
-            'button_label' => __('Add', 'event-manager'),
+            'button_label' => __('Add link', 'event-manager'),
             'sub_fields' => array (
                 array (
                     'key' => 'field_57c817b7a3395',

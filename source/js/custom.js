@@ -105,9 +105,6 @@ jQuery(document).ready(function ($) {
                 for(var i in response) {
                     var id = response[i].id;
                     var title = (isevent) ? response[i].title : response[i].title.rendered;
-                    // console.log('Id: ' + id + ', Title: ' + title);
-                    // $('#suggestionList').append('<li><a href="/wp/wp-admin/post.php?post=' + id + '&action=edit&lightbox=true" class="suggestion">' + title + '</a></li>');
-
                     var pageText = title.replace("<span>","").replace("</span>"),
                     regex = new RegExp("(" + input + ")", "igm"),
                     highlighted = pageText.replace(regex ,"<span>$1</span>");
@@ -119,10 +116,6 @@ jQuery(document).ready(function ($) {
                 {
                     $('#suggestionList').prepend('<li><strong>' + eventmanager.similar_posts + ': <button class="notice-dismiss suggestion-hide" suggestion-hide-action="close"> </strong></li>');
                     $('#suggestionContainer').fadeIn(200);
-                    // $('.suggestion').click(function(event) {
-                    //     event.preventDefault();
-                    //     ImportEvents.Prompt.Modal.open($(this).attr('href'));
-                    // });
                 }
             });
         }
@@ -152,6 +145,52 @@ jQuery(document).ready(function ($) {
         ');
     }
 
+    // Set default end time value for occasion date picker
+    $('body').on('click','.acf-field-576110e583969 .hasDatepicker', function() {
+        var date = $(this).parents('.acf-field-576110e583969').prev().find('.hasDatepicker').val();
+        if (date) {
+            var d = date.split(/[ ]+/);
+            var r = d[0].split(/[-]+/);
+            var m = r[1] - 1;
+            var date = new Date(r[0], m, r[2], 00, 00, 00);
+            if ( Object.prototype.toString.call(date) === "[object Date]" ) {
+                if (! isNaN(date.getTime() ) ) {
+                var year = date.getFullYear();
+                var month = date.getMonth();
+                var day = date.getDate();
+                var end_date = new Date(year + 1, month, day)
+                $(this).datetimepicker( "option", "minDate", date);
+                $(this).datetimepicker( "option", "maxDate", end_date);
+                $(this).datepicker({showOn:'focus'}).focus();
+                }
+            }
+        }
+    });
+
+    // Set default door time value for occasion date picker
+    $('body').on('click','.acf-field-5761169e07309 .hasDatepicker', function() {
+        var date = $(this).parents('.acf-field-5761169e07309').siblings('.acf-field-5761109a83968').find('.hasDatepicker').val();
+        if (date) {
+            var d = date.split(/[ ]+/);
+            var r = d[0].split(/[-]+/);
+            var m = r[1] - 1;
+            var date = new Date(r[0], m, r[2], 00, 00, 00);
+            if ( Object.prototype.toString.call(date) === "[object Date]" ) {
+                if (! isNaN(date.getTime() ) ) {
+                var year = date.getFullYear();
+                var month = date.getMonth();
+                var day = date.getDate();
+                var start_date = new Date(year - 1, month, day)
+                $(this).datetimepicker( "option", "minDate", start_date);
+                $(this).datetimepicker( "option", "maxDate", date);
+                $(this).datepicker( "option", "defaultDate", date);
+                $(this).datepicker({showOn:'focus'}).focus();
+                }
+            }
+        }
+    });
+
+    // Show recurring rules exeptions in date picker
     $('body').on('click','.acf-field-57d279f8db0cc .hasDatepicker', function() {
         $(this).datepicker( "option", "dateFormat", "yy-mm-dd" );
 
@@ -174,7 +213,6 @@ jQuery(document).ready(function ($) {
             for (var dat = new Date(start); dat <= end; dat.setDate(dat.getDate() + 7)) {
                 occurances.push(formattedDate(new Date(dat)));
             }
-            // console.log(occurances);
             function disableSpecificDates(date) {
                 var string = jQuery.datepicker.formatDate('yy-mm-dd', date);
                 return [occurances.indexOf(string) != -1];
@@ -219,27 +257,28 @@ jQuery(document).ready(function ($) {
 (function($) {
     if (typeof acf != 'undefined') {
         acf.add_filter('date_time_picker_args', function( args, $field ){
-        args.timeOnlyTitle = eventmanager.choose_time;
-        args.timeText = eventmanager.time;
-        args.hourText = eventmanager.hour;
-        args.minuteText = eventmanager.minute;
-        args.closeText = eventmanager.done;
-        args.currentText = eventmanager.now;
-        args.showSecond = false;
-        return args;
-    });
-    acf.add_filter('time_picker_args', function( args, $field ){
-        args.timeOnlyTitle = eventmanager.choose_time;
-        args.timeText = eventmanager.time;
-        args.hourText = eventmanager.hour;
-        args.minuteText = eventmanager.minute;
-        args.closeText = eventmanager.done;
-        args.currentText = eventmanager.now;
-        args.showSecond = false;
-        return args;
-    });
+            args.timeOnlyTitle = eventmanager.choose_time;
+            args.timeText = eventmanager.time;
+            args.hourText = eventmanager.hour;
+            args.minuteText = eventmanager.minute;
+            args.closeText = eventmanager.done;
+            args.currentText = eventmanager.now;
+            args.showSecond = false;
+            return args;
+        });
+        acf.add_filter('time_picker_args', function( args, $field ){
+            args.timeOnlyTitle = eventmanager.choose_time;
+            args.timeText = eventmanager.time;
+            args.hourText = eventmanager.hour;
+            args.minuteText = eventmanager.minute;
+            args.closeText = eventmanager.done;
+            args.currentText = eventmanager.now;
+            args.showSecond = false;
+            return args;
+        });
     }
 })(jQuery);
+
 
 /**
  * Format date object to yy-mm-dd

@@ -8,7 +8,7 @@
                 "name": "events_included",
                 "type": "post_object",
                 "instructions": "Select which events that are included in this package.",
-                "required": 0,
+                "required": 1,
                 "conditional_logic": 0,
                 "wrapper": {
                     "width": "",
@@ -33,7 +33,7 @@
                 "required": 0,
                 "conditional_logic": 0,
                 "wrapper": {
-                    "width": "50",
+                    "width": "",
                     "class": "",
                     "id": ""
                 },
@@ -61,22 +61,24 @@
             },
             {
                 "key": "field_57c949ad829f0",
-                "label": "Age restriction",
+                "label": "Minimum age to attend the event",
                 "name": "age_restriction",
-                "type": "text",
+                "type": "number",
                 "instructions": "Enter age if this event is age restricted.",
                 "required": 0,
                 "conditional_logic": 0,
                 "wrapper": {
-                    "width": "",
+                    "width": "50",
                     "class": "",
                     "id": ""
                 },
                 "default_value": "",
-                "placeholder": "",
+                "placeholder": "e.g. 15",
                 "prepend": "",
-                "append": "",
-                "maxlength": ""
+                "append": "year",
+                "min": 0,
+                "max": "",
+                "step": ""
             },
             {
                 "key": "field_581847f9642dc",
@@ -101,50 +103,12 @@
                 "ui": 1
             },
             {
-                "key": "field_57c949b4829f1",
-                "label": "Price information",
-                "name": "price_information",
-                "type": "textarea",
-                "instructions": "Information about prices.",
-                "required": 0,
-                "conditional_logic": 0,
-                "wrapper": {
-                    "width": "50",
-                    "class": "",
-                    "id": ""
-                },
-                "default_value": "",
-                "placeholder": "",
-                "maxlength": "",
-                "rows": 3,
-                "new_lines": "wpautop"
-            },
-            {
-                "key": "field_57c949b9829f2",
-                "label": "Ticket includes",
-                "name": "ticket_includes",
-                "type": "textarea",
-                "instructions": "Specific information about what's included in one ticket.",
-                "required": 0,
-                "conditional_logic": 0,
-                "wrapper": {
-                    "width": "50",
-                    "class": "",
-                    "id": ""
-                },
-                "default_value": "",
-                "placeholder": "",
-                "maxlength": "",
-                "rows": 3,
-                "new_lines": "wpautop"
-            },
-            {
                 "key": "field_57c949bf829f3",
                 "label": "Default price \/ Adult",
                 "name": "price_adult",
                 "type": "text",
                 "instructions": "",
-                "required": 0,
+                "required": 1,
                 "conditional_logic": 0,
                 "wrapper": {
                     "width": "50",
@@ -197,7 +161,7 @@
             },
             {
                 "key": "field_58184887642dd",
-                "label": "Children age",
+                "label": "Age restriction for children price",
                 "name": "children_age",
                 "type": "select",
                 "instructions": "Children price is valid up to this age.",
@@ -267,7 +231,7 @@
             },
             {
                 "key": "field_58184909642de",
-                "label": "Senior age",
+                "label": "Age restriction for senior price",
                 "name": "senior_age",
                 "type": "select",
                 "instructions": "Senior price is valid from this age.",
@@ -343,7 +307,7 @@
                 "min": "",
                 "max": "",
                 "layout": "block",
-                "button_label": "Add",
+                "button_label": "Add group",
                 "sub_fields": [
                     {
                         "key": "field_5818498949eaa",
@@ -407,6 +371,44 @@
                         "step": ""
                     }
                 ]
+            },
+            {
+                "key": "field_57c949b4829f1",
+                "label": "Price information",
+                "name": "price_information",
+                "type": "textarea",
+                "instructions": "Write additional information about prices.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "50",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "placeholder": "",
+                "maxlength": "",
+                "rows": 3,
+                "new_lines": "wpautop"
+            },
+            {
+                "key": "field_57c949b9829f2",
+                "label": "Ticket includes",
+                "name": "ticket_includes",
+                "type": "textarea",
+                "instructions": "Does the ticket include more than entry? Then write what's included in one ticket.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "50",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "placeholder": "e.g. entry, checkroom, meal",
+                "maxlength": "",
+                "rows": 3,
+                "new_lines": "wpautop"
             }
         ],
         "location": [

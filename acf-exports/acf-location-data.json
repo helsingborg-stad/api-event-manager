@@ -122,44 +122,6 @@
                 "disabled": 0
             },
             {
-                "key": "field_57f60a66dc607",
-                "label": "Latitude",
-                "name": "latitude",
-                "type": "text",
-                "instructions": "Latitude for GPS coordinates.",
-                "required": 0,
-                "conditional_logic": 0,
-                "wrapper": {
-                    "width": "50",
-                    "class": "",
-                    "id": ""
-                },
-                "default_value": "",
-                "placeholder": "",
-                "prepend": "",
-                "append": "",
-                "maxlength": ""
-            },
-            {
-                "key": "field_57f60a78dc608",
-                "label": "Longitude",
-                "name": "longitude",
-                "type": "text",
-                "instructions": "Longitude for GPS coordinates.",
-                "required": 0,
-                "conditional_logic": 0,
-                "wrapper": {
-                    "width": "50",
-                    "class": "",
-                    "id": ""
-                },
-                "default_value": "",
-                "placeholder": "",
-                "prepend": "",
-                "append": "",
-                "maxlength": ""
-            },
-            {
                 "key": "field_57cfba1b54b27",
                 "label": "Open hours",
                 "name": "",
@@ -342,7 +304,7 @@
                 "min": "",
                 "max": "",
                 "layout": "table",
-                "button_label": "Add",
+                "button_label": "Add exception",
                 "sub_fields": [
                     {
                         "key": "field_57cfbb60697e2",

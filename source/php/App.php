@@ -38,7 +38,7 @@ class App
 
         //Json load files
         //Remove filter acfJsonLoadPath if load ACF fields with PHP.
-        add_filter('acf/settings/load_json', array($this, 'acfJsonLoadPath'));
+        //add_filter('acf/settings/load_json', array($this, 'acfJsonLoadPath'));
         add_action('acf/init', array($this, 'acfSettings'));
         add_filter('acf/translate_field', array($this, 'acfTranslationFilter'));
 
@@ -273,13 +273,15 @@ class App
             $xcapUrl = 'http://mittkulturkort.se/calendar/listEvents.action' .
                        '?month=&date=&categoryPermaLink=&q=&p=&feedType=ICAL_XML';
             new \HbgEventImporter\Parser\Xcap($xcapUrl);
-            file_put_contents(dirname(__FILE__)."/Log/xcap_cron_events.log", "XCAP, Last run: ".date("Y-m-d H:i:s"));
+            // TA BORT
+            //file_put_contents(dirname(__FILE__)."/Log/xcap_cron_events.log", "XCAP, Last run: ".date("Y-m-d H:i:s"));
         }
         if (get_field('cbis_daily_cron', 'option') == true) {
             $cbisUrl = 'http://api.cbis.citybreak.com/Products.asmx?wsdl';
             new \HbgEventImporter\Parser\CBIS($cbisUrl);
             new \HbgEventImporter\Parser\CbisLocation($cbisUrl);
-            file_put_contents(dirname(__FILE__)."/Log/cbis_cron.log", "CBIS, Last run: ".date("Y-m-d H:i:s"));
+            // TA BORT
+            //file_put_contents(dirname(__FILE__)."/Log/cbis_cron.log", "CBIS, Last run: ".date("Y-m-d H:i:s"));
         }
     }
 
@@ -337,8 +339,12 @@ class App
      */
     public function acfTranslationFilter($field)
     {
-        if ($field['type'] == 'text') {
+        if ($field['type'] == 'text' || $field['type'] == 'number') {
             $field['append'] = acf_translate($field['append']);
+            $field['placeholder'] = acf_translate($field['placeholder']);
+        }
+
+        if ($field['type'] == 'textarea') {
             $field['placeholder'] = acf_translate($field['placeholder']);
         }
 
