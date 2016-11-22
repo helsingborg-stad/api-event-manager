@@ -290,11 +290,8 @@ jQuery(document).ready(function ($) {
         acf.add_filter('google_map_marker_args', function( args, $field ){
             args.draggable = false;
             args.raiseOnDrag = false;
-            console.log(args);
             return args;
         });
-
-        google.maps.event.addDomListener(div, 'mousedown', cancelEvent);
 
         // Show validation errors on tabs
         acf.add_filter('validation_complete', function( json, $form ){
