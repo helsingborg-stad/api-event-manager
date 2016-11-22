@@ -25,4 +25,15 @@ jQuery(document).ready(function ($) {
     });
 
     $('.acf-button').removeClass('button-primary');
+
+    // Hide Google map on post type location if address data is missing
+    $('.acf-field[data-name="geo_map"] .acf-hidden').each(function(i, obj) {
+        var address = $(this).find('.input-address').attr('value');
+        var lat = $(this).find('.input-lat').attr('value');
+        var lng = $(this).find('.input-lng').attr('value');
+        if (!address || !lat || !lng) {
+            $('.acf-field[data-name="geo_map"]').hide();
+        }
+    });
+
 });

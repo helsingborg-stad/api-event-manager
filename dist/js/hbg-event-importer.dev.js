@@ -256,6 +256,7 @@ jQuery(document).ready(function ($) {
 // ACF date picker settings
 (function($) {
     if (typeof acf != 'undefined') {
+        // Datepicker translations
         acf.add_filter('date_time_picker_args', function( args, $field ){
             args.timeOnlyTitle = eventmanager.choose_time;
             args.timeText = eventmanager.time;
@@ -276,9 +277,41 @@ jQuery(document).ready(function ($) {
             args.showSecond = false;
             return args;
         });
+
+        // TA BORT
+        acf.add_filter('google_map_args', function( args, $field ){
+            // args.scrollwheel = false;
+            // args.navigationControl = false;
+            // args.mapTypeControl = false;
+            // args.scaleControl = false;
+            return args;
+        });
+
+        acf.add_filter('google_map_marker_args', function( args, $field ){
+            args.draggable = false;
+            args.raiseOnDrag = false;
+            console.log(args);
+            return args;
+        });
+
+        google.maps.event.addDomListener(div, 'mousedown', cancelEvent);
+
+        // Show validation errors on tabs
+        acf.add_filter('validation_complete', function( json, $form ){
+            $('.acf-tab-error', $form).remove();
+            if(json.errors) {
+                for (var i = 0; i < json.errors.length; i++) {
+                    var field = $('[name="' + json.errors[i].input + '"]', $form).parents('.acf-field');
+                        field = field[field.length - 1];
+                    var tab = $(field, $form).prevAll('.acf-field-tab').attr('data-key');
+                    $('.acf-tab-wrap a[data-key=' + tab + '] .acf-tab-error', $form).remove();
+                    $('.acf-tab-wrap a[data-key=' + tab + ']', $form).append(' <span class="dashicons dashicons-warning acf-tab-error"></span>').click();
+                }
+            }
+            return json;
+        });
     }
 })(jQuery);
-
 
 /**
  * Format date object to yy-mm-dd
@@ -450,46 +483,17 @@ jQuery(document).ready(function ($) {
     });
 
     $('.acf-button').removeClass('button-primary');
-});
 
-var ImportEvents = ImportEvents || {};
-
-jQuery(document).ready(function ($) {
-    if($('.acf-field-57ebb807988f8').length)
-    {
-        $('.acf-field-57ebb807988f8').append('<a class="createContact button" href="http://' + window.location.host + '/wp/wp-admin/post-new.php?post_type=contact&lightbox=true">' + eventmanager.new_contact + '</a>');
-    }
-
-    if($('.acf-field-57a9d5f3804e1').length)
-    {
-        $('.acf-field-57a9d5f3804e1').append('<a class="createContact button" href="http://' + window.location.host + '/wp/wp-admin/post-new.php?post_type=sponsor&lightbox=true">' + eventmanager.new_sponsor + '</a>');
-    }
-
-    if($('.acf-field-576117c423a52').length)
-    {
-        $('.acf-field-576117c423a52').append('<a class="createContact button" href="http://' + window.location.host + '/wp/wp-admin/post-new.php?post_type=location&lightbox=true">' + eventmanager.new_location + '</a>');
-    }
-
-    if($('.acf-field-57c7ed92054e6').length)
-    {
-        $('.acf-field-57c7ed92054e6').append('<a class="createContact button" href="http://' + window.location.host + '/wp/wp-admin/post-new.php?post_type=membership-card&lightbox=true">' + eventmanager.new_card + '</a>');
-    }
-
-    if($('.acf-field-581847f9642dc').length)
-    {
-        $('.acf-field-581847f9642dc').append('<a class="createContact button" href="http://' + window.location.host + '/wp/wp-admin/post-new.php?post_type=membership-card&lightbox=true">' + eventmanager.new_card + '</a>');
-    }
-
-    $('.openContact').click(function(event) {
-        event.preventDefault();
-        ImportEvents.Prompt.Modal.open($(this).attr('href'));
+    // Hide Google map on post type location if address data is missing
+    $('.acf-field[data-name="geo_map"] .acf-hidden').each(function(i, obj) {
+        var address = $(this).find('.input-address').attr('value');
+        var lat = $(this).find('.input-lat').attr('value');
+        var lng = $(this).find('.input-lng').attr('value');
+        if (!address || !lat || !lng) {
+            $('.acf-field[data-name="geo_map"]').hide();
+        }
     });
 
-    $('.createContact').click(function(event) {
-        var parentId = $('#post_ID').val();
-        event.preventDefault();
-        ImportEvents.Prompt.Modal.open($(this).attr('href'), parentId);
-    });
 });
 
 ImportEvents = ImportEvents || {};
@@ -543,3 +547,43 @@ ImportEvents.Prompt.Modal = (function ($) {
     return new Modal();
 
 })(jQuery);
+
+var ImportEvents = ImportEvents || {};
+
+jQuery(document).ready(function ($) {
+    if($('.acf-field-57ebb807988f8').length)
+    {
+        $('.acf-field-57ebb807988f8').append('<a class="createContact button" href="http://' + window.location.host + '/wp/wp-admin/post-new.php?post_type=contact&lightbox=true">' + eventmanager.new_contact + '</a>');
+    }
+
+    if($('.acf-field-57a9d5f3804e1').length)
+    {
+        $('.acf-field-57a9d5f3804e1').append('<a class="createContact button" href="http://' + window.location.host + '/wp/wp-admin/post-new.php?post_type=sponsor&lightbox=true">' + eventmanager.new_sponsor + '</a>');
+    }
+
+    if($('.acf-field-576117c423a52').length)
+    {
+        $('.acf-field-576117c423a52').append('<a class="createContact button" href="http://' + window.location.host + '/wp/wp-admin/post-new.php?post_type=location&lightbox=true">' + eventmanager.new_location + '</a>');
+    }
+
+    if($('.acf-field-57c7ed92054e6').length)
+    {
+        $('.acf-field-57c7ed92054e6').append('<a class="createContact button" href="http://' + window.location.host + '/wp/wp-admin/post-new.php?post_type=membership-card&lightbox=true">' + eventmanager.new_card + '</a>');
+    }
+
+    if($('.acf-field-581847f9642dc').length)
+    {
+        $('.acf-field-581847f9642dc').append('<a class="createContact button" href="http://' + window.location.host + '/wp/wp-admin/post-new.php?post_type=membership-card&lightbox=true">' + eventmanager.new_card + '</a>');
+    }
+
+    $('.openContact').click(function(event) {
+        event.preventDefault();
+        ImportEvents.Prompt.Modal.open($(this).attr('href'));
+    });
+
+    $('.createContact').click(function(event) {
+        var parentId = $('#post_ID').val();
+        event.preventDefault();
+        ImportEvents.Prompt.Modal.open($(this).attr('href'), parentId);
+    });
+});

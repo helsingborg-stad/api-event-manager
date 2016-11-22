@@ -256,6 +256,7 @@ jQuery(document).ready(function ($) {
 // ACF date picker settings
 (function($) {
     if (typeof acf != 'undefined') {
+        // Datepicker translations
         acf.add_filter('date_time_picker_args', function( args, $field ){
             args.timeOnlyTitle = eventmanager.choose_time;
             args.timeText = eventmanager.time;
@@ -276,9 +277,41 @@ jQuery(document).ready(function ($) {
             args.showSecond = false;
             return args;
         });
+
+        // TA BORT
+        acf.add_filter('google_map_args', function( args, $field ){
+            // args.scrollwheel = false;
+            // args.navigationControl = false;
+            // args.mapTypeControl = false;
+            // args.scaleControl = false;
+            return args;
+        });
+
+        acf.add_filter('google_map_marker_args', function( args, $field ){
+            args.draggable = false;
+            args.raiseOnDrag = false;
+            console.log(args);
+            return args;
+        });
+
+        google.maps.event.addDomListener(div, 'mousedown', cancelEvent);
+
+        // Show validation errors on tabs
+        acf.add_filter('validation_complete', function( json, $form ){
+            $('.acf-tab-error', $form).remove();
+            if(json.errors) {
+                for (var i = 0; i < json.errors.length; i++) {
+                    var field = $('[name="' + json.errors[i].input + '"]', $form).parents('.acf-field');
+                        field = field[field.length - 1];
+                    var tab = $(field, $form).prevAll('.acf-field-tab').attr('data-key');
+                    $('.acf-tab-wrap a[data-key=' + tab + '] .acf-tab-error', $form).remove();
+                    $('.acf-tab-wrap a[data-key=' + tab + ']', $form).append(' <span class="dashicons dashicons-warning acf-tab-error"></span>').click();
+                }
+            }
+            return json;
+        });
     }
 })(jQuery);
-
 
 /**
  * Format date object to yy-mm-dd

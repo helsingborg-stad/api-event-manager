@@ -75,6 +75,42 @@ class Locations extends \HbgEventImporter\Entity\CustomPostType
         add_action('manage_posts_extra_tablenav', array($this, 'tablenavButtons'));
         add_action('acf/save_post', array($this, 'updateAddressData'), 20);
         add_action('publish_location', array($this, 'setAcceptedOnPublish'), 10, 2);
+        add_filter('acf/load_value/name=geo_map', array($this, 'setMapValues'), 10, 3);
+        add_filter('acf/update_value/name=geo_map', array($this, 'acfUpdateMap'), 10, 3);
+    }
+
+    /**
+     * Set default map data from post meta
+     * @param  array  $value   the value of the field as found in the database
+     * @param  int    $post_id the post id which the value was loaded from
+     * @param  array  $field   the field object
+     * @return array           updated $value
+     */
+    public function setMapValues($value, $post_id, $field)
+    {
+        $address = get_post_meta($post_id, 'formatted_address', true);
+        $lat = get_post_meta($post_id, 'latitude', true);
+        $lng = get_post_meta($post_id, 'longitude', true);
+
+        $value['address'] = (! empty($address)) ? $address : null;
+        if (! empty($lat) && ! empty($lng)) {
+            $value['lat'] = $lat;
+            $value['lng'] = $lng;
+        }
+        return $value;
+    }
+
+    /**
+     * Set Google Map values to empty, this map is for read only.
+     * @param  string $value   the value of the field
+     * @param  int    $post_id the post id to save against
+     * @param  array  $field   the field object
+     * @return string          the new value
+     */
+    public function acfUpdateMap($value, $post_id, $field)
+    {
+        $value = '';
+        return $value;
     }
 
     /**
@@ -97,7 +133,7 @@ class Locations extends \HbgEventImporter\Entity\CustomPostType
     }
 
     /**
-     * Automatically updates missing address components when saving location
+     * Get missing address components when saving location
      * @param  int $post_id post id
      */
     public function updateAddressData($post_id)
@@ -108,47 +144,53 @@ class Locations extends \HbgEventImporter\Entity\CustomPostType
 
         $defaultLocation = get_option('options_default_city');
         $defaultLocation = (!isset($defaultLocation) || empty($defaultLocation)) ? null : $defaultLocation;
-        $formatted = get_field('street_address') != null ? get_field('street_address') : '';
-        $formatted .= get_field('postal_code') != null ? ', ' . get_field('postal_code') : '';
-        $formatted .= get_field('city') != null ? ', ' . get_field('city') : ', ' . $defaultLocation;
-        $formatted .= get_field('country') != null ? ', ' . get_field('country') : '';
-        if (get_field('street_address') != null) {
-            update_field('formatted_address', $formatted);
-        }
 
-        // Get coordinates from address
-        if (get_field('street_address') != null && get_field('postal_code') != null && get_field('city') != null && (get_field('latitude') == null || get_field('longitude') == null)) {
+        // Get formatted address
+        $formatted = '';
+        if (! empty(get_field('street_address'))) {
+            $formatted = get_field('street_address') . ', ';
+        } elseif (! empty(get_the_title($post_id))) {
+            $formatted = get_the_title($post_id) . ', ';
+        }
+        $formatted .= ! empty(get_field('postal_code')) ? get_field('postal_code') . ', ' : '';
+        if (! empty(get_field('city'))) {
+            $formatted .= get_field('city') . ', ';
+        } elseif (! empty($defaultLocation)) {
+            $formatted .= $defaultLocation . ', ';
+        }
+        $formatted .=  ! empty(get_field('country')) ? get_field('country') : '';
+        $formatted = rtrim($formatted, ', ');
+
+        // If address and postal code is missing, search with Places API
+        if (empty(get_field('street_address')) && empty(get_field('postal_code'))) {
+            $address = Address::gmapsGetAddressComponents($formatted, false);
+            if ($address == false) {
+                update_field('latitude', '');
+                update_field('longitude', '');
+                return;
+            }
+            update_field('street_address', $address->street);
+            update_field('city', $address->city);
+            update_field('postal_code', $address->postalcode);
+            update_field('country', $address->country);
+            update_field('formatted_address', $address->formatted_address);
+            update_field('latitude', $address->latitude);
+            update_field('longitude', $address->longitude);
+        } else {
+            // Get coordinates from address
+            update_field('formatted_address', $formatted);
             $address = Address::gmapsGetAddressComponents($formatted, true);
-            if ($address) {
-                update_field('latitude', $address->latitude);
-                update_field('longitude', $address->longitude);
+            if ($address == false) {
+                $address = Address::gmapsGetAddressComponents($formatted, false);
             }
-        }
-        // Get address from coordinates
-        elseif (get_field('street_address') == null && get_field('postal_code') == null && get_field('city') == null && get_field('latitude') != null || get_field('longitude') != null) {
-            $address = Address::gmapsGetAddressByCoordinates(get_field('latitude'),  get_field('longitude'));
-            if ($address) {
-                update_field('street_address', $address->street);
-                update_field('city', $address->city);
-                update_field('postal_code', $address->postalcode);
-                update_field('country', $address->country);
-                update_field('formatted_address', $address->formatted_address);
+
+            if ($address == false) {
+                update_field('latitude', '');
+                update_field('longitude', '');
+                return;
             }
-        }
-        // Get address and coordinates from post title
-        elseif (get_field('street_address') == null && get_field('postal_code') == null && get_field('city') == null && (get_field('latitude') == null || get_field('longitude') == null)) {
-            $title = get_the_title($post_id);
-            $title .= $defaultLocation != null ? ', ' . $defaultLocation : '';
-            $address = Address::gmapsGetAddressComponents($title, false);
-            if ($address) {
-                update_field('street_address', $address->street);
-                update_field('city', $address->city);
-                update_field('postal_code', $address->postalcode);
-                update_field('country', $address->country);
-                update_field('formatted_address', $address->formatted_address);
-                update_field('latitude', $address->latitude);
-                update_field('longitude', $address->longitude);
-            }
+            update_field('latitude', $address->latitude);
+            update_field('longitude', $address->longitude);
         }
     }
 }

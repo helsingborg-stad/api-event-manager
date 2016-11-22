@@ -330,6 +330,7 @@ class App
     {
         acf_update_setting('l10n', true);
         acf_update_setting('l10n_textdomain', 'event-manager');
+        acf_update_setting('google_api_key', get_option('options_google_geocode_api_key'));
     }
 
     /**

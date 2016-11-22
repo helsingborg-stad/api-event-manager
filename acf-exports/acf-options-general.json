@@ -7,7 +7,7 @@
                 "label": "Google Api key",
                 "name": "google_geocode_api_key",
                 "type": "text",
-                "instructions": "API-services required:<br> Google Maps Geocoding API<br> Google Places API Web Service",
+                "instructions": "API-services required:<br> Google Maps JavaScript API<br> Google Maps Geocoding API<br> Google Places API Web Service",
                 "required": 1,
                 "conditional_logic": 0,
                 "wrapper": {

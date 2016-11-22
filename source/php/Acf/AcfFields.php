@@ -811,6 +811,24 @@ class AcfFields
             'disabled' => 0,
         ),
         array (
+            'key' => 'field_5832ece755362',
+            'label' => __('Map', 'event-manager'),
+            'name' => 'geo_map',
+            'type' => 'google_map',
+            'instructions' => '',
+            'required' => 0,
+            'conditional_logic' => 0,
+            'wrapper' => array (
+                'width' => '',
+                'class' => '',
+                'id' => '',
+            ),
+            'center_lat' => 'null',
+            'center_lng' => 'null',
+            'zoom' => '16',
+            'height' => '',
+        ),
+        array (
             'key' => 'field_57cfba1b54b27',
             'label' => __('Open hours', 'event-manager'),
             'name' => '',
@@ -1690,7 +1708,7 @@ class AcfFields
             'required' => 0,
             'conditional_logic' => 0,
             'wrapper' => array (
-                'width' => '35',
+                'width' => '45',
                 'class' => '',
                 'id' => '',
             ),
@@ -2610,7 +2628,7 @@ class AcfFields
             'label' => _x('Google Api key', 'ACF', 'event-manager'),
             'name' => 'google_geocode_api_key',
             'type' => 'text',
-            'instructions' => _x('API-services required:<br> Google Maps Geocoding API<br> Google Places API Web Service.', 'ACF', 'event-manager'),
+            'instructions' => _x('API-services required:<br> Google Maps JavaScript API<br> Google Maps Geocoding API<br> Google Places API Web Service', 'ACF', 'event-manager'),
             'required' => 1,
             'conditional_logic' => 0,
             'wrapper' => array (

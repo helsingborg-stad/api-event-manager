@@ -337,6 +337,7 @@ abstract class CustomPostType
      */
     public function acfUpdatePhone($value, $post_id, $field)
     {
+        $value = preg_replace("/[^0-9\-\+\(\)\s ]/", "", $value);
         $value = DataCleaner::phoneNumber($value);
         return $value;
     }

@@ -120,6 +120,9 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
         add_filter('acf/update_value/key=field_57f4f6dc747a1', array($this, 'acfUpdatePrices'), 10, 3);
         add_filter('acf/update_value/name=booking_phone', array($this, 'acfUpdatePhone'), 10, 3);
         add_filter('acf/update_value/key=field_57ebb45142846', array($this, 'acfUpdatePhone'), 10, 3);
+        add_filter('acf/fields/post_object/result/name=location', array($this, 'acfLocationSelect'), 10, 4);
+        add_filter('acf/fields/post_object/result/name=additional_locations', array($this, 'acfLocationSelect'), 10, 4);
+        add_filter('acf/fields/post_object/query', array($this, 'acfPostObjectStatus'), 10, 3);
     }
 
     /**
@@ -617,6 +620,7 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
         ?></p>
         </div>
         <?php
+
     }
 
     /**
@@ -628,4 +632,33 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
         DataCleaner::hashtags($post_id, 'event_tags');
     }
 
+    /**
+     * Get only published post objects
+     * @param  array $args    the WP_Query args used to find choices
+     * @param  array $field   the field array containing all attributes & settings
+     * @param  int   $post_id the current post ID being edited
+     * @return array          updated WP_Query args
+     */
+    public function acfPostObjectStatus($args, $field, $post_id)
+    {
+        $args['post_status'] = 'publish';
+        return $args;
+    }
+
+    /**
+     * Adding address to Location select box
+     * @param  string   $title    the text displayed for this post object
+     * @param  object   $post     the post object
+     * @param  array    $field    the field array containing all attributes & settings
+     * @param  int      $post_id  the current post ID being edited
+     * @return string             updated title
+     */
+    public function acfLocationSelect($title, $post, $field, $post_id)
+    {
+        $address = get_post_meta($post->ID, 'formatted_address', true);
+        if (! empty($address)) {
+            $title .= ' (' . $address .  ')';
+        }
+        return $title;
+    }
 }
