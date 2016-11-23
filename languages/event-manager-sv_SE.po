@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Event Manager\n"
-"POT-Creation-Date: 2016-11-22 13:47+0100\n"
-"PO-Revision-Date: 2016-11-22 13:47+0100\n"
+"POT-Creation-Date: 2016-11-23 08:18+0100\n"
+"PO-Revision-Date: 2016-11-23 08:20+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: sv\n"
@@ -237,6 +237,10 @@ msgstr "Land"
 #: source/php/Acf/AcfFields.php:815
 msgid "Map"
 msgstr "Karta"
+
+#: source/php/Acf/AcfFields.php:818
+msgid "This map shows where the site is located and is not editable."
+msgstr "Kartan visar var platsen är belägen och är inte redigerbar."
 
 #: source/php/Acf/AcfFields.php:833 source/php/Acf/AcfFields.php:849
 msgid "Open hours"
@@ -966,7 +970,7 @@ msgstr "Importera evenemang"
 msgid "Import CBIS events"
 msgstr "Importera CBIS evenemang"
 
-#: source/php/App.php:236 source/php/PostTypes/Locations.php:129
+#: source/php/App.php:236 source/php/PostTypes/Locations.php:130
 msgid "Import CBIS locations"
 msgstr "Importera CBIS platser"
 

@@ -278,15 +278,6 @@ jQuery(document).ready(function ($) {
             return args;
         });
 
-        // TA BORT
-        acf.add_filter('google_map_args', function( args, $field ){
-            // args.scrollwheel = false;
-            // args.navigationControl = false;
-            // args.mapTypeControl = false;
-            // args.scaleControl = false;
-            return args;
-        });
-
         acf.add_filter('google_map_marker_args', function( args, $field ){
             args.draggable = false;
             args.raiseOnDrag = false;

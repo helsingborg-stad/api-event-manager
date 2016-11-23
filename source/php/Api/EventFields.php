@@ -107,7 +107,8 @@ class EventFields extends Fields
             $time2 = $_GET['end'];
             $timestamp2 = $time2;
             if (!is_numeric($time2)) {
-                $timestamp2 = strtotime($timestamp2);
+                // Add 1 day to include events occuring on end date
+                $timestamp2 = strtotime($timestamp2 . " +1 days");
             }
             if ($timestamp2 == false) {
                 return $this->errorMessage('Format not ok', array(2, 3));

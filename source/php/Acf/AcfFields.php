@@ -815,7 +815,7 @@ class AcfFields
             'label' => __('Map', 'event-manager'),
             'name' => 'geo_map',
             'type' => 'google_map',
-            'instructions' => '',
+            'instructions' => __('This map shows where the site is located and is not editable.'),
             'required' => 0,
             'conditional_logic' => 0,
             'wrapper' => array (
