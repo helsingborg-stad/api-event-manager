@@ -285,16 +285,16 @@ class Fields
             return null;
         }
 
-        $location_data['ID'] = $location_id;
-        $location_data['title'] = $location->post_title;
-        $location_data['content'] = $location->post_content;
-        $location_data['street_address'] = get_post_meta($location_id, 'street_address', true);
-        $location_data['postal_code'] = get_post_meta($location_id, 'postal_code', true);
-        $location_data['city'] = get_post_meta($location_id, 'city', true);
-        $location_data['country'] = get_post_meta($location_id, 'country', true);
+        $location_data['ID']                = $location_id;
+        $location_data['title']             = $location->post_title;
+        $location_data['content']           = $location->post_content;
+        $location_data['street_address']    = get_post_meta($location_id, 'street_address', true);
+        $location_data['postal_code']       = get_post_meta($location_id, 'postal_code', true);
+        $location_data['city']              = get_post_meta($location_id, 'city', true);
+        $location_data['country']           = get_post_meta($location_id, 'country', true);
         $location_data['formatted_address'] = get_post_meta($location_id, 'formatted_address', true);
-        $location_data['latitude'] = get_post_meta($location_id, 'latitude', true);
-        $location_data['longitude'] = get_post_meta($location_id, 'longitude', true);
+        $location_data['latitude']          = get_post_meta($location_id, 'latitude', true);
+        $location_data['longitude']         = get_post_meta($location_id, 'longitude', true);
 
         return $location_data;
     }
@@ -327,16 +327,16 @@ class Fields
             }
 
             $location_arr[] = array(
-                'ID' => $location->ID,
-                'title' => $location->post_title,
-                'content' => $location->post_content,
-                'street_address' => get_post_meta($location->ID, 'street_address', true),
-                'postal_code' => get_post_meta($location->ID, 'postal_code', true),
-                'city' => get_post_meta($location->ID, 'city', true),
-                'country' => get_post_meta($location->ID, 'country', true),
+                'ID'                => $location->ID,
+                'title'             => $location->post_title,
+                'content'           => $location->post_content,
+                'street_address'    => get_post_meta($location->ID, 'street_address', true),
+                'postal_code'       => get_post_meta($location->ID, 'postal_code', true),
+                'city'              => get_post_meta($location->ID, 'city', true),
+                'country'           => get_post_meta($location->ID, 'country', true),
                 'formatted_address' => get_post_meta($location->ID, 'formatted_address', true),
-                'latitude' => get_post_meta($location->ID, 'latitude', true),
-                'longitude' => get_post_meta($location->ID, 'longitude', true),
+                'latitude'          => get_post_meta($location->ID, 'latitude', true),
+                'longitude'         => get_post_meta($location->ID, 'longitude', true),
             );
         }
 

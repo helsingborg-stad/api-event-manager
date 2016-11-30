@@ -168,15 +168,7 @@ class CBIS extends \HbgEventImporter\Parser
             )
         );
 
-        // Get and save event "arenas" to locations
-        // $this->arenas = $this->client->ListAll($requestParams)->ListAllResult->Items->Product;
-        // $productCategory = 'arena';
-
-        // foreach($this->arenas as $key => $arenaData) {
-        //     $this->saveArena($arenaData, $productCategory, $defaultLocation);
-        // }
-
-        // // Adjust request parameters for getting products, 1500 itemsPerPage to get all events
+        // Adjust request parameters for getting products, 1500 itemsPerPage to get all events
         $requestParams['filter']['ProductType'] = "Product";
         $requestParams['itemsPerPage'] = 1600;
 
@@ -194,38 +186,6 @@ class CBIS extends \HbgEventImporter\Parser
         foreach ($filteredProducts as $key => $eventData) {
             $this->saveEvent($eventData, $postStatus);
         }
-
-        // //Get and save "Accomodations" to locations
-        // $requestParams['itemsPerPage'] = 300;
-        // $requestParams['categoryId'] = 14067;
-        // $requestParams['filter']['WithOccasionsOnly'] = false;
-        // $requestParams['filter']['ExcludeProductsWithoutOccasions'] = false;
-        // $requestParams['filter']['StartDate'] = null;
-        // $productCategory = 'accommodation';
-        // $this->accommodations = $this->client->ListAll($requestParams)->ListAllResult->Items->Product;
-
-        // foreach ($this->accommodations as $accommodationData) {
-        //     $this->saveArena($accommodationData, $productCategory, $defaultLocation);
-        // }
-
-        // // Get and save "To do" to locations
-        // $requestParams['itemsPerPage'] = 500;
-        // $requestParams['categoryId'] = 14085;
-        // $productCategory = 'to do';
-        // $this->todo = $this->client->ListAll($requestParams)->ListAllResult->Items->Product;
-
-        // // Filter expired products
-        // $filteredProducts = array_filter($this->todo, function($obj){
-        //     if (isset($obj->ExpirationDate) && strtotime($obj->ExpirationDate) < strtotime("now")) {
-        //         return false;
-        //     }
-        //     return true;
-        // });
-
-        // foreach($filteredProducts as $key => $todoData) {
-        //     $this->saveArena($todoData, $productCategory, $defaultLocation);
-        // }
-
     }
 
     /**
@@ -327,60 +287,6 @@ class CBIS extends \HbgEventImporter\Parser
         }
 
         return $occasionsToRegister;
-    }
-
-    /**
-     * Cleans a single locations data into correct format and saves it to db
-     * @param  object $arenaData  Location data
-     * @return void
-     */
-    //This function is not the same as the part in saveEvent that looks almost like this, there are no GeoNode when getting arenas from CBIS
-    public function saveArena($arenaData, $productCategory, $defaultLocation)
-    {
-        $attributes = $this->getAttributes($arenaData);
-        $import_client = 'CBIS: '.ucfirst($productCategory);
-        if($this->getAttributeValue(self::ATTRIBUTE_ADDRESS, $attributes) == null && $this->getAttributeValue(self::ATTRIBUTE_NAME, $attributes) == null)
-            return;
-
-        $newPostTitle = $this->getAttributeValue(self::ATTRIBUTE_NAME, $attributes) != null ? $this->getAttributeValue(self::ATTRIBUTE_NAME, $attributes) : $this->getAttributeValue(self::ATTRIBUTE_ADDRESS, $attributes);
-
-        // Checking if there is a post already with this title or similar enough
-        $locationId = $this->checkIfPostExists('location', $newPostTitle);
-        if ($locationId == null) {
-            $country = $this->getAttributeValue(self::ATTRIBUTE_COUNTRY, $attributes);
-            $defaultCity = ($productCategory == 'arena') ? $this->getAttributeValue(self::ATTRIBUTE_POSTAL_ADDRESS, $attributes) : $arenaData->GeoNode->Name;
-            $city = ($defaultCity != null) ? $defaultCity : $defaultLocation;
-            if(is_numeric($country))
-                $country = "Sweden";
-            // Create the location, found in api-event-manager/source/php/PostTypes/Locations.php
-            $latitude = $this->getAttributeValue(self::ATTRIBUTE_LATITUDE, $attributes) != '0' ? $this->getAttributeValue(self::ATTRIBUTE_LATITUDE, $attributes) : null;
-            $longitude = $this->getAttributeValue(self::ATTRIBUTE_LONGITUDE, $attributes) != '0' ? $this->getAttributeValue(self::ATTRIBUTE_LONGITUDE, $attributes) : null;
-            $location = new Location(
-                array(
-                    'post_title' => $newPostTitle
-                ),
-                array(
-                    'street_address'     => $this->getAttributeValue(self::ATTRIBUTE_ADDRESS, $attributes),
-                    'postal_code'        => $this->getAttributeValue(self::ATTRIBUTE_POSTCODE, $attributes),
-                    'city'               => $city,
-                    'municipality'       => $this->getAttributeValue(self::ATTRIBUTE_MUNICIPALITY, $attributes),
-                    'country'            => $country,
-                    'latitude'           => $latitude,
-                    'longitude'          => $longitude,
-                    'import_client'      => $import_client,
-                    '_event_manager_uid' => $this->getAttributeValue(self::ATTRIBUTE_NAME, $attributes) ? $this->getAttributeValue(self::ATTRIBUTE_NAME, $attributes) : $this->getAttributeValue(self::ATTRIBUTE_ADDRESS, $attributes),
-                    'accepted'           => 1,
-                )
-            );
-
-            $creatSuccess = $location->save();
-            if($creatSuccess)
-            {
-                $locationId = $location->ID;
-                ++$this->nrOfNewLocations;
-                $this->levenshteinTitles['location'][] = array('ID' => $locationId, 'post_title' => $newPostTitle);
-            }
-        }
     }
 
     /**

@@ -132,7 +132,7 @@ class CbisLocation extends \HbgEventImporter\Parser
             $this->saveArena($arenaData, $productCategory, $defaultLocation);
         }
 
-        // // Adjust request parameters for getting products
+        // Adjust request parameters for getting products
         $requestParams['filter']['ProductType'] = "Product";
 
         //Get and save "Accomodations" to locations
