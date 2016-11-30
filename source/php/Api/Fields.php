@@ -273,7 +273,7 @@ class Fields
     {
         $return_value = self::getFieldGetMetaData($object, $field_name, $request);
 
-        if (is_int($return_value) && ! empty($return_value)) {
+        if (is_int($return_value) || is_string($return_value) && ! empty($return_value)) {
             $location_id = intval($return_value);
         } else {
             return null;
