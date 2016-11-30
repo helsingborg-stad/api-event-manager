@@ -1719,7 +1719,7 @@ class AcfFields
             ),
             'allow_null' => 0,
             'multiple' => 0,
-            'return_format' => 'object',
+            'return_format' => 'id',
             'ui' => 1,
         ),
         array (
@@ -1742,7 +1742,7 @@ class AcfFields
             ),
             'allow_null' => 0,
             'multiple' => 1,
-            'return_format' => 'object',
+            'return_format' => 'id',
             'ui' => 1,
         ),
         array (

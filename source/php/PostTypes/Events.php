@@ -434,10 +434,10 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
         if (current_user_can('manage_options')) {
             echo '<div class="alignleft actions" style="position: relative;">';
             // TA BORT
-            // echo '<a href="' . admin_url('options.php?page=import-events') . '" class="button-primary" id="post-query-submit">debug XCAP</a>';
+            echo '<a href="' . admin_url('options.php?page=import-events') . '" class="button-primary" id="post-query-submit">DEBUG XCAP</a>';
             // echo '<a href="' . admin_url('options.php?page=import-cbis-events') . '" class="button-primary" id="post-query-submit">debug CBIS</a>';
             // echo '<a href="' . admin_url('options.php?page=import-cbis-locations') . '" class="button-primary" id="post-query-submit">Custom</a>';
-            // echo '<a href="' . admin_url('options.php?page=delete-all-events') . '" class="button-primary" id="post-query-submit">DELETE</a>';
+            echo '<a href="' . admin_url('options.php?page=delete-all-events') . '" class="button-primary" id="post-query-submit">DELETE</a>';
             echo '<div class="button-primary extraspace" id="xcap">' . __('Import XCAP', 'event-manager') . '</div>';
             echo '<div class="button-primary extraspace" id="cbis">' . __('Import CBIS', 'event-manager') . '</div>';
             echo '<div class="button-primary extraspace" id="occasions">'.__('Collect event timestamps', 'event-manager').'</div>';

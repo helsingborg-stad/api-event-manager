@@ -225,7 +225,7 @@ class Fields
     }
 
     /**
-     * Adds more data to featured_media field.
+     * Adds additional data to featured_media field.
      *
      * @param   object  $object      The response object.
      * @param   string  $field_name  The name of the field to add.
@@ -233,7 +233,6 @@ class Fields
      *
      * @return  object|null
      */
-
     public function featuredImageData($object, $field_name, $request)
     {
         // Proceed if the post has a featured image.
@@ -249,7 +248,7 @@ class Fields
             return null;
         }
 
-        $featured_image['id']            = $image_id;
+        $featured_image['ID']            = $image_id;
         $featured_image['alt_text']      = get_post_meta($image_id, '_wp_attachment_image_alt', true);
         $featured_image['caption']       = $image->post_excerpt;
         $featured_image['description']   = $image->post_content;
@@ -258,6 +257,90 @@ class Fields
         $featured_image['source_url']    = wp_get_attachment_url($image_id);
 
         return apply_filters('featured_image_data', $featured_image, $image_id);
+    }
+
+
+    /**
+     * Add data / meta data to additional locations field.
+     *
+     * @param   object  $object      The response object.
+     * @param   string  $field_name  The name of the field to add.
+     * @param   object  $request     The WP_REST_Request object.
+     *
+     * @return  object|null
+     */
+    public function locationData($object, $field_name, $request)
+    {
+        $return_value = self::getFieldGetMetaData($object, $field_name, $request);
+
+        if (is_int($return_value) && ! empty($return_value)) {
+            $location_id = intval($return_value);
+        } else {
+            return null;
+        }
+
+        $location = get_post($location_id);
+
+        if (! $location) {
+            return null;
+        }
+
+        $location_data['ID'] = $location_id;
+        $location_data['title'] = $location->post_title;
+        $location_data['content'] = $location->post_content;
+        $location_data['street_address'] = get_post_meta($location_id, 'street_address', true);
+        $location_data['postal_code'] = get_post_meta($location_id, 'postal_code', true);
+        $location_data['city'] = get_post_meta($location_id, 'city', true);
+        $location_data['country'] = get_post_meta($location_id, 'country', true);
+        $location_data['formatted_address'] = get_post_meta($location_id, 'formatted_address', true);
+        $location_data['latitude'] = get_post_meta($location_id, 'latitude', true);
+        $location_data['longitude'] = get_post_meta($location_id, 'longitude', true);
+
+        return $location_data;
+    }
+
+    /**
+     * Add data / meta data to additional locations field.
+     *
+     * @param   object  $object      The response object.
+     * @param   string  $field_name  The name of the field to add.
+     * @param   object  $request     The WP_REST_Request object.
+     *
+     * @return  object|null
+     */
+    public function additionalLocationData($object, $field_name, $request)
+    {
+        $return_value = self::getFieldGetMetaData($object, $field_name, $request);
+
+        if (is_array($return_value) || is_object($return_value) && !empty($return_value)) {
+            $locations = $return_value;
+        } else {
+            return null;
+        }
+
+        $location_arr = array();
+        foreach ($locations as $location) {
+            $location = get_post($location);
+
+            if (! $location) {
+                continue;
+            }
+
+            $location_arr[] = array(
+                'ID' => $location->ID,
+                'title' => $location->post_title,
+                'content' => $location->post_content,
+                'street_address' => get_post_meta($location->ID, 'street_address', true),
+                'postal_code' => get_post_meta($location->ID, 'postal_code', true),
+                'city' => get_post_meta($location->ID, 'city', true),
+                'country' => get_post_meta($location->ID, 'country', true),
+                'formatted_address' => get_post_meta($location->ID, 'formatted_address', true),
+                'latitude' => get_post_meta($location->ID, 'latitude', true),
+                'longitude' => get_post_meta($location->ID, 'longitude', true),
+            );
+        }
+
+        return $location_arr;
     }
 
     /**

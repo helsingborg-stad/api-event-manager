@@ -213,12 +213,11 @@ class EventFields extends Fields
         register_rest_field($this->postType,
             'location',
             array(
-                'get_callback' => array($this, 'objectGetCallBack'),
-                'update_callback' => array($this, 'objectUpdateCallBack'),
+                'get_callback' => array($this, 'locationData'),
                 'schema' => array(
-                    'description' => 'Field containing object with location.',
+                    'description' => 'Field containing object with location data.',
                     'type' => 'object',
-                    'context' => array('view', 'edit')
+                    'context' => array('view')
                 )
             )
         );
@@ -227,12 +226,11 @@ class EventFields extends Fields
         register_rest_field($this->postType,
             'additional_locations',
             array(
-                'get_callback' => array($this, 'objectGetCallBack'),
-                'update_callback' => array($this, 'objectUpdateCallBack'),
+                'get_callback' => array($this, 'additionalLocationData'),
                 'schema' => array(
-                    'description' => 'Field containing array with additional location data.',
+                    'description' => 'Field containing object with additional locations data.',
                     'type' => 'object',
-                    'context' => array('view', 'edit')
+                    'context' => array('view')
                 )
             )
         );
