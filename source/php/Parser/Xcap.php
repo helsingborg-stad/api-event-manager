@@ -57,9 +57,10 @@ class Xcap extends \HbgEventImporter\Parser
         $city = ($location != null) ? $location : $defaultLocation;
         $postStatus = get_field('xcap_post_status', 'option') ? get_field('xcap_post_status', 'option') : 'publish';
         $image = null;
-        if (isset($eventData->{'x-xcap-wideimageid'}) && !empty($eventData->{'x-xcap-wideimageid'})) {
+        if (isset($eventData->{'x-xcap-wideimageid'}) && !empty($eventData->{'x-xcap-wideimageid'}) && $eventData->{'x-xcap-wideimageid'} != 'null') {
             $image = $eventData->{'x-xcap-wideimageid'};
-        } elseif (isset($eventData->{'x-xcap-imageid'}) && !empty($eventData->{'x-xcap-imageid'})) {
+        }
+        elseif (isset($eventData->{'x-xcap-imageid'}) && !empty($eventData->{'x-xcap-imageid'}) && $eventData->{'x-xcap-imageid'} != 'null') {
             $image = $eventData->{'x-xcap-imageid'};
         }
 
@@ -116,7 +117,6 @@ class Xcap extends \HbgEventImporter\Parser
         }
 
         $eventId = $this->checkIfPostExists('event', $newPostTitle);
-
         $isUpdate = false;
         $accepted = -1;
         // Check: if event is a duplicate and if "sync" option is set.
@@ -142,7 +142,7 @@ class Xcap extends \HbgEventImporter\Parser
                     '_event_manager_uid'    => $eventData->uid,
                     'sync'                  => true,
                     'status'                => 'Active',
-                    'image'                 => isset($image) ? $image : null,
+                    'image'                 => !empty($image) ? $image : null,
                     'alternate_name'        => $alternateName,
                     'event_link'            => null,
                     'categories'            => $categories,

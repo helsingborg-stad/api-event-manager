@@ -354,10 +354,10 @@ function redLoadingButton(button, callback)
 {
     button.fadeOut(500, function() {
         var texts = [eventmanager.loading + '&nbsp;&nbsp;&nbsp;', eventmanager.loading + '.&nbsp;&nbsp;', eventmanager.loading + '..&nbsp;', eventmanager.loading + '...'];
-        button.css('background-color', 'rgb(255, 210, 77)');
-        button.css('border-color', 'rgb(255, 191, 0)');
+        button.css('background-color', 'rgb(51, 197, 255)');
+        button.css('border-color', 'rgb(0, 164, 230)');
         button.css('color', 'white');
-        button.css('text-shadow', '0 -1px 1px rgb(230, 172, 0),1px 0 1px rgb(230, 172, 0),0 1px 1px rgb(230, 172, 0),-1px 0 1px rgb(230, 172, 0)');
+        button.css('text-shadow', '0 -1px 1px rgb(0, 164, 230),1px 0 1px rgb(0, 164, 230),0 1px 1px rgb(0, 164, 230),-1px 0 1px rgb(0, 164, 230)');
         button.css('box-shadow', 'none');
         button.css('width', '85px');
         button.html(texts[0]);
