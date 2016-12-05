@@ -75,7 +75,9 @@ class DataCleaner
 
         $removedShortcodes = preg_replace("/\[.*\]/i", '', $changedComments, -1 , $count);
 
-        return $removedShortcodes;
+        $string = html_entity_decode($removedShortcodes);
+
+        return $string;
     }
 
     /**
