@@ -259,6 +259,43 @@ class Fields
         return apply_filters('featured_image_data', $featured_image, $image_id);
     }
 
+    /**
+     * Add data / meta data to organizers field.
+     *
+     * @param   object  $object      The response object.
+     * @param   string  $field_name  The name of the field to add.
+     * @param   object  $request     The WP_REST_Request object.
+     *
+     * @return  object|null
+     */
+    public function organizerData($object, $field_name, $request)
+    {
+        $return_value = self::getFieldGetMetaData($object, $field_name, $request);
+
+        if (is_array($return_value) || is_object($return_value) && !empty($return_value)) {
+            $organizers = $return_value;
+        } else {
+            return null;
+        }
+
+        $organizers_arr = array();
+        foreach ($organizers as $organizer) {
+            $contacts_array = array();
+            if (! empty($organizer['contacts']) && is_array($organizer['contacts'])) {
+                foreach ($organizer['contacts'] as $contact) {
+                    $contacts_array[] = array(
+                    'title' => get_the_title($contact->ID),
+                    'name' => get_field('name', $contact->ID),
+                    'phone_number' => get_field('phone_number', $contact->ID),
+                    'email' => get_field('email', $contact->ID),
+                    );
+                }
+            $organizer['contacts'] = $contacts_array;
+            }
+            $organizers_arr[] = $organizer;
+        }
+        return $organizers_arr;
+    }
 
     /**
      * Add data / meta data to additional locations field.

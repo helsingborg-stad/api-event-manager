@@ -653,7 +653,7 @@
                     "id": ""
                 },
                 "collapsed": "",
-                "min": 1,
+                "min": "",
                 "max": "",
                 "layout": "block",
                 "button_label": "Add organizer",
@@ -1410,7 +1410,7 @@
                     "id": ""
                 },
                 "collapsed": "",
-                "min": 1,
+                "min": 0,
                 "max": "",
                 "layout": "block",
                 "button_label": "Add link",
@@ -1447,7 +1447,7 @@
                     "id": ""
                 },
                 "collapsed": "",
-                "min": 1,
+                "min": 0,
                 "max": "",
                 "layout": "block",
                 "button_label": "Add link",

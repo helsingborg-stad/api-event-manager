@@ -241,12 +241,11 @@ class EventFields extends Fields
         register_rest_field($this->postType,
             'organizers',
             array(
-                'get_callback' => array($this, 'objectGetCallBack'),
-                'update_callback' => array($this, 'objectUpdateCallBack'),
+                'get_callback' => array($this, 'organizerData'),
                 'schema' => array(
-                    'description' => 'Field containing array with organizers.',
+                    'description' => 'Field containing object with organizer data.',
                     'type' => 'object',
-                    'context' => array('view', 'edit')
+                    'context' => array('view')
                 )
             )
         );
