@@ -1115,7 +1115,7 @@
                     {
                         "key": "field_57f4f74e747a2",
                         "label": "Min persons",
-                        "name": "min_persones",
+                        "name": "min_persons",
                         "type": "number",
                         "instructions": "Minimum number of people.",
                         "required": 1,
