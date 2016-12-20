@@ -1,4 +1,1495 @@
     {
+        "key": "group_57610ebadcee8",
+        "title": "Event",
+        "fields": [
+            {
+                "key": "field_57dbf55ed522a",
+                "label": "Imported",
+                "name": "imported_event",
+                "type": "true_false",
+                "instructions": "If this is an imported event or not.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "imported_event",
+                    "id": ""
+                },
+                "message": "",
+                "default_value": 0
+            },
+            {
+                "key": "field_57610ebe83965",
+                "label": "API synchronization",
+                "name": "sync",
+                "type": "true_false",
+                "instructions": "Unchecking this box will disable API updates sync for this particular event.",
+                "required": 0,
+                "conditional_logic": [
+                    [
+                        {
+                            "field": "field_57dbf55ed522a",
+                            "operator": "==",
+                            "value": "1"
+                        }
+                    ]
+                ],
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "message": "Sync event information with API",
+                "default_value": 0
+            },
+            {
+                "key": "field_5761103c83966",
+                "label": "Event",
+                "name": "",
+                "type": "tab",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "placement": "left",
+                "endpoint": 0
+            },
+            {
+                "key": "field_5761144d641f2",
+                "label": "Website",
+                "name": "event_link",
+                "type": "url",
+                "instructions": "Link to event website.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "placeholder": ""
+            },
+            {
+                "key": "field_57c7fbbee9d7b",
+                "label": "Additional links",
+                "name": "additional_links",
+                "type": "repeater",
+                "instructions": "Additional links to websites.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "collapsed": "",
+                "min": "",
+                "max": "",
+                "layout": "block",
+                "button_label": "Add link",
+                "sub_fields": [
+                    {
+                        "key": "field_57c7fd2381ffb",
+                        "label": "Link",
+                        "name": "link",
+                        "type": "url",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": "",
+                        "placeholder": ""
+                    }
+                ]
+            },
+            {
+                "key": "field_57c97ba976b20",
+                "label": "Related events",
+                "name": "related_events",
+                "type": "post_object",
+                "instructions": "Links to other events associated with this event.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "post_type": [
+                    "event"
+                ],
+                "taxonomy": [],
+                "allow_null": 0,
+                "multiple": 1,
+                "return_format": "object",
+                "ui": 1
+            },
+            {
+                "key": "field_57d274173bf4c",
+                "label": "Occasions",
+                "name": "",
+                "type": "tab",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "placement": "left",
+                "endpoint": 0
+            },
+            {
+                "key": "field_57d8f238dd06b",
+                "label": "Event occasions",
+                "name": "",
+                "type": "message",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "message": "Add occasions to this event. Does the event occur each week? Then add a rule for recurring events.",
+                "new_lines": "wpautop",
+                "esc_html": 0
+            },
+            {
+                "key": "field_5761106783967",
+                "label": "Date",
+                "name": "occasions",
+                "type": "repeater",
+                "instructions": "Start and end time of the event.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "collapsed": "",
+                "min": "",
+                "max": "",
+                "layout": "block",
+                "button_label": "Add occasion",
+                "sub_fields": [
+                    {
+                        "key": "field_5761164591649",
+                        "label": "Status",
+                        "name": "status",
+                        "type": "radio",
+                        "instructions": "Select if event is on schedule or not.",
+                        "required": 1,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "choices": {
+                            "scheduled": "Scheduled",
+                            "rescheduled": "Rescheduled",
+                            "cancelled": "Cancelled"
+                        },
+                        "allow_null": 0,
+                        "other_choice": 0,
+                        "save_other_choice": 0,
+                        "default_value": "scheduled",
+                        "layout": "horizontal",
+                        "return_format": "value"
+                    },
+                    {
+                        "key": "field_57f3c0670c4a9",
+                        "label": "Exeption information",
+                        "name": "occ_exeption_information",
+                        "type": "text",
+                        "instructions": "Information about why there have been an exception.",
+                        "required": 0,
+                        "conditional_logic": [
+                            [
+                                {
+                                    "field": "field_5761164591649",
+                                    "operator": "!=",
+                                    "value": "scheduled"
+                                }
+                            ]
+                        ],
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": "",
+                        "placeholder": "",
+                        "prepend": "",
+                        "append": "",
+                        "maxlength": ""
+                    },
+                    {
+                        "key": "field_5761109a83968",
+                        "label": "Start date",
+                        "name": "start_date",
+                        "type": "date_time_picker",
+                        "instructions": "",
+                        "required": 1,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "33",
+                            "class": "start_date",
+                            "id": "start_date_id"
+                        },
+                        "display_format": "Y-m-d H:i",
+                        "return_format": "Y-m-d H:i",
+                        "first_day": 1
+                    },
+                    {
+                        "key": "field_576110e583969",
+                        "label": "End date",
+                        "name": "end_date",
+                        "type": "date_time_picker",
+                        "instructions": "",
+                        "required": 1,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "33",
+                            "class": "end_date",
+                            "id": "end_date_id"
+                        },
+                        "display_format": "Y-m-d H:i",
+                        "return_format": "Y-m-d H:i",
+                        "first_day": 1
+                    },
+                    {
+                        "key": "field_5761169e07309",
+                        "label": "Door time",
+                        "name": "door_time",
+                        "type": "date_time_picker",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "33",
+                            "class": "door_time",
+                            "id": "door_time_id"
+                        },
+                        "display_format": "Y-m-d H:i",
+                        "return_format": "Y-m-d H:i",
+                        "first_day": 1
+                    },
+                    {
+                        "key": "field_57611277ef032",
+                        "label": "Override content",
+                        "name": "content_mode",
+                        "type": "radio",
+                        "instructions": "Use master or custom content for this occasion.",
+                        "required": 1,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "choices": {
+                            "master": "Use master content",
+                            "custom": "Use custom content"
+                        },
+                        "allow_null": 0,
+                        "other_choice": 0,
+                        "save_other_choice": 0,
+                        "default_value": "",
+                        "layout": "horizontal",
+                        "return_format": "value"
+                    },
+                    {
+                        "key": "field_576110fb8396a",
+                        "label": "Content",
+                        "name": "content",
+                        "type": "wysiwyg",
+                        "instructions": "Override the post content of the event.",
+                        "required": 1,
+                        "conditional_logic": [
+                            [
+                                {
+                                    "field": "field_57611277ef032",
+                                    "operator": "==",
+                                    "value": "custom"
+                                }
+                            ]
+                        ],
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": "",
+                        "tabs": "all",
+                        "toolbar": "full",
+                        "media_upload": 1
+                    }
+                ]
+            },
+            {
+                "key": "field_57d2749e3bf4d",
+                "label": "Recurrence rules",
+                "name": "rcr_rules",
+                "type": "repeater",
+                "instructions": "Weekly recurring event.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "rcr_rules",
+                    "id": ""
+                },
+                "collapsed": "",
+                "min": "",
+                "max": "",
+                "layout": "row",
+                "button_label": "Add rule",
+                "sub_fields": [
+                    {
+                        "key": "field_57d275713bf4e",
+                        "label": "Weekday",
+                        "name": "rcr_week_day",
+                        "type": "select",
+                        "instructions": "The event will occur on this weekday",
+                        "required": 1,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "rcr_day",
+                            "id": ""
+                        },
+                        "choices": {
+                            "Monday": "Monday",
+                            "Tuesday": "Tuesday",
+                            "Wednesday": "Wednesday",
+                            "Thursday": "Thursday",
+                            "Friday": "Friday",
+                            "Saturday": "Saturday",
+                            "Sunday": "Sunday"
+                        },
+                        "default_value": [],
+                        "allow_null": 0,
+                        "multiple": 0,
+                        "ui": 0,
+                        "ajax": 0,
+                        "return_format": "value",
+                        "placeholder": ""
+                    },
+                    {
+                        "key": "field_57d277153bf4f",
+                        "label": "Start time",
+                        "name": "rcr_start_time",
+                        "type": "time_picker",
+                        "instructions": "Start time of the event",
+                        "required": 1,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "display_format": "H:i",
+                        "return_format": "H:i"
+                    },
+                    {
+                        "key": "field_57d2777b3bf50",
+                        "label": "End time",
+                        "name": "rcr_end_time",
+                        "type": "time_picker",
+                        "instructions": "End time of the event",
+                        "required": 1,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "display_format": "H:i",
+                        "return_format": "H:i"
+                    },
+                    {
+                        "key": "field_57d6720f72407",
+                        "label": "Door time",
+                        "name": "rcr_door_time",
+                        "type": "time_picker",
+                        "instructions": "Door time of the event",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "display_format": "H:i",
+                        "return_format": "H:i"
+                    },
+                    {
+                        "key": "field_57d660a687234",
+                        "label": "Start date",
+                        "name": "rcr_start_date",
+                        "type": "date_picker",
+                        "instructions": "When the recurring event period starts.",
+                        "required": 1,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "rcr_start_date",
+                            "id": ""
+                        },
+                        "display_format": "Y-m-d",
+                        "return_format": "Y-m-d",
+                        "first_day": 1
+                    },
+                    {
+                        "key": "field_57d2787b3bf51",
+                        "label": "End date",
+                        "name": "rcr_end_date",
+                        "type": "date_picker",
+                        "instructions": "When the reccurring event period ends",
+                        "required": 1,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "rcr_end_date",
+                            "id": ""
+                        },
+                        "display_format": "Y-m-d",
+                        "return_format": "Y-m-d",
+                        "first_day": 1
+                    },
+                    {
+                        "key": "field_57d279addb0cb",
+                        "label": "Exceptions",
+                        "name": "rcr_exceptions",
+                        "type": "repeater",
+                        "instructions": "Add exceptions to this scheme.",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "rcr_rules_exc",
+                            "id": ""
+                        },
+                        "collapsed": "",
+                        "min": "",
+                        "max": "",
+                        "layout": "block",
+                        "button_label": "Add exception",
+                        "sub_fields": [
+                            {
+                                "key": "field_57d279f8db0cc",
+                                "label": "Exception date",
+                                "name": "rcr_exc_date",
+                                "type": "date_picker",
+                                "instructions": "",
+                                "required": 1,
+                                "conditional_logic": 0,
+                                "wrapper": {
+                                    "width": "",
+                                    "class": "rcr_exc_date",
+                                    "id": ""
+                                },
+                                "display_format": "Y-m-d",
+                                "return_format": "Y-m-d",
+                                "first_day": 1
+                            },
+                            {
+                                "key": "field_57f3bb9c82f5e",
+                                "label": "Status",
+                                "name": "status_rcr_exc",
+                                "type": "radio",
+                                "instructions": "",
+                                "required": 1,
+                                "conditional_logic": 0,
+                                "wrapper": {
+                                    "width": "",
+                                    "class": "",
+                                    "id": ""
+                                },
+                                "choices": {
+                                    "default": "Default",
+                                    "rescheduled": "Rescheduled",
+                                    "cancelled": "Cancelled"
+                                },
+                                "allow_null": 0,
+                                "other_choice": 0,
+                                "save_other_choice": 0,
+                                "default_value": "scheduled",
+                                "layout": "horizontal",
+                                "return_format": "value"
+                            },
+                            {
+                                "key": "field_57f3becaf31a5",
+                                "label": "Exeption information",
+                                "name": "rcr_exception_info",
+                                "type": "text",
+                                "instructions": "",
+                                "required": 0,
+                                "conditional_logic": [
+                                    [
+                                        {
+                                            "field": "field_57f3bb9c82f5e",
+                                            "operator": "!=",
+                                            "value": "default"
+                                        }
+                                    ]
+                                ],
+                                "wrapper": {
+                                    "width": "",
+                                    "class": "",
+                                    "id": ""
+                                },
+                                "default_value": "",
+                                "placeholder": "",
+                                "prepend": "",
+                                "append": "",
+                                "maxlength": ""
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "key": "field_576117b523a51",
+                "label": "Location",
+                "name": "",
+                "type": "tab",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "placement": "left",
+                "endpoint": 0
+            },
+            {
+                "key": "field_576117c423a52",
+                "label": "Location",
+                "name": "location",
+                "type": "post_object",
+                "instructions": "Location or address for the event.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "45",
+                    "class": "",
+                    "id": ""
+                },
+                "post_type": [
+                    "location"
+                ],
+                "taxonomy": [],
+                "allow_null": 0,
+                "multiple": 0,
+                "return_format": "id",
+                "ui": 1
+            },
+            {
+                "key": "field_57ee2a23bd0b5",
+                "label": "Additional locations",
+                "name": "additional_locations",
+                "type": "post_object",
+                "instructions": "Add additional locations if the event takes place on more than one address.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "post_type": [
+                    "location"
+                ],
+                "taxonomy": [],
+                "allow_null": 0,
+                "multiple": 1,
+                "return_format": "id",
+                "ui": 1
+            },
+            {
+                "key": "field_57611356d9415",
+                "label": "Organizer",
+                "name": "",
+                "type": "tab",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "placement": "left",
+                "endpoint": 0
+            },
+            {
+                "key": "field_57ebb36142843",
+                "label": "Organizers",
+                "name": "organizers",
+                "type": "repeater",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "collapsed": "",
+                "min": "",
+                "max": "",
+                "layout": "block",
+                "button_label": "Add organizer",
+                "sub_fields": [
+                    {
+                        "key": "field_57ecf8598ff0d",
+                        "label": "Main organizer",
+                        "name": "main_organizer",
+                        "type": "true_false",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "message": "Check the box if this is the main organizer for the event.",
+                        "default_value": 0
+                    },
+                    {
+                        "key": "field_57ebb3a242844",
+                        "label": "Organizer",
+                        "name": "organizer",
+                        "type": "text",
+                        "instructions": "Company, organization or person that organizes the event.",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "50",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": "",
+                        "placeholder": "",
+                        "prepend": "",
+                        "append": "",
+                        "maxlength": ""
+                    },
+                    {
+                        "key": "field_57ebb41742845",
+                        "label": "Organizer link",
+                        "name": "organizer_link",
+                        "type": "url",
+                        "instructions": "External link to the organizer.",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "50",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": "",
+                        "placeholder": ""
+                    },
+                    {
+                        "key": "field_57ebb45142846",
+                        "label": "Organizer Phone",
+                        "name": "organizer_phone",
+                        "type": "text",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "50",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": "",
+                        "placeholder": "",
+                        "prepend": "",
+                        "append": "",
+                        "maxlength": ""
+                    },
+                    {
+                        "key": "field_57ebb51d42847",
+                        "label": "Organizer Email",
+                        "name": "organizer_email",
+                        "type": "email",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "50",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": "",
+                        "placeholder": "",
+                        "prepend": "",
+                        "append": ""
+                    },
+                    {
+                        "key": "field_57ebb807988f8",
+                        "label": "Contacts",
+                        "name": "contacts",
+                        "type": "post_object",
+                        "instructions": "Add contacts to the organizer.",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "post_type": [
+                            "contact"
+                        ],
+                        "taxonomy": [],
+                        "allow_null": 0,
+                        "multiple": 1,
+                        "return_format": "object",
+                        "ui": 1
+                    }
+                ]
+            },
+            {
+                "key": "field_57a9d5f3804e1",
+                "label": "Sponsors",
+                "name": "supporters",
+                "type": "post_object",
+                "instructions": "Add sponsors to the event.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "post_type": [
+                    "sponsor"
+                ],
+                "taxonomy": [],
+                "allow_null": 0,
+                "multiple": 1,
+                "return_format": "object",
+                "ui": 1
+            },
+            {
+                "key": "field_57611b73acf19",
+                "label": "Booking",
+                "name": "",
+                "type": "tab",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "placement": "left",
+                "endpoint": 0
+            },
+            {
+                "key": "field_57611b82acf1a",
+                "label": "Booking link",
+                "name": "booking_link",
+                "type": "url",
+                "instructions": "External link to booking website.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "placeholder": ""
+            },
+            {
+                "key": "field_57611bffacf1d",
+                "label": "Booking phone",
+                "name": "booking_phone",
+                "type": "text",
+                "instructions": "Phone number to make bookings.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "50",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "placeholder": "",
+                "prepend": "",
+                "append": "",
+                "maxlength": ""
+            },
+            {
+                "key": "field_57611befacf1c",
+                "label": "Minimum age to attend the event",
+                "name": "age_restriction",
+                "type": "number",
+                "instructions": "Enter age if this event is age restricted.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "50",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "placeholder": "e.g. 15",
+                "prepend": "",
+                "append": "year",
+                "min": 0,
+                "max": "",
+                "step": ""
+            },
+            {
+                "key": "field_57c7ed92054e6",
+                "label": "Included in membership cards",
+                "name": "membership_cards",
+                "type": "post_object",
+                "instructions": "Add membership cards where this event is included.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "post_type": [
+                    "membership-card"
+                ],
+                "taxonomy": [],
+                "allow_null": 0,
+                "multiple": 1,
+                "return_format": "object",
+                "ui": 1
+            },
+            {
+                "key": "field_57611c0cacf1e",
+                "label": "Default price \/ Adult",
+                "name": "price_adult",
+                "type": "text",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "50",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "placeholder": "",
+                "prepend": "",
+                "append": "SEK",
+                "maxlength": ""
+            },
+            {
+                "key": "field_57b6fe18e65c4",
+                "label": "Price student",
+                "name": "price_student",
+                "type": "text",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "50",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "placeholder": "",
+                "prepend": "",
+                "append": "SEK",
+                "maxlength": ""
+            },
+            {
+                "key": "field_57611c23acf1f",
+                "label": "Price children",
+                "name": "price_children",
+                "type": "text",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "50",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "placeholder": "",
+                "prepend": "",
+                "append": "SEK",
+                "maxlength": ""
+            },
+            {
+                "key": "field_57f4fe8866a2d",
+                "label": "Age restriction for children price",
+                "name": "children_age",
+                "type": "select",
+                "instructions": "Children price is valid up to this age.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "50",
+                    "class": "",
+                    "id": ""
+                },
+                "choices": [
+                    "0",
+                    "1",
+                    "2",
+                    "3",
+                    "4",
+                    "5",
+                    "6",
+                    "7",
+                    "8",
+                    "9",
+                    "10",
+                    "11",
+                    "12",
+                    "13",
+                    "14",
+                    "15",
+                    "16",
+                    "17",
+                    "18",
+                    "19",
+                    "20",
+                    "21",
+                    "22",
+                    "23",
+                    "24",
+                    "25"
+                ],
+                "default_value": [
+                    18
+                ],
+                "allow_null": 0,
+                "multiple": 0,
+                "ui": 0,
+                "ajax": 0,
+                "return_format": "value",
+                "placeholder": ""
+            },
+            {
+                "key": "field_57b6fe5ee65c5",
+                "label": "Price senior",
+                "name": "price_senior",
+                "type": "text",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "50",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "placeholder": "",
+                "prepend": "",
+                "append": "SEK",
+                "maxlength": ""
+            },
+            {
+                "key": "field_57f4fbaa4365e",
+                "label": "Age restriction for senior price",
+                "name": "senior_age",
+                "type": "select",
+                "instructions": "Senior price is valid from this age.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "50",
+                    "class": "",
+                    "id": ""
+                },
+                "choices": {
+                    "50": "50",
+                    "51": "51",
+                    "52": "52",
+                    "53": "53",
+                    "54": "54",
+                    "55": "55",
+                    "56": "56",
+                    "57": "57",
+                    "58": "58",
+                    "59": "59",
+                    "60": "60",
+                    "61": "61",
+                    "62": "62",
+                    "63": "63",
+                    "64": "64",
+                    "65": "65",
+                    "66": "66",
+                    "67": "67",
+                    "68": "68",
+                    "69": "69",
+                    "70": "70",
+                    "71": "71",
+                    "72": "72",
+                    "73": "73",
+                    "74": "74",
+                    "75": "75",
+                    "76": "76",
+                    "77": "77",
+                    "78": "78",
+                    "79": "79",
+                    "80": "80",
+                    "81": "81",
+                    "82": "82",
+                    "83": "83",
+                    "84": "84",
+                    "85": "85"
+                },
+                "default_value": [
+                    65
+                ],
+                "allow_null": 0,
+                "multiple": 0,
+                "ui": 0,
+                "ajax": 0,
+                "return_format": "value",
+                "placeholder": ""
+            },
+            {
+                "key": "field_57f4f4ac7479f",
+                "label": "Price group",
+                "name": "booking_group",
+                "type": "repeater",
+                "instructions": "Add prices for group bookings.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "collapsed": "",
+                "min": "",
+                "max": "",
+                "layout": "block",
+                "button_label": "Add group",
+                "sub_fields": [
+                    {
+                        "key": "field_57f4f6dc747a1",
+                        "label": "Price",
+                        "name": "price_group",
+                        "type": "text",
+                        "instructions": "Price for this group.",
+                        "required": 1,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "33",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": "",
+                        "placeholder": "",
+                        "prepend": "",
+                        "append": "SEK",
+                        "maxlength": ""
+                    },
+                    {
+                        "key": "field_57f4f74e747a2",
+                        "label": "Min persons",
+                        "name": "min_persons",
+                        "type": "number",
+                        "instructions": "Minimum number of people.",
+                        "required": 1,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "33",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": "",
+                        "placeholder": "",
+                        "prepend": "",
+                        "append": "",
+                        "min": "",
+                        "max": "",
+                        "step": ""
+                    },
+                    {
+                        "key": "field_57f4f765747a3",
+                        "label": "Max persons",
+                        "name": "max_persons",
+                        "type": "number",
+                        "instructions": "Maximum number of people.",
+                        "required": 1,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "33",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": "",
+                        "placeholder": "",
+                        "prepend": "",
+                        "append": "",
+                        "min": "",
+                        "max": "",
+                        "step": ""
+                    }
+                ]
+            },
+            {
+                "key": "field_57611bd8acf1b",
+                "label": "Price information",
+                "name": "price_information",
+                "type": "textarea",
+                "instructions": "Write additional information about prices.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "50",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "placeholder": "",
+                "maxlength": "",
+                "rows": 3,
+                "new_lines": "wpautop"
+            },
+            {
+                "key": "field_57b70267e1f32",
+                "label": "Ticket includes",
+                "name": "ticket_includes",
+                "type": "textarea",
+                "instructions": "Does the ticket include more than entry? Then write what's included in one ticket.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "50",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "placeholder": "e.g. entry, checkroom, meal",
+                "maxlength": "",
+                "rows": 3,
+                "new_lines": "wpautop"
+            },
+            {
+                "key": "field_577a326b71ba8",
+                "label": "Gallery",
+                "name": "",
+                "type": "tab",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "placement": "top",
+                "endpoint": 0
+            },
+            {
+                "key": "field_577a312acd95d",
+                "label": "Gallery",
+                "name": "gallery",
+                "type": "gallery",
+                "instructions": "Add images to this event.<br> Please upload images that are as large as possible and that are not sensitive to cropping (eg. images with text overlay).",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "min": "",
+                "max": "",
+                "insert": "append",
+                "library": "all",
+                "min_width": "",
+                "min_height": "",
+                "min_size": "",
+                "max_width": "",
+                "max_height": "",
+                "max_size": "",
+                "mime_types": ""
+            },
+            {
+                "key": "field_57a9d7f655152",
+                "label": "Links",
+                "name": "",
+                "type": "tab",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "placement": "left",
+                "endpoint": 0
+            },
+            {
+                "key": "field_58188dfcfc3b9",
+                "label": "Links",
+                "name": "",
+                "type": "message",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "message": "Add external links to different social media and streaming services.",
+                "new_lines": "wpautop",
+                "esc_html": 0
+            },
+            {
+                "key": "field_57a9d81f55153",
+                "label": "Facebook",
+                "name": "facebook",
+                "type": "url",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "50",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "placeholder": ""
+            },
+            {
+                "key": "field_57a9d82b55154",
+                "label": "Twitter",
+                "name": "twitter",
+                "type": "url",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "50",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "placeholder": ""
+            },
+            {
+                "key": "field_57a9d83355155",
+                "label": "Instagram",
+                "name": "instagram",
+                "type": "url",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "50",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "placeholder": ""
+            },
+            {
+                "key": "field_57c82373297f1",
+                "label": "Google Music",
+                "name": "google_music",
+                "type": "url",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "50",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "placeholder": ""
+            },
+            {
+                "key": "field_57c82396297f2",
+                "label": "Apple Music",
+                "name": "apple_music",
+                "type": "url",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "50",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "placeholder": ""
+            },
+            {
+                "key": "field_57c823a8297f3",
+                "label": "Spotify",
+                "name": "spotify",
+                "type": "url",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "50",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "placeholder": ""
+            },
+            {
+                "key": "field_57c826af782b0",
+                "label": "Soundcloud",
+                "name": "soundcloud",
+                "type": "url",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "50",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "placeholder": ""
+            },
+            {
+                "key": "field_57c823d7297f4",
+                "label": "Deezer",
+                "name": "deezer",
+                "type": "url",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "50",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "placeholder": ""
+            },
+            {
+                "key": "field_57a9d84055156",
+                "label": "YouTube",
+                "name": "youtube",
+                "type": "repeater",
+                "instructions": "Add one or multiple YouTube links.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "collapsed": "",
+                "min": 0,
+                "max": "",
+                "layout": "block",
+                "button_label": "Add link",
+                "sub_fields": [
+                    {
+                        "key": "field_57c8153ecca56",
+                        "label": "YouTube link",
+                        "name": "youtube_link",
+                        "type": "url",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": "",
+                        "placeholder": ""
+                    }
+                ]
+            },
+            {
+                "key": "field_57a9d84955157",
+                "label": "Vimeo",
+                "name": "vimeo",
+                "type": "repeater",
+                "instructions": "Add one or multiple Vimeo links.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "collapsed": "",
+                "min": 0,
+                "max": "",
+                "layout": "block",
+                "button_label": "Add link",
+                "sub_fields": [
+                    {
+                        "key": "field_57c817b7a3395",
+                        "label": "Vimeo link",
+                        "name": "vimeo_link",
+                        "type": "url",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": "",
+                        "placeholder": ""
+                    }
+                ]
+            }
+        ],
+        "location": [
+            [
+                {
+                    "param": "post_type",
+                    "operator": "==",
+                    "value": "event"
+                }
+            ]
+        ],
+        "menu_order": 0,
+        "position": "normal",
+        "style": "default",
+        "label_placement": "top",
+        "instruction_placement": "label",
+        "hide_on_screen": "",
+        "active": 1,
+        "description": ""
+    },
+    {
         "key": "group_57c94757c2169",
         "title": "Package",
         "fields": [
@@ -331,7 +1822,7 @@
                     {
                         "key": "field_5818498949eab",
                         "label": "Min persons",
-                        "name": "min_persones",
+                        "name": "min_persons",
                         "type": "number",
                         "instructions": "Minimum number of people.",
                         "required": 1,

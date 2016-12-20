@@ -583,8 +583,10 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
     public function importCbisWarning()
     {
         $screen = get_current_screen();
+        $filter = (isset($_GET['filter_action'])) ? $_GET['filter_action'] : false;
+
         $optionsChecked = (get_field('import_warning', 'option') == true && get_field('cbis_daily_cron', 'option') == true) ? true : false;
-        if ($screen->post_type != 'event' || $optionsChecked != true) {
+        if ($screen->post_type != 'event' || $optionsChecked != true || $filter) {
             return;
         }
         $latestPost = get_posts("post_type=event&numberposts=1&meta_key=import_client&meta_value=cbis");

@@ -2240,7 +2240,7 @@ class AcfFields
                 array (
                     'key' => 'field_57f4f74e747a2',
                     'label' => __('Min persons', 'event-manager'),
-                    'name' => 'min_persones',
+                    'name' => 'min_persons',
                     'type' => 'number',
                     'instructions' => __('Minimum number of people.', 'event-manager'),
                     'required' => 1,
