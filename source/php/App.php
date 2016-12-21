@@ -26,13 +26,9 @@ class App
             remove_action('wp_scheduled_delete', 'wp_scheduled_delete');
         });
 
-        //Activations hooks
-        register_activation_hook(plugin_basename(__FILE__), '\HbgEventImporter\App::addCronJob');
-        register_deactivation_hook(plugin_basename(__FILE__), '\HbgEventImporter\App::removeCronJob');
-
         //Json load files
         //Remove filter acfJsonLoadPath if load ACF fields with PHP.
-        //add_filter('acf/settings/load_json', array($this, 'acfJsonLoadPath'));
+        add_filter('acf/settings/load_json', array($this, 'acfJsonLoadPath'));
         add_action('acf/init', array($this, 'acfSettings'));
         add_filter('acf/translate_field', array($this, 'acfTranslationFilter'));
 
@@ -70,6 +66,7 @@ class App
 
         //Init functions
         new Taxonomy\EventCategories();
+        new Taxonomy\EventGroups();
         new Taxonomy\EventTags();
         new Taxonomy\LocationCategories();
 
@@ -296,9 +293,9 @@ class App
     }
 
     /**
-     * Creates necessary database table on plugin activation
+     * Creates custom database table on plugin activation
      */
-    public static function database_creation()
+    public static function initDatabaseTable()
     {
         global $wpdb;
         global $event_db_version;
@@ -347,5 +344,19 @@ class App
             $field['button_label'] = acf_translate($field['button_label']);
         }
         return $field;
+    }
+
+    /**
+     * Add custom user roles
+     * @return void
+     */
+    public static function initUserRoles() {
+    add_role('event_contributor', 'Event contributor', array(
+            'read' => true,
+            'edit_posts' => true,
+            'delete_posts' => true,
+            'edit_published_posts' => false,
+            'upload_files' => true,
+            ));
     }
 }

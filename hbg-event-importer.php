@@ -5,7 +5,7 @@
  * Plugin URI:        http://github.com/helsingborg-stad/api-event-manager/
  * Description:       Manage events locally, and import from XCAP & CBIS.
  * Version:           1.0.0
- * Author:            Kristoffer Svanmark, Sebastian Thulin, Tommy Morberg
+ * Author:            Kristoffer Svanmark, Sebastian Thulin, Tommy Morberg, Jonatan Hanson
  * Author URI:        http://www.helsingborg.se
  * License:           MIT
  * License URI:       https://opensource.org/licenses/MIT
@@ -43,8 +43,12 @@ $loader->addPrefix('HbgEventImporter', HBGEVENTIMPORTER_PATH);
 $loader->addPrefix('HbgEventImporter', HBGEVENTIMPORTER_PATH . 'source/php/');
 $loader->register();
 
+// Activation / deactivation hooks
+register_activation_hook(plugin_basename(__FILE__), '\HbgEventImporter\App::addCronJob');
+register_deactivation_hook(plugin_basename(__FILE__), '\HbgEventImporter\App::removeCronJob');
+register_activation_hook(plugin_basename(__FILE__), '\HbgEventImporter\App::initUserRoles');
 // Create necessary database tables when plugin is activated
-register_activation_hook(plugin_basename(__FILE__), '\HbgEventImporter\App::database_creation');
+register_activation_hook(plugin_basename(__FILE__), '\HbgEventImporter\App::initDatabaseTable');
 
 // Start application
 new HbgEventImporter\App();

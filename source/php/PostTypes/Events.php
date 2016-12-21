@@ -123,6 +123,7 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
         add_filter('acf/fields/post_object/result/name=location', array($this, 'acfLocationSelect'), 10, 4);
         add_filter('acf/fields/post_object/result/name=additional_locations', array($this, 'acfLocationSelect'), 10, 4);
         add_filter('acf/fields/post_object/query', array($this, 'acfPostObjectStatus'), 10, 3);
+        add_filter('acf/fields/taxonomy/wp_list_categories/name=event_publish_groups', array($this, 'filterGroupTaxonomy'), 10, 3);
     }
 
     /**
@@ -529,9 +530,11 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
      */
     public function duplicatePostLink($actions, $post)
     {
-        $post_type = $_GET['post_type'];
-        if ($post_type == 'event' && current_user_can('edit_posts')) {
+        if (current_user_can('editor') || current_user_can('administrator')) {
+            $post_type = $_GET['post_type'];
+            if ($post_type == 'event' && current_user_can('edit_posts')) {
             $actions['duplicate'] = '<a href="admin.php?action=duplicate_post&amp;post=' . $post->ID . '" title="'.__('Create similar item', 'event-manager').'" rel="permalink" onclick="return confirm(\''.__('Are you sure you want to clone this event?', 'event-manager').'\');">'.__('Clone', 'event-manager').'</a>';
+            }
         }
         return $actions;
     }
@@ -662,5 +665,32 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
             $title .= ' (' . $address .  ')';
         }
         return $title;
+    }
+
+    /**
+     * Filter to display users group taxonomies
+     * @param  array  $args   An array of arguments passed to the wp_list_categories function
+     * @param  array  $field  An array containing all the field settings
+     * @return array  $args
+     */
+    public function filterGroupTaxonomy( $args, $field ) {
+        $current_user = wp_get_current_user();
+
+        // Return if admin or editor
+        if (current_user_can('editor') || current_user_can('administrator')) {
+            return $args;
+        }
+
+        $id = 'user_' . $current_user->ID;
+        $groups = get_field('event_user_groups', $id);
+
+        // Return the assigned groups for the user
+        if (! empty($groups) && is_array($groups)) {
+            $args['include'] = $groups;
+        } else {
+            return false;
+        }
+
+        return $args;
     }
 }
