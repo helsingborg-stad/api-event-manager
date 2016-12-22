@@ -32,9 +32,9 @@ class EventGroups
         );
 
         $capabilities = array(
-            'manage_terms' => 'edit_users',
-            'edit_terms'   => 'edit_users',
-            'delete_terms' => 'edit_users',
+            'manage_terms' => 'publish_pages',
+            'edit_terms'   => 'publish_pages',
+            'delete_terms' => 'publish_pages',
             'assign_terms' => 'read',
         );
 

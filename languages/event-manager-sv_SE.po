@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Event Manager\n"
-"POT-Creation-Date: 2016-11-23 08:18+0100\n"
-"PO-Revision-Date: 2016-11-23 08:20+0100\n"
+"POT-Creation-Date: 2016-12-22 15:51+0100\n"
+"PO-Revision-Date: 2016-12-22 15:54+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: sv\n"
@@ -411,7 +411,7 @@ msgstr "Status"
 msgid "Select if event is on schedule or not."
 msgstr "Välj om evenemanget inträffar som planerat."
 
-#: source/php/Acf/AcfFields.php:1321
+#: source/php/Acf/AcfFields.php:1321 source/php/Admin/FilterRestrictions.php:79
 msgid "Scheduled"
 msgstr "Enligt planering"
 
@@ -611,7 +611,7 @@ msgstr "Telefon"
 msgid "Organizer Email"
 msgstr "E-postadress"
 
-#: source/php/Acf/AcfFields.php:1873 source/php/App.php:193
+#: source/php/Acf/AcfFields.php:1873 source/php/App.php:190
 #: source/php/PostTypes/Contacts.php:10
 msgid "Contacts"
 msgstr "Kontakter"
@@ -726,17 +726,29 @@ msgstr "Lägg till en eller flera Vimero-länkar"
 msgid "Vimeo link"
 msgstr "Vimeo-länk"
 
-#: source/php/Acf/AcfFields.php:2624
+#: source/php/Acf/AcfFields.php:2600
+msgid "Publishing groups"
+msgstr "Publiceringsgrupper"
+
+#: source/php/Acf/AcfFields.php:2616 source/php/Taxonomy/EventGroups.php:31
+msgid "Groups"
+msgstr "Grupper"
+
+#: source/php/Acf/AcfFields.php:2619
+msgid "Select groups where the event will be published."
+msgstr "Välj en eller flera grupper där evenemanget ska publiceras."
+
+#: source/php/Acf/AcfFields.php:2662
 msgctxt "ACF"
 msgid "Settings"
 msgstr "Inställningar"
 
-#: source/php/Acf/AcfFields.php:2628
+#: source/php/Acf/AcfFields.php:2666
 msgctxt "ACF"
 msgid "Google Api key"
 msgstr "Google Api-nyckel"
 
-#: source/php/Acf/AcfFields.php:2631
+#: source/php/Acf/AcfFields.php:2669
 msgctxt "ACF"
 msgid ""
 "API-services required:<br> Google Maps JavaScript API<br> Google Maps "
@@ -745,12 +757,12 @@ msgstr ""
 "API-tjänster som krävs:<br> Google Maps JavaScript API<br> Google Maps "
 "Geocoding API<br> Google Places API Web Service."
 
-#: source/php/Acf/AcfFields.php:2647
+#: source/php/Acf/AcfFields.php:2685
 msgctxt "ACF"
 msgid "Default city"
 msgstr "Stad"
 
-#: source/php/Acf/AcfFields.php:2650
+#: source/php/Acf/AcfFields.php:2688
 msgctxt "ACF"
 msgid ""
 "If essential adress components are missing during import, this city will be "
@@ -759,67 +771,116 @@ msgstr ""
 "Om adressuppgifter saknas för en plats kommer angiven stad användas för att "
 "ge exaktare resultat."
 
-#: source/php/Acf/AcfFields.php:2666
+#: source/php/Acf/AcfFields.php:2704
 msgctxt "ACF"
 msgid "Import warning"
 msgstr "Visa varningar"
 
-#: source/php/Acf/AcfFields.php:2677
+#: source/php/Acf/AcfFields.php:2715
 msgctxt "ACF"
 msgid "Show notification if no events have been imported for a week or more."
 msgstr "Visar varning om inga evenemang har importerats senaste veckan."
 
-#: source/php/Acf/AcfFields.php:2705
-msgctxt "ACF"
+#: source/php/Acf/AcfFields.php:2743
 msgid "CBIS"
 msgstr ""
 
-#: source/php/Acf/AcfFields.php:2709
-msgctxt "ACF"
+#: source/php/Acf/AcfFields.php:2747
 msgid "API Key"
 msgstr "API-nyckel"
 
-#: source/php/Acf/AcfFields.php:2730
-msgctxt "ACF"
+#: source/php/Acf/AcfFields.php:2768
 msgid "API GeoNode Id"
 msgstr ""
 
-#: source/php/Acf/AcfFields.php:2749 source/php/Acf/AcfFields.php:2835
+#: source/php/Acf/AcfFields.php:2787 source/php/Acf/AcfFields.php:2981
+msgid "Daily import"
+msgstr "Daglig import"
+
+#: source/php/Acf/AcfFields.php:2798
+msgid "Enable daily automatic import from CBIS"
+msgstr "Daglig automatisk import från CBIS"
+
+#: source/php/Acf/AcfFields.php:2803 source/php/Acf/AcfFields.php:2997
+msgid "Post status"
+msgstr "Poststatus"
+
+#: source/php/Acf/AcfFields.php:2806 source/php/Acf/AcfFields.php:3000
+msgid "Select status of imported events."
+msgstr "Välj status för importerade evenemang."
+
+#: source/php/Acf/AcfFields.php:2815 source/php/Acf/AcfFields.php:3009
+#: source/php/Admin/FilterRestrictions.php:80
+msgid "Draft"
+msgstr "Utkast"
+
+#: source/php/Acf/AcfFields.php:2816 source/php/Acf/AcfFields.php:3010
+#: source/php/Admin/FilterRestrictions.php:76
+msgid "Published"
+msgstr "Publicerad"
+
+#: source/php/Acf/AcfFields.php:2827 source/php/Acf/AcfFields.php:3021
+msgid "Exclude categories"
+msgstr "Uteslut kategorier"
+
+#: source/php/Acf/AcfFields.php:2830 source/php/Acf/AcfFields.php:3024
+msgid ""
+"Enter the name of the categories that you want to exclude from the import. "
+"Separate with commas."
+msgstr ""
+"Skriv namnet på de kategorier ni vill utesluta från import. Separera med "
+"kommatecken."
+
+#: source/php/Acf/AcfFields.php:2846 source/php/Acf/AcfFields.php:3040
+msgid "Default publishing groups"
+msgstr "Förvalda publiceringsgrupper"
+
+#: source/php/Acf/AcfFields.php:2849 source/php/Acf/AcfFields.php:3043
+msgid ""
+"Select the groups that you want to set as default for all imported events."
+msgstr "Välj en eller flera grupper som importerade evenemang ska tillhöra."
+
+#: source/php/Acf/AcfFields.php:2891
+msgctxt "ACF"
+msgid "Xcap (Mittkulturkort.se)"
+msgstr ""
+
+#: source/php/Acf/AcfFields.php:2895
 msgctxt "ACF"
 msgid "Daily import"
 msgstr "Daglig import"
 
-#: source/php/Acf/AcfFields.php:2760
+#: source/php/Acf/AcfFields.php:2906
 msgctxt "ACF"
-msgid "Enable daily automatic import from CBIS"
-msgstr "Daglig automatisk import från CBIS"
+msgid "Enable daily automatic import from XCAP"
+msgstr "Daglig automatisk import från XCAP"
 
-#: source/php/Acf/AcfFields.php:2765 source/php/Acf/AcfFields.php:2851
+#: source/php/Acf/AcfFields.php:2911
 msgctxt "ACF"
 msgid "Post status"
 msgstr "Poststatus"
 
-#: source/php/Acf/AcfFields.php:2768 source/php/Acf/AcfFields.php:2854
+#: source/php/Acf/AcfFields.php:2914
 msgctxt "ACF"
 msgid "Select status of imported events."
 msgstr "Välj status för importerade evenemang."
 
-#: source/php/Acf/AcfFields.php:2777 source/php/Acf/AcfFields.php:2863
+#: source/php/Acf/AcfFields.php:2923
 msgctxt "ACF"
 msgid "Draft"
 msgstr "Utkast"
 
-#: source/php/Acf/AcfFields.php:2778 source/php/Acf/AcfFields.php:2864
+#: source/php/Acf/AcfFields.php:2924
 msgctxt "ACF"
 msgid "Publish"
 msgstr "Publicerad"
 
-#: source/php/Acf/AcfFields.php:2789 source/php/Acf/AcfFields.php:2875
+#: source/php/Acf/AcfFields.php:2935
 msgctxt "ACF"
 msgid "Exclude categories"
 msgstr "Uteslut kategorier"
 
-#: source/php/Acf/AcfFields.php:2792 source/php/Acf/AcfFields.php:2878
+#: source/php/Acf/AcfFields.php:2938
 msgctxt "ACF"
 msgid ""
 "Enter the name of the categories that you want to exclude from the import. "
@@ -828,43 +889,57 @@ msgstr ""
 "Skriv namnet på de kategorier ni vill utesluta från import. Separera med "
 "kommatecken."
 
-#: source/php/Acf/AcfFields.php:2831
-msgctxt "ACF"
+#: source/php/Acf/AcfFields.php:2977
 msgid "Xcap (Mittkulturkort.se)"
 msgstr ""
 
-#: source/php/Acf/AcfFields.php:2846
-msgctxt "ACF"
+#: source/php/Acf/AcfFields.php:2992
 msgid "Enable daily automatic import from XCAP"
 msgstr "Daglig automatisk import från XCAP"
 
-#: source/php/Admin/FilterRestrictions.php:28
+#: source/php/Admin/FilterRestrictions.php:75
+msgid "All"
+msgstr "Alla"
+
+#: source/php/Admin/FilterRestrictions.php:77
+msgid "Private"
+msgstr "Privat"
+
+#: source/php/Admin/FilterRestrictions.php:78
+msgid "Pending Review"
+msgstr "Inväntar granskning"
+
+#: source/php/Admin/FilterRestrictions.php:81
+msgid "Trash"
+msgstr "Papperskorg"
+
+#: source/php/Admin/FilterRestrictions.php:152
 #: source/php/Taxonomy/EventCategories.php:19
 #: source/php/Taxonomy/LocationCategories.php:19
 msgid "All categories"
 msgstr "Alla kategorier"
 
-#: source/php/Admin/FilterRestrictions.php:57
+#: source/php/Admin/FilterRestrictions.php:181
 msgid "Time interval"
 msgstr "Tidsperiod"
 
-#: source/php/Admin/FilterRestrictions.php:58
+#: source/php/Admin/FilterRestrictions.php:182
 msgid "Today"
 msgstr "Idag"
 
-#: source/php/Admin/FilterRestrictions.php:59
+#: source/php/Admin/FilterRestrictions.php:183
 msgid "Tomorrow"
 msgstr "I morgon"
 
-#: source/php/Admin/FilterRestrictions.php:60
+#: source/php/Admin/FilterRestrictions.php:184
 msgid "This week"
 msgstr "Denna veckan"
 
-#: source/php/Admin/FilterRestrictions.php:61
+#: source/php/Admin/FilterRestrictions.php:185
 msgid "This month"
 msgstr "Denna månaden"
 
-#: source/php/Admin/FilterRestrictions.php:62
+#: source/php/Admin/FilterRestrictions.php:186
 msgid "Passed events"
 msgstr "Passerade evenemang"
 
@@ -886,95 +961,95 @@ msgstr ""
 "Vänligen ladda upp bilder som är så stora som möjligt och som kan beskäras "
 "utan att förstöra det bilden vill förmedla (t.ex. bilder med text)."
 
-#: source/php/App.php:182
+#: source/php/App.php:179
 msgid "Title is missing"
 msgstr "Titel saknas"
 
-#: source/php/App.php:183
+#: source/php/App.php:180
 msgid "Create new contact"
 msgstr "Skapa ny kontakt"
 
-#: source/php/App.php:184
+#: source/php/App.php:181
 msgid "Create new sponsor"
 msgstr "Skapa ny sponsor"
 
-#: source/php/App.php:185
+#: source/php/App.php:182
 msgid "Create new location"
 msgstr "Skapa ny plats"
 
-#: source/php/App.php:186
+#: source/php/App.php:183
 msgid "Create new membership card"
 msgstr "Skapa nytt medlemskort"
 
-#: source/php/App.php:187
+#: source/php/App.php:184
 msgid "Close"
 msgstr "Stäng"
 
-#: source/php/App.php:188
+#: source/php/App.php:185
 msgid "Add images"
 msgstr "Lägg till bilder"
 
-#: source/php/App.php:189
+#: source/php/App.php:186
 msgid "Similar posts"
 msgstr "Liknande inlägg"
 
-#: source/php/App.php:190
+#: source/php/App.php:187
 msgid "New data imported or updated"
 msgstr "Importerad eller uppdaterad data"
 
-#: source/php/App.php:191
+#: source/php/App.php:188
 msgid "Events"
 msgstr "Evenemang"
 
-#: source/php/App.php:192 source/php/PostTypes/Locations.php:12
+#: source/php/App.php:189 source/php/PostTypes/Locations.php:12
 msgid "Locations"
 msgstr "Platser"
 
-#: source/php/App.php:194
+#: source/php/App.php:191
 msgid "Time until reload"
 msgstr "Laddar om sidan"
 
-#: source/php/App.php:195
+#: source/php/App.php:192
 msgid "Loading"
 msgstr "Hämtar"
 
-#: source/php/App.php:196
+#: source/php/App.php:193
 msgid "Choose time"
 msgstr "Välj tidpunkt"
 
-#: source/php/App.php:197
+#: source/php/App.php:194
 msgid "Time"
 msgstr "Tid"
 
-#: source/php/App.php:198
+#: source/php/App.php:195
 msgid "Hour"
 msgstr "Timme"
 
-#: source/php/App.php:199
+#: source/php/App.php:196
 msgid "Minute"
 msgstr "Minut"
 
-#: source/php/App.php:200
+#: source/php/App.php:197
 msgid "Done"
 msgstr "Klar"
 
-#: source/php/App.php:201
+#: source/php/App.php:198
 msgid "Now"
 msgstr "Nu"
 
-#: source/php/App.php:215 source/php/App.php:216
+#: source/php/App.php:212 source/php/App.php:213
 msgid "Import events"
 msgstr "Importera evenemang"
 
-#: source/php/App.php:226 source/php/App.php:227 source/php/App.php:237
+#: source/php/App.php:223 source/php/App.php:224 source/php/App.php:234
 msgid "Import CBIS events"
 msgstr "Importera CBIS evenemang"
 
-#: source/php/App.php:236 source/php/PostTypes/Locations.php:130
+#: source/php/App.php:233 source/php/PostTypes/Locations.php:130
 msgid "Import CBIS locations"
 msgstr "Importera CBIS platser"
 
-#: source/php/App.php:246 source/php/App.php:247
+#: source/php/App.php:243 source/php/App.php:244
 msgid "Delete all events"
 msgstr "Ta bort alla evenemang"
 
@@ -1111,63 +1186,63 @@ msgstr "Godkänn"
 msgid "Deny"
 msgstr "Neka"
 
-#: source/php/PostTypes/Events.php:266 source/php/PostTypes/Events.php:404
+#: source/php/PostTypes/Events.php:267 source/php/PostTypes/Events.php:405
 msgid "End date must be after start date"
 msgstr "Slutdatum får inte vara före eller lika med startdatum"
 
-#: source/php/PostTypes/Events.php:290
+#: source/php/PostTypes/Events.php:291
 msgid "Door time cannot be after start date"
 msgstr "Dörrtid får inte vara efter starttid"
 
-#: source/php/PostTypes/Events.php:311
+#: source/php/PostTypes/Events.php:312
 msgid "Please add occasion or recurrence rule"
 msgstr "Vänligen lägg till tidpunkt för evenemanget"
 
-#: source/php/PostTypes/Events.php:332
+#: source/php/PostTypes/Events.php:333
 msgid "Not a valid number"
 msgstr "Inte ett giltigt tal"
 
-#: source/php/PostTypes/Events.php:356
+#: source/php/PostTypes/Events.php:357
 msgid "End time must be after start time"
 msgstr "Sluttid får inte vara före starttid"
 
-#: source/php/PostTypes/Events.php:380
+#: source/php/PostTypes/Events.php:381
 msgid "Door time cannot be after start time"
 msgstr "Dörrtid får inte vara efter starttid"
 
-#: source/php/PostTypes/Events.php:441
+#: source/php/PostTypes/Events.php:442
 msgid "Import XCAP"
 msgstr "Importera XCAP"
 
-#: source/php/PostTypes/Events.php:442
+#: source/php/PostTypes/Events.php:443
 msgid "Import CBIS"
 msgstr "Importera CBIS"
 
-#: source/php/PostTypes/Events.php:443
+#: source/php/PostTypes/Events.php:444
 msgid "Collect event timestamps"
 msgstr "Spara tidsstämplar"
 
-#: source/php/PostTypes/Events.php:456
+#: source/php/PostTypes/Events.php:457
 msgid "No post to duplicate has been supplied!"
 msgstr "Post att duplicera saknas!"
 
-#: source/php/PostTypes/Events.php:520
+#: source/php/PostTypes/Events.php:521
 msgid "Event creation failed, could not find original event"
 msgstr "Dupliceringen misslyckades, kunde inte hitta originalevenemanget"
 
-#: source/php/PostTypes/Events.php:534
+#: source/php/PostTypes/Events.php:536
 msgid "Create similar item"
 msgstr "Skapa ett liknande evenemang"
 
-#: source/php/PostTypes/Events.php:534
+#: source/php/PostTypes/Events.php:536
 msgid "Are you sure you want to clone this event?"
 msgstr "Är du säker på att du vill skapa en dubblett av evenemanget?"
 
-#: source/php/PostTypes/Events.php:534
+#: source/php/PostTypes/Events.php:536
 msgid "Clone"
 msgstr "Duplicera"
 
-#: source/php/PostTypes/Events.php:549
+#: source/php/PostTypes/Events.php:552
 #, php-format
 msgid ""
 "This is a duplicate of the event: %s. If this is a new occasion for the same "
@@ -1177,11 +1252,11 @@ msgstr ""
 "tidpunkt för ett redan existerande evenemang, vänligen %s och publicera "
 "originalversionen."
 
-#: source/php/PostTypes/Events.php:549
+#: source/php/PostTypes/Events.php:552
 msgid "edit"
 msgstr "uppdatera"
 
-#: source/php/PostTypes/Events.php:573
+#: source/php/PostTypes/Events.php:576
 msgid ""
 "Please do not enter information that refers to information in another text "
 "field. It is not certain that all fields will be presented to the consumer "
@@ -1191,7 +1266,7 @@ msgstr ""
 "textfält. Det är inte säkert att alla fält kommer att presenteras för "
 "konsumenten och kan därför bli missledande."
 
-#: source/php/PostTypes/Events.php:596
+#: source/php/PostTypes/Events.php:602
 msgid ""
 "CBIS have not imported any events for atleast 7 days. Please control the "
 "importer."
@@ -1199,7 +1274,7 @@ msgstr ""
 "Inga evenemang från CBIS har importerats de senaste 7 dagarna. Vänligen "
 "kontrollera inställningarna och importen."
 
-#: source/php/PostTypes/Events.php:619
+#: source/php/PostTypes/Events.php:627
 msgid ""
 "XCAP have not imported any events for atleast 7 days. Please control the "
 "importer."
@@ -1301,6 +1376,69 @@ msgstr "Välj bland de mest använda kategorierna"
 msgid "Categories"
 msgstr "Kategorier"
 
+#: source/php/Taxonomy/EventGroups.php:18
+msgctxt "Taxonomy plural name"
+msgid "Groups"
+msgstr "Grupper"
+
+#: source/php/Taxonomy/EventGroups.php:19
+msgctxt "Taxonomy singular name"
+msgid "Group"
+msgstr "Grupp"
+
+#: source/php/Taxonomy/EventGroups.php:20
+msgid "Search groups"
+msgstr "Sök grupper"
+
+#: source/php/Taxonomy/EventGroups.php:21
+msgid "Popular groups"
+msgstr "Populära grupper"
+
+#: source/php/Taxonomy/EventGroups.php:22
+msgid "All groups"
+msgstr "Alla grupper"
+
+#: source/php/Taxonomy/EventGroups.php:23
+#: source/php/Taxonomy/EventGroups.php:24
+msgid "Parent group"
+msgstr "Föräldergrupp"
+
+#: source/php/Taxonomy/EventGroups.php:25
+msgid "Edit group"
+msgstr "Ändra grupp"
+
+#: source/php/Taxonomy/EventGroups.php:26
+msgid "Update group"
+msgstr "Uppdatera grupp"
+
+#: source/php/Taxonomy/EventGroups.php:27
+msgid "Add new group"
+msgstr "Lägg till ny grupp"
+
+#: source/php/Taxonomy/EventGroups.php:28
+msgid "New group"
+msgstr "Ny grupp"
+
+#: source/php/Taxonomy/EventGroups.php:29
+msgid "Add or remove groups"
+msgstr "Lägg till eller ta bort grupper"
+
+#: source/php/Taxonomy/EventGroups.php:30
+msgid "Choose from most used groups"
+msgstr "Välj från de mest använda grupperna"
+
+#: source/php/Taxonomy/EventGroups.php:73
+msgid "Event publishing groups"
+msgstr "Publiceringsgrupper"
+
+#: source/php/Taxonomy/EventGroups.php:76
+msgid "Assigned groups"
+msgstr "Dina grupper"
+
+#: source/php/Taxonomy/EventGroups.php:87
+msgid "There are no groups assigned to your account."
+msgstr "Du ingår inte i någon grupp."
+
 #: source/php/Taxonomy/EventTags.php:15
 msgctxt "Taxonomy plural name"
 msgid "Tags"
@@ -1378,12 +1516,20 @@ msgid "Manage events locally, and import from XCAP & CBIS."
 msgstr ""
 
 #. Author of the plugin/theme
-msgid "Kristoffer Svanmark, Sebastian Thulin, Tommy Morberg"
+msgid "Kristoffer Svanmark, Sebastian Thulin, Tommy Morberg, Jonatan Hanson"
 msgstr ""
 
 #. Author URI of the plugin/theme
 msgid "http://www.helsingborg.se"
 msgstr ""
+
+#~ msgctxt "ACF"
+#~ msgid "API Key"
+#~ msgstr "API-nyckel"
+
+#~ msgctxt "ACF"
+#~ msgid "Enable daily automatic import from CBIS"
+#~ msgstr "Daglig automatisk import från CBIS"
 
 #~ msgctxt "ACF"
 #~ msgid ""

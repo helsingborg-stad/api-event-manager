@@ -123,7 +123,7 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
         add_filter('acf/fields/post_object/result/name=location', array($this, 'acfLocationSelect'), 10, 4);
         add_filter('acf/fields/post_object/result/name=additional_locations', array($this, 'acfLocationSelect'), 10, 4);
         add_filter('acf/fields/post_object/query', array($this, 'acfPostObjectStatus'), 10, 3);
-        add_filter('acf/fields/taxonomy/wp_list_categories/name=event_publish_groups', array($this, 'filterGroupTaxonomy'), 10, 3);
+        add_filter('acf/fields/taxonomy/wp_list_categories/name=event_publishing_groups', array($this, 'filterGroupTaxonomy'), 10, 3);
     }
 
     /**
@@ -586,10 +586,11 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
     public function importCbisWarning()
     {
         $screen = get_current_screen();
+        $current_user = wp_get_current_user();
         $filter = (isset($_GET['filter_action'])) ? $_GET['filter_action'] : false;
 
         $optionsChecked = (get_field('import_warning', 'option') == true && get_field('cbis_daily_cron', 'option') == true) ? true : false;
-        if ($screen->post_type != 'event' || $optionsChecked != true || $filter) {
+        if ($screen->post_type != 'event' || $optionsChecked != true || $filter || ! current_user_can('administrator')) {
             return;
         }
         $latestPost = get_posts("post_type=event&numberposts=1&meta_key=import_client&meta_value=cbis");
@@ -602,7 +603,6 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
         ?></p>
         </div>
         <?php
-
     }
 
     /**
@@ -611,8 +611,11 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
     public function importXcapWarning()
     {
         $screen = get_current_screen();
+        $current_user = wp_get_current_user();
+        $filter = (isset($_GET['filter_action'])) ? $_GET['filter_action'] : false;
+
         $optionsChecked = (get_field('import_warning', 'option') == true && get_field('xcap_daily_cron', 'option') == true) ? true : false;
-        if ($screen->post_type != 'event' || $optionsChecked != true) {
+        if ($screen->post_type != 'event' || $optionsChecked != true || $filter || ! current_user_can('administrator')) {
             return;
         }
         $latestPost = get_posts("post_type=event&numberposts=1&meta_key=import_client&meta_value=xcap");
@@ -625,7 +628,6 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
         ?></p>
         </div>
         <?php
-
     }
 
     /**

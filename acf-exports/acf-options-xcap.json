@@ -33,7 +33,7 @@
                 },
                 "choices": {
                     "draft": "Draft",
-                    "publish": "Publicerad"
+                    "publish": "Published"
                 },
                 "allow_null": 0,
                 "other_choice": 0,
@@ -60,6 +60,28 @@
                 "prepend": "",
                 "append": "",
                 "maxlength": ""
+            },
+            {
+                "key": "field_585bd2005cea7",
+                "label": "Default publishing groups",
+                "name": "xcap_publishing_groups",
+                "type": "taxonomy",
+                "instructions": "Select the groups that you want to set as default for all imported events.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "taxonomy": "event_groups",
+                "field_type": "checkbox",
+                "allow_null": 0,
+                "add_term": 0,
+                "save_terms": 1,
+                "load_terms": 0,
+                "return_format": "id",
+                "multiple": 0
             }
         ],
         "location": [

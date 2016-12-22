@@ -127,8 +127,8 @@ class CBIS extends \HbgEventImporter\Parser
         $cbisId = intval(get_option('options_cbis_api_id'));
         $cbisCategory = 14086;
 
-        $defaultLocation = get_field('default_city', 'option') ? get_field('default_city', 'option') : null;
         $postStatus = get_field('cbis_post_status', 'option') ? get_field('cbis_post_status', 'option') : 'publish';
+        $publishGroups = get_field('cbis_publishing_groups', 'option') ? get_field('cbis_publishing_groups', 'option') : null;
 
         if (!isset($cbisKey) || empty($cbisKey) || !isset($cbisId) || empty($cbisId)) {
             throw new \Exception('Needed authorization information (CBIS API id and/or CBIS API key) is missing.');
@@ -184,7 +184,7 @@ class CBIS extends \HbgEventImporter\Parser
         });
 
         foreach ($filteredProducts as $key => $eventData) {
-            $this->saveEvent($eventData, $postStatus);
+            $this->saveEvent($eventData, $postStatus, $publishGroups);
         }
     }
 
@@ -294,7 +294,7 @@ class CBIS extends \HbgEventImporter\Parser
      * @param  object $eventData  Event data
      * @return void
      */
-    public function saveEvent($eventData, $postStatus)
+    public function saveEvent($eventData, $postStatus, $publishGroups)
     {
         $attributes = $this->getAttributes($eventData);
         $categories = $this->getCategories($eventData);
@@ -429,31 +429,32 @@ class CBIS extends \HbgEventImporter\Parser
             // Creates the event object
             $event = new Event(
                 array(
-                    'post_title'            => $newPostTitle,
-                    'post_content'          => $postContent,
-                    'post_status'           => $postStatus
+                    'post_title'              => $newPostTitle,
+                    'post_content'            => $postContent,
+                    'post_status'             => $postStatus
                 ),
                 array(
-                    'uniqueId'              => 'cbis-' . $eventData->Id,
-                    '_event_manager_uid'    => 'cbis-' . $eventData->Id,
-                    'sync'                  => true,
-                    'status'                => isset($eventData->Status) && !empty($eventData->Status) ? $eventData->Status : null,
-                    'image'                 => $newImage,
-                    'alternate_name'        => isset($eventData->SystemName) && !empty($eventData->SystemName) ? $eventData->SystemName : null,
-                    'event_link'            => $this->getAttributeValue(self::ATTRIBUTE_EVENT_LINK, $attributes),
-                    'categories'            => $categories,
-                    'occasions'             => $occasions,
-                    'location'              => !is_null($locationId) ? $locationId : null,
-                    'organizers'            => $organizers,
-                    'booking_link'          => $this->getAttributeValue(self::ATTRIBUTE_BOOKING_LINK, $attributes),
-                    'booking_phone'         => $this->getAttributeValue(self::ATTRIBUTE_BOOKING_PHONE_NUMBER, $attributes),
-                    'age_restriction'       => $this->getAttributeValue(self::ATTRIBUTE_AGE_RESTRICTION, $attributes),
-                    'price_information'     => $this->getAttributeValue(self::ATTRIBUTE_PRICE_INFORMATION, $attributes),
-                    'price_adult'           => $this->getAttributeValue(self::ATTRIBUTE_PRICE_ADULT, $attributes),
-                    'price_children'        => $this->getAttributeValue(self::ATTRIBUTE_PRICE_CHILD, $attributes),
-                    'accepted'              => $accepted,
-                    'import_client'         => 'cbis',
-                    'imported_event'        => true
+                    'uniqueId'                => 'cbis-' . $eventData->Id,
+                    '_event_manager_uid'      => 'cbis-' . $eventData->Id,
+                    'sync'                    => true,
+                    'status'                  => isset($eventData->Status) && !empty($eventData->Status) ? $eventData->Status : null,
+                    'image'                   => $newImage,
+                    'alternate_name'          => isset($eventData->SystemName) && !empty($eventData->SystemName) ? $eventData->SystemName : null,
+                    'event_link'              => $this->getAttributeValue(self::ATTRIBUTE_EVENT_LINK, $attributes),
+                    'categories'              => $categories,
+                    'occasions'               => $occasions,
+                    'location'                => !is_null($locationId) ? $locationId : null,
+                    'organizers'              => $organizers,
+                    'booking_link'            => $this->getAttributeValue(self::ATTRIBUTE_BOOKING_LINK, $attributes),
+                    'booking_phone'           => $this->getAttributeValue(self::ATTRIBUTE_BOOKING_PHONE_NUMBER, $attributes),
+                    'age_restriction'         => $this->getAttributeValue(self::ATTRIBUTE_AGE_RESTRICTION, $attributes),
+                    'price_information'       => $this->getAttributeValue(self::ATTRIBUTE_PRICE_INFORMATION, $attributes),
+                    'price_adult'             => $this->getAttributeValue(self::ATTRIBUTE_PRICE_ADULT, $attributes),
+                    'price_children'          => $this->getAttributeValue(self::ATTRIBUTE_PRICE_CHILD, $attributes),
+                    'accepted'                => $accepted,
+                    'import_client'           => 'cbis',
+                    'imported_event'          => true,
+                    'event_publishing_groups' => $publishGroups
                 )
             );
 

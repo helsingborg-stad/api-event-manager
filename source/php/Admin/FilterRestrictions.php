@@ -15,6 +15,130 @@ class FilterRestrictions
         add_filter('parse_query', array($this, 'applyCategoryRestriction'), 100);
         add_action('restrict_manage_posts', array($this, 'restrictEventsByInterval'), 100);
         add_action('pre_get_posts', array($this, 'applyIntervalRestriction'), 100);
+
+        add_action('pre_get_posts', array($this, 'filterEventsByGroups'), 100);
+    }
+
+
+
+    /**
+     * Filter event list by users publishing groups
+     * @param  object $query object WP Query
+     */
+    public function filterEventsByGroups($query) {
+
+        //Note that current_user_can('edit_others_posts') check for
+        //capability_type like posts, custom capabilities may be defined for custom posts
+        if( is_admin() && ! current_user_can('edit_others_posts') && $query->is_main_query() ) {
+
+
+        $id = 'user_' . get_current_user_id();
+        $groups = get_field('event_user_groups', $id);
+
+        if (! empty($groups) && is_array($groups)) {
+            $taxquery = array(
+                array(
+                    'taxonomy' => 'event_groups',
+                    'field' => 'id',
+                    'terms' => $groups,
+                    'operator'=> 'IN'
+                )
+            );
+
+            // $query->set('author', get_current_user_id());
+            // $query->set('tax_query', $taxquery);
+
+        } else {
+
+            //$query->set('author', get_current_user_id());
+
+        }
+
+        //add_filter('views_edit-event', array($this, 'updateEventCounters'));
+
+        }
+    }
+
+    /**
+     * FIXA
+     * Update event counters when filtering by publishing groups
+     * @param  [type] $views [description]
+     * @return [type]        [description]
+     */
+    public function updateEventCounters( $views ) {
+        $post_type = get_query_var('post_type');
+        $author = get_current_user_id();
+
+        // unset($views['mine']);
+
+        $new_views = array(
+                'all'       => __('All', 'event-manager'),
+                'publish'   => __('Published', 'event-manager'),
+                'private'   => __('Private', 'event-manager'),
+                'pending'   => __('Pending Review', 'event-manager'),
+                'future'    => __('Scheduled', 'event-manager'),
+                'draft'     => __('Draft', 'event-manager'),
+                'trash'     => __('Trash', 'event-manager')
+                );
+
+        foreach ($new_views as $view => $name ) {
+            $query = array(
+                'author'      => $author,
+                'post_type'   => $post_type
+            );
+
+            if($view == 'all') {
+                $query['all_posts'] = 1;
+                $class = ( get_query_var('all_posts') == 1 || get_query_var('post_status') == '' ) ? ' class="current"' : '';
+                $url_query_var = 'all_posts=1';
+
+            } else {
+                $query['post_status'] = $view;
+                $class = ( get_query_var('post_status') == $view ) ? ' class="current"' : '';
+                $url_query_var = 'post_status='.$view;
+            }
+
+            $result = new \WP_Query($query);
+            if($result->found_posts > 0) {
+
+                $views[$view] = sprintf(
+                    '<a href="%s"'. $class .'>'.__($name).' <span class="count">(%d)</span></a>',
+                    admin_url('edit.php?'.$url_query_var.'&post_type='.$post_type),
+                    $result->found_posts
+                );
+
+            } else {
+                unset($views[$view]);
+            }
+        }
+
+        return $views;
+    }
+
+
+
+
+
+
+
+
+
+
+
+    function filter_posts_list($query)
+    {
+        //$pagenow holds the name of the current page being viewed
+         global $pagenow, $typenow;
+
+        //$current_user uses the get_currentuserinfo() method to get the currently logged in user's data
+         global $current_user;
+
+            //Shouldn't happen for the admin, but for any role with the edit_posts capability and only on the posts list page, that is edit.php
+            if(! current_user_can('administrator') && current_user_can('edit_posts') && ('edit.php' == $pagenow) && $typenow == 'event') {
+                echo "string";
+                //global $query's set() method for setting the author as the current user's id
+                $query->set('author', $current_user->ID);
+            }
     }
 
     public function restrictEventsByCategory()

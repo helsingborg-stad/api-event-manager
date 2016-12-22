@@ -56,6 +56,8 @@ class Xcap extends \HbgEventImporter\Parser
         $defaultLocation = get_field('default_city', 'option') ? get_field('default_city', 'option') : null;
         $city = ($location != null) ? $location : $defaultLocation;
         $postStatus = get_field('xcap_post_status', 'option') ? get_field('xcap_post_status', 'option') : 'publish';
+        $publish_groups = get_field('xcap_publishing_groups', 'option') ? get_field('xcap_publishing_groups', 'option') : null;
+
         $image = null;
         if (isset($eventData->{'x-xcap-wideimageid'}) && !empty($eventData->{'x-xcap-wideimageid'}) && $eventData->{'x-xcap-wideimageid'} != 'null') {
             $image = $eventData->{'x-xcap-wideimageid'};
@@ -133,31 +135,32 @@ class Xcap extends \HbgEventImporter\Parser
             // Creates the event object
             $event = new Event(
                 array(
-                    'post_title'            => $newPostTitle,
-                    'post_content'          => $postContent,
-                    'post_status'           => $postStatus,
+                    'post_title'              => $newPostTitle,
+                    'post_content'            => $postContent,
+                    'post_status'             => $postStatus,
                 ),
                 array(
-                    'uniqueId'              => $eventData->uid,
-                    '_event_manager_uid'    => $eventData->uid,
-                    'sync'                  => true,
-                    'status'                => 'Active',
-                    'image'                 => !empty($image) ? $image : null,
-                    'alternate_name'        => $alternateName,
-                    'event_link'            => null,
-                    'categories'            => $categories,
-                    'occasions'             => $occasions,
-                    'location'              => $locationId != null ? $locationId : null,
-                    'organizers'            => $organizers,
-                    'booking_link'          => is_string($ticketUrl) ? $ticketUrl : null,
-                    'booking_phone'         => null,
-                    'age_restriction'       => null,
-                    'price_information'     => null,
-                    'price_adult'           => null,
-                    'price_children'        => null,
-                    'accepted'              => $accepted,
-                    'import_client'         => 'xcap',
-                    'imported_event'        => true
+                    'uniqueId'                => $eventData->uid,
+                    '_event_manager_uid'      => $eventData->uid,
+                    'sync'                    => true,
+                    'status'                  => 'Active',
+                    'image'                   => !empty($image) ? $image : null,
+                    'alternate_name'          => $alternateName,
+                    'event_link'              => null,
+                    'categories'              => $categories,
+                    'occasions'               => $occasions,
+                    'location'                => $locationId != null ? $locationId : null,
+                    'organizers'              => $organizers,
+                    'booking_link'            => is_string($ticketUrl) ? $ticketUrl : null,
+                    'booking_phone'           => null,
+                    'age_restriction'         => null,
+                    'price_information'       => null,
+                    'price_adult'             => null,
+                    'price_children'          => null,
+                    'accepted'                => $accepted,
+                    'import_client'           => 'xcap',
+                    'imported_event'          => true,
+                    'event_publishing_groups' => $publish_groups,
                 )
             );
 

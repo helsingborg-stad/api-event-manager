@@ -85,6 +85,12 @@ class App
         new Api\EventFields();
         new Api\SponsorFields();
         new Api\PackageFields();
+
+        // TA BORT
+        add_action('init', array($this, 'initUserRoles'));
+
+        // add_filter( 'editable_roles', array($this, 'editable_roles'));
+        // add_filter( 'map_meta_cap', array($this,'controll_map_meta_cap'), 10, 4 );
     }
 
     /**
@@ -351,12 +357,71 @@ class App
      * @return void
      */
     public static function initUserRoles() {
+    //remove_role( 'event_contributor' );
     add_role('event_contributor', 'Event contributor', array(
             'read' => true,
             'edit_posts' => true,
             'delete_posts' => true,
-            'edit_published_posts' => false,
+            'edit_published_posts' => true,
             'upload_files' => true,
+            'edit_others_posts' => false,
             ));
     }
+
+
+/**
+ * Helper function getting roles that the user is allowed to create/edit/delete 'TP' post.
+ *
+ * @param   WP_User $user
+ * @return  array
+ */
+function allowed_roles_to_edit_TP_post( $user ) {
+    $allowed = array();
+
+    if ( in_array( 'administrator', $user->roles ) ) { // Admin can edit all roles post
+        $allowed = array_keys( $GLOBALS['wp_roles']->roles );
+    } else if(in_array('event_contributor',$user->roles)) {
+        $allowed[] = 'event_contributor';
+    }
+    return $allowed;
+}
+
+/**
+ * Remove roles that are not allowed for the current user role.
+ */
+function editable_roles( $roles ) {
+    if ( $user = wp_get_current_user() ) {
+        $allowed = allowed_roles_to_edit_TP_post( $user );
+
+        foreach ( $roles as $role => $caps ) {
+            if ( ! in_array( $role, $allowed ) )
+                unset( $roles[ $role ] );
+        }
+    }
+
+    return $roles;
+}
+
+/**
+ * Prevent users deleting/editing users with a role outside their allowance.
+ */
+function controll_map_meta_cap( $caps, $cap, $user_ID, $args ) {
+    if ( ( $cap === 'read_cpt' || $cap === 'edit_cpt' || $cap === 'edit_others_cpt' ) && $args ) {
+        $the_user = get_userdata( $user_ID ); // The user performing the task
+        $user     = get_userdata( $args[0] ); // The user being edited/deleted
+
+        if ( $the_user && $user ) {
+            $allowed = allowed_roles_to_edit_TP_post( $the_user );
+
+            if ( array_diff( $user->roles, $allowed ) ) {
+                // Target user has roles outside of our limits
+                $caps[] = 'not_allowed';
+            }
+        }
+    }
+
+    return $caps;
+}
+
+
 }
