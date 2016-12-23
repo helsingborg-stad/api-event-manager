@@ -42,7 +42,6 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
             }
             echo '<a href="' . get_edit_post_link($locationId) . '">' . get_the_title($locationId) . '</a>';
         });
-
         $this->addTableColumn('organizer', _x('Main organizer', 'Main organizer column name', 'event-manager'), true, function ($column, $postId) {
             $value = null;
             if (have_rows('organizers')):
@@ -86,8 +85,13 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
                 $second = 'hiddenElement';
                 echo '<a href="'.get_edit_post_link($postId).'" title="'.__('This event needs to be edited before it can be published', 'event-manager').'" class="button" postid="' . $postId . '">' . __('Edit draft', 'event-manager') . '</a>';
             }
+            if (current_user_can('editor') || current_user_can('administrator')) {
             echo '<a href="#" class="accept button-primary ' . $first . '" postid="' . $postId . '">' . __('Accept', 'event-manager') . '</a>
             <a href="#" class="deny button-primary ' . $second . '" postid="' . $postId . '">' . __('Deny', 'event-manager') . '</a>';
+            } else {
+            echo '<span class="' . $first . '">' . __('Hidden', 'event-manager') . '</span>
+            <span class="' . $second . '">' . __('Published', 'event-manager') . '</span>';
+            }
         });
         $this->addTableColumn('date', __('Date', 'event-manager'));
         add_action('publish_event', array($this, 'setAcceptedOnPublish'), 10, 2);

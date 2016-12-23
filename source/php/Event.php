@@ -49,6 +49,7 @@ class Event extends \HbgEventImporter\Entity\PostManager
     public function afterSave()
     {
         $this->saveCategories();
+        $this->saveGroups();
         $this->saveOccasions();
         $this->saveTags();
         $this->saveOrganizers();
@@ -62,6 +63,15 @@ class Event extends \HbgEventImporter\Entity\PostManager
     public function saveCategories()
     {
         wp_set_object_terms($this->ID, $this->categories, 'event_categories', true);
+    }
+
+    /**
+     * Saves publishing groups as event_groups taxonomy terms
+     * @return void
+     */
+    public function saveGroups()
+    {
+        wp_set_object_terms($this->ID, $this->event_publishing_groups, 'event_groups', true);
     }
 
     /**

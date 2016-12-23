@@ -2616,9 +2616,17 @@ class AcfFields
             'label' => __('Groups', 'event-manager'),
             'name' => 'event_publishing_groups',
             'type' => 'taxonomy',
-            'instructions' => __('Select groups where the event will be published.', 'event-manager'),
-            'required' => 0,
-            'conditional_logic' => 0,
+            'instructions' => __('Select one or many groups where this event belongs to.', 'event-manager'),
+            'required' => 1,
+            'conditional_logic' => array (
+                array (
+                    array (
+                        'field' => 'field_585ce2dbc4c0e',
+                        'operator' => '!=',
+                        'value' => '1',
+                    ),
+                ),
+            ),
             'wrapper' => array (
                 'width' => '',
                 'class' => '',
@@ -2632,6 +2640,22 @@ class AcfFields
             'load_terms' => 0,
             'return_format' => 'id',
             'multiple' => 0,
+        ),
+        array (
+            'key' => 'field_585ce2dbc4c0e',
+            'label' => __('Unbelonging to group', 'event-manager'),
+            'name' => 'event_unbelonging_group',
+            'type' => 'true_false',
+            'instructions' => '',
+            'required' => 0,
+            'conditional_logic' => 0,
+            'wrapper' => array (
+                'width' => '',
+                'class' => '',
+                'id' => '',
+            ),
+            'message' => __('Check this box if the event does not belong to any publishing groups. This will make the event available all users.', 'event-manager'),
+            'default_value' => 0,
         ),
     ),
     'location' => array (

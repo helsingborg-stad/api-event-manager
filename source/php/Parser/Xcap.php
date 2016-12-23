@@ -161,6 +161,7 @@ class Xcap extends \HbgEventImporter\Parser
                     'import_client'           => 'xcap',
                     'imported_event'          => true,
                     'event_publishing_groups' => $publish_groups,
+                    'event_unbelonging_group' => $publish_groups == null ? 1 : 0,
                 )
             );
 

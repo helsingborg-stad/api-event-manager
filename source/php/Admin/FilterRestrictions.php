@@ -27,36 +27,53 @@ class FilterRestrictions
      */
     public function filterEventsByGroups($query) {
 
-        //Note that current_user_can('edit_others_posts') check for
-        //capability_type like posts, custom capabilities may be defined for custom posts
-        if( is_admin() && ! current_user_can('edit_others_posts') && $query->is_main_query() ) {
+        if (is_admin() && ! current_user_can('editor') && ! current_user_can('administrator')) {
 
+            add_filter('posts_join', array($this, 'groupFilterJoin'));
+            add_filter('posts_where', array($this, 'groupFilterWhere'), 10, 2);
+            add_filter('posts_groupby', array($this, 'groupFilterGroupBy'));
 
-        $id = 'user_' . get_current_user_id();
-        $groups = get_field('event_user_groups', $id);
-
-        if (! empty($groups) && is_array($groups)) {
-            $taxquery = array(
-                array(
-                    'taxonomy' => 'event_groups',
-                    'field' => 'id',
-                    'terms' => $groups,
-                    'operator'=> 'IN'
-                )
-            );
-
-            // $query->set('author', get_current_user_id());
-            // $query->set('tax_query', $taxquery);
-
-        } else {
-
-            //$query->set('author', get_current_user_id());
-
-        }
+            // remove_filter('posts_join', array($this, 'groupFilterJoin'));
+            // remove_filter('posts_where', array($this, 'groupFilterWhere'), 10, 2);
+            // remove_filter('posts_groupby', array($this, 'groupFilterGroupBy'));
+            return $query;
 
         //add_filter('views_edit-event', array($this, 'updateEventCounters'));
 
         }
+    }
+
+    // Join for searching metadata
+    function groupFilterJoin($join)
+    {
+        global $wp_query, $wpdb;
+        $join .= "LEFT JOIN $wpdb->postmeta ON $wpdb->posts.ID = $wpdb->postmeta.post_id ";
+        $join .= " LEFT JOIN $wpdb->term_relationships ON ($wpdb->posts.ID = $wpdb->term_relationships.object_id) ";
+        $join .= " LEFT JOIN $wpdb->term_taxonomy ON ($wpdb->term_relationships.term_taxonomy_id = $wpdb->term_taxonomy.term_taxonomy_id) ";
+
+        return $join;
+    }
+
+    function groupFilterWhere($where, $wp_query)
+    {
+        global $wpdb;
+
+        $id = get_current_user_id();
+        $groups = get_field('event_user_groups', 'user_' . $id);
+        $groups = (! empty($groups) && is_array($groups)) ? implode(', ', $groups) : false;
+
+        $where .= " AND ($wpdb->posts.post_author = $id ";
+        $where .= "OR ($wpdb->postmeta.meta_key = 'event_unbelonging_group' AND $wpdb->postmeta.meta_value = 1) ";
+        $where .= ($groups) ? " OR ($wpdb->term_taxonomy.taxonomy = 'event_groups' AND $wpdb->term_taxonomy.term_id IN($groups))" : '';
+        $where .= ") ";
+
+        return $where;
+    }
+
+    function groupFilterGroupBy($groupby) {
+        global $wpdb;
+        $groupby = "{$wpdb->posts}.ID";
+        return $groupby;
     }
 
     /**

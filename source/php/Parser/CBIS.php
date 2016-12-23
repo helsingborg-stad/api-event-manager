@@ -454,7 +454,8 @@ class CBIS extends \HbgEventImporter\Parser
                     'accepted'                => $accepted,
                     'import_client'           => 'cbis',
                     'imported_event'          => true,
-                    'event_publishing_groups' => $publishGroups
+                    'event_publishing_groups' => $publishGroups,
+                    'event_unbelonging_group' => $publishGroups == null ? 1 : 0,
                 )
             );
 
