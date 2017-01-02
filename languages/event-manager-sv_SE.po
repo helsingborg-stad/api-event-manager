@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Event Manager\n"
-"POT-Creation-Date: 2016-12-23 08:28+0100\n"
-"PO-Revision-Date: 2016-12-23 08:28+0100\n"
+"POT-Creation-Date: 2017-01-02 09:57+0100\n"
+"PO-Revision-Date: 2017-01-02 10:01+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: sv\n"
@@ -411,7 +411,7 @@ msgstr "Status"
 msgid "Select if event is on schedule or not."
 msgstr "Välj om evenemanget inträffar som planerat."
 
-#: source/php/Acf/AcfFields.php:1321 source/php/Admin/FilterRestrictions.php:79
+#: source/php/Acf/AcfFields.php:1321 source/php/Admin/FilterRestrictions.php:83
 msgid "Scheduled"
 msgstr "Enligt planering"
 
@@ -611,7 +611,7 @@ msgstr "Telefon"
 msgid "Organizer Email"
 msgstr "E-postadress"
 
-#: source/php/Acf/AcfFields.php:1873 source/php/App.php:190
+#: source/php/Acf/AcfFields.php:1873 source/php/App.php:184
 #: source/php/PostTypes/Contacts.php:10
 msgid "Contacts"
 msgstr "Kontakter"
@@ -735,20 +735,32 @@ msgid "Groups"
 msgstr "Grupper"
 
 #: source/php/Acf/AcfFields.php:2619
-msgid "Select groups where the event will be published."
-msgstr "Välj en eller flera grupper där evenemanget ska publiceras."
+msgid "Select one or many groups where this event belongs to."
+msgstr "Välj en eller flera grupper där evenemanget tillhör."
 
-#: source/php/Acf/AcfFields.php:2662
+#: source/php/Acf/AcfFields.php:2646
+msgid "Unbelonging to group"
+msgstr "Ej tillhörande grupp"
+
+#: source/php/Acf/AcfFields.php:2657
+msgid ""
+"Check this box if the event does not belong to any publishing groups. This "
+"will make the event available all users."
+msgstr ""
+"Kryssa i rutan om evenemanget inte ska tilldelas någon publiceringsgrupp. "
+"Detta gör att evenemanget blir tillgängligt för samtliga användare."
+
+#: source/php/Acf/AcfFields.php:2686
 msgctxt "ACF"
 msgid "Settings"
 msgstr "Inställningar"
 
-#: source/php/Acf/AcfFields.php:2666
+#: source/php/Acf/AcfFields.php:2690
 msgctxt "ACF"
 msgid "Google Api key"
 msgstr "Google Api-nyckel"
 
-#: source/php/Acf/AcfFields.php:2669
+#: source/php/Acf/AcfFields.php:2693
 msgctxt "ACF"
 msgid ""
 "API-services required:<br> Google Maps JavaScript API<br> Google Maps "
@@ -757,12 +769,12 @@ msgstr ""
 "API-tjänster som krävs:<br> Google Maps JavaScript API<br> Google Maps "
 "Geocoding API<br> Google Places API Web Service."
 
-#: source/php/Acf/AcfFields.php:2685
+#: source/php/Acf/AcfFields.php:2709
 msgctxt "ACF"
 msgid "Default city"
 msgstr "Stad"
 
-#: source/php/Acf/AcfFields.php:2688
+#: source/php/Acf/AcfFields.php:2712
 msgctxt "ACF"
 msgid ""
 "If essential adress components are missing during import, this city will be "
@@ -771,60 +783,60 @@ msgstr ""
 "Om adressuppgifter saknas för en plats kommer angiven stad användas för att "
 "ge exaktare resultat."
 
-#: source/php/Acf/AcfFields.php:2704
+#: source/php/Acf/AcfFields.php:2728
 msgctxt "ACF"
 msgid "Import warning"
 msgstr "Visa varningar"
 
-#: source/php/Acf/AcfFields.php:2715
+#: source/php/Acf/AcfFields.php:2739
 msgctxt "ACF"
 msgid "Show notification if no events have been imported for a week or more."
 msgstr "Visar varning om inga evenemang har importerats senaste veckan."
 
-#: source/php/Acf/AcfFields.php:2743
+#: source/php/Acf/AcfFields.php:2767
 msgid "CBIS"
 msgstr ""
 
-#: source/php/Acf/AcfFields.php:2747
+#: source/php/Acf/AcfFields.php:2771
 msgid "API Key"
 msgstr "API-nyckel"
 
-#: source/php/Acf/AcfFields.php:2768
+#: source/php/Acf/AcfFields.php:2792
 msgid "API GeoNode Id"
 msgstr ""
 
-#: source/php/Acf/AcfFields.php:2787 source/php/Acf/AcfFields.php:2981
+#: source/php/Acf/AcfFields.php:2811 source/php/Acf/AcfFields.php:3005
 msgid "Daily import"
 msgstr "Daglig import"
 
-#: source/php/Acf/AcfFields.php:2798
+#: source/php/Acf/AcfFields.php:2822
 msgid "Enable daily automatic import from CBIS"
 msgstr "Daglig automatisk import från CBIS"
 
-#: source/php/Acf/AcfFields.php:2803 source/php/Acf/AcfFields.php:2997
+#: source/php/Acf/AcfFields.php:2827 source/php/Acf/AcfFields.php:3021
 msgid "Post status"
 msgstr "Poststatus"
 
-#: source/php/Acf/AcfFields.php:2806 source/php/Acf/AcfFields.php:3000
+#: source/php/Acf/AcfFields.php:2830 source/php/Acf/AcfFields.php:3024
 msgid "Select status of imported events."
 msgstr "Välj status för importerade evenemang."
 
-#: source/php/Acf/AcfFields.php:2815 source/php/Acf/AcfFields.php:3009
-#: source/php/Admin/FilterRestrictions.php:80
+#: source/php/Acf/AcfFields.php:2839 source/php/Acf/AcfFields.php:3033
+#: source/php/Admin/FilterRestrictions.php:84
 msgid "Draft"
 msgstr "Utkast"
 
-#: source/php/Acf/AcfFields.php:2816 source/php/Acf/AcfFields.php:3010
-#: source/php/Admin/FilterRestrictions.php:76
+#: source/php/Acf/AcfFields.php:2840 source/php/Acf/AcfFields.php:3034
+#: source/php/Admin/FilterRestrictions.php:80
 #: source/php/PostTypes/Events.php:93
 msgid "Published"
 msgstr "Publicerad"
 
-#: source/php/Acf/AcfFields.php:2827 source/php/Acf/AcfFields.php:3021
+#: source/php/Acf/AcfFields.php:2851 source/php/Acf/AcfFields.php:3045
 msgid "Exclude categories"
 msgstr "Uteslut kategorier"
 
-#: source/php/Acf/AcfFields.php:2830 source/php/Acf/AcfFields.php:3024
+#: source/php/Acf/AcfFields.php:2854 source/php/Acf/AcfFields.php:3048
 msgid ""
 "Enter the name of the categories that you want to exclude from the import. "
 "Separate with commas."
@@ -832,56 +844,56 @@ msgstr ""
 "Skriv namnet på de kategorier ni vill utesluta från import. Separera med "
 "kommatecken."
 
-#: source/php/Acf/AcfFields.php:2846 source/php/Acf/AcfFields.php:3040
+#: source/php/Acf/AcfFields.php:2870 source/php/Acf/AcfFields.php:3064
 msgid "Default publishing groups"
 msgstr "Förvalda publiceringsgrupper"
 
-#: source/php/Acf/AcfFields.php:2849 source/php/Acf/AcfFields.php:3043
+#: source/php/Acf/AcfFields.php:2873 source/php/Acf/AcfFields.php:3067
 msgid ""
 "Select the groups that you want to set as default for all imported events."
 msgstr "Välj en eller flera grupper som importerade evenemang ska tillhöra."
 
-#: source/php/Acf/AcfFields.php:2891
+#: source/php/Acf/AcfFields.php:2915
 msgctxt "ACF"
 msgid "Xcap (Mittkulturkort.se)"
 msgstr ""
 
-#: source/php/Acf/AcfFields.php:2895
+#: source/php/Acf/AcfFields.php:2919
 msgctxt "ACF"
 msgid "Daily import"
 msgstr "Daglig import"
 
-#: source/php/Acf/AcfFields.php:2906
+#: source/php/Acf/AcfFields.php:2930
 msgctxt "ACF"
 msgid "Enable daily automatic import from XCAP"
 msgstr "Daglig automatisk import från XCAP"
 
-#: source/php/Acf/AcfFields.php:2911
+#: source/php/Acf/AcfFields.php:2935
 msgctxt "ACF"
 msgid "Post status"
 msgstr "Poststatus"
 
-#: source/php/Acf/AcfFields.php:2914
+#: source/php/Acf/AcfFields.php:2938
 msgctxt "ACF"
 msgid "Select status of imported events."
 msgstr "Välj status för importerade evenemang."
 
-#: source/php/Acf/AcfFields.php:2923
+#: source/php/Acf/AcfFields.php:2947
 msgctxt "ACF"
 msgid "Draft"
 msgstr "Utkast"
 
-#: source/php/Acf/AcfFields.php:2924
+#: source/php/Acf/AcfFields.php:2948
 msgctxt "ACF"
 msgid "Publish"
 msgstr "Publicerad"
 
-#: source/php/Acf/AcfFields.php:2935
+#: source/php/Acf/AcfFields.php:2959
 msgctxt "ACF"
 msgid "Exclude categories"
 msgstr "Uteslut kategorier"
 
-#: source/php/Acf/AcfFields.php:2938
+#: source/php/Acf/AcfFields.php:2962
 msgctxt "ACF"
 msgid ""
 "Enter the name of the categories that you want to exclude from the import. "
@@ -890,57 +902,57 @@ msgstr ""
 "Skriv namnet på de kategorier ni vill utesluta från import. Separera med "
 "kommatecken."
 
-#: source/php/Acf/AcfFields.php:2977
+#: source/php/Acf/AcfFields.php:3001
 msgid "Xcap (Mittkulturkort.se)"
 msgstr ""
 
-#: source/php/Acf/AcfFields.php:2992
+#: source/php/Acf/AcfFields.php:3016
 msgid "Enable daily automatic import from XCAP"
 msgstr "Daglig automatisk import från XCAP"
 
-#: source/php/Admin/FilterRestrictions.php:75
+#: source/php/Admin/FilterRestrictions.php:79
 msgid "All"
 msgstr "Alla"
 
-#: source/php/Admin/FilterRestrictions.php:77
+#: source/php/Admin/FilterRestrictions.php:81
 msgid "Private"
 msgstr "Privat"
 
-#: source/php/Admin/FilterRestrictions.php:78
+#: source/php/Admin/FilterRestrictions.php:82
 msgid "Pending Review"
 msgstr "Inväntar granskning"
 
-#: source/php/Admin/FilterRestrictions.php:81
+#: source/php/Admin/FilterRestrictions.php:85
 msgid "Trash"
 msgstr "Papperskorg"
 
-#: source/php/Admin/FilterRestrictions.php:152
+#: source/php/Admin/FilterRestrictions.php:156
 #: source/php/Taxonomy/EventCategories.php:19
 #: source/php/Taxonomy/LocationCategories.php:19
 msgid "All categories"
 msgstr "Alla kategorier"
 
-#: source/php/Admin/FilterRestrictions.php:181
+#: source/php/Admin/FilterRestrictions.php:185
 msgid "Time interval"
 msgstr "Tidsperiod"
 
-#: source/php/Admin/FilterRestrictions.php:182
+#: source/php/Admin/FilterRestrictions.php:186
 msgid "Today"
 msgstr "Idag"
 
-#: source/php/Admin/FilterRestrictions.php:183
+#: source/php/Admin/FilterRestrictions.php:187
 msgid "Tomorrow"
 msgstr "I morgon"
 
-#: source/php/Admin/FilterRestrictions.php:184
+#: source/php/Admin/FilterRestrictions.php:188
 msgid "This week"
 msgstr "Denna veckan"
 
-#: source/php/Admin/FilterRestrictions.php:185
+#: source/php/Admin/FilterRestrictions.php:189
 msgid "This month"
 msgstr "Denna månaden"
 
-#: source/php/Admin/FilterRestrictions.php:186
+#: source/php/Admin/FilterRestrictions.php:190
 msgid "Passed events"
 msgstr "Passerade evenemang"
 
@@ -962,97 +974,101 @@ msgstr ""
 "Vänligen ladda upp bilder som är så stora som möjligt och som kan beskäras "
 "utan att förstöra det bilden vill förmedla (t.ex. bilder med text)."
 
-#: source/php/App.php:179
+#: source/php/App.php:173
 msgid "Title is missing"
 msgstr "Titel saknas"
 
-#: source/php/App.php:180
+#: source/php/App.php:174
 msgid "Create new contact"
 msgstr "Skapa ny kontakt"
 
-#: source/php/App.php:181
+#: source/php/App.php:175
 msgid "Create new sponsor"
 msgstr "Skapa ny sponsor"
 
-#: source/php/App.php:182
+#: source/php/App.php:176
 msgid "Create new location"
 msgstr "Skapa ny plats"
 
-#: source/php/App.php:183
+#: source/php/App.php:177
 msgid "Create new membership card"
 msgstr "Skapa nytt medlemskort"
 
-#: source/php/App.php:184
+#: source/php/App.php:178
 msgid "Close"
 msgstr "Stäng"
 
-#: source/php/App.php:185
+#: source/php/App.php:179
 msgid "Add images"
 msgstr "Lägg till bilder"
 
-#: source/php/App.php:186
+#: source/php/App.php:180
 msgid "Similar posts"
 msgstr "Liknande inlägg"
 
-#: source/php/App.php:187
+#: source/php/App.php:181
 msgid "New data imported or updated"
 msgstr "Importerad eller uppdaterad data"
 
-#: source/php/App.php:188
+#: source/php/App.php:182
 msgid "Events"
 msgstr "Evenemang"
 
-#: source/php/App.php:189 source/php/PostTypes/Locations.php:12
+#: source/php/App.php:183 source/php/PostTypes/Locations.php:12
 msgid "Locations"
 msgstr "Platser"
 
-#: source/php/App.php:191
+#: source/php/App.php:185
 msgid "Time until reload"
 msgstr "Laddar om sidan"
 
-#: source/php/App.php:192
+#: source/php/App.php:186
 msgid "Loading"
 msgstr "Hämtar"
 
-#: source/php/App.php:193
+#: source/php/App.php:187
 msgid "Choose time"
 msgstr "Välj tidpunkt"
 
-#: source/php/App.php:194
+#: source/php/App.php:188
 msgid "Time"
 msgstr "Tid"
 
-#: source/php/App.php:195
+#: source/php/App.php:189
 msgid "Hour"
 msgstr "Timme"
 
-#: source/php/App.php:196
+#: source/php/App.php:190
 msgid "Minute"
 msgstr "Minut"
 
-#: source/php/App.php:197
+#: source/php/App.php:191
 msgid "Done"
 msgstr "Klar"
 
-#: source/php/App.php:198
+#: source/php/App.php:192
 msgid "Now"
 msgstr "Nu"
 
-#: source/php/App.php:212 source/php/App.php:213
+#: source/php/App.php:206 source/php/App.php:207
 msgid "Import events"
 msgstr "Importera evenemang"
 
-#: source/php/App.php:223 source/php/App.php:224 source/php/App.php:234
+#: source/php/App.php:217 source/php/App.php:218 source/php/App.php:228
 msgid "Import CBIS events"
 msgstr "Importera CBIS evenemang"
 
-#: source/php/App.php:233 source/php/PostTypes/Locations.php:130
+#: source/php/App.php:227 source/php/PostTypes/Locations.php:130
 msgid "Import CBIS locations"
 msgstr "Importera CBIS platser"
 
-#: source/php/App.php:243 source/php/App.php:244
+#: source/php/App.php:237 source/php/App.php:238
 msgid "Delete all events"
 msgstr "Ta bort alla evenemang"
+
+#: source/php/App.php:354
+msgid "Event contributor"
+msgstr "Evenemangshanterare"
 
 #: source/php/Entity/CustomPostType.php:60
 msgid "API-url"
@@ -1527,6 +1543,9 @@ msgstr ""
 #. Author URI of the plugin/theme
 msgid "http://www.helsingborg.se"
 msgstr ""
+
+#~ msgid "Select groups where the event will be published."
+#~ msgstr "Välj en eller flera grupper där evenemanget ska publiceras."
 
 #~ msgctxt "ACF"
 #~ msgid "API Key"

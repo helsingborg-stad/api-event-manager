@@ -59,7 +59,7 @@ class EventGroups
      * Adds a new section on user profile with the assigned groups.
      * @param object $user The user object currently being edited.
      */
-    function displayUserGroups( $user ) {
+    function displayUserGroups($user) {
 
     // Return if admin or editor
     if (current_user_can('editor') || current_user_can('administrator')) {

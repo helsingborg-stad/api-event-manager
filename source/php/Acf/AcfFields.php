@@ -2612,6 +2612,22 @@ class AcfFields
             'endpoint' => 0,
         ),
         array (
+            'key' => 'field_585ce2dbc4c0e',
+            'label' => __('Unbelonging to group', 'event-manager'),
+            'name' => 'event_unbelonging_group',
+            'type' => 'true_false',
+            'instructions' => '',
+            'required' => 0,
+            'conditional_logic' => 0,
+            'wrapper' => array (
+                'width' => '',
+                'class' => '',
+                'id' => '',
+            ),
+            'message' => __('Check this box if the event does not belong to any publishing groups. This will make the event available all users.', 'event-manager'),
+            'default_value' => 0,
+        ),
+        array (
             'key' => 'field_585b80034f199',
             'label' => __('Groups', 'event-manager'),
             'name' => 'event_publishing_groups',
@@ -2640,22 +2656,6 @@ class AcfFields
             'load_terms' => 0,
             'return_format' => 'id',
             'multiple' => 0,
-        ),
-        array (
-            'key' => 'field_585ce2dbc4c0e',
-            'label' => __('Unbelonging to group', 'event-manager'),
-            'name' => 'event_unbelonging_group',
-            'type' => 'true_false',
-            'instructions' => '',
-            'required' => 0,
-            'conditional_logic' => 0,
-            'wrapper' => array (
-                'width' => '',
-                'class' => '',
-                'id' => '',
-            ),
-            'message' => __('Check this box if the event does not belong to any publishing groups. This will make the event available all users.', 'event-manager'),
-            'default_value' => 0,
         ),
     ),
     'location' => array (
@@ -3092,6 +3092,60 @@ class AcfFields
         ),
     ),
     'menu_order' => 2,
+    'position' => 'normal',
+    'style' => 'default',
+    'label_placement' => 'top',
+    'instruction_placement' => 'label',
+    'hide_on_screen' => '',
+    'active' => 1,
+    'description' => '',
+    ));
+
+    /**
+     * User publishing groups
+     */
+    acf_add_local_field_group(array (
+    'key' => 'group_585a4624de2e9',
+    'title' => __('Publishing groups', 'event-manager'),
+    'fields' => array (
+        array (
+            'key' => 'field_585a46649ca4e',
+            'label' => __('Groups', 'event-manager'),
+            'name' => 'event_user_groups',
+            'type' => 'taxonomy',
+            'instructions' => '',
+            'required' => 1,
+            'conditional_logic' => 0,
+            'wrapper' => array (
+                'width' => '',
+                'class' => '',
+                'id' => '',
+            ),
+            'taxonomy' => 'event_groups',
+            'field_type' => 'checkbox',
+            'allow_null' => 0,
+            'add_term' => 1,
+            'save_terms' => 1,
+            'load_terms' => 0,
+            'return_format' => 'id',
+            'multiple' => 0,
+        ),
+    ),
+    'location' => array (
+        array (
+            array (
+                'param' => 'current_user_role',
+                'operator' => '==',
+                'value' => 'administrator',
+            ),
+            array (
+                'param' => 'user_form',
+                'operator' => '==',
+                'value' => 'all',
+            ),
+        ),
+    ),
+    'menu_order' => 0,
     'position' => 'normal',
     'style' => 'default',
     'label_placement' => 'top',

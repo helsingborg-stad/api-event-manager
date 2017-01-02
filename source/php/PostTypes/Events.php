@@ -31,7 +31,6 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
             )
         );
 
-        add_action('manage_posts_extra_tablenav', array($this, 'tablenavButtons'));
         $this->addTableColumn('cb', '<input type="checkbox">');
         $this->addTableColumn('title', __('Title', 'event-manager'));
         $this->addTableColumn('location', __('Location', 'event-manager'), true, function ($column, $postId) {
@@ -94,6 +93,8 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
             }
         });
         $this->addTableColumn('date', __('Date', 'event-manager'));
+        add_action('manage_posts_extra_tablenav', array($this, 'tablenavButtons'));
+        add_action('admin_menu', array($this, 'removePublishBox'));
         add_action('publish_event', array($this, 'setAcceptedOnPublish'), 10, 2);
         add_action('save_post', array($this, 'saveEventOccasions'), 10, 3);
         add_action('save_post', array($this, 'saveRecurringEvents'), 10, 3);
@@ -128,6 +129,41 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
         add_filter('acf/fields/post_object/result/name=additional_locations', array($this, 'acfLocationSelect'), 10, 4);
         add_filter('acf/fields/post_object/query', array($this, 'acfPostObjectStatus'), 10, 3);
         add_filter('acf/fields/taxonomy/wp_list_categories/name=event_publishing_groups', array($this, 'filterGroupTaxonomy'), 10, 3);
+    }
+
+
+    public function removePublishBox() {
+        if (current_user_can('editor') || current_user_can('administrator') || get_field('event_unbelonging_group') == true) {
+            return;
+        }
+
+        if (isset($_GET['post'])) {
+            $post_id = $_GET['post'];
+        } else {
+            remove_meta_box('submitdiv', $this->slug, 'side');
+        }
+
+        if (isset($post_id) && is_numeric($post_id)) {
+            $term_list = wp_get_post_terms($post_id, 'event_groups', array("fields" => "ids"));
+            //print_r($term_list);
+        }
+
+        $user_id = get_current_user_id();
+        $groups = get_field('event_user_groups', 'user_' . $user_id);
+        if (! empty($groups) && is_array($groups)) {
+
+        }
+
+        //print_r($groups);
+
+        //$term_list = wp_get_post_terms($post['ID'], 'event_groups', array("fields" => "ids"));
+        //print_r($term_list);
+
+
+        //add_action('admin_notices', array($this, 'duplicateNotice'));
+        //remove_meta_box('submitdiv', $this->slug, 'side');
+
+        //return;
     }
 
     /**
@@ -428,11 +464,11 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
      * Add buttons to start parsing xcap and Cbis
      * @return void
      */
-    public function tablenavButtons($which)
+    public function tablenavButtons()
     {
         global $current_screen;
 
-        if ($current_screen->id != 'edit-event' || $which != 'top') {
+        if ($current_screen->id != 'edit-event') {
             return;
         }
 
@@ -548,7 +584,7 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
      */
     public function duplicateNotice()
     {
-        if (!isset($_GET['duplicate'])) {
+        if (! isset($_GET['duplicate'])) {
             return;
         }
         $id = $_GET['duplicate'];

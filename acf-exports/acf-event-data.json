@@ -1487,6 +1487,22 @@
                 "endpoint": 0
             },
             {
+                "key": "field_585ce2dbc4c0e",
+                "label": "Unbelonging to group",
+                "name": "event_unbelonging_group",
+                "type": "true_false",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "message": "Check this box if the event does not belong to any publishing groups. This will make the event available all users.",
+                "default_value": 0
+            },
+            {
                 "key": "field_585b80034f199",
                 "label": "Groups",
                 "name": "event_publishing_groups",
@@ -1515,22 +1531,6 @@
                 "load_terms": 0,
                 "return_format": "id",
                 "multiple": 0
-            },
-            {
-                "key": "field_585ce2dbc4c0e",
-                "label": "Unbelonging to group",
-                "name": "event_unbelonging_group",
-                "type": "true_false",
-                "instructions": "",
-                "required": 0,
-                "conditional_logic": 0,
-                "wrapper": {
-                    "width": "",
-                    "class": "",
-                    "id": ""
-                },
-                "message": "Check this box if the event does not belong to any publishing groups. This will make the event available all users.",
-                "default_value": 0
             }
         ],
         "location": [
