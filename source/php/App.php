@@ -347,7 +347,7 @@ class App
      * @return void
      */
     public static function initUserRoles() {
-    add_role('event_contributor', __("Event contributor", "event-manager"), array(
+    add_role('event_contributor', __("Event contributor", 'event-manager'), array(
         'read' => true,
         'edit_posts' => true,
         'delete_posts' => true,

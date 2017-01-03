@@ -763,10 +763,10 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
         $empty_values = array_diff($user_groups, $new_value);
 
         // Remove empty values from post groups
-        $array = array_diff($post_groups, $empty_values);
+        $new_post_groups = array_diff($post_groups, $empty_values);
 
         // Add newly added groups to existing post groups
-        $new_array = array_merge($array, $new_value);
+        $new_array = array_merge($new_post_groups, $new_value);
 
         // Remove duplicates
         $new_array = array_unique($new_array);
