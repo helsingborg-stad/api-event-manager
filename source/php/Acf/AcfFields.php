@@ -3114,7 +3114,7 @@ class AcfFields
             'name' => 'event_user_groups',
             'type' => 'taxonomy',
             'instructions' => '',
-            'required' => 1,
+            'required' => 0,
             'conditional_logic' => 0,
             'wrapper' => array (
                 'width' => '',

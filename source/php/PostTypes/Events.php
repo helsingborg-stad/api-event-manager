@@ -85,10 +85,10 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
                 echo '<a href="'.get_edit_post_link($postId).'" title="'.__('This event needs to be edited before it can be published', 'event-manager').'" class="button" postid="' . $postId . '">' . __('Edit draft', 'event-manager') . '</a>';
             }
             if (current_user_can('editor') || current_user_can('administrator')) {
-            echo '<a href="#" class="accept button-primary ' . $first . '" postid="' . $postId . '">' . __('Accept', 'event-manager') . '</a>
+                echo '<a href="#" class="accept button-primary ' . $first . '" postid="' . $postId . '">' . __('Accept', 'event-manager') . '</a>
             <a href="#" class="deny button-primary ' . $second . '" postid="' . $postId . '">' . __('Deny', 'event-manager') . '</a>';
             } else {
-            echo '<span class="' . $first . '">' . __('Hidden', 'event-manager') . '</span>
+                echo '<span class="' . $first . '">' . __('Hidden', 'event-manager') . '</span>
             <span class="' . $second . '">' . __('Published', 'event-manager') . '</span>';
             }
         });
@@ -125,45 +125,11 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
         add_filter('acf/update_value/key=field_57f4f6dc747a1', array($this, 'acfUpdatePrices'), 10, 3);
         add_filter('acf/update_value/name=booking_phone', array($this, 'acfUpdatePhone'), 10, 3);
         add_filter('acf/update_value/key=field_57ebb45142846', array($this, 'acfUpdatePhone'), 10, 3);
+        add_filter('acf/update_value/name=event_publishing_groups', array($this, 'updatePublishGroups'), 10, 3);
         add_filter('acf/fields/post_object/result/name=location', array($this, 'acfLocationSelect'), 10, 4);
         add_filter('acf/fields/post_object/result/name=additional_locations', array($this, 'acfLocationSelect'), 10, 4);
         add_filter('acf/fields/post_object/query', array($this, 'acfPostObjectStatus'), 10, 3);
         add_filter('acf/fields/taxonomy/wp_list_categories/name=event_publishing_groups', array($this, 'filterGroupTaxonomy'), 10, 3);
-    }
-
-
-    public function removePublishBox() {
-        if (current_user_can('editor') || current_user_can('administrator') || get_field('event_unbelonging_group') == true) {
-            return;
-        }
-
-        if (isset($_GET['post'])) {
-            $post_id = $_GET['post'];
-        } else {
-            remove_meta_box('submitdiv', $this->slug, 'side');
-        }
-
-        if (isset($post_id) && is_numeric($post_id)) {
-            $term_list = wp_get_post_terms($post_id, 'event_groups', array("fields" => "ids"));
-            //print_r($term_list);
-        }
-
-        $user_id = get_current_user_id();
-        $groups = get_field('event_user_groups', 'user_' . $user_id);
-        if (! empty($groups) && is_array($groups)) {
-
-        }
-
-        //print_r($groups);
-
-        //$term_list = wp_get_post_terms($post['ID'], 'event_groups', array("fields" => "ids"));
-        //print_r($term_list);
-
-
-        //add_action('admin_notices', array($this, 'duplicateNotice'));
-        //remove_meta_box('submitdiv', $this->slug, 'side');
-
-        //return;
     }
 
     /**
@@ -183,7 +149,7 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
             $wpdb->delete($db_occasions, array( 'event' => $post_id ), array( '%d' ));
             $repeater  = 'occasions';
             $count = intval(get_post_meta($post_id, $repeater, true));
-            for ($i=0; $i<$count; $i++) {
+            for ($i=0; $i < $count; $i++) {
                 $getField   = $repeater.'_'.$i.'_'.'start_date';
                 $value1     = get_post_meta($post_id, $getField, true);
                 $timestamp  = strtotime($value1);
@@ -464,11 +430,12 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
      * Add buttons to start parsing xcap and Cbis
      * @return void
      */
-    public function tablenavButtons()
+
+    public function tablenavButtons($which)
     {
         global $current_screen;
 
-        if ($current_screen->id != 'edit-event') {
+        if ($current_screen->id != 'edit-event' || $which != 'top') {
             return;
         }
 
@@ -573,7 +540,7 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
         if (current_user_can('editor') || current_user_can('administrator')) {
             $post_type = $_GET['post_type'];
             if ($post_type == 'event' && current_user_can('edit_posts')) {
-            $actions['duplicate'] = '<a href="admin.php?action=duplicate_post&amp;post=' . $post->ID . '" title="'.__('Create similar item', 'event-manager').'" rel="permalink" onclick="return confirm(\''.__('Are you sure you want to clone this event?', 'event-manager').'\');">'.__('Clone', 'event-manager').'</a>';
+                $actions['duplicate'] = '<a href="admin.php?action=duplicate_post&amp;post=' . $post->ID . '" title="'.__('Create similar item', 'event-manager').'" rel="permalink" onclick="return confirm(\''.__('Are you sure you want to clone this event?', 'event-manager').'\');">'.__('Clone', 'event-manager').'</a>';
             }
         }
         return $actions;
@@ -643,6 +610,7 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
         ?></p>
         </div>
         <?php
+
     }
 
     /**
@@ -668,6 +636,7 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
         ?></p>
         </div>
         <?php
+
     }
 
     /**
@@ -710,16 +679,113 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
     }
 
     /**
+     * Remove submit buttons on events if user don't have access
+     * @return void
+     */
+    public function removePublishBox()
+    {
+        $post_id = (isset($_GET['post'])) ? $_GET['post'] : false;
+
+        // Return if user is admin/editor or the event don't have any publishing groups
+        if (current_user_can('administrator') || current_user_can('editor') || $post_id == false || get_field('event_unbelonging_group', $post_id) == true) {
+            return;
+        }
+
+        // Get current post object
+        $post = get_post($post_id);
+
+        if ($post != null && $post->post_type == 'event') {
+            // Get posts group taxonomies
+            $post_terms = wp_get_post_terms($post_id, 'event_groups', array("fields" => "ids"));
+
+            // Get users groups
+            $user_id = get_current_user_id();
+            $user_groups = get_field('event_user_groups', 'user_' . $user_id);
+
+            // Remove publish capability if user don't exist in a group
+            if (empty($user_groups) || ! is_array($user_groups)) {
+                add_action('admin_notices', array($this, 'missingAccessNotice'));
+                remove_meta_box('submitdiv', $this->slug, 'side');
+                return;
+            }
+
+            // Check if user belongs to any of the events groups. Remove publish capability if not.
+            $result = array_intersect($post_terms, $user_groups);
+            if (count($result) < 1) {
+                add_action('admin_notices', array($this, 'missingAccessNotice'));
+                remove_meta_box('submitdiv', $this->slug, 'side');
+            }
+        }
+
+        return;
+    }
+
+    /**
+     * Notice to inform if the user don't have access to the event.
+     * @return void
+     */
+    public function missingAccessNotice()
+    {
+        ?>
+        <div class="notice notice-warning dismissable is-dismissible">
+        <p><?php _e("You don't have access to edit this event. Contact an administrator for further information.", "event-manager");
+        ?></p>
+        </div>
+        <?php
+    }
+
+    /**
+     * Function to save publishing groups correctly,
+     * since contributors dont have access to all groups we must add/remove new groups to the existing table value.
+     * @param  string $value   the value of the field
+     * @param  int    $post_id the post id to save against
+     * @param  array  $field   the field object
+     * @return array           the new value
+     */
+    public function updatePublishGroups($value, $post_id, $field)
+    {
+        if (current_user_can('administrator') || current_user_can('editor')) {
+            return $value;
+        }
+
+        // Get users groups
+        $current_user = wp_get_current_user();
+        $id = 'user_' . $current_user->ID;
+        $user_groups = get_field('event_user_groups', $id);
+
+        // Get posts groups
+        $post_groups = get_field('event_publishing_groups', $post_id);
+
+        // Convert strings to int
+        $new_value = array_map('intval', $value);
+
+        // Get the empty values
+        $empty_values = array_diff($user_groups, $new_value);
+
+        // Remove empty values from post groups
+        $array = array_diff($post_groups, $empty_values);
+
+        // Add newly added groups to existing post groups
+        $new_array = array_merge($array, $new_value);
+
+        // Remove duplicates
+        $new_array = array_unique($new_array);
+
+        return $new_array;
+    }
+
+    /**
      * Filter to display users group taxonomies
      * @param  array  $args   An array of arguments passed to the wp_list_categories function
      * @param  array  $field  An array containing all the field settings
      * @return array  $args
      */
-    public function filterGroupTaxonomy( $args, $field ) {
+    public function filterGroupTaxonomy($args, $field)
+    {
         $current_user = wp_get_current_user();
 
         // Return if admin or editor
-        if (current_user_can('editor') || current_user_can('administrator')) {
+        if (current_user_can('administrator') || current_user_can('editor')) {
             return $args;
         }
 

@@ -7,7 +7,6 @@ class EventGroups
     public function __construct()
     {
         add_action('init', array($this, 'registerTaxonomy'));
-
         add_action( 'show_user_profile', array($this, 'displayUserGroups'));
         add_action( 'edit_user_profile', array($this, 'displayUserGroups'));
     }
