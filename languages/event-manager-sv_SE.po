@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Event Manager\n"
-"POT-Creation-Date: 2017-01-03 15:07+0100\n"
-"PO-Revision-Date: 2017-01-03 15:07+0100\n"
+"POT-Creation-Date: 2017-01-04 08:42+0100\n"
+"PO-Revision-Date: 2017-01-04 08:42+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: sv\n"
@@ -727,9 +727,10 @@ msgstr "Lägg till en eller flera Vimero-länkar"
 msgid "Vimeo link"
 msgstr "Vimeo-länk"
 
-#: source/php/Acf/AcfFields.php:2600 source/php/Acf/AcfFields.php:3023
-msgid "Publishing groups"
-msgstr "Publiceringsgrupper"
+#: source/php/Acf/AcfFields.php:2600 source/php/Acf/AcfFields.php:2632
+#: source/php/Acf/AcfFields.php:3027 source/php/Taxonomy/EventGroups.php:30
+msgid "Groups"
+msgstr "Grupper"
 
 #: source/php/Acf/AcfFields.php:2616
 msgid "Unbelonging to group"
@@ -742,11 +743,6 @@ msgid ""
 msgstr ""
 "Kryssa i rutan om evenemanget inte ska tilldelas någon publiceringsgrupp. "
 "Detta gör att evenemanget blir tillgängligt för samtliga användare."
-
-#: source/php/Acf/AcfFields.php:2632 source/php/Acf/AcfFields.php:3027
-#: source/php/Taxonomy/EventGroups.php:30
-msgid "Groups"
-msgstr "Grupper"
 
 #: source/php/Acf/AcfFields.php:2635
 msgid "Select one or many groups where this event belongs to."
@@ -862,6 +858,10 @@ msgstr ""
 #: source/php/Acf/AcfFields.php:2930
 msgid "Enable daily automatic import from XCAP"
 msgstr "Daglig automatisk import från XCAP"
+
+#: source/php/Acf/AcfFields.php:3023
+msgid "Publishing groups"
+msgstr "Publiceringsgrupper"
 
 #: source/php/Admin/FilterRestrictions.php:98
 msgid "All"

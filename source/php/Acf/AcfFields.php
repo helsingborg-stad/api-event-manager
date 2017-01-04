@@ -2597,7 +2597,7 @@ class AcfFields
         ),
         array (
             'key' => 'field_585b7f804f198',
-            'label' => __('Publishing groups', 'event-manager'),
+            'label' => __('Groups', 'event-manager'),
             'name' => '',
             'type' => 'tab',
             'instructions' => '',

@@ -1,3 +1,4 @@
+[
     {
         "key": "group_57610ebadcee8",
         "title": "Event",
@@ -1472,7 +1473,7 @@
             },
             {
                 "key": "field_585b7f804f198",
-                "label": "Publishing groups",
+                "label": "Groups",
                 "name": "",
                 "type": "tab",
                 "instructions": "",
@@ -1551,3 +1552,4 @@
         "active": 1,
         "description": ""
     }
+]

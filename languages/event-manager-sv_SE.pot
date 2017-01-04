@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "Project-Id-Version: Event Manager\n"
-"POT-Creation-Date: 2017-01-03 15:07+0100\n"
+"POT-Creation-Date: 2017-01-04 08:42+0100\n"
 "PO-Revision-Date: 2016-10-26 08:27+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -721,8 +721,9 @@ msgstr ""
 msgid "Vimeo link"
 msgstr ""
 
-#: source/php/Acf/AcfFields.php:2600 source/php/Acf/AcfFields.php:3023
-msgid "Publishing groups"
+#: source/php/Acf/AcfFields.php:2600 source/php/Acf/AcfFields.php:2632
+#: source/php/Acf/AcfFields.php:3027 source/php/Taxonomy/EventGroups.php:30
+msgid "Groups"
 msgstr ""
 
 #: source/php/Acf/AcfFields.php:2616
@@ -733,11 +734,6 @@ msgstr ""
 msgid ""
 "Check this box if the event does not belong to any publishing groups. This "
 "will make the event available all users."
-msgstr ""
-
-#: source/php/Acf/AcfFields.php:2632 source/php/Acf/AcfFields.php:3027
-#: source/php/Taxonomy/EventGroups.php:30
-msgid "Groups"
 msgstr ""
 
 #: source/php/Acf/AcfFields.php:2635
@@ -847,6 +843,10 @@ msgstr ""
 
 #: source/php/Acf/AcfFields.php:2930
 msgid "Enable daily automatic import from XCAP"
+msgstr ""
+
+#: source/php/Acf/AcfFields.php:3023
+msgid "Publishing groups"
 msgstr ""
 
 #: source/php/Admin/FilterRestrictions.php:98
