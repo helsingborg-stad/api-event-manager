@@ -407,4 +407,31 @@ class Fields
         return apply_filters('event_taxonomies', $taxArray);
     }
 
+    /**
+     * Replace id with array with group name and slug
+     *
+     * @param   object  $object      The response object.
+     * @param   string  $field_name  The name of the field to add.
+     * @param   object  $request     The WP_REST_Request object.
+     *
+     * @return  object|null
+     */
+
+    public function eventGroups($object, $field_name, $request)
+    {
+        if (! empty($object[$field_name])) {
+            $taxonomies = $object[$field_name];
+        } else {
+            return null;
+        }
+
+        $taxArray = array();
+        foreach ($taxonomies as $val) {
+            $term = get_term($val, $field_name);
+            $taxArray[] = array('name' => $term->name, 'slug' => $term->slug);
+        }
+
+        return apply_filters('event_taxonomies', $taxArray);
+    }
+
 }

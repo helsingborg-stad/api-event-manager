@@ -634,5 +634,20 @@ class EventFields extends Fields
                 )
             )
         );
+
+        /* Replace group id with taxonomy name */
+
+        register_rest_field($this->postType,
+            'event_groups',
+            array(
+                'get_callback' => array($this, 'eventGroups'),
+                'schema' => array(
+                    'description' => 'Field containing object with taxonomies.',
+                    'type' => 'object',
+                    'context' => array('view')
+                )
+            )
+        );
+
     }
 }
