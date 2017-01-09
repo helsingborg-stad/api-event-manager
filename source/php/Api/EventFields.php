@@ -87,6 +87,8 @@ class EventFields extends Fields
             return $this->errorMessage('Format not valid', array(0, 1));
         }
 
+        $limit = (isset($_GET['post-limit']) && is_numeric($_GET['post-limit'])) ? $_GET['post-limit'] : null;
+
         $db_occasions = $wpdb->prefix . "occasions";
         $query =
         "
@@ -100,6 +102,7 @@ class EventFields extends Fields
                     ORDER BY $db_occasions.timestamp_start ASC
         "
         ;
+        $query .= ($limit != null) ? ' LIMIT ' . $limit : '';
 
         $timePlusWeek = 0;
 
