@@ -100,8 +100,7 @@ class EventFields extends Fields
                     AND $wpdb->posts.post_status = %s
                     AND ($db_occasions.timestamp_start BETWEEN %d AND %d OR $db_occasions.timestamp_end BETWEEN %d AND %d)
                     ORDER BY $db_occasions.timestamp_start ASC
-        "
-        ;
+        ";
         $query .= ($limit != null) ? ' LIMIT ' . $limit : '';
 
         $timePlusWeek = 0;

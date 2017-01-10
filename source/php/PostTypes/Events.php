@@ -93,7 +93,7 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
             }
         });
         $this->addTableColumn('date', __('Date', 'event-manager'));
-        add_action('manage_posts_extra_tablenav', array($this, 'tablenavButtons'));
+        add_filter('views_edit-event', array($this, 'addImportButtons'));
         add_action('admin_menu', array($this, 'removePublishBox'));
         add_action('publish_event', array($this, 'setAcceptedOnPublish'), 10, 2);
         add_action('save_post', array($this, 'saveEventOccasions'), 10, 3);
@@ -430,28 +430,17 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
      * Add buttons to start parsing xcap and Cbis
      * @return void
      */
-
-    public function tablenavButtons($which)
+    public function addImportButtons($views)
     {
-        global $current_screen;
-
-        if ($current_screen->id != 'edit-event' || $which != 'top') {
-            return;
+        if (current_user_can('administrator')) {
+            $button  = '<div class="import-buttons actions" style="position: relative;">';
+            $button .= '<div class="button-primary extraspace" id="xcap">' . __('Import XCAP', 'event-manager') . '</div>';
+            $button .= '<div class="button-primary extraspace" id="cbis">' . __('Import CBIS', 'event-manager') . '</div>';
+            $button .= '<div class="button-primary extraspace" id="occasions">'.__('Collect event timestamps', 'event-manager').'</div>';
+            $button .= '</div>';
+            $views['import-buttons'] = $button;
         }
-
-        if (current_user_can('manage_options')) {
-            echo '<div class="alignleft actions" style="position: relative;">';
-            // TA BORT
-            // echo '<a href="' . admin_url('options.php?page=import-events') . '" class="button-primary" id="post-query-submit">DEBUG XCAP</a>';
-            // echo '<a href="' . admin_url('options.php?page=import-cbis-events') . '" class="button-primary" id="post-query-submit">debug CBIS</a>';
-            // echo '<a href="' . admin_url('options.php?page=import-cbis-locations') . '" class="button-primary" id="post-query-submit">Custom</a>';
-            // echo '<a href="' . admin_url('options.php?page=delete-all-events') . '" class="button-primary" id="post-query-submit">DELETE</a>';
-            echo '<div class="button-primary extraspace" id="xcap">' . __('Import XCAP', 'event-manager') . '</div>';
-            echo '<div class="button-primary extraspace" id="cbis">' . __('Import CBIS', 'event-manager') . '</div>';
-            echo '<div class="button-primary extraspace" id="occasions">'.__('Collect event timestamps', 'event-manager').'</div>';
-                //echo '<div id="importResponse"></div>';
-            echo '</div>';
-        }
+        return $views;
     }
 
     /*
@@ -584,7 +573,6 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
         ?></p>
         </div>
         <?php
-
     }
 
     /**

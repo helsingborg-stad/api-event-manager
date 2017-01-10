@@ -38,8 +38,6 @@ class App
         add_action('admin_enqueue_scripts', array($this, 'enqueueScripts'));
 
         //Admin components
-        // TA BORT parsePage
-        add_action('admin_menu', array($this, 'createParsePage'));
         add_action('admin_notices', array($this, 'adminNotices'));
 
         // Register cron action
@@ -195,66 +193,6 @@ class App
     }
 
     /**
-     * TA BORT
-     * Creates a admin page to trigger update data function
-     * ARE NOT USED ANYMORE
-     * @return void
-     */
-    public function createParsePage()
-    {
-        add_submenu_page(
-            null,
-            __('Import events', 'hbg-event-importer'),
-            __('Import events', 'hbg-event-importer'),
-            'edit_posts',
-            'import-events',
-            function () {
-                new \HbgEventImporter\Parser\Xcap('http://mittkulturkort.se/calendar/listEvents.action?month=&date=&categoryPermaLink=&q=&p=&feedType=ICAL_XML');
-            }
-        );
-
-        add_submenu_page(
-            null,
-            __('Import CBIS events', 'hbg-event-importer'),
-            __('Import CBIS events', 'hbg-event-importer'),
-            'edit_posts',
-            'import-cbis-events',
-            function () {
-                new \HbgEventImporter\Parser\CBIS('http://api.cbis.citybreak.com/Products.asmx?wsdl');
-            });
-// TA BORT
-        add_submenu_page(
-            null,
-            __('Import CBIS locations', 'hbg-event-importer'),
-            __('Import CBIS events', 'hbg-event-importer'),
-            'edit_posts',
-            'import-cbis-locations',
-            function () {
-                new \HbgEventImporter\Parser\CbisLocation('http://api.info.citybreak.com/Products.asmx?WSDL');
-            });
-// TA BORT
-        add_submenu_page(
-            null,
-            __('Delete all events', 'hbg-event-importer'),
-            __('Delete all events', 'hbg-event-importer'),
-            'edit_posts',
-            'delete-all-events',
-            function () {
-                global $wpdb;
-                $delete = $wpdb->query("TRUNCATE TABLE `cbis_data`");
-                $delete = $wpdb->query("TRUNCATE TABLE `event_occasions`");
-                $delete = $wpdb->query("TRUNCATE TABLE `event_postmeta`");
-                $delete = $wpdb->query("TRUNCATE TABLE `event_posts`");
-                $delete = $wpdb->query("TRUNCATE TABLE `event_stream`");
-                $delete = $wpdb->query("TRUNCATE TABLE `event_stream_meta`");
-                $delete = $wpdb->query("TRUNCATE TABLE `event_term_relationships`");
-                $delete = $wpdb->query("TRUNCATE TABLE `event_term_taxonomy`");
-                $delete = $wpdb->query("TRUNCATE TABLE `event_termmeta`");
-                $delete = $wpdb->query("TRUNCATE TABLE `event_terms`");
-            });
-    }
-
-    /**
      * Starts the data import
      * @return void
      */
@@ -274,7 +212,7 @@ class App
 
     public static function addCronJob()
     {
-        wp_schedule_event(time(), 'hourly', 'import_events_daily');
+        wp_schedule_event(time(), 'daily', 'import_events_daily');
     }
 
     public static function removeCronJob()
