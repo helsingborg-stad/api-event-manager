@@ -23,7 +23,7 @@ class CBIS extends \HbgEventImporter\Parser
      * Which product type to get
      * @var string Product|Arena
      */
-    private $productType = 'Arena';
+    private $productType = 'Product';
 
     /**
      * Holds a list of all found events
@@ -134,7 +134,7 @@ class CBIS extends \HbgEventImporter\Parser
             throw new \Exception('Needed authorization information (CBIS API id and/or CBIS API key) is missing.');
         }
 
-        // Number of arenas to get, 200 to get all
+        // Number of products to get, 1500 to get all
         $getLength = 200;
 
         $requestParams = array(
@@ -167,10 +167,6 @@ class CBIS extends \HbgEventImporter\Parser
                 'IncludePendingPublish' => false
             )
         );
-
-        // Adjust request parameters for getting products, 1500 itemsPerPage to get all events
-        $requestParams['filter']['ProductType'] = "Product";
-        $requestParams['itemsPerPage'] = 1600;
 
         // Get and save "Events"
         $this->events = $this->client->ListAll($requestParams)->ListAllResult->Items->Product;

@@ -122,6 +122,122 @@
                 "load_terms": 0,
                 "return_format": "id",
                 "multiple": 0
+            },
+            {
+                "key": "field_587648c2581e9",
+                "label": "API keys",
+                "name": "api_keys",
+                "type": "repeater",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "collapsed": "",
+                "min": "",
+                "max": "",
+                "layout": "block",
+                "button_label": "Add key",
+                "sub_fields": [
+                    {
+                        "key": "field_58764910581ea",
+                        "label": "API key",
+                        "name": "cbis_api_product_key",
+                        "type": "text",
+                        "instructions": "",
+                        "required": 1,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": "",
+                        "placeholder": "",
+                        "prepend": "",
+                        "append": "",
+                        "maxlength": ""
+                    },
+                    {
+                        "key": "field_58764943581eb",
+                        "label": "API GeoNode ID",
+                        "name": "cbis_api_geonode_id",
+                        "type": "text",
+                        "instructions": "",
+                        "required": 1,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "50",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": "",
+                        "placeholder": "",
+                        "prepend": "",
+                        "append": "",
+                        "maxlength": ""
+                    },
+                    {
+                        "key": "field_587649e8581ec",
+                        "label": "Event ID",
+                        "name": "cbis_event_id",
+                        "type": "text",
+                        "instructions": "ID of the category \"events\".",
+                        "required": 1,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "50",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": "",
+                        "placeholder": "",
+                        "prepend": "",
+                        "append": "",
+                        "maxlength": ""
+                    },
+                    {
+                        "key": "field_58764a87581ed",
+                        "label": "Accommodations ID",
+                        "name": "cbis_accom_id",
+                        "type": "text",
+                        "instructions": "ID of the category \"accommodations\".",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "50",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": "",
+                        "placeholder": "",
+                        "prepend": "",
+                        "append": "",
+                        "maxlength": ""
+                    },
+                    {
+                        "key": "field_58764af6581ee",
+                        "label": "To do ID",
+                        "name": "cbis_todo_id",
+                        "type": "text",
+                        "instructions": "ID of the category \"accommodations\".",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "50",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": "",
+                        "placeholder": "",
+                        "prepend": "",
+                        "append": "",
+                        "maxlength": ""
+                    }
+                ]
             }
         ],
         "location": [
