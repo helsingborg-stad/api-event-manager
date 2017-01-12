@@ -31,12 +31,6 @@ class CBIS extends \HbgEventImporter\Parser
      */
     private $events = array();
 
-    /**
-     * Holds a list of all found arenas
-     * @var array
-     */
-    private $arenas = array();
-
     //CBIS attribute id's we use
     const ATTRIBUTE_NAME                        =   99;
     const ATTRIBUTE_INGRESS                     =   101;
@@ -123,9 +117,14 @@ class CBIS extends \HbgEventImporter\Parser
         $this->collectDataForLevenshtein();
         $this->client = new \SoapClient($this->url, array('keep_alive' => false));
 
-        $cbisKey = get_option('options_cbis_api_key');
-        $cbisId = intval(get_option('options_cbis_api_id'));
-        $cbisCategory = 14086;
+        // CBIS API keys and ids
+        $cbisKey = $this->apiKeys['cbis_key'];
+        $cbisId = $this->apiKeys['cbis_geonode'];
+        $cbisCategory = $this->apiKeys['cbis_event_id'];
+
+        //$cbisKey = get_option('options_cbis_api_key');
+        //$cbisId = intval(get_option('options_cbis_api_id'));
+        //$cbisCategory = 14086;
 
         $postStatus = get_field('cbis_post_status', 'option') ? get_field('cbis_post_status', 'option') : 'publish';
         $publishGroups = get_field('cbis_publishing_groups', 'option') ? get_field('cbis_publishing_groups', 'option') : null;
@@ -135,7 +134,7 @@ class CBIS extends \HbgEventImporter\Parser
         }
 
         // Number of products to get, 1500 to get all
-        $getLength = 200;
+        $getLength = 500;
 
         $requestParams = array(
             'apiKey' => $cbisKey,

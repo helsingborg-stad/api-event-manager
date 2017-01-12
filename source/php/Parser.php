@@ -5,6 +5,7 @@ namespace HbgEventImporter;
 abstract class Parser
 {
     protected $url;
+    protected $apiKeys;
     protected $nrOfNewEvents;
     protected $nrOfNewLocations;
     protected $nrOfNewContacts;
@@ -60,11 +61,12 @@ abstract class Parser
         return false;
     }
 
-    public function __construct($url)
+    public function __construct($url, $apiKeys = null)
     {
         ini_set('max_execution_time', 300);
 
         $this->url = $url;
+        $this->apiKeys = $apiKeys;
         $this->nrOfNewEvents = 0;
         $this->nrOfNewLocations = 0;
         $this->nrOfNewContacts = 0;

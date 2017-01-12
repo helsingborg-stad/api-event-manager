@@ -43,6 +43,48 @@ abstract class CustomPostType
         add_filter('get_sample_permalink_html', array($this, 'replacePermalink'), 10, 5);
         add_filter('redirect_post_location', array($this, 'redirectLightboxLocation'), 10, 2);
         add_filter('post_updated_messages', array($this, 'postPublishedMsg'));
+
+        add_action( 'wp_ajax_cbis_ajax_parse', array($this, 'cbisAjaxParse'));
+    }
+
+    public function cbisAjaxParse() {
+        $api_key = $_POST['api_key'];
+        $importer = new \HbgEventImporter\Parser\CBIS('http://api.cbis.citybreak.com/Products.asmx?wsdl', $api_key);
+        $data = $importer->getCreatedData();
+
+        echo json_encode($data);
+
+        wp_die();
+    }
+
+    /**
+     * Start parsing event importer
+     */
+    public function importEvents()
+    {
+        if ($_POST['value'] == 'cbis') {
+            $api_keys = $_POST['api_keys'];
+            $importer = new \HbgEventImporter\Parser\CBIS('http://api.cbis.citybreak.com/Products.asmx?wsdl', $api_keys);
+            $data = $importer->getCreatedData();
+
+            wp_send_json($data);
+            wp_die();
+
+        } elseif ($_POST['value'] == 'xcap') {
+            $importer = new \HbgEventImporter\Parser\Xcap('http://mittkulturkort.se/calendar/listEvents.action?month=&date=&categoryPermaLink=&q=&p=&feedType=ICAL_XML');
+            $data = $importer->getCreatedData();
+
+            wp_send_json($data);
+            wp_die();
+
+        } elseif ($_POST['value'] == 'cbislocation') {
+            $importer = new \HbgEventImporter\Parser\CbisLocation('http://api.cbis.citybreak.com/Products.asmx?wsdl');
+            $data = $importer->getCreatedData();
+
+            wp_send_json($data);
+            wp_die();
+
+        }
     }
 
     /**
@@ -68,26 +110,6 @@ abstract class CustomPostType
         global $current_screen;
         if ($current_screen->post_type != 'page') {
             remove_action('media_buttons', 'media_buttons');
-        }
-    }
-
-    /**
-     * Start parsing event importer
-     */
-    public function importEvents()
-    {
-        if ($_POST['value'] == 'cbis') {
-            $importer = new \HbgEventImporter\Parser\CBIS('http://api.cbis.citybreak.com/Products.asmx?wsdl');
-            $data = $importer->getCreatedData();
-            wp_send_json($data);
-        } elseif ($_POST['value'] == 'xcap') {
-            $importer = new \HbgEventImporter\Parser\Xcap('http://mittkulturkort.se/calendar/listEvents.action?month=&date=&categoryPermaLink=&q=&p=&feedType=ICAL_XML');
-            $data = $importer->getCreatedData();
-            wp_send_json($data);
-        } elseif ($_POST['value'] == 'cbislocation') {
-            $importer = new \HbgEventImporter\Parser\CbisLocation('http://api.cbis.citybreak.com/Products.asmx?wsdl');
-            $data = $importer->getCreatedData();
-            wp_send_json($data);
         }
     }
 

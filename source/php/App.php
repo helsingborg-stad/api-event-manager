@@ -167,10 +167,29 @@ class App
         global $current_screen;
         $type = $current_screen->post_type;
         if ($type == 'event' || $type == 'location' || $type == 'contact' || $type == 'sponsor' || $type == 'package' || $type == 'membership-card') {
-            wp_enqueue_script('hbg-event-importer', HBGEVENTIMPORTER_URL . '/dist/js/hbg-event-importer.min.js');
+            wp_enqueue_script('hbg-event-importer', HBGEVENTIMPORTER_URL . '/dist/js/hbg-event-importer.dev.js');
+        }
+
+        $cbis_keys = array();
+        if (have_rows('cbis_api_keys', 'option') ):
+            while(have_rows('cbis_api_keys', 'option') ): the_row();
+            $cbis_keys[] = array(
+                'cbis_key'      => get_sub_field('cbis_api_product_key'),
+                'cbis_geonode'  => get_sub_field('cbis_api_geonode_id'),
+                'cbis_event_id' => get_sub_field('cbis_event_id'),
+                'cbis_accom_id' => get_sub_field('cbis_accom_id'),
+                'cbis_todo_id'  => get_sub_field('cbis_todo_id'),
+            );
+            endwhile;
+        endif;
+
+        if (current_user_can('administrator')) {
+            wp_enqueue_script('cbis-ajax-parse', HBGEVENTIMPORTER_URL . '/source/cbis-ajax-parse.js', array( 'jquery' ));
+            wp_localize_script('cbis-ajax-parse', 'cbis_ajax_vars', array('cbis_keys' => $cbis_keys));
         }
 
         wp_localize_script('hbg-event-importer', 'eventmanager', array(
+            'ajaxurl'           => admin_url('admin-ajax.php'),
             'require_title'     => __("Title is missing", 'event-manager'),
             'new_contact'       => __("Create new contact", 'event-manager'),
             'new_sponsor'       => __("Create new sponsor", 'event-manager'),
@@ -222,6 +241,7 @@ class App
             function () {
                 new \HbgEventImporter\Parser\CBIS('http://api.cbis.citybreak.com/Products.asmx?wsdl');
             });
+
         add_submenu_page(
             null,
             __('Import CBIS locations', 'hbg-event-importer'),
@@ -229,7 +249,7 @@ class App
             'edit_posts',
             'import-cbis-locations',
             function () {
-                new \HbgEventImporter\Parser\CbisLocation('http://api.info.citybreak.com/Products.asmx?WSDL');
+                new \HbgEventImporter\Parser\CbisLocation('http://api.info.citybreak.com/Products.asmx?wsdl');
             });
         add_submenu_page(
             null,

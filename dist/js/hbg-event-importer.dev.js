@@ -1,68 +1,85 @@
-var ImportEvents = ImportEvents || {};
-ImportEvents.loading = false;
-ImportEvents.data = {'action' : 'import_events', 'value': ''};
-ImportEvents.short = 200;
-ImportEvents.long = 400;
-ImportEvents.timerId = null;
+// ACF date picker settings
+(function($) {
+    if (typeof acf != 'undefined') {
+        // Datepicker translations
+        acf.add_filter('date_time_picker_args', function( args, $field ){
+            args.timeOnlyTitle = eventmanager.choose_time;
+            args.timeText = eventmanager.time;
+            args.hourText = eventmanager.hour;
+            args.minuteText = eventmanager.minute;
+            args.closeText = eventmanager.done;
+            args.currentText = eventmanager.now;
+            args.showSecond = false;
+            return args;
+        });
+        acf.add_filter('time_picker_args', function( args, $field ){
+            args.timeOnlyTitle = eventmanager.choose_time;
+            args.timeText = eventmanager.time;
+            args.hourText = eventmanager.hour;
+            args.minuteText = eventmanager.minute;
+            args.closeText = eventmanager.done;
+            args.currentText = eventmanager.now;
+            args.showSecond = false;
+            return args;
+        });
+
+        acf.add_filter('google_map_marker_args', function( args, $field ){
+            args.draggable = false;
+            args.raiseOnDrag = false;
+            return args;
+        });
+
+        // Show validation errors on tabs
+        acf.add_filter('validation_complete', function( json, $form ){
+            $('.acf-tab-error', $form).remove();
+            if(json.errors) {
+                for (var i = 0; i < json.errors.length; i++) {
+                    var field = $('[name="' + json.errors[i].input + '"]', $form).parents('.acf-field');
+                        field = field[field.length - 1];
+                    var tab = $(field, $form).prevAll('.acf-field-tab').attr('data-key');
+                    $('.acf-tab-wrap a[data-key=' + tab + '] .acf-tab-error', $form).remove();
+                    $('.acf-tab-wrap a[data-key=' + tab + ']', $form).append(' <span class="dashicons dashicons-warning acf-tab-error"></span>').click();
+                }
+            }
+            return json;
+        });
+    }
+})(jQuery);
 
 jQuery(document).ready(function ($) {
-    $('#cbis, #xcap, #cbislocation').click(function() {
-        if(!ImportEvents.loadingOccasions)
-        {
-            ImportEvents.loadingOccasions = true;
-            var button = $(this);
-            var storedCss = collectCssFromButton(button);
-            redLoadingButton(button, function() {
-                ImportEvents.data.value = button.attr('id');
-                jQuery.post(ajaxurl, ImportEvents.data, function(response) {
-                    var newPosts = response;
-                    console.log(newPosts);
-                    ImportEvents.loadingOccasions = false;
-                    $('#blackOverlay').show();
-                    var responsePopup = $('#importResponse');
-                    responsePopup.show(500, function() {
-                        var eventNumber = responsePopup.find('#event');
-                        var locationNumber = responsePopup.find('#location');
-                        var contactNumber = responsePopup.find('#contact');
-                        var normalTextSize = eventNumber.css('fontSize');
-                        var bigTextSize = '26px'
-                        eventNumber.text(newPosts.events);
-                        locationNumber.text(newPosts.locations);
-                        contactNumber.text(newPosts.contacts);
-                        eventNumber.animate({opacity: 1}, ImportEvents.long).animate({fontSize: bigTextSize}, ImportEvents.short).animate({fontSize: normalTextSize}, ImportEvents.short, function() {
-                            locationNumber.animate({opacity: 1}, ImportEvents.long).animate({fontSize: bigTextSize}, ImportEvents.short).animate({fontSize: normalTextSize}, ImportEvents.short, function() {
-                                contactNumber.animate({opacity: 1}, ImportEvents.long).animate({fontSize: bigTextSize}, ImportEvents.short).animate({fontSize: normalTextSize}, ImportEvents.short, function() {
-                                    var loadingBar = responsePopup.find('#untilReload #meter');
-                                    loadingBar.animate({width: '100%'}, 7000, function() {
-                                        location.reload();
-                                    });
-                                });
-                            });
-                        });
-                    });
-                    restoreButton(button, storedCss);
-                });
-            });
+    $('.acf-field[data-name="sync"] input[type="checkbox"]').on('change', function () {
+        if ($('.acf-field[data-name="sync"] input[type="checkbox"]').is(':checked')) {
+            $('body').addClass('no-sync');
+            $(this).parent().addClass('check_active');
+        } else {
+            $('body').removeClass('no-sync');
+            $(this).parent().removeClass('check_active');
+        }
+    }).trigger('change');
+
+    $('.acf-field[data-name="main_organizer"] input[type="checkbox"]').each(function(i, obj) {
+        if ($(this).prop('checked')) {
+            $('.acf-field[data-name="main_organizer"]').not($(this).closest('.acf-field[data-name="main_organizer"]')).addClass('main_organizer_hidden');
         }
     });
 
-    $('#occasions').click(function() {
-        if(!ImportEvents.loadingOccasions)
-        {
-            ImportEvents.loadingOccasions = true;
-            var button = $(this);
-            var storedCss = collectCssFromButton(button);
-            redLoadingButton(button, function() {
-                var data = {
-                    'action'    : 'collect_occasions'
-                };
+    $('.acf-field[data-name="main_organizer"] input[type="checkbox"]').live('click', function () {
+        if ($(this).prop('checked')) {
+            $('.acf-field[data-name="main_organizer"]').not($(this).closest('.acf-field[data-name="main_organizer"]')).addClass('main_organizer_hidden');
+        } else {
+            $('.acf-field[data-name="main_organizer"]').removeClass('main_organizer_hidden');
+        }
+    });
 
-                jQuery.post(ajaxurl, data, function(response) {
-                    console.log(response);
-                    ImportEvents.loadingOccasions = false;
-                    restoreButton(button, storedCss);
-                });
-            });
+    $('.acf-button').removeClass('button-primary');
+
+    // Hide Google map on post type location if address data is missing
+    $('.acf-field[data-name="geo_map"] .acf-hidden').each(function(i, obj) {
+        var address = $(this).find('.input-address').attr('value');
+        var lat = $(this).find('.input-lat').attr('value');
+        var lng = $(this).find('.input-lng').attr('value');
+        if (!address || !lat || !lng) {
+            $('.acf-field[data-name="geo_map"]').hide();
         }
     });
 
@@ -251,55 +268,8 @@ jQuery(document).ready(function ($) {
             }
         }
     });
+
 });
-
-// ACF date picker settings
-(function($) {
-    if (typeof acf != 'undefined') {
-        // Datepicker translations
-        acf.add_filter('date_time_picker_args', function( args, $field ){
-            args.timeOnlyTitle = eventmanager.choose_time;
-            args.timeText = eventmanager.time;
-            args.hourText = eventmanager.hour;
-            args.minuteText = eventmanager.minute;
-            args.closeText = eventmanager.done;
-            args.currentText = eventmanager.now;
-            args.showSecond = false;
-            return args;
-        });
-        acf.add_filter('time_picker_args', function( args, $field ){
-            args.timeOnlyTitle = eventmanager.choose_time;
-            args.timeText = eventmanager.time;
-            args.hourText = eventmanager.hour;
-            args.minuteText = eventmanager.minute;
-            args.closeText = eventmanager.done;
-            args.currentText = eventmanager.now;
-            args.showSecond = false;
-            return args;
-        });
-
-        acf.add_filter('google_map_marker_args', function( args, $field ){
-            args.draggable = false;
-            args.raiseOnDrag = false;
-            return args;
-        });
-
-        // Show validation errors on tabs
-        acf.add_filter('validation_complete', function( json, $form ){
-            $('.acf-tab-error', $form).remove();
-            if(json.errors) {
-                for (var i = 0; i < json.errors.length; i++) {
-                    var field = $('[name="' + json.errors[i].input + '"]', $form).parents('.acf-field');
-                        field = field[field.length - 1];
-                    var tab = $(field, $form).prevAll('.acf-field-tab').attr('data-key');
-                    $('.acf-tab-wrap a[data-key=' + tab + '] .acf-tab-error', $form).remove();
-                    $('.acf-tab-wrap a[data-key=' + tab + ']', $form).append(' <span class="dashicons dashicons-warning acf-tab-error"></span>').click();
-                }
-            }
-            return json;
-        });
-    }
-})(jQuery);
 
 /**
  * Format date object to yy-mm-dd
@@ -335,60 +305,6 @@ function getClosestDay(date, dayOfWeek) {
     var resultDate = new Date(date.getTime());
     resultDate.setDate(date.getDate() + (7 + dayOfWeek - date.getDay()) % 7);
     return resultDate;
-}
-
-function collectCssFromButton(button)
-{
-    return {
-        bgColor: button.css('background-color'),
-        textColor: button.css('color'),
-        borderColor: button.css('border-color'),
-        textShadow: button.css('text-shadow'),
-        boxShadow: button.css('box-shadow'),
-        width: button.css('width'),
-        text: button.text()
-    };
-}
-
-function redLoadingButton(button, callback)
-{
-    button.fadeOut(500, function() {
-        var texts = [eventmanager.loading + '&nbsp;&nbsp;&nbsp;', eventmanager.loading + '.&nbsp;&nbsp;', eventmanager.loading + '..&nbsp;', eventmanager.loading + '...'];
-        button.css('background-color', 'rgb(51, 197, 255)');
-        button.css('border-color', 'rgb(0, 164, 230)');
-        button.css('color', 'white');
-        button.css('text-shadow', '0 -1px 1px rgb(0, 164, 230),1px 0 1px rgb(0, 164, 230),0 1px 1px rgb(0, 164, 230),-1px 0 1px rgb(0, 164, 230)');
-        button.css('box-shadow', 'none');
-        button.css('width', '85px');
-        button.html(texts[0]);
-        button.fadeIn(500);
-
-        var counter = 1;
-        ImportEvents.timerId = setInterval(function()
-        {
-            if(counter > 3)
-                counter = 0;
-            button.html(texts[counter]);
-            ++counter;
-        }, 500);
-        if(callback != undefined)
-            callback();
-    });
-}
-
-function restoreButton(button, storedCss)
-{
-    button.fadeOut(500, function() {
-        button.css('background-color', storedCss.bgColor);
-        button.css('color', storedCss.textColor);
-        button.css('border-color', storedCss.borderColor);
-        button.css('text-shadow', storedCss.textShadow);
-        button.css('box-shadow', storedCss.boxShadow);
-        button.css('width', storedCss.width);
-        button.text(storedCss.text);
-        button.fadeIn(500);
-        clearTimeout(ImportEvents.timerId);
-    });
 }
 
 /**
@@ -443,46 +359,220 @@ function dismissInstructions() {
     jQuery.post(ajaxurl, data);
 }
 
+var ImportEvents = ImportEvents || {};
 
-jQuery(document).ready(function ($) {
+ImportEvents = ImportEvents || {};
+ImportEvents.Parser = ImportEvents.Parser || {};
 
-    $('.acf-field[data-name="sync"] input[type="checkbox"]').on('change', function () {
-        if ($('.acf-field[data-name="sync"] input[type="checkbox"]').is(':checked')) {
-            $('body').addClass('no-sync');
-            $(this).parent().addClass('check_active');
-        } else {
-            $('body').removeClass('no-sync');
-            $(this).parent().removeClass('check_active');
+ImportEvents.Parser.Eventhandling = (function ($) {
+
+    var i                   = 0;
+    var newPosts            = {events:0,locations:0,contacts:0};
+    var data                = {action : 'import_events',
+                                value : '',
+                                api_keys : cbis_ajax_vars.cbis_keys[i]
+                              };
+    var short               = 200;
+    var long                = 400;
+    var timerId             = null;
+    var loadingOccasions    = false;
+
+    function Eventhandling() {
+        $(function() {
+
+            $(document).on('click', '#cbis, #xcap, #cbislocation', function (e) {
+                e.preventDefault();
+
+                if (! loadingOccasions) {
+                    loadingOccasions = true;
+                    var button = $(this);
+                    var storedCss = Eventhandling.prototype.collectCssFromButton(button);
+                    Eventhandling.prototype.redLoadingButton(button, function() {
+                        data.value = button.attr('id');
+
+                        // function parseCBIS() {
+
+                        //     if( (typeof cbis_ajax_vars.cbis_keys[i] == 'undefined') ) {
+                        //         console.log('undefined key');
+                        //         return;
+                        //     }
+
+                        //     $.ajax({
+                        //         url: eventmanager.ajaxurl,
+                        //         type: 'post',
+                        //         data: data
+                        //         },
+                        //         beforeSend: function() {
+
+                        //         },
+                        //         success: function(response) {
+                        //             var newPosts = response;
+                        //             console.log( response );
+                        //             loadingOccasions = false;
+                        //             Eventhandling.prototype.dataPopUp(newPosts);
+                        //             Eventhandling.prototype.restoreButton(button, storedCss);
+
+                        //             i++;
+                        //             parseCBIS();
+                        //         }
+                        //     })
+                        // }
+
+                        if (button.attr('id') === "cbis") {
+                            console.log('run cbis');
+                            Eventhandling.prototype.parseCBIS(data, button, storedCss);
+                        } else {
+                            console.log('run xcap or locations');
+                            jQuery.post(ajaxurl, data, function(response) {
+                            newPosts = response;
+                            console.log(newPosts);
+                            loadingOccasions = false;
+                            Eventhandling.prototype.dataPopUp(newPosts);
+                            Eventhandling.prototype.restoreButton(button, storedCss);
+                            });
+                        }
+
+                    });
+                }
+            });
+
+            $(document).on('click', '#occasions', function (e) {
+                e.preventDefault();
+                if (! loadingOccasions) {
+                    loadingOccasions = true;
+                    var button = $(this);
+                    var storedCss = Eventhandling.prototype.collectCssFromButton(button);
+                    Eventhandling.prototype.redLoadingButton(button, function() {
+                        var data = {
+                            'action'    : 'collect_occasions'
+                        };
+
+                        jQuery.post(ajaxurl, data, function(response) {
+                            console.log(response);
+                            loadingOccasions = false;
+                            Eventhandling.prototype.restoreButton(button, storedCss);
+                        });
+                    });
+                }
+            });
+
+        }.bind(this));
+    }
+
+    Eventhandling.prototype.parseCBIS = function(data, button, storedCss) {
+
+        // Show result if theres no api keys left
+        if( (typeof cbis_ajax_vars.cbis_keys[i] == 'undefined') ) {
+            console.log('undefined key');
+            Eventhandling.prototype.dataPopUp(newPosts);
+            Eventhandling.prototype.restoreButton(button, storedCss);
+            return;
         }
-    }).trigger('change');
 
-    $('.acf-field[data-name="main_organizer"] input[type="checkbox"]').each(function(i, obj) {
-        if ($(this).prop('checked')) {
-            $('.acf-field[data-name="main_organizer"]').not($(this).closest('.acf-field[data-name="main_organizer"]')).addClass('main_organizer_hidden');
-        }
-    });
+        $.ajax({
+            url: eventmanager.ajaxurl,
+            type: 'post',
+            data: data,
+            beforeSend: function() {
 
-    $('.acf-field[data-name="main_organizer"] input[type="checkbox"]').live('click', function () {
-        if ($(this).prop('checked')) {
-            $('.acf-field[data-name="main_organizer"]').not($(this).closest('.acf-field[data-name="main_organizer"]')).addClass('main_organizer_hidden');
-        } else {
-            $('.acf-field[data-name="main_organizer"]').removeClass('main_organizer_hidden');
-        }
-    });
+            },
+            success: function(response) {
+                // Update response object
+                newPosts.events    += response.events;
+                newPosts.locations += response.locations;
+                newPosts.contacts  += response.contacts;
 
-    $('.acf-button').removeClass('button-primary');
+                console.log( newPosts );
+                loadingOccasions = false;
+                // Eventhandling.prototype.dataPopUp(newPosts);
+                // Eventhandling.prototype.restoreButton(button, storedCss);
 
-    // Hide Google map on post type location if address data is missing
-    $('.acf-field[data-name="geo_map"] .acf-hidden').each(function(i, obj) {
-        var address = $(this).find('.input-address').attr('value');
-        var lat = $(this).find('.input-lat').attr('value');
-        var lng = $(this).find('.input-lng').attr('value');
-        if (!address || !lat || !lng) {
-            $('.acf-field[data-name="geo_map"]').hide();
-        }
-    });
+                i++;
+                Eventhandling.prototype.parseCBIS(data, button, storedCss);
+            }
+        })
 
-});
+    };
+
+    Eventhandling.prototype.dataPopUp = function(newData){
+        $('#blackOverlay').show();
+        var responsePopup = $('#importResponse');
+        responsePopup.show(500, function() {
+            var eventNumber = responsePopup.find('#event');
+            var locationNumber = responsePopup.find('#location');
+            var contactNumber = responsePopup.find('#contact');
+            var normalTextSize = eventNumber.css('fontSize');
+            var bigTextSize = '26px';
+            eventNumber.text(newData.events);
+            locationNumber.text(newData.locations);
+            contactNumber.text(newData.contacts);
+            eventNumber.animate({opacity: 1}, long).animate({fontSize: bigTextSize}, short).animate({fontSize: normalTextSize}, short, function() {
+                locationNumber.animate({opacity: 1}, long).animate({fontSize: bigTextSize}, short).animate({fontSize: normalTextSize}, short, function() {
+                    contactNumber.animate({opacity: 1}, long).animate({fontSize: bigTextSize}, short).animate({fontSize: normalTextSize}, short, function() {
+                        var loadingBar = responsePopup.find('#untilReload #meter');
+                        loadingBar.animate({width: '100%'}, 7000, function() {
+                            location.reload();
+                        });
+                    });
+                });
+            });
+        });
+    };
+
+    Eventhandling.prototype.collectCssFromButton = function (button) {
+        return {
+            bgColor: button.css('background-color'),
+            textColor: button.css('color'),
+            borderColor: button.css('border-color'),
+            textShadow: button.css('text-shadow'),
+            boxShadow: button.css('box-shadow'),
+            width: button.css('width'),
+            text: button.text()
+        };
+    };
+
+    Eventhandling.prototype.redLoadingButton = function (button, callback) {
+        button.fadeOut(500, function() {
+            var texts = [eventmanager.loading + '&nbsp;&nbsp;&nbsp;', eventmanager.loading + '.&nbsp;&nbsp;', eventmanager.loading + '..&nbsp;', eventmanager.loading + '...'];
+            button.css('background-color', 'rgb(51, 197, 255)');
+            button.css('border-color', 'rgb(0, 164, 230)');
+            button.css('color', 'white');
+            button.css('text-shadow', '0 -1px 1px rgb(0, 164, 230),1px 0 1px rgb(0, 164, 230),0 1px 1px rgb(0, 164, 230),-1px 0 1px rgb(0, 164, 230)');
+            button.css('box-shadow', 'none');
+            button.css('width', '85px');
+            button.html(texts[0]);
+            button.fadeIn(500);
+
+            var counter = 1;
+            timerId = setInterval(function()
+            {
+                if(counter > 3)
+                    counter = 0;
+                button.html(texts[counter]);
+                ++counter;
+            }, 500);
+            if(callback != undefined)
+                callback();
+        });
+    };
+
+    Eventhandling.prototype.restoreButton = function (button, storedCss) {
+        button.fadeOut(500, function() {
+            button.css('background-color', storedCss.bgColor);
+            button.css('color', storedCss.textColor);
+            button.css('border-color', storedCss.borderColor);
+            button.css('text-shadow', storedCss.textShadow);
+            button.css('box-shadow', storedCss.boxShadow);
+            button.css('width', storedCss.width);
+            button.text(storedCss.text);
+            button.fadeIn(500);
+            clearTimeout(timerId);
+        });
+    };
+
+    return new Eventhandling();
+
+})(jQuery);
 
 var ImportEvents = ImportEvents || {};
 

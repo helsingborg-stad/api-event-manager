@@ -126,7 +126,7 @@
             {
                 "key": "field_587648c2581e9",
                 "label": "API keys",
-                "name": "api_keys",
+                "name": "cbis_api_keys",
                 "type": "repeater",
                 "instructions": "",
                 "required": 0,
@@ -223,7 +223,7 @@
                         "label": "To do ID",
                         "name": "cbis_todo_id",
                         "type": "text",
-                        "instructions": "ID of the category \"accommodations\".",
+                        "instructions": "ID of the category \"to do\".",
                         "required": 0,
                         "conditional_logic": 0,
                         "wrapper": {
