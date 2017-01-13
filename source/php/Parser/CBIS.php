@@ -20,12 +20,6 @@ class CBIS extends \HbgEventImporter\Parser
     private $client = null;
 
     /**
-     * Which product type to get
-     * @var string Product|Arena
-     */
-    private $productType = 'Product';
-
-    /**
      * Holds a list of all found events
      * @var array
      */
@@ -117,23 +111,20 @@ class CBIS extends \HbgEventImporter\Parser
         $this->collectDataForLevenshtein();
         $this->client = new \SoapClient($this->url, array('keep_alive' => false));
 
-        // CBIS API keys and ids
-        $cbisKey = $this->apiKeys['cbis_key'];
-        $cbisId = $this->apiKeys['cbis_geonode'];
-        $cbisCategory = $this->apiKeys['cbis_event_id'];
-
-        //$cbisKey = get_option('options_cbis_api_key');
-        //$cbisId = intval(get_option('options_cbis_api_id'));
-        //$cbisCategory = 14086;
-
-        $postStatus = get_field('cbis_post_status', 'option') ? get_field('cbis_post_status', 'option') : 'publish';
-        $publishGroups = get_field('cbis_publishing_groups', 'option') ? get_field('cbis_publishing_groups', 'option') : null;
+        // CBIS API keys and settings
+        $cbisKey        = $this->apiKeys['cbis_key'];
+        $cbisId         = $this->apiKeys['cbis_geonode'];
+        $cbisCategory   = $this->apiKeys['cbis_event_id'];
+        $publishGroups  = (! empty($this->apiKeys['cbis_groups'])) ? array_map('intval', $this->apiKeys['cbis_groups']) : null;
+        // Used to set unique key on events
+        $shortKey       = substr(intval($this->apiKeys['cbis_key'], 36), 0, 4);
+        $postStatus     = get_field('cbis_post_status', 'option') ? get_field('cbis_post_status', 'option') : 'publish';
 
         if (!isset($cbisKey) || empty($cbisKey) || !isset($cbisId) || empty($cbisId)) {
             throw new \Exception('Needed authorization information (CBIS API id and/or CBIS API key) is missing.');
         }
 
-        // Number of products to get, 1500 to get all
+        // Number of products to get, 2000 to get all
         $getLength = 500;
 
         $requestParams = array(
@@ -154,7 +145,7 @@ class CBIS extends \HbgEventImporter\Parser
                 'MaxLongitude' => null,
                 'MinLongitude' => null,
                 'SubCategoryId' => 0,
-                'ProductType' => $this->productType,
+                'ProductType' => 'Product',
                 'WithOccasionsOnly' => true,
                 'ExcludeProductsWithoutOccasions' => true,
                 'ExcludeProductsNotInCurrentLanguage' => false,
@@ -179,7 +170,7 @@ class CBIS extends \HbgEventImporter\Parser
         });
 
         foreach ($filteredProducts as $key => $eventData) {
-            $this->saveEvent($eventData, $postStatus, $publishGroups);
+            $this->saveEvent($eventData, $postStatus, $publishGroups, $shortKey);
         }
     }
 
@@ -286,10 +277,13 @@ class CBIS extends \HbgEventImporter\Parser
 
     /**
      * Cleans a single events data into correct format and saves it to db
-     * @param  object $eventData  Event data
+     * @param  object   $eventData      Event data
+     * @param  string   $postStatus     default post status
+     * @param  array    $publishGroups  default publishing groups
+     * @param  int      $shortKey       shortened api key
      * @return void
      */
-    public function saveEvent($eventData, $postStatus, $publishGroups)
+    public function saveEvent($eventData, $postStatus, $publishGroups, $shortKey)
     {
         $attributes = $this->getAttributes($eventData);
         $categories = $this->getCategories($eventData);
@@ -406,7 +400,7 @@ class CBIS extends \HbgEventImporter\Parser
         $newPostTitle = str_replace(" (copy)", "", trim($postTitle), $count);
         $newImage = (isset($eventData->Image->Url) ? $eventData->Image->Url : null);
         $eventId = $this->checkIfPostExists('event', $newPostTitle);
-        $uid = 'cbis-' . $eventData->Id;
+        $uid = 'cbis-' . $shortKey . '-' . $eventData->Id;
         $isUpdate = false;
         $accepted = -1;
 
@@ -429,8 +423,8 @@ class CBIS extends \HbgEventImporter\Parser
                     'post_status'             => $postStatus
                 ),
                 array(
-                    'uniqueId'                => 'cbis-' . $eventData->Id,
-                    '_event_manager_uid'      => 'cbis-' . $eventData->Id,
+                    'uniqueId'                => 'cbis-' . $shortKey . '-' . $eventData->Id,
+                    '_event_manager_uid'      => 'cbis-' . $shortKey . '-' . $eventData->Id,
                     'sync'                    => true,
                     'status'                  => isset($eventData->Status) && !empty($eventData->Status) ? $eventData->Status : null,
                     'image'                   => $newImage,
@@ -478,8 +472,10 @@ class CBIS extends \HbgEventImporter\Parser
     public function filter($categories)
     {
         $passes = true;
-        if (get_field('cbis_filter_categories', 'options')) {
-            $filters = array_map('trim', explode(',', get_field('cbis_filter_categories', 'options')));
+        $exclude = $this->apiKeys['cbis_exclude'];
+
+        if (! empty($exclude)) {
+            $filters = array_map('trim', explode(',', $exclude));
             $categoriesLower = array_map('strtolower', $categories);
 
             foreach ($filters as $filter) {

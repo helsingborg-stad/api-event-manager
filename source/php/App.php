@@ -174,11 +174,12 @@ class App
         if (have_rows('cbis_api_keys', 'option') ):
             while(have_rows('cbis_api_keys', 'option') ): the_row();
             $cbis_keys[] = array(
-                'cbis_key'      => get_sub_field('cbis_api_product_key'),
-                'cbis_geonode'  => get_sub_field('cbis_api_geonode_id'),
-                'cbis_event_id' => get_sub_field('cbis_event_id'),
-                'cbis_accom_id' => get_sub_field('cbis_accom_id'),
-                'cbis_todo_id'  => get_sub_field('cbis_todo_id'),
+                'cbis_key'           => get_sub_field('cbis_api_product_key'),
+                'cbis_geonode'       => get_sub_field('cbis_api_geonode_id'),
+                'cbis_event_id'      => get_sub_field('cbis_event_id'),
+                'cbis_exclude'       => get_sub_field('cbis_filter_categories'),
+                'cbis_groups'        => get_sub_field('cbis_publishing_groups'),
+                'cbis_location_ids'  => get_sub_field('cbis_location_ids'),
             );
             endwhile;
         endif;
@@ -198,7 +199,7 @@ class App
             'close'             => __("Close", 'event-manager'),
             'add_images'        => __("Add images", 'event-manager'),
             'similar_posts'     => __("Similar posts", 'event-manager'),
-            'new_data_imported' => __("New data imported or updated", 'event-manager'),
+            'new_data_imported' => __("Imported or updated data", 'event-manager'),
             'events'            => __("Events", 'event-manager'),
             'locations'         => __("Locations", 'event-manager'),
             'contacts'          => __("Contacts", 'event-manager'),

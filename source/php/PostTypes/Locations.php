@@ -72,7 +72,7 @@ class Locations extends \HbgEventImporter\Entity\CustomPostType
             <a href="#" class="deny button-primary ' . $second . '" postid="' . $postId . '">' . __('Deny', 'event-manager') . '</a>';
         });
         $this->addTableColumn('date', __('Date', 'event-manager'));
-        add_action('manage_posts_extra_tablenav', array($this, 'tablenavButtons'));
+        add_filter('views_edit-location', array($this, 'addImportButtons'));
         add_action('acf/save_post', array($this, 'updateAddressData'), 20);
         add_action('publish_location', array($this, 'setAcceptedOnPublish'), 10, 2);
         add_filter('acf/load_value/name=geo_map', array($this, 'setMapValues'), 10, 3);
@@ -114,22 +114,20 @@ class Locations extends \HbgEventImporter\Entity\CustomPostType
     }
 
     /**
-     * Add buttons to start parsing locations from Cbis
+     * Add buttons to start parsing xcap and Cbis
      * @return void
      */
-    public function tablenavButtons($which)
+    public function addImportButtons($views)
     {
-        global $current_screen;
-
-        if ($current_screen->id != 'edit-location' || $which != 'top') {
-            return;
+        if (current_user_can('administrator')) {
+            $button  = '<div class="import-buttons actions">';
+            if (have_rows('cbis_api_keys', 'option') ) {
+                $button .= '<div class="button-primary extraspace" id="cbislocation">' . __('Import CBIS locations', 'event-manager') . '</div>';
+            }
+            $button .= '</div>';
+            $views['import-buttons'] = $button;
         }
-
-        if (current_user_can('manage_options')) {
-            echo '<div class="alignleft actions" style="position: relative;">';
-            echo '<div class="button-primary extraspace" id="cbislocation">' . __('Import CBIS locations', 'event-manager') . '</div>';
-            echo '</div>';
-        }
+        return $views;
     }
 
     /**

@@ -80,18 +80,21 @@ class CbisLocation extends \HbgEventImporter\Parser
         $this->collectDataForLevenshtein();
         $this->client = new \SoapClient($this->url, array('keep_alive' => false));
 
-        $cbisKey = get_option('options_cbis_api_key');
-        $cbisId = intval(get_option('options_cbis_api_id'));
-        $cbisCategory = 14086;
+        // CBIS API keys and settings
+        $cbisKey         = $this->apiKeys['cbis_key'];
+        $cbisId          = $this->apiKeys['cbis_geonode'];
+        // Fixa denna
+        $cbisCategory    = $this->apiKeys['cbis_event_id'];
+
         $defaultLocation = get_field('default_city', 'option') ? get_field('default_city', 'option') : null;
-        $postStatus = get_field('cbis_post_status', 'option') ? get_field('cbis_post_status', 'option') : 'publish';
+        $postStatus      = get_field('cbis_post_status', 'option') ? get_field('cbis_post_status', 'option') : 'publish';
 
         if (!isset($cbisKey) || empty($cbisKey) || !isset($cbisId) || empty($cbisId)) {
             throw new \Exception('Needed authorization information (CBIS API id and/or CBIS API key) is missing.');
         }
 
         // Number of arenas to get, 200 to get all
-        $getLength = 200;
+        $getLength = 500;
 
         $requestParams = array(
             'apiKey' => $cbisKey,
@@ -129,6 +132,7 @@ class CbisLocation extends \HbgEventImporter\Parser
         $productCategory = 'arena';
 
         foreach($this->arenas as $key => $arenaData) {
+break;
             $this->saveArena($arenaData, $productCategory, $defaultLocation);
         }
 
@@ -136,7 +140,6 @@ class CbisLocation extends \HbgEventImporter\Parser
         $requestParams['filter']['ProductType'] = "Product";
 
         //Get and save "Accomodations" to locations
-        $requestParams['itemsPerPage'] = 300;
         $requestParams['categoryId'] = 14067;
         $requestParams['filter']['WithOccasionsOnly'] = false;
         $requestParams['filter']['ExcludeProductsWithoutOccasions'] = false;
@@ -144,12 +147,17 @@ class CbisLocation extends \HbgEventImporter\Parser
         $productCategory = 'accommodation';
         $this->accommodations = $this->client->ListAll($requestParams)->ListAllResult->Items->Product;
 
-        foreach ($this->accommodations as $accommodationData) {
+        $filteredProducts = array_filter($this->accommodations, function($obj){
+            if (isset($obj->ExpirationDate) && strtotime($obj->ExpirationDate) < strtotime("now")) {
+                return false;
+            }
+            return true;
+        });
+        foreach ($filteredProducts as $accommodationData) {
             $this->saveArena($accommodationData, $productCategory, $defaultLocation);
         }
 
         // Get and save "To do" to locations
-        $requestParams['itemsPerPage'] = 500;
         $requestParams['categoryId'] = 14085;
         $productCategory = 'to do';
         $this->todo = $this->client->ListAll($requestParams)->ListAllResult->Items->Product;
@@ -163,6 +171,7 @@ class CbisLocation extends \HbgEventImporter\Parser
         });
 
         foreach($filteredProducts as $key => $todoData) {
+break;
             $this->saveArena($todoData, $productCategory, $defaultLocation);
         }
 

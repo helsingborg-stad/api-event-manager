@@ -433,12 +433,12 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
     public function addImportButtons($views)
     {
         if (current_user_can('administrator')) {
-            $button  = '<div class="import-buttons actions" style="position: relative;">';
+            $button  = '<div class="import-buttons actions">';
             $button .= '<div class="button-primary extraspace" id="xcap">' . __('Import XCAP', 'event-manager') . '</div>';
-            $button .= '<div class="button-primary extraspace" id="cbis">' . __('Import CBIS', 'event-manager') . '</div>';
+            if (have_rows('cbis_api_keys', 'option') ) {
+                $button .= '<div class="button-primary extraspace" id="cbis">' . __('Import CBIS', 'event-manager') . '</div>';
+            }
             $button .= '<div class="button-primary extraspace" id="occasions">'.__('Collect event timestamps', 'event-manager').'</div>';
-
-            $button .= '<div class="button-primary extraspace" id="cbis-ajax">' . __('CBIS AJAX', 'event-manager') . '</div>';
 
             // Debug code
             $button .= '<a href="' . admin_url('options.php?page=import-events') . '" class="button" id="post-query-submit">DEBUG XCAP</a>';

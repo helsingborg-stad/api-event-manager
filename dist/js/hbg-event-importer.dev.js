@@ -368,10 +368,7 @@ ImportEvents.Parser.Eventhandling = (function ($) {
 
     var i                   = 0;
     var newPosts            = {events:0,locations:0,contacts:0};
-    var data                = {action : 'import_events',
-                                value : '',
-                                api_keys : cbis_ajax_vars.cbis_keys[i]
-                              };
+    var data                = {action:'import_events', value:'', api_keys:''};
     var short               = 200;
     var long                = 400;
     var timerId             = null;
@@ -380,7 +377,7 @@ ImportEvents.Parser.Eventhandling = (function ($) {
     function Eventhandling() {
         $(function() {
 
-            $(document).on('click', '#cbis, #xcap, #cbislocation', function (e) {
+            $(document).on('click', '#cbis, #xcap', function (e) {
                 e.preventDefault();
 
                 if (! loadingOccasions) {
@@ -388,41 +385,11 @@ ImportEvents.Parser.Eventhandling = (function ($) {
                     var button = $(this);
                     var storedCss = Eventhandling.prototype.collectCssFromButton(button);
                     Eventhandling.prototype.redLoadingButton(button, function() {
+                        // Get button id
                         data.value = button.attr('id');
 
-                        // function parseCBIS() {
-
-                        //     if( (typeof cbis_ajax_vars.cbis_keys[i] == 'undefined') ) {
-                        //         console.log('undefined key');
-                        //         return;
-                        //     }
-
-                        //     $.ajax({
-                        //         url: eventmanager.ajaxurl,
-                        //         type: 'post',
-                        //         data: data
-                        //         },
-                        //         beforeSend: function() {
-
-                        //         },
-                        //         success: function(response) {
-                        //             var newPosts = response;
-                        //             console.log( response );
-                        //             loadingOccasions = false;
-                        //             Eventhandling.prototype.dataPopUp(newPosts);
-                        //             Eventhandling.prototype.restoreButton(button, storedCss);
-
-                        //             i++;
-                        //             parseCBIS();
-                        //         }
-                        //     })
-                        // }
-
-                        if (button.attr('id') === "cbis") {
-                            console.log('run cbis');
-                            Eventhandling.prototype.parseCBIS(data, button, storedCss);
-                        } else {
-                            console.log('run xcap or locations');
+                        if (data.value === "xcap") {
+                            console.log('run xcap');
                             jQuery.post(ajaxurl, data, function(response) {
                             newPosts = response;
                             console.log(newPosts);
@@ -430,8 +397,28 @@ ImportEvents.Parser.Eventhandling = (function ($) {
                             Eventhandling.prototype.dataPopUp(newPosts);
                             Eventhandling.prototype.restoreButton(button, storedCss);
                             });
+                        } else if(data.value === "cbis") {
+                            console.log('run CBIS');
+                            Eventhandling.prototype.parseCbis(data, button, storedCss);
                         }
 
+                        return;
+                    });
+                }
+            });
+
+            $(document).on('click', '#cbislocation', function (e) {
+                e.preventDefault();
+
+                if (! loadingOccasions) {
+                    loadingOccasions = true;
+                    var button = $(this);
+                    var storedCss = Eventhandling.prototype.collectCssFromButton(button);
+                    Eventhandling.prototype.redLoadingButton(button, function() {
+                        console.log('run CBIS Location');
+                        Eventhandling.prototype.parseCbislocation({action:'import_events', value:'cbislocation', api_keys:''}, button, storedCss);
+
+                        return;
                     });
                 }
             });
@@ -459,16 +446,110 @@ ImportEvents.Parser.Eventhandling = (function ($) {
         }.bind(this));
     }
 
-    Eventhandling.prototype.parseCBIS = function(data, button, storedCss) {
-
-        // Show result if theres no api keys left
+    // Parse CBIS locations, loop through each API key
+    Eventhandling.prototype.parseCbislocation = function(ajaxvars, button, storedCss) {
+        // Show result if there's no API keys left to parse
         if( (typeof cbis_ajax_vars.cbis_keys[i] == 'undefined') ) {
-            console.log('undefined key');
+            console.log('parsing done, return');
             Eventhandling.prototype.dataPopUp(newPosts);
             Eventhandling.prototype.restoreButton(button, storedCss);
             return;
         }
 
+        var j = 0;
+
+        var functionOne = function() {
+            var r = $.Deferred();
+
+            if ( j === 1 ) {
+                console.log('each loc keys done, return');
+
+                return r;
+            }
+
+            ajaxvars.api_keys = cbis_ajax_vars.cbis_keys[i];
+
+            $.ajax({
+                url: eventmanager.ajaxurl,
+                type: 'post',
+                data: ajaxvars,
+                beforeSend: function() {
+                },
+                success: function(response) {
+                    // Update response object
+                    newPosts.events    += response.events;
+                    newPosts.locations += response.locations;
+                    newPosts.contacts  += response.contacts;
+
+                    console.log( i );
+                    console.log( response );
+                    console.log( newPosts );
+                    //loadingOccasions = false;
+
+                    // Run this function again
+                    j++;
+                    functionOne();
+                }
+            })
+        }
+
+        functionOne();
+
+        // Run this function again
+// Fixa callback
+        functionOne().done( Eventhandling.prototype.parseCbislocation(data, button, storedCss) );
+        //Eventhandling.prototype.parseCbislocation(data, button, storedCss);
+    };
+
+    // Parse each location ID
+    Eventhandling.prototype.parseEachId = function(ajaxvars){
+
+        console.log();
+        console.log(ajaxvars);
+
+        // if( (typeof cbis_ajax_vars.cbis_keys[i] == 'undefined') ) {
+        //     console.log('each loc keys done, return');
+        //     return;
+        // }
+
+        $.ajax({
+            url: eventmanager.ajaxurl,
+            type: 'post',
+            data: ajaxvars,
+            beforeSend: function() {
+
+            },
+            success: function(response) {
+                // Update response object
+                newPosts.events    += response.events;
+                newPosts.locations += response.locations;
+                newPosts.contacts  += response.contacts;
+
+                console.log( i );
+                console.log( response );
+                console.log( newPosts );
+                loadingOccasions = false;
+
+                // Run this function again
+                //i++;
+                //Eventhandling.prototype.parseEachId(ajaxvars, button, storedCss);
+            }
+        })
+
+    };
+
+
+    // Parse CBIS, loop through each API key
+    Eventhandling.prototype.parseCbis = function(data, button, storedCss) {
+        // Show result if there's no API keys left to parse
+        if( (typeof cbis_ajax_vars.cbis_keys[i] == 'undefined') ) {
+            console.log('parsing done, return');
+            Eventhandling.prototype.dataPopUp(newPosts);
+            Eventhandling.prototype.restoreButton(button, storedCss);
+            return;
+        }
+
+        data.api_keys = cbis_ajax_vars.cbis_keys[i];
         $.ajax({
             url: eventmanager.ajaxurl,
             type: 'post',
@@ -482,16 +563,16 @@ ImportEvents.Parser.Eventhandling = (function ($) {
                 newPosts.locations += response.locations;
                 newPosts.contacts  += response.contacts;
 
+                console.log( i );
+                console.log( response );
                 console.log( newPosts );
                 loadingOccasions = false;
-                // Eventhandling.prototype.dataPopUp(newPosts);
-                // Eventhandling.prototype.restoreButton(button, storedCss);
 
+                // Run this function again
                 i++;
-                Eventhandling.prototype.parseCBIS(data, button, storedCss);
+                Eventhandling.prototype.parseCbis(data, button, storedCss);
             }
         })
-
     };
 
     Eventhandling.prototype.dataPopUp = function(newData){

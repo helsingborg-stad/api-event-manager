@@ -83,47 +83,6 @@
                 "return_format": "value"
             },
             {
-                "key": "field_58130c6c12be0",
-                "label": "Exclude categories",
-                "name": "cbis_filter_categories",
-                "type": "text",
-                "instructions": "Enter the name of the categories that you want to exclude from the import. Separate with commas.",
-                "required": 0,
-                "conditional_logic": 0,
-                "wrapper": {
-                    "width": "",
-                    "class": "",
-                    "id": ""
-                },
-                "default_value": "",
-                "placeholder": "",
-                "prepend": "",
-                "append": "",
-                "maxlength": ""
-            },
-            {
-                "key": "field_585be263e7698",
-                "label": "Default publishing groups",
-                "name": "cbis_publishing_groups",
-                "type": "taxonomy",
-                "instructions": "Select the groups that you want to set as default for all imported events.",
-                "required": 0,
-                "conditional_logic": 0,
-                "wrapper": {
-                    "width": "",
-                    "class": "",
-                    "id": ""
-                },
-                "taxonomy": "event_groups",
-                "field_type": "checkbox",
-                "allow_null": 0,
-                "add_term": 0,
-                "save_terms": 1,
-                "load_terms": 0,
-                "return_format": "id",
-                "multiple": 0
-            },
-            {
                 "key": "field_587648c2581e9",
                 "label": "API keys",
                 "name": "cbis_api_keys",
@@ -200,15 +159,76 @@
                         "maxlength": ""
                     },
                     {
-                        "key": "field_58764a87581ed",
-                        "label": "Accommodations ID",
-                        "name": "cbis_accom_id",
-                        "type": "text",
-                        "instructions": "ID of the category \"accommodations\".",
+                        "key": "field_5878a78737d0b",
+                        "label": "Location IDs",
+                        "name": "cbis_location_ids",
+                        "type": "repeater",
+                        "instructions": "Add IDs to get locations from different categories.",
                         "required": 0,
                         "conditional_logic": 0,
                         "wrapper": {
-                            "width": "50",
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "collapsed": "",
+                        "min": "",
+                        "max": "",
+                        "layout": "table",
+                        "button_label": "Add",
+                        "sub_fields": [
+                            {
+                                "key": "field_5878a7a737d0c",
+                                "label": "Category ID",
+                                "name": "cbis_location_cat_id",
+                                "type": "number",
+                                "instructions": "",
+                                "required": 0,
+                                "conditional_logic": 0,
+                                "wrapper": {
+                                    "width": "20",
+                                    "class": "",
+                                    "id": ""
+                                },
+                                "default_value": "",
+                                "placeholder": "",
+                                "prepend": "",
+                                "append": "",
+                                "min": "",
+                                "max": "",
+                                "step": ""
+                            },
+                            {
+                                "key": "field_5878a80137d0d",
+                                "label": "Category name",
+                                "name": "cbis_location_name",
+                                "type": "text",
+                                "instructions": "Name of the category.",
+                                "required": 0,
+                                "conditional_logic": 0,
+                                "wrapper": {
+                                    "width": "80",
+                                    "class": "",
+                                    "id": ""
+                                },
+                                "default_value": "",
+                                "placeholder": "e.g. Accommodations",
+                                "prepend": "",
+                                "append": "",
+                                "maxlength": ""
+                            }
+                        ]
+                    },
+                    {
+                        "key": "field_5878a6f38bbaa",
+                        "label": "Exclude categories",
+                        "name": "cbis_filter_categories",
+                        "type": "text",
+                        "instructions": "Enter the name of the categories that you want to exclude from the import. Separate with commas.",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
                             "class": "",
                             "id": ""
                         },
@@ -219,23 +239,26 @@
                         "maxlength": ""
                     },
                     {
-                        "key": "field_58764af6581ee",
-                        "label": "To do ID",
-                        "name": "cbis_todo_id",
-                        "type": "text",
-                        "instructions": "ID of the category \"to do\".",
+                        "key": "field_5878a7338bbab",
+                        "label": "Default publishing groups",
+                        "name": "cbis_publishing_groups",
+                        "type": "taxonomy",
+                        "instructions": "Select the groups that you want to set as default for all imported events.",
                         "required": 0,
                         "conditional_logic": 0,
                         "wrapper": {
-                            "width": "50",
+                            "width": "",
                             "class": "",
                             "id": ""
                         },
-                        "default_value": "",
-                        "placeholder": "",
-                        "prepend": "",
-                        "append": "",
-                        "maxlength": ""
+                        "taxonomy": "event_groups",
+                        "field_type": "checkbox",
+                        "allow_null": 0,
+                        "add_term": 0,
+                        "save_terms": 1,
+                        "load_terms": 0,
+                        "return_format": "id",
+                        "multiple": 0
                     }
                 ]
             }

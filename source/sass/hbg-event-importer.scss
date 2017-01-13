@@ -250,6 +250,11 @@
   padding: 4px 8px;
   line-height: normal;
   height: auto;
+  position: relative;
+}
+
+#cbislocation {
+  display: block;
 }
 
 #blackOverlay {
