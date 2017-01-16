@@ -6,6 +6,7 @@ abstract class Parser
 {
     protected $url;
     protected $apiKeys;
+    protected $cbisLocation;
     protected $nrOfNewEvents;
     protected $nrOfNewLocations;
     protected $nrOfNewContacts;
@@ -61,15 +62,16 @@ abstract class Parser
         return false;
     }
 
-    public function __construct($url, $apiKeys = null)
+    public function __construct($url, $apiKeys = null, $cbisLocation = null)
     {
         ini_set('max_execution_time', 300);
 
-        $this->url = $url;
-        $this->apiKeys = $apiKeys;
-        $this->nrOfNewEvents = 0;
+        $this->url              = $url;
+        $this->apiKeys          = $apiKeys;
+        $this->cbisLocation     = $cbisLocation;
+        $this->nrOfNewEvents    = 0;
         $this->nrOfNewLocations = 0;
-        $this->nrOfNewContacts = 0;
+        $this->nrOfNewContacts  = 0;
         $this->start();
         //$this->done();
     }

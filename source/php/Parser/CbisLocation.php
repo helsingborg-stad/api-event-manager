@@ -17,28 +17,16 @@ class CbisLocation extends \HbgEventImporter\Parser
     private $client = null;
 
     /**
-     * Which product type to get
-     * @var string Product|Arena
-     */
-    private $productType = 'Arena';
-
-    /**
      * Holds a list of all found arenas
      * @var array
      */
     private $arenas = array();
 
     /**
-     * Holds a list of all found accommodations
+     * Holds a list of all found products
      * @var array
      */
-    private $accommodations = array();
-
-    /**
-     * Holds a list of all found to do
-     * @var array
-     */
-    private $todo = array();
+    private $products = array();
 
     //CBIS attribute id's we use
     const ATTRIBUTE_NAME                        =   99;
@@ -80,11 +68,14 @@ class CbisLocation extends \HbgEventImporter\Parser
         $this->collectDataForLevenshtein();
         $this->client = new \SoapClient($this->url, array('keep_alive' => false));
 
-        // CBIS API keys and settings
+        // CBIS API keys
         $cbisKey         = $this->apiKeys['cbis_key'];
         $cbisId          = $this->apiKeys['cbis_geonode'];
-        // Fixa denna
-        $cbisCategory    = $this->apiKeys['cbis_event_id'];
+
+        // Location data
+        $isArena         = $this->cbisLocation['arena'];
+        $cbisCategory    = $this->cbisLocation['cbis_location_cat_id'];
+        $cbisLocName     = $this->cbisLocation['cbis_location_name'];
 
         $defaultLocation = get_field('default_city', 'option') ? get_field('default_city', 'option') : null;
         $postStatus      = get_field('cbis_post_status', 'option') ? get_field('cbis_post_status', 'option') : 'publish';
@@ -114,7 +105,7 @@ class CbisLocation extends \HbgEventImporter\Parser
                 'MaxLongitude' => null,
                 'MinLongitude' => null,
                 'SubCategoryId' => 0,
-                'ProductType' => $this->productType,
+                'ProductType' => 'Arena',
                 'WithOccasionsOnly' => true,
                 'ExcludeProductsWithoutOccasions' => true,
                 'ExcludeProductsNotInCurrentLanguage' => false,
@@ -127,53 +118,53 @@ class CbisLocation extends \HbgEventImporter\Parser
             )
         );
 
-        //Get and save event "arenas" to locations
-        $this->arenas = $this->client->ListAll($requestParams)->ListAllResult->Items->Product;
-        $productCategory = 'arena';
+        if (intval($isArena)) {
+            // Get and save event "arenas" to locations
+            $this->arenas = $this->client->ListAll($requestParams)->ListAllResult->Items->Product;
 
-        foreach($this->arenas as $key => $arenaData) {
-break;
-            $this->saveArena($arenaData, $productCategory, $defaultLocation);
-        }
-
-        // Adjust request parameters for getting products
-        $requestParams['filter']['ProductType'] = "Product";
-
-        //Get and save "Accomodations" to locations
-        $requestParams['categoryId'] = 14067;
-        $requestParams['filter']['WithOccasionsOnly'] = false;
-        $requestParams['filter']['ExcludeProductsWithoutOccasions'] = false;
-        $requestParams['filter']['StartDate'] = null;
-        $productCategory = 'accommodation';
-        $this->accommodations = $this->client->ListAll($requestParams)->ListAllResult->Items->Product;
-
-        $filteredProducts = array_filter($this->accommodations, function($obj){
-            if (isset($obj->ExpirationDate) && strtotime($obj->ExpirationDate) < strtotime("now")) {
-                return false;
+            foreach($this->arenas as $key => $arenaData) {
+                $this->saveArena($arenaData, $cbisLocName, $defaultLocation);
             }
-            return true;
-        });
-        foreach ($filteredProducts as $accommodationData) {
-            $this->saveArena($accommodationData, $productCategory, $defaultLocation);
-        }
 
-        // Get and save "To do" to locations
-        $requestParams['categoryId'] = 14085;
-        $productCategory = 'to do';
-        $this->todo = $this->client->ListAll($requestParams)->ListAllResult->Items->Product;
+        } else {
+            // Adjust request parameters for getting products
+            $requestParams['filter']['ProductType'] = "Product";
+            $requestParams['filter']['WithOccasionsOnly'] = false;
+            $requestParams['filter']['ExcludeProductsWithoutOccasions'] = false;
+            $requestParams['filter']['StartDate'] = null;
 
-        // Filter expired products
-        $filteredProducts = array_filter($this->todo, function($obj){
-            if (isset($obj->ExpirationDate) && strtotime($obj->ExpirationDate) < strtotime("now")) {
-                return false;
+            $this->products = $this->client->ListAll($requestParams)->ListAllResult->Items->Product;
+
+            // Filter expired products
+            $filteredProducts = array_filter($this->products, function($obj){
+                if (isset($obj->ExpirationDate) && strtotime($obj->ExpirationDate) < strtotime("now")) {
+                    return false;
+                }
+                return true;
+            });
+            foreach ($filteredProducts as $product) {
+                $this->saveArena($product, $cbisLocName, $defaultLocation);
             }
-            return true;
-        });
-
-        foreach($filteredProducts as $key => $todoData) {
-break;
-            $this->saveArena($todoData, $productCategory, $defaultLocation);
         }
+
+
+//      Get and save "To do" to locations
+//         $requestParams['categoryId'] = 14085;
+//         $productCategory = 'to do';
+//         $this->todo = $this->client->ListAll($requestParams)->ListAllResult->Items->Product;
+
+//         // Filter expired products
+//         $filteredProducts = array_filter($this->todo, function($obj){
+//             if (isset($obj->ExpirationDate) && strtotime($obj->ExpirationDate) < strtotime("now")) {
+//                 return false;
+//             }
+//             return true;
+//         });
+
+//         foreach($filteredProducts as $key => $todoData) {
+// break;
+//             $this->saveArena($todoData, $productCategory, $defaultLocation);
+//         }
 
     }
 
