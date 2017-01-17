@@ -98,7 +98,7 @@ ImportEvents.Parser.Eventhandling = (function ($) {
         // Show result if there's no API keys left to parse
         if( (typeof data.api_keys == 'undefined') ) {
             loadingOccasions = false;
-            console.log(newPosts);
+            //console.log(newPosts);
             Eventhandling.prototype.dataPopUp(newPosts);
             Eventhandling.prototype.restoreButton(button, storedCss);
 
@@ -114,9 +114,6 @@ ImportEvents.Parser.Eventhandling = (function ($) {
                 newPosts.events    += response.events;
                 newPosts.locations += response.locations;
                 newPosts.contacts  += response.contacts;
-
-                console.log(response);
-
                 // Run function again
                 i++;
                 Eventhandling.prototype.parseEvents(data, button, storedCss);

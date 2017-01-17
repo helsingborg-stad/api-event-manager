@@ -44,10 +44,10 @@
             },
             {
                 "key": "field_587cc39d5ebc9",
-                "label": "API urls",
+                "label": "API links",
                 "name": "xcap_api_urls",
                 "type": "repeater",
-                "instructions": "",
+                "instructions": "Add one or many API links to Xcap",
                 "required": 0,
                 "conditional_logic": 0,
                 "wrapper": {
@@ -59,11 +59,11 @@
                 "min": "",
                 "max": "",
                 "layout": "block",
-                "button_label": "Add Row",
+                "button_label": "Add",
                 "sub_fields": [
                     {
                         "key": "field_587cc3c55ebca",
-                        "label": "API-url",
+                        "label": "API link",
                         "name": "xcap_api_url",
                         "type": "url",
                         "instructions": "",

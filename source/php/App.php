@@ -29,7 +29,7 @@ class App
 
         //Json load files
         //Remove filter acfJsonLoadPath if load ACF fields with PHP.
-        add_filter('acf/settings/load_json', array($this, 'acfJsonLoadPath'));
+        //add_filter('acf/settings/load_json', array($this, 'acfJsonLoadPath'));
         add_action('acf/init', array($this, 'acfSettings'));
         add_filter('acf/translate_field', array($this, 'acfTranslationFilter'));
 
@@ -170,7 +170,7 @@ class App
         global $current_screen;
         $type = $current_screen->post_type;
         if ($type == 'event' || $type == 'location' || $type == 'contact' || $type == 'sponsor' || $type == 'package' || $type == 'membership-card') {
-            wp_enqueue_script('hbg-event-importer', HBGEVENTIMPORTER_URL . '/dist/js/hbg-event-importer.dev.js');
+            wp_enqueue_script('hbg-event-importer', HBGEVENTIMPORTER_URL . '/dist/js/hbg-event-importer.min.js');
         }
 
         wp_localize_script('hbg-event-importer', 'eventmanager', array(

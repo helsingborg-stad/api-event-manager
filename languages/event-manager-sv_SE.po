@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Event Manager\n"
-"POT-Creation-Date: 2017-01-04 08:42+0100\n"
-"PO-Revision-Date: 2017-01-04 08:42+0100\n"
+"POT-Creation-Date: 2017-01-17 10:03+0100\n"
+"PO-Revision-Date: 2017-01-17 10:06+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: sv\n"
@@ -612,7 +612,7 @@ msgstr "Telefon"
 msgid "Organizer Email"
 msgstr "E-postadress"
 
-#: source/php/Acf/AcfFields.php:1873 source/php/App.php:185
+#: source/php/Acf/AcfFields.php:1873 source/php/App.php:189
 #: source/php/PostTypes/Contacts.php:10
 msgid "Contacts"
 msgstr "Kontakter"
@@ -728,7 +728,7 @@ msgid "Vimeo link"
 msgstr "Vimeo-länk"
 
 #: source/php/Acf/AcfFields.php:2600 source/php/Acf/AcfFields.php:2632
-#: source/php/Acf/AcfFields.php:3027 source/php/Taxonomy/EventGroups.php:30
+#: source/php/Acf/AcfFields.php:3163 source/php/Taxonomy/EventGroups.php:30
 msgid "Groups"
 msgstr "Grupper"
 
@@ -795,46 +795,92 @@ msgstr "Visar varning om inga evenemang har importerats senaste veckan."
 msgid "CBIS"
 msgstr ""
 
-#: source/php/Acf/AcfFields.php:2771
-msgid "API Key"
-msgstr "API-nyckel"
-
-#: source/php/Acf/AcfFields.php:2792
-msgid "API GeoNode Id"
-msgstr ""
-
-#: source/php/Acf/AcfFields.php:2811 source/php/Acf/AcfFields.php:2919
+#: source/php/Acf/AcfFields.php:2771 source/php/Acf/AcfFields.php:3018
 msgid "Daily import"
 msgstr "Daglig import"
 
-#: source/php/Acf/AcfFields.php:2822
+#: source/php/Acf/AcfFields.php:2782
 msgid "Enable daily automatic import from CBIS"
 msgstr "Daglig automatisk import från CBIS"
 
-#: source/php/Acf/AcfFields.php:2827 source/php/Acf/AcfFields.php:2935
+#: source/php/Acf/AcfFields.php:2787 source/php/Acf/AcfFields.php:3034
 msgid "Post status"
 msgstr "Poststatus"
 
-#: source/php/Acf/AcfFields.php:2830 source/php/Acf/AcfFields.php:2938
+#: source/php/Acf/AcfFields.php:2790 source/php/Acf/AcfFields.php:3037
 msgid "Select status of imported events."
 msgstr "Välj status för importerade evenemang."
 
-#: source/php/Acf/AcfFields.php:2839 source/php/Acf/AcfFields.php:2947
+#: source/php/Acf/AcfFields.php:2799 source/php/Acf/AcfFields.php:3046
 #: source/php/Admin/FilterRestrictions.php:103
 msgid "Draft"
 msgstr "Utkast"
 
-#: source/php/Acf/AcfFields.php:2840 source/php/Acf/AcfFields.php:2948
+#: source/php/Acf/AcfFields.php:2800 source/php/Acf/AcfFields.php:3047
 #: source/php/Admin/FilterRestrictions.php:99
 #: source/php/PostTypes/Events.php:92
 msgid "Published"
 msgstr "Publicerad"
 
-#: source/php/Acf/AcfFields.php:2851 source/php/Acf/AcfFields.php:2959
+#: source/php/Acf/AcfFields.php:2811
+msgid "API keys"
+msgstr "API-nycklar"
+
+#: source/php/Acf/AcfFields.php:2826
+msgid "Add key"
+msgstr "Lägg till nyckel"
+
+#: source/php/Acf/AcfFields.php:2830
+msgid "API key"
+msgstr "API-nyckel"
+
+#: source/php/Acf/AcfFields.php:2849
+msgid "API GeoNode ID"
+msgstr ""
+
+#: source/php/Acf/AcfFields.php:2868
+msgid "Event ID"
+msgstr "ID för evenemang"
+
+#: source/php/Acf/AcfFields.php:2871
+msgid "ID of the category \"events\" used in CBIS."
+msgstr "ID-nummer för kategorin \"evenemang\" som finns i CBIS."
+
+#: source/php/Acf/AcfFields.php:2887
+msgid "Location categories"
+msgstr "Kategorier för platser"
+
+#: source/php/Acf/AcfFields.php:2890
+msgid "Add one or many IDs to get locations from different categories."
+msgstr ""
+"Lägg till ett eller flera ID-nummer för att hämta platser inom olika "
+"kategorier."
+
+#: source/php/Acf/AcfFields.php:2902 source/php/Acf/AcfFields.php:3073
+msgid "Add"
+msgstr "Lägg till"
+
+#: source/php/Acf/AcfFields.php:2906
+msgid "Category ID"
+msgstr "ID för kategorin"
+
+#: source/php/Acf/AcfFields.php:2927
+msgid "Category name"
+msgstr "Kategorinamn"
+
+#: source/php/Acf/AcfFields.php:2930
+msgid "Name of the category."
+msgstr "Kategorins namn"
+
+#: source/php/Acf/AcfFields.php:2939
+msgid "e.g. Accommodations"
+msgstr "t.ex. Boenden"
+
+#: source/php/Acf/AcfFields.php:2948 source/php/Acf/AcfFields.php:3093
 msgid "Exclude categories"
 msgstr "Uteslut kategorier"
 
-#: source/php/Acf/AcfFields.php:2854 source/php/Acf/AcfFields.php:2962
+#: source/php/Acf/AcfFields.php:2951 source/php/Acf/AcfFields.php:3096
 msgid ""
 "Enter the name of the categories that you want to exclude from the import. "
 "Separate with commas."
@@ -842,24 +888,36 @@ msgstr ""
 "Skriv namnet på de kategorier ni vill utesluta från import. Separera med "
 "kommatecken."
 
-#: source/php/Acf/AcfFields.php:2870 source/php/Acf/AcfFields.php:2978
+#: source/php/Acf/AcfFields.php:2967 source/php/Acf/AcfFields.php:3112
 msgid "Default publishing groups"
 msgstr "Förvalda publiceringsgrupper"
 
-#: source/php/Acf/AcfFields.php:2873 source/php/Acf/AcfFields.php:2981
+#: source/php/Acf/AcfFields.php:2970 source/php/Acf/AcfFields.php:3115
 msgid ""
 "Select the groups that you want to set as default for all imported events."
 msgstr "Välj en eller flera grupper som importerade evenemang ska tillhöra."
 
-#: source/php/Acf/AcfFields.php:2915
-msgid "Xcap (Mittkulturkort.se)"
+#: source/php/Acf/AcfFields.php:3014
+msgid "Xcap"
 msgstr ""
 
-#: source/php/Acf/AcfFields.php:2930
+#: source/php/Acf/AcfFields.php:3029
 msgid "Enable daily automatic import from XCAP"
 msgstr "Daglig automatisk import från XCAP"
 
-#: source/php/Acf/AcfFields.php:3023
+#: source/php/Acf/AcfFields.php:3058
+msgid "API links"
+msgstr "API-länkar"
+
+#: source/php/Acf/AcfFields.php:3061
+msgid "Add one or many API links to Xcap"
+msgstr "Lägg till en eller flera API-länkar till Xcap"
+
+#: source/php/Acf/AcfFields.php:3077
+msgid "API link"
+msgstr "API-länk"
+
+#: source/php/Acf/AcfFields.php:3159
 msgid "Publishing groups"
 msgstr "Publiceringsgrupper"
 
@@ -932,164 +990,164 @@ msgstr ""
 "Vänligen ladda upp bilder som är så stora som möjligt och som kan beskäras "
 "utan att förstöra det bilden vill förmedla (t.ex. bilder med text)."
 
-#: source/php/App.php:174
+#: source/php/App.php:178
 msgid "Title is missing"
 msgstr "Titel saknas"
 
-#: source/php/App.php:175
+#: source/php/App.php:179
 msgid "Create new contact"
 msgstr "Skapa ny kontakt"
 
-#: source/php/App.php:176
+#: source/php/App.php:180
 msgid "Create new sponsor"
 msgstr "Skapa ny sponsor"
 
-#: source/php/App.php:177
+#: source/php/App.php:181
 msgid "Create new location"
 msgstr "Skapa ny plats"
 
-#: source/php/App.php:178
+#: source/php/App.php:182
 msgid "Create new membership card"
 msgstr "Skapa nytt medlemskort"
 
-#: source/php/App.php:179
+#: source/php/App.php:183
 msgid "Close"
 msgstr "Stäng"
 
-#: source/php/App.php:180
+#: source/php/App.php:184
 msgid "Add images"
 msgstr "Lägg till bilder"
 
-#: source/php/App.php:181
+#: source/php/App.php:185
 msgid "Similar posts"
 msgstr "Liknande inlägg"
 
-#: source/php/App.php:182
-msgid "New data imported or updated"
-msgstr "Importerad eller uppdaterad data"
+#: source/php/App.php:186
+msgid "Imported or updated data"
+msgstr ""
 
-#: source/php/App.php:183
+#: source/php/App.php:187
 msgid "Events"
 msgstr "Evenemang"
 
-#: source/php/App.php:184 source/php/PostTypes/Locations.php:12
+#: source/php/App.php:188 source/php/PostTypes/Locations.php:12
 msgid "Locations"
 msgstr "Platser"
 
-#: source/php/App.php:186
+#: source/php/App.php:190
 msgid "Time until reload"
 msgstr "Laddar om sidan"
 
-#: source/php/App.php:187
+#: source/php/App.php:191
 msgid "Loading"
 msgstr "Hämtar"
 
-#: source/php/App.php:188
+#: source/php/App.php:192
 msgid "Choose time"
 msgstr "Välj tidpunkt"
 
-#: source/php/App.php:189
+#: source/php/App.php:193
 msgid "Time"
 msgstr "Tid"
 
-#: source/php/App.php:190
+#: source/php/App.php:194
 msgid "Hour"
 msgstr "Timme"
 
-#: source/php/App.php:191
+#: source/php/App.php:195
 msgid "Minute"
 msgstr "Minut"
 
-#: source/php/App.php:192
+#: source/php/App.php:196
 msgid "Done"
 msgstr "Klar"
 
-#: source/php/App.php:193
+#: source/php/App.php:197
 msgid "Now"
 msgstr "Nu"
 
-#: source/php/App.php:207 source/php/App.php:208
+#: source/php/App.php:265 source/php/App.php:266
 msgid "Import events"
 msgstr "Importera evenemang"
 
-#: source/php/App.php:218 source/php/App.php:219 source/php/App.php:229
+#: source/php/App.php:276 source/php/App.php:277 source/php/App.php:287
 msgid "Import CBIS events"
 msgstr "Importera CBIS evenemang"
 
-#: source/php/App.php:228 source/php/PostTypes/Locations.php:130
+#: source/php/App.php:286 source/php/PostTypes/Locations.php:125
 msgid "Import CBIS locations"
 msgstr "Importera CBIS platser"
 
-#: source/php/App.php:238 source/php/App.php:239
+#: source/php/App.php:295 source/php/App.php:296
 msgid "Delete all events"
 msgstr "Ta bort alla evenemang"
 
-#: source/php/App.php:350
+#: source/php/App.php:407
 msgid "Event contributor"
 msgstr "Evenemangshanterare"
 
-#: source/php/Entity/CustomPostType.php:60
+#: source/php/Entity/CustomPostType.php:92
 msgid "API-url"
 msgstr "API-url"
 
-#: source/php/Entity/CustomPostType.php:150
+#: source/php/Entity/CustomPostType.php:162
 msgid "Something went wrong!"
 msgstr "Något gick fel!"
 
-#: source/php/Entity/CustomPostType.php:196
-#: source/php/Entity/CustomPostType.php:197
+#: source/php/Entity/CustomPostType.php:208
+#: source/php/Entity/CustomPostType.php:209
 #, php-format
 msgid "Add new %s"
 msgstr "Lägg till %s"
 
-#: source/php/Entity/CustomPostType.php:198
+#: source/php/Entity/CustomPostType.php:210
 #, php-format
 msgid "Edit %s"
 msgstr "Redigera %s"
 
-#: source/php/Entity/CustomPostType.php:199
+#: source/php/Entity/CustomPostType.php:211
 #, php-format
 msgid "New %s"
 msgstr "Nytt %s"
 
-#: source/php/Entity/CustomPostType.php:200
+#: source/php/Entity/CustomPostType.php:212
 #, php-format
 msgid "View %s"
 msgstr "Visa %s"
 
-#: source/php/Entity/CustomPostType.php:201
+#: source/php/Entity/CustomPostType.php:213
 #, php-format
 msgid "Search %s"
 msgstr "Sök %s"
 
-#: source/php/Entity/CustomPostType.php:202
+#: source/php/Entity/CustomPostType.php:214
 #, php-format
 msgid "No %s found"
 msgstr "Inga %s hittades"
 
-#: source/php/Entity/CustomPostType.php:203
+#: source/php/Entity/CustomPostType.php:215
 #, php-format
 msgid "No %s found in trash"
 msgstr "Inga %s hittades i papperskorgen"
 
-#: source/php/Entity/CustomPostType.php:204
+#: source/php/Entity/CustomPostType.php:216
 #, php-format
 msgid "Parent %s:"
 msgstr "Förälder %s:"
 
-#: source/php/Entity/CustomPostType.php:308
+#: source/php/Entity/CustomPostType.php:320
 msgid "Post updated."
 msgstr "Inlägget uppdaterades."
 
-#: source/php/Entity/CustomPostType.php:309
+#: source/php/Entity/CustomPostType.php:321
 msgid "Post published."
 msgstr "Inlägget publicerades."
 
-#: source/php/Entity/CustomPostType.php:310
+#: source/php/Entity/CustomPostType.php:322
 msgid "Post submitted."
 msgstr "Inlägget uppdaterades."
 
-#: source/php/Entity/CustomPostType.php:311
+#: source/php/Entity/CustomPostType.php:323
 msgid "Post draft updated."
 msgstr "Utkast uppdaterades."
 
@@ -1101,7 +1159,7 @@ msgstr "Kunde inte skapa mappen"
 msgid "please go ahead and create it manually and rerun the import."
 msgstr "vänligen skapa den manuellt och gör om importen."
 
-#: source/php/Parser.php:87
+#: source/php/Parser.php:91
 msgid "Parser done."
 msgstr ""
 
@@ -1189,39 +1247,39 @@ msgstr "Sluttid får inte vara före starttid"
 msgid "Door time cannot be after start time"
 msgstr "Dörrtid får inte vara efter starttid"
 
-#: source/php/PostTypes/Events.php:449
+#: source/php/PostTypes/Events.php:438
 msgid "Import XCAP"
 msgstr "Importera XCAP"
 
-#: source/php/PostTypes/Events.php:450
+#: source/php/PostTypes/Events.php:441
 msgid "Import CBIS"
 msgstr "Importera CBIS"
 
-#: source/php/PostTypes/Events.php:451
+#: source/php/PostTypes/Events.php:443
 msgid "Collect event timestamps"
 msgstr "Spara tidsstämplar"
 
-#: source/php/PostTypes/Events.php:464
+#: source/php/PostTypes/Events.php:462
 msgid "No post to duplicate has been supplied!"
 msgstr "Post att duplicera saknas!"
 
-#: source/php/PostTypes/Events.php:528
+#: source/php/PostTypes/Events.php:526
 msgid "Event creation failed, could not find original event"
 msgstr "Dupliceringen misslyckades, kunde inte hitta originalevenemanget"
 
-#: source/php/PostTypes/Events.php:543
+#: source/php/PostTypes/Events.php:541
 msgid "Create similar item"
 msgstr "Skapa ett liknande evenemang"
 
-#: source/php/PostTypes/Events.php:543
+#: source/php/PostTypes/Events.php:541
 msgid "Are you sure you want to clone this event?"
 msgstr "Är du säker på att du vill skapa en dubblett av evenemanget?"
 
-#: source/php/PostTypes/Events.php:543
+#: source/php/PostTypes/Events.php:541
 msgid "Clone"
 msgstr "Duplicera"
 
-#: source/php/PostTypes/Events.php:559
+#: source/php/PostTypes/Events.php:557
 #, php-format
 msgid ""
 "This is a duplicate of the event: %s. If this is a new occasion for the same "
@@ -1231,11 +1289,11 @@ msgstr ""
 "tidpunkt för ett redan existerande evenemang, vänligen %s och publicera "
 "originalversionen."
 
-#: source/php/PostTypes/Events.php:559
+#: source/php/PostTypes/Events.php:557
 msgid "edit"
 msgstr "uppdatera"
 
-#: source/php/PostTypes/Events.php:583
+#: source/php/PostTypes/Events.php:581
 msgid ""
 "Please do not enter information that refers to information in another text "
 "field. It is not certain that all fields will be presented to the consumer "
@@ -1245,7 +1303,7 @@ msgstr ""
 "textfält. Det är inte säkert att alla fält kommer att presenteras för "
 "konsumenten och kan därför bli missledande."
 
-#: source/php/PostTypes/Events.php:609
+#: source/php/PostTypes/Events.php:606
 msgid ""
 "CBIS have not imported any events for atleast 7 days. Please control the "
 "importer."
@@ -1253,7 +1311,7 @@ msgstr ""
 "Inga evenemang från CBIS har importerats de senaste 7 dagarna. Vänligen "
 "kontrollera inställningarna och importen."
 
-#: source/php/PostTypes/Events.php:635
+#: source/php/PostTypes/Events.php:632
 msgid ""
 "XCAP have not imported any events for atleast 7 days. Please control the "
 "importer."
@@ -1261,7 +1319,7 @@ msgstr ""
 "Inga evenemang från XCAP har importerats de senaste 7 dagarna. Vänligen "
 "kontrollera inställningarna och importen."
 
-#: source/php/PostTypes/Events.php:731
+#: source/php/PostTypes/Events.php:728
 msgid ""
 "You don't have access to edit this event. Contact an administrator for "
 "further information."
@@ -1506,6 +1564,12 @@ msgstr ""
 msgid "http://www.helsingborg.se"
 msgstr ""
 
+#~ msgid "API Key"
+#~ msgstr "API-nyckel"
+
+#~ msgid "New data imported or updated"
+#~ msgstr "Importerad eller uppdaterad data"
+
 #~ msgctxt "ACF"
 #~ msgid "Daily import"
 #~ msgstr "Daglig import"
@@ -1563,9 +1627,6 @@ msgstr ""
 
 #~ msgid "Add group price"
 #~ msgstr "Lägg till gruppris"
-
-#~ msgid "Add"
-#~ msgstr "Lägg till"
 
 #~ msgid "Information about prices."
 #~ msgstr "Övrig information om priserna."

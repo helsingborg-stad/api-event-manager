@@ -126,7 +126,7 @@ class CBIS extends \HbgEventImporter\Parser
         }
 
         // Number of products to get, 2000 to get all
-        $getLength = 100;
+        $getLength = 2000;
 
         $requestParams = array(
             'apiKey' => $cbisKey,

@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "Project-Id-Version: Event Manager\n"
-"POT-Creation-Date: 2017-01-04 08:42+0100\n"
+"POT-Creation-Date: 2017-01-17 10:03+0100\n"
 "PO-Revision-Date: 2016-10-26 08:27+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -609,7 +609,7 @@ msgstr ""
 msgid "Organizer Email"
 msgstr ""
 
-#: source/php/Acf/AcfFields.php:1873 source/php/App.php:185
+#: source/php/Acf/AcfFields.php:1873 source/php/App.php:189
 #: source/php/PostTypes/Contacts.php:10
 msgid "Contacts"
 msgstr ""
@@ -722,7 +722,7 @@ msgid "Vimeo link"
 msgstr ""
 
 #: source/php/Acf/AcfFields.php:2600 source/php/Acf/AcfFields.php:2632
-#: source/php/Acf/AcfFields.php:3027 source/php/Taxonomy/EventGroups.php:30
+#: source/php/Acf/AcfFields.php:3163 source/php/Taxonomy/EventGroups.php:30
 msgid "Groups"
 msgstr ""
 
@@ -783,69 +783,125 @@ msgstr ""
 msgid "CBIS"
 msgstr ""
 
-#: source/php/Acf/AcfFields.php:2771
-msgid "API Key"
-msgstr ""
-
-#: source/php/Acf/AcfFields.php:2792
-msgid "API GeoNode Id"
-msgstr ""
-
-#: source/php/Acf/AcfFields.php:2811 source/php/Acf/AcfFields.php:2919
+#: source/php/Acf/AcfFields.php:2771 source/php/Acf/AcfFields.php:3018
 msgid "Daily import"
 msgstr ""
 
-#: source/php/Acf/AcfFields.php:2822
+#: source/php/Acf/AcfFields.php:2782
 msgid "Enable daily automatic import from CBIS"
 msgstr ""
 
-#: source/php/Acf/AcfFields.php:2827 source/php/Acf/AcfFields.php:2935
+#: source/php/Acf/AcfFields.php:2787 source/php/Acf/AcfFields.php:3034
 msgid "Post status"
 msgstr ""
 
-#: source/php/Acf/AcfFields.php:2830 source/php/Acf/AcfFields.php:2938
+#: source/php/Acf/AcfFields.php:2790 source/php/Acf/AcfFields.php:3037
 msgid "Select status of imported events."
 msgstr ""
 
-#: source/php/Acf/AcfFields.php:2839 source/php/Acf/AcfFields.php:2947
+#: source/php/Acf/AcfFields.php:2799 source/php/Acf/AcfFields.php:3046
 #: source/php/Admin/FilterRestrictions.php:103
 msgid "Draft"
 msgstr ""
 
-#: source/php/Acf/AcfFields.php:2840 source/php/Acf/AcfFields.php:2948
+#: source/php/Acf/AcfFields.php:2800 source/php/Acf/AcfFields.php:3047
 #: source/php/Admin/FilterRestrictions.php:99
 #: source/php/PostTypes/Events.php:92
 msgid "Published"
 msgstr ""
 
-#: source/php/Acf/AcfFields.php:2851 source/php/Acf/AcfFields.php:2959
+#: source/php/Acf/AcfFields.php:2811
+msgid "API keys"
+msgstr ""
+
+#: source/php/Acf/AcfFields.php:2826
+msgid "Add key"
+msgstr ""
+
+#: source/php/Acf/AcfFields.php:2830
+msgid "API key"
+msgstr ""
+
+#: source/php/Acf/AcfFields.php:2849
+msgid "API GeoNode ID"
+msgstr ""
+
+#: source/php/Acf/AcfFields.php:2868
+msgid "Event ID"
+msgstr ""
+
+#: source/php/Acf/AcfFields.php:2871
+msgid "ID of the category \"events\" used in CBIS."
+msgstr ""
+
+#: source/php/Acf/AcfFields.php:2887
+msgid "Location categories"
+msgstr ""
+
+#: source/php/Acf/AcfFields.php:2890
+msgid "Add one or many IDs to get locations from different categories."
+msgstr ""
+
+#: source/php/Acf/AcfFields.php:2902 source/php/Acf/AcfFields.php:3073
+msgid "Add"
+msgstr ""
+
+#: source/php/Acf/AcfFields.php:2906
+msgid "Category ID"
+msgstr ""
+
+#: source/php/Acf/AcfFields.php:2927
+msgid "Category name"
+msgstr ""
+
+#: source/php/Acf/AcfFields.php:2930
+msgid "Name of the category."
+msgstr ""
+
+#: source/php/Acf/AcfFields.php:2939
+msgid "e.g. Accommodations"
+msgstr ""
+
+#: source/php/Acf/AcfFields.php:2948 source/php/Acf/AcfFields.php:3093
 msgid "Exclude categories"
 msgstr ""
 
-#: source/php/Acf/AcfFields.php:2854 source/php/Acf/AcfFields.php:2962
+#: source/php/Acf/AcfFields.php:2951 source/php/Acf/AcfFields.php:3096
 msgid ""
 "Enter the name of the categories that you want to exclude from the import. "
 "Separate with commas."
 msgstr ""
 
-#: source/php/Acf/AcfFields.php:2870 source/php/Acf/AcfFields.php:2978
+#: source/php/Acf/AcfFields.php:2967 source/php/Acf/AcfFields.php:3112
 msgid "Default publishing groups"
 msgstr ""
 
-#: source/php/Acf/AcfFields.php:2873 source/php/Acf/AcfFields.php:2981
+#: source/php/Acf/AcfFields.php:2970 source/php/Acf/AcfFields.php:3115
 msgid ""
 "Select the groups that you want to set as default for all imported events."
 msgstr ""
 
-#: source/php/Acf/AcfFields.php:2915
-msgid "Xcap (Mittkulturkort.se)"
+#: source/php/Acf/AcfFields.php:3014
+msgid "Xcap"
 msgstr ""
 
-#: source/php/Acf/AcfFields.php:2930
+#: source/php/Acf/AcfFields.php:3029
 msgid "Enable daily automatic import from XCAP"
 msgstr ""
 
-#: source/php/Acf/AcfFields.php:3023
+#: source/php/Acf/AcfFields.php:3058
+msgid "API links"
+msgstr ""
+
+#: source/php/Acf/AcfFields.php:3061
+msgid "Add one or many API links to Xcap"
+msgstr ""
+
+#: source/php/Acf/AcfFields.php:3077
+msgid "API link"
+msgstr ""
+
+#: source/php/Acf/AcfFields.php:3159
 msgid "Publishing groups"
 msgstr ""
 
@@ -916,164 +972,164 @@ msgid ""
 "sensitive to cropping (eg. images with text overlay)."
 msgstr ""
 
-#: source/php/App.php:174
+#: source/php/App.php:178
 msgid "Title is missing"
 msgstr ""
 
-#: source/php/App.php:175
+#: source/php/App.php:179
 msgid "Create new contact"
 msgstr ""
 
-#: source/php/App.php:176
+#: source/php/App.php:180
 msgid "Create new sponsor"
 msgstr ""
 
-#: source/php/App.php:177
+#: source/php/App.php:181
 msgid "Create new location"
 msgstr ""
 
-#: source/php/App.php:178
+#: source/php/App.php:182
 msgid "Create new membership card"
 msgstr ""
 
-#: source/php/App.php:179
+#: source/php/App.php:183
 msgid "Close"
 msgstr ""
 
-#: source/php/App.php:180
+#: source/php/App.php:184
 msgid "Add images"
 msgstr ""
 
-#: source/php/App.php:181
+#: source/php/App.php:185
 msgid "Similar posts"
 msgstr ""
 
-#: source/php/App.php:182
-msgid "New data imported or updated"
-msgstr ""
-
-#: source/php/App.php:183
-msgid "Events"
-msgstr ""
-
-#: source/php/App.php:184 source/php/PostTypes/Locations.php:12
-msgid "Locations"
-msgstr ""
-
 #: source/php/App.php:186
-msgid "Time until reload"
+msgid "Imported or updated data"
 msgstr ""
 
 #: source/php/App.php:187
-msgid "Loading"
+msgid "Events"
 msgstr ""
 
-#: source/php/App.php:188
-msgid "Choose time"
-msgstr ""
-
-#: source/php/App.php:189
-msgid "Time"
+#: source/php/App.php:188 source/php/PostTypes/Locations.php:12
+msgid "Locations"
 msgstr ""
 
 #: source/php/App.php:190
-msgid "Hour"
+msgid "Time until reload"
 msgstr ""
 
 #: source/php/App.php:191
-msgid "Minute"
+msgid "Loading"
 msgstr ""
 
 #: source/php/App.php:192
-msgid "Done"
+msgid "Choose time"
 msgstr ""
 
 #: source/php/App.php:193
+msgid "Time"
+msgstr ""
+
+#: source/php/App.php:194
+msgid "Hour"
+msgstr ""
+
+#: source/php/App.php:195
+msgid "Minute"
+msgstr ""
+
+#: source/php/App.php:196
+msgid "Done"
+msgstr ""
+
+#: source/php/App.php:197
 msgid "Now"
 msgstr ""
 
-#: source/php/App.php:207 source/php/App.php:208
+#: source/php/App.php:265 source/php/App.php:266
 msgid "Import events"
 msgstr ""
 
-#: source/php/App.php:218 source/php/App.php:219 source/php/App.php:229
+#: source/php/App.php:276 source/php/App.php:277 source/php/App.php:287
 msgid "Import CBIS events"
 msgstr ""
 
-#: source/php/App.php:228 source/php/PostTypes/Locations.php:130
+#: source/php/App.php:286 source/php/PostTypes/Locations.php:125
 msgid "Import CBIS locations"
 msgstr ""
 
-#: source/php/App.php:238 source/php/App.php:239
+#: source/php/App.php:295 source/php/App.php:296
 msgid "Delete all events"
 msgstr ""
 
-#: source/php/App.php:350
+#: source/php/App.php:407
 msgid "Event contributor"
 msgstr ""
 
-#: source/php/Entity/CustomPostType.php:60
+#: source/php/Entity/CustomPostType.php:92
 msgid "API-url"
 msgstr ""
 
-#: source/php/Entity/CustomPostType.php:150
+#: source/php/Entity/CustomPostType.php:162
 msgid "Something went wrong!"
 msgstr ""
 
-#: source/php/Entity/CustomPostType.php:196
-#: source/php/Entity/CustomPostType.php:197
+#: source/php/Entity/CustomPostType.php:208
+#: source/php/Entity/CustomPostType.php:209
 #, php-format
 msgid "Add new %s"
 msgstr ""
 
-#: source/php/Entity/CustomPostType.php:198
+#: source/php/Entity/CustomPostType.php:210
 #, php-format
 msgid "Edit %s"
 msgstr ""
 
-#: source/php/Entity/CustomPostType.php:199
+#: source/php/Entity/CustomPostType.php:211
 #, php-format
 msgid "New %s"
 msgstr ""
 
-#: source/php/Entity/CustomPostType.php:200
+#: source/php/Entity/CustomPostType.php:212
 #, php-format
 msgid "View %s"
 msgstr ""
 
-#: source/php/Entity/CustomPostType.php:201
+#: source/php/Entity/CustomPostType.php:213
 #, php-format
 msgid "Search %s"
 msgstr ""
 
-#: source/php/Entity/CustomPostType.php:202
+#: source/php/Entity/CustomPostType.php:214
 #, php-format
 msgid "No %s found"
 msgstr ""
 
-#: source/php/Entity/CustomPostType.php:203
+#: source/php/Entity/CustomPostType.php:215
 #, php-format
 msgid "No %s found in trash"
 msgstr ""
 
-#: source/php/Entity/CustomPostType.php:204
+#: source/php/Entity/CustomPostType.php:216
 #, php-format
 msgid "Parent %s:"
 msgstr ""
 
-#: source/php/Entity/CustomPostType.php:308
+#: source/php/Entity/CustomPostType.php:320
 msgid "Post updated."
 msgstr ""
 
-#: source/php/Entity/CustomPostType.php:309
+#: source/php/Entity/CustomPostType.php:321
 msgid "Post published."
 msgstr ""
 
-#: source/php/Entity/CustomPostType.php:310
+#: source/php/Entity/CustomPostType.php:322
 msgid "Post submitted."
 msgstr ""
 
-#: source/php/Entity/CustomPostType.php:311
+#: source/php/Entity/CustomPostType.php:323
 msgid "Post draft updated."
 msgstr ""
 
@@ -1085,7 +1141,7 @@ msgstr ""
 msgid "please go ahead and create it manually and rerun the import."
 msgstr ""
 
-#: source/php/Parser.php:87
+#: source/php/Parser.php:91
 msgid "Parser done."
 msgstr ""
 
@@ -1173,69 +1229,69 @@ msgstr ""
 msgid "Door time cannot be after start time"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:449
+#: source/php/PostTypes/Events.php:438
 msgid "Import XCAP"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:450
+#: source/php/PostTypes/Events.php:441
 msgid "Import CBIS"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:451
+#: source/php/PostTypes/Events.php:443
 msgid "Collect event timestamps"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:464
+#: source/php/PostTypes/Events.php:462
 msgid "No post to duplicate has been supplied!"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:528
+#: source/php/PostTypes/Events.php:526
 msgid "Event creation failed, could not find original event"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:543
+#: source/php/PostTypes/Events.php:541
 msgid "Create similar item"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:543
+#: source/php/PostTypes/Events.php:541
 msgid "Are you sure you want to clone this event?"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:543
+#: source/php/PostTypes/Events.php:541
 msgid "Clone"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:559
+#: source/php/PostTypes/Events.php:557
 #, php-format
 msgid ""
 "This is a duplicate of the event: %s. If this is a new occasion for the "
 "same event, please %s and republish the original event"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:559
+#: source/php/PostTypes/Events.php:557
 msgid "edit"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:583
+#: source/php/PostTypes/Events.php:581
 msgid ""
 "Please do not enter information that refers to information in another text "
 "field. It is not certain that all fields will be presented to the consumer "
 "and would thefore be missguiding."
 msgstr ""
 
-#: source/php/PostTypes/Events.php:609
+#: source/php/PostTypes/Events.php:606
 msgid ""
 "CBIS have not imported any events for atleast 7 days. Please control the "
 "importer."
 msgstr ""
 
-#: source/php/PostTypes/Events.php:635
+#: source/php/PostTypes/Events.php:632
 msgid ""
 "XCAP have not imported any events for atleast 7 days. Please control the "
 "importer."
 msgstr ""
 
-#: source/php/PostTypes/Events.php:731
+#: source/php/PostTypes/Events.php:728
 msgid ""
 "You don't have access to edit this event. Contact an administrator for "
 "further information."

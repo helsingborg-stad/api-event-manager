@@ -84,7 +84,7 @@ class CbisLocation extends \HbgEventImporter\Parser
             throw new \Exception('Needed authorization information (CBIS API id and/or CBIS API key) is missing.');
         }
 
-        // Number of arenas to get, 200 to get all
+        // Number of arenas/products to get, 500 to get all
         $getLength = 500;
 
         $requestParams = array(
