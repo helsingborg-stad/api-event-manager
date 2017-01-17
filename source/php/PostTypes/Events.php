@@ -434,10 +434,13 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
     {
         if (current_user_can('administrator')) {
             $button  = '<div class="import-buttons actions">';
-            $button .= '<div class="button-primary extraspace" id="xcap">' . __('Import XCAP', 'event-manager') . '</div>';
+            if (have_rows('xcap_api_urls', 'option') ) {
+                $button .= '<div class="button-primary extraspace" id="xcap">' . __('Import XCAP', 'event-manager') . '</div>';
+            }
             if (have_rows('cbis_api_keys', 'option') ) {
                 $button .= '<div class="button-primary extraspace" id="cbis">' . __('Import CBIS', 'event-manager') . '</div>';
             }
+
             $button .= '<div class="button-primary extraspace" id="occasions">'.__('Collect event timestamps', 'event-manager').'</div>';
 
             // Debug code

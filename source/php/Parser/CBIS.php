@@ -118,6 +118,7 @@ class CBIS extends \HbgEventImporter\Parser
         $publishGroups  = (! empty($this->apiKeys['cbis_groups'])) ? array_map('intval', $this->apiKeys['cbis_groups']) : null;
         // Used to set unique key on events
         $shortKey       = substr(intval($this->apiKeys['cbis_key'], 36), 0, 4);
+
         $postStatus     = get_field('cbis_post_status', 'option') ? get_field('cbis_post_status', 'option') : 'publish';
 
         if (!isset($cbisKey) || empty($cbisKey) || !isset($cbisId) || empty($cbisId)) {
@@ -125,7 +126,7 @@ class CBIS extends \HbgEventImporter\Parser
         }
 
         // Number of products to get, 2000 to get all
-        $getLength = 500;
+        $getLength = 100;
 
         $requestParams = array(
             'apiKey' => $cbisKey,
@@ -354,7 +355,7 @@ class CBIS extends \HbgEventImporter\Parser
                         'name'                  =>  $this->getAttributeValue(self::ATTRIBUTE_CONTACT_PERSON, $attributes),
                         'email'                 =>  strtolower($this->getAttributeValue(self::ATTRIBUTE_CONTACT_EMAIL, $attributes)),
                         'phone_number'          =>  $phoneNumber == null ? $phoneNumber : (strlen($phoneNumber) > 5 ? $phoneNumber : null),
-                        '_event_manager_uid'    =>  $this->getAttributeValue(self::ATTRIBUTE_CONTACT_PERSON, $attributes) . ': ' . strtolower($this->getAttributeValue(self::ATTRIBUTE_CONTACT_EMAIL, $attributes))
+                        '_event_manager_uid'    =>  strtolower($this->getAttributeValue(self::ATTRIBUTE_CONTACT_EMAIL, $attributes))
                     )
                 );
 

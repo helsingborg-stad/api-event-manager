@@ -146,26 +146,6 @@ class CbisLocation extends \HbgEventImporter\Parser
                 $this->saveArena($product, $cbisLocName, $defaultLocation);
             }
         }
-
-
-//      Get and save "To do" to locations
-//         $requestParams['categoryId'] = 14085;
-//         $productCategory = 'to do';
-//         $this->todo = $this->client->ListAll($requestParams)->ListAllResult->Items->Product;
-
-//         // Filter expired products
-//         $filteredProducts = array_filter($this->todo, function($obj){
-//             if (isset($obj->ExpirationDate) && strtotime($obj->ExpirationDate) < strtotime("now")) {
-//                 return false;
-//             }
-//             return true;
-//         });
-
-//         foreach($filteredProducts as $key => $todoData) {
-// break;
-//             $this->saveArena($todoData, $productCategory, $defaultLocation);
-//         }
-
     }
 
     /**

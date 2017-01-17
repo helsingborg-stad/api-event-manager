@@ -9,9 +9,9 @@ use \HbgEventImporter\Helper\Address as Address;
 
 class Xcap extends \HbgEventImporter\Parser
 {
-    public function __construct($url)
+    public function __construct($url, $apiKeys)
     {
-        parent::__construct($url);
+        parent::__construct($url, $apiKeys);
     }
 
     /**
@@ -25,20 +25,24 @@ class Xcap extends \HbgEventImporter\Parser
         $events = $xml->iCal->vevent;
 
         $this->collectDataForLevenshtein();
+        // Used to set unique key on events
+        $shortKey = substr(intval($this->url, 36), 0, 4);
+
         foreach ($events as $key => $event) {
             if (!isset($event->uid) || empty($event->uid)) {
                 continue;
             }
-            $this->saveEvent($event);
+            $this->saveEvent($event, $shortKey);
         }
     }
 
     /**
      * Cleans a single events data into correct format and saves it to db
      * @param  object $eventData  Event data
+     * @param  int    $shortKey   unique key, created from the api url
      * @return void
      */
-    public function saveEvent($eventData)
+    public function saveEvent($eventData, $shortKey)
     {
         $address = isset($eventData->{'x-xcap-address'}) && !empty($eventData->{'x-xcap-address'}) ? $eventData->{'x-xcap-address'} : null;
         $alternateName = isset($eventData->uid) && !empty($eventData->uid) ? $eventData->uid : null;
@@ -56,7 +60,7 @@ class Xcap extends \HbgEventImporter\Parser
         $defaultLocation = get_field('default_city', 'option') ? get_field('default_city', 'option') : null;
         $city = ($location != null) ? $location : $defaultLocation;
         $postStatus = get_field('xcap_post_status', 'option') ? get_field('xcap_post_status', 'option') : 'publish';
-        $publish_groups = get_field('xcap_publishing_groups', 'option') ? get_field('xcap_publishing_groups', 'option') : null;
+        $publish_groups = (! empty($this->apiKeys['xcap_groups'])) ? array_map('intval', $this->apiKeys['xcap_groups']) : null;
 
         $image = null;
         if (isset($eventData->{'x-xcap-wideimageid'}) && !empty($eventData->{'x-xcap-wideimageid'}) && $eventData->{'x-xcap-wideimageid'} != 'null') {
@@ -126,7 +130,7 @@ class Xcap extends \HbgEventImporter\Parser
             $existingUid = get_post_meta( $eventId, '_event_manager_uid', true);
             $sync = get_post_meta( $eventId, 'sync', true);
             $accepted = get_post_meta($eventId, 'accepted', true);
-            $isUpdate = ($existingUid == $eventData->uid && $sync == 1 ) ? true : false;
+            $isUpdate = ($existingUid == $shortKey . '-' . $eventData->uid && $sync == 1 ) ? true : false;
             $postStatus = get_post_status($eventId);
         }
 
@@ -140,8 +144,8 @@ class Xcap extends \HbgEventImporter\Parser
                     'post_status'             => $postStatus,
                 ),
                 array(
-                    'uniqueId'                => $eventData->uid,
-                    '_event_manager_uid'      => $eventData->uid,
+                    'uniqueId'                => $shortKey . '-' . $eventData->uid,
+                    '_event_manager_uid'      => $shortKey . '-' . $eventData->uid,
                     'sync'                    => true,
                     'status'                  => 'Active',
                     'image'                   => !empty($image) ? $image : null,
@@ -187,8 +191,10 @@ class Xcap extends \HbgEventImporter\Parser
     public function filter($categories)
     {
         $passes = true;
-        if (get_field('xcap_filter_categories', 'options')) {
-            $filters = array_map('trim', explode(',', get_field('xcap_filter_categories', 'options')));
+        $exclude = $this->apiKeys['xcap_exclude'];
+
+        if (! empty($exclude)) {
+            $filters = array_map('trim', explode(',', $exclude));
             $categoriesLower = array_map('strtolower', $categories);
 
             foreach ($filters as $filter) {

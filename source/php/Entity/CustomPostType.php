@@ -68,7 +68,8 @@ abstract class CustomPostType
             wp_die();
 
         } elseif ($_POST['value'] == 'xcap') {
-            $importer = new \HbgEventImporter\Parser\Xcap('http://mittkulturkort.se/calendar/listEvents.action?month=&date=&categoryPermaLink=&q=&p=&feedType=ICAL_XML');
+            $api_keys = $_POST['api_keys'];
+            $importer = new \HbgEventImporter\Parser\Xcap($api_keys['xcap_api_url'], $api_keys);
             $data = $importer->getCreatedData();
 
             wp_send_json($data);

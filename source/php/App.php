@@ -37,6 +37,9 @@ class App
         add_action('admin_enqueue_scripts', array($this, 'enqueueStyles'));
         add_action('admin_enqueue_scripts', array($this, 'enqueueScripts'));
 
+        // Set api keys
+        add_action('admin_enqueue_scripts', array($this, 'setApiKeys'));
+
         //Admin components
         // Debug code createParsePage
         add_action('admin_menu', array($this, 'createParsePage'));
@@ -170,8 +173,39 @@ class App
             wp_enqueue_script('hbg-event-importer', HBGEVENTIMPORTER_URL . '/dist/js/hbg-event-importer.dev.js');
         }
 
-        // Set CBIS API keys
+        wp_localize_script('hbg-event-importer', 'eventmanager', array(
+            'ajaxurl'           => admin_url('admin-ajax.php'),
+            'require_title'     => __("Title is missing", 'event-manager'),
+            'new_contact'       => __("Create new contact", 'event-manager'),
+            'new_sponsor'       => __("Create new sponsor", 'event-manager'),
+            'new_location'      => __("Create new location", 'event-manager'),
+            'new_card'          => __("Create new membership card", 'event-manager'),
+            'close'             => __("Close", 'event-manager'),
+            'add_images'        => __("Add images", 'event-manager'),
+            'similar_posts'     => __("Similar posts", 'event-manager'),
+            'new_data_imported' => __("Imported or updated data", 'event-manager'),
+            'events'            => __("Events", 'event-manager'),
+            'locations'         => __("Locations", 'event-manager'),
+            'contacts'          => __("Contacts", 'event-manager'),
+            'time_until_reload' => __("Time until reload", 'event-manager'),
+            'loading'           => __("Loading", 'event-manager'),
+            'choose_time'       => __("Choose time", 'event-manager'),
+            'time'              => __("Time", 'event-manager'),
+            'hour'              => __("Hour", 'event-manager'),
+            'minute'            => __("Minute", 'event-manager'),
+            'done'              => __("Done", 'event-manager'),
+            'now'               => __("Now", 'event-manager'),
+        ));
+    }
+
+    /**
+     * Get API keys from options and set as
+     * @return void
+     */
+    public function setApiKeys()
+    {
         if (current_user_can('administrator')) {
+            // Set CBIS API vars
             $cbis_keys = array();
             if (have_rows('cbis_api_keys', 'option') ):
                 while(have_rows('cbis_api_keys', 'option') ): the_row();
@@ -200,31 +234,22 @@ class App
             endif;
 
             wp_localize_script('hbg-event-importer', 'cbis_ajax_vars', array('cbis_keys' => $cbis_keys));
-        }
 
-        wp_localize_script('hbg-event-importer', 'eventmanager', array(
-            'ajaxurl'           => admin_url('admin-ajax.php'),
-            'require_title'     => __("Title is missing", 'event-manager'),
-            'new_contact'       => __("Create new contact", 'event-manager'),
-            'new_sponsor'       => __("Create new sponsor", 'event-manager'),
-            'new_location'      => __("Create new location", 'event-manager'),
-            'new_card'          => __("Create new membership card", 'event-manager'),
-            'close'             => __("Close", 'event-manager'),
-            'add_images'        => __("Add images", 'event-manager'),
-            'similar_posts'     => __("Similar posts", 'event-manager'),
-            'new_data_imported' => __("Imported or updated data", 'event-manager'),
-            'events'            => __("Events", 'event-manager'),
-            'locations'         => __("Locations", 'event-manager'),
-            'contacts'          => __("Contacts", 'event-manager'),
-            'time_until_reload' => __("Time until reload", 'event-manager'),
-            'loading'           => __("Loading", 'event-manager'),
-            'choose_time'       => __("Choose time", 'event-manager'),
-            'time'              => __("Time", 'event-manager'),
-            'hour'              => __("Hour", 'event-manager'),
-            'minute'            => __("Minute", 'event-manager'),
-            'done'              => __("Done", 'event-manager'),
-            'now'               => __("Now", 'event-manager'),
-        ));
+            // Set XCAP API vars
+            $xcap_keys = array();
+            if (have_rows('xcap_api_urls', 'option') ):
+                while(have_rows('xcap_api_urls', 'option') ): the_row();
+
+                $xcap_keys[] = array(
+                    'xcap_api_url'       => get_sub_field('xcap_api_url'),
+                    'xcap_exclude'       => get_sub_field('xcap_filter_categories'),
+                    'xcap_groups'        => get_sub_field('xcap_publishing_groups')
+                );
+                endwhile;
+            endif;
+
+            wp_localize_script('hbg-event-importer', 'xcap_ajax_vars', array('xcap_keys' => $xcap_keys));
+        }
     }
 
     /**

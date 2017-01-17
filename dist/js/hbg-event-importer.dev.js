@@ -366,43 +366,45 @@ ImportEvents.Parser = ImportEvents.Parser || {};
 
 ImportEvents.Parser.Eventhandling = (function ($) {
 
-    var i                   = 0;
-    var j                   = 0;
     var newPosts            = {events:0,locations:0,contacts:0};
     var data                = {action:'import_events', value:'', api_keys:''};
     var short               = 200;
     var long                = 400;
     var timerId             = null;
     var loadingOccasions    = false;
+    var i                   = 0;
+    var j                   = 0;
 
     function Eventhandling() {
         $(function() {
 
-            $(document).on('click', '#cbis, #xcap', function (e) {
+            $(document).on('click', '#xcap', function (e) {
                 e.preventDefault();
+                data.value = 'xcap';
 
                 if (! loadingOccasions) {
                     loadingOccasions = true;
                     var button = $(this);
                     var storedCss = Eventhandling.prototype.collectCssFromButton(button);
                     Eventhandling.prototype.redLoadingButton(button, function() {
-                        // Get button id
-                        data.value = button.attr('id');
+                        console.log('run XCAP');
+                        Eventhandling.prototype.parseEvents(data, button, storedCss);
+                        return;
+                    });
+                }
+            });
 
-                        if (data.value === "xcap") {
-                            console.log('run xcap');
-                            jQuery.post(ajaxurl, data, function(response) {
-                            newPosts = response;
-                            console.log(newPosts);
-                            loadingOccasions = false;
-                            Eventhandling.prototype.dataPopUp(newPosts);
-                            Eventhandling.prototype.restoreButton(button, storedCss);
-                            });
-                        } else if(data.value === "cbis") {
-                            console.log('run CBIS');
-                            Eventhandling.prototype.parseEvents(data, button, storedCss);
-                        }
+            $(document).on('click', '#cbis', function (e) {
+                e.preventDefault();
+                data.value = 'cbis';
 
+                if (! loadingOccasions) {
+                    loadingOccasions = true;
+                    var button = $(this);
+                    var storedCss = Eventhandling.prototype.collectCssFromButton(button);
+                    Eventhandling.prototype.redLoadingButton(button, function() {
+                        console.log('run CBIS');
+                        Eventhandling.prototype.parseEvents(data, button, storedCss);
                         return;
                     });
                 }
@@ -446,26 +448,60 @@ ImportEvents.Parser.Eventhandling = (function ($) {
         }.bind(this));
     }
 
-    // Parse CBIS locations, loop through each API key
-    Eventhandling.prototype.parseCbislocation = function(data, button, storedCss) {
-        j = 0;
+    // Parse CBIS & XCAP events, loop through each API key
+    Eventhandling.prototype.parseEvents = function(data, button, storedCss) {
+        if (data.value === 'cbis') {
+            data.api_keys = cbis_ajax_vars.cbis_keys[i];
+        } else if (data.value === 'xcap') {
+            data.api_keys = xcap_ajax_vars.xcap_keys[i];
+        }
 
-        // When done, show import result
-        if( (typeof cbis_ajax_vars.cbis_keys[i] == 'undefined') ) {
-            console.log('parsing done, return');
-            //loadingOccasions = false;
+        // Show result if there's no API keys left to parse
+        if( (typeof data.api_keys == 'undefined') ) {
+            loadingOccasions = false;
+            console.log(newPosts);
             Eventhandling.prototype.dataPopUp(newPosts);
             Eventhandling.prototype.restoreButton(button, storedCss);
+
             return;
         }
 
-        console.log("KEY RUN: " + i);
+        $.ajax({
+            url: eventmanager.ajaxurl,
+            type: 'post',
+            data: data,
+            success: function(response) {
+                // Update response object
+                newPosts.events    += response.events;
+                newPosts.locations += response.locations;
+                newPosts.contacts  += response.contacts;
+
+                console.log(response);
+
+                // Run function again
+                i++;
+                Eventhandling.prototype.parseEvents(data, button, storedCss);
+            }
+        })
+    };
+
+    // Parse CBIS locations, loop through each API key and its categories
+    Eventhandling.prototype.parseCbislocation = function(data, button, storedCss) {
+        j = 0;
+
+        // Show import result when done
+        if( (typeof cbis_ajax_vars.cbis_keys[i] == 'undefined') ) {
+            loadingOccasions = false;
+            Eventhandling.prototype.dataPopUp(newPosts);
+            Eventhandling.prototype.restoreButton(button, storedCss);
+
+            return;
+        }
 
         data.api_keys = cbis_ajax_vars.cbis_keys[i];
 
-        // Wait for Ajax callback and run this function again until there's no API keys left to parse
+        // Wait for callback and run this function again until there's no API keys left to parse
         $.when(Eventhandling.prototype.parseLocations(data)).then(function() {
-            console.log('Pass3');
             i++;
             Eventhandling.prototype.parseCbislocation(data, button, storedCss) ;
         });
@@ -479,17 +515,13 @@ ImportEvents.Parser.Eventhandling = (function ($) {
         Eventhandling.prototype.parse = function() {
             // Return when done
             if( (typeof data.api_keys.cbis_locations[j] == 'undefined') ) {
-                console.log('locations done, return');
                 deferredObject.resolve();
                 return;
             }
 
-            console.log("LOCATION RUN: " + j + " KEY: " + i);
-
             data.cbis_location = data.api_keys.cbis_locations[j];
             // Wait for Ajax callback and run this function again until there's no categories left
             $.when(Eventhandling.prototype.parseLocationCategory(data)).then(function() {
-                console.log('Pass2');
                 j++;
                 Eventhandling.prototype.parse(data);
             });
@@ -500,63 +532,17 @@ ImportEvents.Parser.Eventhandling = (function ($) {
         return deferredObject.promise();
     }
 
-
     // Call ajax with category ID
     Eventhandling.prototype.parseLocationCategory = function(data){
-        console.log(data);
-        console.log(data.cbis_location);
         return $.ajax({
             url: eventmanager.ajaxurl,
             type: 'post',
             data: data,
-            beforeSend: function() {
-            console.log('start parse ' + i );
-            },
             success: function(response) {
                 // Update response object
                 newPosts.events    += response.events;
                 newPosts.locations += response.locations;
                 newPosts.contacts  += response.contacts;
-                console.log("Ajax done, Pass 1, key: " + i);
-                console.log( response );
-                console.log( newPosts );
-            }
-        })
-    };
-
-
-    // Parse CBIS, loop through each API key
-    Eventhandling.prototype.parseEvents = function(data, button, storedCss) {
-        // Show result if there's no API keys left to parse
-        if( (typeof cbis_ajax_vars.cbis_keys[i] == 'undefined') ) {
-            console.log('parsing done, return');
-            Eventhandling.prototype.dataPopUp(newPosts);
-            Eventhandling.prototype.restoreButton(button, storedCss);
-            return;
-        }
-
-        data.api_keys = cbis_ajax_vars.cbis_keys[i];
-        $.ajax({
-            url: eventmanager.ajaxurl,
-            type: 'post',
-            data: data,
-            beforeSend: function() {
-
-            },
-            success: function(response) {
-                // Update response object
-                newPosts.events    += response.events;
-                newPosts.locations += response.locations;
-                newPosts.contacts  += response.contacts;
-
-                console.log( i );
-                console.log( response );
-                console.log( newPosts );
-                loadingOccasions = false;
-
-                // Run this function again
-                i++;
-                Eventhandling.prototype.parseEvents(data, button, storedCss);
             }
         })
     };
