@@ -442,7 +442,7 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
             }
             $button .= '<div class="button-primary extraspace" id="occasions">'.__('Collect event timestamps', 'event-manager').'</div>';
             // Debug code
-            // $button .= '<a href="' . admin_url('options.php?page=import-events') . '" class="button" id="post-query-submit">DEBUG XCAP</a>';
+            //$button .= '<a href="' . admin_url('options.php?page=import-events') . '" class="button" id="post-query-submit">DEBUG XCAP</a>';
             // $button .= '<a href="' . admin_url('options.php?page=import-cbis-events') . '" class="button" id="post-query-submit">debug CBIS</a>';
             // $button .= '<a href="' . admin_url('options.php?page=import-cbis-locations') . '" class="button" id="post-query-submit">Locations</a>';
             // $button .= '<a href="' . admin_url('options.php?page=delete-all-events') . '" class="button" id="post-query-submit">DELETE</a>';

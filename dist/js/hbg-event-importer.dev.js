@@ -367,7 +367,7 @@ ImportEvents.Parser = ImportEvents.Parser || {};
 ImportEvents.Parser.Eventhandling = (function ($) {
 
     var newPosts            = {events:0,locations:0,contacts:0};
-    var data                = {action:'import_events', value:'', api_keys:''};
+    var data                = {action:'import_events', value:'', api_keys:'', cron:false};
     var short               = 200;
     var long                = 400;
     var timerId             = null;
@@ -381,13 +381,12 @@ ImportEvents.Parser.Eventhandling = (function ($) {
             $(document).on('click', '#xcap', function (e) {
                 e.preventDefault();
                 data.value = 'xcap';
-
+                console.log('Parse XCAP');
                 if (! loadingOccasions) {
                     loadingOccasions = true;
                     var button = $(this);
                     var storedCss = Eventhandling.prototype.collectCssFromButton(button);
                     Eventhandling.prototype.redLoadingButton(button, function() {
-                        console.log('run XCAP');
                         Eventhandling.prototype.parseEvents(data, button, storedCss);
                         return;
                     });
@@ -403,7 +402,6 @@ ImportEvents.Parser.Eventhandling = (function ($) {
                     var button = $(this);
                     var storedCss = Eventhandling.prototype.collectCssFromButton(button);
                     Eventhandling.prototype.redLoadingButton(button, function() {
-                        console.log('run CBIS');
                         Eventhandling.prototype.parseEvents(data, button, storedCss);
                         return;
                     });
@@ -412,7 +410,6 @@ ImportEvents.Parser.Eventhandling = (function ($) {
 
             $(document).on('click', '#cbislocation', function (e) {
                 e.preventDefault();
-                data.value = 'cbislocation';
 
                 if (! loadingOccasions) {
                     loadingOccasions = true;
@@ -459,10 +456,11 @@ ImportEvents.Parser.Eventhandling = (function ($) {
         // Show result if there's no API keys left to parse
         if( (typeof data.api_keys == 'undefined') ) {
             loadingOccasions = false;
-            //console.log(newPosts);
-            Eventhandling.prototype.dataPopUp(newPosts);
-            Eventhandling.prototype.restoreButton(button, storedCss);
-
+            // Show data pop up if function is not called with cron
+            if (! data.cron) {
+                Eventhandling.prototype.dataPopUp(newPosts);
+                Eventhandling.prototype.restoreButton(button, storedCss);
+            }
             return;
         }
 
@@ -489,9 +487,11 @@ ImportEvents.Parser.Eventhandling = (function ($) {
         // Show import result when done
         if( (typeof cbis_ajax_vars.cbis_keys[i] == 'undefined') ) {
             loadingOccasions = false;
-            Eventhandling.prototype.dataPopUp(newPosts);
-            Eventhandling.prototype.restoreButton(button, storedCss);
-
+            // Show data pop up if function is not called with cron
+            if (! data.cron) {
+                Eventhandling.prototype.dataPopUp(newPosts);
+                Eventhandling.prototype.restoreButton(button, storedCss);
+            }
             return;
         }
 
@@ -624,6 +624,46 @@ ImportEvents.Parser.Eventhandling = (function ($) {
 
 })(jQuery);
 
+var ImportEvents = ImportEvents || {};
+
+jQuery(document).ready(function ($) {
+    if($('.acf-field-57ebb807988f8').length)
+    {
+        $('.acf-field-57ebb807988f8').append('<a class="createContact button" href="http://' + window.location.host + '/wp/wp-admin/post-new.php?post_type=contact&lightbox=true">' + eventmanager.new_contact + '</a>');
+    }
+
+    if($('.acf-field-57a9d5f3804e1').length)
+    {
+        $('.acf-field-57a9d5f3804e1').append('<a class="createContact button" href="http://' + window.location.host + '/wp/wp-admin/post-new.php?post_type=sponsor&lightbox=true">' + eventmanager.new_sponsor + '</a>');
+    }
+
+    if($('.acf-field-576117c423a52').length)
+    {
+        $('.acf-field-576117c423a52').append('<a class="createContact button" href="http://' + window.location.host + '/wp/wp-admin/post-new.php?post_type=location&lightbox=true">' + eventmanager.new_location + '</a>');
+    }
+
+    if($('.acf-field-57c7ed92054e6').length)
+    {
+        $('.acf-field-57c7ed92054e6').append('<a class="createContact button" href="http://' + window.location.host + '/wp/wp-admin/post-new.php?post_type=membership-card&lightbox=true">' + eventmanager.new_card + '</a>');
+    }
+
+    if($('.acf-field-581847f9642dc').length)
+    {
+        $('.acf-field-581847f9642dc').append('<a class="createContact button" href="http://' + window.location.host + '/wp/wp-admin/post-new.php?post_type=membership-card&lightbox=true">' + eventmanager.new_card + '</a>');
+    }
+
+    $('.openContact').click(function(event) {
+        event.preventDefault();
+        ImportEvents.Prompt.Modal.open($(this).attr('href'));
+    });
+
+    $('.createContact').click(function(event) {
+        var parentId = $('#post_ID').val();
+        event.preventDefault();
+        ImportEvents.Prompt.Modal.open($(this).attr('href'), parentId);
+    });
+});
+
 ImportEvents = ImportEvents || {};
 ImportEvents.Prompt = ImportEvents.Prompt || {};
 
@@ -675,43 +715,3 @@ ImportEvents.Prompt.Modal = (function ($) {
     return new Modal();
 
 })(jQuery);
-
-var ImportEvents = ImportEvents || {};
-
-jQuery(document).ready(function ($) {
-    if($('.acf-field-57ebb807988f8').length)
-    {
-        $('.acf-field-57ebb807988f8').append('<a class="createContact button" href="http://' + window.location.host + '/wp/wp-admin/post-new.php?post_type=contact&lightbox=true">' + eventmanager.new_contact + '</a>');
-    }
-
-    if($('.acf-field-57a9d5f3804e1').length)
-    {
-        $('.acf-field-57a9d5f3804e1').append('<a class="createContact button" href="http://' + window.location.host + '/wp/wp-admin/post-new.php?post_type=sponsor&lightbox=true">' + eventmanager.new_sponsor + '</a>');
-    }
-
-    if($('.acf-field-576117c423a52').length)
-    {
-        $('.acf-field-576117c423a52').append('<a class="createContact button" href="http://' + window.location.host + '/wp/wp-admin/post-new.php?post_type=location&lightbox=true">' + eventmanager.new_location + '</a>');
-    }
-
-    if($('.acf-field-57c7ed92054e6').length)
-    {
-        $('.acf-field-57c7ed92054e6').append('<a class="createContact button" href="http://' + window.location.host + '/wp/wp-admin/post-new.php?post_type=membership-card&lightbox=true">' + eventmanager.new_card + '</a>');
-    }
-
-    if($('.acf-field-581847f9642dc').length)
-    {
-        $('.acf-field-581847f9642dc').append('<a class="createContact button" href="http://' + window.location.host + '/wp/wp-admin/post-new.php?post_type=membership-card&lightbox=true">' + eventmanager.new_card + '</a>');
-    }
-
-    $('.openContact').click(function(event) {
-        event.preventDefault();
-        ImportEvents.Prompt.Modal.open($(this).attr('href'));
-    });
-
-    $('.createContact').click(function(event) {
-        var parentId = $('#post_ID').val();
-        event.preventDefault();
-        ImportEvents.Prompt.Modal.open($(this).attr('href'), parentId);
-    });
-});

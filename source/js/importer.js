@@ -6,7 +6,7 @@ ImportEvents.Parser = ImportEvents.Parser || {};
 ImportEvents.Parser.Eventhandling = (function ($) {
 
     var newPosts            = {events:0,locations:0,contacts:0};
-    var data                = {action:'import_events', value:'', api_keys:''};
+    var data                = {action:'import_events', value:'', api_keys:'', cron:false};
     var short               = 200;
     var long                = 400;
     var timerId             = null;
@@ -20,13 +20,12 @@ ImportEvents.Parser.Eventhandling = (function ($) {
             $(document).on('click', '#xcap', function (e) {
                 e.preventDefault();
                 data.value = 'xcap';
-
+                console.log('Parse XCAP');
                 if (! loadingOccasions) {
                     loadingOccasions = true;
                     var button = $(this);
                     var storedCss = Eventhandling.prototype.collectCssFromButton(button);
                     Eventhandling.prototype.redLoadingButton(button, function() {
-                        console.log('run XCAP');
                         Eventhandling.prototype.parseEvents(data, button, storedCss);
                         return;
                     });
@@ -42,7 +41,6 @@ ImportEvents.Parser.Eventhandling = (function ($) {
                     var button = $(this);
                     var storedCss = Eventhandling.prototype.collectCssFromButton(button);
                     Eventhandling.prototype.redLoadingButton(button, function() {
-                        console.log('run CBIS');
                         Eventhandling.prototype.parseEvents(data, button, storedCss);
                         return;
                     });
@@ -51,7 +49,6 @@ ImportEvents.Parser.Eventhandling = (function ($) {
 
             $(document).on('click', '#cbislocation', function (e) {
                 e.preventDefault();
-                data.value = 'cbislocation';
 
                 if (! loadingOccasions) {
                     loadingOccasions = true;
@@ -98,10 +95,11 @@ ImportEvents.Parser.Eventhandling = (function ($) {
         // Show result if there's no API keys left to parse
         if( (typeof data.api_keys == 'undefined') ) {
             loadingOccasions = false;
-            //console.log(newPosts);
-            Eventhandling.prototype.dataPopUp(newPosts);
-            Eventhandling.prototype.restoreButton(button, storedCss);
-
+            // Show data pop up if function is not called with cron
+            if (! data.cron) {
+                Eventhandling.prototype.dataPopUp(newPosts);
+                Eventhandling.prototype.restoreButton(button, storedCss);
+            }
             return;
         }
 
@@ -128,9 +126,11 @@ ImportEvents.Parser.Eventhandling = (function ($) {
         // Show import result when done
         if( (typeof cbis_ajax_vars.cbis_keys[i] == 'undefined') ) {
             loadingOccasions = false;
-            Eventhandling.prototype.dataPopUp(newPosts);
-            Eventhandling.prototype.restoreButton(button, storedCss);
-
+            // Show data pop up if function is not called with cron
+            if (! data.cron) {
+                Eventhandling.prototype.dataPopUp(newPosts);
+                Eventhandling.prototype.restoreButton(button, storedCss);
+            }
             return;
         }
 

@@ -43,12 +43,11 @@ class App
         //Admin components
         // Debug code createParsePage
         add_action('admin_menu', array($this, 'createParsePage'));
+        add_action('admin_menu', array($this, 'addCronParserPage'));
         add_action('admin_notices', array($this, 'adminNotices'));
 
         // Register cron action
         add_action('import_events_daily', array($this, 'startImport'));
-
-        //add_action('delete_post', array($this, 'checkItOut'), 10);
 
         // Redirects
         add_filter('login_redirect', array($this, 'loginRedirect'), 10, 3);
@@ -123,12 +122,6 @@ class App
         }
     }
 
-    public function checkItOut()
-    {
-        debug_print_backtrace();
-        die();
-    }
-
     public function enqueuStyleSheets()
     {
         wp_register_style('lightbox', plugins_url() . '/api-event-manager/dist/css/lightbox.min.css', false, '1.0.0');
@@ -169,8 +162,9 @@ class App
     {
         global $current_screen;
         $type = $current_screen->post_type;
-        if ($type == 'event' || $type == 'location' || $type == 'contact' || $type == 'sponsor' || $type == 'package' || $type == 'membership-card') {
-            wp_enqueue_script('hbg-event-importer', HBGEVENTIMPORTER_URL . '/dist/js/hbg-event-importer.min.js');
+
+        if ($type == 'event' || $type == 'location' || $type == 'contact' || $type == 'sponsor' || $type == 'package' || $type == 'membership-card' || $current_screen->base == 'admin_page_cron-import') {
+            wp_enqueue_script('hbg-event-importer', HBGEVENTIMPORTER_URL . '/dist/js/hbg-event-importer.dev.js');
         }
 
         wp_localize_script('hbg-event-importer', 'eventmanager', array(
@@ -273,6 +267,17 @@ class App
 
         add_submenu_page(
             null,
+            __('Import events', 'hbg-event-importer'),
+            __('Import events', 'hbg-event-importer'),
+            'edit_posts',
+            'import-events',
+            function () {
+                new \HbgEventImporter\Parser\Xcap('http://mittkulturkort.se/calendar/listEvents.action?month=&date=&categoryPermaLink=&q=&p=&feedType=ICAL_XML');
+            }
+        );
+
+        add_submenu_page(
+            null,
             __('Import CBIS events', 'hbg-event-importer'),
             __('Import CBIS events', 'hbg-event-importer'),
             'edit_posts',
@@ -312,21 +317,58 @@ class App
     }
 
     /**
+     * Creates an admin page that executes event import
+     * @return void
+     */
+    public function addCronParserPage()
+    {
+        add_submenu_page(
+            null,
+            'import-data',
+            'import-data',
+            'edit_posts',
+            'cron-import',
+            function () {
+                if (get_field('xcap_daily_cron', 'option') == true) {
+                ?>
+                    <script type="text/javascript">
+                        (function($) {
+                            // Import events from XCAP
+                            var data = {action:'import_events', value:'xcap', api_keys:'', cron:true};
+                            ImportEvents.Parser.Eventhandling.parseEvents(data);
+                        })(jQuery);
+                    </script>
+                <?php
+                }
+                if (get_field('cbis_daily_cron', 'option') == true) {
+                ?>
+                    <script type="text/javascript">
+                        (function($) {
+                            // Import events from CBIS
+                            var data = {action:'import_events', value:'cbis', api_keys:'', cron:true};
+                            ImportEvents.Parser.Eventhandling.parseEvents(data);
+                            // Import arenas/locations from CBIS
+                            var data = {action:'import_events', value:'', api_keys:'', cron:true};
+                            ImportEvents.Parser.Eventhandling.parseCbislocation(data);
+                        })(jQuery);
+                    </script>
+                <?php
+                }
+            });
+    }
+
+    /**
      * Starts the data import
      * @return void
      */
     public function startImport()
     {
-        if (get_field('xcap_daily_cron', 'option') == true) {
-            $xcapUrl = 'http://mittkulturkort.se/calendar/listEvents.action' .
-                       '?month=&date=&categoryPermaLink=&q=&p=&feedType=ICAL_XML';
-            new \HbgEventImporter\Parser\Xcap($xcapUrl);
-        }
-        if (get_field('cbis_daily_cron', 'option') == true) {
-            $cbisUrl = 'http://api.cbis.citybreak.com/Products.asmx?wsdl';
-            new \HbgEventImporter\Parser\CBIS($cbisUrl);
-            new \HbgEventImporter\Parser\CbisLocation($cbisUrl);
-        }
+        // Send a HTTP request to cron importer page
+        $url = admin_url('options.php?page=cron-import');
+        \WP_Http_Curl::request($url);
+
+        // Log when done
+        file_put_contents(dirname(__FILE__)."/log/cron_import.log", "Cron last run: ".date("Y-m-d H:i:s"));
     }
 
     public static function addCronJob()
@@ -403,7 +445,8 @@ class App
      * Add custom user roles
      * @return void
      */
-    public static function initUserRoles() {
+    public static function initUserRoles()
+    {
     add_role('event_contributor', __("Event contributor", 'event-manager'), array(
         'read' => true,
         'edit_posts' => true,
