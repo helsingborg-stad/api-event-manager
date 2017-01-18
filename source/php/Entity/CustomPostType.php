@@ -135,9 +135,9 @@ abstract class CustomPostType
                 }
             }
         }
-        ob_clean();
+        if (ob_get_contents()) ob_end_clean();
         // Print results to console
-        // echo $resultString;
+        //echo $resultString;
         wp_die();
     }
 

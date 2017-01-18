@@ -89,19 +89,28 @@ class EventFields extends Fields
 
         $limit = (isset($_GET['post-limit']) && is_numeric($_GET['post-limit'])) ? $_GET['post-limit'] : null;
 
+        $groupId = (isset($_GET['group-id'])) ? trim($_GET['group-id'], ',') : '';
+        $categoryId = (isset($_GET['category-id'])) ? trim($_GET['category-id'], ',') : '';
+        $taxonomies  = $groupId;
+        $taxonomies .= ($groupId) ? ',' . $categoryId : $categoryId;
+        $taxonomies = trim($taxonomies, ',');
+
         $db_occasions = $wpdb->prefix . "occasions";
         $query =
         "
         SELECT      *
         FROM        $wpdb->posts
-        LEFT JOIN   $db_occasions
-                    ON $wpdb->posts.ID = $db_occasions.event
+        LEFT JOIN   $db_occasions ON ($wpdb->posts.ID = $db_occasions.event)
+        LEFT JOIN   $wpdb->term_relationships ON ($wpdb->posts.ID = $wpdb->term_relationships.object_id)
         WHERE       $wpdb->posts.post_type = %s
                     AND $wpdb->posts.post_status = %s
                     AND ($db_occasions.timestamp_start BETWEEN %d AND %d OR $db_occasions.timestamp_end BETWEEN %d AND %d)
-                    ORDER BY $db_occasions.timestamp_start ASC
         ";
-        $query .= ($limit != null) ? ' LIMIT ' . $limit : '';
+        $query .= (! empty($taxonomies)) ? "AND ($wpdb->term_relationships.term_taxonomy_id IN ($taxonomies))" : "";
+
+        $query .= "GROUP BY $db_occasions.timestamp_start, $db_occasions.timestamp_end ";
+        $query .= "ORDER BY $db_occasions.timestamp_start ASC";
+        $query .= ($limit != null) ? " LIMIT " . $limit : "";
 
         $timePlusWeek = 0;
 

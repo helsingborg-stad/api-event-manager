@@ -198,7 +198,10 @@ class App
      */
     public function setApiKeys()
     {
-        if (current_user_can('administrator')) {
+        global $current_screen;
+        $page = $current_screen->base;
+
+        if (current_user_can('administrator') || $page == 'admin_page_cron-import') {
             // Set CBIS API vars
             $cbis_keys = array();
             if (have_rows('cbis_api_keys', 'option') ):
@@ -361,14 +364,20 @@ class App
      * Starts the data import
      * @return void
      */
-    public function startImport()
+    public static function startImport()
     {
-        // Send a HTTP request to cron importer page
+        // Send a HTTP request to the page that executes importer function
         $url = admin_url('options.php?page=cron-import');
-        \WP_Http_Curl::request($url);
+        // $request = new \WP_Http;
+        // $result = $request->request($url);
+
+        // $msg = (is_wp_error($result)) ? $result->get_error_message() : '';
+
+        // FIXA
+        wp_remote_post( $url );
 
         // Log when done
-        file_put_contents(dirname(__FILE__)."/log/cron_import.log", "Cron last run: ".date("Y-m-d H:i:s"));
+        file_put_contents(dirname(__FILE__)."/log/cron_import.log", "Cron last run: " . date("Y-m-d H:i:s"));
     }
 
     public static function addCronJob()
