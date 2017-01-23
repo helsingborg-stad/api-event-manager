@@ -355,7 +355,8 @@ class CBIS extends \HbgEventImporter\Parser
                         'name'                  =>  $this->getAttributeValue(self::ATTRIBUTE_CONTACT_PERSON, $attributes),
                         'email'                 =>  strtolower($this->getAttributeValue(self::ATTRIBUTE_CONTACT_EMAIL, $attributes)),
                         'phone_number'          =>  $phoneNumber == null ? $phoneNumber : (strlen($phoneNumber) > 5 ? $phoneNumber : null),
-                        '_event_manager_uid'    =>  strtolower($this->getAttributeValue(self::ATTRIBUTE_CONTACT_EMAIL, $attributes))
+                        '_event_manager_uid'    =>  strtolower($this->getAttributeValue(self::ATTRIBUTE_CONTACT_EMAIL, $attributes)),
+                        'accepted'              =>  1
                     )
                 );
 

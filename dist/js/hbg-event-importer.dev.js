@@ -323,7 +323,7 @@ function changeAccepted(newValue, postId) {
     var postElement = jQuery('#post-' + postId);
     toggleClasses(postElement, newValue);
     jQuery.post(ajaxurl, data, function(response) {
-        console.log(response);
+        //console.log(response);
     });
 }
 

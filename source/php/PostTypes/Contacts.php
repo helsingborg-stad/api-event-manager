@@ -39,6 +39,18 @@ class Contacts extends \HbgEventImporter\Entity\CustomPostType
         $this->addTableColumn('phone', __('Phone', 'event-manager'), true, function ($column, $postId) {
             echo get_post_meta($postId, 'phone_number', true) ? get_post_meta($postId, 'phone_number', true) : __('n/a', 'event-manager');
         });
+        $this->addTableColumn('acceptAndDeny', __('Public', 'event-manager'), false, function ($column, $postId) {
+            $post_status = get_post_status($postId);
+            $first = '';
+            $second = '';
+            if ($post_status == 'publish') {
+                $first = 'hiddenElement';
+            } else {
+                $second = 'hiddenElement';
+            }
+            echo '<a href="#" class="accept button-primary ' . $first . '" postid="' . $postId . '">' . __('Accept', 'event-manager') . '</a>
+            <a href="#" class="deny button-primary ' . $second . '" postid="' . $postId . '">' . __('Deny', 'event-manager') . '</a>';
+        });
         $this->addTableColumn('date', __('Date', 'event-manager'));
         add_action('do_meta_boxes', array($this, 'changeImageBox'), 10, 3);
         add_filter('acf/update_value/key=field_57445c09358ce', array($this, 'acfUpdatePhone'), 10, 3);
