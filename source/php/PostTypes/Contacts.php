@@ -58,12 +58,10 @@ class Contacts extends \HbgEventImporter\Entity\CustomPostType
 
     public function changeImageBox($page, $context, $object)
     {
-        if($page == 'contact')
-        {
-            remove_meta_box( 'postimagediv', 'contact', 'side' );
+        if ($page == 'contact') {
+            remove_meta_box('postimagediv', 'contact', 'side');
             add_meta_box('postimagediv', __('Profile image', 'event-manager'), 'post_thumbnail_meta_box', 'contact', 'side');
             remove_action('do_meta_boxes', array($this, 'changeImageBox'));
         }
     }
-
 }

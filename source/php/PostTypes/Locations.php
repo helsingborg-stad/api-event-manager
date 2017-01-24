@@ -121,7 +121,7 @@ class Locations extends \HbgEventImporter\Entity\CustomPostType
     {
         if (current_user_can('administrator')) {
             $button  = '<div class="import-buttons actions">';
-            if (have_rows('cbis_api_keys', 'option') ) {
+            if (have_rows('cbis_api_keys', 'option')) {
                 $button .= '<div class="button-primary extraspace" id="cbislocation">' . __('Import CBIS locations', 'event-manager') . '</div>';
             }
             $button .= '</div>';
