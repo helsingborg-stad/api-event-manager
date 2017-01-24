@@ -381,7 +381,6 @@ ImportEvents.Parser.Eventhandling = (function ($) {
             $(document).on('click', '#xcap', function (e) {
                 e.preventDefault();
                 data.value = 'xcap';
-                console.log('Parse XCAP');
                 if (! loadingOccasions) {
                     loadingOccasions = true;
                     var button = $(this);
@@ -396,7 +395,6 @@ ImportEvents.Parser.Eventhandling = (function ($) {
             $(document).on('click', '#cbis', function (e) {
                 e.preventDefault();
                 data.value = 'cbis';
-
                 if (! loadingOccasions) {
                     loadingOccasions = true;
                     var button = $(this);

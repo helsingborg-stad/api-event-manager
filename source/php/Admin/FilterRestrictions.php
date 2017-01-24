@@ -13,27 +13,36 @@ class FilterRestrictions
         add_action('pre_get_posts', array($this, 'filterEventsByGroups'), 100);
         add_action('restrict_manage_posts', array($this, 'restrictEventsByCategory'), 100);
         add_action('restrict_manage_posts', array($this, 'restrictEventsByGroups'), 100);
-        add_filter('parse_query', array($this, 'applyCategoryRestriction'), 100);
+        add_filter('parse_query', array($this, 'applyFilterRestrictions'), 100);
         add_action('restrict_manage_posts', array($this, 'restrictEventsByInterval'), 100);
         add_action('pre_get_posts', array($this, 'applyIntervalRestriction'), 100);
     }
 
     /**
-     * Filter event list by users publishing groups
+     * Filter post types by users publishing groups
      * @param  object $query object WP Query
      */
     public function filterEventsByGroups($query)
     {
-        global $pagenow, $post_type;
-
-        if (is_admin() && $pagenow == 'edit.php' && $post_type == 'event' && ! current_user_can('editor') && ! current_user_can('administrator')) {
-            add_filter('posts_join', array($this, 'groupFilterJoin'));
-            add_filter('posts_where', array($this, 'groupFilterWhere'), 10, 2);
-            add_filter('posts_groupby', array($this, 'groupFilterGroupBy'));
-            add_filter('views_edit-event', array($this, 'updateEventCounters'));
-
+        global $pagenow, $wp_post_types, $post_type;
+        if (current_user_can('administrator') || current_user_can('editor')) {
             return $query;
         }
+
+        $post_types = get_option('options_event_group_select');
+
+        if (is_array($post_types) && ! empty($post_types)) {
+            foreach ($post_types as $p) {
+                if (isset($wp_post_types[$p]) && is_object($wp_post_types[$p]) && $pagenow == 'edit.php' && $post_type == $p) {
+                    add_filter('posts_join', array($this, 'groupFilterJoin'));
+                    add_filter('posts_where', array($this, 'groupFilterWhere'), 10, 2);
+                    add_filter('posts_groupby', array($this, 'groupFilterGroupBy'));
+                    add_filter('views_edit-'.$p, array($this, 'updateEventCounters'));
+                }
+            }
+        }
+
+        return $query;
     }
 
     /**
@@ -66,8 +75,8 @@ class FilterRestrictions
         $groups = (! empty($groups) && is_array($groups)) ? implode(', ', $groups) : false;
 
         $where .= " AND ($wpdb->posts.post_author = $id ";
-        $where .= "OR ($wpdb->postmeta.meta_key = 'event_unbelonging_group' AND $wpdb->postmeta.meta_value = 1) ";
-        $where .= ($groups) ? " OR ($wpdb->term_taxonomy.taxonomy = 'event_groups' AND $wpdb->term_taxonomy.term_id IN($groups))" : '';
+        $where .= "OR ($wpdb->postmeta.meta_key = 'missing_user_group' AND $wpdb->postmeta.meta_value = 1) ";
+        $where .= ($groups) ? " OR ($wpdb->term_taxonomy.taxonomy = 'user_groups' AND $wpdb->term_taxonomy.term_id IN($groups))" : '';
         $where .= ") ";
 
         return $where;
@@ -183,13 +192,13 @@ class FilterRestrictions
             }
         }
 
-        if ($post_type=='event') {
-            $taxonomy = 'event_groups';
-            $term = isset($wp_query->query['event_groups']) ? $wp_query->query['event_groups'] :'';
+        if ($post_type == 'event') {
+            $taxonomy = 'user_groups';
+            $term = isset($wp_query->query['user_groups']) ? $wp_query->query['user_groups'] :'';
             wp_dropdown_categories(array(
                 'show_option_all' =>  __('All groups', 'event-manager'),
                 'taxonomy'        =>  $taxonomy,
-                'name'            =>  'event_groups',
+                'name'            =>  'user_groups',
                 'orderby'         =>  'name',
                 'selected'        =>  $term,
                 'hierarchical'    =>  false,
@@ -205,7 +214,7 @@ class FilterRestrictions
      * Apply taxonomy search filter
      * @return void
      */
-    public function applyCategoryRestriction($query)
+    public function applyFilterRestrictions($query)
     {
         global $pagenow;
         $qv =& $query->query_vars;
@@ -215,9 +224,9 @@ class FilterRestrictions
             $qv['event_categories'] = ($term ? $term->slug : '');
         }
 
-        if ($pagenow=='edit.php' && isset($qv['event_groups']) && is_numeric($qv['event_groups'])) {
-            $term = get_term_by('id', $qv['event_groups'], 'event_groups');
-            $qv['event_groups'] = ($term ? $term->slug : '');
+        if ($pagenow=='edit.php' && isset($qv['user_groups']) && is_numeric($qv['user_groups'])) {
+            $term = get_term_by('id', $qv['user_groups'], 'user_groups');
+            $qv['user_groups'] = ($term ? $term->slug : '');
         }
     }
 

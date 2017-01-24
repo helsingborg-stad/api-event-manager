@@ -15,9 +15,26 @@ class AcfFields
 
     public function addLocalFieldGroups()
     {
+    // Save user groups option to array
+    $groups = get_field('event_group_select', 'option');
+
+    $user_groups = array();
+    if (is_array($groups) && !empty($groups)) {
+        foreach ($groups as $group) {
+            $user_groups[] = array(
+                    array(
+                    'param' => 'post_type',
+                    'operator' => '==',
+                    'value' => $group,
+                ),
+            );
+        }
+    }
+
     /**
      * Sponsor group field
      */
+    if( function_exists('acf_add_local_field_group') ) {
     acf_add_local_field_group(array (
     'key' => 'group_57a9bf12ef1a3',
     'title' => __('Sponsor', 'event-manager'),
@@ -163,11 +180,26 @@ class AcfFields
     /**
      * Package group field
      */
-
     acf_add_local_field_group(array (
     'key' => 'group_57c94757c2169',
     'title' => __('Package', 'event-manager'),
     'fields' => array (
+        array (
+            'key' => 'field_5885b8a1f95bc',
+            'label' => __('Package', 'event-manager'),
+            'name' => '',
+            'type' => 'tab',
+            'instructions' => '',
+            'required' => 0,
+            'conditional_logic' => 0,
+            'wrapper' => array (
+                'width' => '',
+                'class' => '',
+                'id' => '',
+            ),
+            'placement' => 'left',
+            'endpoint' => 0,
+        ),
         array (
             'key' => 'field_57c94b88d8030',
             'label' => __('Events included', 'event-manager'),
@@ -240,9 +272,9 @@ class AcfFields
                 'id' => '',
             ),
             'default_value' => '',
-            'placeholder' => 'e.g. 15',
+            'placeholder' => __('e.g. 15', 'event-manager'),
             'prepend' => '',
-            'append' => 'year',
+            'append' => __('year', 'event-manager'),
             'min' => 0,
             'max' => '',
             'step' => '',
@@ -341,32 +373,32 @@ class AcfFields
                 'id' => '',
             ),
             'choices' => array (
-                0 => '0',
-                1 => '1',
-                2 => '2',
-                3 => '3',
-                4 => '4',
-                5 => '5',
-                6 => '6',
-                7 => '7',
-                8 => '8',
-                9 => '9',
-                10 => '10',
-                11 => '11',
-                12 => '12',
-                13 => '13',
-                14 => '14',
-                15 => '15',
-                16 => '16',
-                17 => '17',
-                18 => '18',
-                19 => '19',
-                20 => '20',
-                21 => '21',
-                22 => '22',
-                23 => '23',
-                24 => '24',
-                25 => '25',
+                0 => __('0', 'event-manager'),
+                1 => __('1', 'event-manager'),
+                2 => __('2', 'event-manager'),
+                3 => __('3', 'event-manager'),
+                4 => __('4', 'event-manager'),
+                5 => __('5', 'event-manager'),
+                6 => __('6', 'event-manager'),
+                7 => __('7', 'event-manager'),
+                8 => __('8', 'event-manager'),
+                9 => __('9', 'event-manager'),
+                10 => __('10', 'event-manager'),
+                11 => __('11', 'event-manager'),
+                12 => __('12', 'event-manager'),
+                13 => __('13', 'event-manager'),
+                14 => __('14', 'event-manager'),
+                15 => __('15', 'event-manager'),
+                16 => __('16', 'event-manager'),
+                17 => __('17', 'event-manager'),
+                18 => __('18', 'event-manager'),
+                19 => __('19', 'event-manager'),
+                20 => __('20', 'event-manager'),
+                21 => __('21', 'event-manager'),
+                22 => __('22', 'event-manager'),
+                23 => __('23', 'event-manager'),
+                24 => __('24', 'event-manager'),
+                25 => __('25', 'event-manager'),
             ),
             'default_value' => array (
                 0 => 18,
@@ -411,42 +443,42 @@ class AcfFields
                 'id' => '',
             ),
             'choices' => array (
-                50 => '50',
-                51 => '51',
-                52 => '52',
-                53 => '53',
-                54 => '54',
-                55 => '55',
-                56 => '56',
-                57 => '57',
-                58 => '58',
-                59 => '59',
-                60 => '60',
-                61 => '61',
-                62 => '62',
-                63 => '63',
-                64 => '64',
-                65 => '65',
-                66 => '66',
-                67 => '67',
-                68 => '68',
-                69 => '69',
-                70 => '70',
-                71 => '71',
-                72 => '72',
-                73 => '73',
-                74 => '74',
-                75 => '75',
-                76 => '76',
-                77 => '77',
-                78 => '78',
-                79 => '79',
-                80 => '80',
-                81 => '81',
-                82 => '82',
-                83 => '83',
-                84 => '84',
-                85 => '85',
+                50 => __('50', 'event-manager'),
+                51 => __('51', 'event-manager'),
+                52 => __('52', 'event-manager'),
+                53 => __('53', 'event-manager'),
+                54 => __('54', 'event-manager'),
+                55 => __('55', 'event-manager'),
+                56 => __('56', 'event-manager'),
+                57 => __('57', 'event-manager'),
+                58 => __('58', 'event-manager'),
+                59 => __('59', 'event-manager'),
+                60 => __('60', 'event-manager'),
+                61 => __('61', 'event-manager'),
+                62 => __('62', 'event-manager'),
+                63 => __('63', 'event-manager'),
+                64 => __('64', 'event-manager'),
+                65 => __('65', 'event-manager'),
+                66 => __('66', 'event-manager'),
+                67 => __('67', 'event-manager'),
+                68 => __('68', 'event-manager'),
+                69 => __('69', 'event-manager'),
+                70 => __('70', 'event-manager'),
+                71 => __('71', 'event-manager'),
+                72 => __('72', 'event-manager'),
+                73 => __('73', 'event-manager'),
+                74 => __('74', 'event-manager'),
+                75 => __('75', 'event-manager'),
+                76 => __('76', 'event-manager'),
+                77 => __('77', 'event-manager'),
+                78 => __('78', 'event-manager'),
+                79 => __('79', 'event-manager'),
+                80 => __('80', 'event-manager'),
+                81 => __('81', 'event-manager'),
+                82 => __('82', 'event-manager'),
+                83 => __('83', 'event-manager'),
+                84 => __('84', 'event-manager'),
+                85 => __('85', 'event-manager'),
             ),
             'default_value' => array (
                 0 => 65,
@@ -573,7 +605,7 @@ class AcfFields
                 'id' => '',
             ),
             'default_value' => '',
-            'placeholder' => 'e.g. entry, checkroom, meal',
+            'placeholder' => __('e.g. entry, checkroom, meal', 'event-manager'),
             'maxlength' => '',
             'rows' => 3,
             'new_lines' => 'wpautop',
@@ -597,7 +629,6 @@ class AcfFields
     'active' => 1,
     'description' => '',
     ));
-
 
     /**
      * Contact group field
@@ -686,7 +717,6 @@ class AcfFields
     /**
      * Location group field
      */
-
     acf_add_local_field_group(array (
     'key' => 'group_57612f9baa78b',
     'title' => __('Location', 'event-manager'),
@@ -1115,7 +1145,6 @@ class AcfFields
     /**
      * Event group field
      */
-
     acf_add_local_field_group(array (
     'key' => 'group_57610ebadcee8',
     'title' => __('Event', 'event-manager'),
@@ -2595,68 +2624,6 @@ class AcfFields
                 ),
             ),
         ),
-        array (
-            'key' => 'field_585b7f804f198',
-            'label' => __('Groups', 'event-manager'),
-            'name' => '',
-            'type' => 'tab',
-            'instructions' => '',
-            'required' => 0,
-            'conditional_logic' => 0,
-            'wrapper' => array (
-                'width' => '',
-                'class' => '',
-                'id' => '',
-            ),
-            'placement' => 'left',
-            'endpoint' => 0,
-        ),
-        array (
-            'key' => 'field_585ce2dbc4c0e',
-            'label' => __('Unbelonging to group', 'event-manager'),
-            'name' => 'event_unbelonging_group',
-            'type' => 'true_false',
-            'instructions' => '',
-            'required' => 0,
-            'conditional_logic' => 0,
-            'wrapper' => array (
-                'width' => '',
-                'class' => '',
-                'id' => '',
-            ),
-            'message' => __('Check this box if the event does not belong to any publishing groups. This will make the event available all users.', 'event-manager'),
-            'default_value' => 0,
-        ),
-        array (
-            'key' => 'field_585b80034f199',
-            'label' => __('Groups', 'event-manager'),
-            'name' => 'event_publishing_groups',
-            'type' => 'taxonomy',
-            'instructions' => __('Select one or many groups where this event belongs to.', 'event-manager'),
-            'required' => 1,
-            'conditional_logic' => array (
-                array (
-                    array (
-                        'field' => 'field_585ce2dbc4c0e',
-                        'operator' => '!=',
-                        'value' => '1',
-                    ),
-                ),
-            ),
-            'wrapper' => array (
-                'width' => '',
-                'class' => '',
-                'id' => '',
-            ),
-            'taxonomy' => 'event_groups',
-            'field_type' => 'checkbox',
-            'allow_null' => 0,
-            'add_term' => 1,
-            'save_terms' => 1,
-            'load_terms' => 0,
-            'return_format' => 'id',
-            'multiple' => 0,
-        ),
     ),
     'location' => array (
         array (
@@ -2676,87 +2643,6 @@ class AcfFields
     'active' => 1,
     'description' => '',
     'local' => 'json',
-    ));
-
-    /**
-     * Event manager settings
-     */
-    acf_add_local_field_group(array (
-    'key' => 'group_575fe32901927',
-    'title' => _x('Settings', 'ACF', 'event-manager'),
-    'fields' => array (
-        array (
-            'key' => 'field_575fe34355309',
-            'label' => _x('Google Api key', 'ACF', 'event-manager'),
-            'name' => 'google_geocode_api_key',
-            'type' => 'text',
-            'instructions' => _x('API-services required:<br> Google Maps JavaScript API<br> Google Maps Geocoding API<br> Google Places API Web Service', 'ACF', 'event-manager'),
-            'required' => 1,
-            'conditional_logic' => 0,
-            'wrapper' => array (
-                'width' => '',
-                'class' => '',
-                'id' => '',
-            ),
-            'default_value' => '',
-            'placeholder' => '',
-            'prepend' => '',
-            'append' => '',
-            'maxlength' => '',
-        ),
-        array (
-            'key' => 'field_57fb3d55d2535',
-            'label' => _x('Default city', 'ACF', 'event-manager'),
-            'name' => 'default_city',
-            'type' => 'text',
-            'instructions' => _x('If essential adress components are missing during import, this city will be used as default.', 'ACF', 'event-manager'),
-            'required' => 0,
-            'conditional_logic' => 0,
-            'wrapper' => array (
-                'width' => '',
-                'class' => '',
-                'id' => '',
-            ),
-            'default_value' => '',
-            'placeholder' => '',
-            'prepend' => '',
-            'append' => '',
-            'maxlength' => '',
-        ),
-        array (
-            'key' => 'field_580db5e4967d6',
-            'label' => _x('Import warning', 'ACF', 'event-manager'),
-            'name' => 'import_warning',
-            'type' => 'true_false',
-            'instructions' => '',
-            'required' => 0,
-            'conditional_logic' => 0,
-            'wrapper' => array (
-                'width' => '',
-                'class' => '',
-                'id' => '',
-            ),
-            'message' => _x('Show notification if no events have been imported for a week or more.', 'ACF', 'event-manager'),
-            'default_value' => 1,
-        ),
-    ),
-    'location' => array (
-        array (
-            array (
-                'param' => 'options_page',
-                'operator' => '==',
-                'value' => 'acf-options-options',
-            ),
-        ),
-    ),
-    'menu_order' => 0,
-    'position' => 'normal',
-    'style' => 'default',
-    'label_placement' => 'top',
-    'instruction_placement' => 'label',
-    'hide_on_screen' => '',
-    'active' => 1,
-    'description' => '',
     ));
 
     /**
@@ -2964,10 +2850,10 @@ class AcfFields
                 ),
                 array (
                     'key' => 'field_5878a7338bbab',
-                    'label' => __('Default publishing groups', 'event-manager'),
+                    'label' => __('Default user groups', 'event-manager'),
                     'name' => 'cbis_publishing_groups',
                     'type' => 'taxonomy',
-                    'instructions' => __('Select the groups that you want to set as default for all imported events.', 'event-manager'),
+                    'instructions' => __('Select the user groups that you want to set as default to imported posts.', 'event-manager'),
                     'required' => 0,
                     'conditional_logic' => 0,
                     'wrapper' => array (
@@ -2975,7 +2861,7 @@ class AcfFields
                         'class' => '',
                         'id' => '',
                     ),
-                    'taxonomy' => 'event_groups',
+                    'taxonomy' => 'user_groups',
                     'field_type' => 'checkbox',
                     'allow_null' => 0,
                     'add_term' => 0,
@@ -3109,10 +2995,10 @@ class AcfFields
                 ),
                 array (
                     'key' => 'field_587cc3fe5ebcc',
-                    'label' => __('Default publishing groups', 'event-manager'),
+                    'label' => __('Default user groups', 'event-manager'),
                     'name' => 'xcap_publishing_groups',
                     'type' => 'taxonomy',
-                    'instructions' => __('Select the groups that you want to set as default for all imported events.', 'event-manager'),
+                    'instructions' => __('Select the user groups that you want to set as default to imported posts.', 'event-manager'),
                     'required' => 0,
                     'conditional_logic' => 0,
                     'wrapper' => array (
@@ -3120,7 +3006,7 @@ class AcfFields
                         'class' => '',
                         'id' => '',
                     ),
-                    'taxonomy' => 'event_groups',
+                    'taxonomy' => 'user_groups',
                     'field_type' => 'checkbox',
                     'allow_null' => 0,
                     'add_term' => 0,
@@ -3171,7 +3057,7 @@ class AcfFields
                 'class' => '',
                 'id' => '',
             ),
-            'taxonomy' => 'event_groups',
+            'taxonomy' => 'user_groups',
             'field_type' => 'checkbox',
             'allow_null' => 0,
             'add_term' => 1,
@@ -3204,5 +3090,180 @@ class AcfFields
     'active' => 1,
     'description' => '',
     ));
+
+    /**
+     * User groups
+     */
+    acf_add_local_field_group(array (
+    'key' => 'group_5885f51260b61',
+    'title' => __('Groups', 'event-manager'),
+    'fields' => array (
+        array (
+            'key' => 'field_5885f58a36f81',
+            'label' => __('Missing user group', 'event-manager'),
+            'name' => 'missing_user_group',
+            'type' => 'true_false',
+            'instructions' => '',
+            'required' => 0,
+            'conditional_logic' => 0,
+            'wrapper' => array (
+                'width' => '',
+                'class' => '',
+                'id' => '',
+            ),
+            'message' => __('Check this box if the post does not belong to any user groups. This post will be available to all users.', 'event-manager'),
+            'default_value' => 0,
+        ),
+        array (
+            'key' => 'field_5885f58c36f82',
+            'label' => __('Groups', 'event-manager'),
+            'name' => 'user_groups',
+            'type' => 'taxonomy',
+            'instructions' => __('Select one or many user groups.', 'event-manager'),
+            'required' => 1,
+            'conditional_logic' => array (
+                array (
+                    array (
+                        'field' => 'field_5885f58a36f81',
+                        'operator' => '!=',
+                        'value' => '1',
+                    ),
+                ),
+            ),
+            'wrapper' => array (
+                'width' => '',
+                'class' => '',
+                'id' => '',
+            ),
+            'taxonomy' => 'user_groups',
+            'field_type' => 'checkbox',
+            'allow_null' => 0,
+            'add_term' => 1,
+            'save_terms' => 1,
+            'load_terms' => 0,
+            'return_format' => 'id',
+            'multiple' => 0,
+        ),
+    ),
+    'location' => $user_groups,
+    'menu_order' => 1,
+    'position' => 'normal',
+    'style' => 'default',
+    'label_placement' => 'top',
+    'instruction_placement' => 'label',
+    'hide_on_screen' => '',
+    'active' => 1,
+    'description' => '',
+    ));
+
+    /**
+     * Event manager settings
+     */
+    acf_add_local_field_group(array (
+    'key' => 'group_575fe32901927',
+    'title' => __('Event manager settings', 'event-manager'),
+    'fields' => array (
+        array (
+            'key' => 'field_575fe34355309',
+            'label' => __('Google Api key', 'event-manager'),
+            'name' => 'google_geocode_api_key',
+            'type' => 'text',
+            'instructions' => __('API-services required:<br> Google Maps JavaScript API<br> Google Maps Geocoding API<br> Google Places API Web Service', 'event-manager'),
+            'required' => 1,
+            'conditional_logic' => 0,
+            'wrapper' => array (
+                'width' => '',
+                'class' => '',
+                'id' => '',
+            ),
+            'default_value' => '',
+            'placeholder' => '',
+            'prepend' => '',
+            'append' => '',
+            'maxlength' => '',
+        ),
+        array (
+            'key' => 'field_57fb3d55d2535',
+            'label' => __('Default city', 'event-manager'),
+            'name' => 'default_city',
+            'type' => 'text',
+            'instructions' => __('If essential address components are missing during import, this city will be used as default.', 'event-manager'),
+            'required' => 0,
+            'conditional_logic' => 0,
+            'wrapper' => array (
+                'width' => '',
+                'class' => '',
+                'id' => '',
+            ),
+            'default_value' => '',
+            'placeholder' => '',
+            'prepend' => '',
+            'append' => '',
+            'maxlength' => '',
+        ),
+        array (
+            'key' => 'field_580db5e4967d6',
+            'label' => __('Import warning', 'event-manager'),
+            'name' => 'import_warning',
+            'type' => 'true_false',
+            'instructions' => '',
+            'required' => 0,
+            'conditional_logic' => 0,
+            'wrapper' => array (
+                'width' => '',
+                'class' => '',
+                'id' => '',
+            ),
+            'message' => __('Show notification if no events have been imported for a week or more.', 'event-manager'),
+            'default_value' => 1,
+        ),
+        array (
+            'key' => 'field_588605e9078dc',
+            'label' => __('Groups', 'event-manager'),
+            'name' => 'event_group_select',
+            'type' => 'checkbox',
+            'instructions' => __('Activate user groups on selected post types.', 'event-manager'),
+            'required' => 0,
+            'conditional_logic' => 0,
+            'wrapper' => array (
+                'width' => '',
+                'class' => '',
+                'id' => '',
+            ),
+            'choices' => array (
+                'event' => __('Events', 'event-manager'),
+                'location' => __('Locations', 'event-manager'),
+                'contact' => __('Contacts', 'event-manager'),
+                'sponsor' => __('Sponsors', 'event-manager'),
+                'package' => __('Packages', 'event-manager'),
+                'membership-card' => __('Membership cards', 'event-manager'),
+            ),
+            'default_value' => array (
+                0 => 'event',
+            ),
+            'layout' => 'vertical',
+            'toggle' => 0,
+            'return_format' => 'value',
+        ),
+    ),
+    'location' => array (
+        array (
+            array (
+                'param' => 'options_page',
+                'operator' => '==',
+                'value' => 'acf-options-options',
+            ),
+        ),
+    ),
+    'menu_order' => 0,
+    'position' => 'normal',
+    'style' => 'default',
+    'label_placement' => 'top',
+    'instruction_placement' => 'label',
+    'hide_on_screen' => '',
+    'active' => 1,
+    'description' => '',
+    ));
+        }
     }
 }

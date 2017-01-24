@@ -649,7 +649,7 @@ class EventFields extends Fields
         /* Replace group id with taxonomy name */
 
         register_rest_field($this->postType,
-            'event_groups',
+            'user_groups',
             array(
                 'get_callback' => array($this, 'eventGroups'),
                 'schema' => array(

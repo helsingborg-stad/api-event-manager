@@ -11,8 +11,8 @@
 .wp-admin.post-type-event.post-php.no-sync .acf-field[data-name="price_information"],
 .wp-admin.post-type-event.post-php.no-sync .acf-field[data-name="price_adult"],
 .wp-admin.post-type-event.post-php.no-sync .acf-field[data-name="price_children"],
-.wp-admin.post-type-event.post-php.no-sync .acf-field[data-name="event_publishing_groups"],
-.wp-admin.post-type-event.post-php.no-sync .acf-field[data-name="event_unbelonging_group"] {
+.wp-admin.post-type-event.post-php.no-sync .acf-field[data-name="user_groups"],
+.wp-admin.post-type-event.post-php.no-sync .acf-field[data-name="missing_user_group"] {
   position: relative; }
   .wp-admin.post-type-event.post-php.no-sync .postbox:not(#submitdiv):not(.acf-postbox):not(#lix-calculator):not(#revisionsdiv)::after,
   .wp-admin.post-type-event.post-php.no-sync .postarea::after,
@@ -27,8 +27,8 @@
   .wp-admin.post-type-event.post-php.no-sync .acf-field[data-name="price_information"]::after,
   .wp-admin.post-type-event.post-php.no-sync .acf-field[data-name="price_adult"]::after,
   .wp-admin.post-type-event.post-php.no-sync .acf-field[data-name="price_children"]::after,
-  .wp-admin.post-type-event.post-php.no-sync .acf-field[data-name="event_publishing_groups"]::after,
-  .wp-admin.post-type-event.post-php.no-sync .acf-field[data-name="event_unbelonging_group"]::after {
+  .wp-admin.post-type-event.post-php.no-sync .acf-field[data-name="user_groups"]::after,
+  .wp-admin.post-type-event.post-php.no-sync .acf-field[data-name="missing_user_group"]::after {
     display: block;
     content: '';
     position: absolute;
@@ -51,8 +51,8 @@
   .wp-admin.post-type-event.post-php.no-sync .acf-field[data-name="price_information"]::before,
   .wp-admin.post-type-event.post-php.no-sync .acf-field[data-name="price_adult"]::before,
   .wp-admin.post-type-event.post-php.no-sync .acf-field[data-name="price_children"]::before,
-  .wp-admin.post-type-event.post-php.no-sync .acf-field[data-name="event_publishing_groups"]::before,
-  .wp-admin.post-type-event.post-php.no-sync .acf-field[data-name="event_unbelonging_group"]::before {
+  .wp-admin.post-type-event.post-php.no-sync .acf-field[data-name="user_groups"]::before,
+  .wp-admin.post-type-event.post-php.no-sync .acf-field[data-name="missing_user_group"]::before {
     display: block;
     content: '';
     width: 25px;

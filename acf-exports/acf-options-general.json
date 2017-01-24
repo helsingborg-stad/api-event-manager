@@ -26,7 +26,7 @@
                 "label": "Default city",
                 "name": "default_city",
                 "type": "text",
-                "instructions": "If essential adress components are missing during import, this city will be used as default.",
+                "instructions": "If essential address components are missing during import, this city will be used as default.",
                 "required": 0,
                 "conditional_logic": 0,
                 "wrapper": {
@@ -55,6 +55,34 @@
                 },
                 "message": "Show notification if no events have been imported for a week or more.",
                 "default_value": 1
+            },
+            {
+                "key": "field_588605e9078dc",
+                "label": "Groups",
+                "name": "event_group_select",
+                "type": "checkbox",
+                "instructions": "Activate user groups on selected post types.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "choices": {
+                    "event": "Events",
+                    "location": "Locations",
+                    "contact": "Contacts",
+                    "sponsor": "Sponsors",
+                    "package": "Packages",
+                    "membership-card": "Membership cards"
+                },
+                "default_value": [
+                    "event"
+                ],
+                "layout": "vertical",
+                "toggle": 0,
+                "return_format": "value"
             }
         ],
         "location": [

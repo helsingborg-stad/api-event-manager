@@ -15,7 +15,7 @@
                     "class": "",
                     "id": ""
                 },
-                "taxonomy": "event_groups",
+                "taxonomy": "user_groups",
                 "field_type": "checkbox",
                 "allow_null": 0,
                 "add_term": 1,

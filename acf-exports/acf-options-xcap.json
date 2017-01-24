@@ -98,10 +98,10 @@
                     },
                     {
                         "key": "field_587cc3fe5ebcc",
-                        "label": "Default publishing groups",
+                        "label": "Default user groups",
                         "name": "xcap_publishing_groups",
                         "type": "taxonomy",
-                        "instructions": "Select the groups that you want to set as default for all imported events.",
+                        "instructions": "Select the user groups that you want to set as default to imported posts.",
                         "required": 0,
                         "conditional_logic": 0,
                         "wrapper": {
@@ -109,7 +109,7 @@
                             "class": "",
                             "id": ""
                         },
-                        "taxonomy": "event_groups",
+                        "taxonomy": "user_groups",
                         "field_type": "checkbox",
                         "allow_null": 0,
                         "add_term": 0,

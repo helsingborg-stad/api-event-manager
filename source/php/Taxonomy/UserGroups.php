@@ -2,13 +2,13 @@
 
 namespace HbgEventImporter\Taxonomy;
 
-class EventGroups
+class UserGroups
 {
     public function __construct()
     {
         add_action('init', array($this, 'registerTaxonomy'));
-        add_action( 'show_user_profile', array($this, 'displayUserGroups'));
-        add_action( 'edit_user_profile', array($this, 'displayUserGroups'));
+        add_action('show_user_profile', array($this, 'displayUserGroups'));
+        add_action('edit_user_profile', array($this, 'displayUserGroups'));
     }
 
     public function registerTaxonomy()
@@ -51,7 +51,7 @@ class EventGroups
             'meta_box_cb'           => false,
         );
 
-        register_taxonomy('event_groups', array('event'), $args);
+        register_taxonomy('user_groups', array('event'), $args);
     }
 
     /**

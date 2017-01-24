@@ -43,6 +43,9 @@ abstract class CustomPostType
         add_filter('get_sample_permalink_html', array($this, 'replacePermalink'), 10, 5);
         add_filter('redirect_post_location', array($this, 'redirectLightboxLocation'), 10, 2);
         add_filter('post_updated_messages', array($this, 'postPublishedMsg'));
+        add_action('admin_menu', array($this, 'removePublishBox'));
+        add_filter('acf/update_value/name=user_groups', array($this, 'updateuserGroups'), 10, 3);
+        add_filter('acf/fields/taxonomy/wp_list_categories/name=user_groups', array($this, 'filterGroupTaxonomy'), 10, 3);
     }
 
     /**
@@ -158,7 +161,7 @@ abstract class CustomPostType
     public function acceptOrDeny()
     {
         if (!isset($_POST['postId']) || !isset($_POST['value'])) {
-            ob_clean();
+            if (ob_get_contents()) ob_end_clean();
             echo _e('Something went wrong!', 'event-manager');
             wp_die();
         }
@@ -180,17 +183,17 @@ abstract class CustomPostType
         if ($postAccepted == false) {
             add_post_meta($postId, 'accepted', $newValue);
 
-            ob_clean();
+            if (ob_get_contents()) ob_end_clean();
             echo $newValue;
             wp_die();
         } else {
             if ($postAccepted[0] == $newValue) {
-                ob_clean();
+                if (ob_get_contents()) ob_end_clean();
                 echo $postAccepted[0];
                 wp_die();
             }
             update_post_meta($postId, 'accepted', $newValue);
-            ob_clean();
+            if (ob_get_contents()) ob_end_clean();
             echo $newValue;
             wp_die();
         }
@@ -353,4 +356,139 @@ abstract class CustomPostType
         $value = DataCleaner::phoneNumber($value);
         return $value;
     }
+
+    /**
+     * Remove submit buttons on post if user don't have access
+     * @return void
+     */
+    public function removePublishBox()
+    {
+        $post_id = (isset($_GET['post'])) ? $_GET['post'] : false;
+
+        // Return if user is admin/editor or the event don't have any publishing groups
+        if (current_user_can('administrator') || current_user_can('editor') || $post_id == false || get_field('missing_user_group', $post_id) == true) {
+            return;
+        }
+
+        // Get current post object
+        $post = get_post($post_id);
+
+        $post_types = get_field('event_group_select', 'option') ? get_field('event_group_select', 'option') : array();
+
+        if ($post != null && in_array($post->post_type, $post_types)) {
+            // Get posts group taxonomies
+            $post_terms = wp_get_post_terms($post_id, 'user_groups', array("fields" => "ids"));
+
+            // Get users groups
+            $user_id = get_current_user_id();
+            $user_groups = get_field('event_user_groups', 'user_' . $user_id);
+
+            // Remove publish capability if user don't exist in a group
+            if (empty($user_groups) || ! is_array($user_groups)) {
+                add_action('admin_notices', array($this, 'missingAccessNotice'));
+                remove_meta_box('submitdiv', $this->slug, 'side');
+                return;
+            }
+
+            // Check if user belongs to any of the events groups. Remove publish capability if not.
+            $result = array_intersect($post_terms, $user_groups);
+            if (count($result) < 1) {
+                add_action('admin_notices', array($this, 'missingAccessNotice'));
+                remove_meta_box('submitdiv', $this->slug, 'side');
+            }
+        }
+
+        return;
+    }
+
+    /**
+     * Notice to inform if the user don't have access to the event.
+     * @return void
+     */
+    public function missingAccessNotice()
+    {
+        $screen = get_current_screen();
+        if ($screen->post_type !== $this->slug) {
+            return;
+        }
+        ?>
+        <div class="notice notice-warning dismissable is-dismissible">
+        <p><?php _e("You don't have access to edit this event. Contact an administrator for further information.", "event-manager");
+        ?></p>
+        </div>
+        <?php
+    }
+
+    /**
+     * Function to save publishing groups correctly,
+     * since contributors dont have access to all groups we must add/remove new groups to the existing table value.
+     * @param  string $value   the value of the field
+     * @param  int    $post_id the post id to save against
+     * @param  array  $field   the field object
+     * @return array           the new value
+     */
+    public function updateuserGroups($value, $post_id, $field)
+    {
+        if (current_user_can('administrator') || current_user_can('editor')) {
+            return $value;
+        }
+
+        // Get users groups
+        $current_user = wp_get_current_user();
+        $id = 'user_' . $current_user->ID;
+        $user_groups = get_field('event_user_groups', $id);
+
+        // Get posts groups
+        $post_groups = get_field('user_groups', $post_id);
+
+        if (!$post_groups) {
+            return $value;
+        }
+
+        // Convert strings to int
+        $new_value = array_map('intval', $value);
+
+        // Get the empty values
+        $empty_values = array_diff($user_groups, $new_value);
+
+        // Remove empty values from post groups
+        $new_post_groups = array_diff($post_groups, $empty_values);
+
+        // Add newly added groups to existing post groups
+        $new_array = array_merge($new_post_groups, $new_value);
+
+        // Remove duplicates
+        $new_array = array_unique($new_array);
+
+        return $new_array;
+    }
+
+    /**
+     * Filter to display users group taxonomies
+     * @param  array  $args   An array of arguments passed to the wp_list_categories function
+     * @param  array  $field  An array containing all the field settings
+     * @return array  $args
+     */
+    public function filterGroupTaxonomy($args, $field)
+    {
+        $current_user = wp_get_current_user();
+
+        // Return if admin or editor
+        if (current_user_can('administrator') || current_user_can('editor')) {
+            return $args;
+        }
+
+        $id = 'user_' . $current_user->ID;
+        $groups = get_field('event_user_groups', $id);
+
+        // Return the assigned groups for the user
+        if (! empty($groups) && is_array($groups)) {
+            $args['include'] = $groups;
+        } else {
+            return false;
+        }
+
+        return $args;
+    }
+
 }

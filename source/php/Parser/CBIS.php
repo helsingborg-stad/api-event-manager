@@ -115,7 +115,7 @@ class CBIS extends \HbgEventImporter\Parser
         $cbisKey        = $this->apiKeys['cbis_key'];
         $cbisId         = $this->apiKeys['cbis_geonode'];
         $cbisCategory   = $this->apiKeys['cbis_event_id'];
-        $publishGroups  = (! empty($this->apiKeys['cbis_groups'])) ? array_map('intval', $this->apiKeys['cbis_groups']) : null;
+        $userGroups     = (! empty($this->apiKeys['cbis_groups'])) ? array_map('intval', $this->apiKeys['cbis_groups']) : null;
         // Used to set unique key on events
         $shortKey       = substr(intval($this->apiKeys['cbis_key'], 36), 0, 4);
 
@@ -171,7 +171,7 @@ class CBIS extends \HbgEventImporter\Parser
         });
 
         foreach ($filteredProducts as $key => $eventData) {
-            $this->saveEvent($eventData, $postStatus, $publishGroups, $shortKey);
+            $this->saveEvent($eventData, $postStatus, $userGroups, $shortKey);
         }
     }
 
@@ -280,11 +280,11 @@ class CBIS extends \HbgEventImporter\Parser
      * Cleans a single events data into correct format and saves it to db
      * @param  object   $eventData      Event data
      * @param  string   $postStatus     default post status
-     * @param  array    $publishGroups  default publishing groups
+     * @param  array    $userGroups  default user groups
      * @param  int      $shortKey       shortened api key
      * @return void
      */
-    public function saveEvent($eventData, $postStatus, $publishGroups, $shortKey)
+    public function saveEvent($eventData, $postStatus, $userGroups, $shortKey)
     {
         $attributes = $this->getAttributes($eventData);
         $categories = $this->getCategories($eventData);
@@ -319,6 +319,8 @@ class CBIS extends \HbgEventImporter\Parser
                     'import_client'         =>  $import_client,
                     '_event_manager_uid'    =>  $this->getAttributeValue(self::ATTRIBUTE_ADDRESS, $attributes) ? $this->getAttributeValue(self::ATTRIBUTE_ADDRESS, $attributes) : $eventData->GeoNode->Name,
                     'accepted'              =>  1,
+                    'user_groups'           => $userGroups,
+                    'missing_user_group'    => $userGroups == null ? 1 : 0,
                 )
             );
 
@@ -356,7 +358,9 @@ class CBIS extends \HbgEventImporter\Parser
                         'email'                 =>  strtolower($this->getAttributeValue(self::ATTRIBUTE_CONTACT_EMAIL, $attributes)),
                         'phone_number'          =>  $phoneNumber == null ? $phoneNumber : (strlen($phoneNumber) > 5 ? $phoneNumber : null),
                         '_event_manager_uid'    =>  strtolower($this->getAttributeValue(self::ATTRIBUTE_CONTACT_EMAIL, $attributes)),
-                        'accepted'              =>  1
+                        'accepted'              =>  1,
+                        'user_groups'           => $userGroups,
+                        'missing_user_group'    => $userGroups == null ? 1 : 0,
                     )
                 );
 
@@ -445,8 +449,8 @@ class CBIS extends \HbgEventImporter\Parser
                     'accepted'                => $accepted,
                     'import_client'           => 'cbis',
                     'imported_event'          => true,
-                    'event_publishing_groups' => $publishGroups,
-                    'event_unbelonging_group' => $publishGroups == null ? 1 : 0,
+                    'user_groups'             => $userGroups,
+                    'missing_user_group'      => $userGroups == null ? 1 : 0,
                 )
             );
 

@@ -72,6 +72,8 @@ class CbisLocation extends \HbgEventImporter\Parser
         $cbisKey         = $this->apiKeys['cbis_key'];
         $cbisId          = $this->apiKeys['cbis_geonode'];
 
+        $userGroups      = (! empty($this->apiKeys['cbis_groups'])) ? array_map('intval', $this->apiKeys['cbis_groups']) : null;
+
         // Location data
         $isArena         = $this->cbisLocation['arena'];
         $cbisCategory    = $this->cbisLocation['cbis_location_cat_id'];
@@ -123,7 +125,7 @@ class CbisLocation extends \HbgEventImporter\Parser
             $this->arenas = $this->client->ListAll($requestParams)->ListAllResult->Items->Product;
 
             foreach($this->arenas as $key => $arenaData) {
-                $this->saveArena($arenaData, $cbisLocName, $defaultLocation);
+                $this->saveArena($arenaData, $cbisLocName, $defaultLocation, $userGroups);
             }
 
         } else {
@@ -143,7 +145,7 @@ class CbisLocation extends \HbgEventImporter\Parser
                 return true;
             });
             foreach ($filteredProducts as $product) {
-                $this->saveArena($product, $cbisLocName, $defaultLocation);
+                $this->saveArena($product, $cbisLocName, $defaultLocation, $userGroups);
             }
         }
     }
@@ -172,11 +174,14 @@ class CbisLocation extends \HbgEventImporter\Parser
 
     /**
      * Cleans a single locations data into correct format and saves it to db
-     * @param  object $arenaData  Location data
+     * (This function is not the same as the part in saveEvent that looks almost like this, there are no GeoNode when getting arenas from CBIS)
+     * @param  object $arenaData       Location data
+     * @param  string $productCategory Category name
+     * @param  string $defaultLocation Default city
+     * @param  array  $userGroups      Default user groups
      * @return void
      */
-    //This function is not the same as the part in saveEvent that looks almost like this, there are no GeoNode when getting arenas from CBIS
-    public function saveArena($arenaData, $productCategory, $defaultLocation)
+    public function saveArena($arenaData, $productCategory, $defaultLocation, $userGroups)
     {
         $attributes = $this->getAttributes($arenaData);
         $import_client = 'CBIS: '.ucfirst($productCategory);
@@ -212,6 +217,8 @@ class CbisLocation extends \HbgEventImporter\Parser
                     'import_client'      => $import_client,
                     '_event_manager_uid' => $this->getAttributeValue(self::ATTRIBUTE_NAME, $attributes) ? $this->getAttributeValue(self::ATTRIBUTE_NAME, $attributes) : $this->getAttributeValue(self::ATTRIBUTE_ADDRESS, $attributes),
                     'accepted'           => 1,
+                    'user_groups'        => $userGroups,
+                    'missing_user_group' => $userGroups == null ? 1 : 0,
                 )
             );
 

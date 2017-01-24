@@ -66,12 +66,12 @@ class Event extends \HbgEventImporter\Entity\PostManager
     }
 
     /**
-     * Saves publishing groups as event_groups taxonomy terms
+     * Saves publishing groups as user_groups taxonomy terms
      * @return void
      */
     public function saveGroups()
     {
-        wp_set_object_terms($this->ID, $this->event_publishing_groups, 'event_groups', true);
+        wp_set_object_terms($this->ID, $this->user_groups, 'user_groups', true);
     }
 
     /**

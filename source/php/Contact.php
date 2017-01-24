@@ -24,4 +24,22 @@ class Contact extends \HbgEventImporter\Entity\PostManager
         $this->name = !is_string($this->name) ? $this->name : DataCleaner::string($this->name);
         $this->_event_manager_uid = !is_string($this->_event_manager_uid) ? $this->_event_manager_uid : DataCleaner::string($this->_event_manager_uid);
     }
+
+    /**
+     * Stuff to do after save
+     * @return void
+     */
+    public function afterSave()
+    {
+        $this->saveGroups();
+        return true;
+    }
+    /**
+     * Saves publishing groups as user_groups taxonomy terms
+     * @return void
+     */
+    public function saveGroups()
+    {
+        wp_set_object_terms($this->ID, $this->user_groups, 'user_groups', true);
+    }
 }

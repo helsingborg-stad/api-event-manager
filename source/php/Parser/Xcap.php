@@ -60,7 +60,7 @@ class Xcap extends \HbgEventImporter\Parser
         $defaultLocation = get_field('default_city', 'option') ? get_field('default_city', 'option') : null;
         $city = ($location != null) ? $location : $defaultLocation;
         $postStatus = get_field('xcap_post_status', 'option') ? get_field('xcap_post_status', 'option') : 'publish';
-        $publish_groups = (! empty($this->apiKeys['xcap_groups'])) ? array_map('intval', $this->apiKeys['xcap_groups']) : null;
+        $user_groups = (! empty($this->apiKeys['xcap_groups'])) ? array_map('intval', $this->apiKeys['xcap_groups']) : null;
 
         $image = null;
         if (isset($eventData->{'x-xcap-wideimageid'}) && !empty($eventData->{'x-xcap-wideimageid'}) && $eventData->{'x-xcap-wideimageid'} != 'null') {
@@ -84,7 +84,6 @@ class Xcap extends \HbgEventImporter\Parser
 
         $postContent = $description;
         $newPostTitle = $name;
-        $contactId = null;
         $locationId = null;
         $organizers = array();
         $import_client = 'XCAP';
@@ -110,6 +109,8 @@ class Xcap extends \HbgEventImporter\Parser
                         'import_client'         =>  $import_client,
                         '_event_manager_uid'    =>  null,
                         'accepted'              =>  1,
+                        'user_groups'           => $user_groups,
+                        'missing_user_group'    => $user_groups == null ? 1 : 0,
                     )
                 );
 
@@ -164,8 +165,8 @@ class Xcap extends \HbgEventImporter\Parser
                     'accepted'                => $accepted,
                     'import_client'           => 'xcap',
                     'imported_event'          => true,
-                    'event_publishing_groups' => $publish_groups,
-                    'event_unbelonging_group' => $publish_groups == null ? 1 : 0,
+                    'user_groups'             => $user_groups,
+                    'missing_user_group'      => $user_groups == null ? 1 : 0,
                 )
             );
 

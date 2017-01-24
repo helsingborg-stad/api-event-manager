@@ -31,6 +31,8 @@ class Location extends \HbgEventImporter\Entity\PostManager
      */
     public function afterSave()
     {
+        $this->saveGroups();
+
         // Get address and coordinates from post title.
         if(!isset($this->_event_manager_uid) || ($this->street_address == null && ($this->latitude == null || $this->longitude == null)))
         {
@@ -82,5 +84,14 @@ class Location extends \HbgEventImporter\Entity\PostManager
             update_post_meta($this->ID, 'formatted_address', $wholeAddress);
         }
         return true;
+    }
+
+    /**
+     * Saves publishing groups as user_groups taxonomy terms
+     * @return void
+     */
+    public function saveGroups()
+    {
+        wp_set_object_terms($this->ID, $this->user_groups, 'user_groups', true);
     }
 }

@@ -4,13 +4,6 @@ namespace HbgEventImporter;
 
 class App
 {
-    public $eventsPostType          = null;
-    public $locationsPostType       = null;
-    public $contactsPostType        = null;
-    public $sponsorsPostType        = null;
-    public $packagesPostType        = null;
-    public $membershipCardsPostType = null;
-
     public function __construct()
     {
         global $event_db_version;
@@ -41,9 +34,8 @@ class App
         add_action('admin_enqueue_scripts', array($this, 'setApiKeys'));
 
         //Admin components
-        // Debug code createParsePage
+        // Debug code createParsePage, TA BORT
         add_action('admin_menu', array($this, 'createParsePage'));
-        add_action('admin_menu', array($this, 'addCronParserPage'));
         add_action('admin_notices', array($this, 'adminNotices'));
 
         // Register cron action
@@ -60,24 +52,24 @@ class App
         }
 
         //Init post types
-        $this->eventsPostType = new PostTypes\Events();
-        $this->locationsPostType = new PostTypes\Locations();
-        $this->contactsPostType = new PostTypes\Contacts();
-        $this->sponsorsPostType = new PostTypes\Sponsors();
-        $this->packagesPostType = new PostTypes\Packages();
-        $this->membershipCardsPostType = new PostTypes\MembershipCards();
+        new PostTypes\Events();
+        new PostTypes\Locations();
+        new PostTypes\Contacts();
+        new PostTypes\Sponsors();
+        new PostTypes\Packages();
+        new PostTypes\MembershipCards();
 
         //Init functions
+        new Acf\AcfFields();
+
         new Taxonomy\EventCategories();
-        new Taxonomy\EventGroups();
+        new Taxonomy\UserGroups();
         new Taxonomy\EventTags();
         new Taxonomy\LocationCategories();
 
         new Admin\Options();
         new Admin\UI();
         new Admin\FilterRestrictions();
-
-        new Acf\AcfFields();
 
         new Api\Filter();
         new Api\PostTypes();
@@ -177,7 +169,7 @@ class App
             'close'             => __("Close", 'event-manager'),
             'add_images'        => __("Add images", 'event-manager'),
             'similar_posts'     => __("Similar posts", 'event-manager'),
-            'new_data_imported' => __("Imported or updated data", 'event-manager'),
+            'new_data_imported' => __("Imported data", 'event-manager'),
             'events'            => __("Events", 'event-manager'),
             'locations'         => __("Locations", 'event-manager'),
             'contacts'          => __("Contacts", 'event-manager'),
@@ -193,7 +185,7 @@ class App
     }
 
     /**
-     * Get API keys from options and set as
+     * Set API keys from options as js variables
      * @return void
      */
     public function setApiKeys()
@@ -202,7 +194,7 @@ class App
         $page = $current_screen->base;
 
         if (current_user_can('administrator') || $page == 'admin_page_cron-import') {
-            // Set CBIS API vars
+            // Set CBIS API variables
             $cbis_keys = array();
             if (have_rows('cbis_api_keys', 'option') ):
                 while(have_rows('cbis_api_keys', 'option') ): the_row();
@@ -232,7 +224,7 @@ class App
 
             wp_localize_script('hbg-event-importer', 'cbis_ajax_vars', array('cbis_keys' => $cbis_keys));
 
-            // Set XCAP API vars
+            // Set XCAP API variables
             $xcap_keys = array();
             if (have_rows('xcap_api_urls', 'option') ):
                 while(have_rows('xcap_api_urls', 'option') ): the_row();
@@ -320,6 +312,7 @@ class App
     }
 
     /**
+     * TA BORT
      * Creates an admin page that executes event import
      * @return void
      */
@@ -366,15 +359,7 @@ class App
      */
     public static function startImport()
     {
-        // Send a HTTP request to the page that executes importer function
-        $url = admin_url('options.php?page=cron-import');
-        // $request = new \WP_Http;
-        // $result = $request->request($url);
-
-        // $msg = (is_wp_error($result)) ? $result->get_error_message() : '';
-
-        // FIXA
-        wp_remote_post( $url );
+        //$url = admin_url('options.php?page=cron-import');
 
         // Log when done
         file_put_contents(dirname(__FILE__)."/log/cron_import.log", "Cron last run: " . date("Y-m-d H:i:s"));
@@ -465,6 +450,5 @@ class App
         'edit_others_posts' => true,
         ));
     }
-
 
 }
