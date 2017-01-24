@@ -11,7 +11,7 @@ class Contacts extends \HbgEventImporter\Entity\CustomPostType
             __('Contact', 'event-manager'),
             'contact',
             array(
-                'description'          => 'Contacts',
+                'description'          => 'Contacts in the system, partially parsed from events.',
                 'menu_icon'            => 'dashicons-admin-users',
                 'public'               => true,
                 'publicly_queriable'   => true,

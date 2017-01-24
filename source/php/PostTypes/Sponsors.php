@@ -11,7 +11,7 @@ class Sponsors extends \HbgEventImporter\Entity\CustomPostType
             __('Sponsor', 'event-manager'),
             'sponsor',
             array(
-                'description'          => 'Sponsors',
+                'description'          => 'Sponsors of events.',
                 'menu_icon'            => 'dashicons-businessman',
                 'public'               => true,
                 'publicly_queriable'   => true,

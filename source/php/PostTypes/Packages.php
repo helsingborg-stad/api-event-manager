@@ -11,7 +11,7 @@ class Packages extends \HbgEventImporter\Entity\CustomPostType
             __('Package', 'event-manager'),
             'package',
             array(
-                'description'          => 'Packages',
+                'description'          => 'Packages of multiple events',
                 'menu_icon'            => 'dashicons-screenoptions',
                 'public'               => true,
                 'publicly_queriable'   => true,
