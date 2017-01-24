@@ -149,7 +149,7 @@ class LocationFields extends Fields
         );
 
         register_rest_field($this->postType,
-            'oph_mon',
+            'open_hours_mon',
             array(
                 'get_callback' => array($this, 'stringGetCallBack'),
                 'update_callback' => array($this, 'stringUpdateCallBack'),
@@ -162,7 +162,7 @@ class LocationFields extends Fields
         );
 
         register_rest_field($this->postType,
-            'oph_tue',
+            'open_hours_tue',
             array(
                 'get_callback' => array($this, 'stringGetCallBack'),
                 'update_callback' => array($this, 'stringUpdateCallBack'),
@@ -175,7 +175,7 @@ class LocationFields extends Fields
         );
 
         register_rest_field($this->postType,
-            'oph_wed',
+            'open_hours_wed',
             array(
                 'get_callback' => array($this, 'stringGetCallBack'),
                 'update_callback' => array($this, 'stringUpdateCallBack'),
@@ -188,7 +188,7 @@ class LocationFields extends Fields
         );
 
         register_rest_field($this->postType,
-            'oph_thu',
+            'open_hours_thu',
             array(
                 'get_callback' => array($this, 'stringGetCallBack'),
                 'update_callback' => array($this, 'stringUpdateCallBack'),
@@ -201,7 +201,7 @@ class LocationFields extends Fields
         );
 
         register_rest_field($this->postType,
-            'oph_fri',
+            'open_hours_fri',
             array(
                 'get_callback' => array($this, 'stringGetCallBack'),
                 'update_callback' => array($this, 'stringUpdateCallBack'),
@@ -214,7 +214,7 @@ class LocationFields extends Fields
         );
 
         register_rest_field($this->postType,
-            'oph_sat',
+            'open_hours_sat',
             array(
                 'get_callback' => array($this, 'stringGetCallBack'),
                 'update_callback' => array($this, 'stringUpdateCallBack'),
@@ -227,7 +227,7 @@ class LocationFields extends Fields
         );
 
         register_rest_field($this->postType,
-            'oph_sun',
+            'open_hours_sun',
             array(
                 'get_callback' => array($this, 'stringGetCallBack'),
                 'update_callback' => array($this, 'stringUpdateCallBack'),
