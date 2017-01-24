@@ -11,7 +11,7 @@ class Packages extends \HbgEventImporter\Entity\CustomPostType
             __('Package', 'event-manager'),
             'package',
             array(
-                'description'          => 'Packages',
+                'description'          => 'Packages of multiple events',
                 'menu_icon'            => 'dashicons-screenoptions',
                 'public'               => true,
                 'publicly_queriable'   => true,
@@ -34,8 +34,8 @@ class Packages extends \HbgEventImporter\Entity\CustomPostType
             $events = get_post_meta($postId, 'events_included', true);
             if ($events) {
                 $end = end($events);
-                foreach ($events as $key => $value) {
-                    echo('<a href="'.get_edit_post_link($value).'">'.get_the_title($value).'</a>');
+                foreach ((array) $events as $key => $value) {
+                    echo '<a href="'.get_edit_post_link($value).'"> '.get_the_title($value). '</a>';
                     if ($value != $end) {
                         echo ", ";
                     }
