@@ -55,7 +55,7 @@ class Filter
         $keys = array('author','acf','guid','type','link', 'template');
 
         //Only for location and contact
-        if ($post->post_type == "location" || $post->post_type == "contact") {
+        if (in_array($post->post_type, array("location", "contact"))) {
             $keys[] = "content";
         }
 
