@@ -216,7 +216,6 @@ class CbisLocation extends \HbgEventImporter\Parser
                     'longitude'          => $longitude,
                     'import_client'      => $import_client,
                     '_event_manager_uid' => $this->getAttributeValue(self::ATTRIBUTE_NAME, $attributes) ? $this->getAttributeValue(self::ATTRIBUTE_NAME, $attributes) : $this->getAttributeValue(self::ATTRIBUTE_ADDRESS, $attributes),
-                    'accepted'           => 1,
                     'user_groups'        => $userGroups,
                     'missing_user_group' => $userGroups == null ? 1 : 0,
                 )

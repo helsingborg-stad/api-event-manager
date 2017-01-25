@@ -34,24 +34,22 @@ class Location extends \HbgEventImporter\Entity\PostManager
         $this->saveGroups();
 
         // Get address and coordinates from post title.
-        if(!isset($this->_event_manager_uid) || ($this->street_address == null && ($this->latitude == null || $this->longitude == null)))
+        if($this->street_address == null && ($this->latitude == null || $this->longitude == null))
         {
-            $type = $this->street_address != null ? true : false;
-            $wholeAddress = $this->street_address != null ? $this->street_address : $this->post_title;
+            $wholeAddress = $this->post_title;
             $wholeAddress .= $this->city != null ? ', ' . $this->city : '';
-            $res = Helper\Address::gmapsGetAddressComponents($wholeAddress, $type);
-            if(!$res) {
-                wp_delete_post($this->ID, true);
-                return false;
+
+             // Search Google places api
+            $res = Helper\Address::gmapsGetAddressComponents($wholeAddress, false);
+            if($res) {
+                update_post_meta($this->ID, 'street_address', $res->street);
+                update_post_meta($this->ID, 'postal_code', $res->postalcode);
+                update_post_meta($this->ID, 'city', $res->city);
+                update_post_meta($this->ID, 'country', $res->country);
+                update_post_meta($this->ID, 'formatted_address', $res->formatted_address);
+                update_post_meta($this->ID, 'latitude', $res->latitude);
+                update_post_meta($this->ID, 'longitude', $res->longitude);
             }
-            update_post_meta($this->ID, 'street_address', $res->street);
-            update_post_meta($this->ID, 'postal_code', $res->postalcode);
-            update_post_meta($this->ID, 'city', $res->city);
-            update_post_meta($this->ID, 'country', $res->country);
-            update_post_meta($this->ID, 'formatted_address', $res->formatted_address);
-            update_post_meta($this->ID, 'latitude', $res->latitude);
-            update_post_meta($this->ID, 'longitude', $res->longitude);
-            update_post_meta($this->ID, '_event_manager_uid', $this->post_title);
 
         // Get coordinates from address.
         } elseif ($this->street_address != null && ($this->latitude == null || $this->longitude == null)) {

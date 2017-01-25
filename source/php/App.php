@@ -156,7 +156,7 @@ class App
         $type = $current_screen->post_type;
 
         if ($type == 'event' || $type == 'location' || $type == 'contact' || $type == 'sponsor' || $type == 'package' || $type == 'membership-card' || $current_screen->base == 'admin_page_cron-import') {
-            wp_enqueue_script('hbg-event-importer', HBGEVENTIMPORTER_URL . '/dist/js/hbg-event-importer.min.js');
+            wp_enqueue_script('hbg-event-importer', HBGEVENTIMPORTER_URL . '/dist/js/hbg-event-importer.dev.js');
         }
 
         wp_localize_script('hbg-event-importer', 'eventmanager', array(
@@ -190,10 +190,7 @@ class App
      */
     public function setApiKeys()
     {
-        global $current_screen;
-        $page = $current_screen->base;
-
-        if (current_user_can('administrator') || $page == 'admin_page_cron-import') {
+        if (current_user_can('administrator')) {
             // Set CBIS API variables
             $cbis_keys = array();
             if (have_rows('cbis_api_keys', 'option') ):

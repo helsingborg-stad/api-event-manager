@@ -478,6 +478,7 @@ ImportEvents.Parser.Eventhandling = (function ($) {
             type: 'post',
             data: data,
             success: function(response) {
+                console.log(response);
                 // Update response object
                 newPosts.events    += response.events;
                 newPosts.locations += response.locations;

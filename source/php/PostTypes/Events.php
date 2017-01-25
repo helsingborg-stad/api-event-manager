@@ -477,7 +477,7 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
                     switch ($meta_key) {
                     case 'import_client':
                         continue 2;
-                    case 'imported_event':
+                    case 'imported_post':
                         $meta_value = addslashes(0);
                         break;
                     case 'sync':

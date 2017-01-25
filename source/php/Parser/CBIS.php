@@ -115,7 +115,7 @@ class CBIS extends \HbgEventImporter\Parser
         $cbisKey        = $this->apiKeys['cbis_key'];
         $cbisId         = $this->apiKeys['cbis_geonode'];
         $cbisCategory   = $this->apiKeys['cbis_event_id'];
-        $userGroups     = (! empty($this->apiKeys['cbis_groups'])) ? array_map('intval', $this->apiKeys['cbis_groups']) : null;
+        $userGroups     = (is_array($this->apiKeys['cbis_groups']) && ! empty($this->apiKeys['cbis_groups'])) ? array_map('intval', $this->apiKeys['cbis_groups']) : null;
         // Used to set unique key on events
         $shortKey       = substr(intval($this->apiKeys['cbis_key'], 36), 0, 4);
 
@@ -126,7 +126,7 @@ class CBIS extends \HbgEventImporter\Parser
         }
 
         // Number of products to get, 2000 to get all
-        $getLength = 2000;
+        $getLength = 500;
 
         $requestParams = array(
             'apiKey' => $cbisKey,
@@ -318,9 +318,10 @@ class CBIS extends \HbgEventImporter\Parser
                     'longitude'             =>  $longitude,
                     'import_client'         =>  $import_client,
                     '_event_manager_uid'    =>  $this->getAttributeValue(self::ATTRIBUTE_ADDRESS, $attributes) ? $this->getAttributeValue(self::ATTRIBUTE_ADDRESS, $attributes) : $eventData->GeoNode->Name,
-                    'accepted'              =>  1,
                     'user_groups'           => $userGroups,
                     'missing_user_group'    => $userGroups == null ? 1 : 0,
+                    'sync'                  => 1,
+                    'imported_post'         => 1,
                 )
             );
 
@@ -358,9 +359,10 @@ class CBIS extends \HbgEventImporter\Parser
                         'email'                 =>  strtolower($this->getAttributeValue(self::ATTRIBUTE_CONTACT_EMAIL, $attributes)),
                         'phone_number'          =>  $phoneNumber == null ? $phoneNumber : (strlen($phoneNumber) > 5 ? $phoneNumber : null),
                         '_event_manager_uid'    =>  strtolower($this->getAttributeValue(self::ATTRIBUTE_CONTACT_EMAIL, $attributes)),
-                        'accepted'              =>  1,
                         'user_groups'           => $userGroups,
                         'missing_user_group'    => $userGroups == null ? 1 : 0,
+                        'sync'                  => 1,
+                        'imported_post'         => 1,
                     )
                 );
 
@@ -408,13 +410,11 @@ class CBIS extends \HbgEventImporter\Parser
         $eventId = $this->checkIfPostExists('event', $newPostTitle);
         $uid = 'cbis-' . $shortKey . '-' . $eventData->Id;
         $isUpdate = false;
-        $accepted = -1;
 
         // Check: if event is a duplicate and if "sync" option is set.
         if ($eventId != null && get_post_meta($eventId, '_event_manager_uid', true) != null) {
             $existingUid = get_post_meta( $eventId, '_event_manager_uid', true);
             $sync = get_post_meta( $eventId, 'sync', true);
-            $accepted = get_post_meta($eventId, 'accepted', true);
             $isUpdate = ($existingUid == $uid && $sync == 1 ) ? true : false;
             $postStatus = get_post_status($eventId);
         }
@@ -431,7 +431,7 @@ class CBIS extends \HbgEventImporter\Parser
                 array(
                     'uniqueId'                => 'cbis-' . $shortKey . '-' . $eventData->Id,
                     '_event_manager_uid'      => 'cbis-' . $shortKey . '-' . $eventData->Id,
-                    'sync'                    => true,
+                    'sync'                    => 1,
                     'status'                  => isset($eventData->Status) && !empty($eventData->Status) ? $eventData->Status : null,
                     'image'                   => $newImage,
                     'alternate_name'          => isset($eventData->SystemName) && !empty($eventData->SystemName) ? $eventData->SystemName : null,
@@ -446,9 +446,8 @@ class CBIS extends \HbgEventImporter\Parser
                     'price_information'       => $this->getAttributeValue(self::ATTRIBUTE_PRICE_INFORMATION, $attributes),
                     'price_adult'             => $this->getAttributeValue(self::ATTRIBUTE_PRICE_ADULT, $attributes),
                     'price_children'          => $this->getAttributeValue(self::ATTRIBUTE_PRICE_CHILD, $attributes),
-                    'accepted'                => $accepted,
                     'import_client'           => 'cbis',
-                    'imported_event'          => true,
+                    'imported_post'           => 1,
                     'user_groups'             => $userGroups,
                     'missing_user_group'      => $userGroups == null ? 1 : 0,
                 )

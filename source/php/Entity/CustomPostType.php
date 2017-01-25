@@ -529,7 +529,7 @@ abstract class CustomPostType
         $second = '';
         if ($post_status == 'publish') {
             $first = 'hidden';
-        } elseif ($post_status == 'draft' || $post_status == 'trash') {
+        } elseif ($post_status == 'draft' || $post_status == 'trash' || $post_status == 'pending') {
             $second = 'hidden';
         }
         echo '<a href="#" class="accept button-primary ' . $first . '" post-id="' . $post_id . '">' . __('Accept', 'event-manager') . '</a>

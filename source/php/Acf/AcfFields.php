@@ -638,6 +638,46 @@ class AcfFields
     'title' => __('Contact', 'event-manager'),
     'fields' => array (
         array (
+            'key' => 'field_588894df9849a',
+            'label' => __('Imported', 'event-manager'),
+            'name' => 'imported_post',
+            'type' => 'true_false',
+            'instructions' => __('If this is an imported post or not.', 'event-manager'),
+            'required' => 0,
+            'conditional_logic' => 0,
+            'wrapper' => array (
+                'width' => '',
+                'class' => 'imported_post',
+                'id' => '',
+            ),
+            'message' => '',
+            'default_value' => 0,
+        ),
+        array (
+            'key' => 'field_588894e19849b',
+            'label' => __('API synchronization', 'event-manager'),
+            'name' => 'sync',
+            'type' => 'true_false',
+            'instructions' => __('Unchecking this box will disable API updates sync for this particular post.', 'event-manager'),
+            'required' => 0,
+            'conditional_logic' => array (
+                array (
+                    array (
+                        'field' => 'field_588894df9849a',
+                        'operator' => '==',
+                        'value' => '1',
+                    ),
+                ),
+            ),
+            'wrapper' => array (
+                'width' => '',
+                'class' => '',
+                'id' => '',
+            ),
+            'message' => __('Sync post information with API', 'event-manager'),
+            'default_value' => 0,
+        ),
+        array (
             'key' => 'field_575e73a5c6a18',
             'label' => __('Name', 'event-manager'),
             'name' => 'name',
@@ -711,7 +751,6 @@ class AcfFields
     'hide_on_screen' => '',
     'active' => 1,
     'description' => '',
-    'local' => 'json',
     ));
 
     /**
@@ -721,6 +760,46 @@ class AcfFields
     'key' => 'group_57612f9baa78b',
     'title' => __('Location', 'event-manager'),
     'fields' => array (
+        array (
+            'key' => 'field_588894eb9849c',
+            'label' => __('Imported', 'event-manager'),
+            'name' => 'imported_post',
+            'type' => 'true_false',
+            'instructions' => __('If this is an imported post or not.', 'event-manager'),
+            'required' => 0,
+            'conditional_logic' => 0,
+            'wrapper' => array (
+                'width' => '',
+                'class' => 'imported_post',
+                'id' => '',
+            ),
+            'message' => '',
+            'default_value' => 0,
+        ),
+        array (
+            'key' => 'field_588894ee9849d',
+            'label' => __('API synchronization', 'event-manager'),
+            'name' => 'sync',
+            'type' => 'true_false',
+            'instructions' => __('Unchecking this box will disable API updates sync for this particular post.', 'event-manager'),
+            'required' => 0,
+            'conditional_logic' => array (
+                array (
+                    array (
+                        'field' => 'field_588894eb9849c',
+                        'operator' => '==',
+                        'value' => '1',
+                    ),
+                ),
+            ),
+            'wrapper' => array (
+                'width' => '',
+                'class' => '',
+                'id' => '',
+            ),
+            'message' => __('Sync post information with API', 'event-manager'),
+            'default_value' => 0,
+        ),
         array (
             'key' => 'field_57d26cffc2f68',
             'label' => __('Address', 'event-manager'),
@@ -845,7 +924,7 @@ class AcfFields
             'label' => __('Map', 'event-manager'),
             'name' => 'geo_map',
             'type' => 'google_map',
-            'instructions' => __('This map shows where the site is located and is not editable.'),
+            'instructions' => __('The map shows where the site is located and is not editable.', 'event-manager'),
             'required' => 0,
             'conditional_logic' => 0,
             'wrapper' => array (
@@ -855,7 +934,7 @@ class AcfFields
             ),
             'center_lat' => 'null',
             'center_lng' => 'null',
-            'zoom' => '16',
+            'zoom' => 16,
             'height' => '',
         ),
         array (
@@ -1152,14 +1231,14 @@ class AcfFields
         array (
             'key' => 'field_57dbf55ed522a',
             'label' => __('Imported', 'event-manager'),
-            'name' => 'imported_event',
+            'name' => 'imported_post',
             'type' => 'true_false',
             'instructions' => __('If this is an imported event or not.', 'event-manager'),
             'required' => 0,
             'conditional_logic' => 0,
             'wrapper' => array (
                 'width' => '',
-                'class' => 'imported_event',
+                'class' => 'imported_post',
                 'id' => '',
             ),
             'message' => '',

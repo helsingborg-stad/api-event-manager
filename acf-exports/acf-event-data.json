@@ -5,14 +5,14 @@
             {
                 "key": "field_57dbf55ed522a",
                 "label": "Imported",
-                "name": "imported_event",
+                "name": "imported_post",
                 "type": "true_false",
                 "instructions": "If this is an imported event or not.",
                 "required": 0,
                 "conditional_logic": 0,
                 "wrapper": {
                     "width": "",
-                    "class": "imported_event",
+                    "class": "imported_post",
                     "id": ""
                 },
                 "message": "",
