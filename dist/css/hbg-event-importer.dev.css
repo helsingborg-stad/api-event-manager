@@ -67,7 +67,7 @@
     background-size: cover;
     opacity: .5; }
 
-.acceptAndDeny .hiddenElement {
+.acceptAndDeny .hidden {
   display: none; }
 
 #suggestionContainer {

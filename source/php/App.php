@@ -156,7 +156,7 @@ class App
         $type = $current_screen->post_type;
 
         if ($type == 'event' || $type == 'location' || $type == 'contact' || $type == 'sponsor' || $type == 'package' || $type == 'membership-card' || $current_screen->base == 'admin_page_cron-import') {
-            wp_enqueue_script('hbg-event-importer', HBGEVENTIMPORTER_URL . '/dist/js/hbg-event-importer.dev.js');
+            wp_enqueue_script('hbg-event-importer', HBGEVENTIMPORTER_URL . '/dist/js/hbg-event-importer.min.js');
         }
 
         wp_localize_script('hbg-event-importer', 'eventmanager', array(

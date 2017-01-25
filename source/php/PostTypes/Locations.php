@@ -51,32 +51,14 @@ class Locations extends \HbgEventImporter\Entity\CustomPostType
             }
             echo get_post_meta($postId, 'import_client', true);
         });
-        $this->addTableColumn('acceptAndDeny', __('Public', 'event-manager'), true, function ($column, $postId) {
-            $metaAccepted = get_post_meta($postId, 'accepted');
-            if (!isset($metaAccepted[0])) {
-                add_post_meta($postId, 'accepted', 0);
-                $metaAccepted[0] = 0;
-            }
-            $first = '';
-            $second = '';
-            if ($metaAccepted[0] == 1) {
-                $first = 'hiddenElement';
-            } elseif ($metaAccepted[0] == -1) {
-                $second = 'hiddenElement';
-            } elseif ($metaAccepted[0] == 0) {
-                $first = 'hiddenElement';
-                $second = 'hiddenElement';
-                echo '<a href="'.get_edit_post_link($postId).'" title="'.__('This post needs to be edited before it can be published', 'event-manager').'" class="button" postid="' . $postId . '">' . __('Edit draft') . '</a>';
-            }
-            echo '<a href="#" class="accept button-primary ' . $first . '" postid="' . $postId . '">' . __('Accept', 'event-manager') . '</a>
-            <a href="#" class="deny button-primary ' . $second . '" postid="' . $postId . '">' . __('Deny', 'event-manager') . '</a>';
-        });
         $this->addTableColumn('date', __('Date', 'event-manager'));
         add_filter('views_edit-location', array($this, 'addImportButtons'));
         add_action('acf/save_post', array($this, 'updateAddressData'), 20);
         add_action('publish_location', array($this, 'setAcceptedOnPublish'), 10, 2);
         add_filter('acf/load_value/name=geo_map', array($this, 'setMapValues'), 10, 3);
         add_filter('acf/update_value/name=geo_map', array($this, 'acfUpdateMap'), 10, 3);
+        add_filter('manage_edit-' . $this->slug . '_columns', array($this, 'addAcceptDenyTable'));
+        add_action('manage_' . $this->slug . '_posts_custom_column', array($this,'addAcceptDenyButtons'), 10, 2);
     }
 
     /**

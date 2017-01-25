@@ -35,7 +35,7 @@ abstract class CustomPostType
         add_filter('manage_edit-' . $this->slug . '_columns', array($this, 'tableColumns'));
         add_filter('manage_edit-' . $this->slug . '_sortable_columns', array($this, 'tableSortableColumns'));
         add_action('manage_' . $this->slug . '_posts_custom_column', array($this, 'tableColumnsContent'), 10, 2);
-        add_action('wp_ajax_my_action', array($this, 'acceptOrDeny'));
+        add_action('wp_ajax_accept_or_deny', array($this, 'acceptAndDeny'));
         add_action('wp_ajax_collect_occasions', array($this, 'collectOccasions'));
         add_action('wp_ajax_import_events', array($this, 'importEvents'));
         add_action('wp_ajax_dismiss', array($this, 'dismissInstructions'));
@@ -60,7 +60,6 @@ abstract class CustomPostType
 
             wp_send_json($data);
             wp_die();
-
         } elseif ($_POST['value'] == 'cbislocation') {
             $api_keys = $_POST['api_keys'];
             $location = $_POST['cbis_location'];
@@ -69,7 +68,6 @@ abstract class CustomPostType
 
             wp_send_json($data);
             wp_die();
-
         } elseif ($_POST['value'] == 'xcap') {
             $api_keys = $_POST['api_keys'];
             $importer = new \HbgEventImporter\Parser\Xcap($api_keys['xcap_api_url'], $api_keys);
@@ -138,7 +136,9 @@ abstract class CustomPostType
                 }
             }
         }
-        if (ob_get_contents()) ob_end_clean();
+        if (ob_get_contents()) {
+            ob_end_clean();
+        }
         // Print results to console
         //echo $resultString;
         wp_die();
@@ -151,7 +151,7 @@ abstract class CustomPostType
     {
         $current_user = wp_get_current_user();
         $user_id = $current_user->ID;
-        add_user_meta( $user_id, 'dismissed_instr', 1, true );
+        add_user_meta($user_id, 'dismissed_instr', 1, true);
     }
 
     /**
@@ -161,7 +161,9 @@ abstract class CustomPostType
     public function acceptOrDeny()
     {
         if (!isset($_POST['postId']) || !isset($_POST['value'])) {
-            if (ob_get_contents()) ob_end_clean();
+            if (ob_get_contents()) {
+                ob_end_clean();
+            }
             echo _e('Something went wrong!', 'event-manager');
             wp_die();
         }
@@ -183,17 +185,23 @@ abstract class CustomPostType
         if ($postAccepted == false) {
             add_post_meta($postId, 'accepted', $newValue);
 
-            if (ob_get_contents()) ob_end_clean();
+            if (ob_get_contents()) {
+                ob_end_clean();
+            }
             echo $newValue;
             wp_die();
         } else {
             if ($postAccepted[0] == $newValue) {
-                if (ob_get_contents()) ob_end_clean();
+                if (ob_get_contents()) {
+                    ob_end_clean();
+                }
                 echo $postAccepted[0];
                 wp_die();
             }
             update_post_meta($postId, 'accepted', $newValue);
-            if (ob_get_contents()) ob_end_clean();
+            if (ob_get_contents()) {
+                ob_end_clean();
+            }
             echo $newValue;
             wp_die();
         }
@@ -316,10 +324,9 @@ abstract class CustomPostType
      * Update admin notice messages. Removes public links.
      * @return array
      */
-    function postPublishedMsg( $messages )
+    public function postPublishedMsg($messages)
     {
-        foreach($messages as $key => $value)
-        {
+        foreach ($messages as $key => $value) {
             $messages['post'][1]  = __('Post updated.', 'event-manager');
             $messages['post'][6]  = __('Post published.', 'event-manager');
             $messages['post'][8]  = __('Post submitted.', 'event-manager');
@@ -417,6 +424,7 @@ abstract class CustomPostType
         ?></p>
         </div>
         <?php
+
     }
 
     /**
@@ -489,6 +497,75 @@ abstract class CustomPostType
         }
 
         return $args;
+    }
+
+    /**
+     * Add public table column
+     * @param array $columns array with table columns
+     */
+    public function addAcceptDenyTable($columns)
+    {
+        if (current_user_can('administrator') || current_user_can('editor')) {
+            $columns['acceptAndDeny'] =__('Public', 'myplugindomain');
+        }
+
+        return $columns;
+    }
+
+    /**
+     * Adds accept and deny buttons to public table
+     * @param string $column_name name of column
+     * @param int    $post_id
+     */
+    public function addAcceptDenyButtons($column_name, $post_id)
+    {
+        if ('acceptAndDeny' != $column_name) {
+            return;
+        }
+
+        $post_status = get_post_status($post_id);
+
+        $first = '';
+        $second = '';
+        if ($post_status == 'publish') {
+            $first = 'hidden';
+        } elseif ($post_status == 'draft' || $post_status == 'trash') {
+            $second = 'hidden';
+        }
+        echo '<a href="#" class="accept button-primary ' . $first . '" post-id="' . $post_id . '">' . __('Accept', 'event-manager') . '</a>
+        <a href="#" class="deny button-primary ' . $second . '" post-id="' . $post_id . '">' . __('Deny', 'event-manager') . '</a>';
+    }
+
+    /**
+     * Accept or deny an event. Changes post status to draft if denied.
+     * @return int $value
+     */
+    public function acceptAndDeny()
+    {
+        if (! isset($_POST['postId']) || ! isset($_POST['value'])) {
+            echo __('Something went wrong!', 'event-manager');
+            wp_die();
+        }
+
+        $postId =  $_POST['postId'];
+        $value = $_POST['value'];
+
+        $post = get_post($postId);
+        if ($value == 0) {
+            $post->post_status = 'draft';
+        }
+        if ($value == 1) {
+            $post->post_status = 'publish';
+        }
+
+        $update = wp_update_post($post, true);
+        if (is_wp_error($update)) {
+            echo __('Error', 'event-manager');
+            wp_die();
+        }
+
+        echo $value;
+        wp_die();
     }
 
 }

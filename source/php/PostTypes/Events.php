@@ -67,31 +67,6 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
 
             echo strtoupper(get_post_meta($postId, 'import_client', true));
         });
-        $this->addTableColumn('acceptAndDeny', __('Public', 'event-manager'), true, function ($column, $postId) {
-            $metaAccepted = get_post_meta($postId, 'accepted');
-            if (!isset($metaAccepted[0])) {
-                add_post_meta($postId, 'accepted', 0);
-                $metaAccepted[0] = 0;
-            }
-            $first = '';
-            $second = '';
-            if ($metaAccepted[0] == 1) {
-                $first = 'hiddenElement';
-            } elseif ($metaAccepted[0] == -1) {
-                $second = 'hiddenElement';
-            } elseif ($metaAccepted[0] == 0) {
-                $first = 'hiddenElement';
-                $second = 'hiddenElement';
-                echo '<a href="'.get_edit_post_link($postId).'" title="'.__('This event needs to be edited before it can be published', 'event-manager').'" class="button" postid="' . $postId . '">' . __('Edit draft', 'event-manager') . '</a>';
-            }
-            if (current_user_can('editor') || current_user_can('administrator')) {
-                echo '<a href="#" class="accept button-primary ' . $first . '" postid="' . $postId . '">' . __('Accept', 'event-manager') . '</a>
-            <a href="#" class="deny button-primary ' . $second . '" postid="' . $postId . '">' . __('Deny', 'event-manager') . '</a>';
-            } else {
-                echo '<span class="' . $first . '">' . __('Hidden', 'event-manager') . '</span>
-            <span class="' . $second . '">' . __('Published', 'event-manager') . '</span>';
-            }
-        });
         $this->addTableColumn('date', __('Date', 'event-manager'));
         add_filter('views_edit-event', array($this, 'addImportButtons'));
         add_action('publish_event', array($this, 'setAcceptedOnPublish'), 10, 2);
@@ -127,6 +102,8 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
         add_filter('acf/fields/post_object/result/name=location', array($this, 'acfLocationSelect'), 10, 4);
         add_filter('acf/fields/post_object/result/name=additional_locations', array($this, 'acfLocationSelect'), 10, 4);
         add_filter('acf/fields/post_object/query', array($this, 'acfPostObjectStatus'), 10, 3);
+        add_filter('manage_edit-' . $this->slug . '_columns', array($this, 'addAcceptDenyTable'));
+        add_action('manage_' . $this->slug . '_posts_custom_column', array($this,'addAcceptDenyButtons'), 10, 2);
     }
 
     /**
