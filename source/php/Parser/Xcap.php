@@ -159,7 +159,6 @@ class Xcap extends \HbgEventImporter\Parser
                     'post_status'             => $postStatus,
                 ),
                 array(
-                    'uniqueId'                => $shortKey . '-' . $eventData->uid,
                     '_event_manager_uid'      => $shortKey . '-' . $eventData->uid,
                     'sync'                    => 1,
                     'status'                  => 'Active',

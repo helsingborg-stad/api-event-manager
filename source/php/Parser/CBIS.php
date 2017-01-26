@@ -463,7 +463,6 @@ class CBIS extends \HbgEventImporter\Parser
                     'post_status'             => $postStatus
                 ),
                 array(
-                    'uniqueId'                => 'cbis-' . $shortKey . '-' . $eventData->Id,
                     '_event_manager_uid'      => 'cbis-' . $shortKey . '-' . $eventData->Id,
                     'sync'                    => 1,
                     'status'                  => isset($eventData->Status) && !empty($eventData->Status) ? $eventData->Status : null,
