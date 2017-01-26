@@ -10,7 +10,7 @@ class Address
      * @param  boolean $type   is true if address exists, is false if only place name exist
      * @return object          Address components
      */
-    public static function gmapsGetAddressComponents($address, $type)
+    public static function gmapsGetAddressComponents($address, $type = true)
     {
         if (empty(get_option('options_google_geocode_api_key')) || empty($address) || $address == 'null') {
             return false;

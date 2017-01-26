@@ -47,7 +47,7 @@ ImportEvents.Parser.Eventhandling = (function ($) {
 
             $(document).on('click', '#cbislocation', function (e) {
                 e.preventDefault();
-
+                data.value = 'cbislocation';
                 if (! loadingOccasions) {
                     loadingOccasions = true;
                     var button = $(this);
@@ -106,6 +106,7 @@ ImportEvents.Parser.Eventhandling = (function ($) {
             type: 'post',
             data: data,
             success: function(response) {
+                console.log(response);
                 // Update response object
                 newPosts.events    += response.events;
                 newPosts.locations += response.locations;
@@ -139,7 +140,6 @@ ImportEvents.Parser.Eventhandling = (function ($) {
             i++;
             Eventhandling.prototype.parseCbislocation(data, button, storedCss) ;
         });
-
     };
 
     // Parse each location category ID
@@ -173,6 +173,7 @@ ImportEvents.Parser.Eventhandling = (function ($) {
             type: 'post',
             data: data,
             success: function(response) {
+                console.log(response);
                 // Update response object
                 newPosts.events    += response.events;
                 newPosts.locations += response.locations;

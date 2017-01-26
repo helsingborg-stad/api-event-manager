@@ -1,4 +1,4 @@
-.wp-admin.post-type-event {
+.wp-admin.post-type-event, .wp-admin.post-type-location, .wp-admin.post-type-contact {
 
     &.post-php.no-sync {
         .postbox:not(#submitdiv):not(.acf-postbox):not(#lix-calculator):not(#revisionsdiv),
@@ -15,7 +15,18 @@
         .acf-field[data-name="price_adult"],
         .acf-field[data-name="price_children"],
         .acf-field[data-name="user_groups"],
-        .acf-field[data-name="missing_user_group"]
+        .acf-field[data-name="missing_user_group"],
+        //Location
+        .acf-field[data-name="street_address"],
+        .acf-field[data-name="postal_code"],
+        .acf-field[data-name="city"],
+        .acf-field[data-name="municipality"],
+        .acf-field[data-name="country"],
+        .acf-field[data-name="geo_map"],
+        // Contact
+        .acf-field[data-name="name"],
+        .acf-field[data-name="phone_number"],
+        .acf-field[data-name="email"]
         {
             position: relative;
 
@@ -55,7 +66,7 @@
     }
 }
 
-.acceptAndDeny .hiddenElement {
+.acceptAndDeny .hidden {
     display: none;
 }
 
@@ -184,7 +195,7 @@
   display: none !important;
 }
 
-.acf-field[data-name="imported_event"] {
+.acf-field[data-name="imported_post"] {
   display: none !important;
 }
 

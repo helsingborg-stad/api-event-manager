@@ -1,3 +1,64 @@
+ImportEvents = ImportEvents || {};
+ImportEvents.Admin = ImportEvents.Admin || {};
+
+ImportEvents.Admin.AcceptDeny = (function ($) {
+
+    function AcceptDeny() {
+        $(function(){
+            this.handleEvents();
+        }.bind(this));
+    }
+
+    /**
+     * Accept or deny events.
+     * @param  int postStatus 1 = accept, 0 = deny
+     * @param  int postId     event object id
+     * @return void
+     */
+    AcceptDeny.prototype.changeAccepted = function(postStatus, postId) {
+            $.ajax({
+            url: eventmanager.ajaxurl,
+            type: 'post',
+            data: {
+                action    : 'accept_or_deny',
+                value     : postStatus,
+                postId    : postId
+            },
+            beforeSend: function(response) {
+                var postElement = $('#post-' + postId);
+                if (postStatus == 1) {
+                    postElement.find('.deny').removeClass('hidden');
+                    postElement.find('.accept').addClass('hidden');
+                } else if(postStatus == 0) {
+                    postElement.find('.deny').addClass('hidden');
+                    postElement.find('.accept').removeClass('hidden');
+                }
+            }
+        });
+    };
+
+    /**
+     * Handle events
+     * @return void
+     */
+    AcceptDeny.prototype.handleEvents = function () {
+        $(document).on('click', '.accept', function (e) {
+            e.preventDefault();
+            var postId = $(e.target).attr('post-id');
+            AcceptDeny.prototype.changeAccepted(1, postId);
+        }.bind(this));
+
+        $(document).on('click', '.deny', function (e) {
+            e.preventDefault();
+            var postId = $(e.target).attr('post-id');
+            AcceptDeny.prototype.changeAccepted(0, postId);
+        }.bind(this));
+    };
+
+    return new AcceptDeny();
+
+})(jQuery);
+
 // ACF date picker settings
 (function($) {
     if (typeof acf != 'undefined') {
@@ -85,16 +146,6 @@ jQuery(document).ready(function ($) {
 
     $('.notice.is-dismissible').on('click', '.notice-dismiss', function(event){
         dismissInstructions();
-    });
-
-    $('.accept').click(function() {
-        var postId = $(this).attr('postid');
-        changeAccepted(1, postId);
-    });
-
-    $('.deny').click(function() {
-        var postId = $(this).attr('postid');
-        changeAccepted(-1, postId);
     });
 
     $('.acf-gallery-add').text(eventmanager.add_images);
@@ -308,46 +359,6 @@ function getClosestDay(date, dayOfWeek) {
 }
 
 /**
- * Creates data with values for ajax, and also runs the ajax
- * @param  int newValue either -1,0,1
- * @param  int postId   wordpress post id
- * @return void
- */
-function changeAccepted(newValue, postId) {
-    var data = {
-        'action'    : 'my_action',
-        'value'     : newValue,
-        'postId'    : postId
-    };
-
-    var postElement = jQuery('#post-' + postId);
-    toggleClasses(postElement, newValue);
-    jQuery.post(ajaxurl, data, function(response) {
-        //console.log(response);
-    });
-}
-
-/**
- * Changing the background of a event post
- * @param  jQuery object, base event element
- * @param  int responseValue
- * @return void
- */
-function toggleClasses(element, responseValue) {
-    if(responseValue == 1) {
-        element.removeClass('red');
-        element.addClass('green');
-        element.find('.accept').addClass('hiddenElement');
-        element.find('.deny').removeClass('hiddenElement');
-    } else if(responseValue == -1) {
-        element.removeClass('green');
-        element.addClass('red');
-        element.find('.accept').removeClass('hiddenElement');
-        element.find('.deny').addClass('hiddenElement');
-    }
-}
-
-/**
  * Hides event instructions if clicked.
  * @return void
  */
@@ -408,7 +419,7 @@ ImportEvents.Parser.Eventhandling = (function ($) {
 
             $(document).on('click', '#cbislocation', function (e) {
                 e.preventDefault();
-
+                data.value = 'cbislocation';
                 if (! loadingOccasions) {
                     loadingOccasions = true;
                     var button = $(this);
@@ -467,6 +478,7 @@ ImportEvents.Parser.Eventhandling = (function ($) {
             type: 'post',
             data: data,
             success: function(response) {
+                console.log(response);
                 // Update response object
                 newPosts.events    += response.events;
                 newPosts.locations += response.locations;
@@ -500,7 +512,6 @@ ImportEvents.Parser.Eventhandling = (function ($) {
             i++;
             Eventhandling.prototype.parseCbislocation(data, button, storedCss) ;
         });
-
     };
 
     // Parse each location category ID
@@ -534,6 +545,7 @@ ImportEvents.Parser.Eventhandling = (function ($) {
             type: 'post',
             data: data,
             success: function(response) {
+                console.log(response);
                 // Update response object
                 newPosts.events    += response.events;
                 newPosts.locations += response.locations;

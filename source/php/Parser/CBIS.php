@@ -115,7 +115,7 @@ class CBIS extends \HbgEventImporter\Parser
         $cbisKey        = $this->apiKeys['cbis_key'];
         $cbisId         = $this->apiKeys['cbis_geonode'];
         $cbisCategory   = $this->apiKeys['cbis_event_id'];
-        $userGroups     = (! empty($this->apiKeys['cbis_groups'])) ? array_map('intval', $this->apiKeys['cbis_groups']) : null;
+        $userGroups     = (is_array($this->apiKeys['cbis_groups']) && ! empty($this->apiKeys['cbis_groups'])) ? array_map('intval', $this->apiKeys['cbis_groups']) : null;
         // Used to set unique key on events
         $shortKey       = substr(intval($this->apiKeys['cbis_key'], 36), 0, 4);
 
@@ -293,7 +293,20 @@ class CBIS extends \HbgEventImporter\Parser
         $newPostTitle = $this->getAttributeValue(self::ATTRIBUTE_ADDRESS, $attributes) ? $this->getAttributeValue(self::ATTRIBUTE_ADDRESS, $attributes) : $eventData->GeoNode->Name;
 
         $locationId = $this->checkIfPostExists('location', $newPostTitle);
-        if ($locationId == null) {
+
+        $uid = 'cbis-' . $shortKey . '-' . $this->cleanString($newPostTitle);
+        $locPostStatus = $postStatus;
+        $isUpdate = false;
+
+        // Check if this is a duplicate or update and if "sync" option is set.
+        if ($locationId && get_post_meta($locationId, '_event_manager_uid', true)) {
+            $existingUid   = get_post_meta($locationId, '_event_manager_uid', true);
+            $sync          = get_post_meta($locationId, 'sync', true);
+            $locPostStatus = get_post_status($locationId);
+            $isUpdate      = ($existingUid == $uid && $sync == 1 ) ? true : false;
+        }
+
+        if ($locationId == null || $isUpdate == true) {
 
             $country = $this->getAttributeValue(self::ATTRIBUTE_COUNTRY, $attributes);
             if(is_numeric($country))
@@ -306,21 +319,23 @@ class CBIS extends \HbgEventImporter\Parser
 
             $location = new Location(
                 array(
-                    'post_title'            =>  $newPostTitle
+                    'post_title'            => $newPostTitle,
+                    'post_status'           => $locPostStatus,
                 ),
                 array(
-                    'street_address'        =>  $this->getAttributeValue(self::ATTRIBUTE_ADDRESS, $attributes),
-                    'postal_code'           =>  $this->getAttributeValue(self::ATTRIBUTE_POSTCODE, $attributes),
-                    'city'                  =>  $eventData->GeoNode->Name,
-                    'municipality'          =>  $this->getAttributeValue(self::ATTRIBUTE_MUNICIPALITY, $attributes),
-                    'country'               =>  $country,
-                    'latitude'              =>  $latitude,
-                    'longitude'             =>  $longitude,
-                    'import_client'         =>  $import_client,
-                    '_event_manager_uid'    =>  $this->getAttributeValue(self::ATTRIBUTE_ADDRESS, $attributes) ? $this->getAttributeValue(self::ATTRIBUTE_ADDRESS, $attributes) : $eventData->GeoNode->Name,
-                    'accepted'              =>  1,
+                    'street_address'        => $this->getAttributeValue(self::ATTRIBUTE_ADDRESS, $attributes),
+                    'postal_code'           => $this->getAttributeValue(self::ATTRIBUTE_POSTCODE, $attributes),
+                    'city'                  => $eventData->GeoNode->Name,
+                    'municipality'          => $this->getAttributeValue(self::ATTRIBUTE_MUNICIPALITY, $attributes),
+                    'country'               => $country,
+                    'latitude'              => $latitude,
+                    'longitude'             => $longitude,
+                    'import_client'         => $import_client,
+                    '_event_manager_uid'    => $uid,
                     'user_groups'           => $userGroups,
                     'missing_user_group'    => $userGroups == null ? 1 : 0,
+                    'sync'                  => 1,
+                    'imported_post'         => 1,
                 )
             );
 
@@ -328,7 +343,9 @@ class CBIS extends \HbgEventImporter\Parser
             if($creatSuccess)
             {
                 $locationId = $location->ID;
-                ++$this->nrOfNewLocations;
+                if ($isUpdate == false) {
+                    ++$this->nrOfNewLocations;
+                }
                 $this->levenshteinTitles['location'][] = array('ID' => $location->ID, 'post_title' => $newPostTitle);
             }
         }
@@ -346,21 +363,38 @@ class CBIS extends \HbgEventImporter\Parser
 
         if (!empty($newPostTitle)) {
             $contactId = $this->checkIfPostExists('contact', $newPostTitle);
-            if ($contactId == null) {
+
+            $uniqueString = ($this->getAttributeValue(self::ATTRIBUTE_CONTACT_EMAIL, $attributes) != null) ? strtolower($this->getAttributeValue(self::ATTRIBUTE_CONTACT_EMAIL, $attributes)) : strtolower(preg_replace(' ', '', $newPostTitle));
+
+            $uid = 'cbis-' . $shortKey . '-' . $uniqueString;
+            $conPostStatus = $postStatus;
+            $isUpdate = false;
+
+            // Check if this is a duplicate or update and if "sync" option is set.
+            if ($contactId && get_post_meta($contactId, '_event_manager_uid', true)) {
+                $existingUid   = get_post_meta($contactId, '_event_manager_uid', true);
+                $sync          = get_post_meta($contactId, 'sync', true);
+                $conPostStatus = get_post_status($contactId);
+                $isUpdate      = ($existingUid == $uid && $sync == 1 ) ? true : false;
+            }
+
+            if ($contactId == null || $isUpdate == true) {
                 $phoneNumber = $this->getAttributeValue(self::ATTRIBUTE_PHONE_NUMBER, $attributes);
                 // Save contact
                 $contact = new Contact(
                     array(
-                        'post_title'            =>  $newPostTitle
+                        'post_title'            => $newPostTitle,
+                        'post_status'           => $conPostStatus,
                     ),
                     array(
-                        'name'                  =>  $this->getAttributeValue(self::ATTRIBUTE_CONTACT_PERSON, $attributes),
-                        'email'                 =>  strtolower($this->getAttributeValue(self::ATTRIBUTE_CONTACT_EMAIL, $attributes)),
-                        'phone_number'          =>  $phoneNumber == null ? $phoneNumber : (strlen($phoneNumber) > 5 ? $phoneNumber : null),
-                        '_event_manager_uid'    =>  strtolower($this->getAttributeValue(self::ATTRIBUTE_CONTACT_EMAIL, $attributes)),
-                        'accepted'              =>  1,
+                        'name'                  => $this->getAttributeValue(self::ATTRIBUTE_CONTACT_PERSON, $attributes),
+                        'email'                 => strtolower($this->getAttributeValue(self::ATTRIBUTE_CONTACT_EMAIL, $attributes)),
+                        'phone_number'          => $phoneNumber == null ? $phoneNumber : (strlen($phoneNumber) > 5 ? $phoneNumber : null),
+                        '_event_manager_uid'    => $uid,
                         'user_groups'           => $userGroups,
                         'missing_user_group'    => $userGroups == null ? 1 : 0,
+                        'sync'                  => 1,
+                        'imported_post'         => 1,
                     )
                 );
 
@@ -368,7 +402,9 @@ class CBIS extends \HbgEventImporter\Parser
                 $contactId = $contact->ID;
                 if($creatSuccess)
                 {
-                    ++$this->nrOfNewContacts;
+                    if ($isUpdate == false) {
+                        ++$this->nrOfNewContacts;
+                    }
                     $this->levenshteinTitles['contact'][] = array('ID' => $contact->ID, 'post_title' => $newPostTitle);
                 }
             }
@@ -408,15 +444,13 @@ class CBIS extends \HbgEventImporter\Parser
         $eventId = $this->checkIfPostExists('event', $newPostTitle);
         $uid = 'cbis-' . $shortKey . '-' . $eventData->Id;
         $isUpdate = false;
-        $accepted = -1;
 
-        // Check: if event is a duplicate and if "sync" option is set.
-        if ($eventId != null && get_post_meta($eventId, '_event_manager_uid', true) != null) {
+        // Check if this is a duplicate or update and if "sync" option is set.
+        if ($eventId && get_post_meta($eventId, '_event_manager_uid', true)) {
             $existingUid = get_post_meta( $eventId, '_event_manager_uid', true);
-            $sync = get_post_meta( $eventId, 'sync', true);
-            $accepted = get_post_meta($eventId, 'accepted', true);
-            $isUpdate = ($existingUid == $uid && $sync == 1 ) ? true : false;
-            $postStatus = get_post_status($eventId);
+            $sync        = get_post_meta( $eventId, 'sync', true);
+            $postStatus  = get_post_status($eventId);
+            $isUpdate    = ($existingUid == $uid && $sync == 1 ) ? true : false;
         }
 
         // Save event if it doesn't exist or is an update and "sync" option is set to true. Skips if event is an older duplicate.
@@ -431,7 +465,7 @@ class CBIS extends \HbgEventImporter\Parser
                 array(
                     'uniqueId'                => 'cbis-' . $shortKey . '-' . $eventData->Id,
                     '_event_manager_uid'      => 'cbis-' . $shortKey . '-' . $eventData->Id,
-                    'sync'                    => true,
+                    'sync'                    => 1,
                     'status'                  => isset($eventData->Status) && !empty($eventData->Status) ? $eventData->Status : null,
                     'image'                   => $newImage,
                     'alternate_name'          => isset($eventData->SystemName) && !empty($eventData->SystemName) ? $eventData->SystemName : null,
@@ -446,9 +480,8 @@ class CBIS extends \HbgEventImporter\Parser
                     'price_information'       => $this->getAttributeValue(self::ATTRIBUTE_PRICE_INFORMATION, $attributes),
                     'price_adult'             => $this->getAttributeValue(self::ATTRIBUTE_PRICE_ADULT, $attributes),
                     'price_children'          => $this->getAttributeValue(self::ATTRIBUTE_PRICE_CHILD, $attributes),
-                    'accepted'                => $accepted,
                     'import_client'           => 'cbis',
-                    'imported_event'          => true,
+                    'imported_post'           => 1,
                     'user_groups'             => $userGroups,
                     'missing_user_group'      => $userGroups == null ? 1 : 0,
                 )

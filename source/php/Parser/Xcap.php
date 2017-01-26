@@ -60,7 +60,7 @@ class Xcap extends \HbgEventImporter\Parser
         $defaultLocation = get_field('default_city', 'option') ? get_field('default_city', 'option') : null;
         $city = ($location != null) ? $location : $defaultLocation;
         $postStatus = get_field('xcap_post_status', 'option') ? get_field('xcap_post_status', 'option') : 'publish';
-        $user_groups = (! empty($this->apiKeys['xcap_groups'])) ? array_map('intval', $this->apiKeys['xcap_groups']) : null;
+        $user_groups = (is_array($this->apiKeys['xcap_groups']) && ! empty($this->apiKeys['xcap_groups'])) ? array_map('intval', $this->apiKeys['xcap_groups']) : null;
 
         $image = null;
         if (isset($eventData->{'x-xcap-wideimageid'}) && !empty($eventData->{'x-xcap-wideimageid'}) && $eventData->{'x-xcap-wideimageid'} != 'null') {
@@ -92,32 +92,48 @@ class Xcap extends \HbgEventImporter\Parser
         if (is_string($address)) {
             // Checking if there is a location already with this title or similar enough
             $locationId = $this->checkIfPostExists('location', $address);
-            if ($locationId == null) {
+
+            $locPostStatus = $postStatus;
+            $isUpdate = false;
+            // Check if this is a duplicate or update and if "sync" option is set.
+            if ($locationId && get_post_meta($locationId, '_event_manager_uid', true)) {
+                $existingUid    = get_post_meta($locationId, '_event_manager_uid', true);
+                $sync           = get_post_meta($locationId, 'sync', true);
+                $locPostStatus  = get_post_status($locationId);
+                $isUpdate       = ($existingUid == 'xcap-' . $shortKey . '-' . $this->cleanString($address) && $sync == 1) ? true : false;
+            }
+
+            if ($locationId == null || $isUpdate == true) {
+
                 // Create the location
                 $location = new Location(
                     array(
-                        'post_title'            =>  $address
+                        'post_title'            => $address,
+                        'post_status'           => $locPostStatus,
                     ),
                     array(
-                        'street_address'        =>  null,
-                        'postal_code'           =>  null,
-                        'city'                  =>  $city,
-                        'municipality'          =>  null,
-                        'country'               =>  null,
-                        'latitude'              =>  null,
-                        'longitude'             =>  null,
-                        'import_client'         =>  $import_client,
-                        '_event_manager_uid'    =>  null,
-                        'accepted'              =>  1,
+                        'street_address'        => null,
+                        'postal_code'           => null,
+                        'city'                  => $city,
+                        'municipality'          => null,
+                        'country'               => null,
+                        'latitude'              => null,
+                        'longitude'             => null,
+                        'import_client'         => $import_client,
+                        '_event_manager_uid'    => 'xcap-' . $shortKey . '-' . $this->cleanString($address),
                         'user_groups'           => $user_groups,
                         'missing_user_group'    => $user_groups == null ? 1 : 0,
+                        'sync'                  => 1,
+                        'imported_post'         => 1,
                     )
                 );
 
-                $creatSuccess = $location->save();
-                if ($creatSuccess) {
+                $createSuccess = $location->save();
+                if ($createSuccess) {
                     $locationId = $location->ID;
-                    ++$this->nrOfNewLocations;
+                        if ($isUpdate == false) {
+                            ++$this->nrOfNewLocations;
+                        }
                     $this->levenshteinTitles['location'][] = array('ID' => $location->ID, 'post_title' => $address);
                 }
             }
@@ -125,14 +141,12 @@ class Xcap extends \HbgEventImporter\Parser
 
         $eventId = $this->checkIfPostExists('event', $newPostTitle);
         $isUpdate = false;
-        $accepted = -1;
-        // Check: if event is a duplicate and if "sync" option is set.
-        if ($eventId && get_post_meta( $eventId, '_event_manager_uid', true)) {
+        // Check if this is a duplicate or update and if "sync" option is set.
+        if ($eventId && get_post_meta($eventId, '_event_manager_uid', true)) {
             $existingUid = get_post_meta( $eventId, '_event_manager_uid', true);
-            $sync = get_post_meta( $eventId, 'sync', true);
-            $accepted = get_post_meta($eventId, 'accepted', true);
-            $isUpdate = ($existingUid == $shortKey . '-' . $eventData->uid && $sync == 1 ) ? true : false;
-            $postStatus = get_post_status($eventId);
+            $sync        = get_post_meta($eventId, 'sync', true);
+            $postStatus  = get_post_status($eventId);
+            $isUpdate    = ($existingUid == $shortKey . '-' . $eventData->uid && $sync == 1 ) ? true : false;
         }
 
         // Save event if it doesn't exist or is an update and "sync" option is set. Continues if event is an older version of a duplicate.
@@ -147,7 +161,7 @@ class Xcap extends \HbgEventImporter\Parser
                 array(
                     'uniqueId'                => $shortKey . '-' . $eventData->uid,
                     '_event_manager_uid'      => $shortKey . '-' . $eventData->uid,
-                    'sync'                    => true,
+                    'sync'                    => 1,
                     'status'                  => 'Active',
                     'image'                   => !empty($image) ? $image : null,
                     'alternate_name'          => $alternateName,
@@ -162,16 +176,15 @@ class Xcap extends \HbgEventImporter\Parser
                     'price_information'       => null,
                     'price_adult'             => null,
                     'price_children'          => null,
-                    'accepted'                => $accepted,
                     'import_client'           => 'xcap',
-                    'imported_event'          => true,
+                    'imported_post'           => 1,
                     'user_groups'             => $user_groups,
                     'missing_user_group'      => $user_groups == null ? 1 : 0,
                 )
             );
 
-            $creatSuccess = $event->save();
-            if ($creatSuccess) {
+            $createSuccess = $event->save();
+            if ($createSuccess) {
                 if ($isUpdate == false) {
                     ++$this->nrOfNewEvents;
                 }

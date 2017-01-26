@@ -71,8 +71,9 @@ class CbisLocation extends \HbgEventImporter\Parser
         // CBIS API keys
         $cbisKey         = $this->apiKeys['cbis_key'];
         $cbisId          = $this->apiKeys['cbis_geonode'];
-
-        $userGroups      = (! empty($this->apiKeys['cbis_groups'])) ? array_map('intval', $this->apiKeys['cbis_groups']) : null;
+        $userGroups      = (is_array($this->apiKeys['cbis_groups']) && ! empty($this->apiKeys['cbis_groups'])) ? array_map('intval', $this->apiKeys['cbis_groups']) : null;
+        // Used to set unique key on events
+        $shortKey        = substr(intval($this->apiKeys['cbis_key'], 36), 0, 4);
 
         // Location data
         $isArena         = $this->cbisLocation['arena'];
@@ -87,7 +88,7 @@ class CbisLocation extends \HbgEventImporter\Parser
         }
 
         // Number of arenas/products to get, 500 to get all
-        $getLength = 500;
+        $getLength = 600;
 
         $requestParams = array(
             'apiKey' => $cbisKey,
@@ -124,12 +125,11 @@ class CbisLocation extends \HbgEventImporter\Parser
             // Get and save event "arenas" to locations
             $this->arenas = $this->client->ListAll($requestParams)->ListAllResult->Items->Product;
 
-            foreach($this->arenas as $key => $arenaData) {
-                $this->saveArena($arenaData, $cbisLocName, $defaultLocation, $userGroups);
+            foreach($this->arenas as $arena) {
+                $this->saveLocation($arena, 'arena', $defaultLocation, $userGroups, $shortKey, $postStatus);
             }
-
         } else {
-            // Adjust request parameters for getting products
+            // Adjust request parameters when parsing products
             $requestParams['filter']['ProductType'] = "Product";
             $requestParams['filter']['WithOccasionsOnly'] = false;
             $requestParams['filter']['ExcludeProductsWithoutOccasions'] = false;
@@ -145,7 +145,7 @@ class CbisLocation extends \HbgEventImporter\Parser
                 return true;
             });
             foreach ($filteredProducts as $product) {
-                $this->saveArena($product, $cbisLocName, $defaultLocation, $userGroups);
+                $this->saveLocation($product, $cbisLocName, $defaultLocation, $userGroups, $shortKey, $postStatus);
             }
         }
     }
@@ -179,9 +179,10 @@ class CbisLocation extends \HbgEventImporter\Parser
      * @param  string $productCategory Category name
      * @param  string $defaultLocation Default city
      * @param  array  $userGroups      Default user groups
+     * @param  int    $shortKey        Shortened api key
      * @return void
      */
-    public function saveArena($arenaData, $productCategory, $defaultLocation, $userGroups)
+    public function saveLocation($arenaData, $productCategory, $defaultLocation, $userGroups, $shortKey, $postStatus)
     {
         $attributes = $this->getAttributes($arenaData);
         $import_client = 'CBIS: '.ucfirst($productCategory);
@@ -192,19 +193,32 @@ class CbisLocation extends \HbgEventImporter\Parser
 
         // Checking if there is a post already with this title or similar enough
         $locationId = $this->checkIfPostExists('location', $newPostTitle);
-        if ($locationId == null) {
-            $country = $this->getAttributeValue(self::ATTRIBUTE_COUNTRY, $attributes);
+
+        $uid = 'cbis-' . $shortKey . '-' . $this->cleanString($newPostTitle);
+        $isUpdate = false;
+
+        // Check if this is a duplicate or update and if "sync" option is set.
+        if ($locationId && get_post_meta($locationId, '_event_manager_uid', true)) {
+            $existingUid   = get_post_meta($locationId, '_event_manager_uid', true);
+            $sync          = get_post_meta($locationId, 'sync', true);
+            $postStatus    = get_post_status($locationId);
+            $isUpdate      = ($existingUid == $uid && $sync == 1 ) ? true : false;
+        }
+
+        if ($locationId == null || $isUpdate == true) {
+        $country = $this->getAttributeValue(self::ATTRIBUTE_COUNTRY, $attributes);
         $arenaLocation = $this->getAttributeValue(self::ATTRIBUTE_POSTAL_ADDRESS, $attributes) != null ? $this->getAttributeValue(self::ATTRIBUTE_POSTAL_ADDRESS, $attributes) : $defaultLocation;
         $city = ($productCategory == 'arena') ? $arenaLocation : $arenaData->GeoNode->Name;
 
             if(is_numeric($country))
                 $country = "Sweden";
-            // Create the location, found in api-event-manager/source/php/PostTypes/Locations.php
+            // Create the location
             $latitude = $this->getAttributeValue(self::ATTRIBUTE_LATITUDE, $attributes) != '0' ? $this->getAttributeValue(self::ATTRIBUTE_LATITUDE, $attributes) : null;
             $longitude = $this->getAttributeValue(self::ATTRIBUTE_LONGITUDE, $attributes) != '0' ? $this->getAttributeValue(self::ATTRIBUTE_LONGITUDE, $attributes) : null;
             $location = new Location(
                 array(
-                    'post_title' => $newPostTitle
+                    'post_title'         => $newPostTitle,
+                    'post_status'        => $postStatus,
                 ),
                 array(
                     'street_address'     => $this->getAttributeValue(self::ATTRIBUTE_ADDRESS, $attributes),
@@ -215,18 +229,21 @@ class CbisLocation extends \HbgEventImporter\Parser
                     'latitude'           => $latitude,
                     'longitude'          => $longitude,
                     'import_client'      => $import_client,
-                    '_event_manager_uid' => $this->getAttributeValue(self::ATTRIBUTE_NAME, $attributes) ? $this->getAttributeValue(self::ATTRIBUTE_NAME, $attributes) : $this->getAttributeValue(self::ATTRIBUTE_ADDRESS, $attributes),
-                    'accepted'           => 1,
+                    '_event_manager_uid' => $uid,
                     'user_groups'        => $userGroups,
                     'missing_user_group' => $userGroups == null ? 1 : 0,
+                    'sync'               => 1,
+                    'imported_post'      => 1,
                 )
             );
 
-            $creatSuccess = $location->save();
+            $createSuccess = $location->save();
             $locationId = $location->ID;
-            if($creatSuccess)
+            if($createSuccess)
             {
-                ++$this->nrOfNewLocations;
+                if ($isUpdate == false) {
+                    ++$this->nrOfNewLocations;
+                }
                 $this->levenshteinTitles['location'][] = array('ID' => $locationId, 'post_title' => $newPostTitle);
             }
         }
