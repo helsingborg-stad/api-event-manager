@@ -69,7 +69,6 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
         });
         $this->addTableColumn('date', __('Date', 'event-manager'));
         add_filter('views_edit-event', array($this, 'addImportButtons'));
-        add_action('publish_event', array($this, 'setAcceptedOnPublish'), 10, 2);
         add_action('save_post', array($this, 'saveEventOccasions'), 10, 3);
         add_action('save_post', array($this, 'saveRecurringEvents'), 10, 3);
         add_action('save_post', array($this, 'extractEventTags'), 10, 3);

@@ -52,9 +52,8 @@ class Locations extends \HbgEventImporter\Entity\CustomPostType
             echo get_post_meta($postId, 'import_client', true);
         });
         $this->addTableColumn('date', __('Date', 'event-manager'));
-        add_filter('views_edit-location', array($this, 'addImportButtons'));
+        add_filter('views_edit-' . $this->slug, array($this, 'addImportButtons'));
         add_action('acf/save_post', array($this, 'updateAddressData'), 20);
-        add_action('publish_location', array($this, 'setAcceptedOnPublish'), 10, 2);
         add_filter('acf/load_value/name=geo_map', array($this, 'setMapValues'), 10, 3);
         add_filter('acf/update_value/name=geo_map', array($this, 'acfUpdateMap'), 10, 3);
         add_filter('manage_edit-' . $this->slug . '_columns', array($this, 'addAcceptDenyTable'));

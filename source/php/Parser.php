@@ -91,4 +91,15 @@ abstract class Parser
         echo __('Parser done.', 'event-manager');
         echo '<script>location.href = "' . admin_url('edit.php?post_type=event&msg=import-complete') . '";</script>';
     }
+
+    /**
+     * Removes spaces and special characters from string
+     * @param  string $string string to clean
+     * @return string
+     */
+    public function cleanString($string) {
+        $string = str_replace(' ', '-', $string);
+
+        return preg_replace('/[^A-Za-z0-9\-]/', '', $string);
+    }
 }

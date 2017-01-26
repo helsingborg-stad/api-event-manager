@@ -95,15 +95,16 @@ class Xcap extends \HbgEventImporter\Parser
 
             $locPostStatus = $postStatus;
             $isUpdate = false;
-            // Check: if location is a duplicate and if "sync" option is set.
+            // Check if this is a duplicate or update and if "sync" option is set.
             if ($locationId && get_post_meta($locationId, '_event_manager_uid', true)) {
-                $existingUid = get_post_meta( $locationId, '_event_manager_uid', true);
-                $sync = get_post_meta($locationId, 'sync', true);
-                $isUpdate = ($existingUid == $shortKey . '-xcap-' . $this->cleanString($address) && $sync == 1) ? true : false;
-                $locPostStatus = ($sync == 0) ? get_post_status($locationId) : $postStatus;
+                $existingUid    = get_post_meta($locationId, '_event_manager_uid', true);
+                $sync           = get_post_meta($locationId, 'sync', true);
+                $locPostStatus  = get_post_status($locationId);
+                $isUpdate       = ($existingUid == 'xcap-' . $shortKey . '-' . $this->cleanString($address) && $sync == 1) ? true : false;
             }
 
             if ($locationId == null || $isUpdate == true) {
+
                 // Create the location
                 $location = new Location(
                     array(
@@ -119,7 +120,7 @@ class Xcap extends \HbgEventImporter\Parser
                         'latitude'              => null,
                         'longitude'             => null,
                         'import_client'         => $import_client,
-                        '_event_manager_uid'    => $shortKey . '-xcap-' . $this->cleanString($address),
+                        '_event_manager_uid'    => 'xcap-' . $shortKey . '-' . $this->cleanString($address),
                         'user_groups'           => $user_groups,
                         'missing_user_group'    => $user_groups == null ? 1 : 0,
                         'sync'                  => 1,
@@ -140,18 +141,16 @@ class Xcap extends \HbgEventImporter\Parser
 
         $eventId = $this->checkIfPostExists('event', $newPostTitle);
         $isUpdate = false;
-        // Check: if event is a duplicate and if "sync" option is set.
+        // Check if this is a duplicate or update and if "sync" option is set.
         if ($eventId && get_post_meta($eventId, '_event_manager_uid', true)) {
             $existingUid = get_post_meta( $eventId, '_event_manager_uid', true);
-            $sync = get_post_meta($eventId, 'sync', true);
-            $isUpdate = ($existingUid == $shortKey . '-' . $eventData->uid && $sync == 1 ) ? true : false;
-            $postStatus = get_post_status($eventId);
+            $sync        = get_post_meta($eventId, 'sync', true);
+            $postStatus  = get_post_status($eventId);
+            $isUpdate    = ($existingUid == $shortKey . '-' . $eventData->uid && $sync == 1 ) ? true : false;
         }
 
         // Save event if it doesn't exist or is an update and "sync" option is set. Continues if event is an older version of a duplicate.
         if (($eventId == null || $isUpdate == true) && $this->filter($categories) == true) {
-// TA BORT
-return;
             // Creates the event object
             $event = new Event(
                 array(
@@ -219,17 +218,6 @@ return;
             }
         }
         return $passes;
-    }
-
-    /**
-     * Removes spaces and special characters from string
-     * @param  string $string string to clean
-     * @return string
-     */
-    public function cleanString($string) {
-        $string = str_replace(' ', '-', $string);
-
-        return preg_replace('/[^A-Za-z0-9\-]/', '', $string);
     }
 
     /**

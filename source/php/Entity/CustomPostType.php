@@ -155,59 +155,6 @@ abstract class CustomPostType
     }
 
     /**
-     * Creates a meta value (accepted) for post with value -1, 0 or 1 if, updates if meta value already exists for that post
-     * @return int $newValue
-     */
-    public function acceptOrDeny()
-    {
-        if (!isset($_POST['postId']) || !isset($_POST['value'])) {
-            if (ob_get_contents()) {
-                ob_end_clean();
-            }
-            echo _e('Something went wrong!', 'event-manager');
-            wp_die();
-        }
-        $postId =  $_POST['postId'];
-        $newValue = $_POST['value'];
-
-        $postAccepted = get_post_meta($postId, 'accepted');
-
-        $post = get_post($postId);
-        if ($newValue == -1) {
-            $post->post_status = 'draft';
-        }
-        if ($newValue == 1) {
-            $post->post_status = 'publish';
-        }
-
-        $error = wp_update_post($post, true);
-
-        if ($postAccepted == false) {
-            add_post_meta($postId, 'accepted', $newValue);
-
-            if (ob_get_contents()) {
-                ob_end_clean();
-            }
-            echo $newValue;
-            wp_die();
-        } else {
-            if ($postAccepted[0] == $newValue) {
-                if (ob_get_contents()) {
-                    ob_end_clean();
-                }
-                echo $postAccepted[0];
-                wp_die();
-            }
-            update_post_meta($postId, 'accepted', $newValue);
-            if (ob_get_contents()) {
-                ob_end_clean();
-            }
-            echo $newValue;
-            wp_die();
-        }
-    }
-
-    /**
      * Registers the post type with WP
      * @return string Post type slug
      */
@@ -333,21 +280,6 @@ abstract class CustomPostType
             $messages['post'][10] = __('Post draft updated.', 'event-manager');
         }
         return $messages;
-    }
-
-    /**
-     * When publish are clicked we are either creating the meta 'accepted' with value 1 or update it
-     * @param int $ID event post id
-     * @param $post wordpress post object
-     */
-    public function setAcceptedOnPublish($ID, $post)
-    {
-        $metaAccepted = get_post_meta($ID, 'accepted', true);
-        if (!isset($metaAccepted)) {
-            add_post_meta($ID, 'accepted', 1);
-        } else {
-            update_post_meta($ID, 'accepted', 1);
-        }
     }
 
     /**
