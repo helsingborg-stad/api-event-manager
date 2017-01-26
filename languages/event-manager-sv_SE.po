@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Event Manager\n"
-"POT-Creation-Date: 2017-01-26 15:35+0100\n"
-"PO-Revision-Date: 2017-01-26 15:36+0100\n"
+"POT-Creation-Date: 2017-01-26 16:12+0100\n"
+"PO-Revision-Date: 2017-01-26 16:13+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: sv\n"
@@ -1704,16 +1704,16 @@ msgstr "Kategorier"
 #: source/php/Taxonomy/EventCategories.php:46
 msgctxt "Taxonomy plural name"
 msgid "Imported categories"
-msgstr ""
+msgstr "Importerade kategorier"
 
 #: source/php/Taxonomy/EventCategories.php:47
 msgctxt "Taxonomy singular name"
 msgid "Imported category"
-msgstr ""
+msgstr "Importerad kategori"
 
 #: source/php/Taxonomy/EventCategories.php:59
 msgid "Imported categories"
-msgstr ""
+msgstr "Importerade kategorier"
 
 #: source/php/Taxonomy/EventTags.php:15
 msgctxt "Taxonomy plural name"
