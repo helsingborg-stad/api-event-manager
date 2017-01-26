@@ -31,7 +31,6 @@ class Event extends \HbgEventImporter\Entity\PostManager
         // Clean strings
         $this->post_title = !is_string($this->post_title) ? $this->post_title : DataCleaner::string($this->post_title);
         $this->post_content = !is_string($this->post_content) ? $this->post_content : DataCleaner::string($this->post_content);
-        $this->uniqueId = !is_string($this->uniqueId) ? $this->uniqueId : DataCleaner::string($this->uniqueId);
         $this->_event_manager_uid = !is_string($this->_event_manager_uid) ? $this->_event_manager_uid : DataCleaner::string($this->_event_manager_uid);
         $this->status = !is_string($this->status) ? $this->status : DataCleaner::string($this->status);
         $this->alternate_name = !is_string($this->alternate_name) ? $this->alternate_name : DataCleaner::string($this->alternate_name);
@@ -49,6 +48,7 @@ class Event extends \HbgEventImporter\Entity\PostManager
     public function afterSave()
     {
         $this->saveCategories();
+        $this->mapCategories();
         $this->saveGroups();
         $this->saveOccasions();
         $this->saveTags();
@@ -57,12 +57,37 @@ class Event extends \HbgEventImporter\Entity\PostManager
     }
 
     /**
-     * Saves categories as event_categories taxonomy terms
+     * Saves categories to imported categories taxonomy
      * @return void
      */
     public function saveCategories()
     {
-        wp_set_object_terms($this->ID, $this->categories, 'event_categories', true);
+        wp_set_object_terms($this->ID, $this->categories, 'imported_categories', false);
+    }
+
+    /**
+     * Maps the imported categories with the categories of the event post type
+     * @return void
+     */
+    public function mapCategories()
+    {
+        $matches = array();
+        $importCategories = array_map('trim', $this->categories);
+        $postCategories = get_categories(array('taxonomy' => 'event_categories', 'hide_empty' => false));
+
+        foreach ($postCategories as $postCategory) {
+            $mapTheseCategories = get_field('event_categories_map', 'event_categories_' . $postCategory->term_id);
+
+            if (is_array($mapTheseCategories) && !is_wp_error($mapTheseCategories) ) {
+                foreach ($mapTheseCategories as $map) {
+                    if (!is_wp_error($map) && in_array(html_entity_decode($map->name), $importCategories)) {
+                        $matches[] = $postCategory->term_id;
+                    }
+                }
+            }
+        }
+
+        wp_set_object_terms($this->ID, $matches, 'event_categories', false);
     }
 
     /**
@@ -71,7 +96,7 @@ class Event extends \HbgEventImporter\Entity\PostManager
      */
     public function saveGroups()
     {
-        wp_set_object_terms($this->ID, $this->user_groups, 'user_groups', true);
+        wp_set_object_terms($this->ID, $this->user_groups, 'user_groups', false);
     }
 
     /**

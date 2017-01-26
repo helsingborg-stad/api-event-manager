@@ -471,6 +471,7 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
             $post_meta_infos = $wpdb->get_results("SELECT meta_key, meta_value FROM $wpdb->postmeta WHERE post_id=$post_id");
             if (count($post_meta_infos)!=0) {
                 $sql_query = "INSERT INTO $wpdb->postmeta (post_id, meta_key, meta_value) ";
+                // Filter certain values from imported events
                 foreach ($post_meta_infos as $meta_info) {
                     $meta_key = $meta_info->meta_key;
                     switch ($meta_key) {
@@ -480,9 +481,6 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
                         $meta_value = addslashes(0);
                         break;
                     case 'sync':
-                        $meta_value = addslashes(0);
-                        break;
-                    case 'accepted':
                         $meta_value = addslashes(0);
                         break;
                     default:
