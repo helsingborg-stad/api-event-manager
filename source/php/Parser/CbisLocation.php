@@ -125,7 +125,7 @@ class CbisLocation extends \HbgEventImporter\Parser
             // Get and save event "arenas" to locations
             $this->arenas = $this->client->ListAll($requestParams)->ListAllResult->Items->Product;
 
-            foreach($this->arenas as $arena) {
+            foreach ($this->arenas as $arena) {
                 $this->saveLocation($arena, 'arena', $defaultLocation, $userGroups, $shortKey, $postStatus);
             }
         } else {
@@ -138,7 +138,7 @@ class CbisLocation extends \HbgEventImporter\Parser
             $this->products = $this->client->ListAll($requestParams)->ListAllResult->Items->Product;
 
             // Filter expired products
-            $filteredProducts = array_filter($this->products, function($obj){
+            $filteredProducts = array_filter($this->products, function ($obj) {
                 if (isset($obj->ExpirationDate) && strtotime($obj->ExpirationDate) < strtotime("now")) {
                     return false;
                 }
@@ -186,8 +186,9 @@ class CbisLocation extends \HbgEventImporter\Parser
     {
         $attributes = $this->getAttributes($arenaData);
         $import_client = 'CBIS: '.ucfirst($productCategory);
-        if($this->getAttributeValue(self::ATTRIBUTE_ADDRESS, $attributes) == null && $this->getAttributeValue(self::ATTRIBUTE_NAME, $attributes) == null)
+        if ($this->getAttributeValue(self::ATTRIBUTE_ADDRESS, $attributes) == null && $this->getAttributeValue(self::ATTRIBUTE_NAME, $attributes) == null) {
             return;
+        }
 
         $newPostTitle = $this->getAttributeValue(self::ATTRIBUTE_NAME, $attributes) != null ? $this->getAttributeValue(self::ATTRIBUTE_NAME, $attributes) : $this->getAttributeValue(self::ATTRIBUTE_ADDRESS, $attributes);
 
@@ -202,16 +203,17 @@ class CbisLocation extends \HbgEventImporter\Parser
             $existingUid   = get_post_meta($locationId, '_event_manager_uid', true);
             $sync          = get_post_meta($locationId, 'sync', true);
             $postStatus    = get_post_status($locationId);
-            $isUpdate      = ($existingUid == $uid && $sync == 1 ) ? true : false;
+            $isUpdate      = ($existingUid == $uid && $sync == 1) ? true : false;
         }
 
         if ($locationId == null || $isUpdate == true) {
-        $country = $this->getAttributeValue(self::ATTRIBUTE_COUNTRY, $attributes);
-        $arenaLocation = $this->getAttributeValue(self::ATTRIBUTE_POSTAL_ADDRESS, $attributes) != null ? $this->getAttributeValue(self::ATTRIBUTE_POSTAL_ADDRESS, $attributes) : $defaultLocation;
-        $city = ($productCategory == 'arena') ? $arenaLocation : $arenaData->GeoNode->Name;
+            $country = $this->getAttributeValue(self::ATTRIBUTE_COUNTRY, $attributes);
+            $arenaLocation = $this->getAttributeValue(self::ATTRIBUTE_POSTAL_ADDRESS, $attributes) != null ? $this->getAttributeValue(self::ATTRIBUTE_POSTAL_ADDRESS, $attributes) : $defaultLocation;
+            $city = ($productCategory == 'arena') ? $arenaLocation : $arenaData->GeoNode->Name;
 
-            if(is_numeric($country))
+            if (is_numeric($country)) {
                 $country = "Sweden";
+            }
             // Create the location
             $latitude = $this->getAttributeValue(self::ATTRIBUTE_LATITUDE, $attributes) != '0' ? $this->getAttributeValue(self::ATTRIBUTE_LATITUDE, $attributes) : null;
             $longitude = $this->getAttributeValue(self::ATTRIBUTE_LONGITUDE, $attributes) != '0' ? $this->getAttributeValue(self::ATTRIBUTE_LONGITUDE, $attributes) : null;
@@ -239,8 +241,7 @@ class CbisLocation extends \HbgEventImporter\Parser
 
             $createSuccess = $location->save();
             $locationId = $location->ID;
-            if($createSuccess)
-            {
+            if ($createSuccess) {
                 if ($isUpdate == false) {
                     ++$this->nrOfNewLocations;
                 }
