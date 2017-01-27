@@ -10,6 +10,7 @@ abstract class Parser
     protected $nrOfNewEvents;
     protected $nrOfNewLocations;
     protected $nrOfNewContacts;
+    private $db;
 
     /**
      * Holds all titles of existing locations, contacts and events in wordpress
@@ -20,10 +21,15 @@ abstract class Parser
 
     public function __construct($url, $apiKeys = null, $cbisLocation = null)
     {
-        //Max excec time
+
+        // Class specific wpdb
+        global $wpdb;
+        $this->db = $wpdb;
+
+        // Max excec time
         ini_set('max_execution_time', 60*5);
 
-        //Setup vars
+        // Setup vars
         $this->url              = $url;
         $this->apiKeys          = $apiKeys;
         $this->cbisLocation     = $cbisLocation;
@@ -31,7 +37,7 @@ abstract class Parser
         $this->nrOfNewLocations = 0;
         $this->nrOfNewContacts  = 0;
 
-        //Run import
+        // Run import
         $this->start();
     }
 
@@ -41,13 +47,12 @@ abstract class Parser
      */
     public function collectDataForLevenshtein()
     {
-        global $wpdb;
-        $types = array('event', 'location', 'contact');
+        $types = (array) apply_filters('event/parser/common/levenshtein/post_types', array('event', 'location', 'contact'));
 
         foreach ((array) $types as $type) {
-            $allOfCertainType = $wpdb->get_results(
-                                    $wpdb->prepare("SELECT ID,post_title FROM " . $wpdb->posts . " WHERE (post_status = %s OR post_status = %s) AND post_type = %s", 'publish', 'draft', $type)
-                                );
+            $allOfCertainType = $thsi->db->get_results(
+                $this->db->prepare("SELECT ID,post_title FROM " . $this->db->posts . " WHERE (post_status = %s OR post_status = %s) AND post_type = %s", 'publish', 'draft', $type)
+            );
 
             foreach ((array) $allOfCertainType as $post) {
                 $this->levenshteinTitles[$type][] = array('ID' => $post->ID, 'post_title' => $post->post_title);
