@@ -18,7 +18,6 @@ abstract class Parser
      */
     protected $levenshteinTitles = array('location' => array(), 'contact' => array(), 'event' => array());
 
-
     public function __construct($url, $apiKeys = null, $cbisLocation = null)
     {
 
@@ -51,7 +50,7 @@ abstract class Parser
 
         foreach ((array) $types as $type) {
             $allOfCertainType = $thsi->db->get_results(
-                $this->db->prepare("SELECT ID,post_title FROM " . $this->db->posts . " WHERE (post_status = %s OR post_status = %s) AND post_type = %s", 'publish', 'draft', $type)
+                $this->db->prepare("SELECT ID, post_title FROM " . $this->db->posts . " WHERE (post_status = %s OR post_status = %s) AND post_type = %s", 'publish', 'draft', $type)
             );
 
             foreach ((array) $allOfCertainType as $post) {

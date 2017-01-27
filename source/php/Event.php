@@ -78,7 +78,7 @@ class Event extends \HbgEventImporter\Entity\PostManager
         foreach ($postCategories as $postCategory) {
             $mapTheseCategories = get_field('event_categories_map', 'event_categories_' . $postCategory->term_id);
 
-            if (is_array($mapTheseCategories) && !is_wp_error($mapTheseCategories) ) {
+            if (is_array($mapTheseCategories) && !is_wp_error($mapTheseCategories)) {
                 foreach ($mapTheseCategories as $map) {
                     if (!is_wp_error($map) && in_array(html_entity_decode($map->name), $importCategories)) {
                         $matches[] = $postCategory->term_id;
@@ -140,13 +140,13 @@ class Event extends \HbgEventImporter\Entity\PostManager
         $timestamp = strtotime($startDate);
         $timestamp2 = strtotime($endDate);
         if (empty($doorTime)) {
-            $timestamp3 = NULL;
+            $timestamp3 = null;
         } else {
             $timestamp3 = strtotime($doorTime);
         }
 
         if ($timestamp <= 0 || $timestamp2 <= 0 || $timestamp == false || $timestamp2 == false) {
-        //if ($timestamp <= 0 || $timestamp2 <= 0 || $timestamp == false || $timestamp2 == false || $timestamp2 < $timestamp) {
+            //if ($timestamp <= 0 || $timestamp2 <= 0 || $timestamp == false || $timestamp2 == false || $timestamp2 < $timestamp) {
             return true;
         }
 
