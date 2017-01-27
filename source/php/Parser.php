@@ -17,6 +17,24 @@ abstract class Parser
      */
     protected $levenshteinTitles = array('location' => array(), 'contact' => array(), 'event' => array());
 
+
+    public function __construct($url, $apiKeys = null, $cbisLocation = null)
+    {
+        //Max excec time
+        ini_set('max_execution_time', 60*5);
+
+        //Setup vars
+        $this->url              = $url;
+        $this->apiKeys          = $apiKeys;
+        $this->cbisLocation     = $cbisLocation;
+        $this->nrOfNewEvents    = 0;
+        $this->nrOfNewLocations = 0;
+        $this->nrOfNewContacts  = 0;
+
+        //Run import
+        $this->start();
+    }
+
     /**
      * Collecting titles of existing events, locations and contacts
      * @return void
@@ -64,19 +82,10 @@ abstract class Parser
         return false;
     }
 
-    public function __construct($url, $apiKeys = null, $cbisLocation = null)
-    {
-        ini_set('max_execution_time', 300);
-
-        $this->url              = $url;
-        $this->apiKeys          = $apiKeys;
-        $this->cbisLocation     = $cbisLocation;
-        $this->nrOfNewEvents    = 0;
-        $this->nrOfNewLocations = 0;
-        $this->nrOfNewContacts  = 0;
-        $this->start();
-        //$this->done();
-    }
+    /**
+     * Get statistics for imported dataset
+     * @return array
+     */
 
     public function getCreatedData()
     {
