@@ -26,7 +26,7 @@ abstract class Parser
         global $wpdb;
         $types = array('event', 'location', 'contact');
 
-        foreach($types as $type) {
+        foreach ($types as $type) {
             $sql = $wpdb->prepare("SELECT ID,post_title FROM " . $wpdb->posts . " WHERE (post_status = %s OR post_status = %s) AND post_type = %s", 'publish', 'draft', $type);
             $allOfCertainType = $wpdb->get_results($sql);
             foreach ($allOfCertainType as $post) {
@@ -41,9 +41,10 @@ abstract class Parser
      */
     public function checkIfPostExists($postType, $postTitle)
     {
-        foreach($this->levenshteinTitles[$postType] as $title) {
-            if($this->isSimilarEnough(trim(html_entity_decode($postTitle)), $title['post_title'], $postType == 'location' ? 1 : 3))
+        foreach ($this->levenshteinTitles[$postType] as $title) {
+            if ($this->isSimilarEnough(trim(html_entity_decode($postTitle)), $title['post_title'], $postType == 'location' ? 1 : 3)) {
                 return $title['ID'];
+            }
         }
         return null;
     }
@@ -57,8 +58,9 @@ abstract class Parser
         $forTest1 = strtolower($newTitle);
         $forTest2 = strtolower($existingTitle);
         $steps = levenshtein($forTest1, $forTest2);
-        if($steps <= $threshold)
+        if ($steps <= $threshold) {
             return true;
+        }
         return false;
     }
 
@@ -97,7 +99,8 @@ abstract class Parser
      * @param  string $string string to clean
      * @return string
      */
-    public function cleanString($string) {
+    public function cleanString($string)
+    {
         $string = str_replace(' ', '-', $string);
 
         return preg_replace('/[^A-Za-z0-9\-]/', '', $string);
