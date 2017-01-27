@@ -96,7 +96,11 @@ abstract class Parser
 
     public function getCreatedData()
     {
-        return array('events' => $this->nrOfNewEvents, 'locations' => $this->nrOfNewLocations, 'contacts' => $this->nrOfNewContacts);
+        return array(
+                'events' => $this->nrOfNewEvents,
+                'locations' => $this->nrOfNewLocations,
+                'contacts' => $this->nrOfNewContacts
+            );
     }
 
     /**
