@@ -272,7 +272,8 @@ class App
             'import-cbis-events',
             function () {
                 new \HbgEventImporter\Parser\CBIS('http://api.cbis.citybreak.com/Products.asmx?wsdl');
-            });
+            }
+        );
 
         add_submenu_page(
             null,
@@ -282,7 +283,9 @@ class App
             'import-cbis-locations',
             function () {
                 new \HbgEventImporter\Parser\CbisLocation('http://api.info.citybreak.com/Products.asmx?wsdl');
-            });
+            }
+        );
+
         add_submenu_page(
             null,
             __('Delete all events', 'hbg-event-importer'),
@@ -301,7 +304,8 @@ class App
                 $delete = $wpdb->query("TRUNCATE TABLE `event_term_taxonomy`");
                 $delete = $wpdb->query("TRUNCATE TABLE `event_termmeta`");
                 $delete = $wpdb->query("TRUNCATE TABLE `event_terms`");
-            });
+            }
+        );
     }
 
     /**
@@ -354,9 +358,6 @@ class App
      */
     public static function startImport()
     {
-        //$url = admin_url('options.php?page=cron-import');
-
-        // Log when done
         file_put_contents(dirname(__FILE__)."/log/cron_import.log", "Cron last run: " . date("Y-m-d H:i:s"));
     }
 
@@ -437,12 +438,12 @@ class App
     public static function initUserRoles()
     {
         add_role('event_contributor', __("Event contributor", 'event-manager'), array(
-        'read' => true,
-        'edit_posts' => true,
-        'delete_posts' => true,
-        'edit_published_posts' => true,
-        'upload_files' => true,
-        'edit_others_posts' => true,
+            'read' => true,
+            'edit_posts' => true,
+            'delete_posts' => true,
+            'edit_published_posts' => true,
+            'upload_files' => true,
+            'edit_others_posts' => true,
         ));
     }
 }
