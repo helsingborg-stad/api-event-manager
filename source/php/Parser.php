@@ -44,10 +44,12 @@ abstract class Parser
         global $wpdb;
         $types = array('event', 'location', 'contact');
 
-        foreach ($types as $type) {
-            $sql = $wpdb->prepare("SELECT ID,post_title FROM " . $wpdb->posts . " WHERE (post_status = %s OR post_status = %s) AND post_type = %s", 'publish', 'draft', $type);
-            $allOfCertainType = $wpdb->get_results($sql);
-            foreach ($allOfCertainType as $post) {
+        foreach ((array) $types as $type) {
+            $allOfCertainType = $wpdb->get_results(
+                                    $wpdb->prepare("SELECT ID,post_title FROM " . $wpdb->posts . " WHERE (post_status = %s OR post_status = %s) AND post_type = %s", 'publish', 'draft', $type)
+                                );
+
+            foreach ((array) $allOfCertainType as $post) {
                 $this->levenshteinTitles[$type][] = array('ID' => $post->ID, 'post_title' => $post->post_title);
             }
         }
