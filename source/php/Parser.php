@@ -80,10 +80,10 @@ abstract class Parser
      */
     public function isSimilarEnough($newTitle, $existingTitle, $threshold)
     {
-        $forTest1 = strtolower($newTitle);
-        $forTest2 = strtolower($existingTitle);
-        $steps = levenshtein($forTest1, $forTest2);
-        if ($steps <= $threshold) {
+        $newTitle       = strtolower($newTitle);
+        $existingTitle  = strtolower($existingTitle);
+
+        if (levenshtein($newTitle, $existingTitle) <= $threshold) {
             return true;
         }
         return false;
