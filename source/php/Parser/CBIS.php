@@ -6,18 +6,25 @@ use \HbgEventImporter\Event as Event;
 use \HbgEventImporter\Location as Location;
 use \HbgEventImporter\Contact as Contact;
 
-ini_set('memory_limit','256M');
-ini_set('default_socket_timeout', 120);
+ini_set('memory_limit', '256M');
+ini_set('default_socket_timeout', 60*10);
 
 class CBIS extends \HbgEventImporter\Parser
 {
     //API for cbis
     //http://api.cbis.citybreak.com/
+
     /**
      * Holds the Soap client
      * @var SoapClient
      */
     private $client = null;
+
+    /**
+     * Caches timezone setting to prevent fething multiple times (may occur if wpcache is not working)
+     * @var array
+     */
+    private $timeZoneString;
 
     /**
      * Holds a list of all found events
@@ -163,7 +170,7 @@ class CBIS extends \HbgEventImporter\Parser
         $this->events = $this->client->ListAll($requestParams)->ListAllResult->Items->Product;
 
         // Filter expired products older than 2 years
-        $filteredProducts = array_filter($this->events, function($obj){
+        $filteredProducts = array_filter($this->events, function ($obj) {
             if (isset($obj->ExpirationDate) && strtotime($obj->ExpirationDate) < strtotime("-2 years")) {
                 return false;
             }
@@ -303,14 +310,14 @@ class CBIS extends \HbgEventImporter\Parser
             $existingUid   = get_post_meta($locationId, '_event_manager_uid', true);
             $sync          = get_post_meta($locationId, 'sync', true);
             $locPostStatus = get_post_status($locationId);
-            $isUpdate      = ($existingUid == $uid && $sync == 1 ) ? true : false;
+            $isUpdate      = ($existingUid == $uid && $sync == 1) ? true : false;
         }
 
         if ($locationId == null || $isUpdate == true) {
-
             $country = $this->getAttributeValue(self::ATTRIBUTE_COUNTRY, $attributes);
-            if(is_numeric($country))
+            if (is_numeric($country)) {
                 $country = "Sweden";
+            }
 
             $import_client = 'CBIS: Event';
             // Create the location
@@ -340,8 +347,7 @@ class CBIS extends \HbgEventImporter\Parser
             );
 
             $creatSuccess = $location->save();
-            if($creatSuccess)
-            {
+            if ($creatSuccess) {
                 $locationId = $location->ID;
                 if ($isUpdate == false) {
                     ++$this->nrOfNewLocations;
@@ -375,7 +381,7 @@ class CBIS extends \HbgEventImporter\Parser
                 $existingUid   = get_post_meta($contactId, '_event_manager_uid', true);
                 $sync          = get_post_meta($contactId, 'sync', true);
                 $conPostStatus = get_post_status($contactId);
-                $isUpdate      = ($existingUid == $uid && $sync == 1 ) ? true : false;
+                $isUpdate      = ($existingUid == $uid && $sync == 1) ? true : false;
             }
 
             if ($contactId == null || $isUpdate == true) {
@@ -400,8 +406,7 @@ class CBIS extends \HbgEventImporter\Parser
 
                 $creatSuccess = $contact->save();
                 $contactId = $contact->ID;
-                if($creatSuccess)
-                {
+                if ($creatSuccess) {
                     if ($isUpdate == false) {
                         ++$this->nrOfNewContacts;
                     }
@@ -447,10 +452,10 @@ class CBIS extends \HbgEventImporter\Parser
 
         // Check if this is a duplicate or update and if "sync" option is set.
         if ($eventId && get_post_meta($eventId, '_event_manager_uid', true)) {
-            $existingUid = get_post_meta( $eventId, '_event_manager_uid', true);
-            $sync        = get_post_meta( $eventId, 'sync', true);
+            $existingUid = get_post_meta($eventId, '_event_manager_uid', true);
+            $sync        = get_post_meta($eventId, 'sync', true);
             $postStatus  = get_post_status($eventId);
-            $isUpdate    = ($existingUid == $uid && $sync == 1 ) ? true : false;
+            $isUpdate    = ($existingUid == $uid && $sync == 1) ? true : false;
         }
 
         // Save event if it doesn't exist or is an update and "sync" option is set to true. Skips if event is an older duplicate.
@@ -488,8 +493,7 @@ class CBIS extends \HbgEventImporter\Parser
 
             $creatSuccess = $event->save();
             $eventId = $event->ID;
-            if($creatSuccess)
-            {
+            if ($creatSuccess) {
                 if ($isUpdate == false) {
                     ++$this->nrOfNewEvents;
                 }
@@ -550,18 +554,22 @@ class CBIS extends \HbgEventImporter\Parser
     public function formatDate($date)
     {
         // Format the date string correctly
-        $dateParts = explode("T", $date);
+        $dateParts  = explode("T", $date);
         $timeString = substr($dateParts[1], 0, 5);
         $dateString = $dateParts[0] . ' ' . $timeString;
 
         // Create UTC date object
         $date = new \DateTime($dateString);
 
-        /**
-         * @todo Change to get timezone from wp options
-         */
-        $timeZone = new \DateTimeZone('Europe/Stockholm');
-        $date->setTimezone($timeZone);
+        //Get timezon from wp
+        if (!$this->timeZoneString) {
+            $this->timeZoneString = get_option('timezone_string');
+        }
+
+        //Create new date time for timezone
+        $date->setTimezone(
+            new \DateTimeZone($this->timeZoneString)
+        );
 
         return $date->format('Y-m-d H:i:s');
     }
