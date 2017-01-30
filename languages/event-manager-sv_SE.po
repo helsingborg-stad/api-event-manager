@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Event Manager\n"
-"POT-Creation-Date: 2017-01-26 11:30+0100\n"
-"PO-Revision-Date: 2017-01-26 11:38+0100\n"
+"POT-Creation-Date: 2017-01-26 16:42+0100\n"
+"PO-Revision-Date: 2017-01-26 16:42+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: sv\n"
@@ -1200,6 +1200,19 @@ msgstr "Paket"
 msgid "Membership cards"
 msgstr "Medlemskort"
 
+#: source/php/Acf/AcfFields.php:3352
+msgid "Event categories"
+msgstr "Evenemangskategorier"
+
+#: source/php/Acf/AcfFields.php:3356
+msgid "Include imported categories"
+msgstr "Inkludera importerade kategorier"
+
+#: source/php/Acf/AcfFields.php:3359
+msgid ""
+"Select which imported categories that will be included in this category."
+msgstr "Ange de importerade kategorier som ska inkluderas i denna kategori."
+
 #: source/php/Admin/FilterRestrictions.php:107
 msgid "All"
 msgstr "Alla"
@@ -1218,6 +1231,7 @@ msgstr "Papperskorg"
 
 #: source/php/Admin/FilterRestrictions.php:162
 #: source/php/Taxonomy/EventCategories.php:19
+#: source/php/Taxonomy/EventCategories.php:50
 #: source/php/Taxonomy/LocationCategories.php:19
 msgid "All categories"
 msgstr "Alla kategorier"
@@ -1535,23 +1549,23 @@ msgstr "Spara tidsstämplar"
 msgid "No post to duplicate has been supplied!"
 msgstr "Post att duplicera saknas!"
 
-#: source/php/PostTypes/Events.php:499
+#: source/php/PostTypes/Events.php:497
 msgid "Event creation failed, could not find original event"
 msgstr "Dupliceringen misslyckades, kunde inte hitta originalevenemanget"
 
-#: source/php/PostTypes/Events.php:514
+#: source/php/PostTypes/Events.php:512
 msgid "Create similar item"
 msgstr "Skapa ett liknande evenemang"
 
-#: source/php/PostTypes/Events.php:514
+#: source/php/PostTypes/Events.php:512
 msgid "Are you sure you want to clone this event?"
 msgstr "Är du säker på att du vill skapa en dubblett av evenemanget?"
 
-#: source/php/PostTypes/Events.php:514
+#: source/php/PostTypes/Events.php:512
 msgid "Clone"
 msgstr "Duplicera"
 
-#: source/php/PostTypes/Events.php:530
+#: source/php/PostTypes/Events.php:528
 #, php-format
 msgid ""
 "This is a duplicate of the event: %s. If this is a new occasion for the same "
@@ -1561,11 +1575,11 @@ msgstr ""
 "tidpunkt för ett redan existerande evenemang, vänligen %s och publicera "
 "originalversionen."
 
-#: source/php/PostTypes/Events.php:530
+#: source/php/PostTypes/Events.php:528
 msgid "edit"
 msgstr "uppdatera"
 
-#: source/php/PostTypes/Events.php:554
+#: source/php/PostTypes/Events.php:552
 msgid ""
 "Please do not enter information that refers to information in another text "
 "field. It is not certain that all fields will be presented to the consumer "
@@ -1575,7 +1589,7 @@ msgstr ""
 "textfält. Det är inte säkert att alla fält kommer att presenteras för "
 "konsumenten och kan därför bli missledande."
 
-#: source/php/PostTypes/Events.php:579
+#: source/php/PostTypes/Events.php:577
 msgid ""
 "CBIS have not imported any events for atleast 7 days. Please control the "
 "importer."
@@ -1583,7 +1597,7 @@ msgstr ""
 "Inga evenemang från CBIS har importerats de senaste 7 dagarna. Vänligen "
 "kontrollera inställningarna och importen."
 
-#: source/php/PostTypes/Events.php:605
+#: source/php/PostTypes/Events.php:603
 msgid ""
 "XCAP have not imported any events for atleast 7 days. Please control the "
 "importer."
@@ -1626,48 +1640,58 @@ msgid "Event category"
 msgstr "Evenemangskategori"
 
 #: source/php/Taxonomy/EventCategories.php:17
+#: source/php/Taxonomy/EventCategories.php:48
 #: source/php/Taxonomy/LocationCategories.php:17
 msgid "Search categories"
 msgstr "Sök kategori"
 
 #: source/php/Taxonomy/EventCategories.php:18
+#: source/php/Taxonomy/EventCategories.php:49
 #: source/php/Taxonomy/LocationCategories.php:18
 msgid "Popular categories"
 msgstr "Populära kategorier"
 
 #: source/php/Taxonomy/EventCategories.php:20
 #: source/php/Taxonomy/EventCategories.php:21
+#: source/php/Taxonomy/EventCategories.php:51
+#: source/php/Taxonomy/EventCategories.php:52
 #: source/php/Taxonomy/LocationCategories.php:20
 #: source/php/Taxonomy/LocationCategories.php:21
 msgid "Parent category"
 msgstr "Huvudkategori"
 
 #: source/php/Taxonomy/EventCategories.php:22
+#: source/php/Taxonomy/EventCategories.php:53
 #: source/php/Taxonomy/LocationCategories.php:22
 msgid "Edit category"
 msgstr "Redigera kategori"
 
 #: source/php/Taxonomy/EventCategories.php:23
+#: source/php/Taxonomy/EventCategories.php:54
 #: source/php/Taxonomy/LocationCategories.php:23
 msgid "Update category"
 msgstr "Uppdatera kategori"
 
 #: source/php/Taxonomy/EventCategories.php:24
+#: source/php/Taxonomy/EventCategories.php:55
 #: source/php/Taxonomy/LocationCategories.php:24
 msgid "Add new category"
 msgstr "Lägg till ny kategori"
 
 #: source/php/Taxonomy/EventCategories.php:25
+#: source/php/Taxonomy/EventCategories.php:56
 #: source/php/Taxonomy/LocationCategories.php:25
 msgid "New category"
 msgstr "Ny kategori"
 
 #: source/php/Taxonomy/EventCategories.php:26
+#: source/php/Taxonomy/EventCategories.php:57
 #: source/php/Taxonomy/LocationCategories.php:26
 msgid "Add or remove categories"
 msgstr "Lägg till eller ta bort kategorier"
 
 #: source/php/Taxonomy/EventCategories.php:27
+#: source/php/Taxonomy/EventCategories.php:58
 #: source/php/Taxonomy/LocationCategories.php:27
 msgid "Choose from most used categories"
 msgstr "Välj bland de mest använda kategorierna"
@@ -1676,6 +1700,20 @@ msgstr "Välj bland de mest använda kategorierna"
 #: source/php/Taxonomy/LocationCategories.php:28
 msgid "Categories"
 msgstr "Kategorier"
+
+#: source/php/Taxonomy/EventCategories.php:46
+msgctxt "Taxonomy plural name"
+msgid "Imported categories"
+msgstr "Importerade kategorier"
+
+#: source/php/Taxonomy/EventCategories.php:47
+msgctxt "Taxonomy singular name"
+msgid "Imported category"
+msgstr "Importerad kategori"
+
+#: source/php/Taxonomy/EventCategories.php:59
+msgid "Imported categories"
+msgstr "Importerade kategorier"
 
 #: source/php/Taxonomy/EventTags.php:15
 msgctxt "Taxonomy plural name"

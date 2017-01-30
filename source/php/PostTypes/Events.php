@@ -32,7 +32,9 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
         );
 
         $this->addTableColumn('cb', '<input type="checkbox">');
+
         $this->addTableColumn('title', __('Title', 'event-manager'));
+
         $this->addTableColumn('location', __('Location', 'event-manager'), true, function ($column, $postId) {
             $locationId = get_field('location', $postId);
             if (!$locationId) {
@@ -41,8 +43,11 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
             }
             echo '<a href="' . get_edit_post_link($locationId) . '">' . get_the_title($locationId) . '</a>';
         });
+
         $this->addTableColumn('organizer', _x('Main organizer', 'Main organizer column name', 'event-manager'), true, function ($column, $postId) {
+
             $value = null;
+
             if (have_rows('organizers')):
                 while (have_rows('organizers')) : the_row();
                     if (get_sub_field('main_organizer')) {
@@ -59,6 +64,7 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
             }
             echo($value);
         });
+
         $this->addTableColumn('import_client', __('Import client', 'event-manager'), true, function ($column, $postId) {
             $eventId = get_post_meta($postId, 'import_client', true);
             if (!isset($eventId[0])) {
@@ -67,18 +73,26 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
 
             echo strtoupper(get_post_meta($postId, 'import_client', true));
         });
+
         $this->addTableColumn('date', __('Date', 'event-manager'));
+
         add_filter('views_edit-event', array($this, 'addImportButtons'));
+
         add_action('save_post', array($this, 'saveEventOccasions'), 10, 3);
         add_action('save_post', array($this, 'saveRecurringEvents'), 10, 3);
         add_action('save_post', array($this, 'extractEventTags'), 10, 3);
+
         add_action('delete_post', array($this, 'deleteEventOccasions'), 10);
+
         add_action('admin_notices', array($this, 'duplicateNotice'));
         add_action('admin_notices', array($this, 'importCbisWarning'));
         add_action('admin_notices', array($this, 'importXcapWarning'));
         add_action('admin_notices', array($this, 'eventInstructions'));
+
         add_action('admin_action_duplicate_post', array($this, 'duplicatePost'));
+
         add_filter('post_row_actions', array($this, 'duplicatePostLink'), 10, 2);
+
         add_filter('acf/validate_value/name=end_date', array($this, 'validateEndDate'), 10, 4);
         add_filter('acf/validate_value/name=door_time', array($this, 'validateDoorTime'), 10, 4);
         add_filter('acf/validate_value/name=occasions', array($this, 'validateOccasion'), 10, 4);
@@ -91,6 +105,7 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
         add_filter('acf/validate_value/name=price_student', array($this, 'validatePrice'), 10, 4);
         add_filter('acf/validate_value/name=price_senior', array($this, 'validatePrice'), 10, 4);
         add_filter('acf/validate_value/name=price_group', array($this, 'validatePrice'), 10, 4);
+
         add_filter('acf/update_value/name=price_adult', array($this, 'acfUpdatePrices'), 10, 3);
         add_filter('acf/update_value/name=price_children', array($this, 'acfUpdatePrices'), 10, 3);
         add_filter('acf/update_value/name=price_student', array($this, 'acfUpdatePrices'), 10, 3);
@@ -98,11 +113,14 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
         add_filter('acf/update_value/key=field_57f4f6dc747a1', array($this, 'acfUpdatePrices'), 10, 3);
         add_filter('acf/update_value/name=booking_phone', array($this, 'acfUpdatePhone'), 10, 3);
         add_filter('acf/update_value/key=field_57ebb45142846', array($this, 'acfUpdatePhone'), 10, 3);
+
         add_filter('acf/fields/post_object/result/name=location', array($this, 'acfLocationSelect'), 10, 4);
         add_filter('acf/fields/post_object/result/name=additional_locations', array($this, 'acfLocationSelect'), 10, 4);
         add_filter('acf/fields/post_object/query', array($this, 'acfPostObjectStatus'), 10, 3);
+
         add_filter('manage_edit-' . $this->slug . '_columns', array($this, 'addAcceptDenyTable'));
-        add_action('manage_' . $this->slug . '_posts_custom_column', array($this,'addAcceptDenyButtons'), 10, 2);
+        add_action('manage_' . $this->slug . '_posts_custom_column', array($this, 'addAcceptDenyButtons'), 10, 2);
+
     }
 
     /**
@@ -553,6 +571,7 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
         ?></p>
         </div>
         <?php
+
     }
 
     /**

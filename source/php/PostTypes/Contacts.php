@@ -43,7 +43,7 @@ class Contacts extends \HbgEventImporter\Entity\CustomPostType
         add_action('do_meta_boxes', array($this, 'changeImageBox'), 10, 3);
         add_filter('acf/update_value/key=field_57445c09358ce', array($this, 'acfUpdatePhone'), 10, 3);
         add_filter('manage_edit-' . $this->slug . '_columns', array($this, 'addAcceptDenyTable'));
-        add_action('manage_' . $this->slug . '_posts_custom_column', array($this,'addAcceptDenyButtons'), 10, 2);
+        add_action('manage_' . $this->slug . '_posts_custom_column', array($this, 'addAcceptDenyButtons'), 10, 2);
     }
 
     public function changeImageBox($page, $context, $object)

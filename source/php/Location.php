@@ -34,14 +34,14 @@ class Location extends \HbgEventImporter\Entity\PostManager
         $this->saveGroups();
 
         // Get address and coordinates from post title.
-        if($this->street_address == null && ($this->latitude == null || $this->longitude == null))
-        {
+        if ($this->street_address == null && ($this->latitude == null || $this->longitude == null)) {
             $wholeAddress = $this->post_title;
             $wholeAddress .= $this->city != null ? ', ' . $this->city : '';
 
              // Search Google places api
             $res = Helper\Address::gmapsGetAddressComponents($wholeAddress, false);
-            if($res) {
+
+            if ($res) {
                 update_post_meta($this->ID, 'street_address', $res->street);
                 update_post_meta($this->ID, 'postal_code', $res->postalcode);
                 update_post_meta($this->ID, 'city', $res->city);

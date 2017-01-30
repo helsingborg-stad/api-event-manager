@@ -9,6 +9,9 @@ use \HbgEventImporter\Helper\Address as Address;
 
 class Xcap extends \HbgEventImporter\Parser
 {
+
+    private $timeZoneString;
+
     public function __construct($url, $apiKeys)
     {
         parent::__construct($url, $apiKeys);
@@ -236,11 +239,17 @@ class Xcap extends \HbgEventImporter\Parser
         $timeString = substr($timeString, 0, 2) . ':' . substr($timeString, 2, 2);
         $dateString = $dateString . ' ' . $timeString;
 
+        //Get timezon from wp
+        if (!$this->timeZoneString) {
+            $this->timeZoneString = get_option('timezone_string');
+        }
+
         // Create UTC date object
         $returnDate = new \DateTime(date('Y-m-d H:i', strtotime($dateString)));
-        $timeZone = new \DateTimeZone('Europe/Stockholm');
+        $timeZone = new \DateTimeZone($this->timeZoneString);
         $returnDate->setTimezone($timeZone);
 
         return str_replace(' ', 'T', $returnDate->format('Y-m-d H:i:s'));
     }
+
 }

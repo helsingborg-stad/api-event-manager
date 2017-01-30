@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "Project-Id-Version: Event Manager\n"
-"POT-Creation-Date: 2017-01-26 11:29+0100\n"
+"POT-Creation-Date: 2017-01-26 16:41+0100\n"
 "PO-Revision-Date: 2016-10-26 08:27+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -1184,6 +1184,19 @@ msgstr ""
 msgid "Membership cards"
 msgstr ""
 
+#: source/php/Acf/AcfFields.php:3352
+msgid "Event categories"
+msgstr ""
+
+#: source/php/Acf/AcfFields.php:3356
+msgid "Include imported categories"
+msgstr ""
+
+#: source/php/Acf/AcfFields.php:3359
+msgid ""
+"Select which imported categories that will be included in this category."
+msgstr ""
+
 #: source/php/Admin/FilterRestrictions.php:107
 msgid "All"
 msgstr ""
@@ -1202,6 +1215,7 @@ msgstr ""
 
 #: source/php/Admin/FilterRestrictions.php:162
 #: source/php/Taxonomy/EventCategories.php:19
+#: source/php/Taxonomy/EventCategories.php:50
 #: source/php/Taxonomy/LocationCategories.php:19
 msgid "All categories"
 msgstr ""
@@ -1515,47 +1529,47 @@ msgstr ""
 msgid "No post to duplicate has been supplied!"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:499
+#: source/php/PostTypes/Events.php:497
 msgid "Event creation failed, could not find original event"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:514
+#: source/php/PostTypes/Events.php:512
 msgid "Create similar item"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:514
+#: source/php/PostTypes/Events.php:512
 msgid "Are you sure you want to clone this event?"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:514
+#: source/php/PostTypes/Events.php:512
 msgid "Clone"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:530
+#: source/php/PostTypes/Events.php:528
 #, php-format
 msgid ""
 "This is a duplicate of the event: %s. If this is a new occasion for the "
 "same event, please %s and republish the original event"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:530
+#: source/php/PostTypes/Events.php:528
 msgid "edit"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:554
+#: source/php/PostTypes/Events.php:552
 msgid ""
 "Please do not enter information that refers to information in another text "
 "field. It is not certain that all fields will be presented to the consumer "
 "and would thefore be missguiding."
 msgstr ""
 
-#: source/php/PostTypes/Events.php:579
+#: source/php/PostTypes/Events.php:577
 msgid ""
 "CBIS have not imported any events for atleast 7 days. Please control the "
 "importer."
 msgstr ""
 
-#: source/php/PostTypes/Events.php:605
+#: source/php/PostTypes/Events.php:603
 msgid ""
 "XCAP have not imported any events for atleast 7 days. Please control the "
 "importer."
@@ -1596,48 +1610,58 @@ msgid "Event category"
 msgstr ""
 
 #: source/php/Taxonomy/EventCategories.php:17
+#: source/php/Taxonomy/EventCategories.php:48
 #: source/php/Taxonomy/LocationCategories.php:17
 msgid "Search categories"
 msgstr ""
 
 #: source/php/Taxonomy/EventCategories.php:18
+#: source/php/Taxonomy/EventCategories.php:49
 #: source/php/Taxonomy/LocationCategories.php:18
 msgid "Popular categories"
 msgstr ""
 
 #: source/php/Taxonomy/EventCategories.php:20
 #: source/php/Taxonomy/EventCategories.php:21
+#: source/php/Taxonomy/EventCategories.php:51
+#: source/php/Taxonomy/EventCategories.php:52
 #: source/php/Taxonomy/LocationCategories.php:20
 #: source/php/Taxonomy/LocationCategories.php:21
 msgid "Parent category"
 msgstr ""
 
 #: source/php/Taxonomy/EventCategories.php:22
+#: source/php/Taxonomy/EventCategories.php:53
 #: source/php/Taxonomy/LocationCategories.php:22
 msgid "Edit category"
 msgstr ""
 
 #: source/php/Taxonomy/EventCategories.php:23
+#: source/php/Taxonomy/EventCategories.php:54
 #: source/php/Taxonomy/LocationCategories.php:23
 msgid "Update category"
 msgstr ""
 
 #: source/php/Taxonomy/EventCategories.php:24
+#: source/php/Taxonomy/EventCategories.php:55
 #: source/php/Taxonomy/LocationCategories.php:24
 msgid "Add new category"
 msgstr ""
 
 #: source/php/Taxonomy/EventCategories.php:25
+#: source/php/Taxonomy/EventCategories.php:56
 #: source/php/Taxonomy/LocationCategories.php:25
 msgid "New category"
 msgstr ""
 
 #: source/php/Taxonomy/EventCategories.php:26
+#: source/php/Taxonomy/EventCategories.php:57
 #: source/php/Taxonomy/LocationCategories.php:26
 msgid "Add or remove categories"
 msgstr ""
 
 #: source/php/Taxonomy/EventCategories.php:27
+#: source/php/Taxonomy/EventCategories.php:58
 #: source/php/Taxonomy/LocationCategories.php:27
 msgid "Choose from most used categories"
 msgstr ""
@@ -1645,6 +1669,20 @@ msgstr ""
 #: source/php/Taxonomy/EventCategories.php:28
 #: source/php/Taxonomy/LocationCategories.php:28
 msgid "Categories"
+msgstr ""
+
+#: source/php/Taxonomy/EventCategories.php:46
+msgctxt "Taxonomy plural name"
+msgid "Imported categories"
+msgstr ""
+
+#: source/php/Taxonomy/EventCategories.php:47
+msgctxt "Taxonomy singular name"
+msgid "Imported category"
+msgstr ""
+
+#: source/php/Taxonomy/EventCategories.php:59
+msgid "Imported categories"
 msgstr ""
 
 #: source/php/Taxonomy/EventTags.php:15
