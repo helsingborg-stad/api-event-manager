@@ -359,7 +359,7 @@ class App
         //$url = admin_url('options.php?page=cron-import');
 
         // Log when done
-        file_put_contents(dirname(__FILE__)."/log/cron_import.log", "Cron last run: " . date("Y-m-d H:i:s"));
+        //file_put_contents(dirname(__FILE__)."/log/cron_import.log", "Cron last run: " . date("Y-m-d H:i:s"));
     }
 
     public static function addCronJob()
