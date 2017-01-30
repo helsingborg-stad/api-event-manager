@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Event Manager\n"
-"POT-Creation-Date: 2017-01-26 16:42+0100\n"
-"PO-Revision-Date: 2017-01-26 16:42+0100\n"
+"POT-Creation-Date: 2017-01-30 11:51+0100\n"
+"PO-Revision-Date: 2017-01-30 11:51+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: sv\n"
@@ -489,7 +489,7 @@ msgid "Contact person or company name."
 msgstr "Kontaktperson eller företagsnamn."
 
 #: source/php/Acf/AcfFields.php:761 source/php/Acf/AcfFields.php:1796
-#: source/php/Acf/AcfFields.php:1812 source/php/PostTypes/Events.php:36
+#: source/php/Acf/AcfFields.php:1812 source/php/PostTypes/Events.php:38
 #: source/php/PostTypes/Locations.php:13
 msgid "Location"
 msgstr "Plats"
@@ -582,7 +582,7 @@ msgid "Add exception"
 msgstr "Lägg till undantag"
 
 #: source/php/Acf/AcfFields.php:1127 source/php/Acf/AcfFields.php:1398
-#: source/php/PostTypes/Contacts.php:42 source/php/PostTypes/Events.php:70
+#: source/php/PostTypes/Contacts.php:42 source/php/PostTypes/Events.php:77
 #: source/php/PostTypes/Locations.php:54
 #: source/php/PostTypes/MembershipCards.php:33
 #: source/php/PostTypes/Packages.php:46 source/php/PostTypes/Sponsors.php:33
@@ -889,7 +889,7 @@ msgid "Organizer Email"
 msgstr "E-postadress"
 
 #: source/php/Acf/AcfFields.php:1981 source/php/Acf/AcfFields.php:3315
-#: source/php/App.php:175 source/php/PostTypes/Contacts.php:10
+#: source/php/App.php:172 source/php/PostTypes/Contacts.php:10
 msgid "Contacts"
 msgstr "Kontakter"
 
@@ -1123,7 +1123,7 @@ msgstr "Publiceringsgrupper"
 
 #: source/php/Acf/AcfFields.php:3128 source/php/Acf/AcfFields.php:3178
 #: source/php/Acf/AcfFields.php:3198 source/php/Acf/AcfFields.php:3301
-#: source/php/Taxonomy/UserGroups.php:30
+#: source/php/Taxonomy/UserGroups.php:31
 msgid "Groups"
 msgstr "Grupper"
 
@@ -1183,11 +1183,11 @@ msgstr "Visar varning om inga evenemang har importerats senaste veckan."
 msgid "Activate user groups on selected post types."
 msgstr "Aktivera användargrupper för valda posttyper."
 
-#: source/php/Acf/AcfFields.php:3313 source/php/App.php:173
+#: source/php/Acf/AcfFields.php:3313 source/php/App.php:170
 msgid "Events"
 msgstr "Evenemang"
 
-#: source/php/Acf/AcfFields.php:3314 source/php/App.php:174
+#: source/php/Acf/AcfFields.php:3314 source/php/App.php:171
 #: source/php/PostTypes/Locations.php:12
 msgid "Locations"
 msgstr "Platser"
@@ -1237,7 +1237,7 @@ msgid "All categories"
 msgstr "Alla kategorier"
 
 #: source/php/Admin/FilterRestrictions.php:199
-#: source/php/Taxonomy/UserGroups.php:21
+#: source/php/Taxonomy/UserGroups.php:22
 msgid "All groups"
 msgstr "Alla grupper"
 
@@ -1283,84 +1283,84 @@ msgstr ""
 "Vänligen ladda upp bilder som är så stora som möjligt och som kan beskäras "
 "utan att förstöra det bilden vill förmedla (t.ex. bilder med text)."
 
-#: source/php/App.php:164
+#: source/php/App.php:161
 msgid "Title is missing"
 msgstr "Titel saknas"
 
-#: source/php/App.php:165
+#: source/php/App.php:162
 msgid "Create new contact"
 msgstr "Skapa ny kontakt"
 
-#: source/php/App.php:166
+#: source/php/App.php:163
 msgid "Create new sponsor"
 msgstr "Skapa ny sponsor"
 
-#: source/php/App.php:167
+#: source/php/App.php:164
 msgid "Create new location"
 msgstr "Skapa ny plats"
 
-#: source/php/App.php:168
+#: source/php/App.php:165
 msgid "Create new membership card"
 msgstr "Skapa nytt medlemskort"
 
-#: source/php/App.php:169
+#: source/php/App.php:166
 msgid "Close"
 msgstr "Stäng"
 
-#: source/php/App.php:170
+#: source/php/App.php:167
 msgid "Add images"
 msgstr "Lägg till bilder"
 
-#: source/php/App.php:171
+#: source/php/App.php:168
 msgid "Similar posts"
 msgstr "Liknande inlägg"
 
-#: source/php/App.php:172
+#: source/php/App.php:169
 msgid "Imported data"
 msgstr "Imorterad data"
 
-#: source/php/App.php:176
+#: source/php/App.php:173
 msgid "Time until reload"
 msgstr "Laddar om sidan"
 
-#: source/php/App.php:177
+#: source/php/App.php:174
 msgid "Loading"
 msgstr "Hämtar"
 
-#: source/php/App.php:178
+#: source/php/App.php:175
 msgid "Choose time"
 msgstr "Välj tidpunkt"
 
-#: source/php/App.php:179
+#: source/php/App.php:176
 msgid "Time"
 msgstr "Tid"
 
-#: source/php/App.php:180
+#: source/php/App.php:177
 msgid "Hour"
 msgstr "Timme"
 
-#: source/php/App.php:181
+#: source/php/App.php:178
 msgid "Minute"
 msgstr "Minut"
 
-#: source/php/App.php:182
+#: source/php/App.php:179
 msgid "Done"
 msgstr "Klar"
 
-#: source/php/App.php:183
+#: source/php/App.php:180
 msgid "Now"
 msgstr "Nu"
 
-#: source/php/App.php:251 source/php/App.php:252 source/php/App.php:262
-#: source/php/App.php:263
+#: source/php/App.php:248 source/php/App.php:249 source/php/App.php:259
+#: source/php/App.php:260
 msgid "Import events"
 msgstr "Importera evenemang"
 
-#: source/php/App.php:273 source/php/App.php:274 source/php/App.php:284
+#: source/php/App.php:270 source/php/App.php:271 source/php/App.php:282
 msgid "Import CBIS events"
 msgstr "Importera CBIS evenemang"
 
-#: source/php/App.php:283 source/php/PostTypes/Locations.php:106
+#: source/php/App.php:281 source/php/PostTypes/Locations.php:106
 msgid "Import CBIS locations"
 msgstr "Importera CBIS platser"
 
@@ -1372,68 +1372,68 @@ msgstr "Ta bort alla evenemang"
 msgid "Event contributor"
 msgstr "Evenemangshanterare"
 
-#: source/php/Entity/CustomPostType.php:93
+#: source/php/Entity/CustomPostType.php:94
 msgid "API-url"
 msgstr "API-url"
 
-#: source/php/Entity/CustomPostType.php:166
 #: source/php/Entity/CustomPostType.php:167
+#: source/php/Entity/CustomPostType.php:168
 #, php-format
 msgid "Add new %s"
 msgstr "Lägg till %s"
 
-#: source/php/Entity/CustomPostType.php:168
+#: source/php/Entity/CustomPostType.php:169
 #, php-format
 msgid "Edit %s"
 msgstr "Redigera %s"
 
-#: source/php/Entity/CustomPostType.php:169
+#: source/php/Entity/CustomPostType.php:170
 #, php-format
 msgid "New %s"
 msgstr "Nytt %s"
 
-#: source/php/Entity/CustomPostType.php:170
+#: source/php/Entity/CustomPostType.php:171
 #, php-format
 msgid "View %s"
 msgstr "Visa %s"
 
-#: source/php/Entity/CustomPostType.php:171
+#: source/php/Entity/CustomPostType.php:172
 #, php-format
 msgid "Search %s"
 msgstr "Sök %s"
 
-#: source/php/Entity/CustomPostType.php:172
+#: source/php/Entity/CustomPostType.php:173
 #, php-format
 msgid "No %s found"
 msgstr "Inga %s hittades"
 
-#: source/php/Entity/CustomPostType.php:173
+#: source/php/Entity/CustomPostType.php:174
 #, php-format
 msgid "No %s found in trash"
 msgstr "Inga %s hittades i papperskorgen"
 
-#: source/php/Entity/CustomPostType.php:174
+#: source/php/Entity/CustomPostType.php:175
 #, php-format
 msgid "Parent %s:"
 msgstr "Förälder %s:"
 
-#: source/php/Entity/CustomPostType.php:277
+#: source/php/Entity/CustomPostType.php:278
 msgid "Post updated."
 msgstr "Inlägget uppdaterades."
 
-#: source/php/Entity/CustomPostType.php:278
+#: source/php/Entity/CustomPostType.php:279
 msgid "Post published."
 msgstr "Inlägget publicerades."
 
-#: source/php/Entity/CustomPostType.php:279
+#: source/php/Entity/CustomPostType.php:280
 msgid "Post submitted."
 msgstr "Inlägget uppdaterades."
 
-#: source/php/Entity/CustomPostType.php:280
+#: source/php/Entity/CustomPostType.php:281
 msgid "Post draft updated."
 msgstr "Utkast uppdaterades."
 
-#: source/php/Entity/CustomPostType.php:355
+#: source/php/Entity/CustomPostType.php:356
 msgid ""
 "You don't have access to edit this event. Contact an administrator for "
 "further information."
@@ -1441,23 +1441,23 @@ msgstr ""
 "Ni saknar rättigheter att uppdatera evenemanget. Vid frågor kontakta en "
 "administratör."
 
-#: source/php/Entity/CustomPostType.php:441
+#: source/php/Entity/CustomPostType.php:442
 msgid "Public"
 msgstr "Offentlig"
 
-#: source/php/Entity/CustomPostType.php:467
+#: source/php/Entity/CustomPostType.php:468
 msgid "Accept"
 msgstr "Godkänn"
 
-#: source/php/Entity/CustomPostType.php:468
+#: source/php/Entity/CustomPostType.php:469
 msgid "Deny"
 msgstr "Neka"
 
-#: source/php/Entity/CustomPostType.php:478
+#: source/php/Entity/CustomPostType.php:479
 msgid "Something went wrong!"
 msgstr "Något gick fel!"
 
-#: source/php/Entity/CustomPostType.php:495
+#: source/php/Entity/CustomPostType.php:496
 msgid "Error"
 msgstr ""
 
@@ -1469,11 +1469,11 @@ msgstr "Kunde inte skapa mappen"
 msgid "please go ahead and create it manually and rerun the import."
 msgstr "vänligen skapa den manuellt och gör om importen."
 
-#: source/php/Parser.php:91
+#: source/php/Parser.php:112
 msgid "Parser done."
 msgstr ""
 
-#: source/php/PostTypes/Contacts.php:32 source/php/PostTypes/Events.php:35
+#: source/php/PostTypes/Contacts.php:32 source/php/PostTypes/Events.php:36
 #: source/php/PostTypes/Locations.php:34
 #: source/php/PostTypes/MembershipCards.php:32
 #: source/php/PostTypes/Packages.php:32 source/php/PostTypes/Sponsors.php:32
@@ -1481,8 +1481,8 @@ msgid "Title"
 msgstr "Titel"
 
 #: source/php/PostTypes/Contacts.php:34 source/php/PostTypes/Contacts.php:37
-#: source/php/PostTypes/Contacts.php:40 source/php/PostTypes/Events.php:39
-#: source/php/PostTypes/Events.php:57 source/php/PostTypes/Locations.php:36
+#: source/php/PostTypes/Contacts.php:40 source/php/PostTypes/Events.php:41
+#: source/php/PostTypes/Events.php:62 source/php/PostTypes/Locations.php:36
 msgid "n/a"
 msgstr ""
 
@@ -1500,72 +1500,72 @@ msgctxt "Post type singular"
 msgid "Event"
 msgstr "Evenemang"
 
-#: source/php/PostTypes/Events.php:44
+#: source/php/PostTypes/Events.php:47
 msgctxt "Main organizer column name"
 msgid "Main organizer"
 msgstr "Arrangör"
 
-#: source/php/PostTypes/Events.php:62 source/php/PostTypes/Locations.php:47
+#: source/php/PostTypes/Events.php:68 source/php/PostTypes/Locations.php:47
 msgid "Import client"
 msgstr "Klient"
 
-#: source/php/PostTypes/Events.php:246 source/php/PostTypes/Events.php:384
+#: source/php/PostTypes/Events.php:264 source/php/PostTypes/Events.php:402
 msgid "End date must be after start date"
 msgstr "Slutdatum får inte vara före eller lika med startdatum"
 
-#: source/php/PostTypes/Events.php:270
+#: source/php/PostTypes/Events.php:288
 msgid "Door time cannot be after start date"
 msgstr "Dörrtid får inte vara efter starttid"
 
-#: source/php/PostTypes/Events.php:291
+#: source/php/PostTypes/Events.php:309
 msgid "Please add occasion or recurrence rule"
 msgstr "Vänligen lägg till tidpunkt för evenemanget"
 
-#: source/php/PostTypes/Events.php:312
+#: source/php/PostTypes/Events.php:330
 msgid "Not a valid number"
 msgstr "Inte ett giltigt tal"
 
-#: source/php/PostTypes/Events.php:336
+#: source/php/PostTypes/Events.php:354
 msgid "End time must be after start time"
 msgstr "Sluttid får inte vara före starttid"
 
-#: source/php/PostTypes/Events.php:360
+#: source/php/PostTypes/Events.php:378
 msgid "Door time cannot be after start time"
 msgstr "Dörrtid får inte vara efter starttid"
 
-#: source/php/PostTypes/Events.php:411
+#: source/php/PostTypes/Events.php:429
 msgid "Import XCAP"
 msgstr "Importera XCAP"
 
-#: source/php/PostTypes/Events.php:414
+#: source/php/PostTypes/Events.php:432
 msgid "Import CBIS"
 msgstr "Importera CBIS"
 
-#: source/php/PostTypes/Events.php:416
+#: source/php/PostTypes/Events.php:434
 msgid "Collect event timestamps"
 msgstr "Spara tidsstämplar"
 
-#: source/php/PostTypes/Events.php:435
+#: source/php/PostTypes/Events.php:453
 msgid "No post to duplicate has been supplied!"
 msgstr "Post att duplicera saknas!"
 
-#: source/php/PostTypes/Events.php:497
+#: source/php/PostTypes/Events.php:515
 msgid "Event creation failed, could not find original event"
 msgstr "Dupliceringen misslyckades, kunde inte hitta originalevenemanget"
 
-#: source/php/PostTypes/Events.php:512
+#: source/php/PostTypes/Events.php:530
 msgid "Create similar item"
 msgstr "Skapa ett liknande evenemang"
 
-#: source/php/PostTypes/Events.php:512
+#: source/php/PostTypes/Events.php:530
 msgid "Are you sure you want to clone this event?"
 msgstr "Är du säker på att du vill skapa en dubblett av evenemanget?"
 
-#: source/php/PostTypes/Events.php:512
+#: source/php/PostTypes/Events.php:530
 msgid "Clone"
 msgstr "Duplicera"
 
-#: source/php/PostTypes/Events.php:528
+#: source/php/PostTypes/Events.php:546
 #, php-format
 msgid ""
 "This is a duplicate of the event: %s. If this is a new occasion for the same "
@@ -1575,11 +1575,11 @@ msgstr ""
 "tidpunkt för ett redan existerande evenemang, vänligen %s och publicera "
 "originalversionen."
 
-#: source/php/PostTypes/Events.php:528
+#: source/php/PostTypes/Events.php:546
 msgid "edit"
 msgstr "uppdatera"
 
-#: source/php/PostTypes/Events.php:552
+#: source/php/PostTypes/Events.php:570
 msgid ""
 "Please do not enter information that refers to information in another text "
 "field. It is not certain that all fields will be presented to the consumer "
@@ -1589,7 +1589,7 @@ msgstr ""
 "textfält. Det är inte säkert att alla fält kommer att presenteras för "
 "konsumenten och kan därför bli missledande."
 
-#: source/php/PostTypes/Events.php:577
+#: source/php/PostTypes/Events.php:596
 msgid ""
 "CBIS have not imported any events for atleast 7 days. Please control the "
 "importer."
@@ -1597,7 +1597,7 @@ msgstr ""
 "Inga evenemang från CBIS har importerats de senaste 7 dagarna. Vänligen "
 "kontrollera inställningarna och importen."
 
-#: source/php/PostTypes/Events.php:603
+#: source/php/PostTypes/Events.php:622
 msgid ""
 "XCAP have not imported any events for atleast 7 days. Please control the "
 "importer."
@@ -1779,61 +1779,65 @@ msgctxt "Taxonomy singular name"
 msgid "Location category"
 msgstr "Platskategori"
 
-#: source/php/Taxonomy/UserGroups.php:17
+#: source/php/Taxonomy/UserGroups.php:18
 msgctxt "Taxonomy plural name"
 msgid "Groups"
 msgstr "Grupper"
 
-#: source/php/Taxonomy/UserGroups.php:18
+#: source/php/Taxonomy/UserGroups.php:19
 msgctxt "Taxonomy singular name"
 msgid "Group"
 msgstr "Grupp"
 
-#: source/php/Taxonomy/UserGroups.php:19
+#: source/php/Taxonomy/UserGroups.php:20
 msgid "Search groups"
 msgstr "Sök grupper"
 
-#: source/php/Taxonomy/UserGroups.php:20
+#: source/php/Taxonomy/UserGroups.php:21
 msgid "Popular groups"
 msgstr "Populära grupper"
 
-#: source/php/Taxonomy/UserGroups.php:22 source/php/Taxonomy/UserGroups.php:23
+#: source/php/Taxonomy/UserGroups.php:23 source/php/Taxonomy/UserGroups.php:24
 msgid "Parent group"
 msgstr "Föräldergrupp"
 
-#: source/php/Taxonomy/UserGroups.php:24
+#: source/php/Taxonomy/UserGroups.php:25
 msgid "Edit group"
 msgstr "Ändra grupp"
 
-#: source/php/Taxonomy/UserGroups.php:25
+#: source/php/Taxonomy/UserGroups.php:26
 msgid "Update group"
 msgstr "Uppdatera grupp"
 
-#: source/php/Taxonomy/UserGroups.php:26
+#: source/php/Taxonomy/UserGroups.php:27
 msgid "Add new group"
 msgstr "Lägg till ny grupp"
 
-#: source/php/Taxonomy/UserGroups.php:27
+#: source/php/Taxonomy/UserGroups.php:28
 msgid "New group"
 msgstr "Ny grupp"
 
-#: source/php/Taxonomy/UserGroups.php:28
+#: source/php/Taxonomy/UserGroups.php:29
 msgid "Add or remove groups"
 msgstr "Lägg till eller ta bort grupper"
 
-#: source/php/Taxonomy/UserGroups.php:29
+#: source/php/Taxonomy/UserGroups.php:30
 msgid "Choose from most used groups"
 msgstr "Välj från de mest använda grupperna"
 
-#: source/php/Taxonomy/UserGroups.php:72
+#: source/php/Taxonomy/UserGroups.php:71
+msgid "User groups"
+msgstr "Användargrupper"
+
+#: source/php/Taxonomy/UserGroups.php:89
 msgid "Event publishing groups"
 msgstr "Publiceringsgrupper"
 
-#: source/php/Taxonomy/UserGroups.php:75
+#: source/php/Taxonomy/UserGroups.php:92
 msgid "Assigned groups"
 msgstr "Dina grupper"
 
-#: source/php/Taxonomy/UserGroups.php:86
+#: source/php/Taxonomy/UserGroups.php:103
 msgid "There are no groups assigned to your account."
 msgstr "Du ingår inte i någon grupp."
 

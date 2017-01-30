@@ -7,6 +7,8 @@ class UserGroups
     public function __construct()
     {
         add_action('init', array($this, 'registerTaxonomy'));
+        add_action('admin_menu', array($this, 'manageAdminMenu'), 999);
+        add_filter('parent_file', array($this, 'highlightAdminMenu'));
         add_action('show_user_profile', array($this, 'displayUserGroups'));
         add_action('edit_user_profile', array($this, 'displayUserGroups'));
     }
@@ -41,7 +43,7 @@ class UserGroups
             'capabilities'          => $capabilities,
             'labels'                => $labels,
             'public'                => true,
-            'show_in_nav_menus'     => true,
+            'show_in_nav_menus'     => false,
             'show_admin_column'     => true,
             'hierarchical'          => false,
             'show_tagcloud'         => false,
@@ -51,7 +53,38 @@ class UserGroups
             'meta_box_cb'           => false,
         );
 
-        register_taxonomy('user_groups', array('event'), $args);
+        $user_groups = get_field('event_group_select', 'option');
+        register_taxonomy('user_groups', $user_groups, $args);
+    }
+
+    /**
+     * Hide groups from post type menus. Add user group to Users menu.
+     * @return void
+     */
+    public function manageAdminMenu() {
+        $post_types = get_post_types(array('public' => true), 'names');
+        if (is_array($post_types) && ! empty($post_types)) {
+            foreach ($post_types as $val) {
+                remove_submenu_page('edit.php?post_type=' . $val, 'edit-tags.php?taxonomy=user_groups&amp;post_type=' . $val);
+            }
+        }
+
+        add_submenu_page('users.php' , __('User groups', 'event-manager'), __('User groups', 'event-manager') , 'add_users',  'edit-tags.php?taxonomy=user_groups');
+    }
+
+    /**
+     * Highlighting the Users parent menu item
+     * @param  string $parent parent string
+     * @return string
+     */
+    public function highlightAdminMenu($parent = '') {
+        global $pagenow;
+
+        if(! empty($_GET['taxonomy']) && $pagenow == 'edit-tags.php' && $_GET['taxonomy'] == 'user_groups') {
+            $parent = 'users.php';
+        }
+
+        return $parent;
     }
 
     /**

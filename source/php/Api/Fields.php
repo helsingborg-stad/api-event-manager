@@ -403,7 +403,7 @@ class Fields
      * @return  object|null
      */
 
-    public function eventTaxonomies($object, $field_name, $request)
+    public function renameTaxonomies($object, $field_name, $request)
     {
         if (! empty($object[$field_name])) {
             $taxonomies = $object[$field_name];
@@ -417,11 +417,11 @@ class Fields
             $taxArray[] .= $term->name;
         }
 
-        return apply_filters('event_taxonomies', $taxArray);
+        return apply_filters($object['type'] . '_taxonomies', $taxArray);
     }
 
     /**
-     * Replace id with array with group name and slug
+     * Replace id with array with group id, name and slug
      *
      * @param   object  $object      The response object.
      * @param   string  $field_name  The name of the field to add.
@@ -430,7 +430,7 @@ class Fields
      * @return  object|null
      */
 
-    public function eventGroups($object, $field_name, $request)
+    public function userGroups($object, $field_name, $request)
     {
         if (! empty($object[$field_name])) {
             $taxonomies = $object[$field_name];
@@ -441,10 +441,14 @@ class Fields
         $taxArray = array();
         foreach ($taxonomies as $val) {
             $term = get_term($val, $field_name);
-            $taxArray[] = array('name' => $term->name, 'slug' => $term->slug);
+            $taxArray[] = array(
+                            'id'    => $term->term_id,
+                            'name'  => $term->name,
+                            'slug'  => $term->slug
+                        );
         }
 
-        return apply_filters('event_taxonomies', $taxArray);
+        return apply_filters($object['type'] . '_taxonomies', $taxArray);
     }
 
 }

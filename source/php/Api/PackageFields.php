@@ -22,6 +22,19 @@ class PackageFields extends Fields
      */
     public static function registerRestFields()
     {
+        // Replace group id with taxonomy name
+        register_rest_field($this->postType,
+            'user_groups',
+            array(
+                'get_callback' => array($this, 'userGroups'),
+                'schema' => array(
+                    'description' => 'Field containing object with taxonomies.',
+                    'type' => 'object',
+                    'context' => array('view')
+                )
+            )
+        );
+
         // Included events in the package
         register_rest_field($this->postType,
             'events_included',
