@@ -49,7 +49,7 @@ abstract class Parser
         $types = (array) apply_filters('event/parser/common/levenshtein/post_types', array('event', 'location', 'contact'));
 
         foreach ((array) $types as $type) {
-            $allOfCertainType = $thsi->db->get_results(
+            $allOfCertainType = $this->db->get_results(
                 $this->db->prepare("SELECT ID, post_title FROM " . $this->db->posts . " WHERE (post_status = %s OR post_status = %s) AND post_type = %s", 'publish', 'draft', $type)
             );
 

@@ -623,7 +623,7 @@ class EventFields extends Fields
         register_rest_field($this->postType,
             'event_categories',
             array(
-                'get_callback' => array($this, 'eventTaxonomies'),
+                'get_callback' => array($this, 'renameTaxonomies'),
                 'schema' => array(
                     'description' => 'Field containing object with taxonomies.',
                     'type' => 'object',
@@ -637,7 +637,7 @@ class EventFields extends Fields
         register_rest_field($this->postType,
             'event_tags',
             array(
-                'get_callback' => array($this, 'eventTaxonomies'),
+                'get_callback' => array($this, 'renameTaxonomies'),
                 'schema' => array(
                     'description' => 'Field containing object with taxonomies.',
                     'type' => 'object',
@@ -651,7 +651,7 @@ class EventFields extends Fields
         register_rest_field($this->postType,
             'user_groups',
             array(
-                'get_callback' => array($this, 'eventGroups'),
+                'get_callback' => array($this, 'userGroups'),
                 'schema' => array(
                     'description' => 'Field containing object with taxonomies.',
                     'type' => 'object',

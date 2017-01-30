@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "Project-Id-Version: Event Manager\n"
-"POT-Creation-Date: 2017-01-26 16:41+0100\n"
+"POT-Creation-Date: 2017-01-30 11:50+0100\n"
 "PO-Revision-Date: 2016-10-26 08:27+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -493,7 +493,7 @@ msgid "Contact person or company name."
 msgstr ""
 
 #: source/php/Acf/AcfFields.php:761 source/php/Acf/AcfFields.php:1796
-#: source/php/Acf/AcfFields.php:1812 source/php/PostTypes/Events.php:36
+#: source/php/Acf/AcfFields.php:1812 source/php/PostTypes/Events.php:38
 #: source/php/PostTypes/Locations.php:13
 msgid "Location"
 msgstr ""
@@ -586,7 +586,7 @@ msgid "Add exception"
 msgstr ""
 
 #: source/php/Acf/AcfFields.php:1127 source/php/Acf/AcfFields.php:1398
-#: source/php/PostTypes/Contacts.php:42 source/php/PostTypes/Events.php:70
+#: source/php/PostTypes/Contacts.php:42 source/php/PostTypes/Events.php:77
 #: source/php/PostTypes/Locations.php:54
 #: source/php/PostTypes/MembershipCards.php:33
 #: source/php/PostTypes/Packages.php:46 source/php/PostTypes/Sponsors.php:33
@@ -886,7 +886,7 @@ msgid "Organizer Email"
 msgstr ""
 
 #: source/php/Acf/AcfFields.php:1981 source/php/Acf/AcfFields.php:3315
-#: source/php/App.php:175 source/php/PostTypes/Contacts.php:10
+#: source/php/App.php:172 source/php/PostTypes/Contacts.php:10
 msgid "Contacts"
 msgstr ""
 
@@ -1113,7 +1113,7 @@ msgstr ""
 
 #: source/php/Acf/AcfFields.php:3128 source/php/Acf/AcfFields.php:3178
 #: source/php/Acf/AcfFields.php:3198 source/php/Acf/AcfFields.php:3301
-#: source/php/Taxonomy/UserGroups.php:30
+#: source/php/Taxonomy/UserGroups.php:31
 msgid "Groups"
 msgstr ""
 
@@ -1167,11 +1167,11 @@ msgstr ""
 msgid "Activate user groups on selected post types."
 msgstr ""
 
-#: source/php/Acf/AcfFields.php:3313 source/php/App.php:173
+#: source/php/Acf/AcfFields.php:3313 source/php/App.php:170
 msgid "Events"
 msgstr ""
 
-#: source/php/Acf/AcfFields.php:3314 source/php/App.php:174
+#: source/php/Acf/AcfFields.php:3314 source/php/App.php:171
 #: source/php/PostTypes/Locations.php:12
 msgid "Locations"
 msgstr ""
@@ -1221,7 +1221,7 @@ msgid "All categories"
 msgstr ""
 
 #: source/php/Admin/FilterRestrictions.php:199
-#: source/php/Taxonomy/UserGroups.php:21
+#: source/php/Taxonomy/UserGroups.php:22
 msgid "All groups"
 msgstr ""
 
@@ -1265,84 +1265,84 @@ msgid ""
 "sensitive to cropping (eg. images with text overlay)."
 msgstr ""
 
-#: source/php/App.php:164
+#: source/php/App.php:161
 msgid "Title is missing"
 msgstr ""
 
-#: source/php/App.php:165
+#: source/php/App.php:162
 msgid "Create new contact"
 msgstr ""
 
-#: source/php/App.php:166
+#: source/php/App.php:163
 msgid "Create new sponsor"
 msgstr ""
 
-#: source/php/App.php:167
+#: source/php/App.php:164
 msgid "Create new location"
 msgstr ""
 
-#: source/php/App.php:168
+#: source/php/App.php:165
 msgid "Create new membership card"
 msgstr ""
 
-#: source/php/App.php:169
+#: source/php/App.php:166
 msgid "Close"
 msgstr ""
 
-#: source/php/App.php:170
+#: source/php/App.php:167
 msgid "Add images"
 msgstr ""
 
-#: source/php/App.php:171
+#: source/php/App.php:168
 msgid "Similar posts"
 msgstr ""
 
-#: source/php/App.php:172
+#: source/php/App.php:169
 msgid "Imported data"
 msgstr ""
 
-#: source/php/App.php:176
+#: source/php/App.php:173
 msgid "Time until reload"
 msgstr ""
 
-#: source/php/App.php:177
+#: source/php/App.php:174
 msgid "Loading"
 msgstr ""
 
-#: source/php/App.php:178
+#: source/php/App.php:175
 msgid "Choose time"
 msgstr ""
 
-#: source/php/App.php:179
+#: source/php/App.php:176
 msgid "Time"
 msgstr ""
 
-#: source/php/App.php:180
+#: source/php/App.php:177
 msgid "Hour"
 msgstr ""
 
-#: source/php/App.php:181
+#: source/php/App.php:178
 msgid "Minute"
 msgstr ""
 
-#: source/php/App.php:182
+#: source/php/App.php:179
 msgid "Done"
 msgstr ""
 
-#: source/php/App.php:183
+#: source/php/App.php:180
 msgid "Now"
 msgstr ""
 
-#: source/php/App.php:251 source/php/App.php:252 source/php/App.php:262
-#: source/php/App.php:263
+#: source/php/App.php:248 source/php/App.php:249 source/php/App.php:259
+#: source/php/App.php:260
 msgid "Import events"
 msgstr ""
 
-#: source/php/App.php:273 source/php/App.php:274 source/php/App.php:284
+#: source/php/App.php:270 source/php/App.php:271 source/php/App.php:282
 msgid "Import CBIS events"
 msgstr ""
 
-#: source/php/App.php:283 source/php/PostTypes/Locations.php:106
+#: source/php/App.php:281 source/php/PostTypes/Locations.php:106
 msgid "Import CBIS locations"
 msgstr ""
 
@@ -1354,90 +1354,90 @@ msgstr ""
 msgid "Event contributor"
 msgstr ""
 
-#: source/php/Entity/CustomPostType.php:93
+#: source/php/Entity/CustomPostType.php:94
 msgid "API-url"
 msgstr ""
 
-#: source/php/Entity/CustomPostType.php:166
 #: source/php/Entity/CustomPostType.php:167
+#: source/php/Entity/CustomPostType.php:168
 #, php-format
 msgid "Add new %s"
 msgstr ""
 
-#: source/php/Entity/CustomPostType.php:168
+#: source/php/Entity/CustomPostType.php:169
 #, php-format
 msgid "Edit %s"
 msgstr ""
 
-#: source/php/Entity/CustomPostType.php:169
+#: source/php/Entity/CustomPostType.php:170
 #, php-format
 msgid "New %s"
 msgstr ""
 
-#: source/php/Entity/CustomPostType.php:170
+#: source/php/Entity/CustomPostType.php:171
 #, php-format
 msgid "View %s"
 msgstr ""
 
-#: source/php/Entity/CustomPostType.php:171
+#: source/php/Entity/CustomPostType.php:172
 #, php-format
 msgid "Search %s"
 msgstr ""
 
-#: source/php/Entity/CustomPostType.php:172
+#: source/php/Entity/CustomPostType.php:173
 #, php-format
 msgid "No %s found"
 msgstr ""
 
-#: source/php/Entity/CustomPostType.php:173
+#: source/php/Entity/CustomPostType.php:174
 #, php-format
 msgid "No %s found in trash"
 msgstr ""
 
-#: source/php/Entity/CustomPostType.php:174
+#: source/php/Entity/CustomPostType.php:175
 #, php-format
 msgid "Parent %s:"
 msgstr ""
 
-#: source/php/Entity/CustomPostType.php:277
+#: source/php/Entity/CustomPostType.php:278
 msgid "Post updated."
 msgstr ""
 
-#: source/php/Entity/CustomPostType.php:278
+#: source/php/Entity/CustomPostType.php:279
 msgid "Post published."
 msgstr ""
 
-#: source/php/Entity/CustomPostType.php:279
+#: source/php/Entity/CustomPostType.php:280
 msgid "Post submitted."
 msgstr ""
 
-#: source/php/Entity/CustomPostType.php:280
+#: source/php/Entity/CustomPostType.php:281
 msgid "Post draft updated."
 msgstr ""
 
-#: source/php/Entity/CustomPostType.php:355
+#: source/php/Entity/CustomPostType.php:356
 msgid ""
 "You don't have access to edit this event. Contact an administrator for "
 "further information."
 msgstr ""
 
-#: source/php/Entity/CustomPostType.php:441
+#: source/php/Entity/CustomPostType.php:442
 msgid "Public"
 msgstr ""
 
-#: source/php/Entity/CustomPostType.php:467
+#: source/php/Entity/CustomPostType.php:468
 msgid "Accept"
 msgstr ""
 
-#: source/php/Entity/CustomPostType.php:468
+#: source/php/Entity/CustomPostType.php:469
 msgid "Deny"
 msgstr ""
 
-#: source/php/Entity/CustomPostType.php:478
+#: source/php/Entity/CustomPostType.php:479
 msgid "Something went wrong!"
 msgstr ""
 
-#: source/php/Entity/CustomPostType.php:495
+#: source/php/Entity/CustomPostType.php:496
 msgid "Error"
 msgstr ""
 
@@ -1449,11 +1449,11 @@ msgstr ""
 msgid "please go ahead and create it manually and rerun the import."
 msgstr ""
 
-#: source/php/Parser.php:91
+#: source/php/Parser.php:112
 msgid "Parser done."
 msgstr ""
 
-#: source/php/PostTypes/Contacts.php:32 source/php/PostTypes/Events.php:35
+#: source/php/PostTypes/Contacts.php:32 source/php/PostTypes/Events.php:36
 #: source/php/PostTypes/Locations.php:34
 #: source/php/PostTypes/MembershipCards.php:32
 #: source/php/PostTypes/Packages.php:32 source/php/PostTypes/Sponsors.php:32
@@ -1461,8 +1461,8 @@ msgid "Title"
 msgstr ""
 
 #: source/php/PostTypes/Contacts.php:34 source/php/PostTypes/Contacts.php:37
-#: source/php/PostTypes/Contacts.php:40 source/php/PostTypes/Events.php:39
-#: source/php/PostTypes/Events.php:57 source/php/PostTypes/Locations.php:36
+#: source/php/PostTypes/Contacts.php:40 source/php/PostTypes/Events.php:41
+#: source/php/PostTypes/Events.php:62 source/php/PostTypes/Locations.php:36
 msgid "n/a"
 msgstr ""
 
@@ -1480,96 +1480,96 @@ msgctxt "Post type singular"
 msgid "Event"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:44
+#: source/php/PostTypes/Events.php:47
 msgctxt "Main organizer column name"
 msgid "Main organizer"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:62 source/php/PostTypes/Locations.php:47
+#: source/php/PostTypes/Events.php:68 source/php/PostTypes/Locations.php:47
 msgid "Import client"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:246 source/php/PostTypes/Events.php:384
+#: source/php/PostTypes/Events.php:264 source/php/PostTypes/Events.php:402
 msgid "End date must be after start date"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:270
+#: source/php/PostTypes/Events.php:288
 msgid "Door time cannot be after start date"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:291
+#: source/php/PostTypes/Events.php:309
 msgid "Please add occasion or recurrence rule"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:312
+#: source/php/PostTypes/Events.php:330
 msgid "Not a valid number"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:336
+#: source/php/PostTypes/Events.php:354
 msgid "End time must be after start time"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:360
+#: source/php/PostTypes/Events.php:378
 msgid "Door time cannot be after start time"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:411
+#: source/php/PostTypes/Events.php:429
 msgid "Import XCAP"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:414
+#: source/php/PostTypes/Events.php:432
 msgid "Import CBIS"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:416
+#: source/php/PostTypes/Events.php:434
 msgid "Collect event timestamps"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:435
+#: source/php/PostTypes/Events.php:453
 msgid "No post to duplicate has been supplied!"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:497
+#: source/php/PostTypes/Events.php:515
 msgid "Event creation failed, could not find original event"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:512
+#: source/php/PostTypes/Events.php:530
 msgid "Create similar item"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:512
+#: source/php/PostTypes/Events.php:530
 msgid "Are you sure you want to clone this event?"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:512
+#: source/php/PostTypes/Events.php:530
 msgid "Clone"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:528
+#: source/php/PostTypes/Events.php:546
 #, php-format
 msgid ""
 "This is a duplicate of the event: %s. If this is a new occasion for the "
 "same event, please %s and republish the original event"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:528
+#: source/php/PostTypes/Events.php:546
 msgid "edit"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:552
+#: source/php/PostTypes/Events.php:570
 msgid ""
 "Please do not enter information that refers to information in another text "
 "field. It is not certain that all fields will be presented to the consumer "
 "and would thefore be missguiding."
 msgstr ""
 
-#: source/php/PostTypes/Events.php:577
+#: source/php/PostTypes/Events.php:596
 msgid ""
 "CBIS have not imported any events for atleast 7 days. Please control the "
 "importer."
 msgstr ""
 
-#: source/php/PostTypes/Events.php:603
+#: source/php/PostTypes/Events.php:622
 msgid ""
 "XCAP have not imported any events for atleast 7 days. Please control the "
 "importer."
@@ -1749,62 +1749,66 @@ msgctxt "Taxonomy singular name"
 msgid "Location category"
 msgstr ""
 
-#: source/php/Taxonomy/UserGroups.php:17
+#: source/php/Taxonomy/UserGroups.php:18
 msgctxt "Taxonomy plural name"
 msgid "Groups"
 msgstr ""
 
-#: source/php/Taxonomy/UserGroups.php:18
+#: source/php/Taxonomy/UserGroups.php:19
 msgctxt "Taxonomy singular name"
 msgid "Group"
 msgstr ""
 
-#: source/php/Taxonomy/UserGroups.php:19
+#: source/php/Taxonomy/UserGroups.php:20
 msgid "Search groups"
 msgstr ""
 
-#: source/php/Taxonomy/UserGroups.php:20
+#: source/php/Taxonomy/UserGroups.php:21
 msgid "Popular groups"
 msgstr ""
 
-#: source/php/Taxonomy/UserGroups.php:22
 #: source/php/Taxonomy/UserGroups.php:23
+#: source/php/Taxonomy/UserGroups.php:24
 msgid "Parent group"
 msgstr ""
 
-#: source/php/Taxonomy/UserGroups.php:24
+#: source/php/Taxonomy/UserGroups.php:25
 msgid "Edit group"
 msgstr ""
 
-#: source/php/Taxonomy/UserGroups.php:25
+#: source/php/Taxonomy/UserGroups.php:26
 msgid "Update group"
 msgstr ""
 
-#: source/php/Taxonomy/UserGroups.php:26
+#: source/php/Taxonomy/UserGroups.php:27
 msgid "Add new group"
 msgstr ""
 
-#: source/php/Taxonomy/UserGroups.php:27
+#: source/php/Taxonomy/UserGroups.php:28
 msgid "New group"
 msgstr ""
 
-#: source/php/Taxonomy/UserGroups.php:28
+#: source/php/Taxonomy/UserGroups.php:29
 msgid "Add or remove groups"
 msgstr ""
 
-#: source/php/Taxonomy/UserGroups.php:29
+#: source/php/Taxonomy/UserGroups.php:30
 msgid "Choose from most used groups"
 msgstr ""
 
-#: source/php/Taxonomy/UserGroups.php:72
+#: source/php/Taxonomy/UserGroups.php:71
+msgid "User groups"
+msgstr ""
+
+#: source/php/Taxonomy/UserGroups.php:89
 msgid "Event publishing groups"
 msgstr ""
 
-#: source/php/Taxonomy/UserGroups.php:75
+#: source/php/Taxonomy/UserGroups.php:92
 msgid "Assigned groups"
 msgstr ""
 
-#: source/php/Taxonomy/UserGroups.php:86
+#: source/php/Taxonomy/UserGroups.php:103
 msgid "There are no groups assigned to your account."
 msgstr ""
 

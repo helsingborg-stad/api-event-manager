@@ -33,7 +33,7 @@ class LocationCategories
             'public'                => true,
             'show_in_nav_menus'     => true,
             'show_admin_column'     => true,
-            'hierarchical'          => false,
+            'hierarchical'          => true,
             'show_tagcloud'         => true,
             'show_ui'               => true,
             'query_var'             => true,
