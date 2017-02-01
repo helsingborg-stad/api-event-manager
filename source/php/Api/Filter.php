@@ -53,7 +53,7 @@ class Filter
     public function removeResponseKeys($response, $post, $request)
     {
         //Common keys
-        $keys = array('author','acf','guid','type','link', 'template');
+        $keys = array('author','acf','guid','type','link', 'template', 'meta');
 
         //Only for location and contact
         if ($post->post_type == "location" || $post->post_type == "contact") {

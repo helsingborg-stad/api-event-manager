@@ -10,8 +10,8 @@ class PostTypes
 {
     public function __construct()
     {
-        add_action('init', array($this, 'enableRestApi'), 50);
-        add_action('init', array($this, 'disableRestApi'), 50);
+        add_action('rest_api_init', array($this, 'enableRestApi'), 11);
+        add_action('rest_api_init', array($this, 'disableRestApi'), 11);
     }
 
     public function enableRestApi()

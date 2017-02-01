@@ -73,6 +73,11 @@ class Xcap extends \HbgEventImporter\Parser
             $image = $eventData->{'x-xcap-imageid'};
         }
 
+        //Add http to strings not containing protocol. The server may correct this to https by redirect.
+        if (strpos($image, '//') === 0) {
+            $image = 'http:'.$image;
+        }
+
         if (!is_string($name)) {
             return;
         }
