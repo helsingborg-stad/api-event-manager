@@ -226,10 +226,11 @@ class EventFields extends Fields
             'location',
             array(
                 'get_callback' => array($this, 'locationData'),
+                'update_callback' => array($this, 'stringUpdateCallBack'),
                 'schema' => array(
                     'description' => 'Field containing object with location data.',
                     'type' => 'object',
-                    'context' => array('view')
+                    'context' => array('view', 'edit')
                 )
             )
         );
@@ -254,10 +255,11 @@ class EventFields extends Fields
             'organizers',
             array(
                 'get_callback' => array($this, 'organizerData'),
+                'update_callback' => array($this, 'objectUpdateCallBack'),
                 'schema' => array(
                     'description' => 'Field containing object with organizer data.',
                     'type' => 'object',
-                    'context' => array('view')
+                    'context' => array('view', 'edit')
                 )
             )
         );
