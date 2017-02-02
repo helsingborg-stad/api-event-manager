@@ -51,3 +51,13 @@ class Guides extends \HbgEventImporter\Entity\CustomPostType
         add_action('manage_' . $this->slug . '_posts_custom_column', array($this,'addAcceptDenyButtons'), 10, 2);
     }
 }
+
+/* Settings /*
+
+/*
+
+    Main location beacon id, and distance.
+    Distance to target.
+    Kids audio
+
+**/
