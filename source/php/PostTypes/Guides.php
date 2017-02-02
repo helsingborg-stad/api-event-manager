@@ -57,7 +57,14 @@ class Guides extends \HbgEventImporter\Entity\CustomPostType
 /*
 
     Main location beacon id, and distance.
-    Distance to target.
-    Kids audio
+    Guide images
+        Beacon images
+        Beacon distance
+        Distance to target.
+        Kids audio
+
+    Apperance tabs
+        Logotype
+        Basic colors
 
 **/
