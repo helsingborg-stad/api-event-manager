@@ -56,6 +56,7 @@ class App
         new PostTypes\Sponsors();
         new PostTypes\Packages();
         new PostTypes\MembershipCards();
+        new PostTypes\Guides();
 
         //Init functions
         new Acf\AcfFields();
