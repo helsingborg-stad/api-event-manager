@@ -56,20 +56,30 @@ class Guides extends \HbgEventImporter\Entity\CustomPostType
 
 /*
 
-    Main location beacon id, and distance.
+    Support:
+    Multi-level locations (2 level / main, sub)
+
+    Main location beacon id
+    Main distance and distance
     Guide images
         Beacon images
         Beacon distance
-        Distance to target.
-        Kids audio
+            - Object
+                - Title
+                - Text
+                - Image(s)
+                - Audio
 
     Apperance tabs
         Logotype
         Basic colors
 
-    Guide actions
+    Guide actions (UI)
         Add location            / Create new location
             Add sublocation     / Create new sublocation
             Add event           / Create new event
+
+    Disconnect sync (MOD)
+        Remove client id (rename client_id)
 
 **/
