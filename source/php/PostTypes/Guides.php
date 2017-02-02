@@ -67,4 +67,9 @@ class Guides extends \HbgEventImporter\Entity\CustomPostType
         Logotype
         Basic colors
 
+    Guide actions
+        Add location            / Create new location
+            Add sublocation     / Create new sublocation
+            Add event           / Create new event
+
 **/
