@@ -71,7 +71,7 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
                 return;
             }
 
-            echo strtoupper(get_post_meta($postId, 'import_client', true));
+            echo ucwords(get_post_meta($postId, 'import_client', true));
         });
 
         $this->addTableColumn('date', __('Date', 'event-manager'));

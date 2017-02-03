@@ -126,6 +126,31 @@ class Fields
     }
 
     /**
+     * Update a acf field in database
+     * @return  bool
+     * @version 0.3.0 creating consumer accessable meta values.
+     */
+    public function acfUpdateCallBack($value, $object, $field_name)
+    {
+        global $wpdb;
+
+        if (! $value || ! is_object($value) && ! is_array($value)) {
+            return;
+        }
+
+        // Get acf field key
+        $field_name = esc_sql("_".$field_name);
+        $field_key = $wpdb->get_results("SELECT meta_value FROM $wpdb->postmeta WHERE $wpdb->postmeta.meta_key = '$field_name' LIMIT 1", ARRAY_A);
+        $key = $field_key[0]['meta_value'];
+
+        if (preg_match('/field_[0-9]+/', $key)) {
+            return update_field($key, $value, $object->ID);
+        } else {
+            return;
+        }
+    }
+
+    /**
      * Returning a formatted or unformatted meta field from database.
      * @return  int, string, object, null, bool
      * @version 0.3.0 creating consumer accessable meta values.
