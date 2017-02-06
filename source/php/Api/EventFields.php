@@ -211,10 +211,11 @@ class EventFields extends Fields
             'occasions',
             array(
                 'get_callback'    => array($this, 'getCompleteOccasions'),
+                'update_callback' => array($this, 'acfUpdateCallBack'),
                 'schema' => array(
                     'description' => 'Field containing array with all event occasions.',
                     'type' => 'object',
-                    'context' => array('view')
+                    'context' => array('view', 'edit')
                 )
             )
         );
@@ -627,10 +628,11 @@ class EventFields extends Fields
             'event_categories',
             array(
                 'get_callback' => array($this, 'renameTaxonomies'),
+                'update_callback' => array($this, 'objectUpdateCallBack'),
                 'schema' => array(
                     'description' => 'Field containing object with taxonomies.',
                     'type' => 'object',
-                    'context' => array('view')
+                    'context' => array('view', 'edit')
                 )
             )
         );
@@ -641,10 +643,11 @@ class EventFields extends Fields
             'event_tags',
             array(
                 'get_callback' => array($this, 'renameTaxonomies'),
+                'update_callback' => array($this, 'objectUpdateCallBack'),
                 'schema' => array(
                     'description' => 'Field containing object with taxonomies.',
                     'type' => 'object',
-                    'context' => array('view')
+                    'context' => array('view', 'edit')
                 )
             )
         );
@@ -655,10 +658,25 @@ class EventFields extends Fields
             'user_groups',
             array(
                 'get_callback' => array($this, 'userGroups'),
+                'update_callback' => array($this, 'objectUpdateCallBack'),
                 'schema' => array(
                     'description' => 'Field containing object with taxonomies.',
                     'type' => 'object',
-                    'context' => array('view')
+                    'context' => array('view', 'edit')
+                )
+            )
+        );
+
+        /* Import client update callback */
+
+        register_rest_field($this->postType,
+            'import_client',
+            array(
+                'update_callback' => array($this, 'stringUpdateCallBack'),
+                'schema' => array(
+                    'description' => 'Field containing string with client.',
+                    'type' => 'string',
+                    'context' => array('edit')
                 )
             )
         );
