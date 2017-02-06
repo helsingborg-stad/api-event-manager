@@ -109,6 +109,11 @@ class App
     {
         global $pagenow;
         if ($pagenow == 'index.php') {
+
+            if (isset($_GET['page']) && in_array($_GET['page'], array('acf-upgrade'))) {
+                return;
+            }
+
             wp_redirect(admin_url('edit.php?post_type=event'), 301);
             exit;
         }
