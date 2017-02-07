@@ -75,10 +75,27 @@ class Locations extends \HbgEventImporter\Entity\CustomPostType
      */
     public function limitPostTypeHierarchy($args)
     {
-        global $post_type_object;
+        global $post_type_object, $wpdb;
 
-        if ($post_type_object->name == 'location') {
+        if ($post_type_object->name == 'location' && is_array($args)) {
+
+            //Limit depth to one level
             $args['depth'] = 1;
+
+            // Remove imported stuff
+            $prohibited = $wpdb->get_results("SELECT post_id FROM {$wpdb->postmeta} WHERE meta_key = 'import_client' AND meta_value != ''");
+
+            if (is_array($prohibited)) {
+                $args['exclude'] = implode(
+                    ",",
+                    array_map(
+                        function ($item) {
+                            return $item->post_id;
+                        },
+                        $prohibited
+                    )
+                );
+            }
         }
         return $args;
     }
