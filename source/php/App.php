@@ -109,7 +109,6 @@ class App
     {
         global $pagenow;
         if ($pagenow == 'index.php') {
-
             if (isset($_GET['page']) && in_array($_GET['page'], array('acf-upgrade'))) {
                 return;
             }
@@ -133,7 +132,7 @@ class App
         }
 
         if (isset($_GET['msg']) && $_GET['msg'] == 'import-complete') {
-            echo '<div class="updated"><p>Events imported</p></div>';
+            echo '<div class="updated"><p>' . __('Events imported', 'event-manager') . '</p></div>';
         }
     }
 
