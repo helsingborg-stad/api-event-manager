@@ -1,0 +1,622 @@
+[
+    {
+        "key": "group_589497ca3741e",
+        "title": "Basic Guide Settings",
+        "fields": [
+            {
+                "placement": "left",
+                "endpoint": 0,
+                "key": "field_58949857fc7b0",
+                "label": "General",
+                "name": "",
+                "type": "tab",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                }
+            },
+            {
+                "tabs": "all",
+                "toolbar": "basic",
+                "media_upload": 0,
+                "default_value": "",
+                "delay": 0,
+                "key": "field_58949813a052c",
+                "label": "Description",
+                "name": "guide_main_description",
+                "type": "wysiwyg",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                }
+            },
+            {
+                "post_type": [
+                    "location"
+                ],
+                "taxonomy": [],
+                "allow_null": 0,
+                "multiple": 0,
+                "return_format": "object",
+                "ui": 1,
+                "key": "field_589498b7fc7b3",
+                "label": "Plats",
+                "name": "guide_main_location",
+                "type": "post_object",
+                "instructions": "",
+                "required": 1,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                }
+            },
+            {
+                "placement": "left",
+                "endpoint": 0,
+                "key": "field_5894987dfc7b1",
+                "label": "Media",
+                "name": "",
+                "type": "tab",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                }
+            },
+            {
+                "library": "all",
+                "min": "",
+                "max": 10,
+                "min_width": "",
+                "min_height": "",
+                "min_size": "",
+                "max_width": "",
+                "max_height": "",
+                "max_size": "",
+                "mime_types": "jpg,jpeg,png",
+                "insert": "append",
+                "key": "field_589dc93cde2d7",
+                "label": "Guide images",
+                "name": "guide_main_media",
+                "type": "gallery",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "secondary-panel",
+                    "id": ""
+                }
+            },
+            {
+                "placement": "left",
+                "endpoint": 0,
+                "key": "field_5894988bfc7b2",
+                "label": "Beacon",
+                "name": "",
+                "type": "tab",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                }
+            },
+            {
+                "default_value": 0,
+                "message": "",
+                "ui": 1,
+                "ui_on_text": "",
+                "ui_off_text": "",
+                "key": "field_58949a8f0c4cd",
+                "label": "Use beacons (bluetooth transmitters)",
+                "name": "guide_main_use_beacon",
+                "type": "true_false",
+                "instructions": "Enable beacons to pinpoint the users location. If disabled the guide will rely on the users GPS position.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                }
+            },
+            {
+                "default_value": "",
+                "maxlength": "",
+                "placeholder": "",
+                "prepend": "",
+                "append": "",
+                "key": "field_5898317b30d55",
+                "label": "Beacon namespace identification",
+                "name": "guide_main_beacon_namespace",
+                "type": "text",
+                "instructions": "A (common) namespace id representing the whole guide area. All beacons in the guid <u>must<\/u> use this id as their primary id.",
+                "required": 1,
+                "conditional_logic": [
+                    [
+                        {
+                            "field": "field_58949a8f0c4cd",
+                            "operator": "==",
+                            "value": "1"
+                        }
+                    ]
+                ],
+                "wrapper": {
+                    "width": "100",
+                    "class": "",
+                    "id": ""
+                }
+            },
+            {
+                "default_value": 5,
+                "min": 1,
+                "max": 70,
+                "step": 1,
+                "placeholder": "",
+                "prepend": "",
+                "append": "meters",
+                "key": "field_589499e9609dd",
+                "label": "Beacon trigger distance",
+                "name": "guide_main_beacon_distance",
+                "type": "number",
+                "instructions": "Max distance 70 meters. More than 50 meters may not be reliable.",
+                "required": 1,
+                "conditional_logic": [
+                    [
+                        {
+                            "field": "field_58949a8f0c4cd",
+                            "operator": "==",
+                            "value": "1"
+                        }
+                    ]
+                ],
+                "wrapper": {
+                    "width": "100",
+                    "class": "",
+                    "id": ""
+                }
+            },
+            {
+                "placement": "top",
+                "endpoint": 0,
+                "key": "field_5899a94bff0ec",
+                "label": "Objects",
+                "name": "",
+                "type": "tab",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                }
+            },
+            {
+                "sub_fields": [
+                    {
+                        "placement": "top",
+                        "endpoint": 0,
+                        "key": "field_589db03e16e51",
+                        "label": "General",
+                        "name": "",
+                        "type": "tab",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        }
+                    },
+                    {
+                        "default_value": "",
+                        "maxlength": "",
+                        "placeholder": "The title of the object",
+                        "prepend": "",
+                        "append": "",
+                        "key": "field_5899aab938d3d",
+                        "label": "Object title",
+                        "name": "guide_object_title",
+                        "type": "text",
+                        "instructions": "",
+                        "required": 1,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "75",
+                            "class": "",
+                            "id": ""
+                        }
+                    },
+                    {
+                        "default_value": "",
+                        "maxlength": 8,
+                        "placeholder": "eg. object 205",
+                        "prepend": "#",
+                        "append": "",
+                        "key": "field_589dcc1a7deb3",
+                        "label": "Exhibition ID",
+                        "name": "guide_object_id",
+                        "type": "text",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "25",
+                            "class": "",
+                            "id": ""
+                        }
+                    },
+                    {
+                        "default_value": "",
+                        "new_lines": "wpautop",
+                        "maxlength": "",
+                        "placeholder": "",
+                        "rows": 6,
+                        "key": "field_5899aae338d3e",
+                        "label": "Object description",
+                        "name": "guide_object_description",
+                        "type": "textarea",
+                        "instructions": "",
+                        "required": 1,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        }
+                    },
+                    {
+                        "post_type": [
+                            "location"
+                        ],
+                        "taxonomy": [],
+                        "allow_null": 0,
+                        "multiple": 0,
+                        "return_format": "object",
+                        "ui": 1,
+                        "key": "field_5899ebab56960",
+                        "label": "Sublocation",
+                        "name": "guide_object_sublocation",
+                        "type": "post_object",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": [
+                            [
+                                {
+                                    "field": "field_5899e1bbeceac",
+                                    "operator": "==",
+                                    "value": "1"
+                                }
+                            ]
+                        ],
+                        "wrapper": {
+                            "width": "25",
+                            "class": "",
+                            "id": ""
+                        }
+                    },
+                    {
+                        "placement": "top",
+                        "endpoint": 0,
+                        "key": "field_589db05816e52",
+                        "label": "Media",
+                        "name": "",
+                        "type": "tab",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        }
+                    },
+                    {
+                        "return_format": "array",
+                        "preview_size": "thumbnail",
+                        "library": "uploadedTo",
+                        "min_width": "",
+                        "min_height": "",
+                        "min_size": "",
+                        "max_width": "",
+                        "max_height": "",
+                        "max_size": "",
+                        "mime_types": "jpg,jpeg,png",
+                        "key": "field_5899ab0338d3f",
+                        "label": "Object image",
+                        "name": "guide_object_image",
+                        "type": "image",
+                        "instructions": "A single image in jpg or png format of the object.",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "33,333",
+                            "class": "",
+                            "id": ""
+                        }
+                    },
+                    {
+                        "return_format": "array",
+                        "library": "uploadedTo",
+                        "min_size": "",
+                        "max_size": 50,
+                        "mime_types": "m4a,aac,mp3",
+                        "key": "field_5899ab2c38d40",
+                        "label": "Object audio",
+                        "name": "guide_object_audio",
+                        "type": "file",
+                        "instructions": "An audiofile describing the object. This should be fairly compressed. Preferred format of the audio is AAC+ V2.",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "33,333",
+                            "class": "",
+                            "id": ""
+                        }
+                    },
+                    {
+                        "return_format": "array",
+                        "library": "uploadedTo",
+                        "min_size": "",
+                        "max_size": 50,
+                        "mime_types": "mp4",
+                        "key": "field_5899ac03acc12",
+                        "label": "Object video",
+                        "name": "guide_object_video",
+                        "type": "file",
+                        "instructions": "An videofile describing the object. This should be fairly compressed. Preferred container of the video is MP4.",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "33,333",
+                            "class": "",
+                            "id": ""
+                        }
+                    },
+                    {
+                        "placement": "top",
+                        "endpoint": 0,
+                        "key": "field_589db08d16e53",
+                        "label": "L\u00e4nkar",
+                        "name": "",
+                        "type": "tab",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        }
+                    },
+                    {
+                        "sub_fields": [
+                            {
+                                "default_value": "",
+                                "maxlength": "",
+                                "placeholder": "",
+                                "prepend": "",
+                                "append": "",
+                                "key": "field_5899e5e1a583d",
+                                "label": "Linkname",
+                                "name": "guide_object_link_title",
+                                "type": "text",
+                                "instructions": "",
+                                "required": 0,
+                                "conditional_logic": 0,
+                                "wrapper": {
+                                    "width": "50",
+                                    "class": "",
+                                    "id": ""
+                                }
+                            },
+                            {
+                                "default_value": "",
+                                "placeholder": "",
+                                "key": "field_5899e64fa583e",
+                                "label": "Web adress",
+                                "name": "guide_object_link_url",
+                                "type": "url",
+                                "instructions": "",
+                                "required": 0,
+                                "conditional_logic": 0,
+                                "wrapper": {
+                                    "width": "50",
+                                    "class": "",
+                                    "id": ""
+                                }
+                            }
+                        ],
+                        "min": 0,
+                        "max": 20,
+                        "layout": "block",
+                        "button_label": "Add new link",
+                        "collapsed": "field_5899e5e1a583d",
+                        "key": "field_5899e5c8a583c",
+                        "label": "Links & Resources",
+                        "name": "guide_object_links",
+                        "type": "repeater",
+                        "instructions": "Add links related to the object. This can be a website or a published file (on the web) containing further information about the object.",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "secondary-panel",
+                            "id": ""
+                        }
+                    },
+                    {
+                        "placement": "top",
+                        "endpoint": 0,
+                        "key": "field_589db114078de",
+                        "label": "Beacons",
+                        "name": "",
+                        "type": "tab",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": [
+                            [
+                                {
+                                    "field": "field_58949a8f0c4cd",
+                                    "operator": "==",
+                                    "value": "1"
+                                }
+                            ]
+                        ],
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        }
+                    },
+                    {
+                        "default_value": "",
+                        "maxlength": "",
+                        "placeholder": "",
+                        "prepend": "",
+                        "append": "",
+                        "key": "field_589db29081803",
+                        "label": "Object beacon ID",
+                        "name": "guide_object_beacon_id",
+                        "type": "text",
+                        "instructions": "A unique id for a specific  bluetooth beacon.",
+                        "required": 1,
+                        "conditional_logic": [
+                            [
+                                {
+                                    "field": "field_58949a8f0c4cd",
+                                    "operator": "==",
+                                    "value": "1"
+                                }
+                            ]
+                        ],
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        }
+                    },
+                    {
+                        "default_value": 5,
+                        "min": 1,
+                        "max": 70,
+                        "step": 1,
+                        "placeholder": "",
+                        "prepend": "",
+                        "append": "meters",
+                        "key": "field_589dc6da3611c",
+                        "label": "Beacon trigger distance",
+                        "name": "guide_object_beacon_distance",
+                        "type": "number",
+                        "instructions": "",
+                        "required": 1,
+                        "conditional_logic": [
+                            [
+                                {
+                                    "field": "field_58949a8f0c4cd",
+                                    "operator": "==",
+                                    "value": "1"
+                                }
+                            ]
+                        ],
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        }
+                    },
+                    {
+                        "placement": "top",
+                        "endpoint": 0,
+                        "key": "field_589dc80299fb5",
+                        "label": "Plats",
+                        "name": "",
+                        "type": "tab",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        }
+                    },
+                    {
+                        "post_type": [
+                            "location"
+                        ],
+                        "taxonomy": [],
+                        "allow_null": 1,
+                        "multiple": 0,
+                        "return_format": "object",
+                        "ui": 1,
+                        "key": "field_589dc81699fb6",
+                        "label": "Plats",
+                        "name": "guide_object_location",
+                        "type": "post_object",
+                        "instructions": "Choose a location that is related to this object. All sub-locations to a main location is avilabile here.",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        }
+                    }
+                ],
+                "min": 1,
+                "max": 500,
+                "layout": "block",
+                "button_label": "Add new object",
+                "collapsed": "field_5899aab938d3d",
+                "key": "field_5899cc4b59d94",
+                "label": "Objects (trigger places related to location or beacon)",
+                "name": "guide_location_objects",
+                "type": "repeater",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                }
+            }
+        ],
+        "location": [
+            [
+                {
+                    "param": "post_type",
+                    "operator": "==",
+                    "value": "guide"
+                }
+            ]
+        ],
+        "menu_order": 0,
+        "position": "normal",
+        "style": "default",
+        "label_placement": "top",
+        "instruction_placement": "field",
+        "hide_on_screen": "",
+        "active": 1,
+        "description": "Manage main guide object details."
+    }
+]
