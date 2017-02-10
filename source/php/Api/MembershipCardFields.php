@@ -6,7 +6,7 @@ namespace HbgEventImporter\Api;
  * Adding meta fields to location post type
  */
 
-class MembershipCards extends Fields
+class MembershipCardFields extends Fields
 {
     private $postType = 'membership-card';
 

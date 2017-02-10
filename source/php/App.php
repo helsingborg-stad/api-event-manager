@@ -75,12 +75,14 @@ class App
         new Api\PostTypes();
         new Api\Taxonomies();
         new Api\Linking();
+
         new Api\EventFields();
         new Api\LocationFields();
         new Api\ContactFields();
         new Api\SponsorFields();
         new Api\PackageFields();
-        new Api\MembershipCards();
+        new Api\MembershipCardFields();
+        new Api\GuideFields();
     }
 
     /**

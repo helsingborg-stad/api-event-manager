@@ -27,6 +27,7 @@ class Filter
         add_filter('rest_prepare_event_tags', array($this, 'removeResponseKeys'), 5000, 3);
         add_filter('rest_prepare_user_groups', array($this, 'removeResponseKeys'), 5000, 3);
         add_filter('rest_prepare_location_categories', array($this, 'removeResponseKeys'), 5000, 3);
+        add_filter('rest_prepare_guide', array($this, 'removeResponseKeys'), 5000, 3);
     }
 
     /**

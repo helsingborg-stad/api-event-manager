@@ -129,7 +129,7 @@ class Linking
     }
 
     /**
-     * Register link to related events, embeddable
+     * Register link to related membership cards, embeddable
      * @return  object
      */
     public function addEventMemberCards($response, $post, $request)
