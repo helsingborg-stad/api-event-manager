@@ -313,7 +313,6 @@
   overflow: hidden !important; }
 
 .lightbox-open #wpwrap {
-  -webkit-filter: blur(10px) !important;
   -moz-filter: blur(10px) !important;
   -o-filter: blur(10px) !important;
   -ms-filter: blur(10px) !important;

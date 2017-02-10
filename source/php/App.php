@@ -65,6 +65,7 @@ class App
         new Taxonomy\UserGroups();
         new Taxonomy\EventTags();
         new Taxonomy\LocationCategories();
+        new Taxonomy\GuideCategories();
 
         new Admin\Options();
         new Admin\UI();
