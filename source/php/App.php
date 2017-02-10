@@ -156,9 +156,9 @@ class App
     public function enqueueScripts()
     {
         global $current_screen;
-        $type = $current_screen->post_type;
+        //var_dump($current_screen->base);
 
-        if ($type == 'event' || $type == 'location' || $type == 'contact' || $type == 'sponsor' || $type == 'package' || $type == 'membership-card' || $current_screen->base == 'admin_page_cron-import') {
+        if (is_object($current_screen) && in_array($current_screen->base, array('event', 'location', 'contact', 'sponsor', 'package', 'membership-card', 'admin_page_cron-import', 'guide','term'))) {
             wp_enqueue_script('hbg-event-importer', HBGEVENTIMPORTER_URL . '/dist/js/hbg-event-importer.min.js');
         }
 

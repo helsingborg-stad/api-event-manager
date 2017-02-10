@@ -48,6 +48,7 @@ gulp.task('sass-dev', function() {
 // Concatenate & Minify JS
 gulp.task('scripts-dist', function() {
     gulp.src([
+            'node_modules/spectrum-colorpicker/spectrum.js',
             'source/js/**/*.js',
         ])
         .pipe(concat('hbg-event-importer.dev.js'))
