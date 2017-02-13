@@ -93,6 +93,7 @@ class GuideFields extends Fields
     {
         $theme = array(
             'id' => $this->numericGetCallBack($object, 'guide_apperance_data', $request),
+            'name' => $this->numericGetCallBack($object, 'guide_apperance_data', $request),
             'logotype' => $this->numericGetCallBack($object, 'guide_apperance_data', $request),
             'color' => $this->numericGetCallBack($object, 'guide_apperance_data', $request)
         );
@@ -153,18 +154,19 @@ class GuideFields extends Fields
                     'distance' => !is_numeric($item['guide_object_beacon_distance']) ? null : $item['guide_object_beacon_distance']
                 ),
             );
-
-            //Add HAL links to locations
-            if (!is_null($item['guide_object_location']) && is_numeric($item['guide_object_location'])) {
-                $this->addHalLink($item['guide_object_location']);
-            }
         }
 
         return $objects;
     }
 
-    public function addHalLink($post_id)
+    public function addHalLink($object, $post_id)
     {
+        $response = new \WP_REST_Response($object);
+        $response->add_link(
+            'blaha',
+            rest_url('/wp/v2/users/42'),
+            array( 'embeddable' => true )
+        );
     }
 
     public function sanitizeMediaObject($item)

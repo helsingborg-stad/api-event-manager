@@ -6,7 +6,7 @@ namespace HbgEventImporter\Api;
  * Adding linked post types to endpoints.
  */
 
-class Linking
+class Linking extends Fields
 {
     public function __construct()
     {
@@ -18,11 +18,16 @@ class Linking
         add_filter('rest_prepare_event', array($this, 'addEventRelatedEvents'), 20, 3);
         add_filter('rest_prepare_event', array($this, 'addEventMemberCards'), 20, 3);
         add_filter('rest_prepare_event', array($this, 'addEmbedLink'), 20, 3);
+
         add_filter('rest_prepare_location', array($this, 'addEventGallery'), 15, 3);
         add_filter('rest_prepare_location', array($this, 'addEmbedLink'), 20, 3);
+
         add_filter('rest_prepare_package', array($this, 'addEventMemberCards'), 20, 3);
         add_filter('rest_prepare_package', array($this, 'addIncludedEvents'), 20, 3);
         add_filter('rest_prepare_package', array($this, 'addEmbedLink'), 20, 3);
+
+        add_filter('rest_prepare_guide', array($this, 'addGuideLocation'), 20, 3);
+        add_filter('rest_prepare_guide', array($this, 'addGuideSubLocation'), 20, 3);
     }
 
     /**
@@ -171,5 +176,40 @@ class Linking
         return $response;
     }
 
+    /**
+     * Register link to connected locations, embeddable
+     * @return  object
+     */
+    public function addGuideLocation($response, $post, $request)
+    {
+        $id = $this->numericGetCallBack(array('id' => $post->ID), 'guide_main_location', $request);
 
+        if (!is_null($id)) {
+            $response->add_link(
+                'location',
+                rest_url('/wp/v2/location/' . $id),
+                array( 'embeddable' => true )
+            );
+        }
+
+        return $response;
+    }
+
+    /**
+     * Register link to connected sub-locations, embeddable
+     * @return  object
+     */
+    public function addGuideSubLocation($response, $post, $request)
+    {
+        foreach ((array) $this->objectGetCallBack(array('id' => $post->ID), 'guide_location_objects', $request, true) as $item) {
+            if (isset($item['guide_object_location']) && is_numeric($item['guide_object_location'])) {
+                $response->add_link(
+                    'location',
+                    rest_url('/wp/v2/location/' . $item['guide_object_location']),
+                    array( 'embeddable' => true )
+                );
+            }
+        }
+        return $response;
+    }
 }
