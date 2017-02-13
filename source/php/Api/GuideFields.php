@@ -36,6 +36,19 @@ class GuideFields extends Fields
             )
         );
 
+        // Guide main location
+        register_rest_field($this->postType,
+            'location',
+            array(
+                'get_callback' => array($this, 'mainLocation'),
+                'schema' => array(
+                    'description' => 'Field containing object with taxonomies.',
+                    'type' => 'object',
+                    'context' => array('view')
+                )
+            )
+        );
+
         // Guide beacon object
         register_rest_field($this->postType,
             'beacon',
@@ -53,7 +66,7 @@ class GuideFields extends Fields
         register_rest_field($this->postType,
             'media',
             array(
-                'get_callback' => array($this, 'stringGetCallBack'),
+                'get_callback' => array($this, 'media'),
                 'schema' => array(
                     'description' => 'Field containing object with taxonomies.',
                     'type' => 'object',
@@ -78,20 +91,44 @@ class GuideFields extends Fields
 
     public function theme($object, $field_name, $request, $formatted = true)
     {
-        return array(
+        $theme = array(
             'id' => $this->numericGetCallBack($object, 'guide_apperance_data', $request),
             'logotype' => $this->numericGetCallBack($object, 'guide_apperance_data', $request),
             'color' => $this->numericGetCallBack($object, 'guide_apperance_data', $request)
         );
+
+        if (empty(array_filter($theme))) {
+            return null;
+        } else {
+            return $theme;
+        }
     }
 
     public function beacon($object, $field_name, $request, $formatted = true)
     {
-        return array(
-            'enabled' => $this->unformattedNumericGetCallBack($object, 'guide_main_use_beacon', $request, false),
+        $beacon = array(
             'namespace' => $this->numericGetCallBack($object, 'guide_main_beacon_namespace', $request, $formatted),
             'distance' => $this->numericGetCallBack($object, 'guide_main_beacon_distance', $request, $formatted)
         );
+
+        if (empty(array_filter($beacon))) {
+            return null;
+        } else {
+            return $beacon;
+        }
+    }
+
+    public function media($object, $field_name, $request, $formatted = true)
+    {
+        $media =    $this->sanitinzeMediaObjectArray(
+                        $this->objectGetCallBack($object, 'guide_main_media', $request, true)
+                    );
+
+        if (empty(array_filter($media))) {
+            return null;
+        } else {
+            return $media;
+        }
     }
 
     public function objects($object, $field_name, $request, $formatted = true)
@@ -104,10 +141,10 @@ class GuideFields extends Fields
                 'title' => empty($item['guide_object_title']) ? null : $item['guide_object_title'],
                 'description' => empty($item['guide_object_description']) ? null : $item['guide_object_description'],
 
-                'image' => !is_numeric($item['guide_object_image']) ? null : $item['guide_object_image'],
-                'audio' => !is_numeric($item['guide_object_audio']) ? null : $item['guide_object_audio'],
-                'video' => !is_numeric($item['guide_object_video']) ? null : $item['guide_object_video'],
-                'links' => !is_array($item['guide_object_links']) ? null : $item['guide_object_links'],
+                'image' => !is_array($item['guide_object_image']) ? null : $this->sanitizeMediaObject($item['guide_object_image']),
+                'audio' => !is_array($item['guide_object_audio']) ? null : $this->sanitizeMediaObject($item['guide_object_audio']),
+                'video' => !is_array($item['guide_object_video']) ? null : $this->sanitizeMediaObject($item['guide_object_video']),
+                'links' => !is_array($item['guide_object_links']) ? null : $this->sanitizeLinkObject($item['guide_object_links']),
 
                 'sublocation' => !is_numeric($item['guide_object_location']) ? null : $item['guide_object_location'],
 
@@ -128,5 +165,52 @@ class GuideFields extends Fields
 
     public function addHalLink($post_id)
     {
+    }
+
+    public function sanitizeMediaObject($item)
+    {
+        if (is_array($item)) {
+            unset($item['ID']);
+            unset($item['filename']);
+            unset($item['author']);
+            unset($item['caption']);
+            unset($item['icon']);
+        }
+
+        return $item;
+    }
+
+    public function sanitinzeMediaObjectArray($objectArray)
+    {
+        if (array_values($objectArray) !== $objectArray) {
+            return $objectArray;
+        }
+
+        foreach ((array) $objectArray as $key => $item) {
+            $objectArray[$key] = $this->sanitizeMediaObject($item);
+        }
+
+        return $objectArray;
+    }
+
+    public function mainLocation($object, $field_name, $request, $formatted = true)
+    {
+        return $this->numericGetCallBack($object, 'guide_main_location', $request, true);
+    }
+
+    public function sanitizeLinkObject($linkObject)
+    {
+        $sanitizedLinkObject = [];
+
+        foreach ((array) $linkObject as $key => $item) {
+            if (!filter_var($item['guide_object_link_url'], FILTER_VALIDATE_URL) === false) {
+                $sanitizedLinkObject[$key] = array(
+                    'title' => $item['guide_object_link_title'],
+                    'link' => $item['guide_object_link_url']
+                );
+            }
+        }
+
+        return $sanitizedLinkObject;
     }
 }
