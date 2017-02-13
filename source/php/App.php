@@ -60,6 +60,8 @@ class App
 
         //Init functions
         new Acf\AcfFields();
+        new Acf\AcfGuide();
+        new Acf\AcfGuideSettings();
 
         new Taxonomy\EventCategories();
         new Taxonomy\UserGroups();
