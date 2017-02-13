@@ -8,6 +8,8 @@ namespace HbgEventImporter\Api;
 
 class Linking extends Fields
 {
+    private $addedHAL = [];
+
     public function __construct()
     {
         add_filter('rest_prepare_event', array($this, 'addEventContacts'), 10, 3);
@@ -185,11 +187,15 @@ class Linking extends Fields
         $id = $this->numericGetCallBack(array('id' => $post->ID), 'guide_main_location', $request);
 
         if (!is_null($id)) {
-            $response->add_link(
-                'location',
-                rest_url('/wp/v2/location/' . $id),
-                array( 'embeddable' => true )
-            );
+            if ($this->hasDuplicateHAL($post, $id)) {
+                $response->add_link(
+                    'location',
+                    rest_url('/wp/v2/location/' . $id),
+                    array( 'embeddable' => true )
+                );
+
+                $this->addedHAL[$post->ID][] = $id;
+            }
         }
 
         return $response;
@@ -203,13 +209,38 @@ class Linking extends Fields
     {
         foreach ((array) $this->objectGetCallBack(array('id' => $post->ID), 'guide_location_objects', $request, true) as $item) {
             if (isset($item['guide_object_location']) && is_numeric($item['guide_object_location'])) {
-                $response->add_link(
-                    'location',
-                    rest_url('/wp/v2/location/' . $item['guide_object_location']),
-                    array( 'embeddable' => true )
-                );
+                if (!$this->hasDuplicateHAL($post, $item['guide_object_location'])) {
+                    $response->add_link(
+                        'location',
+                        rest_url('/wp/v2/location/' . $item['guide_object_location']),
+                        array( 'embeddable' => true )
+                    );
+
+                    $this->addedHAL[$post->ID][] = $item['guide_object_location'];
+                }
             }
         }
         return $response;
+    }
+
+    /**
+     * Prevent duplicate HAL objects to be registered
+     * @return  boolean
+     */
+    public function hasDuplicateHAL($currentObject, $linkId)
+    {
+
+        // Create object array if not extists (return if not exists)
+        if (!isset($this->addedHAL[$currentObject->ID])) {
+            $this->addedHAL[$currentObject->ID] = [];
+            return false;
+        }
+
+        //Check for link
+        if (in_array($linkId, $this->addedHAL[$currentObject->ID])) {
+            return true;
+        }
+
+        return false;
     }
 }
