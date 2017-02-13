@@ -96,7 +96,6 @@ class GuideFields extends Fields
 
     public function objects($object, $field_name, $request, $formatted = true)
     {
-
         $objects = [];
 
         foreach ((array) $this->objectGetCallBack($object, 'guide_location_objects', $request, true) as $item) {
@@ -117,8 +116,17 @@ class GuideFields extends Fields
                     'distance' => !is_numeric($item['guide_object_beacon_distance']) ? null : $item['guide_object_beacon_distance']
                 ),
             );
+
+            //Add HAL links to locations
+            if (!is_null($item['guide_object_location']) && is_numeric($item['guide_object_location'])) {
+                $this->addHalLink($item['guide_object_location']);
+            }
         }
 
         return $objects;
+    }
+
+    public function addHalLink($post_id)
+    {
     }
 }
