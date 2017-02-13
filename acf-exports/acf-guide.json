@@ -45,7 +45,7 @@
                 "taxonomy": [],
                 "allow_null": 0,
                 "multiple": 0,
-                "return_format": "object",
+                "return_format": "id",
                 "ui": 1,
                 "key": "field_589498b7fc7b3",
                 "label": "Plats",
@@ -265,50 +265,20 @@
                         }
                     },
                     {
+                        "tabs": "all",
+                        "toolbar": "basic",
+                        "media_upload": 1,
                         "default_value": "",
-                        "new_lines": "wpautop",
-                        "maxlength": "",
-                        "placeholder": "",
-                        "rows": 6,
+                        "delay": 0,
                         "key": "field_5899aae338d3e",
                         "label": "Object description",
                         "name": "guide_object_description",
-                        "type": "textarea",
+                        "type": "wysiwyg",
                         "instructions": "",
                         "required": 1,
                         "conditional_logic": 0,
                         "wrapper": {
                             "width": "",
-                            "class": "",
-                            "id": ""
-                        }
-                    },
-                    {
-                        "post_type": [
-                            "location"
-                        ],
-                        "taxonomy": [],
-                        "allow_null": 0,
-                        "multiple": 0,
-                        "return_format": "object",
-                        "ui": 1,
-                        "key": "field_5899ebab56960",
-                        "label": "Sublocation",
-                        "name": "guide_object_sublocation",
-                        "type": "post_object",
-                        "instructions": "",
-                        "required": 0,
-                        "conditional_logic": [
-                            [
-                                {
-                                    "field": "field_5899e1bbeceac",
-                                    "operator": "==",
-                                    "value": "1"
-                                }
-                            ]
-                        ],
-                        "wrapper": {
-                            "width": "25",
                             "class": "",
                             "id": ""
                         }
@@ -566,7 +536,7 @@
                         "taxonomy": [],
                         "allow_null": 1,
                         "multiple": 0,
-                        "return_format": "object",
+                        "return_format": "id",
                         "ui": 1,
                         "key": "field_589dc81699fb6",
                         "label": "Plats",
