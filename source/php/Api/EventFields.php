@@ -256,7 +256,7 @@ class EventFields extends Fields
             'organizers',
             array(
                 'get_callback' => array($this, 'organizerData'),
-                'update_callback' => array($this, 'objectUpdateCallBack'),
+                'update_callback' => array($this, 'acfUpdateCallBack'),
                 'schema' => array(
                     'description' => 'Field containing object with organizer data.',
                     'type' => 'object',
@@ -617,7 +617,7 @@ class EventFields extends Fields
                 'schema' => array(
                     'description' => 'Field containing object with featured image data.',
                     'type' => 'object',
-                    'context' => array('view')
+                    'context' => array('view', 'edit')
                 )
             )
         );
@@ -676,6 +676,20 @@ class EventFields extends Fields
                 'schema' => array(
                     'description' => 'Field containing string with client.',
                     'type' => 'string',
+                    'context' => array('edit')
+                )
+            )
+        );
+
+        /* Recurring occasions client update callback */
+
+        register_rest_field($this->postType,
+            'rcr_rules',
+            array(
+                'update_callback' => array($this, 'acfUpdateCallBack'),
+                'schema' => array(
+                    'description' => 'Field containing object with recurring occasion.',
+                    'type' => 'object',
                     'context' => array('edit')
                 )
             )
