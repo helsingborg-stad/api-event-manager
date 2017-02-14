@@ -95,7 +95,8 @@ class GuideFields extends Fields
             'id' => $this->numericGetCallBack($object, 'guide_apperance_data', $request),
             'name' => $this->numericGetCallBack($object, 'guide_apperance_data', $request),
             'logotype' => $this->numericGetCallBack($object, 'guide_apperance_data', $request),
-            'color' => $this->numericGetCallBack($object, 'guide_apperance_data', $request)
+            'color' => $this->numericGetCallBack($object, 'guide_apperance_data', $request),
+            'moodimage' => $this->numericGetCallBack($object, 'guide_apperance_data', $request)
         );
 
         if (empty(array_filter($theme))) {
