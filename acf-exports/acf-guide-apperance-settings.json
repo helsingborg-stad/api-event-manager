@@ -1,0 +1,68 @@
+[
+    {
+        "key": "group_589dcf7e047a8",
+        "title": "Guide apperance settings",
+        "fields": [
+            {
+                "return_format": "array",
+                "preview_size": "medium",
+                "library": "uploadedTo",
+                "min_width": "",
+                "min_height": "",
+                "min_size": "",
+                "max_width": "",
+                "max_height": "",
+                "max_size": "",
+                "mime_types": "svg, png",
+                "key": "field_589dcf9661090",
+                "label": "Logotype",
+                "name": "guide_taxonomy_logotype",
+                "type": "image",
+                "instructions": "A logotype that may be shown related to the guides with this category.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                }
+            },
+            {
+                "default_value": "000000",
+                "maxlength": "",
+                "placeholder": "",
+                "prepend": "",
+                "append": "",
+                "key": "field_589dd18acd51f",
+                "label": "Color",
+                "name": "guide_taxonomy_color",
+                "type": "text",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "colorpicker",
+                    "id": ""
+                }
+            }
+        ],
+        "location": [
+            [
+                {
+                    "param": "taxonomy",
+                    "operator": "==",
+                    "value": "guide_sender"
+                }
+            ]
+        ],
+        "menu_order": 0,
+        "position": "normal",
+        "style": "default",
+        "label_placement": "top",
+        "instruction_placement": "label",
+        "hide_on_screen": "",
+        "active": 1,
+        "description": ""
+    }
+]

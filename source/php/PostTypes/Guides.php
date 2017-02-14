@@ -46,9 +46,6 @@ class Guides extends \HbgEventImporter\Entity\CustomPostType
         );
 
         $this->addTableColumn('date', __('Date', 'event-manager'));
-
-        add_filter('manage_edit-' . $this->slug . '_columns', array($this, 'addAcceptDenyTable'));
-        add_action('manage_' . $this->slug . '_posts_custom_column', array($this,'addAcceptDenyButtons'), 10, 2);
     }
 }
 

@@ -24,12 +24,14 @@ class Locations extends \HbgEventImporter\Entity\CustomPostType
                     'slug'       => 'location',
                     'with_front' => false
                 ),
-                'hierarchical'         => false,
+                'hierarchical'         => true,
                 'exclude_from_search'  => false,
                 'taxonomies'           => array('location_categories'),
                 'supports'             => array('title', 'revisions', 'editor', 'thumbnail')
             )
         );
+
+        //Archive table
         $this->addTableColumn('cb', '<input type="checkbox">');
         $this->addTableColumn('title', __('Title', 'event-manager'));
         $this->addTableColumn('name', __('Address', 'event-manager'), true, function ($column, $postId) {
@@ -44,6 +46,7 @@ class Locations extends \HbgEventImporter\Entity\CustomPostType
             }
             echo get_post_meta($postId, 'latitude', true).', '.get_post_meta($postId, 'longitude', true);
         });
+
         $this->addTableColumn('import_client', __('Import client', 'event-manager'), true, function ($column, $postId) {
             $eventId = get_post_meta($postId, 'import_client', true);
             if (!isset($eventId[0])) {
@@ -52,12 +55,49 @@ class Locations extends \HbgEventImporter\Entity\CustomPostType
             echo get_post_meta($postId, 'import_client', true);
         });
         $this->addTableColumn('date', __('Date', 'event-manager'));
+
+        //Filters
         add_filter('views_edit-' . $this->slug, array($this, 'addImportButtons'));
         add_action('acf/save_post', array($this, 'updateAddressData'), 20);
         add_filter('acf/load_value/name=geo_map', array($this, 'setMapValues'), 10, 3);
         add_filter('acf/update_value/name=geo_map', array($this, 'acfUpdateMap'), 10, 3);
         add_filter('manage_edit-' . $this->slug . '_columns', array($this, 'addAcceptDenyTable'));
-        add_action('manage_' . $this->slug . '_posts_custom_column', array($this,'addAcceptDenyButtons'), 10, 2);
+        add_action('manage_' . $this->slug . '_posts_custom_column', array($this, 'addAcceptDenyButtons'), 10, 2);
+
+        add_filter('page_attributes_dropdown_pages_args', array($this, 'limitPostTypeHierarchy'));
+        add_filter('quick_edit_dropdown_pages_args', array($this, 'limitPostTypeHierarchy'));
+    }
+
+    /**
+     * Limit heiracy to two levels.
+     * @param  array  $args    the value of the field by definition
+     * @return array           updated $args
+     */
+    public function limitPostTypeHierarchy($args)
+    {
+        global $post_type_object, $wpdb;
+
+        if ($post_type_object->name == 'location' && is_array($args)) {
+
+            //Limit depth to one level
+            $args['depth'] = 1;
+
+            // Remove imported stuff
+            $prohibited = $wpdb->get_results("SELECT post_id FROM {$wpdb->postmeta} WHERE meta_key = 'import_client' AND meta_value != ''");
+
+            if (is_array($prohibited)) {
+                $args['exclude'] = implode(
+                    ",",
+                    array_map(
+                        function ($item) {
+                            return $item->post_id;
+                        },
+                        $prohibited
+                    )
+                );
+            }
+        }
+        return $args;
     }
 
     /**

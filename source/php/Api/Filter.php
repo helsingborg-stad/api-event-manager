@@ -27,6 +27,7 @@ class Filter
         add_filter('rest_prepare_event_tags', array($this, 'removeResponseKeys'), 5000, 3);
         add_filter('rest_prepare_user_groups', array($this, 'removeResponseKeys'), 5000, 3);
         add_filter('rest_prepare_location_categories', array($this, 'removeResponseKeys'), 5000, 3);
+        add_filter('rest_prepare_guide', array($this, 'removeResponseKeys'), 5000, 3);
     }
 
     /**
@@ -56,7 +57,7 @@ class Filter
         $keys = array('author','acf','guid','type','link', 'template', 'meta');
 
         //Only for location and contact
-        if ($post->post_type == "location" || $post->post_type == "contact") {
+        if (in_array($post->post_type, array("location", "contact"))) {
             $keys[] = "content";
         }
 

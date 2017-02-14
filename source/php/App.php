@@ -60,11 +60,14 @@ class App
 
         //Init functions
         new Acf\AcfFields();
+        new Acf\AcfGuide();
+        new Acf\AcfGuideSettings();
 
         new Taxonomy\EventCategories();
         new Taxonomy\UserGroups();
         new Taxonomy\EventTags();
         new Taxonomy\LocationCategories();
+        new Taxonomy\GuideCategories();
 
         new Admin\Options();
         new Admin\UI();
@@ -74,12 +77,14 @@ class App
         new Api\PostTypes();
         new Api\Taxonomies();
         new Api\Linking();
+
         new Api\EventFields();
         new Api\LocationFields();
         new Api\ContactFields();
         new Api\SponsorFields();
         new Api\PackageFields();
-        new Api\MembershipCards();
+        new Api\MembershipCardFields();
+        new Api\GuideFields();
     }
 
     /**
@@ -109,6 +114,10 @@ class App
     {
         global $pagenow;
         if ($pagenow == 'index.php') {
+            if (isset($_GET['page']) && in_array($_GET['page'], array('acf-upgrade'))) {
+                return;
+            }
+
             wp_redirect(admin_url('edit.php?post_type=event'), 301);
             exit;
         }
@@ -128,7 +137,7 @@ class App
         }
 
         if (isset($_GET['msg']) && $_GET['msg'] == 'import-complete') {
-            echo '<div class="updated"><p>Events imported</p></div>';
+            echo '<div class="updated"><p>' . __('Events imported', 'event-manager') . '</p></div>';
         }
     }
 
@@ -151,9 +160,9 @@ class App
     public function enqueueScripts()
     {
         global $current_screen;
-        $type = $current_screen->post_type;
+        //var_dump($current_screen->base);
 
-        if ($type == 'event' || $type == 'location' || $type == 'contact' || $type == 'sponsor' || $type == 'package' || $type == 'membership-card' || $current_screen->base == 'admin_page_cron-import') {
+        if (is_object($current_screen) && in_array($current_screen->base, array('event', 'location', 'contact', 'sponsor', 'package', 'membership-card', 'admin_page_cron-import', 'guide','term'))) {
             wp_enqueue_script('hbg-event-importer', HBGEVENTIMPORTER_URL . '/dist/js/hbg-event-importer.min.js');
         }
 

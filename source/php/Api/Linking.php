@@ -6,8 +6,10 @@ namespace HbgEventImporter\Api;
  * Adding linked post types to endpoints.
  */
 
-class Linking
+class Linking extends Fields
 {
+    private $addedHAL = [];
+
     public function __construct()
     {
         add_filter('rest_prepare_event', array($this, 'addEventContacts'), 10, 3);
@@ -18,11 +20,16 @@ class Linking
         add_filter('rest_prepare_event', array($this, 'addEventRelatedEvents'), 20, 3);
         add_filter('rest_prepare_event', array($this, 'addEventMemberCards'), 20, 3);
         add_filter('rest_prepare_event', array($this, 'addEmbedLink'), 20, 3);
+
         add_filter('rest_prepare_location', array($this, 'addEventGallery'), 15, 3);
         add_filter('rest_prepare_location', array($this, 'addEmbedLink'), 20, 3);
+
         add_filter('rest_prepare_package', array($this, 'addEventMemberCards'), 20, 3);
         add_filter('rest_prepare_package', array($this, 'addIncludedEvents'), 20, 3);
         add_filter('rest_prepare_package', array($this, 'addEmbedLink'), 20, 3);
+
+        add_filter('rest_prepare_guide', array($this, 'addGuideLocation'), 20, 3);
+        add_filter('rest_prepare_guide', array($this, 'addGuideSubLocation'), 20, 3);
     }
 
     /**
@@ -129,7 +136,7 @@ class Linking
     }
 
     /**
-     * Register link to related events, embeddable
+     * Register link to related membership cards, embeddable
      * @return  object
      */
     public function addEventMemberCards($response, $post, $request)
@@ -171,5 +178,69 @@ class Linking
         return $response;
     }
 
+    /**
+     * Register link to connected locations, embeddable
+     * @return  object
+     */
+    public function addGuideLocation($response, $post, $request)
+    {
+        $id = $this->numericGetCallBack(array('id' => $post->ID), 'guide_main_location', $request);
 
+        if (!is_null($id)) {
+            if ($this->hasDuplicateHAL($post, $id)) {
+                $response->add_link(
+                    'location',
+                    rest_url('/wp/v2/location/' . $id),
+                    array( 'embeddable' => true )
+                );
+
+                $this->addedHAL[$post->ID][] = $id;
+            }
+        }
+
+        return $response;
+    }
+
+    /**
+     * Register link to connected sub-locations, embeddable
+     * @return  object
+     */
+    public function addGuideSubLocation($response, $post, $request)
+    {
+        foreach ((array) $this->objectGetCallBack(array('id' => $post->ID), 'guide_location_objects', $request, true) as $item) {
+            if (isset($item['guide_object_location']) && is_numeric($item['guide_object_location'])) {
+                if (!$this->hasDuplicateHAL($post, $item['guide_object_location'])) {
+                    $response->add_link(
+                        'location',
+                        rest_url('/wp/v2/location/' . $item['guide_object_location']),
+                        array( 'embeddable' => true )
+                    );
+
+                    $this->addedHAL[$post->ID][] = $item['guide_object_location'];
+                }
+            }
+        }
+        return $response;
+    }
+
+    /**
+     * Prevent duplicate HAL objects to be registered
+     * @return  boolean
+     */
+    public function hasDuplicateHAL($currentObject, $linkId)
+    {
+
+        // Create object array if not extists (return if not exists)
+        if (!isset($this->addedHAL[$currentObject->ID])) {
+            $this->addedHAL[$currentObject->ID] = [];
+            return false;
+        }
+
+        //Check for link
+        if (in_array($linkId, $this->addedHAL[$currentObject->ID])) {
+            return true;
+        }
+
+        return false;
+    }
 }
