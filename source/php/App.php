@@ -148,7 +148,7 @@ class App
     public function enqueueStyles()
     {
         global $current_screen;
-        if (in_array($current_screen->post_type, array('event', 'location', 'contact', 'sponsor', 'package', 'membership-card'))) {
+        if (in_array($current_screen->post_type, array('event', 'location', 'contact', 'sponsor', 'package', 'membership-card', 'guide'))) {
             wp_enqueue_style('hbg-event-importer', HBGEVENTIMPORTER_URL . '/dist/css/hbg-event-importer.min.css');
         }
     }
@@ -162,7 +162,7 @@ class App
         global $current_screen;
         //var_dump($current_screen->base);
 
-        if (is_object($current_screen) && in_array($current_screen->base, array('event', 'location', 'contact', 'sponsor', 'package', 'membership-card', 'admin_page_cron-import', 'guide','term'))) {
+        if (is_object($current_screen) && in_array($current_screen->post_type, array('event', 'location', 'contact', 'sponsor', 'package', 'membership-card', 'guide','term'))) {
             wp_enqueue_script('hbg-event-importer', HBGEVENTIMPORTER_URL . '/dist/js/hbg-event-importer.min.js');
         }
 
