@@ -2450,7 +2450,6 @@ ImportEvents.Admin.ColorPicker = (function ($) {
     return new ColorPicker();
 
 })(jQuery);
-object
 
 jQuery(document).ready(function ($) {
     $('.acf-field[data-name="sync"] input[type="checkbox"]').on('change', function () {

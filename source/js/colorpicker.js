@@ -17,4 +17,3 @@ ImportEvents.Admin.ColorPicker = (function ($) {
     return new ColorPicker();
 
 })(jQuery);
-object
