@@ -53,6 +53,57 @@ class LocationFields extends Fields
     }
 
     /**
+     * Returning formatted and sorted open hours array
+     * @return  array, null
+     */
+    public function openHoursGetCallBack($object, $field_name, $request, $formatted = true)
+    {
+        $return_value = self::getFieldGetMetaData($object, $field_name, $request);
+
+        if (is_array($return_value) || is_object($return_value) && !empty($return_value)) {
+            $values = $return_value;
+        } else {
+            return null;
+        }
+
+        $days = array(
+            1 => 'Monday',
+            2 => 'Tuesday',
+            3 => 'Wednesday',
+            4 => 'Thursday',
+            5 => 'Friday',
+            6 => 'Saturday',
+            7 => 'Sunday'
+        );
+
+        // Sort by days order
+        usort($values, array($this, 'compareDays'));
+
+        $open_hours = array();
+        foreach ($values as $v) {
+            $open_hours[] = array(
+                            "day_number" => $v['weekday'],
+                            "weekday"    => $days[$v['weekday']],
+                            "closed"     => $v['closed'],
+                            "opening"    => ($v['closed']) ? null : $v['opening'],
+                            "closing"    => ($v['closed']) ? null : $v['closing'],
+                            );
+        }
+
+        return $open_hours;
+    }
+
+    /**
+     * Usort comparer for weekdays
+     */
+    public function compareDays($a, $b) {
+        if ($a['weekday'] == $b['weekday']) {
+            return 0;
+        }
+        return ($a['weekday'] < $b['weekday']) ? -1 : 1;
+    }
+
+    /**
      * Register rest fields to consumer api
      * @return  void
      * @version 0.3.2 creating consumer accessable meta values.
@@ -200,12 +251,12 @@ class LocationFields extends Fields
 
         //Open hours
         register_rest_field($this->postType,
-            'oph_exceptions',
+            'open_hours',
             array(
-                'get_callback' => array($this, 'objectGetCallBack'),
+                'get_callback' => array($this, 'openHoursGetCallBack'),
                 'update_callback' => array($this, 'objectUpdateCallBack'),
                 'schema' => array(
-                    'description' => 'Field containing object with open hour exceptions.',
+                    'description' => 'Field containing object with open hours.',
                     'type' => 'object',
                     'context' => array('view', 'edit')
                 )
@@ -213,91 +264,13 @@ class LocationFields extends Fields
         );
 
         register_rest_field($this->postType,
-            'open_hours_mon',
+            'open_hour_exceptions',
             array(
-                'get_callback' => array($this, 'stringGetCallBack'),
-                'update_callback' => array($this, 'stringUpdateCallBack'),
+                'get_callback' => array($this, 'objectGetCallBack'),
+                'update_callback' => array($this, 'objectUpdateCallBack'),
                 'schema' => array(
-                    'description' => 'Field containing object with open hours.',
-                    'type' => 'string',
-                    'context' => array('view', 'edit')
-                )
-            )
-        );
-
-        register_rest_field($this->postType,
-            'open_hours_tue',
-            array(
-                'get_callback' => array($this, 'stringGetCallBack'),
-                'update_callback' => array($this, 'stringUpdateCallBack'),
-                'schema' => array(
-                    'description' => 'Field containing object with open hours.',
-                    'type' => 'string',
-                    'context' => array('view', 'edit')
-                )
-            )
-        );
-
-        register_rest_field($this->postType,
-            'open_hours_wed',
-            array(
-                'get_callback' => array($this, 'stringGetCallBack'),
-                'update_callback' => array($this, 'stringUpdateCallBack'),
-                'schema' => array(
-                    'description' => 'Field containing object with open hours.',
-                    'type' => 'string',
-                    'context' => array('view', 'edit')
-                )
-            )
-        );
-
-        register_rest_field($this->postType,
-            'open_hours_thu',
-            array(
-                'get_callback' => array($this, 'stringGetCallBack'),
-                'update_callback' => array($this, 'stringUpdateCallBack'),
-                'schema' => array(
-                    'description' => 'Field containing object with open hours.',
-                    'type' => 'string',
-                    'context' => array('view', 'edit')
-                )
-            )
-        );
-
-        register_rest_field($this->postType,
-            'open_hours_fri',
-            array(
-                'get_callback' => array($this, 'stringGetCallBack'),
-                'update_callback' => array($this, 'stringUpdateCallBack'),
-                'schema' => array(
-                    'description' => 'Field containing object with open hours.',
-                    'type' => 'string',
-                    'context' => array('view', 'edit')
-                )
-            )
-        );
-
-        register_rest_field($this->postType,
-            'open_hours_sat',
-            array(
-                'get_callback' => array($this, 'stringGetCallBack'),
-                'update_callback' => array($this, 'stringUpdateCallBack'),
-                'schema' => array(
-                    'description' => 'Field containing object with open hours.',
-                    'type' => 'string',
-                    'context' => array('view', 'edit')
-                )
-            )
-        );
-
-        register_rest_field($this->postType,
-            'open_hours_sun',
-            array(
-                'get_callback' => array($this, 'stringGetCallBack'),
-                'update_callback' => array($this, 'stringUpdateCallBack'),
-                'schema' => array(
-                    'description' => 'Field containing object with open hours.',
-                    'type' => 'string',
+                    'description' => 'Field containing object with open hour exceptions.',
+                    'type' => 'object',
                     'context' => array('view', 'edit')
                 )
             )
