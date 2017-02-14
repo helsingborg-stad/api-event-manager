@@ -91,12 +91,18 @@ class GuideFields extends Fields
 
     public function theme($object, $field_name, $request, $formatted = true)
     {
+        $taxonomy = $this->objectGetCallBack($object, 'guide_apperance_data', $request);
+        if (is_null($taxonomy) ||!is_object($taxonomy)) {
+            return null;
+        }
+
         $theme = array(
-            'id' => $this->numericGetCallBack($object, 'guide_apperance_data', $request),
-            'name' => $this->numericGetCallBack($object, 'guide_apperance_data', $request),
-            'logotype' => $this->numericGetCallBack($object, 'guide_apperance_data', $request),
-            'color' => $this->numericGetCallBack($object, 'guide_apperance_data', $request),
-            'moodimage' => $this->numericGetCallBack($object, 'guide_apperance_data', $request)
+            'id' => $taxonomy->term_id,
+            'name' => $taxonomy->name,
+            'logotype' => get_field('guide_taxonomy_logotype', $taxonomy->taxonomy. '_' . $taxonomy->term_id),
+            'color' => get_field('guide_taxonomy_color', $taxonomy->taxonomy. '_' . $taxonomy->term_id),
+            'moodimage' => get_field('guide_taxonomy_image', $taxonomy->taxonomy. '_' . $taxonomy->term_id),
+            'taxonomy' => $taxonomy
         );
 
         if (empty(array_filter($theme))) {
@@ -158,16 +164,6 @@ class GuideFields extends Fields
         }
 
         return $objects;
-    }
-
-    public function addHalLink($object, $post_id)
-    {
-        $response = new \WP_REST_Response($object);
-        $response->add_link(
-            'blaha',
-            rest_url('/wp/v2/users/42'),
-            array( 'embeddable' => true )
-        );
     }
 
     public function sanitizeMediaObject($item)
