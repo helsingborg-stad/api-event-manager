@@ -37,11 +37,11 @@ class Guides extends \HbgEventImporter\Entity\CustomPostType
     public function runFilters()
     {
         add_filter('acf/update_value/name=guide_apperance_data', array($this, 'updateTaxonomyRelation'), 10, 3);
-        add_filter('acf/load_value/name=my_select', 'my_acf_load_value', 10, 3);
+        add_filter('acf/load_field/name=guide_object_location', array($this, 'getSublocationsOnly'), 10, 3);
     }
 
     /**
-     * Get missing address components when saving location
+     * Update taxonomy connection guide sender on save.
      * @param  $value     Value before save
      * @param  $post_id   Id of the post being saved or updated
      * @param  $field     Array containing field details
@@ -50,5 +50,51 @@ class Guides extends \HbgEventImporter\Entity\CustomPostType
     {
         wp_set_object_terms((int) $post_id, array((int) $value), 'guide_sender');
         return $value;
+    }
+
+    /**
+     * Only get sublocation to previously selected main location.
+     * @param  $field     Array containing field details
+     */
+    public function getSublocationsOnly($field)
+    {
+        $parent_id = $this->getSelectedParent();
+
+        if (!is_null($parent_id) && is_numeric($parent_id)) {
+            $child_posts =  get_children($x = array(
+                                'post_parent' => $parent_id,
+                                'post_type'   => 'location',
+                                'numberposts' => -1,
+                                'post_status' => 'publish'
+                            ));
+
+            if (is_array($child_posts)) {
+                $field['choices'] = [];
+                foreach ($child_posts as $item) {
+                    $field['choices'][ $item->ID ] = $item->post_title . " (" . get_the_title($parent_id) . ")";
+                }
+            }
+        }
+
+        if (empty($field['choices'])) {
+            $field['choices'][''] = __("ERROR: Not a valid main location", 'event-manager');
+        }
+
+        return $field;
+    }
+
+    public function getSelectedParent($postObject = null)
+    {
+        if (is_null($postObject)) {
+            global $post;
+        } else {
+            $post = $postObject;
+        }
+
+        if (is_object($post) && isset($post->ID) && is_numeric($post->ID)) {
+            return get_post_meta($post->ID, 'guide_main_location', true);
+        }
+
+        return false;
     }
 }
