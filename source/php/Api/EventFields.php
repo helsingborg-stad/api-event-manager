@@ -879,30 +879,24 @@ class EventFields extends Fields
         /* Replace category id with taxonomy name */
 
         register_rest_field($this->postType,
+            'terms',
             'event_categories',
             array(
                 'get_callback' => array($this, 'renameTaxonomies'),
-                'update_callback' => array($this, 'objectUpdateCallBack'),
-                'schema' => array(
-                    'description' => 'Field containing object with taxonomies.',
-                    'type' => 'object',
-                    'context' => array('view', 'edit')
-                )
+                'update_callback' => null,
+                'schema' => null
             )
         );
 
         /* Replace tag id with taxonomy name */
 
         register_rest_field($this->postType,
+            'terms',
             'event_tags',
             array(
                 'get_callback' => array($this, 'renameTaxonomies'),
-                'update_callback' => array($this, 'objectUpdateCallBack'),
-                'schema' => array(
-                    'description' => 'Field containing object with taxonomies.',
-                    'type' => 'object',
-                    'context' => array('view', 'edit')
-                )
+                'update_callback' => null,
+                'schema' => null
             )
         );
 
@@ -913,11 +907,7 @@ class EventFields extends Fields
             array(
                 'get_callback' => array($this, 'userGroups'),
                 'update_callback' => array($this, 'objectUpdateCallBack'),
-                'schema' => array(
-                    'description' => 'Field containing object with taxonomies.',
-                    'type' => 'object',
-                    'context' => array('view', 'edit')
-                )
+                'schema' => null
             )
         );
 
@@ -948,6 +938,6 @@ class EventFields extends Fields
                 )
             )
         );
-
     }
+
 }
