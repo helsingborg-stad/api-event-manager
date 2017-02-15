@@ -65,13 +65,17 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
             echo($value);
         });
 
-        $this->addTableColumn('import_client', __('Import client', 'event-manager'), true, function ($column, $postId) {
-            $eventId = get_post_meta($postId, 'import_client', true);
-            if (!isset($eventId[0])) {
+        $this->addTableColumn('import_client', __('Client', 'event-manager'), true, function ($column, $postId) {
+            $import     = get_post_meta($postId, 'import_client', true);
+            $consumer   = get_post_meta($postId, 'consumer_client', true);
+
+            if (! empty($import)) {
+                echo ucwords($import);
+            } elseif (! empty($consumer)) {
+                echo $consumer;
+            } else {
                 return;
             }
-
-            echo ucwords(get_post_meta($postId, 'import_client', true));
         });
 
         $this->addTableColumn('date', __('Date', 'event-manager'));

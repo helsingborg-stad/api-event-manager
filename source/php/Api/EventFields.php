@@ -914,11 +914,11 @@ class EventFields extends Fields
         /* Import client update callback */
 
         register_rest_field($this->postType,
-            'import_client',
+            'consumer_client',
             array(
                 'update_callback' => array($this, 'stringUpdateCallBack'),
                 'schema' => array(
-                    'description' => 'Field containing string with client.',
+                    'description' => 'Field containing string with consumer name.',
                     'type' => 'string',
                     'context' => array('edit')
                 )
