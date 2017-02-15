@@ -465,8 +465,17 @@ abstract class CustomPostType
         } elseif ($post_status == 'draft' || $post_status == 'trash' || $post_status == 'pending') {
             $second = 'hidden';
         }
-        echo '<a href="#" class="accept button-primary ' . $first . '" post-id="' . $post_id . '">' . __('Accept', 'event-manager') . '</a>
-        <a href="#" class="deny button-primary ' . $second . '" post-id="' . $post_id . '">' . __('Deny', 'event-manager') . '</a>';
+
+        // If post is created from an external client we must publish it manually
+        $revisions = wp_get_post_revisions($post_id);
+        $consumer_client = get_post_meta($post_id, 'consumer_client');
+        if (! empty($consumer_client) && $post_status == 'draft' && empty($revisions)) {
+           echo '<a href="' . get_edit_post_link($post_id) . '" class="button" title="' . __('This post must be updated before it can be published.', 'event-manager') . '">' . __('Edit draft', 'event-manager') . '</a>';
+        } else {
+        // Show accept or deny buttons
+            echo '<a href="#" class="accept button-primary ' . $first . '" post-id="' . $post_id . '">' . __('Accept', 'event-manager') . '</a>
+            <a href="#" class="deny button-primary ' . $second . '" post-id="' . $post_id . '">' . __('Deny', 'event-manager') . '</a>';
+        }
     }
 
     /**
