@@ -6,6 +6,8 @@ class Guides extends \HbgEventImporter\Entity\CustomPostType
 {
     public function __construct()
     {
+        $this->runFilters();
+
         parent::__construct(
             __('Guides', 'event-manager'),
             __('Guide', 'event-manager'),
@@ -27,56 +29,16 @@ class Guides extends \HbgEventImporter\Entity\CustomPostType
                 'supports'             => array('title', 'revisions')
             )
         );
+    }
 
-        $this->addTableColumn('cb', '<input type="checkbox">');
-        $this->addTableColumn('title', __('Title', 'event-manager'));
+    public function runFilters()
+    {
+        add_filter('acf/update_value/name=guide_apperance_data', array($this, 'updateTaxonomyRelation'), 10, 3);
+    }
 
-        $this->addTableColumn('events', __('Includes', 'event-manager'), true, function ($column, $postId) {
-            $events = get_post_meta($postId, 'events_included', true);
-            if ($events) {
-                $end = end($events);
-                foreach ((array) $events as $key => $value) {
-                    echo '<a href="'.get_edit_post_link($value).'"> '.get_the_title($value). '</a>';
-                    if ($value != $end) {
-                        echo ", ";
-                    }
-                }
-            }
-        }
-        );
-
-        $this->addTableColumn('date', __('Date', 'event-manager'));
+    public function updateTaxonomyRelation($value, $post_id, $field)
+    {
+        wp_set_object_terms((int) $post_id, array((int) $value), 'guide_sender');
+        return $value;
     }
 }
-
-/* Settings /*
-
-/*
-
-    Support:
-    Multi-level locations (2 level / main, sub)
-
-    Main location beacon id
-    Main distance and distance
-    Guide images
-        Beacon images
-        Beacon distance
-            - Object
-                - Title
-                - Text
-                - Image(s)
-                - Audio
-
-    Apperance tabs
-        Logotype
-        Basic colors
-
-    Guide actions (UI)
-        Add location            / Create new location
-            Add sublocation     / Create new sublocation
-            Add event           / Create new event
-
-    Disconnect sync (MOD)
-        Remove client id (rename client_id)
-
-**/
