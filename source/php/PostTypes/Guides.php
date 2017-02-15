@@ -31,11 +31,21 @@ class Guides extends \HbgEventImporter\Entity\CustomPostType
         );
     }
 
+    /**
+     * Running filters connected to guide section of the api
+     */
     public function runFilters()
     {
         add_filter('acf/update_value/name=guide_apperance_data', array($this, 'updateTaxonomyRelation'), 10, 3);
+        add_filter('acf/load_value/name=my_select', 'my_acf_load_value', 10, 3);
     }
 
+    /**
+     * Get missing address components when saving location
+     * @param  $value     Value before save
+     * @param  $post_id   Id of the post being saved or updated
+     * @param  $field     Array containing field details
+     */
     public function updateTaxonomyRelation($value, $post_id, $field)
     {
         wp_set_object_terms((int) $post_id, array((int) $value), 'guide_sender');
