@@ -2459,6 +2459,7 @@ ImportEvents.Admin.Guide = (function ($) {
                         jQuery("[data-name='guide_object_location']").each(function(){
                             var prePopulateSelected = $(this).val();
 
+                            //TODO: loop over json result and populate all selects. Make the pre populated selected again if exists.
 
                         });
                     });
