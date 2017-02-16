@@ -70,16 +70,13 @@ class Guides extends \HbgEventImporter\Entity\CustomPostType
                                 'post_status' => 'publish'
                             ));
 
+            $field['choices'] = array('' => __("No location", 'event-manager'));
+
             if (is_array($child_posts)) {
-                $field['choices'] = [];
                 foreach ($child_posts as $item) {
                     $field['choices'][ $item->ID ] = $item->post_title . " (" . get_the_title($parent_id) . ")";
                 }
             }
-        }
-
-        if (empty($field['choices'])) {
-            $field['choices'][''] = __("ERROR: Not a valid main location", 'event-manager');
         }
 
         return $field;
@@ -117,7 +114,7 @@ class Guides extends \HbgEventImporter\Entity\CustomPostType
                             ));
 
             if (is_array($child_posts)) {
-                $result= [];
+                $result = array('' => __("No location", 'event-manager'));
                 foreach ($child_posts as $item) {
                     $result[ $item->ID ] = $item->post_title . " (" . get_the_title($parent_id) . ")";
                 }
@@ -127,7 +124,7 @@ class Guides extends \HbgEventImporter\Entity\CustomPostType
             }
         }
 
-        echo json_encode(array());
+        echo json_encode(array('' => __("No location", 'event-manager')));
         exit;
     }
 }

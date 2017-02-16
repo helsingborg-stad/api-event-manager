@@ -21,15 +21,37 @@ ImportEvents.Admin.Guide = (function ($) {
 
                 if(postId) {
                     $.post(ajaxurl, data, function(response) {
+
                         var jsonResult = $.parseJSON(response);
+                        console.log(jsonResult);
+                            jsonResult = this.objectToArray(jsonResult);
 
-                        jQuery("[data-name='guide_object_location']").each(function(){
-                            var prePopulateSelected = $(this).val();
+                        $("[data-name='guide_object_location'] select").each(function(index, object){
+                            var select = $(this);
 
-                            //TODO: loop over json result and populate all selects. Make the pre populated selected again if exists.
+                            if(select.length) {
+                                var prePopulateSelected = select.val();
 
+                                //Empty select
+                                select.empty();
+
+                                //Populate from json
+                                $.each(jsonResult, function(i, item) {
+                                    select.append($('<option/>', {
+                                        value: i,
+                                        text: item
+                                    }).bind(item));
+                                }.bind(select));
+
+                                //Select previusly selected option
+                                if(prePopulateSelected != '') {
+                                    select.val(prePopulateSelected);
+                                }
+
+                            }
                         });
-                    });
+
+                    }.bind(this));
                 } else {
                     alert("Please save the guide to allow sublocations to be selected.");
                 }
