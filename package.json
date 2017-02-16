@@ -27,6 +27,5 @@
     "gulp-uglify": "^1.1.0"
   },
   "dependencies": {
-    "spectrum-colorpicker": "^1.8.0"
   }
 }

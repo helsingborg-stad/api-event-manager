@@ -6,6 +6,8 @@ class Guides extends \HbgEventImporter\Entity\CustomPostType
 {
     public function __construct()
     {
+        $this->runFilters();
+
         parent::__construct(
             __('Guides', 'event-manager'),
             __('Guide', 'event-manager'),
@@ -27,56 +29,105 @@ class Guides extends \HbgEventImporter\Entity\CustomPostType
                 'supports'             => array('title', 'revisions')
             )
         );
+    }
 
-        $this->addTableColumn('cb', '<input type="checkbox">');
-        $this->addTableColumn('title', __('Title', 'event-manager'));
+    /**
+     * Running filters connected to guide section of the api
+     */
+    public function runFilters()
+    {
+        add_filter('acf/update_value/name=guide_apperance_data', array($this, 'updateTaxonomyRelation'), 10, 3);
+        add_filter('acf/load_field/name=guide_object_location', array($this, 'getSublocationsOnly'), 10, 3);
 
-        $this->addTableColumn('events', __('Includes', 'event-manager'), true, function ($column, $postId) {
-            $events = get_post_meta($postId, 'events_included', true);
-            if ($events) {
-                $end = end($events);
-                foreach ((array) $events as $key => $value) {
-                    echo '<a href="'.get_edit_post_link($value).'"> '.get_the_title($value). '</a>';
-                    if ($value != $end) {
-                        echo ", ";
-                    }
+        add_action('wp_ajax_update_guide_sublocation_option', array($this, 'getSublocationsAjax'));
+    }
+
+    /**
+     * Update taxonomy connection guide sender on save.
+     * @param  $value     Value before save
+     * @param  $post_id   Id of the post being saved or updated
+     * @param  $field     Array containing field details
+     */
+    public function updateTaxonomyRelation($value, $post_id, $field)
+    {
+        wp_set_object_terms((int) $post_id, array((int) $value), 'guide_sender');
+        return $value;
+    }
+
+    /**
+     * Only get sublocation to previously selected main location.
+     * @param  $field     Array containing field details
+     */
+    public function getSublocationsOnly($field)
+    {
+        $parent_id = $this->getSelectedParent();
+
+        if (!is_null($parent_id) && is_numeric($parent_id)) {
+            $child_posts =  get_children($x = array(
+                                'post_parent' => $parent_id,
+                                'post_type'   => 'location',
+                                'numberposts' => -1,
+                                'post_status' => 'publish'
+                            ));
+
+            if (is_array($child_posts)) {
+                $field['choices'] = [];
+                foreach ($child_posts as $item) {
+                    $field['choices'][ $item->ID ] = $item->post_title . " (" . get_the_title($parent_id) . ")";
                 }
             }
         }
-        );
 
-        $this->addTableColumn('date', __('Date', 'event-manager'));
+        if (empty($field['choices'])) {
+            $field['choices'][''] = __("ERROR: Not a valid main location", 'event-manager');
+        }
+
+        return $field;
+    }
+
+    public function getSelectedParent($postObject = null)
+    {
+        if (is_null($postObject)) {
+            global $post;
+        } else {
+            $post = $postObject;
+        }
+
+        if (is_object($post) && isset($post->ID) && is_numeric($post->ID)) {
+            return get_post_meta($post->ID, 'guide_main_location', true);
+        }
+
+        if (!is_object($post) && is_numeric($post)) {
+            return get_post_meta($post, 'guide_main_location', true);
+        }
+
+        return false;
+    }
+
+    public function getSublocationsAjax()
+    {
+        $parent_id = (isset($_POST['selected']) && is_numeric($_POST['selected'])) ? $_POST['selected'] : null;
+
+        if (!is_null($parent_id) && is_numeric($parent_id)) {
+            $child_posts =  get_children(array(
+                                'post_parent' => $parent_id,
+                                'post_type'   => 'location',
+                                'numberposts' => -1,
+                                'post_status' => 'publish'
+                            ));
+
+            if (is_array($child_posts)) {
+                $result= [];
+                foreach ($child_posts as $item) {
+                    $result[ $item->ID ] = $item->post_title . " (" . get_the_title($parent_id) . ")";
+                }
+
+                echo json_encode($result);
+                exit;
+            }
+        }
+
+        echo json_encode(array());
+        exit;
     }
 }
-
-/* Settings /*
-
-/*
-
-    Support:
-    Multi-level locations (2 level / main, sub)
-
-    Main location beacon id
-    Main distance and distance
-    Guide images
-        Beacon images
-        Beacon distance
-            - Object
-                - Title
-                - Text
-                - Image(s)
-                - Audio
-
-    Apperance tabs
-        Logotype
-        Basic colors
-
-    Guide actions (UI)
-        Add location            / Create new location
-            Add sublocation     / Create new sublocation
-            Add event           / Create new event
-
-    Disconnect sync (MOD)
-        Remove client id (rename client_id)
-
-**/
