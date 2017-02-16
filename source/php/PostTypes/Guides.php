@@ -38,7 +38,7 @@ class Guides extends \HbgEventImporter\Entity\CustomPostType
     {
         add_filter('acf/update_value/name=guide_apperance_data', array($this, 'updateTaxonomyRelation'), 10, 3);
         add_filter('acf/load_field/name=guide_object_location', array($this, 'getSublocationsOnly'), 10, 3);
-
+        add_filter('acf/fields/post_object/query/name=guide_main_location', array($this, 'getMainLocations'), 10, 3);
         add_action('wp_ajax_update_guide_sublocation_option', array($this, 'getSublocationsAjax'));
     }
 
@@ -52,6 +52,22 @@ class Guides extends \HbgEventImporter\Entity\CustomPostType
     {
         wp_set_object_terms((int) $post_id, array((int) $value), 'guide_sender');
         return $value;
+    }
+
+    /**
+     * Only get main locations containing childrens
+     * @param  $field     Array containing field details
+     */
+    public function getMainLocations($args, $field, $post_id)
+    {
+        global $wpdb;
+        $valid_id = $wpdb->get_col("SELECT post_parent FROM {$wpdb->posts} WHERE post_parent != 0 AND post_type='location' GROUP BY post_parent");
+
+        if (is_array($valid_id)) {
+            $args['post__in'] = $valid_id;
+        }
+
+        return $args;
     }
 
     /**
