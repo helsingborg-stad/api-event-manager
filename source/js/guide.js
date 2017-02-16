@@ -23,8 +23,6 @@ ImportEvents.Admin.Guide = (function ($) {
                     $.post(ajaxurl, data, function(response) {
 
                         var jsonResult = $.parseJSON(response);
-                        console.log(jsonResult);
-                            jsonResult = this.objectToArray(jsonResult);
 
                         $("[data-name='guide_object_location'] select").each(function(index, object){
                             var select = $(this);
@@ -44,9 +42,7 @@ ImportEvents.Admin.Guide = (function ($) {
                                 }.bind(select));
 
                                 //Select previusly selected option
-                                if(prePopulateSelected != '') {
-                                    select.val(prePopulateSelected);
-                                }
+                                select.val(prePopulateSelected);
 
                             }
                         });
