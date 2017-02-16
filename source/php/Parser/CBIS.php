@@ -401,6 +401,7 @@ class CBIS extends \HbgEventImporter\Parser
                         'missing_user_group'    => $userGroups == null ? 1 : 0,
                         'sync'                  => 1,
                         'imported_post'         => 1,
+                        'import_client'         => 'cbis',
                     )
                 );
 

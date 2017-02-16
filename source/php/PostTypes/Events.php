@@ -110,6 +110,7 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
         add_filter('acf/validate_value/name=price_senior', array($this, 'validatePrice'), 10, 4);
         add_filter('acf/validate_value/name=price_group', array($this, 'validatePrice'), 10, 4);
 
+        add_filter('acf/update_value/name=sync', array($this, 'acfUpdateSync'), 10, 3);
         add_filter('acf/update_value/name=price_adult', array($this, 'acfUpdatePrices'), 10, 3);
         add_filter('acf/update_value/name=price_children', array($this, 'acfUpdatePrices'), 10, 3);
         add_filter('acf/update_value/name=price_student', array($this, 'acfUpdatePrices'), 10, 3);
@@ -667,5 +668,27 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
             $title .= ' (' . $address .  ')';
         }
         return $title;
+    }
+
+    /**
+     * When unchecking sync option, remove import client and save to new meta field
+     * @param  string $value   the value of the field
+     * @param  int    $post_id the post id to save against
+     * @param  array  $field   the field object
+     * @return string          the new value
+     */
+    public function acfUpdateSync($value, $post_id, $field)
+    {
+        if (! $value) {
+            $import_client = get_post_meta($post_id, 'import_client', true);
+            add_post_meta($post_id, 'orig_import_client', $import_client, true);
+            delete_post_meta($post_id, 'import_client');
+        } else {
+            $orig_client = get_post_meta($post_id, 'orig_import_client', true);
+            add_post_meta($post_id, 'import_client', $orig_client, true);
+            delete_post_meta($post_id, 'orig_import_client');
+        }
+
+        return $value;
     }
 }
