@@ -10,12 +10,11 @@ class AcfGuide
 {
     public function __construct()
     {
-        //add_action('acf/init', array($this, 'addLocalFieldGroups'));
+        add_action('acf/init', array($this, 'addLocalFieldGroups'));
     }
 
     public function addLocalFieldGroups()
     {
-
         if (function_exists('acf_add_local_field_group')):
 
         acf_add_local_field_group(array(
@@ -550,20 +549,56 @@ class AcfGuide
                             ),
                         ),
                         array(
-                            'post_type' => array(
-                                0 => 'location',
-                            ),
-                            'taxonomy' => array(
-                            ),
-                            'allow_null' => 1,
                             'multiple' => 0,
-                            'return_format' => 'id',
-                            'ui' => 1,
+                            'allow_null' => 0,
+                            'choices' => array(
+                            ),
+                            'default_value' => array(
+                            ),
+                            'ui' => 0,
+                            'ajax' => 0,
+                            'placeholder' => '',
+                            'return_format' => 'value',
                             'key' => 'field_589dc81699fb6',
                             'label' => __('Plats', 'event-manager'),
                             'name' => 'guide_object_location',
-                            'type' => 'post_object',
+                            'type' => 'select',
                             'instructions' => __('Choose a location that is related to this object. All sub-locations to a main location is avilabile here.', 'event-manager'),
+                            'required' => 0,
+                            'conditional_logic' => 0,
+                            'wrapper' => array(
+                                'width' => '',
+                                'class' => '',
+                                'id' => '',
+                            ),
+                        ),
+                        array(
+                            'placement' => 'top',
+                            'endpoint' => 0,
+                            'key' => 'field_58a5c081f4193',
+                            'label' => __('Visibility', 'event-manager'),
+                            'name' => '',
+                            'type' => 'tab',
+                            'instructions' => '',
+                            'required' => 0,
+                            'conditional_logic' => 0,
+                            'wrapper' => array(
+                                'width' => '',
+                                'class' => '',
+                                'id' => '',
+                            ),
+                        ),
+                        array(
+                            'default_value' => 1,
+                            'message' => __('Show or hide this object', 'event-manager'),
+                            'ui' => 1,
+                            'ui_on_text' => __('Show', 'event-manager'),
+                            'ui_off_text' => __('Hide', 'event-manager'),
+                            'key' => 'field_58a5c098f4194',
+                            'label' => __('Object visibility', 'event-manager'),
+                            'name' => 'guide_object_active',
+                            'type' => 'true_false',
+                            'instructions' => '',
                             'required' => 0,
                             'conditional_logic' => 0,
                             'wrapper' => array(
