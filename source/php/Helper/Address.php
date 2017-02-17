@@ -121,4 +121,48 @@ class Address
         }
         return false;
     }
+
+    /**
+     * Get nearby locations within given distance
+     * @param  string       $lat       latitude
+     * @param  string       $lng       longitude
+     * @param  int/float    $distance  radius distance in km
+     * @return array with locations
+     */
+    public static function getNearbyLocations($lat, $lng, $distance = 0)
+    {
+        global $wpdb;
+
+        // Radius of the earth in kilometers.
+        $earth_radius = 6371;
+        $sql = $wpdb->prepare( "
+                SELECT DISTINCT
+                    latitude.post_id,
+                    post.post_title,
+                    latitude.meta_value as lat,
+                    longitude.meta_value as lng,
+                    (%s * ACOS(
+                        COS(RADIANS( %s )) * COS(RADIANS(latitude.meta_value)) * COS(
+                        RADIANS(longitude.meta_value) - RADIANS( %s )
+                        ) + SIN(RADIANS( %s )) * SIN(RADIANS(latitude.meta_value))
+                    )) AS distance
+                    FROM $wpdb->posts post
+                    INNER JOIN $wpdb->postmeta latitude ON post.ID = latitude.post_id
+                    INNER JOIN $wpdb->postmeta longitude ON post.ID = longitude.post_id
+                    AND post.post_type   = 'location'
+                    AND post.post_status = 'publish'
+                    AND latitude.meta_key = 'latitude'
+                    AND longitude.meta_key = 'longitude'
+                    HAVING distance <= %s
+                    ORDER BY distance ASC",
+                    $earth_radius, $lat, $lng, $lat, $distance
+                );
+
+        $nearby_locations = $wpdb->get_results($sql, ARRAY_A);
+
+        if ($nearby_locations) {
+            return $nearby_locations;
+        }
+    }
+
 }
