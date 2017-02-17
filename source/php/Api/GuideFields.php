@@ -29,7 +29,7 @@ class GuideFields extends Fields
             array(
                 'get_callback' => array($this, 'theme'),
                 'schema' => array(
-                    'description' => 'Field containing object with taxonomies.',
+                    'description' => 'Describes the guides colors and logo.',
                     'type' => 'object',
                     'context' => array('view')
                 )
@@ -42,7 +42,7 @@ class GuideFields extends Fields
             array(
                 'get_callback' => array($this, 'mainLocation'),
                 'schema' => array(
-                    'description' => 'Field containing object with taxonomies.',
+                    'description' => 'The main location for this guide.',
                     'type' => 'object',
                     'context' => array('view')
                 )
@@ -55,7 +55,7 @@ class GuideFields extends Fields
             array(
                 'get_callback' => array($this, 'beacon'),
                 'schema' => array(
-                    'description' => 'Field containing object with taxonomies.',
+                    'description' => 'Guide main beacon information.',
                     'type' => 'object',
                     'context' => array('view')
                 )
@@ -68,7 +68,7 @@ class GuideFields extends Fields
             array(
                 'get_callback' => array($this, 'media'),
                 'schema' => array(
-                    'description' => 'Field containing object with taxonomies.',
+                    'description' => 'Guide main media information.',
                     'type' => 'object',
                     'context' => array('view')
                 )
@@ -81,7 +81,20 @@ class GuideFields extends Fields
             array(
                 'get_callback' => array($this, 'objects'),
                 'schema' => array(
-                    'description' => 'Field containing object with taxonomies.',
+                    'description' => 'Objects of this guide.',
+                    'type' => 'object',
+                    'context' => array('view')
+                )
+            )
+        );
+
+        // Guide location objects
+        register_rest_field($this->postType,
+            'objectMap',
+            array(
+                'get_callback' => array($this, 'objectMap'),
+                'schema' => array(
+                    'description' => 'A map of beacon and location structure.',
                     'type' => 'object',
                     'context' => array('view')
                 )
@@ -110,6 +123,14 @@ class GuideFields extends Fields
         } else {
             return $theme;
         }
+    }
+
+    public function objectMap($object, $field_name, $request, $formatted = true)
+    {
+        return array(
+            'beacon' => array(),
+            'location' => array()
+        );
     }
 
     public function beacon($object, $field_name, $request, $formatted = true)
@@ -145,6 +166,7 @@ class GuideFields extends Fields
 
         foreach ((array) $this->objectGetCallBack($object, 'guide_location_objects', $request, true) as $item) {
             $objects[] = array(
+                'active' => ($item['guide_object_active'] == 1) ? true : false,
                 'id' => empty($item['guide_object_id']) ? null : $item['guide_object_id'],
                 'title' => empty($item['guide_object_title']) ? null : $item['guide_object_title'],
                 'description' => empty($item['guide_object_description']) ? null : $item['guide_object_description'],
