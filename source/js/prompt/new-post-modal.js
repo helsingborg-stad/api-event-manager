@@ -25,7 +25,9 @@ ImportEvents.Admin.NewPostModal = (function ($) {
      */
     NewPostModal.prototype.createTrigger = function(postType, triggerClass) {
         if($(triggerClass).length) {
-            $(triggerClass).append('<a class="createNewPost button" href="//' + window.location.host + '/wp/wp-admin/post-new.php?post_type=' + postType+ '&lightbox=true">' + eventmanager['new_' + postType] + '</a>');
+            if(typeof eventmanager['new_' + postType] != 'undefined') {
+               $(triggerClass).append('<a class="createNewPost button" href="//' + window.location.host + '/wp/wp-admin/post-new.php?post_type=' + postType+ '&lightbox=true">' + eventmanager['new_' + postType] + '</a>');
+            }
         }
     };
 
