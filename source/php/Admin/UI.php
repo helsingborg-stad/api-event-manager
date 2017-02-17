@@ -41,15 +41,14 @@ class UI
     }
 
     // Remove Permalink meta box on edit posts
-    function removeMetaBox() {
+    public function removeMetaBox()
+    {
         remove_meta_box('slugdiv', array('event', 'location', 'contact', 'sponsor', 'package', 'membership-card', 'guide'), 'normal');
     }
 
     // Add instructions to Featured Image meta box
-    function editFeaturedImageInstruction( $content ) {
+    public function editFeaturedImageInstruction($content)
+    {
         return $content .= '<p>'.__('Please upload images that are as large as possible and that are not sensitive to cropping (eg. images with text overlay).', 'event-manager').'</p>';
     }
-
-
-
 }
