@@ -26,9 +26,9 @@ class GuideFields extends Fields
 
         // Guide theme object
         register_rest_field($this->postType,
-            'theme',
+            'settings',
             array(
-                'get_callback' => array($this, 'theme'),
+                'get_callback' => array($this, 'settings'),
                 'schema' => array(
                     'description' => 'Describes the guides colors and logo.',
                     'type' => 'object',
@@ -103,14 +103,13 @@ class GuideFields extends Fields
         );
     }
 
-    public function theme($object, $field_name, $request, $formatted = true)
+    public function settings($object, $field_name, $request, $formatted = true)
     {
-        $taxonomy = $this->objectGetCallBack($object, 'guide_apperance_data', $request);
-        if (is_null($taxonomy) ||!is_object($taxonomy)) {
-            return null;
-        }
+        $settings = [];
 
-        $theme = array(
+        /* Theme */
+        $taxonomy = $this->objectGetCallBack($object, 'guide_apperance_data', $request);
+        $settings['theme'] = array(
             'id' => $taxonomy->term_id,
             'name' => $taxonomy->name,
             'logotype' => get_field('guide_taxonomy_logotype', $taxonomy->taxonomy. '_' . $taxonomy->term_id),
@@ -119,11 +118,36 @@ class GuideFields extends Fields
             'taxonomy' => $taxonomy
         );
 
-        if (empty(array_filter($theme))) {
-            return null;
-        } else {
-            return $theme;
-        }
+        /* Wheter to use map or not */
+        $settings['map'] = $this->boolGetCallBack($object, 'guide_main_map', $request, $formatted);
+
+        /* Wheter the location has full wifi coverage or not */
+        $settings['wifi'] = $this->boolGetCallBack($object, 'guide_main_wifi', $request, $formatted);
+
+        /* Check if guide has objects - If not its disabled */
+        $settings['objects'] = empty($this->getObjects($object, 'guide_location_objects', $request, true)) ? false : true;
+
+        /* Arrival messages */
+        $settings['messages'] = array(
+            'arrival' => array(
+                array(
+                    'message' => 'Välkommen till oss, du vet väl att vi bjuder på bullar?',
+                    'delay' => 5,
+                )
+            ),
+            'departue' => array(
+                array(
+                    'message' => 'Tack för ditt besök, välkommen åter!',
+                    'delay' => 5,
+                ),
+                array(
+                    'message' => 'Hur upplevde du ditt besök igår? Ge oss ett betyg på http://dunkerskulturs.se/betyg/',
+                    'delay' => 86400,
+                )
+            )
+        );
+
+        return $settings;
     }
 
     public function objectMap($object, $field_name, $request, $formatted = true)
@@ -143,7 +167,6 @@ class GuideFields extends Fields
 
         //Create location map
         foreach ((array) $objects as $key => $item) {
-
             if ($item['guide_object_active'] != 1) {
                 continue;
             }
@@ -160,7 +183,6 @@ class GuideFields extends Fields
 
         //Create beacon map
         foreach ((array) $objects as $key => $item) {
-
             if ($item['guide_object_active'] != 1) {
                 continue;
             }
@@ -179,7 +201,7 @@ class GuideFields extends Fields
     public function beacon($object, $field_name, $request, $formatted = true)
     {
         $beacon = array(
-            'namespace' => $this->numericGetCallBack($object, 'guide_main_beacon_namespace', $request, $formatted),
+            'namespace' => $this->stringGetCallBack($object, 'guide_main_beacon_namespace', $request, $formatted),
             'distance' => $this->numericGetCallBack($object, 'guide_main_beacon_distance', $request, $formatted)
         );
 
