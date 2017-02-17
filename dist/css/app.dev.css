@@ -1,3 +1,172 @@
+.acf-tab-error {
+  color: #F55E4F;
+  float: right; }
+
+.createContact {
+  margin-top: 15px !important; }
+
+/* Hide meta box content from publish */
+.misc-pub-visibility, .misc-pub-curtime, #preview-action {
+  display: none !important; }
+
+.main_organizer_hidden {
+  display: none; }
+
+.acf-field[data-name="geo_map"] .title {
+  display: none !important; }
+
+.acf-field[data-name="imported_post"] {
+  display: none !important; }
+
+.acf-field[data-name="sync"] li label {
+  padding: 12px;
+  color: #444;
+  background-color: #efefef;
+  border-radius: 4px; }
+
+.check_active {
+  color: #fff !important;
+  background-color: #0085ba !important; }
+
+.extraspace {
+  margin: 1px 8px 0 0 !important; }
+
+.import-buttons {
+  margin-bottom: 8px; }
+
+.import-buttons .button-primary {
+  padding: 4px 8px;
+  line-height: normal;
+  height: auto;
+  position: relative; }
+
+#cbislocation {
+  display: block; }
+
+#blackOverlay {
+  display: none;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  position: absolute;
+  top: 0; }
+
+.acceptAndDeny .hidden {
+  display: none; }
+
+.accept.button-primary {
+  color: #fff;
+  background-color: #5cb85c;
+  border-color: #5cb85c;
+  text-shadow: 0 -1px 1px #398439,1px 0 1px #398439,0 1px 1px #398439,-1px 0 1px #398439;
+  box-shadow: 0 1px 0 #398439; }
+  .accept.button-primary:active, .accept.button-primary:focus, .accept.button-primary:hover {
+    color: #fff;
+    background-color: #449d44;
+    border-color: #398439; }
+  .accept.button-primary:active {
+    box-shadow: inset 0 2px 0 #398439; }
+
+.deny.button-primary {
+  color: #fff;
+  background-color: #d9534f;
+  border-color: #d9534f;
+  text-shadow: 0 -1px 1px #ac2925,1px 0 1px #ac2925,0 1px 1px #ac2925,-1px 0 1px #ac2925;
+  box-shadow: 0 1px 0 #ac2925; }
+  .deny.button-primary:active, .deny.button-primary:focus, .deny.button-primary:hover {
+    color: #fff;
+    background-color: #c9302c;
+    border-color: #ac2925; }
+  .deny.button-primary:active {
+    box-shadow: inset 0 2px 0 #ac2925; }
+
+#importResponse {
+  display: none;
+  line-height: 0;
+  width: 400px;
+  height: 270px;
+  background-color: #f1f1f1;
+  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.41);
+  z-index: 10000;
+  position: absolute;
+  top: 200px;
+  left: 50%;
+  transform: translate(-50%);
+  color: #000;
+  border-radius: 5px; }
+
+#importResponse .button {
+  background-color: #76f578;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 0;
+  left: 0;
+  text-align: center; }
+
+#importResponse div {
+  height: 25%;
+  position: relative;
+  margin: 0; }
+
+#importResponse div.inline {
+  width: 33.3%;
+  display: inline-block; }
+
+#importResponse div p, #importResponse div h3 {
+  width: 100%;
+  text-align: center;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  margin: 0; }
+
+#importResponse #untilReload {
+  border-radius: 0px 0px 5px 5px;
+  overflow: hidden; }
+
+#importResponse #untilReload #meter {
+  background-color: #5cb85c;
+  position: absolute;
+  width: 0%;
+  height: 100%; }
+
+#importResponse #event, #importResponse #location, #importResponse #contact {
+  opacity: 0; }
+
+#misc-publishing-actions .misc-pub-section.misc-pub-post-status, #minor-publishing-actions {
+  display: none; }
+
+.createNewPost.button {
+  margin-top: 7px; }
+
+#suggestionContainer {
+  width: 100%;
+  max-height: 171px;
+  background-color: #fff;
+  padding: 3px 8px;
+  box-sizing: border-box;
+  overflow-y: auto;
+  display: none; }
+
+#suggestionList {
+  margin: 0; }
+
+#suggestionList a.suggestion {
+  color: #264973;
+  text-decoration: underline; }
+
+#suggestionList a.suggestion:hover {
+  color: #4079bf;
+  text-decoration: underline; }
+
+#suggestionList a.suggestion span {
+  background-color: #dbeff8; }
+
+.suggestion-hide {
+  position: static;
+  float: right; }
+
 .wp-admin.post-type-event.post-php.no-sync .postbox:not(#submitdiv):not(.acf-postbox):not(#lix-calculator):not(#revisionsdiv),
 .wp-admin.post-type-event.post-php.no-sync .postarea,
 .wp-admin.post-type-event.post-php.no-sync #titlewrap,
@@ -231,237 +400,3 @@
     background-position: center center;
     background-size: cover;
     opacity: .5; }
-
-.acceptAndDeny .hidden {
-  display: none; }
-
-#suggestionContainer {
-  width: 100%;
-  max-height: 171px;
-  background-color: #fff;
-  padding: 3px 8px;
-  box-sizing: border-box;
-  overflow-y: auto;
-  display: none; }
-
-#suggestionList {
-  margin: 0; }
-
-#suggestionList a.suggestion {
-  color: #264973;
-  text-decoration: underline; }
-
-#suggestionList a.suggestion:hover {
-  color: #4079bf;
-  text-decoration: underline; }
-
-#suggestionList a.suggestion span {
-  background-color: #dbeff8; }
-
-.suggestion-hide {
-  position: static;
-  float: right; }
-
-#lightbox {
-  position: fixed !important;
-  z-index: 999999 !important;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background-color: rgba(241, 241, 241, 0.9);
-  opacity: 0;
-  animation: 200ms modal-fade-in forwards; }
-
-#lightbox .lightbox-close {
-  position: absolute;
-  top: 0;
-  right: 6%;
-  font-size: 14px;
-  padding: 5px 20px;
-  cursor: pointer;
-  border-radius: 0px 0px 3px 3px;
-  background-color: #d9534f;
-  border-color: #d9534f;
-  border-width: 1px;
-  border-style: solid;
-  text-shadow: 0 -1px 1px #ac2925,1px 0 1px #ac2925,0 1px 1px #ac2925,-1px 0 1px #ac2925;
-  box-shadow: 0 2px 0 #c9302c;
-  color: #fff; }
-
-#lightbox .lightbox-close:hover {
-  padding-top: 10px;
-  color: #fff;
-  background-color: #c9302c;
-  border-color: #ac2925; }
-
-#lightbox .lightbox-close:active {
-  box-shadow: inset 0 2px 0 #ac2925; }
-
-#lightbox .lightbox-wrapper {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  margin: 0 auto; }
-
-#lightbox .lightbox-iframe {
-  box-sizing: border-box;
-  width: 100vw;
-  height: 100%; }
-
-.lightbox-open {
-  overflow: hidden !important; }
-
-.lightbox-open #wpwrap {
-  -moz-filter: blur(10px) !important;
-  -o-filter: blur(10px) !important;
-  -ms-filter: blur(10px) !important;
-  filter: blur(10px) !important;
-  filter: progid:DXImageTransform.Microsoft.Blur(PixelRadius='10'); }
-
-@keyframes modal-fade-in {
-  100% {
-    opacity: 1; } }
-
-.acf-tab-error {
-  color: #F55E4F;
-  float: right; }
-
-.createContact {
-  margin-top: 15px !important; }
-
-/* Hide meta box content from publish */
-.misc-pub-visibility, .misc-pub-curtime, #preview-action {
-  display: none !important; }
-
-.main_organizer_hidden {
-  display: none; }
-
-.acf-field[data-name="geo_map"] .title {
-  display: none !important; }
-
-.acf-field[data-name="imported_post"] {
-  display: none !important; }
-
-.acf-field[data-name="sync"] li label {
-  padding: 12px;
-  color: #444;
-  background-color: #efefef;
-  border-radius: 4px; }
-
-.check_active {
-  color: #fff !important;
-  background-color: #0085ba !important; }
-
-.accept.button-primary {
-  color: #fff;
-  background-color: #5cb85c;
-  border-color: #5cb85c;
-  text-shadow: 0 -1px 1px #398439,1px 0 1px #398439,0 1px 1px #398439,-1px 0 1px #398439;
-  box-shadow: 0 1px 0 #398439; }
-
-.accept.button-primary:hover, .accept.button-primary:focus, .accept.button-primary:active {
-  color: #fff;
-  background-color: #449d44;
-  border-color: #398439; }
-
-.accept.button-primary:active {
-  box-shadow: inset 0 2px 0 #398439; }
-
-.deny.button-primary {
-  color: #fff;
-  background-color: #d9534f;
-  border-color: #d9534f;
-  text-shadow: 0 -1px 1px #ac2925,1px 0 1px #ac2925,0 1px 1px #ac2925,-1px 0 1px #ac2925;
-  box-shadow: 0 1px 0 #ac2925; }
-
-.deny.button-primary:hover, .deny.button-primary:focus, .deny.button-primary:active {
-  color: #fff;
-  background-color: #c9302c;
-  border-color: #ac2925; }
-
-.deny.button-primary:active {
-  box-shadow: inset 0 2px 0 #ac2925; }
-
-.extraspace {
-  margin: 1px 8px 0 0 !important; }
-
-.import-buttons {
-  margin-bottom: 8px; }
-
-.import-buttons .button-primary {
-  padding: 4px 8px;
-  line-height: normal;
-  height: auto;
-  position: relative; }
-
-#cbislocation {
-  display: block; }
-
-#blackOverlay {
-  display: none;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  position: absolute;
-  top: 0; }
-
-#importResponse {
-  display: none;
-  line-height: 0;
-  width: 400px;
-  height: 270px;
-  background-color: #f1f1f1;
-  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.41);
-  z-index: 10000;
-  position: absolute;
-  top: 200px;
-  left: 50%;
-  transform: translate(-50%);
-  color: #000;
-  border-radius: 5px; }
-
-#importResponse .button {
-  background-color: #76f578;
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  right: 0;
-  left: 0;
-  text-align: center; }
-
-#importResponse div {
-  height: 25%;
-  position: relative;
-  margin: 0; }
-
-#importResponse div.inline {
-  width: 33.3%;
-  display: inline-block; }
-
-#importResponse div p, #importResponse div h3 {
-  width: 100%;
-  text-align: center;
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  margin: 0; }
-
-#importResponse #untilReload {
-  border-radius: 0px 0px 5px 5px;
-  overflow: hidden; }
-
-#importResponse #untilReload #meter {
-  background-color: #5cb85c;
-  position: absolute;
-  width: 0%;
-  height: 100%; }
-
-#importResponse #event, #importResponse #location, #importResponse #contact {
-  opacity: 0; }
-
-#misc-publishing-actions .misc-pub-section.misc-pub-post-status, #minor-publishing-actions {
-  display: none; }
-
-.createNewPost.button {
-  margin-top: 5px; }
