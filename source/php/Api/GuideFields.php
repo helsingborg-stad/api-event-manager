@@ -145,7 +145,7 @@ class GuideFields extends Fields
         foreach ((array) $objects as $key => $item) {
 
             if ($item['guide_object_active'] != 1) {
-                continiue;
+                continue;
             }
 
             if (empty($item['guide_object_location'])) {
@@ -162,7 +162,7 @@ class GuideFields extends Fields
         foreach ((array) $objects as $key => $item) {
 
             if ($item['guide_object_active'] != 1) {
-                continiue;
+                continue;
             }
 
             if (!empty($item['guide_object_beacon_id'])) {
