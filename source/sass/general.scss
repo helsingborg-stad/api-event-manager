@@ -1,0 +1,69 @@
+
+
+.acf-tab-error  {
+  color: #F55E4F;
+  float: right;
+}
+
+.createContact {
+  margin-top: 15px !important;
+}
+
+/* Hide meta box content from publish */
+.misc-pub-visibility, .misc-pub-curtime, #preview-action {
+  display: none !important;
+}
+
+.main_organizer_hidden {
+  display: none;
+}
+
+.acf-field[data-name="geo_map"] .title {
+  display: none !important;
+}
+
+.acf-field[data-name="imported_post"] {
+  display: none !important;
+}
+
+.acf-field[data-name="sync"] li label {
+  padding:12px;
+  color:#444;
+  background-color: #efefef;
+  border-radius:4px;
+}
+
+.check_active {
+  color:#fff !important;
+  background-color: #0085ba !important;
+}
+
+.extraspace {
+  margin: 1px 8px 0 0 !important;
+}
+
+.import-buttons {
+  margin-bottom: 8px;
+}
+
+.import-buttons .button-primary {
+  padding: 4px 8px;
+  line-height: normal;
+  height: auto;
+  position: relative;
+}
+
+#cbislocation {
+  display: block;
+}
+
+#blackOverlay {
+  display: none;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.5);
+  position: absolute;
+  top: 0;
+}
+
+

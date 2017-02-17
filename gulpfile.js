@@ -12,7 +12,7 @@ var plumber = require('gulp-plumber');
 
 // Compile Our Sass
 gulp.task('sass-dist', function() {
-    gulp.src('source/sass/hbg-event-importer.scss')
+    gulp.src('source/sass/app.scss')
             .pipe(plumber())
             .pipe(sass())
             .pipe(autoprefixer('last 2 version', 'safari 5', 'ie 8', 'ie 9', 'opera 12.1'))
@@ -20,7 +20,7 @@ gulp.task('sass-dist', function() {
             .pipe(cssnano({zindex: false}))
             .pipe(gulp.dest('dist/css'));
 
-    gulp.src('source/sass/lightbox.scss')
+    gulp.src('source/sass/modal.scss')
             .pipe(plumber())
             .pipe(sass())
             .pipe(autoprefixer('last 2 version', 'safari 5', 'ie 8', 'ie 9', 'opera 12.1'))
@@ -30,14 +30,14 @@ gulp.task('sass-dist', function() {
 });
 
 gulp.task('sass-dev', function() {
-    gulp.src('source/sass/hbg-event-importer.scss')
+    gulp.src('source/sass/app.scss')
         .pipe(plumber())
         .pipe(sass())
         .pipe(autoprefixer('last 2 version', 'safari 5', 'ie 8', 'ie 9', 'opera 12.1'))
         .pipe(rename({suffix: '.dev'}))
         .pipe(gulp.dest('dist/css'));
 
-    gulp.src('source/sass/lightbox.scss')
+    gulp.src('source/sass/modal.scss')
         .pipe(plumber())
         .pipe(sass())
         .pipe(autoprefixer('last 2 version', 'safari 5', 'ie 8', 'ie 9', 'opera 12.1'))
@@ -48,12 +48,11 @@ gulp.task('sass-dev', function() {
 // Concatenate & Minify JS
 gulp.task('scripts-dist', function() {
     gulp.src([
-            'node_modules/spectrum-colorpicker/spectrum.js',
             'source/js/**/*.js',
         ])
-        .pipe(concat('hbg-event-importer.dev.js'))
+        .pipe(concat('app.dev.js'))
         .pipe(gulp.dest('dist/js'))
-        .pipe(rename('hbg-event-importer.min.js'))
+        .pipe(rename('app.min.js'))
         .pipe(uglify())
         .pipe(gulp.dest('dist/js'));
 });

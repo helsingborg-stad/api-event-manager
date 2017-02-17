@@ -1,3 +1,4 @@
+[
     {
         "key": "group_589497ca3741e",
         "title": "Basic Guide Settings",
@@ -25,7 +26,7 @@
                 "default_value": "",
                 "delay": 0,
                 "key": "field_58949813a052c",
-                "label": "Description",
+                "label": "Beskrivning",
                 "name": "guide_main_description",
                 "type": "wysiwyg",
                 "instructions": "",
@@ -529,19 +530,54 @@
                         }
                     },
                     {
-                        "post_type": [
-                            "location"
-                        ],
-                        "taxonomy": [],
-                        "allow_null": 1,
                         "multiple": 0,
-                        "return_format": "id",
-                        "ui": 1,
+                        "allow_null": 0,
+                        "choices": [],
+                        "default_value": [],
+                        "ui": 0,
+                        "ajax": 0,
+                        "placeholder": "",
+                        "return_format": "value",
                         "key": "field_589dc81699fb6",
                         "label": "Plats",
                         "name": "guide_object_location",
-                        "type": "post_object",
+                        "type": "select",
                         "instructions": "Choose a location that is related to this object. All sub-locations to a main location is avilabile here.",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        }
+                    },
+                    {
+                        "placement": "top",
+                        "endpoint": 0,
+                        "key": "field_58a5c081f4193",
+                        "label": "Visibility",
+                        "name": "",
+                        "type": "tab",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        }
+                    },
+                    {
+                        "default_value": 1,
+                        "message": "Show or hide this object",
+                        "ui": 1,
+                        "ui_on_text": "Show",
+                        "ui_off_text": "Hide",
+                        "key": "field_58a5c098f4194",
+                        "label": "Object visibility",
+                        "name": "guide_object_active",
+                        "type": "true_false",
+                        "instructions": "",
                         "required": 0,
                         "conditional_logic": 0,
                         "wrapper": {
@@ -587,4 +623,136 @@
         "hide_on_screen": "",
         "active": 1,
         "description": "Manage main guide object details."
+    },
+    {
+        "key": "group_589dd0fbd412e",
+        "title": "Guide apperance",
+        "fields": [
+            {
+                "taxonomy": "guide_sender",
+                "field_type": "select",
+                "multiple": 0,
+                "allow_null": 0,
+                "return_format": "object",
+                "add_term": 1,
+                "load_terms": 0,
+                "save_terms": 0,
+                "key": "field_589dd138aca7e",
+                "label": "Select apperance",
+                "name": "guide_apperance_data",
+                "type": "taxonomy",
+                "instructions": "",
+                "required": 1,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                }
+            }
+        ],
+        "location": [
+            [
+                {
+                    "param": "post_type",
+                    "operator": "==",
+                    "value": "guide"
+                }
+            ]
+        ],
+        "menu_order": 0,
+        "position": "side",
+        "style": "default",
+        "label_placement": "top",
+        "instruction_placement": "label",
+        "hide_on_screen": "",
+        "active": 1,
+        "description": ""
+    },
+    {
+        "key": "group_589dcf7e047a8",
+        "title": "Guide apperance settings",
+        "fields": [
+            {
+                "return_format": "array",
+                "preview_size": "medium",
+                "library": "uploadedTo",
+                "min_width": "",
+                "min_height": "",
+                "min_size": "",
+                "max_width": "",
+                "max_height": "",
+                "max_size": "",
+                "mime_types": "svg, png",
+                "key": "field_589dcf9661090",
+                "label": "Logotype",
+                "name": "guide_taxonomy_logotype",
+                "type": "image",
+                "instructions": "A logotype that may be shown related to the guides with this category.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                }
+            },
+            {
+                "default_value": "#FFFFFF",
+                "key": "field_589dd18acd51f",
+                "label": "Color",
+                "name": "guide_taxonomy_color",
+                "type": "color_picker",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "colorpicker",
+                    "id": ""
+                }
+            },
+            {
+                "return_format": "array",
+                "preview_size": "thumbnail",
+                "library": "all",
+                "min_width": "",
+                "min_height": "",
+                "min_size": "",
+                "max_width": "",
+                "max_height": "",
+                "max_size": "",
+                "mime_types": "png, jpg, jpeg",
+                "key": "field_58a2d24ca466c",
+                "label": "Mood image",
+                "name": "guide_taxonomy_image",
+                "type": "image",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                }
+            }
+        ],
+        "location": [
+            [
+                {
+                    "param": "taxonomy",
+                    "operator": "==",
+                    "value": "guide_sender"
+                }
+            ]
+        ],
+        "menu_order": 0,
+        "position": "normal",
+        "style": "default",
+        "label_placement": "top",
+        "instruction_placement": "label",
+        "hide_on_screen": "",
+        "active": 1,
+        "description": ""
     }
+]

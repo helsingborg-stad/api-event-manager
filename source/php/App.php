@@ -124,7 +124,7 @@ class App
 
     public function enqueuStyleSheets()
     {
-        wp_enqueue_style('lightbox', plugins_url() . '/api-event-manager/dist/css/lightbox.min.css', false, '1.0.0');
+        wp_enqueue_style('lightbox', plugins_url() . '/api-event-manager/dist/css/modal.min.css', false, '1.0.0');
     }
 
     public function adminNotices()
@@ -148,7 +148,7 @@ class App
     {
         global $current_screen;
         if (in_array($current_screen->post_type, array('event', 'location', 'contact', 'sponsor', 'package', 'membership-card', 'guide'))) {
-            wp_enqueue_style('hbg-event-importer', HBGEVENTIMPORTER_URL . '/dist/css/hbg-event-importer.min.css');
+            wp_enqueue_style('hbg-event-importer', HBGEVENTIMPORTER_URL . '/dist/css/app.min.css');
         }
     }
 
@@ -159,34 +159,34 @@ class App
     public function enqueueScripts()
     {
         global $current_screen;
-        //var_dump($current_screen->base);
 
         if (is_object($current_screen) && in_array($current_screen->post_type, array('event', 'location', 'contact', 'sponsor', 'package', 'membership-card', 'guide','term'))) {
-            wp_enqueue_script('hbg-event-importer', HBGEVENTIMPORTER_URL . '/dist/js/hbg-event-importer.min.js');
+            wp_enqueue_script('hbg-event-importer', HBGEVENTIMPORTER_URL . '/dist/js/app.min.js');
         }
 
         wp_localize_script('hbg-event-importer', 'eventmanager', array(
-            'ajaxurl'           => admin_url('admin-ajax.php'),
-            'require_title'     => __("Title is missing", 'event-manager'),
-            'new_contact'       => __("Create new contact", 'event-manager'),
-            'new_sponsor'       => __("Create new sponsor", 'event-manager'),
-            'new_location'      => __("Create new location", 'event-manager'),
-            'new_card'          => __("Create new membership card", 'event-manager'),
-            'close'             => __("Close", 'event-manager'),
-            'add_images'        => __("Add images", 'event-manager'),
-            'similar_posts'     => __("Similar posts", 'event-manager'),
-            'new_data_imported' => __("Imported data", 'event-manager'),
-            'events'            => __("Events", 'event-manager'),
-            'locations'         => __("Locations", 'event-manager'),
-            'contacts'          => __("Contacts", 'event-manager'),
-            'time_until_reload' => __("Time until reload", 'event-manager'),
-            'loading'           => __("Loading", 'event-manager'),
-            'choose_time'       => __("Choose time", 'event-manager'),
-            'time'              => __("Time", 'event-manager'),
-            'hour'              => __("Hour", 'event-manager'),
-            'minute'            => __("Minute", 'event-manager'),
-            'done'              => __("Done", 'event-manager'),
-            'now'               => __("Now", 'event-manager'),
+            'ajaxurl'               => admin_url('admin-ajax.php'),
+            'require_title'         => __("Title is missing", 'event-manager'),
+            'new_contact'           => __("Create new contact", 'event-manager'),
+            'new_sponsor'           => __("Create new sponsor", 'event-manager'),
+            'new_location'          => __("Create new location", 'event-manager'),
+            'new_card'              => __("Create new membership card", 'event-manager'),
+            'new_membership-card'   => __("Create new membership card", 'event-manager'),
+            'close'                 => __("Close", 'event-manager'),
+            'add_images'            => __("Add images", 'event-manager'),
+            'similar_posts'         => __("Similar posts", 'event-manager'),
+            'new_data_imported'     => __("Imported data", 'event-manager'),
+            'events'                => __("Events", 'event-manager'),
+            'locations'             => __("Locations", 'event-manager'),
+            'contacts'              => __("Contacts", 'event-manager'),
+            'time_until_reload'     => __("Time until reload", 'event-manager'),
+            'loading'               => __("Loading", 'event-manager'),
+            'choose_time'           => __("Choose time", 'event-manager'),
+            'time'                  => __("Time", 'event-manager'),
+            'hour'                  => __("Hour", 'event-manager'),
+            'minute'                => __("Minute", 'event-manager'),
+            'done'                  => __("Done", 'event-manager'),
+            'now'                   => __("Now", 'event-manager'),
         ));
     }
 
