@@ -25,6 +25,22 @@ class Fields
     }
 
     /**
+     * Returning a numeric value formatted by acf if exist
+     * @return  int, float, null
+     * @version 0.3.0 creating consumer accessable meta values.
+     */
+    public function boolGetCallBack($object, $field_name, $request, $formatted = true)
+    {
+        $return_value = self::getFieldGetMetaData($object, $field_name, $request);
+
+        if (is_numeric($return_value) ||is_bool($return_value)) {
+            return (bool) $return_value;
+        } else {
+            return false;
+        }
+    }
+
+    /**
      * Returning a numeric value
      * @return  int, float, null
      * @version 0.3.0 creating consumer accessable meta values.
@@ -221,5 +237,4 @@ class Fields
 
         return apply_filters($object['type'] . '_taxonomies', $taxArray);
     }
-
 }
