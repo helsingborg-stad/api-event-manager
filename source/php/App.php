@@ -32,8 +32,6 @@ class App
         add_action('admin_enqueue_scripts', array($this, 'setApiKeys'));
 
         //Admin components
-        // Debug code createParsePage, TA BORT
-        add_action('admin_menu', array($this, 'createParsePage'));
         add_action('admin_notices', array($this, 'adminNotices'));
 
         // Register cron action
@@ -244,124 +242,6 @@ class App
 
             wp_localize_script('hbg-event-importer', 'xcap_ajax_vars', array('xcap_keys' => $xcap_keys));
         }
-    }
-
-    /**
-     * Debug code
-     * Creates a admin page to trigger update data function
-     * ARE NOT USED ANYMORE
-     * @return void
-     */
-    public function createParsePage()
-    {
-        add_submenu_page(
-            null,
-            __('Import events', 'hbg-event-importer'),
-            __('Import events', 'hbg-event-importer'),
-            'edit_posts',
-            'import-events',
-            function () {
-                new \HbgEventImporter\Parser\Xcap('http://mittkulturkort.se/calendar/listEvents.action?month=&date=&categoryPermaLink=&q=&p=&feedType=ICAL_XML');
-            }
-        );
-
-        add_submenu_page(
-            null,
-            __('Import events', 'hbg-event-importer'),
-            __('Import events', 'hbg-event-importer'),
-            'edit_posts',
-            'import-events',
-            function () {
-                new \HbgEventImporter\Parser\Xcap('http://mittkulturkort.se/calendar/listEvents.action?month=&date=&categoryPermaLink=&q=&p=&feedType=ICAL_XML');
-            }
-        );
-
-        add_submenu_page(
-            null,
-            __('Import CBIS events', 'hbg-event-importer'),
-            __('Import CBIS events', 'hbg-event-importer'),
-            'edit_posts',
-            'import-cbis-events',
-            function () {
-                new \HbgEventImporter\Parser\CBIS('http://api.cbis.citybreak.com/Products.asmx?wsdl');
-            }
-        );
-
-        add_submenu_page(
-            null,
-            __('Import CBIS locations', 'hbg-event-importer'),
-            __('Import CBIS events', 'hbg-event-importer'),
-            'edit_posts',
-            'import-cbis-locations',
-            function () {
-                new \HbgEventImporter\Parser\CbisLocation('http://api.info.citybreak.com/Products.asmx?wsdl');
-            }
-        );
-
-        add_submenu_page(
-            null,
-            __('Delete all events', 'hbg-event-importer'),
-            __('Delete all events', 'hbg-event-importer'),
-            'edit_posts',
-            'delete-all-events',
-            function () {
-                global $wpdb;
-                $delete = $wpdb->query("TRUNCATE TABLE `cbis_data`");
-                $delete = $wpdb->query("TRUNCATE TABLE `event_occasions`");
-                $delete = $wpdb->query("TRUNCATE TABLE `event_postmeta`");
-                $delete = $wpdb->query("TRUNCATE TABLE `event_posts`");
-                $delete = $wpdb->query("TRUNCATE TABLE `event_stream`");
-                $delete = $wpdb->query("TRUNCATE TABLE `event_stream_meta`");
-                $delete = $wpdb->query("TRUNCATE TABLE `event_term_relationships`");
-                $delete = $wpdb->query("TRUNCATE TABLE `event_term_taxonomy`");
-                $delete = $wpdb->query("TRUNCATE TABLE `event_termmeta`");
-                $delete = $wpdb->query("TRUNCATE TABLE `event_terms`");
-            }
-        );
-    }
-
-    /**
-     * TA BORT
-     * Creates an admin page that executes event import
-     * @return void
-     */
-    public function addCronParserPage()
-    {
-        add_submenu_page(
-            null,
-            'import-data',
-            'import-data',
-            'edit_posts',
-            'cron-import',
-            function () {
-                if (get_field('xcap_daily_cron', 'option') == true) {
-                    ?>
-                    <script type="text/javascript">
-                        (function($) {
-                            // Import events from XCAP
-                            var data = {action:'import_events', value:'xcap', api_keys:'', cron:true};
-                            ImportEvents.Parser.Eventhandling.parseEvents(data);
-                        })(jQuery);
-                    </script>
-                <?php
-
-                }
-                if (get_field('cbis_daily_cron', 'option') == true) {
-                    ?>
-                    <script type="text/javascript">
-                        (function($) {
-                            // Import events from CBIS
-                            var data = {action:'import_events', value:'cbis', api_keys:'', cron:true};
-                            ImportEvents.Parser.Eventhandling.parseEvents(data);
-                            // Import arenas/locations from CBIS
-                            var data = {action:'import_events', value:'', api_keys:'', cron:true};
-                            ImportEvents.Parser.Eventhandling.parseCbislocation(data);
-                        })(jQuery);
-                    </script>
-                <?php
-
-                }
-            });
     }
 
     /**
