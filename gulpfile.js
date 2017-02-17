@@ -19,6 +19,14 @@ gulp.task('sass-dist', function() {
             .pipe(rename({suffix: '.min'}))
             .pipe(cssnano({zindex: false}))
             .pipe(gulp.dest('dist/css'));
+
+    gulp.src('source/sass/modal.scss')
+            .pipe(plumber())
+            .pipe(sass())
+            .pipe(autoprefixer('last 2 version', 'safari 5', 'ie 8', 'ie 9', 'opera 12.1'))
+            .pipe(rename({suffix: '.min'}))
+            .pipe(cssnano({zindex: false}))
+            .pipe(gulp.dest('dist/css'));
 });
 
 gulp.task('sass-dev', function() {
@@ -28,11 +36,20 @@ gulp.task('sass-dev', function() {
         .pipe(autoprefixer('last 2 version', 'safari 5', 'ie 8', 'ie 9', 'opera 12.1'))
         .pipe(rename({suffix: '.dev'}))
         .pipe(gulp.dest('dist/css'));
+
+    gulp.src('source/sass/modal.scss')
+        .pipe(plumber())
+        .pipe(sass())
+        .pipe(autoprefixer('last 2 version', 'safari 5', 'ie 8', 'ie 9', 'opera 12.1'))
+        .pipe(rename({suffix: '.dev'}))
+        .pipe(gulp.dest('dist/css'));
 });
 
 // Concatenate & Minify JS
 gulp.task('scripts-dist', function() {
-    gulp.src(['source/js/**/*.js'])
+    gulp.src([
+            'source/js/**/*.js',
+        ])
         .pipe(concat('app.dev.js'))
         .pipe(gulp.dest('dist/js'))
         .pipe(rename('app.min.js'))

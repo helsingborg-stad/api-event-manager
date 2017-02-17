@@ -124,7 +124,7 @@ class App
 
     public function enqueuStyleSheets()
     {
-        wp_enqueue_style('lightbox', plugins_url() . '/api-event-manager/dist/css/lightbox.min.css', false, '1.0.0');
+        wp_enqueue_style('lightbox', plugins_url() . '/api-event-manager/dist/css/modal.min.css', false, '1.0.0');
     }
 
     public function adminNotices()
