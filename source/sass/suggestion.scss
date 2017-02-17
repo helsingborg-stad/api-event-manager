@@ -1,0 +1,32 @@
+#suggestionContainer {
+    width: 100%;
+    max-height: 171px;
+    background-color: #fff;
+    padding: 3px 8px;
+    box-sizing: border-box;
+    overflow-y: auto;
+    display: none;
+}
+
+#suggestionList {
+    margin: 0;
+}
+
+#suggestionList a.suggestion {
+    color: #264973;
+    text-decoration: underline;
+}
+
+#suggestionList a.suggestion:hover {
+    color: #4079bf;
+    text-decoration: underline;
+}
+
+#suggestionList a.suggestion span {
+    background-color: #dbeff8;
+}
+
+.suggestion-hide {
+    position: static;
+    float:right;
+}

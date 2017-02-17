@@ -1,0 +1,39 @@
+.acceptAndDeny .hidden {
+    display: none;
+}
+
+.accept.button-primary {
+    color: #fff;
+    background-color: #5cb85c;
+    border-color: #5cb85c;
+    text-shadow: 0 -1px 1px #398439,1px 0 1px #398439,0 1px 1px #398439,-1px 0 1px #398439;
+    box-shadow: 0 1px 0 #398439;
+
+    &:active, &:focus, &:hover {
+        color: #fff;
+        background-color:#449d44;
+        border-color:#398439;
+    }
+
+    &:active {
+        box-shadow:inset 0 2px 0 #398439;
+    }
+}
+
+.deny.button-primary {
+    color: #fff;
+    background-color: #d9534f;
+    border-color: #d9534f;
+    text-shadow: 0 -1px 1px #ac2925,1px 0 1px #ac2925,0 1px 1px #ac2925,-1px 0 1px #ac2925;
+    box-shadow: 0 1px 0 #ac2925;
+
+    &:active, &:focus, &:hover {
+        color: #fff;
+        background-color:#c9302c;
+        border-color:#ac2925;
+    }
+
+    &:active {
+        box-shadow:inset 0 2px 0 #ac2925;
+    }
+}

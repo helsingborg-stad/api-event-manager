@@ -61,7 +61,8 @@ class UserGroups
      * Hide groups from post type menus. Add user group to Users menu.
      * @return void
      */
-    public function manageAdminMenu() {
+    public function manageAdminMenu()
+    {
         $post_types = get_post_types(array('public' => true), 'names');
         if (is_array($post_types) && ! empty($post_types)) {
             foreach ($post_types as $val) {
@@ -69,7 +70,7 @@ class UserGroups
             }
         }
 
-        add_submenu_page('users.php' , __('User groups', 'event-manager'), __('User groups', 'event-manager') , 'add_users',  'edit-tags.php?taxonomy=user_groups');
+        add_submenu_page('users.php', __('User groups', 'event-manager'), __('User groups', 'event-manager'), 'add_users', 'edit-tags.php?taxonomy=user_groups');
     }
 
     /**
@@ -77,10 +78,11 @@ class UserGroups
      * @param  string $parent parent string
      * @return string
      */
-    public function highlightAdminMenu($parent = '') {
+    public function highlightAdminMenu($parent = '')
+    {
         global $pagenow;
 
-        if(! empty($_GET['taxonomy']) && $pagenow == 'edit-tags.php' && $_GET['taxonomy'] == 'user_groups') {
+        if (!empty($_GET['taxonomy']) && $pagenow == 'edit-tags.php' && $_GET['taxonomy'] == 'user_groups') {
             $parent = 'users.php';
         }
 
@@ -91,36 +93,34 @@ class UserGroups
      * Adds a new section on user profile with the assigned groups.
      * @param object $user The user object currently being edited.
      */
-    function displayUserGroups($user) {
+    public function displayUserGroups($user)
+    {
 
-    // Return if admin or editor
-    if (current_user_can('editor') || current_user_can('administrator')) {
-        return;
+        // Return if admin or editor
+        if (current_user_can('editor') || current_user_can('administrator')) {
+            return;
+        }
+
+        $id = 'user_' . $user->ID;
+        $groups = get_field('event_user_groups', $id);
+
+        ?>
+            <h2><?php _e('Event publishing groups', 'event-manager') ?></h2>
+            <table class="form-table">
+                <tr>
+                    <th><label for="groups"><?php _e('Assigned groups', 'event-manager'); ?></label></th>
+                    <td>
+                        <?php if (! empty($groups)) : ?>
+                            <ul>
+                                <?php foreach ($groups as $group) : ?>
+                                    <li><?php echo get_term($group)->name; ?></li>
+                                <?php endforeach; ?>
+                        <?php else: ?>
+                           <?php _e('There are no groups assigned to your account.', 'event-manager'); ?>
+                        <?php endif; ?>
+                    </td>
+                </tr>
+            </table>
+        <?php
     }
-
-    $id = 'user_' . $user->ID;
-    $groups = get_field('event_user_groups', $id);
-    ?>
-
-        <h2><?php _e('Event publishing groups', 'event-manager') ?></h2>
-        <table class="form-table">
-            <tr>
-                <th><label for="groups"><?php _e( 'Assigned groups', 'event-manager'); ?></label></th>
-                <td>
-                <?php if (! empty($groups)) : ?>
-                    <ul>
-                    <?php foreach ( $groups as $group ) : ?>
-                    <li>
-                        <?php $term = get_term($group) ?>
-                        <?php echo $term->name; ?>
-                    </li>
-                    <?php endforeach; ?>
-                <?php else: ?>
-                   <?php _e( 'There are no groups assigned to your account.', 'event-manager' ); ?>
-                <?php endif; ?>
-                </td>
-            </tr>
-        </table>
-    <?php }
-
 }
