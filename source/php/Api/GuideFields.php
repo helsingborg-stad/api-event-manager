@@ -9,6 +9,7 @@ namespace HbgEventImporter\Api;
 class GuideFields extends Fields
 {
     private $postType = 'guide';
+    private $objectCache = array();
 
     public function __construct()
     {
@@ -94,7 +95,7 @@ class GuideFields extends Fields
             array(
                 'get_callback' => array($this, 'objectMap'),
                 'schema' => array(
-                    'description' => 'A map of beacon and location structure.',
+                    'description' => 'Map item for mapping objects to locations and beacon. Each value reperesents the object array key. Hidden objects will not be mirrored in this strucure object.',
                     'type' => 'object',
                     'context' => array('view')
                 )
@@ -127,10 +128,52 @@ class GuideFields extends Fields
 
     public function objectMap($object, $field_name, $request, $formatted = true)
     {
-        return array(
+
+        //Get objects
+        $objects = $this->getObjects($object, 'guide_location_objects', $request, true);
+
+        //Result structure definition
+        $structured = array(
             'beacon' => array(),
-            'location' => array()
+            'location' => array(
+                'undefined' => array(),
+                'sublocation' => array()
+            )
         );
+
+        //Create location map
+        foreach ((array) $objects as $key => $item) {
+
+            if ($item['guide_object_active'] != 1) {
+                continiue;
+            }
+
+            if (empty($item['guide_object_location'])) {
+                $structured['location']['undefined'][] = $key;
+            } else {
+                if (!is_array($structured['location']['sublocation'])) {
+                    $structured['location']['sublocation'][$item['guide_object_location']] = array($key);
+                }
+                $structured['location']['sublocation'][$item['guide_object_location']][] = $key;
+            }
+        }
+
+        //Create beacon map
+        foreach ((array) $objects as $key => $item) {
+
+            if ($item['guide_object_active'] != 1) {
+                continiue;
+            }
+
+            if (!empty($item['guide_object_beacon_id'])) {
+                if (!is_array($structured['beacon'])) {
+                    $structured['beacon'][$item['guide_object_beacon_id']] = array($key);
+                }
+                $structured['beacon'][$item['guide_object_beacon_id']][] = $key;
+            }
+        }
+
+        return $structured;
     }
 
     public function beacon($object, $field_name, $request, $formatted = true)
@@ -160,11 +203,22 @@ class GuideFields extends Fields
         }
     }
 
+    public function getObjects($object, $field_name, $request, $formatted = true)
+    {
+        $hash = md5(json_encode($object));
+
+        if (isset($this->objectCache[$hash]) && !empty($this->objectCache[$hash])) {
+            return $this->objectCache[$hash];
+        }
+
+        return $this->objectCache[$hash] = $this->objectGetCallBack($object, 'guide_location_objects', $request, true);
+    }
+
     public function objects($object, $field_name, $request, $formatted = true)
     {
         $objects = [];
 
-        foreach ((array) $this->objectGetCallBack($object, 'guide_location_objects', $request, true) as $item) {
+        foreach ($this->getObjects($object, 'guide_location_objects', $request, true) as $item) {
             $objects[] = array(
                 'active' => ($item['guide_object_active'] == 1) ? true : false,
                 'id' => empty($item['guide_object_id']) ? null : $item['guide_object_id'],
@@ -185,7 +239,7 @@ class GuideFields extends Fields
             );
         }
 
-        return $objects;
+        return (array) $objects;
     }
 
     public function sanitizeMediaObject($item)
