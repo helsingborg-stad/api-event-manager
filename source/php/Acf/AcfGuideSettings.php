@@ -10,7 +10,7 @@ class AcfGuideSettings
 {
     public function __construct()
     {
-        //add_action('acf/init', array($this, 'addLocalFieldGroups'));
+        add_action('acf/init', array($this, 'addLocalFieldGroups'));
     }
 
     public function addLocalFieldGroups()
@@ -46,15 +46,11 @@ class AcfGuideSettings
                     ),
                 ),
                 array(
-                    'default_value' => '000000',
-                    'maxlength' => '',
-                    'placeholder' => '',
-                    'prepend' => '',
-                    'append' => '',
+                    'default_value' => '#FFFFFF',
                     'key' => 'field_589dd18acd51f',
                     'label' => __('Color', 'event-manager'),
                     'name' => 'guide_taxonomy_color',
-                    'type' => 'text',
+                    'type' => 'color_picker',
                     'instructions' => '',
                     'required' => 0,
                     'conditional_logic' => 0,
