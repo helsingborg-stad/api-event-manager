@@ -90,7 +90,7 @@ class GuideFields extends Fields
         );
 
         // Guide location objects
-        register_rest_field($this->postType,
+        /*register_rest_field($this->postType,
             'objectMap',
             array(
                 'get_callback' => array($this, 'objectMap'),
@@ -100,7 +100,7 @@ class GuideFields extends Fields
                     'context' => array('view', 'embed')
                 )
             )
-        );
+        );*/
     }
 
     public function settings($object, $field_name, $request, $formatted = true)
@@ -129,22 +129,8 @@ class GuideFields extends Fields
 
         /* Arrival messages */
         $settings['notices'] = array(
-            'arrival' => array(
-                array(
-                    'message' => 'Välkommen till oss, du vet väl att vi bjuder på bullar?',
-                    'delay' => 5,
-                )
-            ),
-            'departue' => array(
-                array(
-                    'message' => 'Tack för ditt besök, välkommen åter!',
-                    'delay' => 5,
-                ),
-                array(
-                    'message' => 'Hur upplevde du ditt besök igår? Ge oss ett betyg på http://dunkerskulturs.se/betyg/',
-                    'delay' => 86400,
-                )
-            )
+            'arrival' => $this->objectGetCallBack($object, 'guide_arrival_notice', $request, true),
+            'departure' => $this->objectGetCallBack($object, 'guide_departure_notice', $request, true)
         );
 
         return $settings;
@@ -244,7 +230,6 @@ class GuideFields extends Fields
             $objects[] = array(
                 'active' => ($item['guide_object_active'] == 1) ? true : false,
                 'id' => empty($item['guide_object_id']) ? null : $item['guide_object_id'],
-                'order' => $key,
 
                 'title' => empty($item['guide_object_title']) ? null : $item['guide_object_title'],
                 'description' => empty($item['guide_object_description']) ? null : $item['guide_object_description'],
@@ -254,7 +239,7 @@ class GuideFields extends Fields
                 'video' => !is_array($item['guide_object_video']) ? null : $this->sanitizeMediaObject($item['guide_object_video']),
                 'links' => !is_array($item['guide_object_links']) ? null : $this->sanitizeLinkObject($item['guide_object_links']),
 
-                'sublocation' => !is_numeric($item['guide_object_location']) ? null : $item['guide_object_location'],
+                //'sublocation' => !is_numeric($item['guide_object_location']) ? null : $item['guide_object_location'],
 
                 'beacon' => array(
                     'id' => empty($item['guide_object_beacon_id']) ? null : $item['guide_object_beacon_id'],
