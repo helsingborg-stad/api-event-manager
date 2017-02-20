@@ -60,7 +60,6 @@ class LocationFields extends Fields
      * @return array $args.
      **/
     function addCoordinateFilter($args, $request) {
-
         if (empty($request['latlng'])) {
             return $args;
         }
@@ -71,7 +70,6 @@ class LocationFields extends Fields
 
         if(count($latlng) != 2) return $args;
         $locations = \HbgEventImporter\Helper\Address::getNearbyLocations($latlng[0], $latlng[1], floatval($distance));
-
         $idArray = ($locations) ? array_column($locations, 'post_id') : array(0);
         $args['post__in'] = $idArray;
 
