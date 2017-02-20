@@ -112,10 +112,10 @@ class GuideFields extends Fields
         $settings['theme'] = array(
             'id' => $taxonomy->term_id,
             'name' => $taxonomy->name,
+            'description' => $taxonomy->description,
             'logotype' => $this->sanitizeMediaObject(get_field('guide_taxonomy_logotype', $taxonomy->taxonomy. '_' . $taxonomy->term_id)),
             'color' => get_field('guide_taxonomy_color', $taxonomy->taxonomy. '_' . $taxonomy->term_id),
             'moodimage' => $this->sanitizeMediaObject(get_field('guide_taxonomy_image', $taxonomy->taxonomy. '_' . $taxonomy->term_id)),
-            'taxonomy' => $taxonomy
         );
 
         /* Wheter to use map or not */
