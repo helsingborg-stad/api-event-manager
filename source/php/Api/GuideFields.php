@@ -32,7 +32,7 @@ class GuideFields extends Fields
                 'schema' => array(
                     'description' => 'Describes the guides colors and logo.',
                     'type' => 'object',
-                    'context' => array('view')
+                    'context' => array('view', 'embed')
                 )
             )
         );
@@ -45,7 +45,7 @@ class GuideFields extends Fields
                 'schema' => array(
                     'description' => 'The main location for this guide.',
                     'type' => 'object',
-                    'context' => array('view')
+                    'context' => array('view', 'embed')
                 )
             )
         );
@@ -58,7 +58,7 @@ class GuideFields extends Fields
                 'schema' => array(
                     'description' => 'Guide main beacon information.',
                     'type' => 'object',
-                    'context' => array('view')
+                    'context' => array('view', 'embed')
                 )
             )
         );
@@ -71,7 +71,7 @@ class GuideFields extends Fields
                 'schema' => array(
                     'description' => 'Guide main media information.',
                     'type' => 'object',
-                    'context' => array('view')
+                    'context' => array('view', 'embed')
                 )
             )
         );
@@ -84,7 +84,7 @@ class GuideFields extends Fields
                 'schema' => array(
                     'description' => 'Objects of this guide.',
                     'type' => 'object',
-                    'context' => array('view')
+                    'context' => array('view', 'embed')
                 )
             )
         );
@@ -97,7 +97,7 @@ class GuideFields extends Fields
                 'schema' => array(
                     'description' => 'Map item for mapping objects to locations and beacon. Each value reperesents the object array key. Hidden objects will not be mirrored in this strucure object.',
                     'type' => 'object',
-                    'context' => array('view')
+                    'context' => array('view', 'embed')
                 )
             )
         );
