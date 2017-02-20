@@ -112,10 +112,10 @@ class GuideFields extends Fields
         $settings['theme'] = array(
             'id' => $taxonomy->term_id,
             'name' => $taxonomy->name,
-            'logotype' => get_field('guide_taxonomy_logotype', $taxonomy->taxonomy. '_' . $taxonomy->term_id),
+            'description' => $taxonomy->description,
+            'logotype' => $this->sanitizeMediaObject(get_field('guide_taxonomy_logotype', $taxonomy->taxonomy. '_' . $taxonomy->term_id)),
             'color' => get_field('guide_taxonomy_color', $taxonomy->taxonomy. '_' . $taxonomy->term_id),
-            'moodimage' => get_field('guide_taxonomy_image', $taxonomy->taxonomy. '_' . $taxonomy->term_id),
-            'taxonomy' => $taxonomy
+            'moodimage' => $this->sanitizeMediaObject(get_field('guide_taxonomy_image', $taxonomy->taxonomy. '_' . $taxonomy->term_id)),
         );
 
         /* Wheter to use map or not */
@@ -240,10 +240,12 @@ class GuideFields extends Fields
     {
         $objects = [];
 
-        foreach ($this->getObjects($object, 'guide_location_objects', $request, true) as $item) {
+        foreach ($this->getObjects($object, 'guide_location_objects', $request, true) as $key => $item) {
             $objects[] = array(
                 'active' => ($item['guide_object_active'] == 1) ? true : false,
                 'id' => empty($item['guide_object_id']) ? null : $item['guide_object_id'],
+                'order' => $key,
+
                 'title' => empty($item['guide_object_title']) ? null : $item['guide_object_title'],
                 'description' => empty($item['guide_object_description']) ? null : $item['guide_object_description'],
 
