@@ -240,10 +240,12 @@ class GuideFields extends Fields
     {
         $objects = [];
 
-        foreach ($this->getObjects($object, 'guide_location_objects', $request, true) as $item) {
+        foreach ($this->getObjects($object, 'guide_location_objects', $request, true) as $key => $item) {
             $objects[] = array(
                 'active' => ($item['guide_object_active'] == 1) ? true : false,
                 'id' => empty($item['guide_object_id']) ? null : $item['guide_object_id'],
+                'order' => $key,
+
                 'title' => empty($item['guide_object_title']) ? null : $item['guide_object_title'],
                 'description' => empty($item['guide_object_description']) ? null : $item['guide_object_description'],
 
