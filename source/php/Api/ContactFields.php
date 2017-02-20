@@ -30,7 +30,7 @@ class ContactFields extends Fields
                 'schema' => array(
                     'description' => 'Field containing object with taxonomies.',
                     'type' => 'object',
-                    'context' => array('view')
+                    'context' => array('view', 'edit', 'embed')
                 )
             )
         );
