@@ -28,7 +28,15 @@ class EventCategories
             'menu_name'             => __('Categories', 'event-manager'),
         );
 
+        $capabilities = array(
+            'manage_terms' => 'edit_users',
+            'edit_terms'   => 'edit_users',
+            'delete_terms' => 'edit_users',
+            'assign_terms' => 'read',
+        );
+
         $args = array(
+            'capabilities'          => $capabilities,
             'labels'                => $labels,
             'public'                => true,
             'show_in_nav_menus'     => true,
@@ -59,7 +67,15 @@ class EventCategories
             'menu_name'             => __('Imported categories', 'event-manager'),
         );
 
+        $capabilities = array(
+            'manage_terms' => 'edit_users',
+            'edit_terms'   => 'edit_users',
+            'delete_terms' => 'edit_users',
+            'assign_terms' => 'read',
+        );
+
         $args = array(
+            'capabilities'          => $capabilities,
             'labels'                => $labels,
             'public'                => false,
             'show_in_nav_menus'     => false,

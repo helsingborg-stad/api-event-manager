@@ -14,6 +14,7 @@ class LocationFields extends Fields
     {
         add_action('rest_api_init', array($this, 'registerRestFields'));
         add_action('rest_api_init', array($this, 'registerRestRoute'));
+        add_filter('rest_location_query', array($this, 'addCoordinateFilter'), 10, 2);
     }
 
     public static function registerRestRoute()
@@ -50,6 +51,29 @@ class LocationFields extends Fields
         } else {
             return new \WP_REST_Response($allLocations, 200);
         }
+    }
+
+    /**
+     * Filter by coordinates and distance
+     * @param  array           $args    The query arguments.
+     * @param  WP_REST_Request $request Full details about the request.
+     * @return array $args.
+     **/
+    function addCoordinateFilter($args, $request) {
+        if (empty($request['latlng'])) {
+            return $args;
+        }
+
+        $distance = !empty($request['distance']) ? str_replace(',', '.', $request['distance']) : 0;
+        $filter = $request['latlng'];
+        $latlng = explode(',', preg_replace('/\s+/', '', urldecode($filter)));
+
+        if(count($latlng) != 2) return $args;
+        $locations = \HbgEventImporter\Helper\Address::getNearbyLocations($latlng[0], $latlng[1], floatval($distance));
+        $idArray = ($locations) ? array_column($locations, 'post_id') : array(0);
+        $args['post__in'] = $idArray;
+
+        return $args;
     }
 
     /**

@@ -47,18 +47,18 @@ class EventFields extends Fields
         return $allEvents;
     }
 
-    public function errorMessage($message, array $texts)
+    public function errorMessage($message)
     {
-        $examples = array(rest_url('/wp/v2/event/time?start=1462060800'),
-            rest_url('/wp/v2/event/time?start=2016-05-01'),
-            rest_url('/wp/v2/event/time?start=1462060800&end=1470009600'),
-            rest_url('/wp/v2/event/time?start=2016-05-01&end=2016-08-01'));
-        $returnArray = array('error' => $message);
-        foreach ($texts as $text) {
-            $returnArray['Example ' . ($text+1)] = $examples[$text];
-        }
+        $returnArray = array(
+            'error'     => $message,
+            'Example 1' => rest_url('/wp/v2/event/time?start=' . date('Y-m-d')),
+            'Example 2' => rest_url('/wp/v2/event/time?start=' . strtotime("now")),
+            'Example 3' => rest_url('/wp/v2/event/time?start=' . date('Y-m-d') . '&end=' . date('Y-m-d', strtotime("now +7 days"))),
+            'Example 4' => rest_url('/wp/v2/event/time?start=' . strtotime("now") . '&end=' . strtotime("now +7 days"))
+        );
 
         $returnArray['Format examples'] = 'http://php.net/manual/en/datetime.formats.php';
+
         return $returnArray;
     }
 
@@ -71,7 +71,7 @@ class EventFields extends Fields
         global $wpdb;
         $week = 604800;
         if (!isset($_GET['start'])) {
-            return $this->errorMessage('No variable supplied', array(0, 1));
+            return $this->errorMessage('No variable supplied');
         }
 
         $time1 = $_GET['start'];
@@ -84,11 +84,22 @@ class EventFields extends Fields
         }
 
         if ($timestamp == false) {
-            return $this->errorMessage('Format not valid', array(0, 1));
+            return $this->errorMessage('Format not valid');
+        }
+
+        // Get nearby locations from coordinates
+        $idString = '';
+        if (isset($_GET['latlng'])) {
+            $distance   = (isset($_GET['distance'])) ? str_replace(',', '.', $_GET['distance']) : 0;
+            $latlng     = explode(',', preg_replace('/\s+/', '', urldecode($_GET['latlng'])));
+            if(count($latlng) != 2) return new \WP_Error('error_message', 'Parameter \'latlng\' is in wrong format', array( 'status' => 404 ));
+            $locations  = \HbgEventImporter\Helper\Address::getNearbyLocations($latlng[0], $latlng[1], floatval($distance));
+            // Return if locations is empty
+            if (! $locations) return new \WP_Error('error_message', 'There are no events', array( 'status' => 404 ));
+            $idString   = implode(',', array_column($locations, 'post_id'));
         }
 
         $limit = (isset($_GET['post-limit']) && is_numeric($_GET['post-limit'])) ? $_GET['post-limit'] : null;
-
         $groupId = (isset($_GET['group-id'])) ? trim($_GET['group-id'], ',') : '';
         $categoryId = (isset($_GET['category-id'])) ? trim($_GET['category-id'], ',') : '';
         $taxonomies  = $groupId;
@@ -109,6 +120,7 @@ class EventFields extends Fields
         ";
         $query .= (! empty($taxonomies)) ? "AND ($wpdb->term_relationships.term_taxonomy_id IN ($taxonomies)) " : "";
         $query .= (! empty($groupId)) ? "AND (postmeta.meta_key = 'missing_user_group' AND postmeta.meta_value = 0) " : "";
+        $query .= (! empty($idString)) ? "AND (postmeta.meta_key = 'location' AND postmeta.meta_value IN ($idString)) " : "";
         $query .= "GROUP BY $db_occasions.timestamp_start, $db_occasions.timestamp_end ";
         $query .= "ORDER BY $db_occasions.timestamp_start ASC";
         $query .= ($limit != null) ? " LIMIT " . $limit : "";
@@ -148,7 +160,7 @@ class EventFields extends Fields
                 $data[] = $controller->prepare_response_for_collection($posts);
             }
         } else {
-            return new \WP_Error('Error', 'There are no events', array( 'status' => 404 ));
+            return new \WP_Error('error_message', 'There are no events', array( 'status' => 404 ));
         }
         return new \WP_REST_Response($data, 200);
     }

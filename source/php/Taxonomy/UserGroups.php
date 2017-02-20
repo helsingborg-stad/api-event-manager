@@ -33,9 +33,9 @@ class UserGroups
         );
 
         $capabilities = array(
-            'manage_terms' => 'publish_pages',
-            'edit_terms'   => 'publish_pages',
-            'delete_terms' => 'publish_pages',
+            'manage_terms' => 'edit_users',
+            'edit_terms'   => 'edit_users',
+            'delete_terms' => 'edit_users',
             'assign_terms' => 'read',
         );
 
