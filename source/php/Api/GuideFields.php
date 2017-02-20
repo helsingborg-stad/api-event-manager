@@ -128,7 +128,7 @@ class GuideFields extends Fields
         $settings['hasObjects'] = empty($this->getObjects($object, 'guide_location_objects', $request, true)) ? false : true;
 
         /* Arrival messages */
-        $settings['messages'] = array(
+        $settings['notices'] = array(
             'arrival' => array(
                 array(
                     'message' => 'Välkommen till oss, du vet väl att vi bjuder på bullar?',
