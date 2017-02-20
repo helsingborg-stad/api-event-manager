@@ -30,7 +30,7 @@ class PackageFields extends Fields
                 'schema' => array(
                     'description' => 'Field containing object with taxonomies.',
                     'type' => 'object',
-                    'context' => array('view')
+                    'context' => array('view', 'edit', 'embed')
                 )
             )
         );
@@ -44,7 +44,7 @@ class PackageFields extends Fields
                 'schema' => array(
                     'description' => 'Field containing objects with included events.',
                     'type' => 'object',
-                    'context' => array('view', 'edit')
+                    'context' => array('view', 'edit', 'embed')
                 )
             )
         );
@@ -58,7 +58,7 @@ class PackageFields extends Fields
                 'schema' => array(
                     'description' => 'Field containing string with link to external booking service.',
                     'type' => 'string',
-                    'context' => array('view', 'edit')
+                    'context' => array('view', 'edit', 'embed')
                 )
             )
         );
@@ -72,7 +72,7 @@ class PackageFields extends Fields
                 'schema' => array(
                     'description' => 'Field containing string with phone number to external booking service.',
                     'type' => 'string',
-                    'context' => array('view', 'edit')
+                    'context' => array('view', 'edit', 'embed')
                 )
             )
         );
@@ -86,7 +86,7 @@ class PackageFields extends Fields
                 'schema' => array(
                     'description' => 'Field containing string with age restriction details.',
                     'type' => 'string',
-                    'context' => array('view', 'edit')
+                    'context' => array('view', 'edit', 'embed')
                 )
             )
         );
@@ -100,7 +100,7 @@ class PackageFields extends Fields
                 'schema' => array(
                     'description' => 'Field containing array with membership cards.',
                     'type' => 'object',
-                    'context' => array('view', 'edit')
+                    'context' => array('view', 'edit', 'embed')
                 )
             )
         );
@@ -114,7 +114,7 @@ class PackageFields extends Fields
                 'schema' => array(
                     'description' => 'Field containing string with price details.',
                     'type' => 'string',
-                    'context' => array('view', 'edit')
+                    'context' => array('view', 'edit', 'embed')
                 )
             )
         );
@@ -128,7 +128,7 @@ class PackageFields extends Fields
                 'schema' => array(
                     'description' => 'Field containing string with ticket includes information.',
                     'type' => 'string',
-                    'context' => array('view', 'edit')
+                    'context' => array('view', 'edit', 'embed')
                 )
             )
         );
@@ -142,7 +142,7 @@ class PackageFields extends Fields
                 'schema' => array(
                     'description' => 'Field containing string with price details.',
                     'type' => 'string',
-                    'context' => array('view', 'edit')
+                    'context' => array('view', 'edit', 'embed')
                 )
             )
         );
@@ -156,7 +156,7 @@ class PackageFields extends Fields
                 'schema' => array(
                     'description' => 'Field containing string with price details.',
                     'type' => 'string',
-                    'context' => array('view', 'edit')
+                    'context' => array('view', 'edit', 'embed')
                 )
             )
         );
@@ -170,7 +170,7 @@ class PackageFields extends Fields
                 'schema' => array(
                     'description' => 'Field containing string with age restrictions.',
                     'type' => 'string',
-                    'context' => array('view', 'edit')
+                    'context' => array('view', 'edit', 'embed')
                 )
             )
         );
@@ -184,7 +184,7 @@ class PackageFields extends Fields
                 'schema' => array(
                     'description' => 'Field containing string with price details.',
                     'type' => 'string',
-                    'context' => array('view', 'edit')
+                    'context' => array('view', 'edit', 'embed')
                 )
             )
         );
@@ -198,7 +198,7 @@ class PackageFields extends Fields
                 'schema' => array(
                     'description' => 'Field containing string with price details.',
                     'type' => 'string',
-                    'context' => array('view', 'edit')
+                    'context' => array('view', 'edit', 'embed')
                 )
             )
         );
@@ -212,7 +212,7 @@ class PackageFields extends Fields
                 'schema' => array(
                     'description' => 'Field containing numeric with age restrictions.',
                     'type' => 'numeric',
-                    'context' => array('view', 'edit')
+                    'context' => array('view', 'edit', 'embed')
                 )
             )
         );
@@ -226,7 +226,7 @@ class PackageFields extends Fields
                 'schema' => array(
                     'description' => 'Field containing object with group prices.',
                     'type' => 'object',
-                    'context' => array('view', 'edit')
+                    'context' => array('view', 'edit', 'embed')
                 )
             )
         );

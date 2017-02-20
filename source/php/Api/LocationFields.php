@@ -143,7 +143,7 @@ class LocationFields extends Fields
                 'schema' => array(
                     'description' => 'Field containing object with taxonomies.',
                     'type' => 'object',
-                    'context' => array('view')
+                    'context' => array('view', 'edit', 'embed')
                 )
             )
         );
@@ -156,7 +156,7 @@ class LocationFields extends Fields
                 'schema' => array(
                     'description' => 'Field containing object with taxonomies.',
                     'type' => 'object',
-                    'context' => array('view')
+                    'context' => array('view', 'edit', 'embed')
                 )
             )
         );
@@ -282,7 +282,7 @@ class LocationFields extends Fields
                 'schema' => array(
                     'description' => 'Field containing object with open hours.',
                     'type' => 'object',
-                    'context' => array('view', 'edit')
+                    'context' => array('view', 'edit', 'embed')
                 )
             )
         );
@@ -295,7 +295,7 @@ class LocationFields extends Fields
                 'schema' => array(
                     'description' => 'Field containing object with open hour exceptions.',
                     'type' => 'object',
-                    'context' => array('view', 'edit')
+                    'context' => array('view', 'edit', 'embed')
                 )
             )
         );
@@ -309,7 +309,7 @@ class LocationFields extends Fields
                 'schema' => array(
                     'description' => 'Field containing object with gallery.',
                     'type' => 'object',
-                    'context' => array('view', 'edit')
+                    'context' => array('view', 'edit', 'embed')
                 )
             )
         );
