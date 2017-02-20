@@ -114,7 +114,7 @@ class GuideFields extends Fields
             'name' => $taxonomy->name,
             'logotype' => get_field('guide_taxonomy_logotype', $taxonomy->taxonomy. '_' . $taxonomy->term_id),
             'color' => get_field('guide_taxonomy_color', $taxonomy->taxonomy. '_' . $taxonomy->term_id),
-            'moodimage' => get_field('guide_taxonomy_image', $taxonomy->taxonomy. '_' . $taxonomy->term_id),
+            'moodimage' => $this->sanitizeMediaObject(get_field('guide_taxonomy_image', $taxonomy->taxonomy. '_' . $taxonomy->term_id)),
             'taxonomy' => $taxonomy
         );
 
