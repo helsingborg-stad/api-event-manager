@@ -119,13 +119,13 @@ class GuideFields extends Fields
         );
 
         /* Wheter to use map or not */
-        $settings['map'] = $this->boolGetCallBack($object, 'guide_main_map', $request, $formatted);
+        $settings['useMap'] = $this->boolGetCallBack($object, 'guide_main_map', $request, $formatted);
 
         /* Wheter the location has full wifi coverage or not */
-        $settings['wifi'] = $this->boolGetCallBack($object, 'guide_main_wifi', $request, $formatted);
+        $settings['hasWifi'] = $this->boolGetCallBack($object, 'guide_main_wifi', $request, $formatted);
 
         /* Check if guide has objects - If not its disabled */
-        $settings['objects'] = empty($this->getObjects($object, 'guide_location_objects', $request, true)) ? false : true;
+        $settings['hasObjects'] = empty($this->getObjects($object, 'guide_location_objects', $request, true)) ? false : true;
 
         /* Arrival messages */
         $settings['messages'] = array(
