@@ -257,7 +257,7 @@ class GuideFields extends Fields
                 'sublocation' => !is_numeric($item['guide_object_location']) ? null : $item['guide_object_location'],
 
                 'beacon' => array(
-                    'id' => !is_numeric($item['guide_object_beacon_id']) ? null : $item['guide_object_beacon_id'],
+                    'id' => empty($item['guide_object_beacon_id']) ? null : $item['guide_object_beacon_id'],
                     'distance' => !is_numeric($item['guide_object_beacon_distance']) ? null : $item['guide_object_beacon_distance']
                 ),
             );
