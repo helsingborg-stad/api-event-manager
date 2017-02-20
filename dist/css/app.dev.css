@@ -134,9 +134,6 @@
 #importResponse #event, #importResponse #location, #importResponse #contact {
   opacity: 0; }
 
-#misc-publishing-actions .misc-pub-section.misc-pub-post-status, #minor-publishing-actions {
-  display: none; }
-
 .createNewPost.button {
   margin-top: 7px; }
 

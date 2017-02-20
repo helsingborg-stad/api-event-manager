@@ -29,7 +29,15 @@ class GuideCategories
             'menu_name'             => __('Guide sender', 'event-manager'),
         );
 
+        $capabilities = array(
+            'manage_terms' => 'edit_users',
+            'edit_terms'   => 'edit_users',
+            'delete_terms' => 'edit_users',
+            'assign_terms' => 'read',
+        );
+
         $args = array(
+            'capabilities'          => $capabilities,
             'labels'                => $labels,
             'public'                => true,
             'show_in_nav_menus'     => true,
