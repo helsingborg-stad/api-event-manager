@@ -16,7 +16,7 @@ ImportEvents.Admin.AcceptDeny = (function ($) {
      * @return void
      */
     AcceptDeny.prototype.changeAccepted = function(postStatus, postId) {
-            $.ajax({
+        $.ajax({
             url: eventmanager.ajaxurl,
             type: 'post',
             data: {
@@ -26,10 +26,11 @@ ImportEvents.Admin.AcceptDeny = (function ($) {
             },
             beforeSend: function(response) {
                 var postElement = $('#post-' + postId);
-                if (postStatus == 1) {
+
+                if (postStatus === 1) {
                     postElement.find('.deny').removeClass('hidden');
                     postElement.find('.accept').addClass('hidden');
-                } else if(postStatus == 0) {
+                } else if(postStatus === 0) {
                     postElement.find('.deny').addClass('hidden');
                     postElement.find('.accept').removeClass('hidden');
                 }
@@ -44,14 +45,14 @@ ImportEvents.Admin.AcceptDeny = (function ($) {
     AcceptDeny.prototype.handleEvents = function () {
         $(document).on('click', '.accept', function (e) {
             e.preventDefault();
-            var postId = $(e.target).attr('post-id');
-            AcceptDeny.prototype.changeAccepted(1, postId);
+            var postId = $(e.target).closest('.accept').attr('post-id');
+            this.changeAccepted(1, postId);
         }.bind(this));
 
         $(document).on('click', '.deny', function (e) {
             e.preventDefault();
-            var postId = $(e.target).attr('post-id');
-            AcceptDeny.prototype.changeAccepted(0, postId);
+            var postId = $(e.target).closest('.deny').attr('post-id');
+            this.changeAccepted(0, postId);
         }.bind(this));
     };
 
@@ -61,7 +62,7 @@ ImportEvents.Admin.AcceptDeny = (function ($) {
 
 // ACF date picker settings
 (function($) {
-    if (typeof acf != 'undefined') {
+    if (typeof acf !== 'undefined') {
         // Datepicker translations
         acf.add_filter('date_time_picker_args', function( args, $field ){
             args.timeOnlyTitle = eventmanager.choose_time;
@@ -73,6 +74,7 @@ ImportEvents.Admin.AcceptDeny = (function ($) {
             args.showSecond = false;
             return args;
         });
+
         acf.add_filter('time_picker_args', function( args, $field ){
             args.timeOnlyTitle = eventmanager.choose_time;
             args.timeText = eventmanager.time;
@@ -93,15 +95,18 @@ ImportEvents.Admin.AcceptDeny = (function ($) {
         // Show validation errors on tabs
         acf.add_filter('validation_complete', function( json, $form ){
             $('.acf-tab-error', $form).remove();
-            if(json.errors) {
+
+            if (json.errors) {
                 for (var i = 0; i < json.errors.length; i++) {
                     var field = $('[name="' + json.errors[i].input + '"]', $form).parents('.acf-field');
                         field = field[field.length - 1];
                     var tab = $(field, $form).prevAll('.acf-field-tab').attr('data-key');
+
                     $('.acf-tab-wrap a[data-key=' + tab + '] .acf-tab-error', $form).remove();
                     $('.acf-tab-wrap a[data-key=' + tab + ']', $form).append(' <span class="dashicons dashicons-warning acf-tab-error"></span>').click();
                 }
             }
+
             return json;
         });
     }
@@ -786,6 +791,12 @@ ImportEvents.Prompt.Modal = (function ($) {
         }.bind(this));
     }
 
+    /**
+     * Open modal
+     * @param  {string} url      Url to open
+     * @param  {} parentId
+     * @return {void}
+     */
     Modal.prototype.open = function (url, parentId) {
         $('body').addClass('lightbox-open').append('\
             <div id="lightbox">\
@@ -796,9 +807,8 @@ ImportEvents.Prompt.Modal = (function ($) {
             </div>\
         ');
 
-        if(typeof(parentId) != 'undefined')
-        {
-            $(".lightbox-iframe").bind("load",function() {
+        if (typeof(parentId) != 'undefined') {
+            $(".lightbox-iframe").bind("load", function() {
                 var newContactForm = $(this).contents().find('#post');
                 newContactForm.append('<input type="hidden" id="parentId" name="parentId" value="' + parentId + '" />');
             });
@@ -807,13 +817,23 @@ ImportEvents.Prompt.Modal = (function ($) {
         isOpen = true;
     };
 
+    /**
+     * Close modal
+     * @return {void}
+     */
     Modal.prototype.close = function () {
         var modalElement = $('.lightbox-iframe');
+
         $('body').removeClass('lightbox-open');
         $('#lightbox').remove();
+
         isOpen = false;
     };
 
+    /**
+     * Handle events
+     * @return {void}
+     */
     Modal.prototype.handleEvents = function () {
         $(document).on('click', '[data-lightbox-action="close"]', function (e) {
             e.preventDefault();
@@ -851,8 +871,8 @@ ImportEvents.Admin.NewPostModal = (function ($) {
      * @return void
      */
     NewPostModal.prototype.createTrigger = function(postType, triggerClass) {
-        if($(triggerClass).length) {
-            if(typeof eventmanager['new_' + postType] != 'undefined') {
+        if ($(triggerClass).length) {
+            if (typeof eventmanager['new_' + postType] !== 'undefined') {
                $(triggerClass).append('<a class="createNewPost button" href="//' + window.location.host + '/wp/wp-admin/post-new.php?post_type=' + postType+ '&lightbox=true">' + eventmanager['new_' + postType] + '</a>');
             }
         }
