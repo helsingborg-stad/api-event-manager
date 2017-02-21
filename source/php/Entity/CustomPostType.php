@@ -87,11 +87,6 @@ abstract class CustomPostType
     public function replacePermalink($return, $post_id, $new_title, $new_slug, $post)
     {
         $postType = $post->post_type;
-
-        if ($postType == 'page') {
-            return $return;
-        }
-
         $jsonUrl = home_url() . '/json/wp/v2/' . $postType . '/';
         $apiUrl = $jsonUrl . $post_id;
 
@@ -532,8 +527,11 @@ abstract class CustomPostType
      */
     public function addAcfGroupMeta($post_id)
     {
-        if (! get_post_meta($post_id, 'missing_user_group', true)) add_post_meta($post_id, 'missing_user_group', 1, true);
-        return;
+        if (get_post_meta($post_id, 'missing_user_group', true)) {
+            return;
+        }
+
+        add_post_meta($post_id, 'missing_user_group', 1, true);
     }
 
 }
