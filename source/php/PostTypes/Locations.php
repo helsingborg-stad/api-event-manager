@@ -41,17 +41,21 @@ class Locations extends \HbgEventImporter\Entity\CustomPostType
         $this->addTableColumn('coordinates', __('Coordinates', 'event-manager'), true, function ($column, $postId) {
             $lat = get_post_meta($postId, 'latitude', true);
             $lng = get_post_meta($postId, 'longitude', true);
+
             if (!isset($lat[0]) || !isset($lng[0])) {
                 return;
             }
+
             echo get_post_meta($postId, 'latitude', true).', '.get_post_meta($postId, 'longitude', true);
         });
 
         $this->addTableColumn('import_client', __('Import client', 'event-manager'), true, function ($column, $postId) {
             $eventId = get_post_meta($postId, 'import_client', true);
+
             if (!isset($eventId[0])) {
                 return;
             }
+
             echo get_post_meta($postId, 'import_client', true);
         });
         $this->addTableColumn('date', __('Date', 'event-manager'));
@@ -78,7 +82,6 @@ class Locations extends \HbgEventImporter\Entity\CustomPostType
         global $post_type_object, $wpdb;
 
         if ($post_type_object->name == 'location' && is_array($args)) {
-
             //Limit depth to one level
             $args['depth'] = 1;
 
@@ -97,6 +100,7 @@ class Locations extends \HbgEventImporter\Entity\CustomPostType
                 );
             }
         }
+
         return $args;
     }
 
@@ -114,10 +118,12 @@ class Locations extends \HbgEventImporter\Entity\CustomPostType
         $lng = get_post_meta($post_id, 'longitude', true);
 
         $value['address'] = (! empty($address)) ? $address : null;
-        if (! empty($lat) && ! empty($lng)) {
+
+        if (!empty($lat) && ! empty($lng)) {
             $value['lat'] = $lat;
             $value['lng'] = $lng;
         }
+
         return $value;
     }
 
@@ -142,12 +148,15 @@ class Locations extends \HbgEventImporter\Entity\CustomPostType
     {
         if (current_user_can('administrator')) {
             $button  = '<div class="import-buttons actions">';
+
             if (have_rows('cbis_api_keys', 'option')) {
                 $button .= '<div class="button-primary extraspace" id="cbislocation">' . __('Import CBIS locations', 'event-manager') . '</div>';
             }
+
             $button .= '</div>';
             $views['import-buttons'] = $button;
         }
+
         return $views;
     }
 
@@ -166,28 +175,33 @@ class Locations extends \HbgEventImporter\Entity\CustomPostType
 
         // Get formatted address
         $formatted = '';
-        if (! empty(get_field('street_address'))) {
+        if (!empty(get_field('street_address'))) {
             $formatted = get_field('street_address') . ', ';
         } elseif (! empty(get_the_title($post_id))) {
             $formatted = get_the_title($post_id) . ', ';
         }
+
         $formatted .= ! empty(get_field('postal_code')) ? get_field('postal_code') . ', ' : '';
-        if (! empty(get_field('city'))) {
+
+        if (!empty(get_field('city'))) {
             $formatted .= get_field('city') . ', ';
         } elseif (! empty($defaultLocation)) {
             $formatted .= $defaultLocation . ', ';
         }
-        $formatted .=  ! empty(get_field('country')) ? get_field('country') : '';
+
+        $formatted .= !empty(get_field('country')) ? get_field('country') : '';
         $formatted = rtrim($formatted, ', ');
 
         // If address and postal code is missing, search with Places API
         if (empty(get_field('street_address')) && empty(get_field('postal_code'))) {
             $address = Address::gmapsGetAddressComponents($formatted, false);
+
             if ($address == false) {
                 update_field('latitude', '');
                 update_field('longitude', '');
                 return;
             }
+
             update_field('street_address', $address->street);
             update_field('city', $address->city);
             update_field('postal_code', $address->postalcode);
@@ -199,6 +213,7 @@ class Locations extends \HbgEventImporter\Entity\CustomPostType
             // Get coordinates from address
             update_field('formatted_address', $formatted);
             $address = Address::gmapsGetAddressComponents($formatted, true);
+
             if ($address == false) {
                 $address = Address::gmapsGetAddressComponents($formatted, false);
             }
@@ -208,6 +223,7 @@ class Locations extends \HbgEventImporter\Entity\CustomPostType
                 update_field('longitude', '');
                 return;
             }
+
             update_field('latitude', $address->latitude);
             update_field('longitude', $address->longitude);
         }

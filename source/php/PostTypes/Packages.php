@@ -30,6 +30,7 @@ class Packages extends \HbgEventImporter\Entity\CustomPostType
 
         $this->addTableColumn('cb', '<input type="checkbox">');
         $this->addTableColumn('title', __('Title', 'event-manager'));
+
         $this->addTableColumn('events', __('Includes', 'event-manager'), true, function ($column, $postId) {
             $events = get_post_meta($postId, 'events_included', true);
             if ($events) {
@@ -41,9 +42,10 @@ class Packages extends \HbgEventImporter\Entity\CustomPostType
                     }
                 }
             }
-        }
-        );
+        });
+
         $this->addTableColumn('date', __('Date', 'event-manager'));
+
         add_filter('manage_edit-' . $this->slug . '_columns', array($this, 'addAcceptDenyTable'));
         add_action('manage_' . $this->slug . '_posts_custom_column', array($this,'addAcceptDenyButtons'), 10, 2);
     }
