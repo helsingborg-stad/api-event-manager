@@ -123,6 +123,7 @@ class CBIS extends \HbgEventImporter\Parser
         $cbisId         = $this->apiKeys['cbis_geonode'];
         $cbisCategory   = $this->apiKeys['cbis_event_id'];
         $userGroups     = (is_array($this->apiKeys['cbis_groups']) && ! empty($this->apiKeys['cbis_groups'])) ? array_map('intval', $this->apiKeys['cbis_groups']) : null;
+
         // Used to set unique key on events
         $shortKey       = substr(intval($this->apiKeys['cbis_key'], 36), 0, 4);
 
@@ -174,6 +175,7 @@ class CBIS extends \HbgEventImporter\Parser
             if (isset($obj->ExpirationDate) && strtotime($obj->ExpirationDate) < strtotime("-2 years")) {
                 return false;
             }
+
             return true;
         });
 
@@ -256,18 +258,22 @@ class CBIS extends \HbgEventImporter\Parser
 
             if (isset($occasion->EndDate)) {
                 $endDate = explode('T', $occasion->EndDate)[0] . 'T' . explode('T', $occasion->EndTime)[1];
+
                 if (strtotime($endDate) <= strtotime($startDate)) {
                     $newEndTime = null;
+
                     if (isset($occasion->StartDate)) {
                         $date = strtotime($startDate);
                         $newEndTime = date('Y-m-d H:i:s', strtotime("+ 1 hour", $date));
                     }
+
                     $endDate = str_replace(' ', 'T', $newEndTime);
                 }
             }
 
             if (isset($occasion->EntryTime)) {
                 $doorTime = explode('T', $occasion->StartDate)[0] . 'T' . explode('T', $occasion->EntryTime)[1];
+
                 if (explode('T', $occasion->EntryTime)[1]=='00:00:00' && isset($occasion->StartDate)) {
                     $doorTime = $startDate;
                 }
@@ -315,11 +321,13 @@ class CBIS extends \HbgEventImporter\Parser
 
         if ($locationId == null || $isUpdate == true) {
             $country = $this->getAttributeValue(self::ATTRIBUTE_COUNTRY, $attributes);
+
             if (is_numeric($country)) {
                 $country = "Sweden";
             }
 
             $import_client = 'CBIS: Event';
+
             // Create the location
             $latitude = $this->getAttributeValue(self::ATTRIBUTE_LATITUDE, $attributes) != '0' ? $this->getAttributeValue(self::ATTRIBUTE_LATITUDE, $attributes) : null;
             $longitude = $this->getAttributeValue(self::ATTRIBUTE_LONGITUDE, $attributes) != '0' ? $this->getAttributeValue(self::ATTRIBUTE_LONGITUDE, $attributes) : null;
@@ -347,11 +355,14 @@ class CBIS extends \HbgEventImporter\Parser
             );
 
             $creatSuccess = $location->save();
+
             if ($creatSuccess) {
                 $locationId = $location->ID;
+
                 if ($isUpdate == false) {
                     ++$this->nrOfNewLocations;
                 }
+
                 $this->levenshteinTitles['location'][] = array('ID' => $location->ID, 'post_title' => $newPostTitle);
             }
         }
@@ -362,6 +373,7 @@ class CBIS extends \HbgEventImporter\Parser
             if (!empty($newPostTitle)) {
                 $newPostTitle .= ' : ';
             }
+
             $newPostTitle .= $this->getAttributeValue(self::ATTRIBUTE_CONTACT_EMAIL, $attributes);
         }
 
@@ -498,6 +510,7 @@ class CBIS extends \HbgEventImporter\Parser
                 if ($isUpdate == false) {
                     ++$this->nrOfNewEvents;
                 }
+
                 $this->levenshteinTitles['event'][] = array('ID' => $event->ID, 'post_title' => $newPostTitle);
             }
 
@@ -517,7 +530,7 @@ class CBIS extends \HbgEventImporter\Parser
         $passes = true;
         $exclude = $this->apiKeys['cbis_exclude'];
 
-        if (! empty($exclude)) {
+        if (!empty($exclude)) {
             $filters = array_map('trim', explode(',', $exclude));
             $categoriesLower = array_map('strtolower', $categories);
 
@@ -527,6 +540,7 @@ class CBIS extends \HbgEventImporter\Parser
                 }
             }
         }
+
         return $passes;
     }
 
@@ -539,12 +553,11 @@ class CBIS extends \HbgEventImporter\Parser
      */
     public function getAttributeValue($attributeId, $attributes, $default = null)
     {
-        if (isset($attributes[$attributeId]) && !isset($attributes[$attributeId]->Data)) {
-            echo "Inside getValue, this should not happen:\n";
-            var_dump($attributes[$attributeId]);
+        if (!isset($attributes[$attributeId]) || !isset($attributes[$attributeId]->Data)) {
+            return $default;
         }
 
-        return isset($attributes[$attributeId]) ? $attributes[$attributeId]->Data : $default;
+        return $attributes[$attributeId]->Data;
     }
 
     /**
