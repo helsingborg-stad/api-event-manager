@@ -38,15 +38,8 @@ class App
         add_filter('login_redirect', array($this, 'loginRedirect'), 10, 3);
         add_action('admin_init', array($this, 'dashboardRedirect'));
 
-
-        //Init post types
-        new PostTypes\Events();
-        new PostTypes\Locations();
-        new PostTypes\Contacts();
-        new PostTypes\Sponsors();
-        new PostTypes\Packages();
-        new PostTypes\MembershipCards();
-        new PostTypes\Guides();
+        // Init post types
+        new PostTypes();
 
         //Init functions
         new Acf\AcfFields();
