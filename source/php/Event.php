@@ -53,6 +53,7 @@ class Event extends \HbgEventImporter\Entity\PostManager
         $this->saveOccasions();
         $this->saveTags();
         $this->saveOrganizers();
+
         return true;
     }
 
@@ -115,11 +116,14 @@ class Event extends \HbgEventImporter\Entity\PostManager
     public function saveOccasions()
     {
         $occasionError = false;
+
         foreach ($this->occasions as $o) {
             $occasionError = $this->extractEventOccasion($o['start_date'], $o['end_date'], $o['door_time']);
         }
+
         update_field('field_5761106783967', $this->occasions, $this->ID);
-        //Use this to say something is wrong with occasions and someone need to see over the data
+
+        // Use this to say something is wrong with occasions and someone need to look over the data
         return $occasionError;
     }
 
@@ -135,29 +139,39 @@ class Event extends \HbgEventImporter\Entity\PostManager
     public function extractEventOccasion($startDate, $endDate, $doorTime)
     {
         global $wpdb;
-        $db_occasions = $wpdb->prefix . "occasions";
+
+        $dbOccasions = $wpdb->prefix . "occasions";
         $eventId = $this->ID;
-        $timestamp = strtotime($startDate);
-        $timestamp2 = strtotime($endDate);
-        if (empty($doorTime)) {
-            $timestamp3 = null;
-        } else {
-            $timestamp3 = strtotime($doorTime);
+
+        $timestampStart = strtotime($startDate);
+        $timestampEnd = strtotime($endDate);
+        $timestampDoor = null;
+
+        if (!empty($doorTime)) {
+            $timestampDoor = strtotime($doorTime);
         }
 
-        if ($timestamp <= 0 || $timestamp2 <= 0 || $timestamp == false || $timestamp2 == false) {
-            //if ($timestamp <= 0 || $timestamp2 <= 0 || $timestamp == false || $timestamp2 == false || $timestamp2 < $timestamp) {
+        if ($timestampStart <= 0 || $timestampEnd <= 0 || $timestampStart == false || $timestampEnd == false) {
             return true;
         }
 
         // We do not need to get all fields, they are just for debugging
-        $testQuery = $wpdb->prepare("SELECT * FROM $db_occasions WHERE event = %d AND timestamp_start = %d AND timestamp_end = %d", $eventId, $timestamp, $timestamp2);
+        $testQuery = $wpdb->prepare("SELECT * FROM $dbOccasions WHERE event = %d AND timestamp_start = %d AND timestamp_end = %d", $eventId, $timestampStart, $timestampEnd);
         $existing = $wpdb->get_results($testQuery);
 
         $resultString = '';
         if (empty($existing)) {
-            $wpdb->insert($db_occasions, array('event' => $eventId, 'timestamp_start' => $timestamp, 'timestamp_end' => $timestamp2, 'timestamp_door' => $timestamp3));
-            $resultString .= "New event occasions inserted with event id: " . $eventId . ', and timestamp_start: ' . $timestamp . ", timestamp_end: " . $timestamp2 . "\n";
+            $wpdb->insert(
+                $dbOccasions,
+                array(
+                    'event' => $eventId,
+                    'timestamp_start' => $timestampStart,
+                    'timestamp_end' => $timestampEnd,
+                    'timestamp_door' => $timestampDoor
+                )
+            );
+
+            $resultString .= "New event occasions inserted with event id: " . $eventId . ', and timestamp_start: ' . $timestampStart . ", timestamp_end: " . $timestampEnd . "\n";
         } else {
             $resultString .= "Already exists! Event: " . $existing[0]->event . ', timestamp: ' . $existing[0]->timestamp_start . ", timestamp_end: " . $existing[0]->timestamp_end . "\n";
         }
