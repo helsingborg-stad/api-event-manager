@@ -22,7 +22,6 @@ abstract class CustomPostType
      * @param string $slug         Post type slug
      * @param array  $args         Post type arguments
      */
-
     public function __construct($namePlural, $nameSingular, $slug, $args = array())
     {
         $this->namePlural = $namePlural;
@@ -32,9 +31,11 @@ abstract class CustomPostType
 
         // Register post type on init
         add_action('init', array($this, 'registerPostType'));
+
         add_filter('manage_edit-' . $this->slug . '_columns', array($this, 'tableColumns'));
         add_filter('manage_edit-' . $this->slug . '_sortable_columns', array($this, 'tableSortableColumns'));
         add_action('manage_' . $this->slug . '_posts_custom_column', array($this, 'tableColumnsContent'), 10, 2);
+
         add_action('publish_' . $this->slug, array($this, 'addAcfGroupMeta'), 10, 2);
         add_action('wp_ajax_accept_or_deny', array($this, 'acceptAndDeny'));
         add_action('wp_ajax_collect_occasions', array($this, 'collectOccasions'));
@@ -86,20 +87,25 @@ abstract class CustomPostType
     public function replacePermalink($return, $post_id, $new_title, $new_slug, $post)
     {
         $postType = $post->post_type;
+
         if ($postType == 'page') {
             return $return;
         }
-        $jsonUrl = home_url().'/json/wp/v2/'.$postType.'/';
-        $apiUrl = $jsonUrl.$post_id;
-        return '<strong>'.__('API-url', 'event-manager').':</strong> <a href="'.$apiUrl.'" target="_blank">'.$apiUrl.'</a>';
+
+        $jsonUrl = home_url() . '/json/wp/v2/' . $postType . '/';
+        $apiUrl = $jsonUrl . $post_id;
+
+        return '<strong>' . __('API-url', 'event-manager').':</strong> <a href="' . $apiUrl . '" target="_blank">' . $apiUrl . '</a>';
     }
 
     /**
      * Remove "Add media" button from posts
+     * @return void
      */
     public function removeMedia()
     {
         global $current_screen;
+
         if ($current_screen->post_type != 'page') {
             remove_action('media_buttons', 'media_buttons');
         }
@@ -107,6 +113,7 @@ abstract class CustomPostType
 
     /**
      * Saves event occasions to database if missing
+     * @return void
      */
     public function collectOccasions()
     {
@@ -120,38 +127,44 @@ abstract class CustomPostType
         foreach ($result as $key => $event) {
             $occasions = get_field('occasions', $event->ID);
             $db_occasions = $wpdb->prefix . "occasions";
+
             foreach ($occasions as $newKey => $value) {
-                $timestamp = strtotime($value['start_date']);
-                $timestamp2 = strtotime($value['end_date']);
-                $timestamp3 = (empty($value['door_time'])) ? null : strtotime($value['door_time']);
-                if ($timestamp <= 0 || $timestamp2 <= 0 || $timestamp == false || $timestamp2 == false) {
+                $timestampStart = strtotime($value['start_date']);
+                $timestampEnd = strtotime($value['end_date']);
+                $timestampDoor = (empty($value['door_time'])) ? null : strtotime($value['door_time']);
+
+                if ($timestampStart <= 0 || $timestampEnd <= 0 || $timestampStart == false || $timestampEnd == false) {
                     continue;
                 }
-                $testQuery = $wpdb->prepare("SELECT * FROM $db_occasions WHERE event = %d AND timestamp_start = %d AND timestamp_end = %d", $event->ID, $timestamp, $timestamp2);
+
+                $testQuery = $wpdb->prepare("SELECT * FROM $db_occasions WHERE event = %d AND timestamp_start = %d AND timestamp_end = %d", $event->ID, $timestampStart, $timestampEnd);
                 $existing = $wpdb->get_results($testQuery);
+
                 if (empty($existing)) {
-                    $newId = $wpdb->insert($db_occasions, array('event' => $event->ID, 'timestamp_start' => $timestamp, 'timestamp_end' => $timestamp2, 'timestamp_door' => $timestamp3));
-                    $resultString .= "New event occasions inserted with event id: " . $event->ID . ', and timestamp_start: ' . $timestamp . ", timestamp_end: " . $timestamp2 . ", timestamp_door: " . $timestamp3 ."\n";
+                    $newId = $wpdb->insert($db_occasions, array('event' => $event->ID, 'timestamp_start' => $timestampStart, 'timestamp_end' => $timestampEnd, 'timestamp_door' => $timestampDoor));
+                    $resultString .= "New event occasions inserted with event id: " . $event->ID . ', and timestamp_start: ' . $timestampStart . ", timestamp_end: " . $timestampEnd . ", timestamp_door: " . $timestampDoor ."\n";
                 } else {
                     $resultString .= "Already exists! Event: " . $existing[0]->event . ', timestamp_start: ' . $existing[0]->timestamp_start . ", timestamp_end: " . $existing[0]->timestamp_end . "\n";
                 }
             }
         }
+
         if (ob_get_contents()) {
             ob_end_clean();
         }
-        // Print results to console
-        //echo $resultString;
+
         wp_die();
     }
 
     /**
      * Hides instruction notice if dismissed.
+     * @return void
      */
     public function dismissInstructions()
     {
         $current_user = wp_get_current_user();
         $user_id = $current_user->ID;
+
         add_user_meta($user_id, 'dismissed_instr', 1, true);
     }
 
@@ -260,11 +273,13 @@ abstract class CustomPostType
     public function redirectLightboxLocation($location, $post_id)
     {
         $referer = (isset($_SERVER['HTTP_REFERER'])) ? $_SERVER['HTTP_REFERER'] : null;
+
         if ((isset($_GET['lightbox']) && $_GET['lightbox'] == 'true') || strpos($referer, 'lightbox=true') > -1) {
             if (isset($_POST['save']) || isset($_POST['publish'])) {
                 return $location.'&lightbox=true';
             }
         }
+
         return $location;
     }
 
@@ -280,6 +295,7 @@ abstract class CustomPostType
             $messages['post'][8]  = __('Post submitted.', 'event-manager');
             $messages['post'][10] = __('Post draft updated.', 'event-manager');
         }
+
         return $messages;
     }
 
@@ -348,16 +364,14 @@ abstract class CustomPostType
     public function missingAccessNotice()
     {
         $screen = get_current_screen();
+
         if ($screen->post_type !== $this->slug) {
             return;
         }
-        ?>
-        <div class="notice notice-warning dismissable is-dismissible">
-        <p><?php _e("You don't have access to edit this event. Contact an administrator for further information.", "event-manager");
-        ?></p>
-        </div>
-        <?php
 
+        echo '<div class="notice notice-warning dismissable is-dismissible">';
+        echo '<p>' . __("You don't have access to edit this event. Contact an administrator for further information.", "event-manager") . '</p>';
+        echo '</div>';
     }
 
     /**
@@ -460,6 +474,7 @@ abstract class CustomPostType
 
         $first = '';
         $second = '';
+
         if ($post_status == 'publish') {
             $first = 'hidden';
         } elseif ($post_status == 'draft' || $post_status == 'trash' || $post_status == 'pending') {
@@ -469,10 +484,11 @@ abstract class CustomPostType
         // If post is created from an external client we must publish it manually
         $revisions = wp_get_post_revisions($post_id);
         $consumer_client = get_post_meta($post_id, 'consumer_client');
-        if (! empty($consumer_client) && $post_status == 'draft' && empty($revisions)) {
+
+        if (!empty($consumer_client) && $post_status == 'draft' && empty($revisions)) {
            echo '<a href="' . get_edit_post_link($post_id) . '" class="button" title="' . __('This post must be updated before it can be published.', 'event-manager') . '">' . __('Edit draft', 'event-manager') . '</a>';
         } else {
-        // Show accept or deny buttons
+            // Show accept or deny buttons
             echo '<a href="#" class="accept button-primary ' . $first . '" post-id="' . $post_id . '">' . __('Accept', 'event-manager') . '</a>
             <a href="#" class="deny button-primary ' . $second . '" post-id="' . $post_id . '">' . __('Deny', 'event-manager') . '</a>';
         }
