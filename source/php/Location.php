@@ -14,15 +14,15 @@ class Location extends \HbgEventImporter\Entity\PostManager
      */
     public function beforeSave()
     {
-        $this->post_title = !is_string($this->post_title) ? $this->post_title : DataCleaner::string($this->post_title);
-        $this->street_address = !is_string($this->street_address) ? $this->street_address : DataCleaner::string($this->street_address);
+        $this->post_title = DataCleaner::string($this->post_title);
+        $this->street_address = DataCleaner::string($this->street_address);
         $this->postal_code = DataCleaner::number($this->postal_code);
-        $this->city = !is_string($this->city) ? $this->city : DataCleaner::string($this->city);
-        $this->municipality = !is_string($this->municipality) ? $this->municipality : DataCleaner::string($this->municipality);
-        $this->country = !is_string($this->country) ? $this->country : DataCleaner::string($this->country);
-        $this->latitude = !is_string($this->latitude) ? $this->latitude : DataCleaner::string($this->latitude);
-        $this->longitude = !is_string($this->longitude) ? $this->longitude : DataCleaner::string($this->longitude);
-        $this->_event_manager_uid = !is_string($this->_event_manager_uid) ? $this->_event_manager_uid : DataCleaner::string($this->_event_manager_uid);
+        $this->city = DataCleaner::string($this->city);
+        $this->municipality = DataCleaner::string($this->municipality);
+        $this->country = DataCleaner::string($this->country);
+        $this->latitude = DataCleaner::string($this->latitude);
+        $this->longitude = DataCleaner::string($this->longitude);
+        $this->_event_manager_uid = DataCleaner::string($this->_event_manager_uid);
     }
 
     /**

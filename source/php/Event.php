@@ -25,20 +25,20 @@ class Event extends \HbgEventImporter\Entity\PostManager
         foreach ($this->organizers as $key => $value) {
             $this->organizers[$key]['organizer_phone'] = DataCleaner::phoneNumber($this->organizers[$key]['organizer_phone']);
             $this->organizers[$key]['organizer_email'] = DataCleaner::email($this->organizers[$key]['organizer_email']);
-            $this->organizers[$key]['organizer'] = !is_string($this->organizers[$key]['organizer']) ? $this->organizers[$key]['organizer'] : DataCleaner::string($this->organizers[$key]['organizer']);
+            $this->organizers[$key]['organizer'] = DataCleaner::string($this->organizers[$key]['organizer']);
         }
 
         // Clean strings
-        $this->post_title = !is_string($this->post_title) ? $this->post_title : DataCleaner::string($this->post_title);
-        $this->post_content = !is_string($this->post_content) ? $this->post_content : DataCleaner::string($this->post_content);
-        $this->_event_manager_uid = !is_string($this->_event_manager_uid) ? $this->_event_manager_uid : DataCleaner::string($this->_event_manager_uid);
-        $this->status = !is_string($this->status) ? $this->status : DataCleaner::string($this->status);
-        $this->alternate_name = !is_string($this->alternate_name) ? $this->alternate_name : DataCleaner::string($this->alternate_name);
-        $this->event_link = !is_string($this->event_link) ? $this->event_link : DataCleaner::string($this->event_link);
-        $this->booking_link = !is_string($this->booking_link) ? $this->booking_link : DataCleaner::string($this->booking_link);
-        $this->age_restriction = !is_string($this->age_restriction) ? $this->age_restriction : DataCleaner::string($this->age_restriction);
-        $this->price_information = !is_string($this->price_information) ? $this->price_information : DataCleaner::string($this->price_information);
-        $this->image = !is_string($this->image) ? $this->image : DataCleaner::string($this->image);
+        $this->post_title = DataCleaner::string($this->post_title);
+        $this->post_content = DataCleaner::string($this->post_content);
+        $this->_event_manager_uid = DataCleaner::string($this->_event_manager_uid);
+        $this->status = DataCleaner::string($this->status);
+        $this->alternate_name = DataCleaner::string($this->alternate_name);
+        $this->event_link = DataCleaner::string($this->event_link);
+        $this->booking_link = DataCleaner::string($this->booking_link);
+        $this->age_restriction = DataCleaner::string($this->age_restriction);
+        $this->price_information = DataCleaner::string($this->price_information);
+        $this->image = DataCleaner::string($this->image);
     }
 
     /**
