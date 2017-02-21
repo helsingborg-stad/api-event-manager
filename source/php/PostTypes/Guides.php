@@ -76,21 +76,21 @@ class Guides extends \HbgEventImporter\Entity\CustomPostType
      */
     public function getSublocationsOnly($field)
     {
-        $parent_id = $this->getSelectedParent();
+        $parent = $this->getSelectedParent();
 
-        if (!is_null($parent_id) && is_numeric($parent_id)) {
-            $child_posts =  get_children($x = array(
-                                'post_parent' => $parent_id,
-                                'post_type'   => 'location',
-                                'numberposts' => -1,
-                                'post_status' => 'publish'
-                            ));
+        if (!is_null($parent) && is_numeric($parent)) {
+            $children =  get_children($x = array(
+                'post_parent' => $parent,
+                'post_type'   => 'location',
+                'numberposts' => -1,
+                'post_status' => 'publish'
+            ));
 
             $field['choices'] = array('' => __("No location", 'event-manager'));
 
-            if (is_array($child_posts)) {
-                foreach ($child_posts as $item) {
-                    $field['choices'][ $item->ID ] = $item->post_title . " (" . get_the_title($parent_id) . ")";
+            if (is_array($children)) {
+                foreach ($children as $item) {
+                    $field['choices'][ $item->ID ] = $item->post_title . " (" . get_the_title($parent) . ")";
                 }
             }
         }
@@ -119,20 +119,21 @@ class Guides extends \HbgEventImporter\Entity\CustomPostType
 
     public function getSublocationsAjax()
     {
-        $parent_id = (isset($_POST['selected']) && is_numeric($_POST['selected'])) ? $_POST['selected'] : null;
+        $parent = (isset($_POST['selected']) && is_numeric($_POST['selected'])) ? $_POST['selected'] : null;
 
-        if (!is_null($parent_id) && is_numeric($parent_id)) {
-            $child_posts =  get_children(array(
-                                'post_parent' => $parent_id,
-                                'post_type'   => 'location',
-                                'numberposts' => -1,
-                                'post_status' => 'publish'
-                            ));
+        if (!is_null($parent) && is_numeric($parent)) {
+            $children =  get_children(array(
+                'post_parent' => $parent,
+                'post_type'   => 'location',
+                'numberposts' => -1,
+                'post_status' => 'publish'
+            ));
 
-            if (is_array($child_posts)) {
+            if (is_array($children)) {
                 $result = array('' => __("No location", 'event-manager'));
-                foreach ($child_posts as $item) {
-                    $result[ $item->ID ] = $item->post_title . " (" . get_the_title($parent_id) . ")";
+
+                foreach ($children as $item) {
+                    $result[ $item->ID ] = $item->post_title . " (" . get_the_title($parent) . ")";
                 }
 
                 echo json_encode($result);
