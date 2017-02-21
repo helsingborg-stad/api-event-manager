@@ -446,84 +446,108 @@ ImportEvents.Parser = ImportEvents.Parser || {};
 
 ImportEvents.Parser.Eventhandling = (function ($) {
 
-    var newPosts            = {events:0,locations:0,contacts:0};
-    var data                = {action:'import_events', value:'', api_keys:'', cron:false};
-    var short               = 200;
-    var long                = 400;
-    var timerId             = null;
-    var loadingOccasions    = false;
-    var i                   = 0;
-    var j                   = 0;
+    var newPosts = {
+        events: 0,
+        locations: 0,
+        contacts: 0
+    };
+
+    var data = {
+        action: 'import_events',
+        value: '',
+        api_keys: '',
+        cron: false
+    };
+
+    var short = 200;
+    var long = 400;
+    var timerId = null;
+    var loadingOccasions = false;
+    var i = 0;
+    var j = 0;
 
     function Eventhandling() {
-        $(function() {
+        $(document).on('click', '#xcap', function (e) {
+            e.preventDefault();
+            data.value = 'xcap';
 
-            $(document).on('click', '#xcap', function (e) {
-                e.preventDefault();
-                data.value = 'xcap';
-                if (! loadingOccasions) {
-                    loadingOccasions = true;
-                    var button = $(this);
-                    var storedCss = Eventhandling.prototype.collectCssFromButton(button);
-                    Eventhandling.prototype.redLoadingButton(button, function() {
-                        Eventhandling.prototype.parseEvents(data, button, storedCss);
-                        return;
+            if (!loadingOccasions) {
+                loadingOccasions = true;
+
+                var button = $(e.target).closest('#xcap');
+                var storedCss = this.collectCssFromButton(button);
+
+                this.redLoadingButton(button, function() {
+                    this.parseEvents(data, button, storedCss);
+                    return;
+                }.bind(this));
+            }
+        }.bind(this));
+
+        $(document).on('click', '#cbis', function (e) {
+            e.preventDefault();
+            data.value = 'cbis';
+
+            if (!loadingOccasions) {
+                loadingOccasions = true;
+
+                var button = $(e.target).closest('#cbis');
+                var storedCss = this.collectCssFromButton(button);
+
+                this.redLoadingButton(button, function() {
+                    this.parseEvents(data, button, storedCss);
+                    return;
+                }.bind(this));
+            }
+        }.bind(this));
+
+        $(document).on('click', '#cbislocation', function (e) {
+            e.preventDefault();
+            data.value = 'cbislocation';
+
+            if (!loadingOccasions) {
+                loadingOccasions = true;
+
+                var button = $(e.target).closest('#cbislocation');
+                var storedCss = this.collectCssFromButton(button);
+
+                this.redLoadingButton(button, function() {
+                    this.parseCbislocation(data, button, storedCss);
+                    return;
+                }.bind(this));
+            }
+        }.bind(this));
+
+        $(document).on('click', '#occasions', function (e) {
+            e.preventDefault();
+
+            if (!loadingOccasions) {
+                loadingOccasions = true;
+
+                var button = $(e.target).closest('#occasions');
+                var storedCss = this.collectCssFromButton(button);
+
+                this.redLoadingButton(button, function() {
+                    var data = {
+                        action: 'collect_occasions'
+                    };
+
+                    jQuery.post(ajaxurl, data, function(response) {
+                        loadingOccasions = false;
+                        this.restoreButton(button, storedCss);
                     });
-                }
-            });
-
-            $(document).on('click', '#cbis', function (e) {
-                e.preventDefault();
-                data.value = 'cbis';
-                if (! loadingOccasions) {
-                    loadingOccasions = true;
-                    var button = $(this);
-                    var storedCss = Eventhandling.prototype.collectCssFromButton(button);
-                    Eventhandling.prototype.redLoadingButton(button, function() {
-                        Eventhandling.prototype.parseEvents(data, button, storedCss);
-                        return;
-                    });
-                }
-            });
-
-            $(document).on('click', '#cbislocation', function (e) {
-                e.preventDefault();
-                data.value = 'cbislocation';
-                if (! loadingOccasions) {
-                    loadingOccasions = true;
-                    var button = $(this);
-                    var storedCss = Eventhandling.prototype.collectCssFromButton(button);
-                    Eventhandling.prototype.redLoadingButton(button, function() {
-                        Eventhandling.prototype.parseCbislocation(data, button, storedCss);
-                        return;
-                    });
-                }
-            });
-
-            $(document).on('click', '#occasions', function (e) {
-                e.preventDefault();
-                if (! loadingOccasions) {
-                    loadingOccasions = true;
-                    var button = $(this);
-                    var storedCss = Eventhandling.prototype.collectCssFromButton(button);
-                    Eventhandling.prototype.redLoadingButton(button, function() {
-                        var data = {
-                            'action'    : 'collect_occasions'
-                        };
-
-                        jQuery.post(ajaxurl, data, function(response) {
-                            console.log(response);
-                            loadingOccasions = false;
-                            Eventhandling.prototype.restoreButton(button, storedCss);
-                        });
-                    });
-                }
-            });
-
+                }.bind(this));
+            }
         }.bind(this));
     }
 
-    // Parse CBIS & XCAP events, loop through each API key
+    /**
+     * Parse CBIS & XCAP events, loop through each API key
+     * @param  {array}   data        Data to parse
+     * @param  {element} button      Clicked button
+     * @param  {object}  storedCss   Default button  css
+     * @return {void}
+     */
     Eventhandling.prototype.parseEvents = function(data, button, storedCss) {
         if (data.value === 'cbis') {
             data.api_keys = cbis_ajax_vars.cbis_keys[i];
@@ -532,13 +556,15 @@ ImportEvents.Parser.Eventhandling = (function ($) {
         }
 
         // Show result if there's no API keys left to parse
-        if( (typeof data.api_keys == 'undefined') ) {
+        if (typeof data.api_keys === 'undefined') {
             loadingOccasions = false;
+
             // Show data pop up if function is not called with cron
-            if (! data.cron) {
-                Eventhandling.prototype.dataPopUp(newPosts);
-                Eventhandling.prototype.restoreButton(button, storedCss);
+            if (!data.cron) {
+                this.dataPopUp(newPosts);
+                this.restoreButton(button, storedCss);
             }
+
             return;
         }
 
@@ -547,94 +573,118 @@ ImportEvents.Parser.Eventhandling = (function ($) {
             type: 'post',
             data: data,
             success: function(response) {
-                console.log(response);
                 // Update response object
                 newPosts.events    += response.events;
                 newPosts.locations += response.locations;
                 newPosts.contacts  += response.contacts;
+
                 // Run function again
                 i++;
-                Eventhandling.prototype.parseEvents(data, button, storedCss);
+                ImportEvents.Parser.Eventhandling.parseEvents(data, button, storedCss);
             }
-        })
+        });
     };
 
-    // Parse CBIS locations, loop through each API key and its categories
+    /**
+     * Parse CBIS locations, loop through each API key and its categories
+     * @param  {object}  data      Data to parse
+     * @param  {element} button    Button element
+     * @param  {object}  storedCss Button default css
+     * @return {void}
+     */
     Eventhandling.prototype.parseCbislocation = function(data, button, storedCss) {
         j = 0;
 
         // Show import result when done
-        if( (typeof cbis_ajax_vars.cbis_keys[i] == 'undefined') ) {
+        if( (typeof cbis_ajax_vars.cbis_keys[i] === 'undefined') ) {
             loadingOccasions = false;
+
             // Show data pop up if function is not called with cron
-            if (! data.cron) {
-                Eventhandling.prototype.dataPopUp(newPosts);
-                Eventhandling.prototype.restoreButton(button, storedCss);
+            if (!data.cron) {
+                this.dataPopUp(newPosts);
+                this.restoreButton(button, storedCss);
             }
+
             return;
         }
 
         data.api_keys = cbis_ajax_vars.cbis_keys[i];
 
         // Wait for callback and run this function again until there's no API keys left to parse
-        $.when(Eventhandling.prototype.parseLocations(data)).then(function() {
+        $.when(this.parseLocations(data)).then(function() {
             i++;
-            Eventhandling.prototype.parseCbislocation(data, button, storedCss) ;
-        });
+            this.parseCbislocation(data, button, storedCss) ;
+        }.bind(this));
     };
 
-    // Parse each location category ID
+    /**
+     * Parse each location category ID
+     * @param  {object} data Data to parse
+     * @return {object}      Deferred object
+     */
     Eventhandling.prototype.parseLocations = function(data){
         var deferredObject = $.Deferred();
 
         Eventhandling.prototype.parse = function() {
             // Return when done
-            if( (typeof data.api_keys.cbis_locations[j] == 'undefined') ) {
+            if (typeof data.api_keys.cbis_locations[j] === 'undefined') {
                 deferredObject.resolve();
                 return;
             }
 
             data.cbis_location = data.api_keys.cbis_locations[j];
+
             // Wait for Ajax callback and run this function again until there's no categories left
-            $.when(Eventhandling.prototype.parseLocationCategory(data)).then(function() {
+            $.when(this.parseLocationCategory(data)).then(function() {
                 j++;
-                Eventhandling.prototype.parse(data);
-            });
+                this.parse(data);
+            }.bind(this));
         };
 
-        Eventhandling.prototype.parse();
+        this.parse();
 
         return deferredObject.promise();
-    }
+    };
 
-    // Call ajax with category ID
+    /**
+     * Call ajax with category ID
+     * @param  {object} data Ajax data
+     * @return {void}
+     */
     Eventhandling.prototype.parseLocationCategory = function(data){
         return $.ajax({
             url: eventmanager.ajaxurl,
             type: 'post',
             data: data,
             success: function(response) {
-                console.log(response);
                 // Update response object
                 newPosts.events    += response.events;
                 newPosts.locations += response.locations;
                 newPosts.contacts  += response.contacts;
             }
-        })
+        });
     };
 
+    /**
+     * Show data popup
+     * @param  {object} newData Data to display
+     * @return {void}
+     */
     Eventhandling.prototype.dataPopUp = function(newData){
         $('#blackOverlay').show();
         var responsePopup = $('#importResponse');
+
         responsePopup.show(500, function() {
             var eventNumber = responsePopup.find('#event');
             var locationNumber = responsePopup.find('#location');
             var contactNumber = responsePopup.find('#contact');
             var normalTextSize = eventNumber.css('fontSize');
             var bigTextSize = '26px';
+
             eventNumber.text(newData.events);
             locationNumber.text(newData.locations);
             contactNumber.text(newData.contacts);
+
             eventNumber.animate({opacity: 1}, long).animate({fontSize: bigTextSize}, short).animate({fontSize: normalTextSize}, short, function() {
                 locationNumber.animate({opacity: 1}, long).animate({fontSize: bigTextSize}, short).animate({fontSize: normalTextSize}, short, function() {
                     contactNumber.animate({opacity: 1}, long).animate({fontSize: bigTextSize}, short).animate({fontSize: normalTextSize}, short, function() {
@@ -648,6 +698,11 @@ ImportEvents.Parser.Eventhandling = (function ($) {
         });
     };
 
+    /**
+     * Collects a object with css params for a button
+     * @param  {element} button The button
+     * @return {object}         The button style
+     */
     Eventhandling.prototype.collectCssFromButton = function (button) {
         return {
             bgColor: button.css('background-color'),
@@ -660,6 +715,12 @@ ImportEvents.Parser.Eventhandling = (function ($) {
         };
     };
 
+    /**
+     * Transforms button style to red loading button
+     * @param  {element}   button    The button to trasnform
+     * @param  {Function}  callback  Callback function
+     * @return {void}
+     */
     Eventhandling.prototype.redLoadingButton = function (button, callback) {
         button.fadeOut(500, function() {
             var texts = [eventmanager.loading + '&nbsp;&nbsp;&nbsp;', eventmanager.loading + '.&nbsp;&nbsp;', eventmanager.loading + '..&nbsp;', eventmanager.loading + '...'];
@@ -673,18 +734,26 @@ ImportEvents.Parser.Eventhandling = (function ($) {
             button.fadeIn(500);
 
             var counter = 1;
-            timerId = setInterval(function()
-            {
-                if(counter > 3)
+            timerId = setInterval(function() {
+                if (counter > 3) {
                     counter = 0;
+                }
+
                 button.html(texts[counter]);
                 ++counter;
             }, 500);
-            if(callback != undefined)
+
+            if (callback !== undefined)
                 callback();
         });
     };
 
+    /**
+     * Restores a button to its default state
+     * @param  {element} button    The button
+     * @param  {object}  storedCss The default css
+     * @return {void}
+     */
     Eventhandling.prototype.restoreButton = function (button, storedCss) {
         button.fadeOut(500, function() {
             button.css('background-color', storedCss.bgColor);
@@ -695,6 +764,7 @@ ImportEvents.Parser.Eventhandling = (function ($) {
             button.css('width', storedCss.width);
             button.text(storedCss.text);
             button.fadeIn(500);
+
             clearTimeout(timerId);
         });
     };
