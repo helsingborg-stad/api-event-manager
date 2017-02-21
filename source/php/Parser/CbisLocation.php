@@ -72,6 +72,7 @@ class CbisLocation extends \HbgEventImporter\Parser
         $cbisKey         = $this->apiKeys['cbis_key'];
         $cbisId          = $this->apiKeys['cbis_geonode'];
         $userGroups      = (is_array($this->apiKeys['cbis_groups']) && ! empty($this->apiKeys['cbis_groups'])) ? array_map('intval', $this->apiKeys['cbis_groups']) : null;
+
         // Used to set unique key on events
         $shortKey        = substr(intval($this->apiKeys['cbis_key'], 36), 0, 4);
 
@@ -142,8 +143,10 @@ class CbisLocation extends \HbgEventImporter\Parser
                 if (isset($obj->ExpirationDate) && strtotime($obj->ExpirationDate) < strtotime("now")) {
                     return false;
                 }
+
                 return true;
             });
+
             foreach ($filteredProducts as $product) {
                 $this->saveLocation($product, $cbisLocName, $defaultLocation, $userGroups, $shortKey, $postStatus);
             }
@@ -158,7 +161,6 @@ class CbisLocation extends \HbgEventImporter\Parser
     public function getAttributes($eventData)
     {
         $attributes = array();
-
         $dataHolder = $eventData->Attributes->AttributeData;
 
         if (!is_array($dataHolder)) {
@@ -241,10 +243,12 @@ class CbisLocation extends \HbgEventImporter\Parser
 
             $createSuccess = $location->save();
             $locationId = $location->ID;
+
             if ($createSuccess) {
                 if ($isUpdate == false) {
                     ++$this->nrOfNewLocations;
                 }
+
                 $this->levenshteinTitles['location'][] = array('ID' => $locationId, 'post_title' => $newPostTitle);
             }
         }
@@ -259,11 +263,10 @@ class CbisLocation extends \HbgEventImporter\Parser
      */
     public function getAttributeValue($attributeId, $attributes, $default = null)
     {
-        if (isset($attributes[$attributeId]) && !isset($attributes[$attributeId]->Data)) {
-            echo "Inside getValue, this should not happen:\n";
-            var_dump($attributes[$attributeId]);
+        if (!isset($attributes[$attributeId]) || !isset($attributes[$attributeId]->Data)) {
+            return $default;
         }
 
-        return isset($attributes[$attributeId]) ? $attributes[$attributeId]->Data : $default;
+        return $attributes[$attributeId]->Data;
     }
 }

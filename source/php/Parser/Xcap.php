@@ -28,6 +28,7 @@ class Xcap extends \HbgEventImporter\Parser
         $events = $xml->iCal->vevent;
 
         $this->collectDataForLevenshtein();
+
         // Used to set unique key on events
         $shortKey = substr(intval($this->url, 36), 0, 4);
 
@@ -35,6 +36,7 @@ class Xcap extends \HbgEventImporter\Parser
             if (!isset($event->uid) || empty($event->uid)) {
                 continue;
             }
+
             $this->saveEvent($event, $shortKey);
         }
     }
@@ -68,19 +70,19 @@ class Xcap extends \HbgEventImporter\Parser
         $image = null;
         if (isset($eventData->{'x-xcap-wideimageid'}) && !empty($eventData->{'x-xcap-wideimageid'}) && $eventData->{'x-xcap-wideimageid'} != 'null') {
             $image = $eventData->{'x-xcap-wideimageid'};
-        }
-        elseif (isset($eventData->{'x-xcap-imageid'}) && !empty($eventData->{'x-xcap-imageid'}) && $eventData->{'x-xcap-imageid'} != 'null') {
+        } elseif (isset($eventData->{'x-xcap-imageid'}) && !empty($eventData->{'x-xcap-imageid'}) && $eventData->{'x-xcap-imageid'} != 'null') {
             $image = $eventData->{'x-xcap-imageid'};
         }
 
         //Add http to strings not containing protocol. The server may correct this to https by redirect.
         if (strpos($image, '//') === 0) {
-            $image = 'http:'.$image;
+            $image = 'http:' . $image;
         }
 
         if (!is_string($name)) {
             return;
         }
+
         $occasions = array();
         if ($startDate != null && $endDate != null && $doorTime != null) {
             $occasions[] = array(
@@ -103,6 +105,7 @@ class Xcap extends \HbgEventImporter\Parser
 
             $locPostStatus = $postStatus;
             $isUpdate = false;
+
             // Check if this is a duplicate or update and if "sync" option is set.
             if ($locationId && get_post_meta($locationId, '_event_manager_uid', true)) {
                 $existingUid    = get_post_meta($locationId, '_event_manager_uid', true);
@@ -112,7 +115,6 @@ class Xcap extends \HbgEventImporter\Parser
             }
 
             if ($locationId == null || $isUpdate == true) {
-
                 // Create the location
                 $location = new Location(
                     array(
@@ -137,11 +139,14 @@ class Xcap extends \HbgEventImporter\Parser
                 );
 
                 $createSuccess = $location->save();
+
                 if ($createSuccess) {
                     $locationId = $location->ID;
-                        if ($isUpdate == false) {
-                            ++$this->nrOfNewLocations;
-                        }
+
+                    if ($isUpdate == false) {
+                        ++$this->nrOfNewLocations;
+                    }
+
                     $this->levenshteinTitles['location'][] = array('ID' => $location->ID, 'post_title' => $address);
                 }
             }
@@ -149,6 +154,7 @@ class Xcap extends \HbgEventImporter\Parser
 
         $eventId = $this->checkIfPostExists('event', $newPostTitle);
         $isUpdate = false;
+
         // Check if this is a duplicate or update and if "sync" option is set.
         if ($eventId && get_post_meta($eventId, '_event_manager_uid', true)) {
             $existingUid = get_post_meta( $eventId, '_event_manager_uid', true);
@@ -195,6 +201,7 @@ class Xcap extends \HbgEventImporter\Parser
                 if ($isUpdate == false) {
                     ++$this->nrOfNewEvents;
                 }
+
                 $this->levenshteinTitles['event'][] = array('ID' => $event->ID, 'post_title' => $newPostTitle);
             }
 
@@ -224,6 +231,7 @@ class Xcap extends \HbgEventImporter\Parser
                 }
             }
         }
+
         return $passes;
     }
 
@@ -256,5 +264,4 @@ class Xcap extends \HbgEventImporter\Parser
 
         return str_replace(' ', 'T', $returnDate->format('Y-m-d H:i:s'));
     }
-
 }
