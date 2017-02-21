@@ -13,20 +13,20 @@ class GuideCategories
     public function registerTaxonomy()
     {
         $labels = array(
-            'name'                  => _x('Guide sender', 'Taxonomy plural name', 'event-manager'),
-            'singular_name'         => _x('Guide sender', 'Taxonomy singular name', 'event-manager'),
-            'search_items'          => __('Search guidesender', 'event-manager'),
-            'popular_items'         => __('Popular guidesenders', 'event-manager'),
-            'all_items'             => __('All guidesenders', 'event-manager'),
-            'parent_item'           => __('Parent guidesenders', 'event-manager'),
-            'parent_item_colon'     => __('Parent guidesender', 'event-manager'),
-            'edit_item'             => __('Edit guidesender', 'event-manager'),
-            'update_item'           => __('Update guidesender', 'event-manager'),
-            'add_new_item'          => __('Add new guidesender', 'event-manager'),
-            'new_item_name'         => __('New guidesender', 'event-manager'),
-            'add_or_remove_items'   => __('Add or remove guidesender', 'event-manager'),
-            'choose_from_most_used' => __('Choose from most used guidesender', 'event-manager'),
-            'menu_name'             => __('Guide sender', 'event-manager'),
+            'name'                  => _x('Guide group', 'Taxonomy plural name', 'event-manager'),
+            'singular_name'         => _x('Guide group', 'Taxonomy singular name', 'event-manager'),
+            'search_items'          => __('Search guide group', 'event-manager'),
+            'popular_items'         => __('Popular guide groups', 'event-manager'),
+            'all_items'             => __('All guide groups', 'event-manager'),
+            'parent_item'           => __('Parent guide group', 'event-manager'),
+            'parent_item_colon'     => __('Parent guide group', 'event-manager'),
+            'edit_item'             => __('Edit guide group', 'event-manager'),
+            'update_item'           => __('Update guide group', 'event-manager'),
+            'add_new_item'          => __('Add new guide group', 'event-manager'),
+            'new_item_name'         => __('New guide group', 'event-manager'),
+            'add_or_remove_items'   => __('Add or remove guide group', 'event-manager'),
+            'choose_from_most_used' => __('Choose from most used guide groups', 'event-manager'),
+            'menu_name'             => __('Guide groups', 'event-manager'),
         );
 
         $capabilities = array(
@@ -49,11 +49,11 @@ class GuideCategories
             'rewrite'               => true
         );
 
-        register_taxonomy('guide_sender', array('guide'), $args);
+        register_taxonomy('guidegroup', array('guide'), $args);
     }
 
     public function unregisterMetaBox()
     {
-        remove_meta_box('tagsdiv-guide_sender', 'guide', 'side');
+        remove_meta_box('tagsdiv-guidegroup', 'guide', 'side');
     }
 }

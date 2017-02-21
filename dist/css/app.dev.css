@@ -397,3 +397,60 @@
     background-position: center center;
     background-size: cover;
     opacity: .5; }
+
+[class*=' taxonomy-'] .term-name-wrap p {
+  display: none; }
+
+[class*=' taxonomy-'] .term-slug-wrap {
+  display: none; }
+
+[class*=' taxonomy-'] .term-description-wrap p {
+  display: none; }
+
+[class*=' taxonomy-'] .form-wrap #addtag .acf-field,
+[class*=' taxonomy-'] .form-wrap #addtag .form-field,
+[class*=' taxonomy-'] #edittag .form-table .acf-field,
+[class*=' taxonomy-'] #edittag .form-table .form-field {
+  background: #f9f9f9;
+  padding-right: 0;
+  border: 1px solid #e5e5e5;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+  margin-right: 0; }
+
+[class*=' taxonomy-'] .form-wrap #addtag label,
+[class*=' taxonomy-'] #edittag .form-table label {
+  background: #fff;
+  padding: 8px;
+  border-bottom: 1px solid #dadada;
+  font-size: 14px; }
+
+[class*=' taxonomy-'] .form-wrap #addtag .acf-label label,
+[class*=' taxonomy-'] #edittag .form-table .acf-label label {
+  margin: 0;
+  font-size: 14px; }
+
+[class*=' taxonomy-'] .form-wrap #addtag .form-field textarea,
+[class*=' taxonomy-'] .form-wrap #addtag .form-field input[type="text"],
+[class*=' taxonomy-'] #edittag .form-table .form-field textarea,
+[class*=' taxonomy-'] #edittag .form-table .form-field input[type="text"] {
+  width: calc(100% - 16px);
+  margin: 8px; }
+
+[class*=' taxonomy-'] .form-wrap #addtag .acf-input,
+[class*=' taxonomy-'] #edittag .form-table .acf-input {
+  padding: 8px; }
+
+[class*=' taxonomy-'] .form-wrap #addtag .acf-input + .acf-input,
+[class*=' taxonomy-'] #edittag .form-table .acf-input + .acf-input {
+  margin-top: 8px; }
+
+[class*=' taxonomy-'] .form-wrap #addtag .acf-true-false label,
+[class*=' taxonomy-'] #edittag .form-table .acf-true-false label {
+  border: none;
+  padding: 0;
+  background: none; }
+
+[class*=' taxonomy-'] #edittag table.form-table label {
+  height: 100%;
+  background: none;
+  border-bottom: none; }
