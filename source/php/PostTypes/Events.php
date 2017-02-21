@@ -143,24 +143,31 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
             return;
         }
 
+        // Get occasions
+        $occasions = get_field('occasions', $post_id);
+        if (!is_array($occasions)) {
+            return;
+        }
+
         global $wpdb;
 
-        $db_occasions = $wpdb->prefix . "occasions";
-        $wpdb->delete($db_occasions, array( 'event' => $post_id ), array('%d'));
+        $dbTable = $wpdb->prefix . "occasions";
+        $wpdb->delete($dbTable, array( 'event' => $post_id ), array('%d'));
 
-        $repeater  = 'occasions';
-        $count = intval(get_post_meta($post_id, $repeater, true));
+        foreach ($occasions as $occasion) {
+            $timestampStart = strtotime($occasion['start_date']);
+            $timestampEnd = strtotime($occasion['end_date']);
+            $timestampDoor = !is_null($occasion['door_time']) ? strtotime($occasion['door_time']) : null;
 
-        for ($i = 0; $i < $count; $i++) {
-            $timestampStart  = strtotime(get_post_meta($post_id, $repeater . '_' . $i . '_' . 'start_date', true));
-            $timestampEnd  = strtotime(get_post_meta($post_id, $repeater . '_' . $i . '_' . 'end_date', true));
-            $timestampDoor  = get_post_meta($post_id, $repeater . '_' . $i . '_' . 'door_time', true);
-
-            if (!is_null($timestampDoor)) {
-                $timestmpDoor = strtotime($timestampDoor);
-            }
-
-            $wpdb->insert($db_occasions, array('event' => $post_id, 'timestamp_start' => $timestampStart, 'timestamp_end' => $timestampEnd, 'timestamp_door' => $timestampDoor));
+            $wpdb->insert(
+                $dbTable,
+                array(
+                    'event' => $post_id,
+                    'timestamp_start' => $timestampStart,
+                    'timestamp_end' => $timestampEnd,
+                    'timestamp_door' => $timestampDoor
+                )
+            );
         }
     }
 
@@ -176,59 +183,56 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
             return;
         }
 
-        $repeater  = 'rcr_rules';
-        $rcr_count = intval(get_post_meta($post_id, $repeater, true));
+        $rules = get_field('rcr_rules', $post_id);
 
-        if ($rcr_count > 0) {
-            global $wpdb;
-            $db_occasions = $wpdb->prefix . "occasions";
+        if (!is_array($rules)) {
+            return;
+        }
 
-            for ($i = 0; $i < $rcr_count; $i++) {
-                $startTime = $repeater.'_'.$i.'_'.'rcr_start_time';
-                $startTimeValue = get_post_meta($post_id, $startTime, true);
-                $endTime  = $repeater.'_'.$i.'_'.'rcr_end_time';
-                $endTimeValue = get_post_meta($post_id, $endTime, true);
-                $doorTime  = $repeater.'_'.$i.'_'.'rcr_door_time';
-                $doorTimeValue = get_post_meta($post_id, $doorTime, true);
-                $weekDay  = $repeater.'_'.$i.'_'.'rcr_week_day';
-                $weekDayValue = get_post_meta($post_id, $weekDay, true);
-                $startDate  = $repeater.'_'.$i.'_'.'rcr_start_date';
-                $startDateValue = get_post_meta($post_id, $startDate, true);
-                $endDate  = $repeater.'_'.$i.'_'.'rcr_end_date';
-                $endDateValue = get_post_meta($post_id, $endDate, true);
+        global $wpdb;
+        $dbTable = $wpdb->prefix . "occasions";
 
-                // Save recurring dates to array
-                $recurringDates = array();
-                for ($j = strtotime($weekDayValue, strtotime($startDateValue)); $j <= strtotime($endDateValue); $j = strtotime('+1 week', $j)) {
-                    $recurringDates[] = $j;
+        foreach ($rules as $rule) {
+            $startDate = $rule['rcr_start_date'];
+            $endDate = $rule['rcr_end_date'];
+            $weekday = $rule['rcr_week_day'];
+            $startTime = $rule['rcr_start_time'];
+            $endTime = $rule['rcr_end_time'];
+            $doorTime = $rule['rcr_door_time'];
+
+            // Get recurring dates
+            $recurringDates = array();
+            for ($j = strtotime($weekday, strtotime($startDate)); $j <= strtotime($endDate); $j = strtotime('+1 week', $j)) {
+                $recurringDates[] = $j;
+            }
+
+            // Remove exceptions from recurring dates
+            $exceptionDates = $rule['rcr_exceptions'];
+            foreach ($exceptionDates as &$date) {
+                $date = strtotime($date['rcr_exc_date']);
+            }
+
+            // Filter exceptions from the recurring dates
+            $recurringDates = array_diff($recurringDates, $exceptionDates);
+
+            foreach ($recurringDates as $date) {
+                $start = strtotime(date('Y-m-d', $date) . ' ' . $startTime);
+                $end = strtotime(date('Y-m-d', $date) . ' ' . $endTime);
+                $door = null;
+
+                if (!empty($doorTime)) {
+                    $door =strtotime(date('Y-m-d', $date) . ' ' . $doorTime);
                 }
 
-                // Save exceptions to array
-                $exceptionDates = array();
-                $exc_count = intval(get_post_meta($post_id, $repeater.'_'.$i.'_'.'rcr_exceptions', true));
-
-                if ($exc_count > 0) {
-                    for ($k = 0; $k < $exc_count; $k++) {
-                        $exceptionDates[] = strtotime(get_post_meta($post_id, $repeater.'_'.$i.'_'.'rcr_exceptions'.'_'.$k.'_'.'rcr_exc_date', true));
-                    }
-                }
-
-                // Remove all exception dates from array
-                $filteredDates = array_diff($recurringDates, $exceptionDates);
-
-                // Save to event_occasions
-                foreach ($filteredDates as $key => $val) {
-                    $timestampStart = strtotime(date('Y:m:d', $val).' '.$startTimeValue);
-                    $timestampEnd = strtotime(date('Y:m:d', $val).' '.$endTimeValue);
-
-                    if (empty($doorTimeValue)) {
-                        $timestampDoor = null;
-                    } else {
-                        $timestampDoor = strtotime(date('Y:m:d', $val).' '.$doorTimeValue);
-                    }
-
-                    $wpdb->insert($db_occasions, array('event' => $post_id, 'timestamp_start' => $timestampStart, 'timestamp_end' => $timestampEnd, 'timestamp_door' => $timestampDoor));
-                }
+                $wpdb->insert(
+                    $dbTable,
+                    array(
+                        'event' => $post_id,
+                        'timestamp_start' => $start,
+                        'timestamp_end' => $end,
+                        'timestamp_door' => $door
+                    )
+                );
             }
         }
     }
