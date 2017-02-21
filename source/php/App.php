@@ -31,9 +31,6 @@ class App
         // Set api keys
         add_action('admin_enqueue_scripts', array($this, 'setApiKeys'));
 
-        // Admin components
-        add_action('admin_notices', array($this, 'adminNotices'));
-
         // Register cron action
         add_action('import_events_daily', array($this, 'startImport'));
 
@@ -120,24 +117,6 @@ class App
 
         wp_redirect(admin_url('edit.php?post_type=event'), 301);
         exit;
-    }
-
-    /**
-     * Admin notice for events imported
-     * @todo Is this used? Maybe move to parser classes?
-     * @return void
-     */
-    public function adminNotices()
-    {
-        global $current_screen;
-
-        if ($current_screen->id != 'edit-event') {
-            return;
-        }
-
-        if (isset($_GET['msg']) && $_GET['msg'] == 'import-complete') {
-            echo '<div class="updated"><p>' . __('Events imported', 'event-manager') . '</p></div>';
-        }
     }
 
     /**
