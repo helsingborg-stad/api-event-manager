@@ -1,0 +1,68 @@
+[class*=' taxonomy-'] {
+    .term-name-wrap p {
+        display: none;
+    }
+
+    .term-slug-wrap {
+        display: none;
+    }
+
+    .term-description-wrap p {
+        display: none;
+    }
+
+
+    .form-wrap #addtag,
+    #edittag .form-table {
+
+        .acf-field,
+        .form-field {
+            background: #f9f9f9;
+            padding-right: 0;
+            border: 1px solid #e5e5e5;
+            -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.04);
+            box-shadow: 0 1px 1px rgba(0,0,0,.04);
+            margin-right: 0;
+        }
+
+        label {
+            background: #fff;
+            padding: 8px;
+            border-bottom: 1px solid #dadada;
+            font-size: 14px;
+        }
+
+        .acf-label label {
+            margin: 0;
+            font-size: 14px;
+        }
+
+        .form-field textarea,
+        .form-field input[type="text"] {
+            width: calc(100% - 16px);
+            margin: 8px;
+        }
+
+        .acf-input {
+            padding: 8px;
+        }
+
+        .acf-input + .acf-input {
+            margin-top: 8px;
+        }
+
+        .acf-true-false label {
+            border: none;
+            padding: 0;
+            background: none;
+        }
+
+    }
+
+    #edittag  table.form-table label {
+        height: 100%;
+        background: none;
+        border-bottom: none;
+    }
+
+}

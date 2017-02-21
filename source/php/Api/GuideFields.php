@@ -26,11 +26,11 @@ class GuideFields extends Fields
 
         // Guide theme object
         register_rest_field($this->postType,
-            'settings',
+            'general',
             array(
                 'get_callback' => array($this, 'settings'),
                 'schema' => array(
-                    'description' => 'Describes the guides colors and logo.',
+                    'description' => 'Describes the guides colors, logo, moodimage and main location.',
                     'type' => 'object',
                     'context' => array('view', 'embed')
                 )
@@ -78,7 +78,7 @@ class GuideFields extends Fields
 
         // Guide location objects
         register_rest_field($this->postType,
-            'objects',
+            'contentObjects',
             array(
                 'get_callback' => array($this, 'objects'),
                 'schema' => array(
@@ -90,17 +90,25 @@ class GuideFields extends Fields
         );
 
         // Guide location objects
-        /*register_rest_field($this->postType,
-            'objectMap',
+        register_rest_field($this->postType,
+            'walk',
             array(
-                'get_callback' => array($this, 'objectMap'),
+                'get_callback' => array($this, 'walk'),
                 'schema' => array(
-                    'description' => 'Map item for mapping objects to locations and beacon. Each value reperesents the object array key. Hidden objects will not be mirrored in this strucure object.',
+                    'description' => 'Objects of this guide.',
                     'type' => 'object',
                     'context' => array('view', 'embed')
                 )
             )
-        );*/
+        );
+    }
+
+    public function walk($object, $field_name, $request, $formatted = true)
+    {
+        if ($this->boolGetCallBack($object, 'guide_enable_stops', $request, $formatted)) {
+            return $this->objectGetCallBack($object, 'guide_object_stops', $request);
+        }
+        return null;
     }
 
     public function settings($object, $field_name, $request, $formatted = true)
@@ -136,54 +144,6 @@ class GuideFields extends Fields
         return $settings;
     }
 
-    public function objectMap($object, $field_name, $request, $formatted = true)
-    {
-
-        //Get objects
-        $objects = $this->getObjects($object, 'guide_location_objects', $request, true);
-
-        //Result structure definition
-        $structured = array(
-            'beacon' => array(),
-            'location' => array(
-                'undefined' => array(),
-                'sublocation' => array()
-            )
-        );
-
-        //Create location map
-        foreach ((array) $objects as $key => $item) {
-            if ($item['guide_object_active'] != 1) {
-                continue;
-            }
-
-            if (empty($item['guide_object_location'])) {
-                $structured['location']['undefined'][] = $key;
-            } else {
-                if (!is_array($structured['location']['sublocation'])) {
-                    $structured['location']['sublocation'][$item['guide_object_location']] = array($key);
-                }
-                $structured['location']['sublocation'][$item['guide_object_location']][] = $key;
-            }
-        }
-
-        //Create beacon map
-        foreach ((array) $objects as $key => $item) {
-            if ($item['guide_object_active'] != 1) {
-                continue;
-            }
-
-            if (!empty($item['guide_object_beacon_id'])) {
-                if (!is_array($structured['beacon'])) {
-                    $structured['beacon'][$item['guide_object_beacon_id']] = array($key);
-                }
-                $structured['beacon'][$item['guide_object_beacon_id']][] = $key;
-            }
-        }
-
-        return $structured;
-    }
-
     public function beacon($object, $field_name, $request, $formatted = true)
     {
         $beacon = array(
@@ -209,17 +169,6 @@ class GuideFields extends Fields
         } else {
             return $media;
         }
-    }
-
-    public function getObjects($object, $field_name, $request, $formatted = true)
-    {
-        $hash = md5(json_encode($object));
-
-        if (isset($this->objectCache[$hash]) && !empty($this->objectCache[$hash])) {
-            return $this->objectCache[$hash];
-        }
-
-        return $this->objectCache[$hash] = $this->objectGetCallBack($object, 'guide_location_objects', $request, true);
     }
 
     public function objects($object, $field_name, $request, $formatted = true)
@@ -251,6 +200,22 @@ class GuideFields extends Fields
         return (array) $objects;
     }
 
+    public function mainLocation($object, $field_name, $request, $formatted = true)
+    {
+        return $this->numericGetCallBack($object, 'guide_main_location', $request, true);
+    }
+
+    public function getObjects($object, $field_name, $request, $formatted = true)
+    {
+        $hash = md5(json_encode($object));
+
+        if (isset($this->objectCache[$hash]) && !empty($this->objectCache[$hash])) {
+            return $this->objectCache[$hash];
+        }
+
+        return $this->objectCache[$hash] = $this->objectGetCallBack($object, 'guide_location_objects', $request, true);
+    }
+
     public function sanitizeMediaObject($item)
     {
         if (is_array($item)) {
@@ -275,11 +240,6 @@ class GuideFields extends Fields
         }
 
         return $objectArray;
-    }
-
-    public function mainLocation($object, $field_name, $request, $formatted = true)
-    {
-        return $this->numericGetCallBack($object, 'guide_main_location', $request, true);
     }
 
     public function sanitizeLinkObject($linkObject)

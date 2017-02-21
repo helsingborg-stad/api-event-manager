@@ -37,9 +37,11 @@ class Guides extends \HbgEventImporter\Entity\CustomPostType
     public function runFilters()
     {
         add_filter('acf/update_value/name=guide_apperance_data', array($this, 'updateTaxonomyRelation'), 10, 3);
-        add_filter('acf/load_field/name=guide_object_location', array($this, 'getSublocationsOnly'), 10, 3);
-        add_filter('acf/fields/post_object/query/name=guide_main_location', array($this, 'getMainLocations'), 10, 3);
-        add_action('wp_ajax_update_guide_sublocation_option', array($this, 'getSublocationsAjax'));
+        add_filter('acf/fields/post_object/query/name=guide_taxonomy_location', array($this, 'getMainLocations'), 10, 3);
+
+        /*add_filter('acf/load_field/name=guide_object_location', array($this, 'getSublocationsOnly'), 10, 3);
+
+        add_action('wp_ajax_update_guide_sublocation_option', array($this, 'getSublocationsAjax'));*/
     }
 
     /**
@@ -50,7 +52,7 @@ class Guides extends \HbgEventImporter\Entity\CustomPostType
      */
     public function updateTaxonomyRelation($value, $post_id, $field)
     {
-        wp_set_object_terms((int) $post_id, array((int) $value), 'guide_sender');
+        wp_set_object_terms((int) $post_id, array((int) $value), 'guidegroup');
         return $value;
     }
 
