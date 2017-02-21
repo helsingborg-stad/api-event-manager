@@ -54,9 +54,11 @@ class Location extends \HbgEventImporter\Entity\PostManager
         // Get coordinates from address.
         } elseif ($this->street_address != null && ($this->latitude == null || $this->longitude == null)) {
             $res = Helper\Address::gmapsGetAddressComponents($this->street_address . ' ' . $this->postal_code . ' ' . $this->city . ' ' . $this->country, true);
+
             if (!isset($res->latitude)) {
                 return true;
             }
+
             update_post_meta($this->ID, 'formatted_address', $res->formatted_address);
             update_post_meta($this->ID, 'latitude', $res->latitude);
             update_post_meta($this->ID, 'longitude', $res->longitude);
@@ -64,9 +66,11 @@ class Location extends \HbgEventImporter\Entity\PostManager
         // Get address from coordinates.
         } elseif ($this->street_address == null && $this->latitude != null && $this->longitude != null) {
             $res = Helper\Address::gmapsGetAddressByCoordinates($this->latitude, $this->longitude);
+
             if (!isset($res->street)) {
                 return true;
             }
+
             update_post_meta($this->ID, 'street_address', $res->street);
             update_post_meta($this->ID, 'postal_code', $res->postalcode);
             update_post_meta($this->ID, 'city', $res->city);
@@ -79,8 +83,10 @@ class Location extends \HbgEventImporter\Entity\PostManager
             $wholeAddress .= $this->postal_code != null ? ', ' . $this->postal_code : '';
             $wholeAddress .= $this->city != null ? ', ' . $this->city : '';
             $wholeAddress .= $this->country != null ? ', ' . $this->country : '';
+
             update_post_meta($this->ID, 'formatted_address', $wholeAddress);
         }
+
         return true;
     }
 
