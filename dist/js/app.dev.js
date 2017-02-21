@@ -172,7 +172,7 @@ ImportEvents.Admin.Guide = (function ($) {
         return results[1] || undefined;
     };
 
-    return new Guide();
+    //return new Guide();
 
 })(jQuery);
 
