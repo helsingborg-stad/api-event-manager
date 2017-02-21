@@ -883,7 +883,7 @@ ImportEvents.Admin.NewPostModal = (function ($) {
      * @return void
      */
     NewPostModal.prototype.bindLaunchModal = function() {
-        $(document).on('click','.createNewPost',function(e) {
+        $(document).on('click','.createNewPost', function(e) {
             e.preventDefault();
             ImportEvents.Prompt.Modal.open($(this).attr('href'), $('#post_ID').val());
         });
