@@ -7,6 +7,7 @@ class Arr
     public static function arrayKeysExist(array $array, $keys)
     {
         $count = 0;
+
         if (!is_array($keys)) {
             $keys = func_get_args();
             array_shift($keys);
