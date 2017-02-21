@@ -4,19 +4,24 @@ namespace HbgEventImporter;
 
 abstract class Parser
 {
+    private $db;
+
     protected $url;
     protected $apiKeys;
     protected $cbisLocation;
     protected $nrOfNewEvents;
     protected $nrOfNewLocations;
     protected $nrOfNewContacts;
-    private $db;
 
     /**
      * Holds all titles of existing locations, contacts and events in wordpress
      * @var array
      */
-    protected $levenshteinTitles = array('location' => array(), 'contact' => array(), 'event' => array());
+    protected $levenshteinTitles = array(
+        'location' => array(),
+        'contact' => array(),
+        'event' => array()
+    );
 
     public function __construct($url, $apiKeys = null, $cbisLocation = null)
     {
@@ -41,20 +46,34 @@ abstract class Parser
     }
 
     /**
+     * Used to start the parsing
+     */
+    abstract public function start();
+
+    /**
      * Collecting titles of existing events, locations and contacts
      * @return void
      */
     public function collectDataForLevenshtein()
     {
-        $types = (array) apply_filters('event/parser/common/levenshtein/post_types', array('event', 'location', 'contact'));
+        $types = (array) apply_filters(
+            'event/parser/common/levenshtein/post_types',
+            array(
+                'event',
+                'location',
+                'contact'
+            )
+        );
 
-        foreach ((array) $types as $type) {
+        foreach ($types as $type) {
             $allOfCertainType = $this->db->get_results(
                 $this->db->prepare("SELECT ID, post_title FROM " . $this->db->posts . " WHERE (post_status = %s OR post_status = %s) AND post_type = %s", 'publish', 'draft', $type)
             );
 
-            foreach ((array) $allOfCertainType as $post) {
-                $this->levenshteinTitles[$type][] = array('ID' => $post->ID, 'post_title' => $post->post_title);
+            if (is_array($allOfCertainType)) {
+                foreach ($allOfCertainType as $post) {
+                    $this->levenshteinTitles[$type][] = array('ID' => $post->ID, 'post_title' => $post->post_title);
+                }
             }
         }
     }
@@ -70,6 +89,7 @@ abstract class Parser
                 return $title['ID'];
             }
         }
+
         return null;
     }
 
@@ -85,6 +105,7 @@ abstract class Parser
         if (levenshtein($newTitle, $existingTitle) <= $threshold) {
             return true;
         }
+
         return false;
     }
 
@@ -92,21 +113,19 @@ abstract class Parser
      * Get statistics for imported dataset
      * @return array
      */
-
     public function getCreatedData()
     {
         return array(
-                'events' => $this->nrOfNewEvents,
-                'locations' => $this->nrOfNewLocations,
-                'contacts' => $this->nrOfNewContacts
-            );
+            'events' => $this->nrOfNewEvents,
+            'locations' => $this->nrOfNewLocations,
+            'contacts' => $this->nrOfNewContacts
+        );
     }
 
     /**
-     * Used to start the parsing
+     * When parser is done
+     * @return void
      */
-    abstract public function start();
-
     public function done()
     {
         echo __('Parser done.', 'event-manager');
@@ -121,7 +140,6 @@ abstract class Parser
     public function cleanString($string)
     {
         $string = str_replace(' ', '-', $string);
-
         return preg_replace('/[^A-Za-z0-9\-]/', '', $string);
     }
 }
