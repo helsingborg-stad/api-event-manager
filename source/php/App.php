@@ -215,52 +215,84 @@ class App
      */
     public function setApiKeys()
     {
-        if (current_user_can('administrator')) {
-            // Set CBIS API variables
-            $cbis_keys = array();
-            if (have_rows('cbis_api_keys', 'option')):
-                while (have_rows('cbis_api_keys', 'option')): the_row();
+        if (!current_user_can('administrator')) {
+            return;
+        }
 
-            $location_categories = array();
-            $location_categories[] = array('arena' => 1, 'cbis_location_cat_id' => get_sub_field('cbis_event_id'), 'cbis_location_name' => 'arena');
-            if (! empty(get_sub_field('cbis_location_ids'))) {
+        wp_localize_script('hbg-event-importer', 'cbis_ajax_vars', array('cbis_keys' => $this->getCbisKeys()));
+        wp_localize_script('hbg-event-importer', 'xcap_ajax_vars', array('xcap_keys' => $this->getXcapKeys()));
+    }
+
+    /**
+     * Get Xcap keys
+     * @return array
+     */
+    public function getXcapKeys() : array
+    {
+        $xcapKeys = array();
+
+        if (!have_rows('xcap_api_urls', 'option')) {
+            return array();
+        }
+
+        while (have_rows('xcap_api_urls', 'option')) {
+            the_row();
+
+            $xcapKeys[] = array(
+                'xcap_api_url'       => get_sub_field('xcap_api_url'),
+                'xcap_exclude'       => get_sub_field('xcap_filter_categories'),
+                'xcap_groups'        => get_sub_field('xcap_publishing_groups')
+            );
+        }
+
+        return $xcapKeys;
+    }
+
+    /**
+     * Get CBIS keys
+     * @return array
+     */
+    public function getCbisKeys() : array
+    {
+        $cbisKeys = array();
+
+        if (!have_rows('cbis_api_keys', 'option')) {
+            return array();
+        }
+
+        while (have_rows('cbis_api_keys', 'option')) {
+            the_row();
+
+            // What
+            $locationCategories = array();
+            $locationCategories[] = array(
+                'arena' => 1,
+                'cbis_location_cat_id' => get_sub_field('cbis_event_id'),
+                'cbis_location_name' => 'arena'
+            );
+
+            // What
+            if (!empty(get_sub_field('cbis_location_ids'))) {
                 foreach (get_sub_field('cbis_location_ids') as $location) {
-                    $location_categories[] = array(
-                            'arena'                 => 0,
-                            'cbis_location_cat_id'  => $location['cbis_location_cat_id'],
-                            'cbis_location_name'    => $location['cbis_location_name']
-                        );
+                    $locationCategories[] = array(
+                        'arena'                 => 0,
+                        'cbis_location_cat_id'  => $location['cbis_location_cat_id'],
+                        'cbis_location_name'    => $location['cbis_location_name']
+                    );
                 }
             }
 
-            $cbis_keys[] = array(
-                    'cbis_key'           => get_sub_field('cbis_api_product_key'),
-                    'cbis_geonode'       => get_sub_field('cbis_api_geonode_id'),
-                    'cbis_event_id'      => get_sub_field('cbis_event_id'),
-                    'cbis_exclude'       => get_sub_field('cbis_filter_categories'),
-                    'cbis_groups'        => get_sub_field('cbis_publishing_groups'),
-                    'cbis_locations'     => $location_categories
-                );
-            endwhile;
-            endif;
-
-            wp_localize_script('hbg-event-importer', 'cbis_ajax_vars', array('cbis_keys' => $cbis_keys));
-
-            // Set XCAP API variables
-            $xcap_keys = array();
-            if (have_rows('xcap_api_urls', 'option')):
-                while (have_rows('xcap_api_urls', 'option')): the_row();
-
-            $xcap_keys[] = array(
-                    'xcap_api_url'       => get_sub_field('xcap_api_url'),
-                    'xcap_exclude'       => get_sub_field('xcap_filter_categories'),
-                    'xcap_groups'        => get_sub_field('xcap_publishing_groups')
-                );
-            endwhile;
-            endif;
-
-            wp_localize_script('hbg-event-importer', 'xcap_ajax_vars', array('xcap_keys' => $xcap_keys));
+            $cbisKeys[] = array(
+                'cbis_key'       => get_sub_field('cbis_api_product_key'),
+                'cbis_geonode'   => get_sub_field('cbis_api_geonode_id'),
+                'cbis_event_id'  => get_sub_field('cbis_event_id'),
+                'cbis_exclude'   => get_sub_field('cbis_filter_categories'),
+                'cbis_groups'    => get_sub_field('cbis_publishing_groups'),
+                'cbis_locations' => $locationCategories
+            );
         }
+
+        return $cbisKeys;
     }
 
     /**
