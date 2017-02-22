@@ -38,13 +38,16 @@ class Guides extends \HbgEventImporter\Entity\CustomPostType
     {
 
         //Update taxonomy
-        add_filter('acf/update_value/name=guide_apperance_data', array($this, 'updateTaxonomyRelation'), 10, 3);
+        add_filter('acf/update_value/name=guide_group', array($this, 'updateTaxonomyRelation'), 10, 3);
 
         //Only main locations selectable
         add_filter('acf/fields/post_object/query/name=guide_taxonomy_location', array($this, 'getMainLocations'), 10, 3);
 
         //Only sublocations selectable (if set)
         add_filter('acf/fields/post_object/query/key=field_58ab0c9554b0a', array($this, 'getMainLocations'), 10, 3);
+
+        //Objects
+        add_filter('acf/load_field/key=field_58ab0cf054b0b', array($this, 'getPostObjects'), 10, 1);
     }
 
     /**
@@ -73,6 +76,19 @@ class Guides extends \HbgEventImporter\Entity\CustomPostType
         }
 
         return $args;
+    }
+
+    /**
+     * Only get sublocation to previously selected main location.
+     * @param  $field     Array containing field details
+     */
+    public function getPostObjects($field)
+    {
+        $field['choices'] = array(
+            'custom' => 'My Custom Choice'
+        );
+
+        return $field;
     }
 
     /**
