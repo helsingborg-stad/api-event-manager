@@ -46,7 +46,8 @@ class GuideCategories
             'show_tagcloud'         => false,
             'show_ui'               => true,
             'query_var'             => true,
-            'rewrite'               => true
+            'rewrite'               => true,
+            'show_in_rest'          => true,
         );
 
         register_taxonomy('guidegroup', array('guide'), $args);
