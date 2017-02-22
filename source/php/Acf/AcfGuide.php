@@ -10,7 +10,7 @@ class AcfGuide
 {
     public function __construct()
     {
-        add_action('acf/init', array($this, 'addLocalFieldGroups'));
+        //add_action('acf/init', array($this, 'addLocalFieldGroups'));
     }
 
     public function addLocalFieldGroups()

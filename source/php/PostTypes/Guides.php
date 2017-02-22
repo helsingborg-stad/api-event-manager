@@ -36,10 +36,15 @@ class Guides extends \HbgEventImporter\Entity\CustomPostType
      */
     public function runFilters()
     {
+
+        //Update taxonomy
         add_filter('acf/update_value/name=guide_apperance_data', array($this, 'updateTaxonomyRelation'), 10, 3);
-        add_filter('acf/load_field/name=guide_object_location', array($this, 'getSublocationsOnly'), 10, 3);
-        add_filter('acf/fields/post_object/query/name=guide_main_location', array($this, 'getMainLocations'), 10, 3);
-        add_action('wp_ajax_update_guide_sublocation_option', array($this, 'getSublocationsAjax'));
+
+        //Only main locations selectable
+        add_filter('acf/fields/post_object/query/name=guide_taxonomy_location', array($this, 'getMainLocations'), 10, 3);
+
+        //Only sublocations selectable (if set)
+        add_filter('acf/fields/post_object/query/key=field_58ab0c9554b0a', array($this, 'getMainLocations'), 10, 3);
     }
 
     /**
@@ -50,7 +55,7 @@ class Guides extends \HbgEventImporter\Entity\CustomPostType
      */
     public function updateTaxonomyRelation($value, $post_id, $field)
     {
-        wp_set_object_terms((int) $post_id, array((int) $value), 'guide_sender');
+        wp_set_object_terms((int) $post_id, array((int) $value), 'guidegroup');
         return $value;
     }
 
@@ -74,73 +79,14 @@ class Guides extends \HbgEventImporter\Entity\CustomPostType
      * Only get sublocation to previously selected main location.
      * @param  $field     Array containing field details
      */
-    public function getSublocationsOnly($field)
+    public function getSublocationsOnly($args, $field, $post_id)
     {
-        $parent_id = $this->getSelectedParent();
 
-        if (!is_null($parent_id) && is_numeric($parent_id)) {
-            $child_posts =  get_children($x = array(
-                                'post_parent' => $parent_id,
-                                'post_type'   => 'location',
-                                'numberposts' => -1,
-                                'post_status' => 'publish'
-                            ));
+        // TODO: Fix.
 
-            $field['choices'] = array('' => __("No location", 'event-manager'));
+        //All settings get for term
 
-            if (is_array($child_posts)) {
-                foreach ($child_posts as $item) {
-                    $field['choices'][ $item->ID ] = $item->post_title . " (" . get_the_title($parent_id) . ")";
-                }
-            }
-        }
-
-        return $field;
+        return $args;
     }
 
-    public function getSelectedParent($postObject = null)
-    {
-        if (is_null($postObject)) {
-            global $post;
-        } else {
-            $post = $postObject;
-        }
-
-        if (is_object($post) && isset($post->ID) && is_numeric($post->ID)) {
-            return get_post_meta($post->ID, 'guide_main_location', true);
-        }
-
-        if (!is_object($post) && is_numeric($post)) {
-            return get_post_meta($post, 'guide_main_location', true);
-        }
-
-        return false;
-    }
-
-    public function getSublocationsAjax()
-    {
-        $parent_id = (isset($_POST['selected']) && is_numeric($_POST['selected'])) ? $_POST['selected'] : null;
-
-        if (!is_null($parent_id) && is_numeric($parent_id)) {
-            $child_posts =  get_children(array(
-                                'post_parent' => $parent_id,
-                                'post_type'   => 'location',
-                                'numberposts' => -1,
-                                'post_status' => 'publish'
-                            ));
-
-            if (is_array($child_posts)) {
-                $result = array('' => __("No location", 'event-manager'));
-                foreach ($child_posts as $item) {
-                    $result[ $item->ID ] = $item->post_title . " (" . get_the_title($parent_id) . ")";
-                }
-
-                echo json_encode($result);
-                exit;
-            }
-        }
-
-        echo json_encode(array('' => __("No location", 'event-manager')));
-        exit;
-    }
 }

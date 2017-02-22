@@ -28,6 +28,7 @@ class Filter
         add_filter('rest_prepare_user_groups', array($this, 'removeResponseKeys'), 5000, 3);
         add_filter('rest_prepare_location_categories', array($this, 'removeResponseKeys'), 5000, 3);
         add_filter('rest_prepare_guide', array($this, 'removeResponseKeys'), 5000, 3);
+        add_filter('rest_prepare_guidegroup', array($this, 'removeResponseKeys'), 5000, 3);
     }
 
     /**
@@ -54,7 +55,7 @@ class Filter
     public function removeResponseKeys($response, $post, $request)
     {
         //Common keys
-        $keys = array('author','acf','guid','type','link', 'template', 'meta');
+        $keys = array('author','acf','guid','type','link', 'template', 'meta', 'taxonomy');
 
         //Only for location and contact
         if (in_array($post->post_type, array("location", "contact"))) {
