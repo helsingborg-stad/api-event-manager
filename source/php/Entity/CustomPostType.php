@@ -57,7 +57,7 @@ abstract class CustomPostType
     {
         if ($_POST['value'] == 'cbis') {
             $api_keys = $_POST['api_keys'];
-            $importer = new \HbgEventImporter\Parser\CBIS('http://api.cbis.citybreak.com/Products.asmx?wsdl', $api_keys);
+            $importer = new \HbgEventImporter\Parser\CbisEvent('http://api.cbis.citybreak.com/Products.asmx?wsdl', $api_keys);
             $data = $importer->getCreatedData();
 
             wp_send_json($data);
