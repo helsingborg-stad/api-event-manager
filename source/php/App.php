@@ -39,6 +39,11 @@ class App
         add_action('admin_init', array($this, 'dashboardRedirect'));
 
 
+        //Load acf plugins
+        add_action('init', function () {
+            require_once HBGEVENTIMPORTER_PATH . 'source/php/Vendor/acf-unique-id/acf-unique_id-v5.php';
+        });
+
         //Init post types
         new PostTypes\Events();
         new PostTypes\Locations();
@@ -156,8 +161,8 @@ class App
             'term'
         );
 
-        if (!is_object($current_screen) || !in_array($current_screen->post_type, $acceptedPostTypes)) {
-            return;
+        if (is_object($current_screen) && in_array($current_screen->post_type, $acceptedPostTypes)) {
+            wp_enqueue_script('hbg-event-importer', HBGEVENTIMPORTER_URL . '/dist/js/app.min.js');
         }
 
         wp_enqueue_script('hbg-event-importer', HBGEVENTIMPORTER_URL . '/dist/js/app.min.js');

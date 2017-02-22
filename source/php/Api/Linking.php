@@ -28,7 +28,7 @@ class Linking extends Fields
         add_filter('rest_prepare_package', array($this, 'addIncludedEvents'), 20, 3);
         add_filter('rest_prepare_package', array($this, 'addEmbedLink'), 20, 3);
 
-        add_filter('rest_prepare_guide', array($this, 'addGuideLocation'), 20, 3);
+        add_filter('rest_prepare_guidegroup', array($this, 'addGuideLocation'), 20, 3);
         add_filter('rest_prepare_guide', array($this, 'addGuideSubLocation'), 20, 3);
     }
 
@@ -182,9 +182,9 @@ class Linking extends Fields
      * Register link to connected locations, embeddable
      * @return  object
      */
-    public function addGuideLocation($response, $post, $request)
+    public function addGuideLocation($response, $taxonomy, $request)
     {
-        $id = $this->numericGetCallBack(array('id' => $post->ID), 'guide_main_location', $request);
+        $id = get_field('guide_taxonomy_location', $taxonomy->taxonomy. '_' . $taxonomy->id);
 
         if (!is_null($id)) {
             if ($this->hasDuplicateHAL($post, $id)) {

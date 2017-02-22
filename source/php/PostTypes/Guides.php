@@ -38,13 +38,16 @@ class Guides extends \HbgEventImporter\Entity\CustomPostType
     {
 
         //Update taxonomy
-        add_filter('acf/update_value/name=guide_apperance_data', array($this, 'updateTaxonomyRelation'), 10, 3);
+        add_filter('acf/update_value/name=guide_group', array($this, 'updateTaxonomyRelation'), 10, 3);
 
         //Only main locations selectable
         add_filter('acf/fields/post_object/query/name=guide_taxonomy_location', array($this, 'getMainLocations'), 10, 3);
 
         //Only sublocations selectable (if set)
         add_filter('acf/fields/post_object/query/key=field_58ab0c9554b0a', array($this, 'getMainLocations'), 10, 3);
+
+        //Objects
+        add_filter('acf/load_field/key=field_58ab0cf054b0b', array($this, 'getPostObjects'), 10, 1);
     }
 
     /**
@@ -79,6 +82,26 @@ class Guides extends \HbgEventImporter\Entity\CustomPostType
      * Only get sublocation to previously selected main location.
      * @param  $field     Array containing field details
      */
+    public function getPostObjects($field)
+    {
+        if (isset($_POST['post_id']) && is_numeric($_POST['post_id'])) {
+            $field['choices'] = [];
+            foreach ((array) get_field('guide_content_objects', (int) $_POST['post_id']) as $key => $item) {
+                if (!empty($item['guide_object_id'])) {
+                    $field['choices'][$item['guide_object_uid']] = $item['guide_object_title'] . " (" . $item['guide_object_id'] . ")";
+                } else {
+                    $field['choices'][$item['guide_object_uid']] = $item['guide_object_title'];
+                }
+            }
+        }
+
+        return $field;
+    }
+
+    /**
+     * Only get sublocation to previously selected main location.
+     * @param  $field     Array containing field details
+     */
     public function getSublocationsOnly($args, $field, $post_id)
     {
 
@@ -88,5 +111,4 @@ class Guides extends \HbgEventImporter\Entity\CustomPostType
 
         return $args;
     }
-
 }
