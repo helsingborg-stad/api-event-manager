@@ -109,7 +109,7 @@ class GuideFields extends Fields
         );
 
         register_rest_field($this->postType,
-            'subAttractionBeacon',
+            'subAttractions',
             array(
                 'get_callback' => array($this, 'subAttractionBeacons'),
                 'schema' => array(
