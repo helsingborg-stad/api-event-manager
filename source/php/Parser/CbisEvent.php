@@ -159,225 +159,333 @@ class CbisEvent extends \HbgEventImporter\Parser\Cbis
      */
     public function saveEvent($eventData, $postStatus, $userGroups, $shortKey)
     {
+        $locationId = $this->maybeCreateLocation($eventData, $postStatus, $userGroups, $shortKey);
+        $contactId = $this->maybeCreateContact($eventData, $postStatus, $userGroups, $shortKey);
+        $organizers = $this->getOrganizers($eventData, $contactId);
+
+        $eventId = $this->maybeCreateEvent($eventData, $postStatus, $userGroups, $shortKey, $locationId, $organizers);
+    }
+
+    /**
+     * Creates or updates a location if possible
+     * @param  object $eventData  The event data
+     * @param  string $postStatus Default post status
+     * @param  string $shortKey   The shortkey for uud
+     * @return boolean|integer    False if noting done else the ID of the location
+     */
+    public function maybeCreateLocation($eventData, $postStatus, $userGroups, $shortKey)
+    {
+        $importClient = 'CBIS: Event';
         $attributes = $this->getAttributes($eventData);
-        $categories = $this->getCategories($eventData);
-        $occasions = $this->getOccasions($eventData);
 
-        $newPostTitle = $this->getAttributeValue(self::ATTRIBUTE_ADDRESS, $attributes) ? $this->getAttributeValue(self::ATTRIBUTE_ADDRESS, $attributes) : $eventData->GeoNode->Name;
+        // Get the title of the location
+        $title = $this->getAttributeValue(self::ATTRIBUTE_ADDRESS, $attributes);
+        if (!$title) {
+            $title = $eventData->GeoNode->Name;
+        }
 
-        $locationId = $this->checkIfPostExists('location', $newPostTitle);
-
-        $uid = 'cbis-' . $shortKey . '-' . $this->cleanString($newPostTitle);
+        // Check if the location already exist
+        $locationId = $this->checkIfPostExists('location', $title);
+        $uid = 'cbis-' . $shortKey . '-' . $this->cleanString($title);
         $locPostStatus = $postStatus;
         $isUpdate = false;
 
         // Check if this is a duplicate or update and if "sync" option is set.
         if ($locationId && get_post_meta($locationId, '_event_manager_uid', true)) {
-            $existingUid   = get_post_meta($locationId, '_event_manager_uid', true);
-            $sync          = get_post_meta($locationId, 'sync', true);
+            $existingUid = get_post_meta($locationId, '_event_manager_uid', true);
+            $sync = get_post_meta($locationId, 'sync', true);
             $locPostStatus = get_post_status($locationId);
-            $isUpdate      = ($existingUid == $uid && $sync == 1) ? true : false;
-        }
 
-        if ($locationId == null || $isUpdate == true) {
-            $country = $this->getAttributeValue(self::ATTRIBUTE_COUNTRY, $attributes);
-
-            if (is_numeric($country)) {
-                $country = "Sweden";
-            }
-
-            $import_client = 'CBIS: Event';
-
-            // Create the location
-            $latitude = $this->getAttributeValue(self::ATTRIBUTE_LATITUDE, $attributes) != '0' ? $this->getAttributeValue(self::ATTRIBUTE_LATITUDE, $attributes) : null;
-            $longitude = $this->getAttributeValue(self::ATTRIBUTE_LONGITUDE, $attributes) != '0' ? $this->getAttributeValue(self::ATTRIBUTE_LONGITUDE, $attributes) : null;
-
-            $location = new Location(
-                array(
-                    'post_title'            => $newPostTitle,
-                    'post_status'           => $locPostStatus,
-                ),
-                array(
-                    'street_address'        => $this->getAttributeValue(self::ATTRIBUTE_ADDRESS, $attributes),
-                    'postal_code'           => $this->getAttributeValue(self::ATTRIBUTE_POSTCODE, $attributes),
-                    'city'                  => $eventData->GeoNode->Name,
-                    'municipality'          => $this->getAttributeValue(self::ATTRIBUTE_MUNICIPALITY, $attributes),
-                    'country'               => $country,
-                    'latitude'              => $latitude,
-                    'longitude'             => $longitude,
-                    'import_client'         => $import_client,
-                    '_event_manager_uid'    => $uid,
-                    'user_groups'           => $userGroups,
-                    'missing_user_group'    => $userGroups == null ? 1 : 0,
-                    'sync'                  => 1,
-                    'imported_post'         => 1,
-                )
-            );
-
-            $creatSuccess = $location->save();
-
-            if ($creatSuccess) {
-                $locationId = $location->ID;
-
-                if ($isUpdate == false) {
-                    ++$this->nrOfNewLocations;
-                }
-
-                $this->levenshteinTitles['location'][] = array('ID' => $location->ID, 'post_title' => $newPostTitle);
+            if ($existingUid === $uid && $sync == 1) {
+                $isUpdate = true;
             }
         }
 
-        $newPostTitle = $this->getAttributeValue(self::ATTRIBUTE_CONTACT_PERSON, $attributes) != null ? $this->getAttributeValue(self::ATTRIBUTE_CONTACT_PERSON, $attributes) : '';
-
-        if ($this->getAttributeValue(self::ATTRIBUTE_CONTACT_EMAIL, $attributes) != null) {
-            if (!empty($newPostTitle)) {
-                $newPostTitle .= ' : ';
-            }
-
-            $newPostTitle .= $this->getAttributeValue(self::ATTRIBUTE_CONTACT_EMAIL, $attributes);
+        // Bail if existing post and not update
+        if ($locationId && !$isUpdate) {
+            return false;
         }
 
-        $contactId = null;
+        // Proceed with updating/creating the location
+        $country = $this->getAttributeValue(self::ATTRIBUTE_COUNTRY, $attributes);
+        if (is_numeric($country)) {
+            $country = "Sweden";
+        }
 
-        if (!empty($newPostTitle)) {
-            $contactId = $this->checkIfPostExists('contact', $newPostTitle);
+        $latitude = $this->getAttributeValue(self::ATTRIBUTE_LATITUDE, $attributes);
+        $longitude = $this->getAttributeValue(self::ATTRIBUTE_LONGITUDE, $attributes);
 
-            $uniqueString = ($this->getAttributeValue(self::ATTRIBUTE_CONTACT_EMAIL, $attributes) != null) ? strtolower($this->getAttributeValue(self::ATTRIBUTE_CONTACT_EMAIL, $attributes)) : strtolower(preg_replace(' ', '', $newPostTitle));
+        if ($latitude == '0') {
+            $latitude = null;
+        }
 
-            $uid = 'cbis-' . $shortKey . '-' . $uniqueString;
-            $conPostStatus = $postStatus;
-            $isUpdate = false;
+        if ($longitude == '0') {
+            $longitude = null;
+        }
 
-            // Check if this is a duplicate or update and if "sync" option is set.
-            if ($contactId && get_post_meta($contactId, '_event_manager_uid', true)) {
-                $existingUid   = get_post_meta($contactId, '_event_manager_uid', true);
-                $sync          = get_post_meta($contactId, 'sync', true);
-                $conPostStatus = get_post_status($contactId);
-                $isUpdate      = ($existingUid == $uid && $sync == 1) ? true : false;
+        // Create the location
+        $location = new Location(
+            array(
+                'post_title'            => $title,
+                'post_status'           => $locPostStatus,
+            ),
+            array(
+                'street_address'        => $this->getAttributeValue(self::ATTRIBUTE_ADDRESS, $attributes),
+                'postal_code'           => $this->getAttributeValue(self::ATTRIBUTE_POSTCODE, $attributes),
+                'city'                  => $eventData->GeoNode->Name,
+                'municipality'          => $this->getAttributeValue(self::ATTRIBUTE_MUNICIPALITY, $attributes),
+                'country'               => $country,
+                'latitude'              => $latitude,
+                'longitude'             => $longitude,
+                'import_client'         => $importClient,
+                '_event_manager_uid'    => $uid,
+                'user_groups'           => $userGroups,
+                'missing_user_group'    => $userGroups == null ? 1 : 0,
+                'sync'                  => 1,
+                'imported_post'         => 1,
+            )
+        );
+
+        if (!$location->save()) {
+            return false;
+        }
+
+        if ($isUpdate == false) {
+            $this->nrOfNewLocations++;
+        }
+
+        $this->levenshteinTitles['location'][] = array(
+            'ID' => $location->ID,
+            'post_title' => $title
+        );
+
+        return $location->ID;
+    }
+
+    /**
+     * Creates or updates a contact if possible
+     * @param  object $eventData  The event data
+     * @param  string $postStatus Default post status
+     * @param  array $userGroups  User groups
+     * @param  string $shortKey   UUID short key
+     * @return boolean|int        False if fail else contact id
+     */
+    public function maybeCreateContact($eventData, $postStatus, $userGroups, $shortKey)
+    {
+        $attributes = $this->getAttributes($eventData);
+        $contactEmail = $this->getAttributeValue(self::ATTRIBUTE_CONTACT_EMAIL, $attributes);
+
+        $title = $this->getAttributeValue(self::ATTRIBUTE_CONTACT_PERSON, $attributes);
+
+        // Append contact email to title
+        if ($contactEmail = $this->getAttributeValue(self::ATTRIBUTE_CONTACT_EMAIL, $attributes)) {
+            if (!empty($title)) {
+                $title .= ' : ';
             }
 
-            if ($contactId == null || $isUpdate == true) {
-                $phoneNumber = $this->getAttributeValue(self::ATTRIBUTE_PHONE_NUMBER, $attributes);
-                // Save contact
-                $contact = new Contact(
-                    array(
-                        'post_title'            => $newPostTitle,
-                        'post_status'           => $conPostStatus,
-                    ),
-                    array(
-                        'name'                  => $this->getAttributeValue(self::ATTRIBUTE_CONTACT_PERSON, $attributes),
-                        'email'                 => strtolower($this->getAttributeValue(self::ATTRIBUTE_CONTACT_EMAIL, $attributes)),
-                        'phone_number'          => $phoneNumber == null ? $phoneNumber : (strlen($phoneNumber) > 5 ? $phoneNumber : null),
-                        '_event_manager_uid'    => $uid,
-                        'user_groups'           => $userGroups,
-                        'missing_user_group'    => $userGroups == null ? 1 : 0,
-                        'sync'                  => 1,
-                        'imported_post'         => 1,
-                        'import_client'         => 'cbis',
-                    )
-                );
+            $title .= $contactEmail;
+        }
 
-                $creatSuccess = $contact->save();
-                $contactId = $contact->ID;
-                if ($creatSuccess) {
-                    if ($isUpdate == false) {
-                        ++$this->nrOfNewContacts;
-                    }
-                    $this->levenshteinTitles['contact'][] = array('ID' => $contact->ID, 'post_title' => $newPostTitle);
-                }
+        // Bail if title is empty
+        if (empty($title)) {
+            return false;
+        }
+
+        $contactId = $this->checkIfPostExists('contact', $title);
+
+        // Get unique string
+        $uniqueString = strtolower(str_replace(' ', '', $title));
+
+        if ($contactEmail) {
+            $uniqueString = strtolower($this->getAttributeValue(self::ATTRIBUTE_CONTACT_EMAIL, $attributes));
+        }
+
+        $uid = 'cbis-' . $shortKey . '-' . $uniqueString;
+        $conPostStatus = $postStatus;
+        $isUpdate = false;
+
+        // Check if this is a duplicate or update and if "sync" option is set.
+        if ($contactId && get_post_meta($contactId, '_event_manager_uid', true)) {
+            $existingUid = get_post_meta($contactId, '_event_manager_uid', true);
+            $sync = get_post_meta($contactId, 'sync', true);
+            $conPostStatus = get_post_status($contactId);
+
+            if ($existingUid == $uid && $sync == 1) {
+                $isUpdate = true;
             }
         }
 
-        $organizers = array();
-        if (!empty($this->getAttributeValue(self::ATTRIBUTE_PHONE_NUMBER, $attributes)) || !empty($this->getAttributeValue(self::ATTRIBUTE_ORGANIZER_EMAIL, $attributes)) || !is_null($contactId)) {
-            $organizers[] = array(
-                'organizer'       => '',
-                'organizer_link'  => '',
-                'organizer_phone' => $this->getAttributeValue(self::ATTRIBUTE_PHONE_NUMBER, $attributes),
-                'organizer_email' => $this->getAttributeValue(self::ATTRIBUTE_ORGANIZER_EMAIL, $attributes),
-                'contacts'        => !is_null($contactId) ? (array) $contactId : null,
-                'main_organizer'  => true
-            );
-
-            if (!empty($this->getAttributeValue(self::ATTRIBUTE_CO_ORGANIZER, $attributes))) {
-                $organizers[] = array(
-                'organizer'       => $this->getAttributeValue(self::ATTRIBUTE_CO_ORGANIZER, $attributes),
-                'organizer_link'  => '',
-                'organizer_phone' => '',
-                'organizer_email' => '',
-                'contacts'        => '',
-                'main_organizer'  => false
-                );
-            }
+        if (!$contactId && !$isUpdate) {
+            return false;
         }
+
+        // Only use phone number if it's longer than 5 charachters
+        $phoneNumber = $this->getAttributeValue(self::ATTRIBUTE_PHONE_NUMBER, $attributes);
+        if (strlen($phoneNumber) <= 5) {
+            $phoneNumber = null;
+        }
+
+        // Save contact
+        $contact = new Contact(
+            array(
+                'post_title'            => $title,
+                'post_status'           => $conPostStatus,
+            ),
+            array(
+                'name'                  => $this->getAttributeValue(self::ATTRIBUTE_CONTACT_PERSON, $attributes),
+                'email'                 => strtolower($this->getAttributeValue(self::ATTRIBUTE_CONTACT_EMAIL, $attributes)),
+                'phone_number'          => $phoneNumber,
+                '_event_manager_uid'    => $uid,
+                'user_groups'           => $userGroups,
+                'missing_user_group'    => $userGroups == null ? 1 : 0,
+                'sync'                  => 1,
+                'imported_post'         => 1,
+                'import_client'         => 'cbis',
+            )
+        );
+
+        if (!$contact->save()) {
+            return false;
+        }
+
+        if ($isUpdate == false) {
+            $this->nrOfNewContacts++;
+        }
+
+        $this->levenshteinTitles['contact'][] = array(
+            'ID' => $contact->ID,
+            'post_title' => $title
+        );
+
+        return $contact->ID;
+    }
+
+    /**
+     * Creates or updates an event if possible
+     * @param  object $eventData  The event data
+     * @param  string $postStatus Default post status
+     * @param  array $userGroups  User groups
+     * @param  string $shortKey   UUID short key
+     * @return boolean|int        False if fail else contact id
+     */
+    public function maybeCreateEvent($eventData, $postStatus, $userGroups, $shortKey, $locationId = null, $organizers = null)
+    {
+        $attributes = $this->getAttributes($eventData);
+        $categories = $this->getCategories($eventData);
+        $occasions = $this->getOccasions($eventData);
+
+        $title = $this->getAttributeValue(self::ATTRIBUTE_NAME, $attributes, $eventData->Name);
+        $title = str_replace(" (copy)", "", trim($title), $count);
 
         $postContent = $this->getAttributeValue(self::ATTRIBUTE_DESCRIPTION, $attributes);
-        if ($this->getAttributeValue(self::ATTRIBUTE_INGRESS, $attributes) && !empty($this->getAttributeValue(self::ATTRIBUTE_INGRESS, $attributes))) {
+        if (!empty($this->getAttributeValue(self::ATTRIBUTE_INGRESS, $attributes))) {
             $postContent = $this->getAttributeValue(self::ATTRIBUTE_INGRESS, $attributes) . "<!--more-->\n\n" . $postContent;
         }
 
-        $postTitle = $this->getAttributeValue(self::ATTRIBUTE_NAME, $attributes, ($eventData->Name != null ? $eventData->Name : null));
-        $newPostTitle = str_replace(" (copy)", "", trim($postTitle), $count);
-        $newImage = (isset($eventData->Image->Url) ? $eventData->Image->Url : null);
-        $eventId = $this->checkIfPostExists('event', $newPostTitle);
+        $newImage = isset($eventData->Image->Url) ? $eventData->Image->Url : null;
+        $eventId = $this->checkIfPostExists('event', $title);
         $uid = 'cbis-' . $shortKey . '-' . $eventData->Id;
         $isUpdate = false;
 
         // Check if this is a duplicate or update and if "sync" option is set.
         if ($eventId && get_post_meta($eventId, '_event_manager_uid', true)) {
             $existingUid = get_post_meta($eventId, '_event_manager_uid', true);
-            $sync        = get_post_meta($eventId, 'sync', true);
-            $postStatus  = get_post_status($eventId);
-            $isUpdate    = ($existingUid == $uid && $sync == 1) ? true : false;
+            $sync = get_post_meta($eventId, 'sync', true);
+            $postStatus = get_post_status($eventId);
+
+            if ($existingUid === $uid && $sync == 1) {
+                $isUpdate = true;
+            }
         }
 
-        // Save event if it doesn't exist or is an update and "sync" option is set to true. Skips if event is an older duplicate.
-        if (($eventId == null || $isUpdate == true) && $this->filter($categories) == true) {
-            // Creates the event object
-            $event = new Event(
-                array(
-                    'post_title'              => $newPostTitle,
-                    'post_content'            => $postContent,
-                    'post_status'             => $postStatus
-                ),
-                array(
-                    '_event_manager_uid'      => 'cbis-' . $shortKey . '-' . $eventData->Id,
-                    'sync'                    => 1,
-                    'status'                  => isset($eventData->Status) && !empty($eventData->Status) ? $eventData->Status : null,
-                    'image'                   => $newImage,
-                    'alternate_name'          => isset($eventData->SystemName) && !empty($eventData->SystemName) ? $eventData->SystemName : null,
-                    'event_link'              => $this->getAttributeValue(self::ATTRIBUTE_EVENT_LINK, $attributes),
-                    'categories'              => $categories,
-                    'occasions'               => $occasions,
-                    'location'                => !is_null($locationId) ? $locationId : null,
-                    'organizers'              => $organizers,
-                    'booking_link'            => $this->getAttributeValue(self::ATTRIBUTE_BOOKING_LINK, $attributes),
-                    'booking_phone'           => $this->getAttributeValue(self::ATTRIBUTE_BOOKING_PHONE_NUMBER, $attributes),
-                    'age_restriction'         => $this->getAttributeValue(self::ATTRIBUTE_AGE_RESTRICTION, $attributes),
-                    'price_information'       => $this->getAttributeValue(self::ATTRIBUTE_PRICE_INFORMATION, $attributes),
-                    'price_adult'             => $this->getAttributeValue(self::ATTRIBUTE_PRICE_ADULT, $attributes),
-                    'price_children'          => $this->getAttributeValue(self::ATTRIBUTE_PRICE_CHILD, $attributes),
-                    'import_client'           => 'cbis',
-                    'imported_post'           => 1,
-                    'user_groups'             => $userGroups,
-                    'missing_user_group'      => $userGroups == null ? 1 : 0,
-                )
+        if (($eventId && !$isUpdate) || !$this->filter($categories)) {
+            return false;
+        }
+
+        $event = new Event(
+            array(
+                'post_title'              => $title,
+                'post_content'            => $postContent,
+                'post_status'             => $postStatus
+            ),
+            array(
+                '_event_manager_uid'      => 'cbis-' . $shortKey . '-' . $eventData->Id,
+                'sync'                    => 1,
+                'status'                  => isset($eventData->Status) && !empty($eventData->Status) ? $eventData->Status : null,
+                'image'                   => $newImage,
+                'alternate_name'          => isset($eventData->SystemName) && !empty($eventData->SystemName) ? $eventData->SystemName : null,
+                'event_link'              => $this->getAttributeValue(self::ATTRIBUTE_EVENT_LINK, $attributes),
+                'categories'              => $categories,
+                'occasions'               => $occasions,
+                'location'                => !is_null($locationId) ? $locationId : null,
+                'organizers'              => $organizers,
+                'booking_link'            => $this->getAttributeValue(self::ATTRIBUTE_BOOKING_LINK, $attributes),
+                'booking_phone'           => $this->getAttributeValue(self::ATTRIBUTE_BOOKING_PHONE_NUMBER, $attributes),
+                'age_restriction'         => $this->getAttributeValue(self::ATTRIBUTE_AGE_RESTRICTION, $attributes),
+                'price_information'       => $this->getAttributeValue(self::ATTRIBUTE_PRICE_INFORMATION, $attributes),
+                'price_adult'             => $this->getAttributeValue(self::ATTRIBUTE_PRICE_ADULT, $attributes),
+                'price_children'          => $this->getAttributeValue(self::ATTRIBUTE_PRICE_CHILD, $attributes),
+                'import_client'           => 'cbis',
+                'imported_post'           => 1,
+                'user_groups'             => $userGroups,
+                'missing_user_group'      => $userGroups == null ? 1 : 0,
+            )
+        );
+
+        if (!$event->save()) {
+            return false;
+        }
+
+        if ($isUpdate == false) {
+            $this->nrOfNewEvents++;
+        }
+
+        $this->levenshteinTitles['event'][] = array(
+            'ID' => $event->ID,
+            'post_title' => $title
+        );
+
+        if (!is_null($event->image)) {
+            $event->setFeaturedImageFromUrl($event->image);
+        }
+
+        return $event->ID;
+    }
+
+    /**
+     * Get organizers
+     * @return array
+     */
+    public function getOrganizers($eventData, $contactId = null)
+    {
+        $attributes = $this->getAttributes($eventData);
+        $organizers = array();
+
+        if (empty($this->getAttributeValue(self::ATTRIBUTE_PHONE_NUMBER, $attributes)) && empty($this->getAttributeValue(self::ATTRIBUTE_ORGANIZER_EMAIL, $attributes)) && is_null($contactId)) {
+            return $organizers;
+        }
+
+        $organizers[] = array(
+            'organizer'       => '',
+            'organizer_link'  => '',
+            'organizer_phone' => $this->getAttributeValue(self::ATTRIBUTE_PHONE_NUMBER, $attributes),
+            'organizer_email' => $this->getAttributeValue(self::ATTRIBUTE_ORGANIZER_EMAIL, $attributes),
+            'contacts'        => !is_null($contactId) ? (array) $contactId : null,
+            'main_organizer'  => true
+        );
+
+        if (!empty($this->getAttributeValue(self::ATTRIBUTE_CO_ORGANIZER, $attributes))) {
+            $organizers[] = array(
+                'organizer'       => $this->getAttributeValue(self::ATTRIBUTE_CO_ORGANIZER, $attributes),
+                'organizer_link'  => '',
+                'organizer_phone' => '',
+                'organizer_email' => '',
+                'contacts'        => '',
+                'main_organizer'  => false
             );
-
-            $creatSuccess = $event->save();
-            $eventId = $event->ID;
-            if ($creatSuccess) {
-                if ($isUpdate == false) {
-                    ++$this->nrOfNewEvents;
-                }
-
-                $this->levenshteinTitles['event'][] = array('ID' => $event->ID, 'post_title' => $newPostTitle);
-            }
-
-            if (!is_null($event->image)) {
-                $event->setFeaturedImageFromUrl($event->image);
-            }
         }
+
+        return $organizers;
     }
 
     /**
