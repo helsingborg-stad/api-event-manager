@@ -3,46 +3,6 @@
         "title": "Event",
         "fields": [
             {
-                "key": "field_57dbf55ed522a",
-                "label": "Imported",
-                "name": "imported_post",
-                "type": "true_false",
-                "instructions": "If this is an imported event or not.",
-                "required": 0,
-                "conditional_logic": 0,
-                "wrapper": {
-                    "width": "",
-                    "class": "imported_post",
-                    "id": ""
-                },
-                "message": "",
-                "default_value": 0
-            },
-            {
-                "key": "field_57610ebe83965",
-                "label": "API synchronization",
-                "name": "sync",
-                "type": "true_false",
-                "instructions": "Unchecking this box will disable API updates sync for this particular event.",
-                "required": 0,
-                "conditional_logic": [
-                    [
-                        {
-                            "field": "field_57dbf55ed522a",
-                            "operator": "==",
-                            "value": "1"
-                        }
-                    ]
-                ],
-                "wrapper": {
-                    "width": "",
-                    "class": "",
-                    "id": ""
-                },
-                "message": "Sync event information with API",
-                "default_value": 0
-            },
-            {
                 "key": "field_5761103c83966",
                 "label": "Event",
                 "name": "",

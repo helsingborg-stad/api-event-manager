@@ -177,13 +177,13 @@ ImportEvents.Admin.Guide = (function ($) {
         return results[1] || undefined;
     };
 
-    return new Guide();
+    //return new Guide();
 
 })(jQuery);
 
 jQuery(document).ready(function ($) {
-    $('.acf-field[data-name="sync"] input[type="checkbox"]').on('change', function () {
-        if ($('.acf-field[data-name="sync"] input[type="checkbox"]').is(':checked')) {
+    $('#sync-meta-box input[type="checkbox"]').on('change', function () {
+        if ($('#sync-meta-box input[type="checkbox"]').is(':checked')) {
             $('body').addClass('no-sync');
             $(this).parent().addClass('check_active');
         } else {

@@ -9,12 +9,37 @@ namespace HbgEventImporter\Api;
 class GuideFields extends Fields
 {
     private $postType = 'guide';
+    private $taxonomyName = 'guidegroup';
     private $objectCache = array();
 
     public function __construct()
     {
         add_action('rest_api_init', array($this, 'registerRestFields'));
+
+        add_action('rest_api_init', array($this, 'registerTaxonomyRestFields'));
     }
+
+    /**
+     * Register rest fields to consumer api
+     * @return  void
+     * @version 0.3.2 creating consumer accessable meta values.
+     */
+
+    public static function registerTaxonomyRestFields()
+    {
+        register_rest_field($this->taxonomyName,
+            'apperance',
+            array(
+                'get_callback' => null,
+                'schema' => array(
+                    'description' => 'Describes the guides colors, logo, moodimage and main location.',
+                    'type' => 'object',
+                    'context' => array('view', 'embed')
+                )
+            )
+        );
+    }
+
 
     /**
      * Register rest fields to consumer api
@@ -23,10 +48,21 @@ class GuideFields extends Fields
      */
     public static function registerRestFields()
     {
-
-        // Guide theme object
         register_rest_field($this->postType,
-            'general',
+            'apperance',
+            array(
+                'get_callback' => array($this, 'apperance'),
+                'schema' => array(
+                    'description' => 'Describes the guides colors, logo, moodimage and main location.',
+                    'type' => 'object',
+                    'context' => array('view', 'embed')
+                )
+            )
+        );
+
+        // Main attraction data
+        register_rest_field($this->postType,
+            'mainAttraction',
             array(
                 'get_callback' => array($this, 'settings'),
                 'schema' => array(
@@ -36,6 +72,25 @@ class GuideFields extends Fields
                 )
             )
         );
+
+        // Guide theme object
+        /*register_rest_field($this->postType,
+            'subAttractions',
+            array(
+                'get_callback' => array($this, 'settings'),
+                'schema' => array(
+                    'description' => 'Describes the guides colors, logo, moodimage and main location.',
+                    'type' => 'object',
+                    'context' => array('view', 'embed')
+                )
+            )
+        );
+*/
+
+
+
+/*
+
 
         // Guide main location
         register_rest_field($this->postType,
@@ -100,7 +155,7 @@ class GuideFields extends Fields
                     'context' => array('view', 'embed')
                 )
             )
-        );
+        );*/
     }
 
     public function walk($object, $field_name, $request, $formatted = true)
@@ -111,37 +166,28 @@ class GuideFields extends Fields
         return null;
     }
 
-    public function settings($object, $field_name, $request, $formatted = true)
+    public function apperance($object, $field_name, $request, $formatted = true)
     {
-        $settings = [];
+        $taxonomy = $this->objectGetCallBack($object, 'guide_group', $request);
 
-        /* Theme */
-        $taxonomy = $this->objectGetCallBack($object, 'guide_apperance_data', $request);
-        $settings['theme'] = array(
-            'id' => $taxonomy->term_id,
-            'name' => $taxonomy->name,
-            'description' => $taxonomy->description,
-            'logotype' => $this->sanitizeMediaObject(get_field('guide_taxonomy_logotype', $taxonomy->taxonomy. '_' . $taxonomy->term_id)),
-            'color' => get_field('guide_taxonomy_color', $taxonomy->taxonomy. '_' . $taxonomy->term_id),
+        return array(
+            'logotype'  => $this->sanitizeMediaObject(get_field('guide_taxonomy_logotype', $taxonomy->taxonomy. '_' . $taxonomy->term_id)),
+            'color'     => get_field('guide_taxonomy_color', $taxonomy->taxonomy. '_' . $taxonomy->term_id),
             'moodimage' => $this->sanitizeMediaObject(get_field('guide_taxonomy_image', $taxonomy->taxonomy. '_' . $taxonomy->term_id)),
         );
+    }
 
-        /* Wheter to use map or not */
-        $settings['useMap'] = $this->boolGetCallBack($object, 'guide_main_map', $request, $formatted);
+    public function settings($object, $field_name, $request, $formatted = true)
+    {
+        $taxonomy       = $this->objectGetCallBack($object, 'guide_group', $request);
+        $location_id    = (int) get_field('guide_taxonomy_location', $taxonomy->taxonomy. '_' . $taxonomy->term_id, false);
 
-        /* Wheter the location has full wifi coverage or not */
-        $settings['hasWifi'] = $this->boolGetCallBack($object, 'guide_main_wifi', $request, $formatted);
-
-        /* Check if guide has objects - If not its disabled */
-        $settings['hasObjects'] = empty($this->getObjects($object, 'guide_location_objects', $request, true)) ? false : true;
-
-        /* Arrival messages */
-        $settings['notices'] = array(
-            'arrival' => $this->objectGetCallBack($object, 'guide_arrival_notice', $request, true),
-            'departure' => $this->objectGetCallBack($object, 'guide_departure_notice', $request, true)
+        return array(
+            'id'            => is_numeric($taxonomy->term_id) && !empty($taxonomy->term_id) ? $taxonomy->term_id : null,
+            'name'          => !empty($taxonomy->name) ? $taxonomy->name : null,
+            'description'   => !empty($taxonomy->description) ? $taxonomy->description : null,
+            'location'      => is_numeric($location_id) && !empty($location_id) ? $location_id : null,
         );
-
-        return $settings;
     }
 
     public function beacon($object, $field_name, $request, $formatted = true)
