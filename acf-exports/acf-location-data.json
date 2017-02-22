@@ -3,46 +3,6 @@
         "title": "Location",
         "fields": [
             {
-                "key": "field_588894eb9849c",
-                "label": "Imported",
-                "name": "imported_post",
-                "type": "true_false",
-                "instructions": "If this is an imported post or not.",
-                "required": 0,
-                "conditional_logic": 0,
-                "wrapper": {
-                    "width": "",
-                    "class": "imported_post",
-                    "id": ""
-                },
-                "message": "",
-                "default_value": 0
-            },
-            {
-                "key": "field_588894ee9849d",
-                "label": "API synchronization",
-                "name": "sync",
-                "type": "true_false",
-                "instructions": "Unchecking this box will disable API updates sync for this particular post.",
-                "required": 0,
-                "conditional_logic": [
-                    [
-                        {
-                            "field": "field_588894eb9849c",
-                            "operator": "==",
-                            "value": "1"
-                        }
-                    ]
-                ],
-                "wrapper": {
-                    "width": "",
-                    "class": "",
-                    "id": ""
-                },
-                "message": "Sync post information with API",
-                "default_value": 0
-            },
-            {
                 "key": "field_57d26cffc2f68",
                 "label": "Address",
                 "name": "",

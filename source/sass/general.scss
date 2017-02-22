@@ -26,16 +26,18 @@
   display: none !important;
 }
 
-.acf-field[data-name="sync"] li label {
-  padding:12px;
-  color:#444;
-  background-color: #efefef;
-  border-radius:4px;
-}
-
-.check_active {
-  color:#fff !important;
-  background-color: #0085ba !important;
+#sync-meta-box {
+  label {
+    display: block;
+    padding:12px;
+    color:#444;
+    background-color: #efefef;
+    border-radius:4px;
+  }
+  .check_active {
+    color:#fff !important;
+    background-color: #0085ba !important;
+  }
 }
 
 .extraspace {

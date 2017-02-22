@@ -177,8 +177,8 @@ ImportEvents.Admin.Guide = (function ($) {
 })(jQuery);
 
 jQuery(document).ready(function ($) {
-    $('.acf-field[data-name="sync"] input[type="checkbox"]').on('change', function () {
-        if ($('.acf-field[data-name="sync"] input[type="checkbox"]').is(':checked')) {
+    $('#sync-meta-box input[type="checkbox"]').on('change', function () {
+        if ($('#sync-meta-box input[type="checkbox"]').is(':checked')) {
             $('body').addClass('no-sync');
             $(this).parent().addClass('check_active');
         } else {
