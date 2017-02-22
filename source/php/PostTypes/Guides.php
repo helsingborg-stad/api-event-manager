@@ -84,9 +84,16 @@ class Guides extends \HbgEventImporter\Entity\CustomPostType
      */
     public function getPostObjects($field)
     {
-        $field['choices'] = array(
-            'custom' => 'My Custom Choice'
-        );
+        if (isset($_POST['post_id']) && is_numeric($_POST['post_id'])) {
+            $field['choices'] = [];
+            foreach ((array) get_field('guide_content_objects', (int) $_POST['post_id']) as $key => $item) {
+                if (!empty($item['guide_object_id'])) {
+                    $field['choices'][$item['guide_object_uid']] = $item['guide_object_title'] . " (" . $item['guide_object_id'] . ")";
+                } else {
+                    $field['choices'][$item['guide_object_uid']] = $item['guide_object_title'];
+                }
+            }
+        }
 
         return $field;
     }
@@ -104,5 +111,4 @@ class Guides extends \HbgEventImporter\Entity\CustomPostType
 
         return $args;
     }
-
 }
