@@ -123,6 +123,7 @@ ImportEvents.Admin.Fields = (function ($) {
             this.mainOrganizerCheckBox();
             this.locationGmaps();
             this.eventDatepickerRange();
+            this.eventDateExceptions();
 
             // Remove .button-primary from acf-buttons
             $('.acf-button').removeClass('button-primary');
@@ -184,6 +185,10 @@ ImportEvents.Admin.Fields = (function ($) {
         });
     };
 
+    /**
+     * Limits datepickers for endtime and door time according to the starttime
+     * @return {void}
+     */
     Fields.prototype.eventDatepickerRange = function() {
         $(document).on('click', '.acf-field-576110e583969 .hasDatepicker, .acf-field-5761169e07309 .hasDatepicker', function () {
             var date = $(this).parents('.acf-fields').find('[data-name="start_date"] .hasDatepicker').val();
@@ -223,6 +228,92 @@ ImportEvents.Admin.Fields = (function ($) {
                 }
             }
         });
+    };
+
+    /**
+     * Show recurring rules exeptions in date picker
+     * @return {void}
+     */
+    Fields.prototype.eventDateExceptions = function() {
+        $(document).on('click', '.acf-field-57d279f8db0cc .hasDatepicker', function (e) {
+            $this = $(e.target).closest('.hasDatepicker');
+
+            $this.datepicker('option', 'dateFormat', 'yy-mm-dd');
+
+            var weekDay = $this.parents('.acf-field-repeater').siblings('[data-name="rcr_week_day"]').find('select').val();
+            var startDate = $this.parents('.acf-field-repeater').siblings('[data-name="rcr_start_time"]').find('.hasDatepicker').val();
+            var endDate = $this.parents('.acf-field-repeater').siblings('[data-name="rcr_end_time"]').find('.hasDatepicker').val();
+
+            $this.datepicker('option', 'defaultDate', startDate);
+
+            if (startDate && endDate) {
+                var start = this.getClosestDay(new Date(startDate), this.weekdayNumber(weekDay) );
+                var end = new Date(endDate);
+                var occurances = [];
+
+                for (var dat = new Date(start); dat <= end; dat.setDate(dat.getDate() + 7)) {
+                    occurances.push(this.formattedDate(new Date(dat)));
+                }
+
+                var disableSepcificDate = function (date) {
+                    var string = jQuery.datepicker.formatDate('yy-mm-dd', date);
+                    return [occurances.indexOf(string) != -1];
+                };
+
+                $this.datepicker('option', 'beforeShowDay', disableSepcificDate);
+            }
+
+            $this.datepicker({showOn: 'focus'}).focus();
+        }.bind(this));
+    };
+
+    /**
+     * Gets the closest date that matches a day of week
+     * @param  {Date} date        Date object
+     * @param  {[type]} dayOfWeek [description]
+     * @return {[type]}           [description]
+     */
+    Fields.prototype.getClosestDay = function(date, dayOfWeek) {
+        var resultDate = new Date(date.getTime());
+        resultDate.setDate(date.getDate() + (7 + dayOfWeek - date.getDay()) % 7);
+
+        return resultDate;
+    };
+
+    /**
+     * Formats date to yyyy-mm-dd
+     * @param  {Date} date
+     * @return {string}
+     */
+    Fields.prototype.formattedDate = function(date) {
+        var curr_date = ('0' + date.getDate()).slice(-2);
+        var curr_month = ('0' + (date.getMonth() + 1)).slice(-2);
+        var curr_year = date.getFullYear();
+
+        return curr_year + "-" + curr_month + "-" + curr_date;
+    };
+
+    /**
+     * Converts weekday in string to weekday number
+     * @param  {string} weekdayString Weekday as string
+     * @return {int}                  Weekday as int
+     */
+    Fields.prototype.weekdayNumber = function(weekdayString) {
+        var weekday = [];
+
+        weekday.monday = 1;
+        weekday.tuesday = 2;
+        weekday.wednesday = 3;
+        weekday.thursday = 4;
+        weekday.friday = 5;
+        weekday.saturday = 6;
+        weekday.sunday = 7;
+
+        if (typeof weekday[weekdayString.toLowerCase()] !== 'undefined') {
+            return weekday[weekdayString.toLowerCase()];
+        }
+
+        return 0;
     };
 
     return new Fields();
@@ -370,39 +461,6 @@ jQuery(document).ready(function ($) {
         ');
     }
 
-
-    // Show recurring rules exeptions in date picker
-    $('body').on('click','.acf-field-57d279f8db0cc .hasDatepicker', function() {
-        $(this).datepicker( "option", "dateFormat", "yy-mm-dd" );
-
-       var weekDay = $(this).parents('.acf-field-57d279addb0cb')
-            .siblings('.acf-field-57d275713bf4e')
-               .find(':selected').val();
-        var startDate = $(this).parents('.acf-field-57d279addb0cb')
-            .siblings('.acf-field-57d660a687234')
-               .find('.hasDatepicker').val();
-        var endDate = $(this).parents('.acf-field-57d279addb0cb')
-            .siblings('.acf-field-57d2787b3bf51')
-               .find('.hasDatepicker').val();
-
-        $(this).datepicker( "option", "defaultDate", startDate );
-
-        if (startDate && endDate) {
-            var start = getClosestDay(new Date(startDate), convertDays(weekDay) );
-            var end = new Date(endDate);
-            var occurances = [];
-            for (var dat = new Date(start); dat <= end; dat.setDate(dat.getDate() + 7)) {
-                occurances.push(formattedDate(new Date(dat)));
-            }
-            function disableSpecificDates(date) {
-                var string = jQuery.datepicker.formatDate('yy-mm-dd', date);
-                return [occurances.indexOf(string) != -1];
-            }
-            $(this).datepicker( "option", "beforeShowDay", disableSpecificDates );
-        }
-        $(this).datepicker({showOn:'focus'}).focus();
-    });
-
     // Require post title when publish posts
     $('#publish').click(function() {
         var testervar = jQuery('[id^="titlediv"]').find('#title');
@@ -434,42 +492,6 @@ jQuery(document).ready(function ($) {
     });
 
 });
-
-/**
- * Format date object to yy-mm-dd
- */
-function formattedDate (date){
-    var curr_date = ("0" + date.getDate()).slice(-2);
-    var curr_month = ("0" + (date.getMonth() + 1)).slice(-2)
-    var curr_year = date.getFullYear();
-    var fulldate = curr_year + "-" + curr_month + "-" + curr_date;
-    return fulldate;
-}
-
-/**
- * Convert week days to digits
- */
-function convertDays(dayOfTheWeek) {
-    var weekday = new Array(7);
-    weekday["Monday"] = 1;
-    weekday["Tuesday"] = 2;
-    weekday["Wednesday"] = 3;
-    weekday["Thursday"] = 4;
-    weekday["Friday"] = 5;
-    weekday["Saturday"] = 6;
-    weekday["Sunday"] = 7;
-    var n = weekday[dayOfTheWeek];
-    return n;
-}
-
-/**
- * Get week day that are closest to a choosen date.
- */
-function getClosestDay(date, dayOfWeek) {
-    var resultDate = new Date(date.getTime());
-    resultDate.setDate(date.getDate() + (7 + dayOfWeek - date.getDay()) % 7);
-    return resultDate;
-}
 
 /**
  * Hides event instructions if clicked.
