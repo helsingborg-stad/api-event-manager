@@ -32,7 +32,7 @@ class Options
      */
     public function saveSyncMeta($post_id)
     {
-        if (get_post_meta($post_id, 'imported_post', true)) {
+        if (isset($_POST['post_title']) && get_post_meta($post_id, 'imported_post', true)) {
             $data = isset($_POST['sync-checkbox']) ? 1 : 0;
             update_post_meta($post_id, 'sync', $data);
         }
