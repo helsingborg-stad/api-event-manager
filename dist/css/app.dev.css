@@ -52,6 +52,9 @@
   position: absolute;
   top: 0; }
 
+.acf-field-unique-id {
+  display: none !important; }
+
 .acceptAndDeny .hidden {
   display: none; }
 
