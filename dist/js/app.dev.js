@@ -120,9 +120,20 @@ ImportEvents.Admin.Fields = (function ($) {
     function Fields() {
         $(document).ready(function () {
             this.syncCheckBox();
+            this.mainOrganizerCheckBox();
+            this.locationGmaps();
+
+            // Remove .button-primary from acf-buttons
+            $('.acf-button').removeClass('button-primary');
+            $('.acf-gallery-add').text(eventmanager.add_images);
         }.bind(this));
     }
 
+    /**
+     * Toggle sync event, adds "blocking" elements to fields to prevent them beeing edited
+     * if sync is activated
+     * @return {void}
+     */
     Fields.prototype.syncCheckBox = function() {
         $('#sync-meta-box input[type="checkbox"]').on('change', function () {
             if ($('#sync-meta-box input[type="checkbox"]').is(':checked')) {
@@ -134,6 +145,42 @@ ImportEvents.Admin.Fields = (function ($) {
             $('body').removeClass('no-sync');
             $(this).parent().removeClass('check_active');
         }).trigger('change');
+    };
+
+    /**
+     * Hides "main organizer" checkbox for other orngaizer rows than the one that's checked
+     * @return {void}
+     */
+    Fields.prototype.mainOrganizerCheckBox = function() {
+        $('.acf-field[data-name="main_organizer"] input[type="checkbox"]').each(function(i, obj) {
+            if ($(this).prop('checked')) {
+                $('.acf-field[data-name="main_organizer"]').not($(this).closest('.acf-field[data-name="main_organizer"]')).addClass('main_organizer_hidden');
+            }
+        });
+
+        $(document).on('click', '.acf-field[data-name="main_organizer"] input[type="checkbox"]', function () {
+            if ($(this).prop('checked')) {
+                $('.acf-field[data-name="main_organizer"]').not($(this).closest('.acf-field[data-name="main_organizer"]')).addClass('main_organizer_hidden');
+            } else {
+                $('.acf-field[data-name="main_organizer"]').removeClass('main_organizer_hidden');
+            }
+        });
+    };
+
+    /**
+     * Hide Google map on post type location if address data is missing
+     * @return {void}
+     */
+    Fields.prototype.locationGmaps = function() {
+        $('.acf-field[data-name="geo_map"] .acf-hidden').each(function(i, obj) {
+            var address = $(this).find('.input-address').attr('value');
+            var lat = $(this).find('.input-lat').attr('value');
+            var lng = $(this).find('.input-lng').attr('value');
+
+            if (!address || !lat || !lng) {
+                $('.acf-field[data-name="geo_map"]').hide();
+            }
+        });
     };
 
     return new Fields();
@@ -212,48 +259,20 @@ ImportEvents.Admin.Guide = (function ($) {
 jQuery(document).ready(function ($) {
 
 
-    $('.acf-field[data-name="main_organizer"] input[type="checkbox"]').each(function(i, obj) {
-        if ($(this).prop('checked')) {
-            $('.acf-field[data-name="main_organizer"]').not($(this).closest('.acf-field[data-name="main_organizer"]')).addClass('main_organizer_hidden');
-        }
-    });
-
-    $('.acf-field[data-name="main_organizer"] input[type="checkbox"]').live('click', function () {
-        if ($(this).prop('checked')) {
-            $('.acf-field[data-name="main_organizer"]').not($(this).closest('.acf-field[data-name="main_organizer"]')).addClass('main_organizer_hidden');
-        } else {
-            $('.acf-field[data-name="main_organizer"]').removeClass('main_organizer_hidden');
-        }
-    });
-
-    $('.acf-button').removeClass('button-primary');
-
-    // Hide Google map on post type location if address data is missing
-    $('.acf-field[data-name="geo_map"] .acf-hidden').each(function(i, obj) {
-        var address = $(this).find('.input-address').attr('value');
-        var lat = $(this).find('.input-lat').attr('value');
-        var lng = $(this).find('.input-lng').attr('value');
-        if (!address || !lat || !lng) {
-            $('.acf-field[data-name="geo_map"]').hide();
-        }
-    });
-
     $('.notice.is-dismissible').on('click', '.notice-dismiss', function(event){
         dismissInstructions();
     });
-
-    $('.acf-gallery-add').text(eventmanager.add_images);
 
     var oldInput = '';
     $('input[name="post_title"]').on('change paste keyup', function() {
         var input = $(this).val();
 
-        if(input == oldInput)
+        if (input == oldInput) {
             return;
+        }
 
         oldInput = input;
-        if(input.length > 3)
-        {
+        if(input.length > 3) {
             var data = {
                 'action'    : 'check_existing_title',
                 'value'     : input,
@@ -261,10 +280,12 @@ jQuery(document).ready(function ($) {
             };
             var isevent = (pagenow === 'event') ? true : false;
             var geturl = (isevent) ? '/json/wp/v2/' + pagenow + '/search?term=' + input : '/json/wp/v2/' + pagenow + '?search=' + input;
+
             //jQuery.get('/json/wp/v2/' + pagenow + '?search=' + input, function(response) {
             jQuery.get(geturl, function(response) {
                 $('#suggestionList').empty();
-                for(var i in response) {
+
+                for (var i in response) {
                     var id = response[i].id;
                     var title = (isevent) ? response[i].title : response[i].title.rendered;
                     var pageText = title.replace("<span>","").replace("</span>"),
@@ -272,17 +293,17 @@ jQuery(document).ready(function ($) {
                     highlighted = pageText.replace(regex ,"<span>$1</span>");
                     $('#suggestionList').append('<li><a href="/wp/wp-admin/post.php?post=' + id + '&action=edit" class="suggestion">' + highlighted + '</a></li>');
                 }
-                if($('.suggestion').length == 0)
+
+                if ($('.suggestion').length == 0) {
                     $('#suggestionContainer').fadeOut(200);
-                else
-                {
+                } else {
                     $('#suggestionList').prepend('<li><strong>' + eventmanager.similar_posts + ': <button class="notice-dismiss suggestion-hide" suggestion-hide-action="close"> </strong></li>');
                     $('#suggestionContainer').fadeIn(200);
                 }
             });
-        }
-        else
+        } else {
             $('#suggestionContainer').fadeOut(200);
+        }
     });
 
     $(this).on('click', '[suggestion-hide-action="close"]', function(e) {
@@ -310,20 +331,24 @@ jQuery(document).ready(function ($) {
     // Set default end time value for occasion date picker
     $('body').on('click','.acf-field-576110e583969 .hasDatepicker', function() {
         var date = $(this).parents('.acf-field-576110e583969').prev().find('.hasDatepicker').val();
+
         if (date) {
             var d = date.split(/[ ]+/);
             var r = d[0].split(/[-]+/);
             var m = r[1] - 1;
-            var date = new Date(r[0], m, r[2], 00, 00, 00);
-            if ( Object.prototype.toString.call(date) === "[object Date]" ) {
-                if (! isNaN(date.getTime() ) ) {
-                var year = date.getFullYear();
-                var month = date.getMonth();
-                var day = date.getDate();
-                var end_date = new Date(year + 1, month, day)
-                $(this).datetimepicker( "option", "minDate", date);
-                $(this).datetimepicker( "option", "maxDate", end_date);
-                $(this).datepicker({showOn:'focus'}).focus();
+
+            date = new Date(r[0], m, r[2], 0, 0, 0);
+
+            if (Object.prototype.toString.call(date) === "[object Date]" ) {
+                if (!isNaN(date.getTime())) {
+                    var year = date.getFullYear();
+                    var month = date.getMonth();
+                    var day = date.getDate();
+                    var end_date = new Date(year + 1, month, day);
+
+                    $(this).datetimepicker( "option", "minDate", date);
+                    $(this).datetimepicker( "option", "maxDate", end_date);
+                    $(this).datepicker({showOn:'focus'}).focus();
                 }
             }
         }
@@ -336,13 +361,16 @@ jQuery(document).ready(function ($) {
             var d = date.split(/[ ]+/);
             var r = d[0].split(/[-]+/);
             var m = r[1] - 1;
-            var date = new Date(r[0], m, r[2], 00, 00, 00);
-            if ( Object.prototype.toString.call(date) === "[object Date]" ) {
-                if (! isNaN(date.getTime() ) ) {
+
+            date = new Date(r[0], m, r[2], 0, 0, 0);
+
+            if (Object.prototype.toString.call(date) === "[object Date]" ) {
+                if (! isNaN(date.getTime())) {
                 var year = date.getFullYear();
                 var month = date.getMonth();
                 var day = date.getDate();
-                var start_date = new Date(year - 1, month, day)
+                var start_date = new Date(year - 1, month, day);
+
                 $(this).datetimepicker( "option", "minDate", start_date);
                 $(this).datetimepicker( "option", "maxDate", date);
                 $(this).datepicker( "option", "defaultDate", date);
