@@ -203,7 +203,7 @@ class CbisEvent extends \HbgEventImporter\Parser\Cbis
 
         // Bail if existing post and not update
         if ($locationId && !$isUpdate) {
-            return false;
+            return $locationId;
         }
 
         // Proceed with updating/creating the location
@@ -315,8 +315,8 @@ class CbisEvent extends \HbgEventImporter\Parser\Cbis
             }
         }
 
-        if (!$contactId && !$isUpdate) {
-            return false;
+        if ($contactId && !$isUpdate) {
+            return $contactId;
         }
 
         // Only use phone number if it's longer than 5 charachters
@@ -399,7 +399,7 @@ class CbisEvent extends \HbgEventImporter\Parser\Cbis
         }
 
         if (($eventId && !$isUpdate) || !$this->filter($categories)) {
-            return false;
+            return $eventId;
         }
 
         $event = new Event(
