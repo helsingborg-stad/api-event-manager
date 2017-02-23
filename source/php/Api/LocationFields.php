@@ -134,6 +134,20 @@ class LocationFields extends Fields
      */
     public static function registerRestFields()
     {
+        //Parent
+        register_rest_field($this->postType,
+            'parent',
+            array(
+                'get_callback' => null,
+                'update_callback' => null,
+                'schema' => array(
+                    'description' => 'Field containing value with post parent.',
+                    'type' => null,
+                    'context' => array('view', 'edit', 'embed')
+                )
+            )
+        );
+
 
         // Replace category id with taxonomy name
         register_rest_field($this->postType,

@@ -325,9 +325,10 @@ class EventFields extends Fields
         if (! $location) {
             return null;
         }
-
-        $location_data['ID']                = $location_id;
+        $parent = ! empty($location->post_parent) ? array('id' => $location->post_parent, 'title' => get_the_title($location->post_parent)) : null;
+        $location_data['id']                = $location_id;
         $location_data['title']             = $location->post_title;
+        $location_data['parent']            = $parent;
         $location_data['content']           = $location->post_content;
         $location_data['street_address']    = get_post_meta($location_id, 'street_address', true);
         $location_data['postal_code']       = get_post_meta($location_id, 'postal_code', true);
@@ -366,10 +367,11 @@ class EventFields extends Fields
             if (! $location) {
                 continue;
             }
-
+            $parent = ! empty($location->post_parent) ? array('id' => $location->post_parent, 'title' => get_the_title($location->post_parent)) : null;
             $location_arr[] = array(
-                'ID'                => $location->ID,
+                'id'                => $location->ID,
                 'title'             => $location->post_title,
+                'parent'            => $parent,
                 'content'           => $location->post_content,
                 'street_address'    => get_post_meta($location->ID, 'street_address', true),
                 'postal_code'       => get_post_meta($location->ID, 'postal_code', true),
@@ -408,7 +410,7 @@ class EventFields extends Fields
             return null;
         }
 
-        $featured_image['ID']            = $image_id;
+        $featured_image['id']            = $image_id;
         $featured_image['alt_text']      = get_post_meta($image_id, '_wp_attachment_image_alt', true);
         $featured_image['caption']       = $image->post_excerpt;
         $featured_image['description']   = $image->post_content;

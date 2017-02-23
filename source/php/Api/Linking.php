@@ -23,6 +23,7 @@ class Linking extends Fields
 
         add_filter('rest_prepare_location', array($this, 'addEventGallery'), 15, 3);
         add_filter('rest_prepare_location', array($this, 'addEmbedLink'), 20, 3);
+        add_filter('rest_prepare_location', array($this, 'addPostParent'), 20, 3);
 
         add_filter('rest_prepare_package', array($this, 'addEventMemberCards'), 20, 3);
         add_filter('rest_prepare_package', array($this, 'addIncludedEvents'), 20, 3);
@@ -30,6 +31,21 @@ class Linking extends Fields
 
         add_filter('rest_prepare_guidegroup', array($this, 'addGuideLocation'), 20, 3);
         add_filter('rest_prepare_guide', array($this, 'addGuideSubLocation'), 20, 3);
+    }
+
+    /**
+     * Register link to post parent, embeddable
+     * @return  object
+     */
+    public function addPostParent($response, $post, $request)
+    {
+        $parent_id = wp_get_post_parent_id($post->ID);
+
+        if ($parent_id > 0) {
+            $response->add_link('parent', rest_url('/wp/v2/location/' . $parent_id), array( 'embeddable' => true ));
+        }
+
+        return $response;
     }
 
     /**
