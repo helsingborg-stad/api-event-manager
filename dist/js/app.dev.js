@@ -241,14 +241,15 @@ ImportEvents.Admin.Fields = (function ($) {
             $this.datepicker('option', 'dateFormat', 'yy-mm-dd');
 
             var weekDay = $this.parents('.acf-field-repeater').siblings('[data-name="rcr_week_day"]').find('select').val();
-            var startDate = $this.parents('.acf-field-repeater').siblings('[data-name="rcr_start_time"]').find('.hasDatepicker').val();
-            var endDate = $this.parents('.acf-field-repeater').siblings('[data-name="rcr_end_time"]').find('.hasDatepicker').val();
+            var startDate = $this.parents('.acf-field-repeater').siblings('[data-name="rcr_start_date"]').find('.hasDatepicker').val();
+            var endDate = $this.parents('.acf-field-repeater').siblings('[data-name="rcr_end_date"]').find('.hasDatepicker').val();
 
             $this.datepicker('option', 'defaultDate', startDate);
 
             if (startDate && endDate) {
-                var start = this.getClosestDay(new Date(startDate), this.weekdayNumber(weekDay) );
+                var start = this.getClosestDay(new Date(startDate), this.weekdayNumber(weekDay));
                 var end = new Date(endDate);
+
                 var occurances = [];
 
                 for (var dat = new Date(start); dat <= end; dat.setDate(dat.getDate() + 7)) {
