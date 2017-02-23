@@ -208,16 +208,16 @@ class Linking extends Fields
      */
     public function addGuideSubLocation($response, $post, $request)
     {
-        foreach ((array) $this->objectGetCallBack(array('id' => $post->ID), 'guide_location_objects', $request, true) as $item) {
-            if (isset($item['guide_object_location']) && is_numeric($item['guide_object_location'])) {
-                if (!$this->hasDuplicateHAL($post, $item['guide_object_location'])) {
+        foreach ((array) $this->objectGetCallBack(array('id' => $post->ID), 'guide_beacon', $request, true) as $item) {
+            if (isset($item['location']) && is_numeric($item['location'])) {
+                if (!$this->hasDuplicateHAL($post, $item['location'])) {
                     $response->add_link(
                         'location',
-                        rest_url('/wp/v2/location/' . $item['guide_object_location']),
+                        rest_url('/wp/v2/location/' . $item['location']),
                         array( 'embeddable' => true )
                     );
 
-                    $this->addedHAL[$post->ID][] = $item['guide_object_location'];
+                    $this->addedHAL[$post->ID][] = $item['location'];
                 }
             }
         }
