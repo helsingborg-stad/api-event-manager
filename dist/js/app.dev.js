@@ -115,6 +115,34 @@ ImportEvents.Admin.AcceptDeny = (function ($) {
 ImportEvents = ImportEvents || {};
 ImportEvents.Admin = ImportEvents.Admin || {};
 
+ImportEvents.Admin.Fields = (function ($) {
+
+    function Fields() {
+        $(document).ready(function () {
+            this.syncCheckBox();
+        }.bind(this));
+    }
+
+    Fields.prototype.syncCheckBox = function() {
+        $('#sync-meta-box input[type="checkbox"]').on('change', function () {
+            if ($('#sync-meta-box input[type="checkbox"]').is(':checked')) {
+                $('body').addClass('no-sync');
+                $(this).parent().addClass('check_active');
+                return;
+            }
+
+            $('body').removeClass('no-sync');
+            $(this).parent().removeClass('check_active');
+        }).trigger('change');
+    };
+
+    return new Fields();
+
+})(jQuery);
+
+ImportEvents = ImportEvents || {};
+ImportEvents.Admin = ImportEvents.Admin || {};
+
 ImportEvents.Admin.Guide = (function ($) {
 
     function Guide() {
@@ -182,15 +210,7 @@ ImportEvents.Admin.Guide = (function ($) {
 })(jQuery);
 
 jQuery(document).ready(function ($) {
-    $('#sync-meta-box input[type="checkbox"]').on('change', function () {
-        if ($('#sync-meta-box input[type="checkbox"]').is(':checked')) {
-            $('body').addClass('no-sync');
-            $(this).parent().addClass('check_active');
-        } else {
-            $('body').removeClass('no-sync');
-            $(this).parent().removeClass('check_active');
-        }
-    }).trigger('change');
+
 
     $('.acf-field[data-name="main_organizer"] input[type="checkbox"]').each(function(i, obj) {
         if ($(this).prop('checked')) {

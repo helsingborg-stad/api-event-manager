@@ -1,13 +1,5 @@
 jQuery(document).ready(function ($) {
-    $('#sync-meta-box input[type="checkbox"]').on('change', function () {
-        if ($('#sync-meta-box input[type="checkbox"]').is(':checked')) {
-            $('body').addClass('no-sync');
-            $(this).parent().addClass('check_active');
-        } else {
-            $('body').removeClass('no-sync');
-            $(this).parent().removeClass('check_active');
-        }
-    }).trigger('change');
+
 
     $('.acf-field[data-name="main_organizer"] input[type="checkbox"]').each(function(i, obj) {
         if ($(this).prop('checked')) {
