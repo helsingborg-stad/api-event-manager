@@ -122,6 +122,7 @@ ImportEvents.Admin.Fields = (function ($) {
             this.syncCheckBox();
             this.mainOrganizerCheckBox();
             this.locationGmaps();
+            this.eventDatepickerRange();
 
             // Remove .button-primary from acf-buttons
             $('.acf-button').removeClass('button-primary');
@@ -179,6 +180,47 @@ ImportEvents.Admin.Fields = (function ($) {
 
             if (!address || !lat || !lng) {
                 $('.acf-field[data-name="geo_map"]').hide();
+            }
+        });
+    };
+
+    Fields.prototype.eventDatepickerRange = function() {
+        $(document).on('click', '.acf-field-576110e583969 .hasDatepicker, .acf-field-5761169e07309 .hasDatepicker', function () {
+            var date = $(this).parents('.acf-fields').find('[data-name="start_date"] .hasDatepicker').val();
+
+            if (!date) {
+                return;
+            }
+
+            var d = date.split(/[ ]+/);
+            var r = d[0].split(/[-]+/);
+            var m = r[1] - 1;
+
+            date = new Date(r[0], m, r[2], 0, 0, 0);
+
+            if (Object.prototype.toString.call(date) === "[object Date]" ) {
+                if (!isNaN(date.getTime())) {
+                    var year = date.getFullYear();
+                    var month = date.getMonth();
+                    var day = date.getDate();
+
+                    if ($(this).parents('[data-name="end_date"]').length) {
+                        var end_date = new Date(year + 1, month, day);
+
+                        $(this).datetimepicker("option", "minDate", date);
+                        $(this).datetimepicker("option", "maxDate", end_date);
+                    }
+
+                    if ($(this).parents('[data-name="door_time"]').length) {
+                        var start_date = new Date(year - 1, month, day);
+
+                        $(this).datetimepicker("option", "minDate", start_date);
+                        $(this).datetimepicker("option", "maxDate", date);
+                    }
+
+                    $(this).datepicker("option", "defaultDate", date);
+                    $(this).datepicker({showOn:'focus'}).focus();
+                }
             }
         });
     };
@@ -328,57 +370,6 @@ jQuery(document).ready(function ($) {
         ');
     }
 
-    // Set default end time value for occasion date picker
-    $('body').on('click','.acf-field-576110e583969 .hasDatepicker', function() {
-        var date = $(this).parents('.acf-field-576110e583969').prev().find('.hasDatepicker').val();
-
-        if (date) {
-            var d = date.split(/[ ]+/);
-            var r = d[0].split(/[-]+/);
-            var m = r[1] - 1;
-
-            date = new Date(r[0], m, r[2], 0, 0, 0);
-
-            if (Object.prototype.toString.call(date) === "[object Date]" ) {
-                if (!isNaN(date.getTime())) {
-                    var year = date.getFullYear();
-                    var month = date.getMonth();
-                    var day = date.getDate();
-                    var end_date = new Date(year + 1, month, day);
-
-                    $(this).datetimepicker( "option", "minDate", date);
-                    $(this).datetimepicker( "option", "maxDate", end_date);
-                    $(this).datepicker({showOn:'focus'}).focus();
-                }
-            }
-        }
-    });
-
-    // Set default door time value for occasion date picker
-    $('body').on('click','.acf-field-5761169e07309 .hasDatepicker', function() {
-        var date = $(this).parents('.acf-field-5761169e07309').siblings('.acf-field-5761109a83968').find('.hasDatepicker').val();
-        if (date) {
-            var d = date.split(/[ ]+/);
-            var r = d[0].split(/[-]+/);
-            var m = r[1] - 1;
-
-            date = new Date(r[0], m, r[2], 0, 0, 0);
-
-            if (Object.prototype.toString.call(date) === "[object Date]" ) {
-                if (! isNaN(date.getTime())) {
-                var year = date.getFullYear();
-                var month = date.getMonth();
-                var day = date.getDate();
-                var start_date = new Date(year - 1, month, day);
-
-                $(this).datetimepicker( "option", "minDate", start_date);
-                $(this).datetimepicker( "option", "maxDate", date);
-                $(this).datepicker( "option", "defaultDate", date);
-                $(this).datepicker({showOn:'focus'}).focus();
-                }
-            }
-        }
-    });
 
     // Show recurring rules exeptions in date picker
     $('body').on('click','.acf-field-57d279f8db0cc .hasDatepicker', function() {
