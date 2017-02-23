@@ -8,9 +8,9 @@ namespace HbgEventImporter\Api;
 
 class GuideFields extends Fields
 {
-    private $postType = 'guide';
-    private $taxonomyName = 'guidegroup';
-    private $objectCache = array();
+    private $postType       = 'guide';
+    private $taxonomyName   = 'guidegroup';
+    private $objectCache    = array();
 
     public function __construct()
     {
@@ -21,7 +21,7 @@ class GuideFields extends Fields
     /**
      * Register rest fields to consumer api
      * @return  void
-     * @version 0.3.2 creating consumer accessable meta values.
+     * @version 0.3.28 creating consumer accessable meta values.
      */
 
     public static function registerTaxonomyRestFields()
@@ -67,7 +67,7 @@ class GuideFields extends Fields
     /**
      * Register rest fields to consumer api
      * @return  void
-     * @version 0.3.2 creating consumer accessable meta values.
+     * @version 0.3.28 creating consumer accessable meta values.
      */
     public static function registerRestFields()
     {
@@ -123,10 +123,22 @@ class GuideFields extends Fields
 
     /* TAXONOMY */
 
+    /**
+     * Create a ACF taxonomy id from taxonomy object
+     * @return  void
+     * @version 0.3.28 Guides
+     */
+
     private function taxonomyKey($taxonomy)
     {
         return $taxonomy['taxonomy']. '_' . $taxonomy['id'];
     }
+
+    /**
+     * Convert value to noll
+     * @return  null or initial provided value
+     * @version 0.3.28 Guides
+     */
 
     private function convertToNull($value, $convertValueToNull = false)
     {
@@ -136,6 +148,12 @@ class GuideFields extends Fields
         return $value;
     }
 
+    /**
+     * Create apperance response array
+     * @return  array
+     * @version 0.3.28 Guides
+     */
+
     public function taxonomyApperance($object, $field_name, $request, $formatted = true)
     {
         return array(
@@ -144,6 +162,12 @@ class GuideFields extends Fields
             'image'             => get_field('guide_taxonomy_image', $this->taxonomyKey($object))
         );
     }
+
+    /**
+     * Create   Create taxonomy response array
+     * @return  array
+     * @version 0.3.28 Guides
+     */
 
     public function taxonomySettings($object, $field_name, $request, $formatted = true)
     {
@@ -156,6 +180,12 @@ class GuideFields extends Fields
         );
     }
 
+    /**
+     * Create taxonomy/notice response array
+     * @return  void
+     * @version 0.3.28 Guides
+     */
+
     public function taxonomyNotice($object, $field_name, $request, $formatted = true)
     {
         return array(
@@ -164,7 +194,11 @@ class GuideFields extends Fields
         );
     }
 
-    /* Posttype */
+    /**
+     * Create array of sub attraction beacons
+     * @return  array
+     * @version 0.3.28 Guides
+     */
 
     public function subAttractionBeacons($object, $field_name, $request, $formatted = true)
     {
@@ -191,6 +225,12 @@ class GuideFields extends Fields
         return $result;
     }
 
+    /**
+     * Create array with guide response data
+     * @return  array
+     * @version 0.3.28 Guides
+     */
+
     public function postBeacon($object, $field_name, $request, $formatted = true)
     {
         $beacon = array(
@@ -203,6 +243,12 @@ class GuideFields extends Fields
             return $beacon;
         }
     }
+
+    /**
+     * Create array of posts object
+     * @return  array
+     * @version 0.3.28 Guides
+     */
 
     public function postObjects($object, $field_name, $request, $formatted = true)
     {
@@ -226,6 +272,12 @@ class GuideFields extends Fields
         return (array) $objects;
     }
 
+    /**
+     * Get post media attrubute
+     * @return  array/null
+     * @version 0.3.28 Guides
+     */
+
     public function postMedia($object, $field_name, $request, $formatted = true)
     {
         $media =    $this->sanitinzeMediaObjectArray(
@@ -238,6 +290,12 @@ class GuideFields extends Fields
             return $media;
         }
     }
+
+    /**
+     * Get objects of this guide
+     * @return  array
+     * @version 0.3.28 Guides
+     */
 
     public function getObjects($object, $field_name, $request, $formatted = true)
     {
@@ -260,7 +318,11 @@ class GuideFields extends Fields
         return $this->objectCache[$hash] = $objects;
     }
 
-    /* Sanitize functions */
+    /**
+     * Sanitize media object
+     * @return  array
+     * @version 0.3.28 Guides
+     */
 
     public function sanitizeMediaObject($item)
     {
@@ -274,6 +336,12 @@ class GuideFields extends Fields
         return $item;
     }
 
+    /**
+     * Sanitize array of media objects
+     * @return  array
+     * @version 0.3.28 Guides
+     */
+
     public function sanitinzeMediaObjectArray($objectArray)
     {
         if (array_values($objectArray) !== $objectArray) {
@@ -286,6 +354,12 @@ class GuideFields extends Fields
 
         return $objectArray;
     }
+
+    /**
+     * Sanitize & validate items in link array
+     * @return  array
+     * @version 0.3.28 Guides
+     */
 
     public function sanitizeLinkObject($linkObject)
     {
