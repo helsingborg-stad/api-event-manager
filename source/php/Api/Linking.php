@@ -185,18 +185,18 @@ class Linking extends Fields
      */
     public function addGuideLocation($response, $taxonomy, $request)
     {
-        $id = get_field('guide_taxonomy_location', $taxonomy->taxonomy. '_' . $taxonomy->id);
+        $id = get_field('guide_taxonomy_location', $taxonomy->taxonomy. '_' . $taxonomy->term_id);
 
         if (!is_null($id)) {
-            if ($this->hasDuplicateHAL($post, $id)) {
+
                 $response->add_link(
                     'location',
                     rest_url('/wp/v2/location/' . $id),
                     array( 'embeddable' => true )
                 );
 
-                $this->addedHAL[$post->ID][] = $id;
-            }
+
+
         }
 
         return $response;
@@ -231,14 +231,21 @@ class Linking extends Fields
     public function hasDuplicateHAL($currentObject, $linkId)
     {
 
+        //Determine id
+        if (isset($currentObject->ID)) {
+            $id = $currentObject->ID;
+        } elseif ($currentObject->term_id) {
+            $id = $currentObject->term_id;
+        }
+
         // Create object array if not extists (return if not exists)
-        if (!isset($this->addedHAL[$currentObject->ID])) {
-            $this->addedHAL[$currentObject->ID] = [];
+        if (!isset($this->addedHAL[$id])) {
+            $this->addedHAL[$id] = [];
             return false;
         }
 
         //Check for link
-        if (in_array($linkId, $this->addedHAL[$currentObject->ID])) {
+        if (in_array($linkId, $this->addedHAL[$id])) {
             return true;
         }
 

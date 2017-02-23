@@ -157,9 +157,9 @@ class GuideFields extends Fields
     public function taxonomyApperance($object, $field_name, $request, $formatted = true)
     {
         return array(
-            'logotype'          => get_field('guide_taxonomy_logotype', $this->taxonomyKey($object)),
-            'color'             => get_field('guide_taxonomy_color', $this->taxonomyKey($object)),
-            'image'             => get_field('guide_taxonomy_image', $this->taxonomyKey($object))
+            'logotype'          => $this->convertToNull(get_field('guide_taxonomy_logotype', $this->taxonomyKey($object))),
+            'color'             => $this->convertToNull(get_field('guide_taxonomy_color', $this->taxonomyKey($object))),
+            'image'             => $this->convertToNull(get_field('guide_taxonomy_image', $this->taxonomyKey($object)))
         );
     }
 
@@ -173,7 +173,7 @@ class GuideFields extends Fields
     {
         return array(
             'active'            => get_field('guide_taxonomy_active', $this->taxonomyKey($object)),
-            'location'          => get_field('guide_taxonomy_location', $this->taxonomyKey($object)),
+            'location'          => $this->convertToNull(get_field('guide_taxonomy_location', $this->taxonomyKey($object))),
             'locationFilter'    => get_field('guide_taxonomy_sublocations', $this->taxonomyKey($object)),
             'wifi'              => get_field('guide_taxonomy_wifi', $this->taxonomyKey($object)),
             'map'               => get_field('guide_taxonomy_map', $this->taxonomyKey($object))
