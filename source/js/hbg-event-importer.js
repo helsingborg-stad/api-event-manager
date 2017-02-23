@@ -15,7 +15,9 @@ jQuery(document).ready(function ($) {
                 'postType'  : pagenow
             };
             var isevent = (pagenow === 'event') ? true : false;
-            var geturl = (isevent) ? '/json/wp/v2/' + pagenow + '/search?term=' + input : '/json/wp/v2/' + pagenow + '?search=' + input;
+            var geturl = (isevent) ? eventmanager.wpapiurl + '/wp/v2/' + pagenow + '/search?term=' + input : eventmanager.wpapiurl + '/wp/v2/' + pagenow + '?search=' + input;
+
+            console.log(geturl);
 
             //jQuery.get('/json/wp/v2/' + pagenow + '?search=' + input, function(response) {
             jQuery.get(geturl, function(response) {
