@@ -257,7 +257,6 @@ class GuideFields extends Fields
             $objectStash[] = $key;
         }
 
-
         //Create in beacon
         foreach ($beacons as $key => $item) {
             if (!empty($item['objects']) && is_array($item['objects'])) {
