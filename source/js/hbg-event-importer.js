@@ -1,8 +1,4 @@
 jQuery(document).ready(function ($) {
-
-
-
-
     var oldInput = '';
     $('input[name="post_title"]').on('change paste keyup', function() {
         var input = $(this).val();
@@ -82,20 +78,28 @@ jQuery(document).ready(function ($) {
                 jQuery('.require-post').remove();
             }
     });
+
     $('#title').keypress(function(e) {
-        if(e.which == 13) {
-        var testervar = jQuery('[id^=\"titlediv\"]').find('#title');
-        if (testervar.val().length < 1) {
-            setTimeout("jQuery('#ajax-loading').css('visibility', 'hidden');", 100);
-            if (!jQuery(".require-post").length) {
-                jQuery('#post').before('<div class="error require-post"><p>' + eventmanager.require_title + '</p></div>');
-            }
-                setTimeout("jQuery('#publish').removeClass('button-primary-disabled');", 100);
+        if (e.which == 13) {
+            var testervar = $('[id^=\"titlediv\"]').find('#title');
+
+            if (testervar.val().length < 1) {
+                setTimeout(function () {
+                    jQuery('#ajax-loading').css('visibility', 'hidden');
+                }, 100);
+
+                if (!jQuery(".require-post").length) {
+                    $('#post').before('<div class="error require-post"><p>' + eventmanager.require_title + '</p></div>');
+                }
+
+                setTimeout(function () {
+                    $('#publish').removeClass('button-primary-disabled');
+                }, 100);
+
                 return false;
-            } else {
-                jQuery('.require-post').remove();
             }
+
+            jQuery('.require-post').remove();
         }
     });
-
 });
