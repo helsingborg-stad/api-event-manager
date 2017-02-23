@@ -119,6 +119,18 @@ class GuideFields extends Fields
                 )
             )
         );
+
+        register_rest_field($this->postType,
+            'orphanContentObjects',
+            array(
+                'get_callback' => array($this, 'orphanPostObjects'),
+                'schema' => array(
+                    'description' => 'Objects of this guide.',
+                    'type' => 'object',
+                    'context' => array('view', 'embed')
+                )
+            )
+        );
     }
 
     /* TAXONOMY */
@@ -222,6 +234,48 @@ class GuideFields extends Fields
             return null;
         }
 
+        return $result;
+    }
+
+    /**
+     * Create list of objects not contained in a subattraction
+     * @return  array
+     * @version 0.3.28 Guides
+     */
+
+    public function orphanPostObjects($object, $field_name, $request, $formatted = true)
+    {
+        $result             = array();
+        $objectStash        = array();
+        $baconStash         = array();
+
+        $beacons            = $this->objectGetCallBack($object, 'guide_beacon', $request, true);
+        $objects            = $this->getObjects($object, 'guide_content_objects', $request, true);
+
+        //Create total objects
+        foreach ($objects as $key => $item) {
+            $objectStash[] = $key;
+        }
+
+
+        //Create in beacon
+        foreach ($beacons as $key => $item) {
+            if (!empty($item['objects']) && is_array($item['objects'])) {
+                foreach ($item['objects'] as $objectID) {
+                    $baconStash[] = $objectID;
+                }
+            }
+        }
+
+        //Calculate drifference (ie. orphaned objects)
+        $result = array_values(array_unique(array_diff($objectStash, $baconStash)));
+
+        //Not present, return null.
+        if (!$result) {
+            return null;
+        }
+
+        //Return resutl
         return $result;
     }
 
