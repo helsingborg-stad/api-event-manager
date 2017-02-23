@@ -393,9 +393,7 @@ ImportEvents.Admin.Guide = (function ($) {
 jQuery(document).ready(function ($) {
 
 
-    $('.notice.is-dismissible').on('click', '.notice-dismiss', function(event){
-        dismissInstructions();
-    });
+
 
     var oldInput = '';
     $('input[name="post_title"]').on('change paste keyup', function() {
@@ -493,18 +491,6 @@ jQuery(document).ready(function ($) {
     });
 
 });
-
-/**
- * Hides event instructions if clicked.
- * @return void
- */
-function dismissInstructions() {
-    var data = {
-        'action'    : 'dismiss'
-    };
-
-    jQuery.post(ajaxurl, data);
-}
 
 var ImportEvents = ImportEvents || {};
 
@@ -952,5 +938,28 @@ ImportEvents.Admin.NewPostModal = (function ($) {
     };
 
     return new NewPostModal();
+
+})(jQuery);
+
+ImportEvents = ImportEvents || {};
+ImportEvents.Prompt = ImportEvents.Prompt || {};
+
+ImportEvents.Prompt.Notice = (function ($) {
+
+    function Notice() {
+        $('.notice.is-dismissible').on('click', '.notice-dismiss', function(event){
+            this.dismissInstructions();
+        }.bind(this));
+    }
+
+    Notice.prototype.dismissInstructions = function() {
+        var data = {
+            action: 'dismiss'
+        };
+
+        $.post(ajaxurl, data);
+    };
+
+    return new Notice();
 
 })(jQuery);

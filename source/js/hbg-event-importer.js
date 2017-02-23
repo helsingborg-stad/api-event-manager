@@ -1,9 +1,7 @@
 jQuery(document).ready(function ($) {
 
 
-    $('.notice.is-dismissible').on('click', '.notice-dismiss', function(event){
-        dismissInstructions();
-    });
+
 
     var oldInput = '';
     $('input[name="post_title"]').on('change paste keyup', function() {
@@ -101,15 +99,3 @@ jQuery(document).ready(function ($) {
     });
 
 });
-
-/**
- * Hides event instructions if clicked.
- * @return void
- */
-function dismissInstructions() {
-    var data = {
-        'action'    : 'dismiss'
-    };
-
-    jQuery.post(ajaxurl, data);
-}
