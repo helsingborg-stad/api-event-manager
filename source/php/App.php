@@ -64,8 +64,6 @@ class App
         //Init functions
         new Acf\AcfFields();
         new Acf\AcfGuide();
-        new Acf\AcfGuideSettings();
-        new Acf\AcfGuideTheme();
 
         new Taxonomy\EventCategories();
         new Taxonomy\UserGroups();

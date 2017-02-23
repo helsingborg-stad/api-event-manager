@@ -27,32 +27,10 @@
                 "delay": 0,
                 "key": "field_58949813a052c",
                 "label": "Beskrivning",
-                "name": "guide_main_description",
+                "name": "guide_description",
                 "type": "wysiwyg",
                 "instructions": "",
                 "required": 0,
-                "conditional_logic": 0,
-                "wrapper": {
-                    "width": "",
-                    "class": "",
-                    "id": ""
-                }
-            },
-            {
-                "post_type": [
-                    "location"
-                ],
-                "taxonomy": [],
-                "allow_null": 0,
-                "multiple": 0,
-                "return_format": "id",
-                "ui": 1,
-                "key": "field_589498b7fc7b3",
-                "label": "Plats",
-                "name": "guide_main_location",
-                "type": "post_object",
-                "instructions": "",
-                "required": 1,
                 "conditional_logic": 0,
                 "wrapper": {
                     "width": "",
@@ -90,7 +68,7 @@
                 "insert": "append",
                 "key": "field_589dc93cde2d7",
                 "label": "Guide images",
-                "name": "guide_main_media",
+                "name": "guide_images",
                 "type": "gallery",
                 "instructions": "",
                 "required": 0,
@@ -102,101 +80,10 @@
                 }
             },
             {
-                "placement": "left",
-                "endpoint": 0,
-                "key": "field_5894988bfc7b2",
-                "label": "Beacon",
-                "name": "",
-                "type": "tab",
-                "instructions": "",
-                "required": 0,
-                "conditional_logic": 0,
-                "wrapper": {
-                    "width": "",
-                    "class": "",
-                    "id": ""
-                }
-            },
-            {
-                "default_value": 0,
-                "message": "",
-                "ui": 1,
-                "ui_on_text": "",
-                "ui_off_text": "",
-                "key": "field_58949a8f0c4cd",
-                "label": "Use beacons (bluetooth transmitters)",
-                "name": "guide_main_use_beacon",
-                "type": "true_false",
-                "instructions": "Enable beacons to pinpoint the users location. If disabled the guide will rely on the users GPS position.",
-                "required": 0,
-                "conditional_logic": 0,
-                "wrapper": {
-                    "width": "",
-                    "class": "",
-                    "id": ""
-                }
-            },
-            {
-                "default_value": "",
-                "maxlength": "",
-                "placeholder": "",
-                "prepend": "",
-                "append": "",
-                "key": "field_5898317b30d55",
-                "label": "Beacon namespace identification",
-                "name": "guide_main_beacon_namespace",
-                "type": "text",
-                "instructions": "A (common) namespace id representing the whole guide area. All beacons in the guid <u>must<\/u> use this id as their primary id.",
-                "required": 1,
-                "conditional_logic": [
-                    [
-                        {
-                            "field": "field_58949a8f0c4cd",
-                            "operator": "==",
-                            "value": "1"
-                        }
-                    ]
-                ],
-                "wrapper": {
-                    "width": "100",
-                    "class": "",
-                    "id": ""
-                }
-            },
-            {
-                "default_value": 5,
-                "min": 1,
-                "max": 70,
-                "step": 1,
-                "placeholder": "",
-                "prepend": "",
-                "append": "meters",
-                "key": "field_589499e9609dd",
-                "label": "Beacon trigger distance",
-                "name": "guide_main_beacon_distance",
-                "type": "number",
-                "instructions": "Max distance 70 meters. More than 50 meters may not be reliable.",
-                "required": 1,
-                "conditional_logic": [
-                    [
-                        {
-                            "field": "field_58949a8f0c4cd",
-                            "operator": "==",
-                            "value": "1"
-                        }
-                    ]
-                ],
-                "wrapper": {
-                    "width": "100",
-                    "class": "",
-                    "id": ""
-                }
-            },
-            {
                 "placement": "top",
                 "endpoint": 0,
                 "key": "field_5899a94bff0ec",
-                "label": "Objects",
+                "label": "Content objects",
                 "name": "",
                 "type": "tab",
                 "instructions": "",
@@ -300,9 +187,9 @@
                         }
                     },
                     {
-                        "return_format": "array",
-                        "preview_size": "thumbnail",
-                        "library": "uploadedTo",
+                        "library": "all",
+                        "min": "",
+                        "max": 10,
                         "min_width": "",
                         "min_height": "",
                         "min_size": "",
@@ -310,15 +197,16 @@
                         "max_height": "",
                         "max_size": "",
                         "mime_types": "jpg,jpeg,png",
+                        "insert": "append",
                         "key": "field_5899ab0338d3f",
                         "label": "Object image",
                         "name": "guide_object_image",
-                        "type": "image",
-                        "instructions": "A single image in jpg or png format of the object.",
+                        "type": "gallery",
+                        "instructions": "Multiple images in jpg or png format of the object.",
                         "required": 0,
                         "conditional_logic": 0,
                         "wrapper": {
-                            "width": "33,333",
+                            "width": "100",
                             "class": "",
                             "id": ""
                         }
@@ -337,7 +225,7 @@
                         "required": 0,
                         "conditional_logic": 0,
                         "wrapper": {
-                            "width": "33,333",
+                            "width": "50",
                             "class": "",
                             "id": ""
                         }
@@ -356,7 +244,7 @@
                         "required": 0,
                         "conditional_logic": 0,
                         "wrapper": {
-                            "width": "33,333",
+                            "width": "50",
                             "class": "",
                             "id": ""
                         }
@@ -479,7 +367,7 @@
                             ]
                         ],
                         "wrapper": {
-                            "width": "",
+                            "width": "60",
                             "class": "",
                             "id": ""
                         }
@@ -496,7 +384,7 @@
                         "label": "Beacon trigger distance",
                         "name": "guide_object_beacon_distance",
                         "type": "number",
-                        "instructions": "",
+                        "instructions": "Distance that the beacon should be triggered at.",
                         "required": 1,
                         "conditional_logic": [
                             [
@@ -508,45 +396,7 @@
                             ]
                         ],
                         "wrapper": {
-                            "width": "",
-                            "class": "",
-                            "id": ""
-                        }
-                    },
-                    {
-                        "placement": "top",
-                        "endpoint": 0,
-                        "key": "field_589dc80299fb5",
-                        "label": "Plats",
-                        "name": "",
-                        "type": "tab",
-                        "instructions": "",
-                        "required": 0,
-                        "conditional_logic": 0,
-                        "wrapper": {
-                            "width": "",
-                            "class": "",
-                            "id": ""
-                        }
-                    },
-                    {
-                        "multiple": 0,
-                        "allow_null": 0,
-                        "choices": [],
-                        "default_value": [],
-                        "ui": 0,
-                        "ajax": 0,
-                        "placeholder": "",
-                        "return_format": "value",
-                        "key": "field_589dc81699fb6",
-                        "label": "Plats",
-                        "name": "guide_object_location",
-                        "type": "select",
-                        "instructions": "Choose a location that is related to this object. All sub-locations to a main location is avilabile here.",
-                        "required": 0,
-                        "conditional_logic": 0,
-                        "wrapper": {
-                            "width": "",
+                            "width": "40",
                             "class": "",
                             "id": ""
                         }
@@ -568,15 +418,29 @@
                         }
                     },
                     {
-                        "default_value": 1,
-                        "message": "Show or hide this object",
-                        "ui": 1,
+                        "default_value": 0,
+                        "message": "Yes, show this object",
+                        "ui": 0,
                         "ui_on_text": "Show",
                         "ui_off_text": "Hide",
                         "key": "field_58a5c098f4194",
                         "label": "Object visibility",
                         "name": "guide_object_active",
                         "type": "true_false",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        }
+                    },
+                    {
+                        "key": "field_58ad84a12d5ac",
+                        "label": "Unique ID",
+                        "name": "guide_object_uid",
+                        "type": "unique_id",
                         "instructions": "",
                         "required": 0,
                         "conditional_logic": 0,
@@ -593,8 +457,127 @@
                 "button_label": "Add new object",
                 "collapsed": "field_5899aab938d3d",
                 "key": "field_5899cc4b59d94",
-                "label": "Objects (trigger places related to location or beacon)",
-                "name": "guide_location_objects",
+                "label": "Content (paintings, art, flowers etc.)",
+                "name": "guide_content_objects",
+                "type": "repeater",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                }
+            },
+            {
+                "placement": "top",
+                "endpoint": 0,
+                "key": "field_58ab0c6354b09",
+                "label": "Beacons",
+                "name": "",
+                "type": "tab",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                }
+            },
+            {
+                "default_value": "",
+                "maxlength": "",
+                "placeholder": "",
+                "prepend": "",
+                "append": "",
+                "key": "field_58ac5c65cdffe",
+                "label": "Beacon namespace",
+                "name": "guide_beacon_namespace",
+                "type": "text",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                }
+            },
+            {
+                "sub_fields": [
+                    {
+                        "post_type": [
+                            "location"
+                        ],
+                        "taxonomy": [],
+                        "allow_null": 0,
+                        "multiple": 0,
+                        "return_format": "id",
+                        "ui": 1,
+                        "key": "field_58ab0c9554b0a",
+                        "label": "Plats",
+                        "name": "location",
+                        "type": "post_object",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "36",
+                            "class": "",
+                            "id": ""
+                        }
+                    },
+                    {
+                        "multiple": 1,
+                        "allow_null": 0,
+                        "choices": [],
+                        "default_value": [],
+                        "ui": 1,
+                        "ajax": 1,
+                        "placeholder": "",
+                        "return_format": "value",
+                        "key": "field_58ab0cf054b0b",
+                        "label": "Objects",
+                        "name": "objects",
+                        "type": "select",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "30",
+                            "class": "",
+                            "id": ""
+                        }
+                    },
+                    {
+                        "default_value": "",
+                        "maxlength": "",
+                        "placeholder": "",
+                        "prepend": "",
+                        "append": "",
+                        "key": "field_58ac54a64bb06",
+                        "label": "Beacon ID",
+                        "name": "beacon",
+                        "type": "text",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "30",
+                            "class": "",
+                            "id": ""
+                        }
+                    }
+                ],
+                "min": 0,
+                "max": 0,
+                "layout": "table",
+                "button_label": "L\u00e4gg till grupp",
+                "collapsed": "field_58ab0cf054b0b",
+                "key": "field_58ab0b4454b08",
+                "label": "Beacon groups",
+                "name": "guide_beacon",
                 "type": "repeater",
                 "instructions": "",
                 "required": 0,
@@ -626,10 +609,10 @@
     },
     {
         "key": "group_589dd0fbd412e",
-        "title": "Guide apperance",
+        "title": "Guide Group",
         "fields": [
             {
-                "taxonomy": "guide_sender",
+                "taxonomy": "guidegroup",
                 "field_type": "select",
                 "multiple": 0,
                 "allow_null": 0,
@@ -638,8 +621,8 @@
                 "load_terms": 0,
                 "save_terms": 0,
                 "key": "field_589dd138aca7e",
-                "label": "Select apperance",
-                "name": "guide_apperance_data",
+                "label": "Select the group for this guide",
+                "name": "guide_group",
                 "type": "taxonomy",
                 "instructions": "",
                 "required": 1,
@@ -671,8 +654,27 @@
     },
     {
         "key": "group_589dcf7e047a8",
-        "title": "Guide apperance settings",
+        "title": "Guide group settings",
         "fields": [
+            {
+                "default_value": 1,
+                "message": "Yes, this group is active (show as clickable location i app).",
+                "ui": 0,
+                "ui_on_text": "",
+                "ui_off_text": "",
+                "key": "field_58ac3daed44c3",
+                "label": "Active",
+                "name": "guide_taxonomy_active",
+                "type": "true_false",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                }
+            },
             {
                 "return_format": "array",
                 "preview_size": "medium",
@@ -735,6 +737,85 @@
                     "class": "",
                     "id": ""
                 }
+            },
+            {
+                "post_type": [
+                    "location"
+                ],
+                "taxonomy": [],
+                "allow_null": 0,
+                "multiple": 0,
+                "return_format": "id",
+                "ui": 1,
+                "key": "field_58ac3ca740387",
+                "label": "Plats",
+                "name": "guide_taxonomy_location",
+                "type": "post_object",
+                "instructions": "",
+                "required": 1,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                }
+            },
+            {
+                "default_value": 0,
+                "message": "Yes, only allow the user to select from avabile sublications",
+                "ui": 0,
+                "ui_on_text": "",
+                "ui_off_text": "",
+                "key": "field_58ad7751e92af",
+                "label": "Only allow sublocations",
+                "name": "guide_taxonomy_sublocations",
+                "type": "true_false",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                }
+            },
+            {
+                "default_value": 1,
+                "message": "Yes, this location has full wifi coverage",
+                "ui": 0,
+                "ui_on_text": "",
+                "ui_off_text": "",
+                "key": "field_58ac5da5ed8ff",
+                "label": "Wifi coverage",
+                "name": "guide_taxonomy_wifi",
+                "type": "true_false",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                }
+            },
+            {
+                "default_value": 1,
+                "message": "Yes, this location may use google maps.",
+                "ui": 0,
+                "ui_on_text": "",
+                "ui_off_text": "",
+                "key": "field_58ac5dc8ed900",
+                "label": "Karta",
+                "name": "guide_taxonomy_map",
+                "type": "true_false",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                }
             }
         ],
         "location": [
@@ -742,7 +823,152 @@
                 {
                     "param": "taxonomy",
                     "operator": "==",
-                    "value": "guide_sender"
+                    "value": "guidegroup"
+                }
+            ]
+        ],
+        "menu_order": 0,
+        "position": "normal",
+        "style": "default",
+        "label_placement": "top",
+        "instruction_placement": "label",
+        "hide_on_screen": "",
+        "active": 1,
+        "description": ""
+    },
+    {
+        "key": "group_58ab055a4b3b8",
+        "title": "Notices",
+        "fields": [
+            {
+                "sub_fields": [
+                    {
+                        "default_value": "",
+                        "new_lines": "",
+                        "maxlength": "",
+                        "placeholder": "What do you want to say?",
+                        "rows": 4,
+                        "key": "field_58ab0585c586f",
+                        "label": "Message",
+                        "name": "message",
+                        "type": "textarea",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "50",
+                            "class": "",
+                            "id": ""
+                        }
+                    },
+                    {
+                        "default_value": 5,
+                        "min": "",
+                        "max": "",
+                        "step": 1,
+                        "placeholder": "",
+                        "prepend": "Delay",
+                        "append": "minute(s)",
+                        "key": "field_58ab05cac5870",
+                        "label": "Timeout",
+                        "name": "timeout",
+                        "type": "number",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "50",
+                            "class": "",
+                            "id": ""
+                        }
+                    }
+                ],
+                "min": 0,
+                "max": 0,
+                "layout": "table",
+                "button_label": "Add notice",
+                "collapsed": "field_58ab0585c586f",
+                "key": "field_58ab055ec586e",
+                "label": "Arrival notice",
+                "name": "guide_arrival_notice",
+                "type": "repeater",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                }
+            },
+            {
+                "sub_fields": [
+                    {
+                        "default_value": "",
+                        "new_lines": "",
+                        "maxlength": "",
+                        "placeholder": "",
+                        "rows": 4,
+                        "key": "field_58ab06528a9b1",
+                        "label": "Message",
+                        "name": "message",
+                        "type": "textarea",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "50",
+                            "class": "",
+                            "id": ""
+                        }
+                    },
+                    {
+                        "default_value": 10,
+                        "min": 0,
+                        "max": "",
+                        "step": 1,
+                        "placeholder": "",
+                        "prepend": "Delay",
+                        "append": "minute(s)",
+                        "key": "field_58ab06698a9b2",
+                        "label": "Timeout",
+                        "name": "timeout",
+                        "type": "number",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "50",
+                            "class": "",
+                            "id": ""
+                        }
+                    }
+                ],
+                "min": 0,
+                "max": 0,
+                "layout": "table",
+                "button_label": "Add notice",
+                "collapsed": "",
+                "key": "field_58ab063f8a9b0",
+                "label": "Departure notice",
+                "name": "guide_departure_notice",
+                "type": "repeater",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                }
+            }
+        ],
+        "location": [
+            [
+                {
+                    "param": "taxonomy",
+                    "operator": "==",
+                    "value": "guidegroup"
                 }
             ]
         ],

@@ -8,9 +8,9 @@ namespace HbgEventImporter\Api;
 
 class GuideFields extends Fields
 {
-    private $postType = 'guide';
-    private $taxonomyName = 'guidegroup';
-    private $objectCache = array();
+    private $postType       = 'guide';
+    private $taxonomyName   = 'guidegroup';
+    private $objectCache    = array();
 
     public function __construct()
     {
@@ -21,7 +21,7 @@ class GuideFields extends Fields
     /**
      * Register rest fields to consumer api
      * @return  void
-     * @version 0.3.2 creating consumer accessable meta values.
+     * @version 0.3.28 creating consumer accessable meta values.
      */
 
     public static function registerTaxonomyRestFields()
@@ -67,12 +67,37 @@ class GuideFields extends Fields
     /**
      * Register rest fields to consumer api
      * @return  void
-     * @version 0.3.2 creating consumer accessable meta values.
+     * @version 0.3.28 creating consumer accessable meta values.
      */
     public static function registerRestFields()
     {
         register_rest_field($this->postType,
-            'content',
+            'guideBeacon',
+            array(
+                'get_callback' => array($this, 'postBeacon'),
+                'schema' => array(
+                    'description' => 'Objects of this guide.',
+                    'type' => 'object',
+                    'context' => array('view', 'embed')
+                )
+            )
+        );
+
+        // Guide media objects
+        register_rest_field($this->postType,
+            'guideMedia',
+            array(
+                'get_callback' => array($this, 'postMedia'),
+                'schema' => array(
+                    'description' => 'Guide main media information.',
+                    'type' => 'object',
+                    'context' => array('view', 'embed')
+                )
+            )
+        );
+
+        register_rest_field($this->postType,
+            'contentObjects',
             array(
                 'get_callback' => array($this, 'postObjects'),
                 'schema' => array(
@@ -84,35 +109,9 @@ class GuideFields extends Fields
         );
 
         register_rest_field($this->postType,
-            'beacons',
-            array(
-                'get_callback' => array($this, 'objectBeacons'),
-                'schema' => array(
-                    'description' => 'Describes the guides colors, logo, moodimage and main location.',
-                    'type' => 'object',
-                    'context' => array('view', 'embed')
-                )
-            )
-        );
-/*
-        // Main attraction data
-        register_rest_field($this->postType,
-            'mainAttraction',
-            array(
-                'get_callback' => array($this, 'settings'),
-                'schema' => array(
-                    'description' => 'Describes the guides colors, logo, moodimage and main location.',
-                    'type' => 'object',
-                    'context' => array('view', 'embed')
-                )
-            )
-        );
-
-        // Guide theme object
-        /*register_rest_field($this->postType,
             'subAttractions',
             array(
-                'get_callback' => array($this, 'settings'),
+                'get_callback' => array($this, 'subAttractionBeacons'),
                 'schema' => array(
                     'description' => 'Describes the guides colors, logo, moodimage and main location.',
                     'type' => 'object',
@@ -120,65 +119,38 @@ class GuideFields extends Fields
                 )
             )
         );
-*/
 
-
-
-/*
-
-
-        // Guide main location
         register_rest_field($this->postType,
-            'location',
+            'orphanContentObjects',
             array(
-                'get_callback' => array($this, 'mainLocation'),
-                'schema' => array(
-                    'description' => 'The main location for this guide.',
-                    'type' => 'object',
-                    'context' => array('view', 'embed')
-                )
-            )
-        );
-
-        // Guide beacon object
-
-
-        // Guide media objects
-        register_rest_field($this->postType,
-            'media',
-            array(
-                'get_callback' => array($this, 'media'),
-                'schema' => array(
-                    'description' => 'Guide main media information.',
-                    'type' => 'object',
-                    'context' => array('view', 'embed')
-                )
-            )
-        );
-
-        // Guide location objects
-
-
-        // Guide location objects
-        register_rest_field($this->postType,
-            'walk',
-            array(
-                'get_callback' => array($this, 'walk'),
+                'get_callback' => array($this, 'orphanPostObjects'),
                 'schema' => array(
                     'description' => 'Objects of this guide.',
                     'type' => 'object',
                     'context' => array('view', 'embed')
                 )
             )
-        );*/
+        );
     }
 
     /* TAXONOMY */
+
+    /**
+     * Create a ACF taxonomy id from taxonomy object
+     * @return  void
+     * @version 0.3.28 Guides
+     */
 
     private function taxonomyKey($taxonomy)
     {
         return $taxonomy['taxonomy']. '_' . $taxonomy['id'];
     }
+
+    /**
+     * Convert value to noll
+     * @return  null or initial provided value
+     * @version 0.3.28 Guides
+     */
 
     private function convertToNull($value, $convertValueToNull = false)
     {
@@ -188,25 +160,43 @@ class GuideFields extends Fields
         return $value;
     }
 
+    /**
+     * Create apperance response array
+     * @return  array
+     * @version 0.3.28 Guides
+     */
+
     public function taxonomyApperance($object, $field_name, $request, $formatted = true)
     {
         return array(
-            'logotype'          => get_field('guide_taxonomy_logotype', $this->taxonomyKey($object)),
-            'color'             => get_field('guide_taxonomy_color', $this->taxonomyKey($object)),
-            'image'             => get_field('guide_taxonomy_image', $this->taxonomyKey($object))
+            'logotype'          => $this->convertToNull(get_field('guide_taxonomy_logotype', $this->taxonomyKey($object))),
+            'color'             => $this->convertToNull(get_field('guide_taxonomy_color', $this->taxonomyKey($object))),
+            'image'             => $this->convertToNull(get_field('guide_taxonomy_image', $this->taxonomyKey($object)))
         );
     }
+
+    /**
+     * Create   Create taxonomy response array
+     * @return  array
+     * @version 0.3.28 Guides
+     */
 
     public function taxonomySettings($object, $field_name, $request, $formatted = true)
     {
         return array(
             'active'            => get_field('guide_taxonomy_active', $this->taxonomyKey($object)),
-            'location'          => get_field('guide_taxonomy_location', $this->taxonomyKey($object)),
+            'location'          => $this->convertToNull(get_field('guide_taxonomy_location', $this->taxonomyKey($object))),
             'locationFilter'    => get_field('guide_taxonomy_sublocations', $this->taxonomyKey($object)),
             'wifi'              => get_field('guide_taxonomy_wifi', $this->taxonomyKey($object)),
             'map'               => get_field('guide_taxonomy_map', $this->taxonomyKey($object))
         );
     }
+
+    /**
+     * Create taxonomy/notice response array
+     * @return  void
+     * @version 0.3.28 Guides
+     */
 
     public function taxonomyNotice($object, $field_name, $request, $formatted = true)
     {
@@ -216,22 +206,83 @@ class GuideFields extends Fields
         );
     }
 
-    /* Posttype */
+    /**
+     * Create array of sub attraction beacons
+     * @return  array
+     * @version 0.3.28 Guides
+     */
 
-    public function objectBeacons($object, $field_name, $request, $formatted = true)
+    public function subAttractionBeacons($object, $field_name, $request, $formatted = true)
     {
-        $result  = array();
-        $beacons = $this->getObjects($object, 'guide_beacon', $request, true);
-        $objects = $this->getObjects($object, 'guide_content_objects', $request, true);
+        $result             = array();
+        $beacons            = $this->objectGetCallBack($object, 'guide_beacon', $request, true);
+        $objects            = $this->getObjects($object, 'guide_content_objects', $request, true);
+        $beacon_namespace   = $this->stringGetCallBack($object, 'guide_beacon_namespace', $request, $formatted);
 
         foreach ($beacons as $key => $item) {
-            $result[] = array(
-                'test' => 'hej'
-            );
+            if (!empty($item['objects'])) {
+                $result[] = array(
+                    'nid' => $beacon_namespace,
+                    'bid' => $item['beacon'],
+                    'content' => $item['objects'],
+                    'location' => is_numeric($item['location']) ? $item['location'] : null
+                );
+            }
+        }
+
+        if (!array_filter($result)) {
+            return null;
         }
 
         return $result;
     }
+
+    /**
+     * Create list of objects not contained in a subattraction
+     * @return  array
+     * @version 0.3.28 Guides
+     */
+
+    public function orphanPostObjects($object, $field_name, $request, $formatted = true)
+    {
+        $result             = array();
+        $objectStash        = array();
+        $baconStash         = array();
+
+        $beacons            = $this->objectGetCallBack($object, 'guide_beacon', $request, true);
+        $objects            = $this->getObjects($object, 'guide_content_objects', $request, true);
+
+        //Create total objects
+        foreach ($objects as $key => $item) {
+            $objectStash[] = $key;
+        }
+
+        //Create in beacon
+        foreach ($beacons as $key => $item) {
+            if (!empty($item['objects']) && is_array($item['objects'])) {
+                foreach ($item['objects'] as $objectID) {
+                    $baconStash[] = $objectID;
+                }
+            }
+        }
+
+        //Calculate drifference (ie. orphaned objects)
+        $result = array_values(array_unique(array_diff($objectStash, $baconStash)));
+
+        //Not present, return null.
+        if (!$result) {
+            return null;
+        }
+
+        //Return resutl
+        return $result;
+    }
+
+    /**
+     * Create array with guide response data
+     * @return  array
+     * @version 0.3.28 Guides
+     */
 
     public function postBeacon($object, $field_name, $request, $formatted = true)
     {
@@ -245,6 +296,12 @@ class GuideFields extends Fields
             return $beacon;
         }
     }
+
+    /**
+     * Create array of posts object
+     * @return  array
+     * @version 0.3.28 Guides
+     */
 
     public function postObjects($object, $field_name, $request, $formatted = true)
     {
@@ -268,39 +325,13 @@ class GuideFields extends Fields
         return (array) $objects;
     }
 
+    /**
+     * Get post media attrubute
+     * @return  array/null
+     * @version 0.3.28 Guides
+     */
 
-
-
-
-
-
-
-    public function walk($object, $field_name, $request, $formatted = true)
-    {
-        if ($this->boolGetCallBack($object, 'guide_enable_stops', $request, $formatted)) {
-            return $this->objectGetCallBack($object, 'guide_object_stops', $request);
-        }
-        return null;
-    }
-
-
-/*
-    public function settings($object, $field_name, $request, $formatted = true)
-    {
-        $taxonomy       = $this->objectGetCallBack($object, 'guide_group', $request);
-        $location_id    = (int) get_field('guide_taxonomy_location', $taxonomy->taxonomy. '_' . $taxonomy->term_id, false);
-
-        return array(
-            'id'            => is_numeric($taxonomy->term_id) && !empty($taxonomy->term_id) ? $taxonomy->term_id : null,
-            'name'          => !empty($taxonomy->name) ? $taxonomy->name : null,
-            'description'   => !empty($taxonomy->description) ? $taxonomy->description : null,
-            'location'      => is_numeric($location_id) && !empty($location_id) ? $location_id : null,
-        );
-    }
-*/
-
-
-    public function media($object, $field_name, $request, $formatted = true)
+    public function postMedia($object, $field_name, $request, $formatted = true)
     {
         $media =    $this->sanitinzeMediaObjectArray(
                         $this->objectGetCallBack($object, 'guide_main_media', $request, true)
@@ -313,12 +344,11 @@ class GuideFields extends Fields
         }
     }
 
-
-
-    public function mainLocation($object, $field_name, $request, $formatted = true)
-    {
-        return $this->numericGetCallBack($object, 'guide_main_location', $request, true);
-    }
+    /**
+     * Get objects of this guide
+     * @return  array
+     * @version 0.3.28 Guides
+     */
 
     public function getObjects($object, $field_name, $request, $formatted = true)
     {
@@ -341,10 +371,15 @@ class GuideFields extends Fields
         return $this->objectCache[$hash] = $objects;
     }
 
+    /**
+     * Sanitize media object
+     * @return  array
+     * @version 0.3.28 Guides
+     */
+
     public function sanitizeMediaObject($item)
     {
         if (is_array($item)) {
-            unset($item['ID']);
             unset($item['filename']);
             unset($item['author']);
             unset($item['caption']);
@@ -353,6 +388,12 @@ class GuideFields extends Fields
 
         return $item;
     }
+
+    /**
+     * Sanitize array of media objects
+     * @return  array
+     * @version 0.3.28 Guides
+     */
 
     public function sanitinzeMediaObjectArray($objectArray)
     {
@@ -366,6 +407,12 @@ class GuideFields extends Fields
 
         return $objectArray;
     }
+
+    /**
+     * Sanitize & validate items in link array
+     * @return  array
+     * @version 0.3.28 Guides
+     */
 
     public function sanitizeLinkObject($linkObject)
     {
