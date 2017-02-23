@@ -167,7 +167,7 @@ class App
 
         wp_localize_script('hbg-event-importer', 'eventmanager', array(
             'ajaxurl'               => admin_url('admin-ajax.php'),
-            'wpapiurl'              => site_url('wp-json'),
+            'wpapiurl'              => site_url('json'),
             'require_title'         => __("Title is missing", 'event-manager'),
             'new_contact'           => __("Create new contact", 'event-manager'),
             'new_sponsor'           => __("Create new sponsor", 'event-manager'),
