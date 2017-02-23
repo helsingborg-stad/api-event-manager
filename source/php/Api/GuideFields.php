@@ -202,7 +202,7 @@ class GuideFields extends Fields
     {
         return array(
             'arrival'           => $this->convertToNull(get_field('guide_arrival_notice', $this->taxonomyKey($object))),
-            'departure'         => $this->convertToNull(get_field('guide_arrival_notice', $this->taxonomyKey($object))),
+            'departure'         => $this->convertToNull(get_field('guide_departure_notice', $this->taxonomyKey($object))),
         );
     }
 
