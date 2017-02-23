@@ -145,13 +145,19 @@
   width: 100%;
   max-height: 171px;
   background-color: #fff;
-  padding: 3px 8px;
   box-sizing: border-box;
   overflow-y: auto;
-  display: none; }
+  display: none;
+  border: 1px solid #ddd;
+  margin-top: -4px; }
 
 #suggestionList {
   margin: 0; }
+  #suggestionList li:first-of-type {
+    border-bottom: 1px solid #ddd;
+    background-color: #f9f9f9; }
+  #suggestionList li {
+    padding: 5px 9px; }
 
 #suggestionList a.suggestion {
   color: #264973;
@@ -166,7 +172,8 @@
 
 .suggestion-hide {
   position: static;
-  float: right; }
+  float: right;
+  padding: 0; }
 
 .wp-admin.post-type-event.post-php.no-sync .postbox:not(#submitdiv):not(.acf-postbox):not(#lix-calculator):not(#revisionsdiv):not(#sync-meta-box),
 .wp-admin.post-type-event.post-php.no-sync .postarea,

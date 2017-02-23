@@ -2,14 +2,24 @@
     width: 100%;
     max-height: 171px;
     background-color: #fff;
-    padding: 3px 8px;
     box-sizing: border-box;
     overflow-y: auto;
     display: none;
+    border: 1px solid #ddd;
+    margin-top: -4px;
 }
 
 #suggestionList {
     margin: 0;
+
+    li:first-of-type {
+        border-bottom: 1px solid #ddd;
+        background-color: #f9f9f9;
+    }
+
+    li {
+        padding: 5px 9px;
+    }
 }
 
 #suggestionList a.suggestion {
@@ -28,5 +38,6 @@
 
 .suggestion-hide {
     position: static;
-    float:right;
+    float: right;
+    padding: 0;
 }
