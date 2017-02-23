@@ -8,9 +8,9 @@ namespace HbgEventImporter\Api;
 
 class GuideFields extends Fields
 {
-    private $postType = 'guide';
-    private $taxonomyName = 'guidegroup';
-    private $objectCache = array();
+    private $postType       = 'guide';
+    private $taxonomyName   = 'guidegroup';
+    private $objectCache    = array();
 
     public function __construct()
     {
@@ -21,7 +21,7 @@ class GuideFields extends Fields
     /**
      * Register rest fields to consumer api
      * @return  void
-     * @version 0.3.2 creating consumer accessable meta values.
+     * @version 0.3.28 creating consumer accessable meta values.
      */
 
     public static function registerTaxonomyRestFields()
@@ -67,7 +67,7 @@ class GuideFields extends Fields
     /**
      * Register rest fields to consumer api
      * @return  void
-     * @version 0.3.2 creating consumer accessable meta values.
+     * @version 0.3.28 creating consumer accessable meta values.
      */
     public static function registerRestFields()
     {
