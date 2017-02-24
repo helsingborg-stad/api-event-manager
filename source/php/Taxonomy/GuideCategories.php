@@ -37,7 +37,7 @@ class GuideCategories
         );
 
         $args = array(
-            'capabilities'          => $capabilities,
+            //'capabilities'          => $capabilities,
             'labels'                => $labels,
             'public'                => true,
             'show_in_nav_menus'     => true,
