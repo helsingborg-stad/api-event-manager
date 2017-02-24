@@ -12,43 +12,4 @@ jQuery(document).ready(function ($) {
             </div>\
         ');
     }
-
-    // Require post title when publish posts
-    $('#publish').click(function() {
-        var testervar = jQuery('[id^="titlediv"]').find('#title');
-        if (testervar.length && testervar.val().length < 1) {
-            setTimeout("jQuery('#ajax-loading').css('visibility', 'hidden');", 100);
-            if (!jQuery('.require-post').length) {
-                jQuery('#post').before('<div class="error require-post"><p>' + eventmanager.require_title + '</p></div>');
-            }
-                setTimeout("jQuery('#publish').removeClass('button-primary-disabled');", 100);
-                return false;
-            } else {
-                jQuery('.require-post').remove();
-            }
-    });
-
-    $('#title').keypress(function(e) {
-        if (e.which == 13) {
-            var testervar = $('[id^=\"titlediv\"]').find('#title');
-
-            if (testervar.val().length < 1) {
-                setTimeout(function () {
-                    jQuery('#ajax-loading').css('visibility', 'hidden');
-                }, 100);
-
-                if (!jQuery(".require-post").length) {
-                    $('#post').before('<div class="error require-post"><p>' + eventmanager.require_title + '</p></div>');
-                }
-
-                setTimeout(function () {
-                    $('#publish').removeClass('button-primary-disabled');
-                }, 100);
-
-                return false;
-            }
-
-            jQuery('.require-post').remove();
-        }
-    });
 });
