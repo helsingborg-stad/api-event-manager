@@ -55,6 +55,29 @@
 .acf-field-unique-id {
   display: none !important; }
 
+.post-type-location.child-location #titlewrap {
+  width: 100%;
+  display: table; }
+
+.post-type-location.child-location #titlediv #title, .post-type-location.child-location #titlediv #title-prompt-text {
+  display: table-cell;
+  line-height: 14px; }
+
+.post-type-location.child-location #titlediv #title {
+  margin: 0px; }
+
+.post-type-location.child-location #titlediv #title-prompt-text, .post-type-location.child-location #titlediv .screen-reader-text {
+  width: 1px;
+  white-space: nowrap;
+  vertical-align: middle;
+  border-radius: 4px 0 0 4px;
+  font-size: 1.1em;
+  position: static;
+  color: #555;
+  background-color: #eee;
+  border: 1px solid #ccc;
+  border-right: 0px; }
+
 .acceptAndDeny .hidden {
   display: none; }
 
