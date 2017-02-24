@@ -390,22 +390,6 @@ ImportEvents.Admin.Guide = (function ($) {
 
 })(jQuery);
 
-jQuery(document).ready(function ($) {
-
-    if(pagenow == 'edit-event' || pagenow == 'edit-location')
-    {
-        $('#wpwrap').append('<div id="blackOverlay"></div>');
-        $('.wrap').append('\
-            <div id="importResponse">\
-                <div><h3>'+ eventmanager.new_data_imported +'</h3></div>\
-                <div class="inline"><p><strong>'+ eventmanager.events +'</strong></p></div><div class="inline"><p><strong>'+ eventmanager.locations +'</strong></p></div><div class="inline"><p><strong>'+ eventmanager.contacts +'</strong></p></div>\
-                <div class="inline"><p id="event">0</p></div><div class="inline"><p id="location">0</p></div><div class="inline"><p id="contact">0</p></div>\
-                <div id="untilReload"><div id="meter"></div><p>'+ eventmanager.time_until_reload +'</p></div>\
-            </div>\
-        ');
-    }
-});
-
 var ImportEvents = ImportEvents || {};
 
 ImportEvents = ImportEvents || {};
@@ -506,7 +490,27 @@ ImportEvents.Parser.Eventhandling = (function ($) {
                 }.bind(this));
             }
         }.bind(this));
+
+        this.importModal();
     }
+
+    Eventhandling.prototype.importModal = function() {
+        if (!['edit-event', 'edit-location'].indexOf(pagenow)) {
+            return;
+        }
+
+        $(document).ready(function () {
+            $('#wpwrap').append('<div id="blackOverlay"></div>');
+            $('.wrap').append('\
+                <div id="importResponse">\
+                    <div><h3>'+ eventmanager.new_data_imported +'</h3></div>\
+                    <div class="inline"><p><strong>'+ eventmanager.events +'</strong></p></div><div class="inline"><p><strong>'+ eventmanager.locations +'</strong></p></div><div class="inline"><p><strong>'+ eventmanager.contacts +'</strong></p></div>\
+                    <div class="inline"><p id="event">0</p></div><div class="inline"><p id="location">0</p></div><div class="inline"><p id="contact">0</p></div>\
+                    <div id="untilReload"><div id="meter"></div><p>'+ eventmanager.time_until_reload +'</p></div>\
+                </div>\
+            ');
+        })
+    };
 
     /**
      * Parse CBIS & XCAP events, loop through each API key
