@@ -1,4 +1,4 @@
-#suggestionContainer {
+#title-suggestions {
     width: 100%;
     max-height: 171px;
     background-color: #fff;
@@ -9,7 +9,7 @@
     margin-top: -4px;
 }
 
-#suggestionList {
+#title-suggestions ul {
     margin: 0;
 
     li:first-of-type {
@@ -22,17 +22,17 @@
     }
 }
 
-#suggestionList a.suggestion {
+#title-suggestions a.suggestion {
     color: #264973;
     text-decoration: underline;
 }
 
-#suggestionList a.suggestion:hover {
+#title-suggestions a.suggestion:hover {
     color: #4079bf;
     text-decoration: underline;
 }
 
-#suggestionList a.suggestion span {
+#title-suggestions a.suggestion span {
     background-color: #dbeff8;
 }
 
