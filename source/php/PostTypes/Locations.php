@@ -63,6 +63,8 @@ class Locations extends \HbgEventImporter\Entity\CustomPostType
         add_filter('acf/update_value/name=geo_map', array($this, 'acfUpdateMap'), 10, 3);
         add_filter('manage_edit-' . $this->slug . '_columns', array($this, 'addAcceptDenyTable'));
         add_action('manage_' . $this->slug . '_posts_custom_column', array($this, 'addAcceptDenyButtons'), 10, 2);
+        add_filter('admin_body_class', array($this, 'addParentBodyClass'));
+        add_filter('enter_title_here', array($this, 'replacePlaceholder'));
 
         add_filter('page_attributes_dropdown_pages_args', array($this, 'limitPostTypeHierarchy'));
         add_filter('quick_edit_dropdown_pages_args', array($this, 'limitPostTypeHierarchy'));
@@ -149,6 +151,38 @@ class Locations extends \HbgEventImporter\Entity\CustomPostType
             $views['import-buttons'] = $button;
         }
         return $views;
+    }
+
+    /**
+     * Add new body class 'child-location' if child
+     * @param string $classes body classes
+     */
+    public function addParentBodyClass($classes) {
+        global $post;
+        $screen = get_current_screen();
+        $parent = ($screen->base == 'post' && $post->post_parent > 0) ? get_the_title($post->post_parent) : null;
+        if ($parent) {
+            $classes .= ' child-location ';
+        }
+
+        return $classes;
+    }
+
+    /**
+     * Change title placeholder on child locations
+     * @param  string   $title  placeholder string
+     * @return string           new string
+     */
+    public function replacePlaceholder($title){
+        global $post;
+        $parent = ($post->post_parent > 0) ? get_the_title($post->post_parent) : null;
+        $screen = get_current_screen();
+
+        if ($screen->post_type == $this->slug && $parent) {
+          $title = $parent . ':';
+        }
+
+        return $title;
     }
 
     /**
