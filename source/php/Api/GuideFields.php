@@ -14,8 +14,56 @@ class GuideFields extends Fields
 
     public function __construct()
     {
+
+        //Fields
         add_action('rest_api_init', array($this, 'registerRestFields'));
         add_action('rest_api_init', array($this, 'registerTaxonomyRestFields'));
+
+        //Api filter querys
+        add_filter('rest_guide_query', array($this, 'addBeaconFilter'), 10, 2);
+    }
+
+     /**
+     * Filter by beacons
+     * @param  array           $args    The query arguments.
+     * @param  WP_REST_Request $request Full details about the request.
+     * @return array $args.
+     **/
+    function addBeaconFilter($args, $request) {
+
+        if(isset($_GET['beacon'])) {
+
+            $nid = isset($_GET['beacon']['nid']) ? $_GET['beacon']['nid'] : null;
+            $bid = isset($_GET['beacon']['bid']) ? $_GET['beacon']['bid'] : null; //Not used.
+
+            if(!is_null($nid)) {
+
+                $result = get_posts(array(
+                    'post_type'     => 'guide',
+                    'post_status'   => 'publish',
+                    'meta_key'      => 'guide_beacon_namespace',
+                    'meta_value'    => sanitize_text_field($nid)
+                ));
+
+                if(!empty($result)) {
+
+                    if(!is_array($args['post__in'])) {
+                        $args['post__in'] = [];
+                    }
+
+                    foreach($result as $item) {
+                        $args['post__in'][] = $item->ID;
+                    }
+
+                } else {
+                    $args['post__in'][] = 0;
+                }
+
+            }
+
+        }
+
+        return $args;
     }
 
     /**
