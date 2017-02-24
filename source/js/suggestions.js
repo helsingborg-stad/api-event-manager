@@ -91,7 +91,7 @@ ImportEvents.Admin.Suggestions = (function ($) {
             regex = new RegExp("(" + term + ")", "igm"),
             highlighted = pageText.replace(regex ,"<span>$1</span>");
 
-            $suggestions.find('ul').append('<li><a href="/wp/wp-admin/post.php?post=' + suggestion.id + '&action=edit" class="suggestion">' + highlighted + '</a></li>');
+            $suggestions.find('ul').append('<li><a href="' + eventmanager.adminurl + ' /post.php?post=' + suggestion.id + '&action=edit" class="suggestion">' + highlighted + '</a></li>');
         });
 
         $('#titlewrap').append($suggestions);
