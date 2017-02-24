@@ -31,6 +31,7 @@ class Sponsors extends \HbgEventImporter\Entity\CustomPostType
         $this->addTableColumn('cb', '<input type="checkbox">');
         $this->addTableColumn('title', __('Title', 'event-manager'));
         $this->addTableColumn('date', __('Date', 'event-manager'));
+
         add_action('do_meta_boxes', array($this, 'changeImageBox'), 10, 3);
         add_filter('acf/update_value/key=field_58183e709de27', array($this, 'acfUpdatePhone'), 10, 3);
         add_filter('manage_edit-' . $this->slug . '_columns', array($this, 'addAcceptDenyTable'));
@@ -39,10 +40,12 @@ class Sponsors extends \HbgEventImporter\Entity\CustomPostType
 
     public function changeImageBox($page, $context, $object)
     {
-        if ($page == 'sponsor') {
-            remove_meta_box('postimagediv', 'sponsor', 'side');
-            add_meta_box('postimagediv', __('Logo'), 'post_thumbnail_meta_box', 'sponsor', 'side');
-            remove_action('do_meta_boxes', array($this, 'changeImageBox'));
+        if ($page !== 'sponsor') {
+            return;
         }
+
+        remove_meta_box('postimagediv', 'sponsor', 'side');
+        add_meta_box('postimagediv', __('Logo'), 'post_thumbnail_meta_box', 'sponsor', 'side');
+        remove_action('do_meta_boxes', array($this, 'changeImageBox'));
     }
 }

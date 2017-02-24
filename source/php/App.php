@@ -15,24 +15,21 @@ class App
             }
         });
 
-        //Remove auto empty of trash
+        // Remove auto empty of trash
         add_action('init', function () {
             remove_action('wp_scheduled_delete', 'wp_scheduled_delete');
         });
 
-        //Field mapping
+        // Field mapping
         add_action('acf/init', array($this, 'acfSettings'));
         add_filter('acf/translate_field', array($this, 'acfTranslationFilter'));
 
-        //Admin scripts
+        // Admin scripts
         add_action('admin_enqueue_scripts', array($this, 'enqueueStyles'));
         add_action('admin_enqueue_scripts', array($this, 'enqueueScripts'));
 
         // Set api keys
         add_action('admin_enqueue_scripts', array($this, 'setApiKeys'));
-
-        //Admin components
-        add_action('admin_notices', array($this, 'adminNotices'));
 
         // Register cron action
         add_action('import_events_daily', array($this, 'startImport'));
@@ -41,11 +38,6 @@ class App
         add_filter('login_redirect', array($this, 'loginRedirect'), 10, 3);
         add_action('admin_init', array($this, 'dashboardRedirect'));
 
-        //Check referer (popup box)
-        $referer = (isset($_SERVER['HTTP_REFERER'])) ? $_SERVER['HTTP_REFERER'] : null;
-        if ((isset($_GET['lightbox']) && $_GET['lightbox'] == 'true') || strpos($referer, 'lightbox=true') > -1) {
-            add_action('admin_enqueue_scripts', array($this, 'enqueuStyleSheets'));
-        }
 
         //Load acf plugins
         add_action('init', function () {
@@ -99,48 +91,35 @@ class App
      */
     public function loginRedirect($redirect_to, $request, $user)
     {
-        if (! is_wp_error($user)) {
+        if (!is_wp_error($user)) {
             if (is_array($user->roles)) {
                 $urlAdmin = admin_url('edit.php?post_type=event');
                 return $urlAdmin;
             }
-        } else {
-            return $redirect_to;
+
+            return '';
         }
+
+        return $redirect_to;
     }
 
     /**
      * Redirect user when entering dashboard.
+     * @return void
      */
     public function dashboardRedirect()
     {
         global $pagenow;
-        if ($pagenow == 'index.php') {
-            if (isset($_GET['page']) && in_array($_GET['page'], array('acf-upgrade'))) {
-                return;
-            }
-
-            wp_redirect(admin_url('edit.php?post_type=event'), 301);
-            exit;
-        }
-    }
-
-    public function enqueuStyleSheets()
-    {
-        wp_enqueue_style('lightbox', plugins_url() . '/api-event-manager/dist/css/modal.min.css', false, '1.0.0');
-    }
-
-    public function adminNotices()
-    {
-        global $current_screen;
-
-        if ($current_screen->id != 'edit-event') {
+        if ($pagenow !== 'index.php') {
             return;
         }
 
-        if (isset($_GET['msg']) && $_GET['msg'] == 'import-complete') {
-            echo '<div class="updated"><p>' . __('Events imported', 'event-manager') . '</p></div>';
+        if (isset($_GET['page']) && in_array($_GET['page'], array('acf-upgrade'))) {
+            return;
         }
+
+        wp_redirect(admin_url('edit.php?post_type=event'), 301);
+        exit;
     }
 
     /**
@@ -150,8 +129,14 @@ class App
     public function enqueueStyles()
     {
         global $current_screen;
+
         if (in_array($current_screen->post_type, array('event', 'location', 'contact', 'sponsor', 'package', 'membership-card', 'guide'))) {
             wp_enqueue_style('hbg-event-importer', HBGEVENTIMPORTER_URL . '/dist/css/app.min.css');
+        }
+
+        $referer = (isset($_SERVER['HTTP_REFERER'])) ? $_SERVER['HTTP_REFERER'] : null;
+        if ((isset($_GET['lightbox']) && $_GET['lightbox'] == 'true') || strpos($referer, 'lightbox=true') > -1) {
+            wp_enqueue_style('lightbox', plugins_url() . '/api-event-manager/dist/css/modal.min.css', false, '1.0.0');
         }
     }
 
@@ -163,12 +148,26 @@ class App
     {
         global $current_screen;
 
-        if (is_object($current_screen) && in_array($current_screen->post_type, array('event', 'location', 'contact', 'sponsor', 'package', 'membership-card', 'guide', 'term'))) {
+        $acceptedPostTypes = array(
+            'event',
+            'location',
+            'contact',
+            'sponsor',
+            'package',
+            'membership-card',
+            'guide',
+            'term'
+        );
+
+        if (is_object($current_screen) && in_array($current_screen->post_type, $acceptedPostTypes)) {
             wp_enqueue_script('hbg-event-importer', HBGEVENTIMPORTER_URL . '/dist/js/app.min.js');
         }
 
+        wp_enqueue_script('hbg-event-importer', HBGEVENTIMPORTER_URL . '/dist/js/app.min.js');
+
         wp_localize_script('hbg-event-importer', 'eventmanager', array(
             'ajaxurl'               => admin_url('admin-ajax.php'),
+            'wpapiurl'              => site_url('json'),
             'require_title'         => __("Title is missing", 'event-manager'),
             'new_contact'           => __("Create new contact", 'event-manager'),
             'new_sponsor'           => __("Create new sponsor", 'event-manager'),
@@ -199,52 +198,84 @@ class App
      */
     public function setApiKeys()
     {
-        if (current_user_can('administrator')) {
-            // Set CBIS API variables
-            $cbis_keys = array();
-            if (have_rows('cbis_api_keys', 'option')):
-                while (have_rows('cbis_api_keys', 'option')): the_row();
+        if (!current_user_can('administrator')) {
+            return;
+        }
 
-            $location_categories = array();
-            $location_categories[] = array('arena' => 1, 'cbis_location_cat_id' => get_sub_field('cbis_event_id'), 'cbis_location_name' => 'arena');
-            if (! empty(get_sub_field('cbis_location_ids'))) {
+        wp_localize_script('hbg-event-importer', 'cbis_ajax_vars', array('cbis_keys' => $this->getCbisKeys()));
+        wp_localize_script('hbg-event-importer', 'xcap_ajax_vars', array('xcap_keys' => $this->getXcapKeys()));
+    }
+
+    /**
+     * Get Xcap keys
+     * @return array
+     */
+    public function getXcapKeys() : array
+    {
+        $xcapKeys = array();
+
+        if (!have_rows('xcap_api_urls', 'option')) {
+            return array();
+        }
+
+        while (have_rows('xcap_api_urls', 'option')) {
+            the_row();
+
+            $xcapKeys[] = array(
+                'xcap_api_url'       => get_sub_field('xcap_api_url'),
+                'xcap_exclude'       => get_sub_field('xcap_filter_categories'),
+                'xcap_groups'        => get_sub_field('xcap_publishing_groups')
+            );
+        }
+
+        return $xcapKeys;
+    }
+
+    /**
+     * Get CBIS keys
+     * @return array
+     */
+    public function getCbisKeys() : array
+    {
+        $cbisKeys = array();
+
+        if (!have_rows('cbis_api_keys', 'option')) {
+            return array();
+        }
+
+        while (have_rows('cbis_api_keys', 'option')) {
+            the_row();
+
+            // What
+            $locationCategories = array();
+            $locationCategories[] = array(
+                'arena' => 1,
+                'cbis_location_cat_id' => get_sub_field('cbis_event_id'),
+                'cbis_location_name' => 'arena'
+            );
+
+            // What
+            if (!empty(get_sub_field('cbis_location_ids'))) {
                 foreach (get_sub_field('cbis_location_ids') as $location) {
-                    $location_categories[] = array(
-                            'arena'                 => 0,
-                            'cbis_location_cat_id'  => $location['cbis_location_cat_id'],
-                            'cbis_location_name'    => $location['cbis_location_name']
-                        );
+                    $locationCategories[] = array(
+                        'arena'                 => 0,
+                        'cbis_location_cat_id'  => $location['cbis_location_cat_id'],
+                        'cbis_location_name'    => $location['cbis_location_name']
+                    );
                 }
             }
 
-            $cbis_keys[] = array(
-                    'cbis_key'           => get_sub_field('cbis_api_product_key'),
-                    'cbis_geonode'       => get_sub_field('cbis_api_geonode_id'),
-                    'cbis_event_id'      => get_sub_field('cbis_event_id'),
-                    'cbis_exclude'       => get_sub_field('cbis_filter_categories'),
-                    'cbis_groups'        => get_sub_field('cbis_publishing_groups'),
-                    'cbis_locations'     => $location_categories
-                );
-            endwhile;
-            endif;
-
-            wp_localize_script('hbg-event-importer', 'cbis_ajax_vars', array('cbis_keys' => $cbis_keys));
-
-            // Set XCAP API variables
-            $xcap_keys = array();
-            if (have_rows('xcap_api_urls', 'option')):
-                while (have_rows('xcap_api_urls', 'option')): the_row();
-
-            $xcap_keys[] = array(
-                    'xcap_api_url'       => get_sub_field('xcap_api_url'),
-                    'xcap_exclude'       => get_sub_field('xcap_filter_categories'),
-                    'xcap_groups'        => get_sub_field('xcap_publishing_groups')
-                );
-            endwhile;
-            endif;
-
-            wp_localize_script('hbg-event-importer', 'xcap_ajax_vars', array('xcap_keys' => $xcap_keys));
+            $cbisKeys[] = array(
+                'cbis_key'       => get_sub_field('cbis_api_product_key'),
+                'cbis_geonode'   => get_sub_field('cbis_api_geonode_id'),
+                'cbis_event_id'  => get_sub_field('cbis_event_id'),
+                'cbis_exclude'   => get_sub_field('cbis_filter_categories'),
+                'cbis_groups'    => get_sub_field('cbis_publishing_groups'),
+                'cbis_locations' => $locationCategories
+            );
         }
+
+        return $cbisKeys;
     }
 
     /**
@@ -253,19 +284,32 @@ class App
      */
     public static function startImport()
     {
-        file_put_contents(dirname(__FILE__)."/log/cron_import.log", "Cron last run: " . date("Y-m-d H:i:s"));
+        file_put_contents(dirname(__FILE__) . "/log/cron_import.log", "Cron last run: " . date("Y-m-d H:i:s"));
     }
 
+    /**
+     * Adds daily import con job
+     * @return void
+     */
     public static function addCronJob()
     {
         wp_schedule_event(time(), 'hourly', 'import_events_daily');
     }
 
+    /**
+     * Removes daily import cron job
+     * @return void
+     */
     public static function removeCronJob()
     {
         wp_clear_scheduled_hook('import_events_daily');
     }
 
+    /**
+     * Set the acf json load path
+     * @param  array $paths Default paths
+     * @return array        Modified paths
+     */
     public function acfJsonLoadPath($paths)
     {
         $paths[] = HBGEVENTIMPORTER_PATH . '/acf-exports';
@@ -273,29 +317,37 @@ class App
     }
 
     /**
-     * Creates custom database table on plugin activation
+     * Creates occasions database table on plugin activation
+     * @return void
      */
     public static function initDatabaseTable()
     {
         global $wpdb;
         global $event_db_version;
+
         $table_name = $wpdb->prefix . 'occasions';
         $charset_collate = $wpdb->get_charset_collate();
-        $sql = "CREATE TABLE $table_name (
-        ID BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-        event BIGINT(20) UNSIGNED NOT NULL,
-        timestamp_start BIGINT(20) UNSIGNED NOT NULL,
-        timestamp_end BIGINT(20) UNSIGNED NOT NULL,
-        timestamp_door BIGINT(20) UNSIGNED DEFAULT NULL,
-        PRIMARY KEY  (ID)
-        ) $charset_collate;";
+
+        $sql = "
+            CREATE TABLE $table_name (
+                ID BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+                event BIGINT(20) UNSIGNED NOT NULL,
+                timestamp_start BIGINT(20) UNSIGNED NOT NULL,
+                timestamp_end BIGINT(20) UNSIGNED NOT NULL,
+                timestamp_door BIGINT(20) UNSIGNED DEFAULT NULL,
+                PRIMARY KEY  (ID)
+            ) $charset_collate;
+        ";
+
         require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
         dbDelta($sql);
+
         add_option('event_db_version', $event_db_version);
     }
 
     /**
      * ACF settings action
+     * @return void
      */
     public function acfSettings()
     {

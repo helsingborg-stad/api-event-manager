@@ -55,6 +55,10 @@ class DataCleaner
      */
     public static function string($string)
     {
+        if (!is_string($string)) {
+            return $string;
+        }
+
         $count = 0;
 
         $removedCopy = str_replace(" (copy)", "", trim($string), $count);
@@ -74,7 +78,6 @@ class DataCleaner
         $count = 0;
 
         $removedShortcodes = preg_replace("/\[.*\]/i", '', $changedComments, -1 , $count);
-
         $string = html_entity_decode($removedShortcodes);
 
         return $string;

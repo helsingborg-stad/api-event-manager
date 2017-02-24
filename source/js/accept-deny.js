@@ -16,7 +16,7 @@ ImportEvents.Admin.AcceptDeny = (function ($) {
      * @return void
      */
     AcceptDeny.prototype.changeAccepted = function(postStatus, postId) {
-            $.ajax({
+        $.ajax({
             url: eventmanager.ajaxurl,
             type: 'post',
             data: {
@@ -26,10 +26,11 @@ ImportEvents.Admin.AcceptDeny = (function ($) {
             },
             beforeSend: function(response) {
                 var postElement = $('#post-' + postId);
-                if (postStatus == 1) {
+
+                if (postStatus === 1) {
                     postElement.find('.deny').removeClass('hidden');
                     postElement.find('.accept').addClass('hidden');
-                } else if(postStatus == 0) {
+                } else if(postStatus === 0) {
                     postElement.find('.deny').addClass('hidden');
                     postElement.find('.accept').removeClass('hidden');
                 }
@@ -44,14 +45,14 @@ ImportEvents.Admin.AcceptDeny = (function ($) {
     AcceptDeny.prototype.handleEvents = function () {
         $(document).on('click', '.accept', function (e) {
             e.preventDefault();
-            var postId = $(e.target).attr('post-id');
-            AcceptDeny.prototype.changeAccepted(1, postId);
+            var postId = $(e.target).closest('.accept').attr('post-id');
+            this.changeAccepted(1, postId);
         }.bind(this));
 
         $(document).on('click', '.deny', function (e) {
             e.preventDefault();
-            var postId = $(e.target).attr('post-id');
-            AcceptDeny.prototype.changeAccepted(0, postId);
+            var postId = $(e.target).closest('.deny').attr('post-id');
+            this.changeAccepted(0, postId);
         }.bind(this));
     };
 

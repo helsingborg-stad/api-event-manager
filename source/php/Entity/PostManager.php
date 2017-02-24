@@ -117,9 +117,11 @@ abstract class PostManager
      */
     public function removeEmpty($metaValue)
     {
-        if(is_array($metaValue))
+        if (is_array($metaValue)) {
             return $metaValue;
-        return ($metaValue !== NULL && $metaValue !== FALSE && $metaValue !== '');
+        }
+
+        return $metaValue !== null && $metaValue !== false && $metaValue !== '';
     }
 
     /**
@@ -160,7 +162,7 @@ abstract class PostManager
         $post['meta_input'] = $meta;
 
         // Check if duplicate by matching "_event_manager_uid" meta value
-        if(isset($meta['_event_manager_uid'])) {
+        if (isset($meta['_event_manager_uid'])) {
             $duplicate = self::get(
                 1,
                 array(
@@ -180,9 +182,7 @@ abstract class PostManager
             $post['ID'] = $duplicate->ID;
             $this->ID = wp_update_post($post);
             $isDuplicate = true;
-        }
-        else
-        {
+        } else {
             // Create if not duplicate
             $this->ID = wp_insert_post($post, true);
         }

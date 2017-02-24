@@ -47,8 +47,17 @@ $loader->register();
 register_activation_hook(plugin_basename(__FILE__), '\HbgEventImporter\App::addCronJob');
 register_deactivation_hook(plugin_basename(__FILE__), '\HbgEventImporter\App::removeCronJob');
 register_activation_hook(plugin_basename(__FILE__), '\HbgEventImporter\App::initUserRoles');
+
 // Create necessary database tables when plugin is activated
 register_activation_hook(plugin_basename(__FILE__), '\HbgEventImporter\App::initDatabaseTable');
 
 // Start application
-new HbgEventImporter\App();
+$apiEventManager = new HbgEventImporter\App();
+
+/*
+add_action('init', function () use ($apiEventManager) {
+    //new \HbgEventImporter\Parser\CbisEvent('http://api.cbis.citybreak.com/Products.asmx?wsdl', $apiEventManager->getCbisKeys()[0]);
+    new \HbgEventImporter\Parser\Xcap($apiEventManager->getXcapKeys()[0]['xcap_api_url'], $apiEventManager->getXcapKeys()[0]);
+});
+*/
+

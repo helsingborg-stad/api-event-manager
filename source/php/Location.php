@@ -14,15 +14,15 @@ class Location extends \HbgEventImporter\Entity\PostManager
      */
     public function beforeSave()
     {
-        $this->post_title = !is_string($this->post_title) ? $this->post_title : DataCleaner::string($this->post_title);
-        $this->street_address = !is_string($this->street_address) ? $this->street_address : DataCleaner::string($this->street_address);
+        $this->post_title = DataCleaner::string($this->post_title);
+        $this->street_address = DataCleaner::string($this->street_address);
         $this->postal_code = DataCleaner::number($this->postal_code);
-        $this->city = !is_string($this->city) ? $this->city : DataCleaner::string($this->city);
-        $this->municipality = !is_string($this->municipality) ? $this->municipality : DataCleaner::string($this->municipality);
-        $this->country = !is_string($this->country) ? $this->country : DataCleaner::string($this->country);
-        $this->latitude = !is_string($this->latitude) ? $this->latitude : DataCleaner::string($this->latitude);
-        $this->longitude = !is_string($this->longitude) ? $this->longitude : DataCleaner::string($this->longitude);
-        $this->_event_manager_uid = !is_string($this->_event_manager_uid) ? $this->_event_manager_uid : DataCleaner::string($this->_event_manager_uid);
+        $this->city = DataCleaner::string($this->city);
+        $this->municipality = DataCleaner::string($this->municipality);
+        $this->country = DataCleaner::string($this->country);
+        $this->latitude = DataCleaner::string($this->latitude);
+        $this->longitude = DataCleaner::string($this->longitude);
+        $this->_event_manager_uid = DataCleaner::string($this->_event_manager_uid);
     }
 
     /**
@@ -54,9 +54,11 @@ class Location extends \HbgEventImporter\Entity\PostManager
         // Get coordinates from address.
         } elseif ($this->street_address != null && ($this->latitude == null || $this->longitude == null)) {
             $res = Helper\Address::gmapsGetAddressComponents($this->street_address . ' ' . $this->postal_code . ' ' . $this->city . ' ' . $this->country, true);
+
             if (!isset($res->latitude)) {
                 return true;
             }
+
             update_post_meta($this->ID, 'formatted_address', $res->formatted_address);
             update_post_meta($this->ID, 'latitude', $res->latitude);
             update_post_meta($this->ID, 'longitude', $res->longitude);
@@ -64,9 +66,11 @@ class Location extends \HbgEventImporter\Entity\PostManager
         // Get address from coordinates.
         } elseif ($this->street_address == null && $this->latitude != null && $this->longitude != null) {
             $res = Helper\Address::gmapsGetAddressByCoordinates($this->latitude, $this->longitude);
+
             if (!isset($res->street)) {
                 return true;
             }
+
             update_post_meta($this->ID, 'street_address', $res->street);
             update_post_meta($this->ID, 'postal_code', $res->postalcode);
             update_post_meta($this->ID, 'city', $res->city);
@@ -79,8 +83,10 @@ class Location extends \HbgEventImporter\Entity\PostManager
             $wholeAddress .= $this->postal_code != null ? ', ' . $this->postal_code : '';
             $wholeAddress .= $this->city != null ? ', ' . $this->city : '';
             $wholeAddress .= $this->country != null ? ', ' . $this->country : '';
+
             update_post_meta($this->ID, 'formatted_address', $wholeAddress);
         }
+
         return true;
     }
 

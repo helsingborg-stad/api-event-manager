@@ -31,6 +31,7 @@ class MembershipCards extends \HbgEventImporter\Entity\CustomPostType
         $this->addTableColumn('cb', '<input type="checkbox">');
         $this->addTableColumn('title', __('Title', 'event-manager'));
         $this->addTableColumn('date', __('Date', 'event-manager'));
+
         add_action('do_meta_boxes', array($this, 'changeImageBox'), 10, 3);
         add_filter('manage_edit-' . $this->slug . '_columns', array($this, 'addAcceptDenyTable'));
         add_action('manage_' . $this->slug . '_posts_custom_column', array($this,'addAcceptDenyButtons'), 10, 2);
@@ -38,10 +39,12 @@ class MembershipCards extends \HbgEventImporter\Entity\CustomPostType
 
     public function changeImageBox($page, $context, $object)
     {
-        if ($page == 'membership-card') {
-            remove_meta_box('postimagediv', 'membership-card', 'side');
-            add_meta_box('postimagediv', __('Image'), 'post_thumbnail_meta_box', 'membership-card', 'side');
-            remove_action('do_meta_boxes', array($this, 'changeImageBox'));
+        if ($page !== 'membership-card') {
+            return;
         }
+
+        remove_meta_box('postimagediv', 'membership-card', 'side');
+        add_meta_box('postimagediv', __('Image'), 'post_thumbnail_meta_box', 'membership-card', 'side');
+        remove_action('do_meta_boxes', array($this, 'changeImageBox'));
     }
 }

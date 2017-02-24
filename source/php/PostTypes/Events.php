@@ -37,31 +37,35 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
 
         $this->addTableColumn('location', __('Location', 'event-manager'), true, function ($column, $postId) {
             $locationId = get_field('location', $postId);
+
             if (!$locationId) {
                 echo __('n/a', 'event-manager');
                 return;
             }
+
             echo '<a href="' . get_edit_post_link($locationId) . '">' . get_the_title($locationId) . '</a>';
         });
 
         $this->addTableColumn('organizer', _x('Main organizer', 'Main organizer column name', 'event-manager'), true, function ($column, $postId) {
-
             $value = null;
 
-            if (have_rows('organizers')):
-                while (have_rows('organizers')) : the_row();
+            if (have_rows('organizers')) {
+                while (have_rows('organizers')) {
+                    the_row();
+
                     if (get_sub_field('main_organizer')) {
                         $value = (get_sub_field('organizer')) ? (get_sub_field('organizer')) : null;
                     } elseif (count(get_field('organizers')) == 1) {
                         $value = (get_sub_field('organizer')) ? (get_sub_field('organizer')) : null;
                     }
-                endwhile;
-            endif;
+                }
+            }
 
             if (!$value) {
                 echo __('n/a', 'event-manager');
                 return;
             }
+
             echo($value);
         });
 
@@ -69,7 +73,7 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
             $import     = get_post_meta($postId, 'import_client', true);
             $consumer   = get_post_meta($postId, 'consumer_client', true);
 
-            if (! empty($import)) {
+            if (!empty($import)) {
                 echo ucwords($import);
             } elseif (! empty($consumer)) {
                 echo $consumer;
@@ -125,7 +129,6 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
 
         add_filter('manage_edit-' . $this->slug . '_columns', array($this, 'addAcceptDenyTable'));
         add_action('manage_' . $this->slug . '_posts_custom_column', array($this, 'addAcceptDenyButtons'), 10, 2);
-
     }
 
     /**
@@ -136,34 +139,35 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
      */
     public function saveEventOccasions($post_id, $post, $update)
     {
-        if ($this->slug != $post->post_type) {
+        if ($this->slug != $post->post_type || !$update) {
             return;
         }
-        if ($update) {
-            global $wpdb;
-            $db_occasions = $wpdb->prefix . "occasions";
-            $wpdb->delete($db_occasions, array( 'event' => $post_id ), array( '%d' ));
-            $repeater  = 'occasions';
-            $count = intval(get_post_meta($post_id, $repeater, true));
-            for ($i=0; $i < $count; $i++) {
-                $getField   = $repeater.'_'.$i.'_'.'start_date';
-                $value1     = get_post_meta($post_id, $getField, true);
-                $timestamp  = strtotime($value1);
-                $getField2  = $repeater.'_'.$i.'_'.'end_date';
-                $value2     = get_post_meta($post_id, $getField2, true);
-                $timestamp2 = strtotime($value2);
-                $getField3  = $repeater.'_'.$i.'_'.'door_time';
-                $value3     = get_post_meta($post_id, $getField3, true);
-                if (empty($value3)) {
-                    $timestamp3 = null;
-                } else {
-                    $timestamp3 = strtotime($value3);
-                }
 
-                $wpdb->insert($db_occasions, array('event' => $post_id, 'timestamp_start' => $timestamp, 'timestamp_end' => $timestamp2, 'timestamp_door' => $timestamp3));
-            }
-        } else {
+        // Get occasions
+        $occasions = get_field('occasions', $post_id);
+        if (!is_array($occasions)) {
             return;
+        }
+
+        global $wpdb;
+
+        $dbTable = $wpdb->prefix . "occasions";
+        $wpdb->delete($dbTable, array( 'event' => $post_id ), array('%d'));
+
+        foreach ($occasions as $occasion) {
+            $timestampStart = strtotime($occasion['start_date']);
+            $timestampEnd = strtotime($occasion['end_date']);
+            $timestampDoor = !is_null($occasion['door_time']) ? strtotime($occasion['door_time']) : null;
+
+            $wpdb->insert(
+                $dbTable,
+                array(
+                    'event' => $post_id,
+                    'timestamp_start' => $timestampStart,
+                    'timestamp_end' => $timestampEnd,
+                    'timestamp_door' => $timestampDoor
+                )
+            );
         }
     }
 
@@ -175,61 +179,61 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
      */
     public function saveRecurringEvents($post_id, $post, $update)
     {
-        if ($this->slug != $post->post_type) {
+        if ($this->slug != $post->post_type || !$update) {
             return;
         }
 
-        if ($update) {
-            $repeater  = 'rcr_rules';
-            $rcr_count = intval(get_post_meta($post_id, $repeater, true));
-            if ($rcr_count > 0) {
-                global $wpdb;
-                $db_occasions = $wpdb->prefix . "occasions";
-                for ($i=0; $i < $rcr_count; $i++) {
-                    $startTime = $repeater.'_'.$i.'_'.'rcr_start_time';
-                    $startTimeValue = get_post_meta($post_id, $startTime, true);
-                    $endTime  = $repeater.'_'.$i.'_'.'rcr_end_time';
-                    $endTimeValue = get_post_meta($post_id, $endTime, true);
-                    $doorTime  = $repeater.'_'.$i.'_'.'rcr_door_time';
-                    $doorTimeValue = get_post_meta($post_id, $doorTime, true);
-                    $weekDay  = $repeater.'_'.$i.'_'.'rcr_week_day';
-                    $weekDayValue = get_post_meta($post_id, $weekDay, true);
-                    $startDate  = $repeater.'_'.$i.'_'.'rcr_start_date';
-                    $startDateValue = get_post_meta($post_id, $startDate, true);
-                    $endDate  = $repeater.'_'.$i.'_'.'rcr_end_date';
-                    $endDateValue = get_post_meta($post_id, $endDate, true);
-                    // Save recurring dates to array
-                    $recurringDates = array();
-                    for ($j = strtotime($weekDayValue, strtotime($startDateValue)); $j <= strtotime($endDateValue); $j = strtotime('+1 week', $j)) {
-                        $recurringDates[] = $j;
-                    }
-                    // Save exceptions to array
-                    $exceptionDates = array();
-                    $exc_count = intval(get_post_meta($post_id, $repeater.'_'.$i.'_'.'rcr_exceptions', true));
-                    if ($exc_count > 0) {
-                        for ($k=0; $k < $exc_count; $k++) {
-                            $exceptionDates[] = strtotime(get_post_meta($post_id, $repeater.'_'.$i.'_'.'rcr_exceptions'.'_'.$k.'_'.'rcr_exc_date', true));
-                        }
-                    }
-                    // Remove all exception dates from array
-                    $filteredDates = array_diff($recurringDates, $exceptionDates);
+        $rules = get_field('rcr_rules', $post_id);
 
-                    // Save to event_occasions
-                    foreach ($filteredDates as $key => $val) {
-                        $timestampStart = strtotime(date('Y:m:d', $val).' '.$startTimeValue);
-                        $timestampEnd = strtotime(date('Y:m:d', $val).' '.$endTimeValue);
-                        if (empty($doorTimeValue)) {
-                            $timestampDoor = null;
-                        } else {
-                            $timestampDoor = strtotime(date('Y:m:d', $val).' '.$doorTimeValue);
-                        }
-
-                        $wpdb->insert($db_occasions, array('event' => $post_id, 'timestamp_start' => $timestampStart, 'timestamp_end' => $timestampEnd, 'timestamp_door' => $timestampDoor));
-                    }
-                }
-            }
-        } else {
+        if (!is_array($rules)) {
             return;
+        }
+
+        global $wpdb;
+        $dbTable = $wpdb->prefix . "occasions";
+
+        foreach ($rules as $rule) {
+            $startDate = $rule['rcr_start_date'];
+            $endDate = $rule['rcr_end_date'];
+            $weekday = $rule['rcr_week_day'];
+            $startTime = $rule['rcr_start_time'];
+            $endTime = $rule['rcr_end_time'];
+            $doorTime = $rule['rcr_door_time'];
+
+            // Get recurring dates
+            $recurringDates = array();
+            for ($j = strtotime($weekday, strtotime($startDate)); $j <= strtotime($endDate); $j = strtotime('+1 week', $j)) {
+                $recurringDates[] = $j;
+            }
+
+            // Remove exceptions from recurring dates
+            $exceptionDates = $rule['rcr_exceptions'];
+            foreach ($exceptionDates as &$date) {
+                $date = strtotime($date['rcr_exc_date']);
+            }
+
+            // Filter exceptions from the recurring dates
+            $recurringDates = array_diff($recurringDates, $exceptionDates);
+
+            foreach ($recurringDates as $date) {
+                $start = strtotime(date('Y-m-d', $date) . ' ' . $startTime);
+                $end = strtotime(date('Y-m-d', $date) . ' ' . $endTime);
+                $door = null;
+
+                if (!empty($doorTime)) {
+                    $door =strtotime(date('Y-m-d', $date) . ' ' . $doorTime);
+                }
+
+                $wpdb->insert(
+                    $dbTable,
+                    array(
+                        'event' => $post_id,
+                        'timestamp_start' => $start,
+                        'timestamp_end' => $end,
+                        'timestamp_door' => $door
+                    )
+                );
+            }
         }
     }
 
@@ -241,6 +245,7 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
     {
         global $wpdb;
         $db_occasions = $wpdb->prefix . "occasions";
+
         if ($wpdb->get_var($wpdb->prepare("SELECT event FROM $db_occasions WHERE event = %d", $post_id))) {
             $wpdb->query($wpdb->prepare("DELETE FROM $db_occasions WHERE event = %d", $post_id));
         }
@@ -259,15 +264,19 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
         if (!$valid) {
             return $valid;
         }
+
         $repeater_key = 'field_5761106783967';
         $start_key = 'field_5761109a83968';
         // $end_key = 'field_576110e583969';
+
         $row = preg_replace('/^\s*acf\[[^\]]+\]\[([^\]]+)\].*$/', '\1', $input);
         $start_value = $_POST['acf'][$repeater_key][$row][$start_key];
         $end_value = $value;
+
         if (strtotime($end_value) <= strtotime($start_value)) {
             $valid = __('End date must be after start date', 'event-manager');
         }
+
         return $valid;
     }
 
@@ -284,14 +293,18 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
         if (!$valid) {
             return $valid;
         }
+
         $repeater_key = 'field_5761106783967';
         $start_key = 'field_5761109a83968';
+
         $row = preg_replace('/^\s*acf\[[^\]]+\]\[([^\]]+)\].*$/', '\1', $input);
         $start_value = $_POST['acf'][$repeater_key][$row][$start_key];
         $door_value = $value;
+
         if (strtotime($door_value) > strtotime($start_value)) {
             $valid = __('Door time cannot be after start date', 'event-manager');
         }
+
         return $valid;
     }
 
@@ -308,11 +321,14 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
         if (!$valid) {
             return $valid;
         }
+
         $occasions = $_POST['acf']['field_5761106783967'];
         $rcr_rules = $_POST['acf']['field_57d2749e3bf4d'];
+
         if (empty($occasions) && empty($rcr_rules)) {
             $valid = __('Please add occasion or recurrence rule', 'event-manager');
         }
+
         return $valid;
     }
 
@@ -329,11 +345,14 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
         if (!$valid || empty($value)) {
             return $valid;
         }
+
         $value1 = str_replace(',', '.', $value);
         $value2 = str_replace(' ', '', $value1);
+
         if (!is_numeric($value2)) {
             $valid = __('Not a valid number', 'event-manager');
         }
+
         return $valid;
     }
 
@@ -350,14 +369,17 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
         if (!$valid) {
             return $valid;
         }
+
         $repeater_key = 'field_57d2749e3bf4d';
         $start_key = 'field_57d277153bf4f';
         $row = preg_replace('/^\s*acf\[[^\]]+\]\[([^\]]+)\].*$/', '\1', $input);
         $start_value = $_POST['acf'][$repeater_key][$row][$start_key];
         $end_value = $value;
+
         if ($end_value <= $start_value) {
             $valid = __('End time must be after start time', 'event-manager');
         }
+
         return $valid;
     }
 
@@ -374,14 +396,17 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
         if (!$valid) {
             return $valid;
         }
+
         $repeater_key = 'field_57d2749e3bf4d';
         $start_key = 'field_57d277153bf4f';
         $row = preg_replace('/^\s*acf\[[^\]]+\]\[([^\]]+)\].*$/', '\1', $input);
         $start_value = $_POST['acf'][$repeater_key][$row][$start_key];
         $door_value = $value;
+
         if ($door_value > $start_value) {
             $valid = __('Door time cannot be after start time', 'event-manager');
         }
+
         return $valid;
     }
 
@@ -403,9 +428,11 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
         $row = preg_replace('/^\s*acf\[[^\]]+\]\[([^\]]+)\].*$/', '\1', $input);
         $start_value = $_POST['acf'][$repeater_key][$row][$start_key];
         $end_value = $value;
+
         if (strtotime($end_value) <= strtotime($start_value)) {
             $valid = __('End date must be after start date', 'event-manager');
         }
+
         return $valid;
     }
 
@@ -430,26 +457,32 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
     {
         if (current_user_can('administrator')) {
             $button  = '<div class="import-buttons actions">';
+
             if (have_rows('xcap_api_urls', 'option')) {
                 $button .= '<div class="button-primary extraspace" id="xcap">' . __('Import XCAP', 'event-manager') . '</div>';
             }
+
             if (have_rows('cbis_api_keys', 'option')) {
                 $button .= '<div class="button-primary extraspace" id="cbis">' . __('Import CBIS', 'event-manager') . '</div>';
             }
+
             $button .= '<div class="button-primary extraspace" id="occasions">'.__('Collect event timestamps', 'event-manager').'</div>';
             $button .= '</div>';
             $views['import-buttons'] = $button;
         }
+
         return $views;
     }
 
-    /*
+    /**
      * Clone event as a draft and redirects to edit post
+     * @return void
      */
     public function duplicatePost()
     {
         global $wpdb;
-        if (! (isset($_GET['post']) || isset($_POST['post'])  || (isset($_REQUEST['action']) && 'duplicate_post' == $_REQUEST['action']))) {
+
+        if (!(isset($_GET['post']) || isset($_POST['post'])  || (isset($_REQUEST['action']) && 'duplicate_post' == $_REQUEST['action']))) {
             wp_die(__('No post to duplicate has been supplied!', 'event-manager'));
         }
 
@@ -459,61 +492,70 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
         $current_user = wp_get_current_user();
         $new_post_author = $current_user->ID;
 
-        if (isset($post) && $post != null) {
-            $args = array(
-                'comment_status' => $post->comment_status,
-                'ping_status'    => $post->ping_status,
-                'post_author'    => $new_post_author,
-                'post_content'   => '',
-                'post_excerpt'   => $post->post_excerpt,
-                'post_name'      => '',
-                'post_parent'    => $post->post_parent,
-                'post_password'  => $post->post_password,
-                'post_status'    => 'draft',
-                'post_title'     => '',
-                'post_type'      => $post->post_type,
-                'to_ping'        => $post->to_ping,
-                'menu_order'     => $post->menu_order
-            );
+        if (!isset($post) || empty($post)) {
+            wp_die(__('Event creation failed, could not find original event', 'event-manager').': ' . $post_id);
+            return;
+        }
 
-            $new_post_id = wp_insert_post($args);
+        $args = array(
+            'comment_status' => $post->comment_status,
+            'ping_status'    => $post->ping_status,
+            'post_author'    => $new_post_author,
+            'post_content'   => '',
+            'post_excerpt'   => $post->post_excerpt,
+            'post_name'      => '',
+            'post_parent'    => $post->post_parent,
+            'post_password'  => $post->post_password,
+            'post_status'    => 'draft',
+            'post_title'     => '',
+            'post_type'      => $post->post_type,
+            'to_ping'        => $post->to_ping,
+            'menu_order'     => $post->menu_order
+        );
 
-            // get current post terms and set them to the new event draft
-            $taxonomies = get_object_taxonomies($post->post_type);
-            foreach ($taxonomies as $taxonomy) {
-                $post_terms = wp_get_object_terms($post_id, $taxonomy, array('fields' => 'slugs'));
-                wp_set_object_terms($new_post_id, $post_terms, $taxonomy, false);
-            }
+        $new_post_id = wp_insert_post($args);
 
-            // duplicate all post meta
-            $post_meta_infos = $wpdb->get_results("SELECT meta_key, meta_value FROM $wpdb->postmeta WHERE post_id=$post_id");
-            if (count($post_meta_infos)!=0) {
-                $sql_query = "INSERT INTO $wpdb->postmeta (post_id, meta_key, meta_value) ";
-                // Filter certain values from imported events
-                foreach ($post_meta_infos as $meta_info) {
-                    $meta_key = $meta_info->meta_key;
-                    switch ($meta_key) {
+        // get current post terms and set them to the new event draft
+        $taxonomies = get_object_taxonomies($post->post_type);
+        foreach ($taxonomies as $taxonomy) {
+            $post_terms = wp_get_object_terms($post_id, $taxonomy, array('fields' => 'slugs'));
+            wp_set_object_terms($new_post_id, $post_terms, $taxonomy, false);
+        }
+
+        // duplicate all post meta
+        $post_meta_infos = $wpdb->get_results("SELECT meta_key, meta_value FROM $wpdb->postmeta WHERE post_id=$post_id");
+
+        if (count($post_meta_infos) != 0) {
+            $sql_query = "INSERT INTO $wpdb->postmeta (post_id, meta_key, meta_value) ";
+            // Filter certain values from imported events
+            foreach ($post_meta_infos as $meta_info) {
+                $meta_key = $meta_info->meta_key;
+                switch ($meta_key) {
                     case 'import_client':
                         continue 2;
+
                     case 'imported_post':
                         $meta_value = addslashes(0);
                         break;
+
                     case 'sync':
                         $meta_value = addslashes(0);
                         break;
+
                     default:
                         $meta_value = addslashes($meta_info->meta_value);
-                    }
-                    $sql_query_sel[]= "SELECT $new_post_id, '$meta_key', '$meta_value'";
+                        break;
                 }
-                $sql_query.= implode(" UNION ALL ", $sql_query_sel);
-                $wpdb->query($sql_query);
+
+                $sql_query_sel[]= "SELECT $new_post_id, '$meta_key', '$meta_value'";
             }
-            wp_redirect(admin_url('post.php?action=edit&post=' . $new_post_id.'&duplicate=' . $post_id));
-            exit;
-        } else {
-            wp_die(__('Event creation failed, could not find original event', 'event-manager').': ' . $post_id);
+
+            $sql_query.= implode(" UNION ALL ", $sql_query_sel);
+            $wpdb->query($sql_query);
         }
+
+        wp_redirect(admin_url('post.php?action=edit&post=' . $new_post_id.'&duplicate=' . $post_id));
+        exit;
     }
 
     /**
@@ -526,104 +568,97 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
     {
         if (current_user_can('editor') || current_user_can('administrator')) {
             $post_type = $_GET['post_type'];
+
             if ($post_type == 'event' && current_user_can('edit_posts')) {
                 $actions['duplicate'] = '<a href="admin.php?action=duplicate_post&amp;post=' . $post->ID . '" title="'.__('Create similar item', 'event-manager').'" rel="permalink" onclick="return confirm(\''.__('Are you sure you want to clone this event?', 'event-manager').'\');">'.__('Clone', 'event-manager').'</a>';
             }
         }
+
         return $actions;
     }
 
     /**
      * Show admin notification after cloning an event.
+     * @return void
      */
     public function duplicateNotice()
     {
-        if (! isset($_GET['duplicate'])) {
+        if (!isset($_GET['duplicate'])) {
             return;
         }
-        $id = $_GET['duplicate'];
 
+        $id = $_GET['duplicate'];
         $msg = sprintf(__('This is a duplicate of the event: %s. If this is a new occasion for the same event, please %s and republish the original event', 'event-manager'), '<strong>"' . get_the_title($id) . '"</strong>', '<a href="' . esc_url(get_edit_post_link($id))  .'">'.__('edit', 'event-manager').'</a>');
 
-        ?>
-        <div class="notice notice-warning is-dismissible">
-        <p><?php echo $msg;
-        ?></p>
-        </div>
-        <?php
-
+        echo '<div class="notice notice-warning is-dismissible">';
+        echo '<p>' . $msg . '</p>';
+        echo '</div>';
     }
 
     /**
      * Show initial instructions as a dismissable notification.
+     * @return void
      */
     public function eventInstructions()
     {
         $screen = get_current_screen();
-        $current_user = wp_get_current_user();
-        $user_id = $current_user->ID;
-        if ($screen->post_type !== 'event' || $screen->base !== 'post' || get_user_meta($user_id, 'dismissed_instr', true) == 1) {
+        $userId = get_current_user_id();
+
+        if ($screen->post_type !== 'event' || $screen->base !== 'post' || get_user_meta($userId, 'dismissed_instr', true) == 1) {
             return;
         }
-        ?>
-        <div class="notice notice-success dismissable is-dismissible">
-        <p><?php _e('Please do not enter information that refers to information in another text field. It is not certain that all fields will be presented to the consumer and would thefore be missguiding.', 'event-manager');
-        ?></p>
-        </div>
-        <?php
 
+        echo '<div class="notice notice-success dismissable is-dismissible"><p>';
+        _e('Please do not enter information that refers to information in another text field. It is not certain that all fields will be presented to the consumer and would thefore be missguiding.', 'event-manager');
+        echo '</p></div>';
     }
 
     /**
      * Show warning if CBIS haven't imported any events the last 7 days.
+     * @return void
      */
     public function importCbisWarning()
     {
         $screen = get_current_screen();
-        $current_user = wp_get_current_user();
         $filter = (isset($_GET['filter_action'])) ? $_GET['filter_action'] : false;
 
         $optionsChecked = (get_field('import_warning', 'option') == true && get_field('cbis_daily_cron', 'option') == true) ? true : false;
         if ($screen->post_type != 'event' || $optionsChecked != true || $filter || ! current_user_can('administrator')) {
             return;
         }
+
         $latestPost = get_posts("post_type=event&numberposts=1&meta_key=import_client&meta_value=cbis");
         if (empty($latestPost[0]) || strtotime($latestPost[0]->post_date) > strtotime('-1 week')) {
             return;
         }
-        ?>
-        <div class="notice notice-warning is-dismissible">
-        <p><?php _e('CBIS have not imported any events for atleast 7 days. Please control the importer.', 'event-manager');
-        ?></p>
-        </div>
-        <?php
 
+        echo '<div class="notice notice-warning is-dismissible"><p>';
+        _e('CBIS have not imported any events for atleast 7 days. Please control the importer.', 'event-manager');
+        echo '</p></div>';
     }
 
     /**
      * Show warning if XCAP haven't imported any events the last 7 days.
+     * @return void
      */
     public function importXcapWarning()
     {
         $screen = get_current_screen();
-        $current_user = wp_get_current_user();
         $filter = (isset($_GET['filter_action'])) ? $_GET['filter_action'] : false;
 
         $optionsChecked = (get_field('import_warning', 'option') == true && get_field('xcap_daily_cron', 'option') == true) ? true : false;
         if ($screen->post_type != 'event' || $optionsChecked != true || $filter || ! current_user_can('administrator')) {
             return;
         }
+
         $latestPost = get_posts("post_type=event&numberposts=1&meta_key=import_client&meta_value=xcap");
         if (empty($latestPost[0]) || strtotime($latestPost[0]->post_date) > strtotime('-1 week')) {
             return;
         }
-        ?>
-        <div class="notice notice-warning is-dismissible">
-        <p><?php _e('XCAP have not imported any events for atleast 7 days. Please control the importer.', 'event-manager');
-        ?></p>
-        </div>
-        <?php
 
+        echo '<div class="notice notice-warning is-dismissible"><p>';
+        _e('XCAP have not imported any events for atleast 7 days. Please control the importer.', 'event-manager');
+        echo '</p></div>';
     }
 
     /**
@@ -659,9 +694,11 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
     public function acfLocationSelect($title, $post, $field, $post_id)
     {
         $address = get_post_meta($post->ID, 'formatted_address', true);
+
         if (! empty($address)) {
             $title .= ' (' . $address .  ')';
         }
+
         return $title;
     }
 
@@ -674,9 +711,9 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
      */
     public function acfUpdateSync($value, $post_id, $field)
     {
-        if (! $value) {
-            $import_client = get_post_meta($post_id, 'import_client', true);
-            add_post_meta($post_id, 'orig_import_client', $import_client, true);
+        if (!$value) {
+            $importClient = get_post_meta($post_id, 'import_client', true);
+            add_post_meta($post_id, 'orig_import_client', $importClient, true);
             delete_post_meta($post_id, 'import_client');
         } else {
             $orig_client = get_post_meta($post_id, 'orig_import_client', true);
