@@ -1,10 +1,5 @@
 jQuery(document).ready(function ($) {
 
-    if(pagenow == 'contact' || pagenow == 'location' || pagenow == 'event' || pagenow == 'sponsor' || pagenow == 'package' || pagenow == 'membership-card')
-    {
-        $('#titlewrap').after('<div id="suggestionContainer"><ul id="suggestionList"></ul></div>');
-    }
-
     if(pagenow == 'edit-event' || pagenow == 'edit-location')
     {
         $('#wpwrap').append('<div id="blackOverlay"></div>');
