@@ -29,15 +29,13 @@ class GuideFields extends Fields
      * @param  WP_REST_Request $request Full details about the request.
      * @return array $args.
      **/
-    function addBeaconFilter($args, $request) {
-
-        if(isset($_GET['beacon'])) {
-
+    public function addBeaconFilter($args, $request)
+    {
+        if (isset($_GET['beacon'])) {
             $nid = isset($_GET['beacon']['nid']) ? $_GET['beacon']['nid'] : null;
             $bid = isset($_GET['beacon']['bid']) ? $_GET['beacon']['bid'] : null; //Not used.
 
-            if(!is_null($nid)) {
-
+            if (!is_null($nid)) {
                 $result = get_posts(array(
                     'post_type'     => 'guide',
                     'post_status'   => 'publish',
@@ -45,22 +43,18 @@ class GuideFields extends Fields
                     'meta_value'    => sanitize_text_field($nid)
                 ));
 
-                if(!empty($result)) {
-
-                    if(!is_array($args['post__in'])) {
+                if (!empty($result)) {
+                    if (!is_array($args['post__in'])) {
                         $args['post__in'] = [];
                     }
 
-                    foreach($result as $item) {
+                    foreach ($result as $item) {
                         $args['post__in'][] = $item->ID;
                     }
-
                 } else {
                     $args['post__in'][] = 0;
                 }
-
             }
-
         }
 
         return $args;
@@ -355,9 +349,11 @@ class GuideFields extends Fields
     public function postObjects($object, $field_name, $request, $formatted = true)
     {
         $objects = [];
+        $i = 0;
 
         foreach ($this->getObjects($object, 'guide_content_objects', $request, true) as $key => $item) {
             $objects[$key] = array(
+                'order' => $i,
                 'active' => ($item['guide_object_active'] == 1) ? true : false,
                 'id' => empty($item['guide_object_id']) ? null : $item['guide_object_id'],
 
@@ -369,6 +365,7 @@ class GuideFields extends Fields
                 'video' => !is_array($item['guide_object_video']) ? null : $this->sanitizeMediaObject($item['guide_object_video']),
                 'links' => !is_array($item['guide_object_links']) ? null : $this->sanitizeLinkObject($item['guide_object_links']),
             );
+            $i++;
         }
 
         return (array) $objects;
