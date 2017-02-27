@@ -121,7 +121,7 @@ class Locations extends \HbgEventImporter\Entity\CustomPostType
 
         $value['address'] = (! empty($address)) ? $address : null;
 
-        if (!empty($lat) && ! empty($lng)) {
+        if (!empty($lat) && !empty($lng)) {
             $value['lat'] = $lat;
             $value['lng'] = $lng;
         }
