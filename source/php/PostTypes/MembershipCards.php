@@ -24,7 +24,9 @@ class MembershipCards extends \HbgEventImporter\Entity\CustomPostType
                 ),
                 'hierarchical'         => false,
                 'exclude_from_search'  => false,
-                'supports'             => array('title', 'revisions', 'editor', 'thumbnail')
+                'supports'             => array('title', 'revisions', 'editor', 'thumbnail'),
+                'map_meta_cap'         => true,
+                'capability_type'      => 'membership-card'
             )
         );
 
