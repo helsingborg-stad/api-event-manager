@@ -264,6 +264,11 @@ class GuideFields extends Fields
 
         foreach ($beacons as $key => $item) {
             if (!empty($item['objects'])) {
+
+                if (is_string($item['objects'])) {
+                    $item['objects'] = explode("||", $item['objects']);
+                }
+
                 $result[] = array(
                     'order' => $key,
                     'nid' => $beacon_namespace,
