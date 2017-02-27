@@ -14,8 +14,50 @@ class GuideFields extends Fields
 
     public function __construct()
     {
+
+        //Fields
         add_action('rest_api_init', array($this, 'registerRestFields'));
         add_action('rest_api_init', array($this, 'registerTaxonomyRestFields'));
+
+        //Api filter querys
+        add_filter('rest_guide_query', array($this, 'addBeaconFilter'), 10, 2);
+    }
+
+     /**
+     * Filter by beacons
+     * @param  array           $args    The query arguments.
+     * @param  WP_REST_Request $request Full details about the request.
+     * @return array $args.
+     **/
+    public function addBeaconFilter($args, $request)
+    {
+        if (isset($_GET['beacon'])) {
+            $nid = isset($_GET['beacon']['nid']) ? $_GET['beacon']['nid'] : null;
+            $bid = isset($_GET['beacon']['bid']) ? $_GET['beacon']['bid'] : null; //Not used.
+
+            if (!is_null($nid)) {
+                $result = get_posts(array(
+                    'post_type'     => 'guide',
+                    'post_status'   => 'publish',
+                    'meta_key'      => 'guide_beacon_namespace',
+                    'meta_value'    => sanitize_text_field($nid)
+                ));
+
+                if (!empty($result)) {
+                    if (!is_array($args['post__in'])) {
+                        $args['post__in'] = [];
+                    }
+
+                    foreach ($result as $item) {
+                        $args['post__in'][] = $item->ID;
+                    }
+                } else {
+                    $args['post__in'][] = 0;
+                }
+            }
+        }
+
+        return $args;
     }
 
     /**
@@ -186,6 +228,7 @@ class GuideFields extends Fields
         return array(
             'active'            => get_field('guide_taxonomy_active', $this->taxonomyKey($object)),
             'location'          => $this->convertToNull(get_field('guide_taxonomy_location', $this->taxonomyKey($object))),
+            'locationRadius'    => $this->convertToNull(get_field('guide_taxonomy_radius', $this->taxonomyKey($object))),
             'locationFilter'    => get_field('guide_taxonomy_sublocations', $this->taxonomyKey($object)),
             'wifi'              => get_field('guide_taxonomy_wifi', $this->taxonomyKey($object)),
             'map'               => get_field('guide_taxonomy_map', $this->taxonomyKey($object))
@@ -221,7 +264,13 @@ class GuideFields extends Fields
 
         foreach ($beacons as $key => $item) {
             if (!empty($item['objects'])) {
+
+                if (is_string($item['objects'])) {
+                    $item['objects'] = explode("||", $item['objects']);
+                }
+
                 $result[] = array(
+                    'order' => $key,
                     'nid' => $beacon_namespace,
                     'bid' => $item['beacon'],
                     'content' => $item['objects'],
@@ -306,9 +355,28 @@ class GuideFields extends Fields
     public function postObjects($object, $field_name, $request, $formatted = true)
     {
         $objects = [];
+        $i = 0;
+        $beacons = $this->objectGetCallBack($object, 'guide_beacon', $request, true);
 
         foreach ($this->getObjects($object, 'guide_content_objects', $request, true) as $key => $item) {
+
+            //Get beacon id
+            foreach ($beacons as $beacon) {
+
+                if (is_string($beacon['objects'])) {
+                    $beacon['objects'] = explode("||", $beacon['objects']);
+                }
+
+                if (in_array($key, $beacon['objects'])) {
+                    $beacon_id = $beacon['beacon'];
+                    break;
+                } else {
+                    $beacon_id = null;
+                }
+            }
+
             $objects[$key] = array(
+                'order' => $i,
                 'active' => ($item['guide_object_active'] == 1) ? true : false,
                 'id' => empty($item['guide_object_id']) ? null : $item['guide_object_id'],
 
@@ -319,7 +387,10 @@ class GuideFields extends Fields
                 'audio' => !is_array($item['guide_object_audio']) ? null : $this->sanitizeMediaObject($item['guide_object_audio']),
                 'video' => !is_array($item['guide_object_video']) ? null : $this->sanitizeMediaObject($item['guide_object_video']),
                 'links' => !is_array($item['guide_object_links']) ? null : $this->sanitizeLinkObject($item['guide_object_links']),
+
+                'bid'   => $beacon_id,
             );
+            $i++;
         }
 
         return (array) $objects;

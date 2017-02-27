@@ -534,7 +534,7 @@
                         "choices": [],
                         "default_value": [],
                         "ui": 1,
-                        "ajax": 1,
+                        "ajax": 0,
                         "placeholder": "",
                         "return_format": "value",
                         "key": "field_58ab0cf054b0b",
@@ -752,6 +752,27 @@
                 "name": "guide_taxonomy_location",
                 "type": "post_object",
                 "instructions": "",
+                "required": 1,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                }
+            },
+            {
+                "default_value": 50,
+                "min": 50,
+                "max": 10000,
+                "step": 50,
+                "placeholder": "",
+                "prepend": "",
+                "append": "meters",
+                "key": "field_58b4091bc9dbf",
+                "label": "Location radius",
+                "name": "guide_taxonomy_radius",
+                "type": "number",
+                "instructions": "Trigger this location a the radius of n meters.",
                 "required": 1,
                 "conditional_logic": 0,
                 "wrapper": {

@@ -328,7 +328,30 @@ ImportEvents.Admin.Guide = (function ($) {
 
     function Guide() {
         this.locationPicker();
+
+        if (pagenow === 'guide') {
+            this.onlySublocations();
+        }
     }
+
+    Guide.prototype.onlySublocations = function() {
+        acf.add_filter('select2_ajax_data', function( data, args, $input, $field ){
+            if (data.field_key !== 'field_58ab0c9554b0a') {
+                return data;
+            }
+
+            var groupInputId = 'acf-field_589dd138aca7e-input';
+            var selectedGroup = $('#' + groupInputId).val();
+
+            if (selectedGroup) {
+                data.selectedGroup = selectedGroup;
+            }
+
+            // return
+            return data;
+
+        });
+    };
 
     Guide.prototype.locationPicker = function() {
         jQuery(function($){
@@ -837,7 +860,7 @@ ImportEvents.Admin.Suggestions = (function ($) {
             regex = new RegExp("(" + term + ")", "igm"),
             highlighted = pageText.replace(regex ,"<span>$1</span>");
 
-            $suggestions.find('ul').append('<li><a href="/wp/wp-admin/post.php?post=' + suggestion.id + '&action=edit" class="suggestion">' + highlighted + '</a></li>');
+            $suggestions.find('ul').append('<li><a href="' + eventmanager.adminurl + 'post.php?post=' + suggestion.id + '&action=edit" class="suggestion">' + highlighted + '</a></li>');
         });
 
         $('#titlewrap').append($suggestions);

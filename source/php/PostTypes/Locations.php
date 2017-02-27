@@ -121,9 +121,13 @@ class Locations extends \HbgEventImporter\Entity\CustomPostType
         $lat = get_post_meta($post_id, 'latitude', true);
         $lng = get_post_meta($post_id, 'longitude', true);
 
+        if (!is_array($value)) {
+            $value = array();
+        }
+
         $value['address'] = (! empty($address)) ? $address : null;
 
-        if (!empty($lat) && ! empty($lng)) {
+        if (!empty($lat) && !empty($lng)) {
             $value['lat'] = $lat;
             $value['lng'] = $lng;
         }

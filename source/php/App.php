@@ -38,7 +38,6 @@ class App
         add_filter('login_redirect', array($this, 'loginRedirect'), 10, 3);
         add_action('admin_init', array($this, 'dashboardRedirect'));
 
-
         //Load acf plugins
         add_action('init', function () {
             require_once HBGEVENTIMPORTER_PATH . 'source/php/Vendor/acf-unique-id/acf-unique_id-v5.php';
@@ -167,7 +166,8 @@ class App
 
         wp_localize_script('hbg-event-importer', 'eventmanager', array(
             'ajaxurl'               => admin_url('admin-ajax.php'),
-            'wpapiurl'              => site_url('json'),
+            'wpapiurl'              => home_url('json'),
+            'adminurl'              => get_admin_url(),
             'require_title'         => __("Title is missing", 'event-manager'),
             'new_contact'           => __("Create new contact", 'event-manager'),
             'new_sponsor'           => __("Create new sponsor", 'event-manager'),
