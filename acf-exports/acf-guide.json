@@ -761,6 +761,27 @@
                 }
             },
             {
+                "default_value": 50,
+                "min": 50,
+                "max": 10000,
+                "step": 50,
+                "placeholder": "",
+                "prepend": "",
+                "append": "meters",
+                "key": "field_58b4091bc9dbf",
+                "label": "Location radius",
+                "name": "guide_taxonomy_radius",
+                "type": "number",
+                "instructions": "Trigger this location a the radius of n meters.",
+                "required": 1,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                }
+            },
+            {
                 "default_value": 0,
                 "message": "Yes, only allow the user to select from avabile sublications",
                 "ui": 0,
