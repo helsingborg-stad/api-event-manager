@@ -555,7 +555,7 @@ class AcfGuide
                             'default_value' => array(
                             ),
                             'ui' => 1,
-                            'ajax' => 1,
+                            'ajax' => 0,
                             'placeholder' => '',
                             'return_format' => 'value',
                             'key' => 'field_58ab0cf054b0b',
