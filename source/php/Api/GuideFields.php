@@ -362,6 +362,11 @@ class GuideFields extends Fields
 
             //Get beacon id
             foreach ($beacons as $beacon) {
+
+                if (is_string($beacon['objects'])) {
+                    $beacon['objects'] = explode("||", $beacon['objects']);
+                }
+
                 if (in_array($key, $beacon['objects'])) {
                     $beacon_id = $beacon['beacon'];
                     break;
