@@ -228,6 +228,7 @@ class GuideFields extends Fields
         return array(
             'active'            => get_field('guide_taxonomy_active', $this->taxonomyKey($object)),
             'location'          => $this->convertToNull(get_field('guide_taxonomy_location', $this->taxonomyKey($object))),
+            'locationRadius'    => $this->convertToNull(get_field('guide_taxonomy_radius', $this->taxonomyKey($object))),
             'locationFilter'    => get_field('guide_taxonomy_sublocations', $this->taxonomyKey($object)),
             'wifi'              => get_field('guide_taxonomy_wifi', $this->taxonomyKey($object)),
             'map'               => get_field('guide_taxonomy_map', $this->taxonomyKey($object))
