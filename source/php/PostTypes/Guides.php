@@ -44,7 +44,7 @@ class Guides extends \HbgEventImporter\Entity\CustomPostType
         //add_filter('acf/fields/post_object/query/name=guide_taxonomy_location', array($this, 'getMainLocations'), 10, 3);
 
         //Only sublocations selectable (if set)
-        //add_filter('acf/fields/post_object/query/key=field_58ab0c9554b0a', array($this, 'getMainLocations'), 10, 3);
+        add_filter('acf/fields/post_object/query/key=field_58ab0c9554b0a', array($this, 'getSublocationsOnly'), 10, 3);
 
         //Objects
         add_filter('acf/load_field/key=field_58ab0cf054b0b', array($this, 'getPostObjects'), 10, 1);
@@ -104,6 +104,15 @@ class Guides extends \HbgEventImporter\Entity\CustomPostType
      */
     public function getSublocationsOnly($args, $field, $post_id)
     {
+        if (isset($_POST['selectedGroup']) && !empty($_POST['selectedGroup'])) {
+            $location = get_field('guide_taxonomy_location', 'guidegroup_' . $_POST['selectedGroup']);
+            $onlySub = get_field('guide_taxonomy_sublocations', 'guidegroup_' . $_POST['selectedGroup']);
+
+            if ($onlySub) {
+                $args['post_parent'] = $location;
+            }
+        }
+
         return $args;
     }
 }
