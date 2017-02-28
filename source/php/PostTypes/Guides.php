@@ -46,8 +46,21 @@ class Guides extends \HbgEventImporter\Entity\CustomPostType
         //Only sublocations selectable (if set)
         add_filter('acf/fields/post_object/query/key=field_58ab0c9554b0a', array($this, 'getSublocationsOnly'), 10, 3);
 
+        // Objects populator
+        //add_filter('acf/fields/select/query/key=field_58ab0cf054b0b', array($this, 'populateNonSavedObjects'), 10, 3);
+        //add_filter('the_posts', array($this, 'objects'), 10, 2);
+
         //Objects
         add_filter('acf/load_field/key=field_58ab0cf054b0b', array($this, 'getPostObjects'), 10, 1);
+    }
+
+    public function objects($posts, $query)
+    {
+        if (!defined('DOING_AJAX') || !DOING_AJAX || $query->query['post_type'] !== 'acf-field' || !isset($_POST['objects'])) {
+            return $posts;
+        }
+
+        return $posts;
     }
 
     /**
@@ -84,14 +97,15 @@ class Guides extends \HbgEventImporter\Entity\CustomPostType
      */
     public function getPostObjects($field)
     {
-        if (isset($_POST['post_id']) && is_numeric($_POST['post_id'])) {
-            $field['choices'] = [];
-            foreach ((array) get_field('guide_content_objects', (int) $_POST['post_id']) as $key => $item) {
-                if (!empty($item['guide_object_id'])) {
-                    $field['choices'][$item['guide_object_uid']] = $item['guide_object_title'] . " (" . $item['guide_object_id'] . ")";
-                } else {
-                    $field['choices'][$item['guide_object_uid']] = $item['guide_object_title'];
-                }
+        global $post;
+
+        $field['choices'] = [];
+
+        foreach ((array) get_field('guide_content_objects', $post->ID) as $key => $item) {
+            if (!empty($item['guide_object_id'])) {
+                $field['choices'][$item['guide_object_uid']] = $item['guide_object_title'] . " (" . $item['guide_object_id'] . ")";
+            } else {
+                $field['choices'][$item['guide_object_uid']] = $item['guide_object_title'];
             }
         }
 
