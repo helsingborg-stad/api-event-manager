@@ -27,11 +27,8 @@ class MembershipCardFields extends Fields
             'user_groups',
             array(
                 'get_callback' => array($this, 'userGroups'),
-                'schema' => array(
-                    'description' => 'Field containing object with taxonomies.',
-                    'type' => 'object',
-                    'context' => array('view', 'edit', 'embed')
-                )
+                'update_callback' => array($this, 'objectUpdateCallBack'),
+                'schema' => null
             )
         );
 

@@ -28,7 +28,7 @@ class Filter
         add_filter('rest_prepare_user_groups', array($this, 'removeResponseKeys'), 5000, 3);
         add_filter('rest_prepare_location_categories', array($this, 'removeResponseKeys'), 5000, 3);
         add_filter('rest_prepare_guide', array($this, 'removeResponseKeys'), 5000, 3);
-        add_filter('rest_prepare_guidegroup', array($this, 'removeResponseKeys'), 5000, 3);
+        add_filter('rest_prepare_guide_group', array($this, 'removeResponseKeys'), 5000, 3);
 
     }
 
@@ -47,6 +47,10 @@ class Filter
      */
     public function redirectToApi()
     {
+        if (php_sapi_name() === 'cli') {
+            return;
+        }
+
         if (!is_admin() && strpos($this->currentUrl(), rtrim(rest_url(), "/")) === false && $this->currentUrl() == rtrim(home_url(), "/")) {
             wp_redirect(rest_url());
             exit;

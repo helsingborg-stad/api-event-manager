@@ -29,7 +29,7 @@ class Linking extends Fields
         add_filter('rest_prepare_package', array($this, 'addIncludedEvents'), 20, 3);
         add_filter('rest_prepare_package', array($this, 'addEmbedLink'), 20, 3);
 
-        add_filter('rest_prepare_guidegroup', array($this, 'addGuideLocation'), 20, 3);
+        add_filter('rest_prepare_guide_group', array($this, 'addGuideLocation'), 20, 3);
         add_filter('rest_prepare_guide', array($this, 'addGuideSubLocation'), 20, 3);
         add_filter('rest_prepare_guide', array($this, 'addEmbedLink'), 20, 3);
     }

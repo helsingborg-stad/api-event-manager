@@ -893,7 +893,6 @@ class EventFields extends Fields
         /* Replace category id with taxonomy name */
 
         register_rest_field($this->postType,
-            'terms',
             'event_categories',
             array(
                 'get_callback' => array($this, 'renameTaxonomies'),
@@ -905,7 +904,6 @@ class EventFields extends Fields
         /* Replace tag id with taxonomy name */
 
         register_rest_field($this->postType,
-            'terms',
             'event_tags',
             array(
                 'get_callback' => array($this, 'renameTaxonomies'),

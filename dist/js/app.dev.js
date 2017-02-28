@@ -326,14 +326,41 @@ ImportEvents.Admin = ImportEvents.Admin || {};
 
 ImportEvents.Admin.Guide = (function ($) {
 
-    function Guide() {
-        this.locationPicker();
+    var select2_args_internal = {};
 
-        if (pagenow === 'guide') {
-            this.onlySublocations();
-        }
+    function Guide() {
+        $(document).ready(function () {
+
+            if (pagenow === 'guide') {
+                this.onlySublocations();
+
+                // Populate objects when clicking the beacon tab
+                $(document).on('click', '.acf-tab-button[data-key="field_58ab0c6354b09"]', function () {
+                    this.populateBeaconObjects();
+                }.bind(this));
+
+                // Populate objects when clicking the "add new row" button in beacon tab
+                $(document).on('click', '[data-name="guide_beacon"] [data-event="add-row"]', function () {
+                    setTimeout(function () {
+                        var $row = $('[data-name="guide_beacon"] .acf-row:not(.acf-clone)').last();
+                        var $input = $row.find('[data-name="objects"] .acf-input input');
+
+                        $input.select2('destroy');
+                        $input.select2({
+                            data: this.getObjects(),
+                            multiple: true
+                        });
+                    }.bind(this), 1);
+                }.bind(this));
+            }
+
+        }.bind(this));
     }
 
+    /**
+     * Only use sublocations in locations selector
+     * @return {void}
+     */
     Guide.prototype.onlySublocations = function() {
         acf.add_filter('select2_ajax_data', function( data, args, $input, $field ){
             if (data.field_key !== 'field_58ab0c9554b0a') {
@@ -349,67 +376,51 @@ ImportEvents.Admin.Guide = (function ($) {
 
             // return
             return data;
-
         });
     };
 
-    Guide.prototype.locationPicker = function() {
-        jQuery(function($){
-            $(document).on('change','#acf-field_589498b7fc7b3-input', function() {
-
-                var postId = this.getParameterByName('post');
-
-                var data = {
-                    'action': 'update_guide_sublocation_option',
-                    'selected': $('#acf-field_589498b7fc7b3-input').val(),
-                    'post_id': postId
-                };
-
-                if(postId) {
-                    $.post(ajaxurl, data, function(response) {
-
-                        var jsonResult = $.parseJSON(response);
-
-                        $("[data-name='guide_object_location'] select").each(function(index, object){
-                            var select = $(this);
-
-                            if(select.length) {
-                                var prePopulateSelected = select.val();
-
-                                //Empty select
-                                select.empty();
-
-                                //Populate from json
-                                $.each(jsonResult, function(i, item) {
-                                    select.append($('<option/>', {
-                                        value: i,
-                                        text: item
-                                    }).bind(item));
-                                }.bind(select));
-
-                                //Select previusly selected option
-                                select.val(prePopulateSelected);
-
-                            }
-                        });
-
-                    }.bind(this));
-                } else {
-                    alert("Please save the guide to allow sublocations to be selected.");
-                }
-            }.bind(this));
+    /**
+     * Populate objects selectors
+     * @return {void}
+     */
+    Guide.prototype.populateBeaconObjects = function() {
+        $('[data-name="objects"] select ~ input[type="hidden"]').each(function (index, element) {
+            $(element).select2('destroy');
+            $(element).select2({
+                data: this.getObjects(),
+                multiple: true
+            });
         }.bind(this));
     };
 
-    Guide.prototype.getParameterByName = function(name) {
-        var results = new RegExp('[\\?&]' + name + '=([^&#]*)').exec(window.location.href);
-        if (!results) {
-            return undefined;
-        }
-        return results[1] || undefined;
+    /**
+     * Get objects from the Content Objects tab to fill the objects selector with
+     * @return {array}
+     */
+    Guide.prototype.getObjects = function() {
+        var objects = [];
+
+        $('[data-name="guide_content_objects"] tr.acf-row:not(.acf-clone)').each(function (index, item) {
+            var $item = $(item);
+
+            var uid = $item.find('[data-name="guide_object_uid"] input').val();
+            var title = $item.find('[data-name="guide_object_title"] input').val();
+
+            if (!uid) {
+                uid = new Date().valueOf();
+                $item.find('[data-name="guide_object_uid"] input').val(uid);
+            }
+
+            objects.push({
+                id: uid,
+                text: title
+            });
+        });
+
+        return objects;
     };
 
-    //return new Guide();
+    return new Guide();
 
 })(jQuery);
 
@@ -508,7 +519,7 @@ ImportEvents.Parser.Eventhandling = (function ($) {
 
                     jQuery.post(ajaxurl, data, function(response) {
                         loadingOccasions = false;
-                        this.restoreButton(button, storedCss);
+                        Eventhandling.prototype.restoreButton(button, storedCss);
                     });
                 }.bind(this));
             }
@@ -518,7 +529,7 @@ ImportEvents.Parser.Eventhandling = (function ($) {
     }
 
     Eventhandling.prototype.importModal = function() {
-        if (!['edit-event', 'edit-location'].indexOf(pagenow)) {
+        if (['edit-event', 'edit-location'].indexOf(pagenow) == -1) {
             return;
         }
 
