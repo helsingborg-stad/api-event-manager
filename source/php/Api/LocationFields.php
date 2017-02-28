@@ -59,7 +59,7 @@ class LocationFields extends Fields
      * @param  WP_REST_Request $request Full details about the request.
      * @return array $args.
      **/
-    function addCoordinateFilter($args, $request) {
+    public function addCoordinateFilter($args, $request) {
         if (empty($request['latlng'])) {
             return $args;
         }

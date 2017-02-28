@@ -75,7 +75,8 @@
                     "contact": "Contacts",
                     "sponsor": "Sponsors",
                     "package": "Packages",
-                    "membership-card": "Membership cards"
+                    "membership-card": "Membership cards",
+                    "guide": "Guides"
                 },
                 "default_value": [
                     "event"

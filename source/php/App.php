@@ -65,6 +65,7 @@ class App
         new Admin\Options();
         new Admin\UI();
         new Admin\FilterRestrictions();
+        new Admin\UserRoles();
 
         new Api\Filter();
         new Api\PostTypes();
@@ -91,12 +92,11 @@ class App
     public function loginRedirect($redirect_to, $request, $user)
     {
         if (!is_wp_error($user)) {
-            if (is_array($user->roles)) {
-                $urlAdmin = admin_url('edit.php?post_type=event');
-                return $urlAdmin;
+            if (user_can($user->ID, 'edit_events')) {
+                $redirect_to = admin_url('edit.php?post_type=event');
+            } elseif(user_can($user->ID, 'edit_guides')) {
+                $redirect_to = admin_url('edit.php?post_type=guide');
             }
-
-            return '';
         }
 
         return $redirect_to;
@@ -376,21 +376,5 @@ class App
             $field['button_label'] = acf_translate($field['button_label']);
         }
         return $field;
-    }
-
-    /**
-     * Add custom user roles
-     * @return void
-     */
-    public static function initUserRoles()
-    {
-        add_role('event_contributor', __("Event contributor", 'event-manager'), array(
-            'read' => true,
-            'edit_posts' => true,
-            'delete_posts' => true,
-            'edit_published_posts' => true,
-            'upload_files' => true,
-            'edit_others_posts' => true,
-        ));
     }
 }

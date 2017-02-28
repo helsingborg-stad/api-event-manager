@@ -28,6 +28,8 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
                 'exclude_from_search'   =>  false,
                 'taxonomies'            =>  array('event_categories', 'event_tags'),
                 'supports'              =>  array('title', 'revisions', 'editor', 'thumbnail'),
+                'map_meta_cap'          =>  true,
+                'capability_type'       =>  'event'
             )
         );
 

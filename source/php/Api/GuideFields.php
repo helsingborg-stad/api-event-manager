@@ -264,6 +264,11 @@ class GuideFields extends Fields
 
         foreach ($beacons as $key => $item) {
             if (!empty($item['objects'])) {
+
+                if (is_string($item['objects'])) {
+                    $item['objects'] = explode("||", $item['objects']);
+                }
+
                 $result[] = array(
                     'order' => $key,
                     'nid' => $beacon_namespace,
@@ -351,8 +356,25 @@ class GuideFields extends Fields
     {
         $objects = [];
         $i = 0;
+        $beacons = $this->objectGetCallBack($object, 'guide_beacon', $request, true);
 
         foreach ($this->getObjects($object, 'guide_content_objects', $request, true) as $key => $item) {
+
+            //Get beacon id
+            foreach ($beacons as $beacon) {
+
+                if (is_string($beacon['objects'])) {
+                    $beacon['objects'] = explode("||", $beacon['objects']);
+                }
+
+                if (in_array($key, $beacon['objects'])) {
+                    $beacon_id = $beacon['beacon'];
+                    break;
+                } else {
+                    $beacon_id = null;
+                }
+            }
+
             $objects[$key] = array(
                 'order' => $i,
                 'active' => ($item['guide_object_active'] == 1) ? true : false,
@@ -365,6 +387,8 @@ class GuideFields extends Fields
                 'audio' => !is_array($item['guide_object_audio']) ? null : $this->sanitizeMediaObject($item['guide_object_audio']),
                 'video' => !is_array($item['guide_object_video']) ? null : $this->sanitizeMediaObject($item['guide_object_video']),
                 'links' => !is_array($item['guide_object_links']) ? null : $this->sanitizeLinkObject($item['guide_object_links']),
+
+                'bid'   => $beacon_id,
             );
             $i++;
         }

@@ -519,7 +519,7 @@ ImportEvents.Parser.Eventhandling = (function ($) {
 
                     jQuery.post(ajaxurl, data, function(response) {
                         loadingOccasions = false;
-                        this.restoreButton(button, storedCss);
+                        Eventhandling.prototype.restoreButton(button, storedCss);
                     });
                 }.bind(this));
             }
@@ -529,7 +529,7 @@ ImportEvents.Parser.Eventhandling = (function ($) {
     }
 
     Eventhandling.prototype.importModal = function() {
-        if (!['edit-event', 'edit-location'].indexOf(pagenow)) {
+        if (['edit-event', 'edit-location'].indexOf(pagenow) == -1) {
             return;
         }
 
