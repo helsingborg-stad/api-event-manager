@@ -26,7 +26,9 @@ class Guides extends \HbgEventImporter\Entity\CustomPostType
                 ),
                 'hierarchical'         => false,
                 'exclude_from_search'  => true,
-                'supports'             => array('title', 'revisions')
+                'supports'             => array('title', 'revisions'),
+                'map_meta_cap'         => true,
+                'capability_type'      => 'guide',
             )
         );
     }

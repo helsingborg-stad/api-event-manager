@@ -30,14 +30,14 @@ class GuideCategories
         );
 
         $capabilities = array(
-            'manage_terms' => 'edit_users',
-            'edit_terms'   => 'edit_users',
-            'delete_terms' => 'edit_users',
+            'manage_terms' => 'read_private_guides',
+            'edit_terms'   => 'read_private_guides',
+            'delete_terms' => 'read_private_guides',
             'assign_terms' => 'read',
         );
 
         $args = array(
-            //'capabilities'          => $capabilities,
+            'capabilities'          => $capabilities,
             'labels'                => $labels,
             'public'                => true,
             'show_in_nav_menus'     => true,

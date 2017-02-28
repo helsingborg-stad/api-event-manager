@@ -3163,6 +3163,7 @@ class AcfFields
                 'sponsor' => __('Sponsors', 'event-manager'),
                 'package' => __('Packages', 'event-manager'),
                 'membership-card' => __('Membership cards', 'event-manager'),
+                'guide' => __('Guides', 'event-manager'),
             ),
             'default_value' => array (
                 0 => 'event',
