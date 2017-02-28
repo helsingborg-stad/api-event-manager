@@ -634,7 +634,7 @@ class AcfGuide
             'title' => __('Guide Group', 'event-manager'),
             'fields' => array(
                 array(
-                    'taxonomy' => 'guidegroup',
+                    'taxonomy' => 'guide_group',
                     'field_type' => 'select',
                     'multiple' => 0,
                     'allow_null' => 0,
@@ -868,7 +868,7 @@ class AcfGuide
                     array(
                         'param' => 'taxonomy',
                         'operator' => '==',
-                        'value' => 'guidegroup',
+                        'value' => 'guide_group',
                     ),
                 ),
             ),
@@ -1014,7 +1014,7 @@ class AcfGuide
                     array(
                         'param' => 'taxonomy',
                         'operator' => '==',
-                        'value' => 'guidegroup',
+                        'value' => 'guide_group',
                     ),
                 ),
             ),

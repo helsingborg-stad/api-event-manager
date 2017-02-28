@@ -198,13 +198,12 @@ class Fields
             return null;
         }
 
-        $taxArray = array();
-        foreach ($taxonomies as $val) {
+        foreach ($taxonomies as &$val) {
             $term = get_term($val, $field_name);
-            $taxArray[] .= $term->name;
+            $val  = $term->name;
         }
 
-        return apply_filters($object['type'] . '_taxonomies', $taxArray);
+        return apply_filters($object['type'] . '_taxonomies', $taxonomies);
     }
 
     /**
@@ -225,16 +224,15 @@ class Fields
             return null;
         }
 
-        $taxArray = array();
-        foreach ($taxonomies as $val) {
+        foreach ($taxonomies as &$val) {
             $term = get_term($val, $field_name);
-            $taxArray[] = array(
+            $val = array(
                             'id'    => $term->term_id,
                             'name'  => $term->name,
                             'slug'  => $term->slug
                         );
         }
 
-        return apply_filters($object['type'] . '_taxonomies', $taxArray);
+        return apply_filters($object['type'] . '_taxonomies', $taxonomies);
     }
 }

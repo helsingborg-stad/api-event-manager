@@ -50,11 +50,11 @@ class GuideCategories
             'show_in_rest'          => true,
         );
 
-        register_taxonomy('guidegroup', array('guide'), $args);
+        register_taxonomy('guide_group', array('guide'), $args);
     }
 
     public function unregisterMetaBox()
     {
-        remove_meta_box('tagsdiv-guidegroup', 'guide', 'side');
+        remove_meta_box('tagsdiv-guide_group', 'guide', 'side');
     }
 }
