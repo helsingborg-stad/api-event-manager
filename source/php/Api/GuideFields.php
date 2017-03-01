@@ -9,7 +9,7 @@ namespace HbgEventImporter\Api;
 class GuideFields extends Fields
 {
     private $postType       = 'guide';
-    private $taxonomyName   = 'guide_group';
+    private $taxonomyName   = 'guidegroup';
     private $objectCache    = array();
 
     public function __construct()
@@ -103,6 +103,19 @@ class GuideFields extends Fields
                 )
             )
         );
+
+        register_rest_field($this->taxonomyName,
+            'guide_taxonomy_location',
+            array(
+                'get_callback' => array($this, 'locationData'),
+                'update_callback' => array($this, 'objectUpdateCallBack'),
+                'schema' => array(
+                    'description' => 'Field containing object with location data.',
+                    'type' => 'object',
+                    'context' => array('view', 'edit', 'embed')
+                )
+            )
+        );
     }
 
 
@@ -117,7 +130,7 @@ class GuideFields extends Fields
         /* Replace group id with taxonomy name */
 
         register_rest_field($this->postType,
-            'guide_group',
+            'guidegroup',
             array(
                 'get_callback' => array($this, 'objectGetCallBack'),
                 'update_callback' => array($this, 'objectUpdateCallBack'),

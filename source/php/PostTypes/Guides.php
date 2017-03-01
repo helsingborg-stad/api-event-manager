@@ -40,7 +40,7 @@ class Guides extends \HbgEventImporter\Entity\CustomPostType
     {
 
         //Update taxonomy
-        add_filter('acf/update_value/name=guide_group', array($this, 'updateTaxonomyRelation'), 10, 3);
+        add_filter('acf/update_value/name=guidegroup', array($this, 'updateTaxonomyRelation'), 10, 3);
 
         //Only main locations selectable
         //add_filter('acf/fields/post_object/query/name=guide_taxonomy_location', array($this, 'getMainLocations'), 10, 3);
@@ -73,7 +73,7 @@ class Guides extends \HbgEventImporter\Entity\CustomPostType
      */
     public function updateTaxonomyRelation($value, $post_id, $field)
     {
-        wp_set_object_terms((int) $post_id, array((int) $value), 'guide_group');
+        wp_set_object_terms((int) $post_id, array((int) $value), 'guidegroup');
         return $value;
     }
 
@@ -121,8 +121,8 @@ class Guides extends \HbgEventImporter\Entity\CustomPostType
     public function getSublocationsOnly($args, $field, $post_id)
     {
         if (isset($_POST['selectedGroup']) && !empty($_POST['selectedGroup'])) {
-            $location = get_field('guide_taxonomy_location', 'guide_group_' . $_POST['selectedGroup']);
-            $onlySub = get_field('guide_taxonomy_sublocations', 'guide_group_' . $_POST['selectedGroup']);
+            $location = get_field('guide_taxonomy_location', 'guidegroup_' . $_POST['selectedGroup']);
+            $onlySub = get_field('guide_taxonomy_sublocations', 'guidegroup_' . $_POST['selectedGroup']);
 
             if ($onlySub) {
                 $args['post_parent'] = $location;
