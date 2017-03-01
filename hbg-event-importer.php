@@ -35,6 +35,7 @@ define('HBGEVENTIMPORTER_TEMPLATE_PATH', HBGEVENTIMPORTER_PATH . 'templates/');
 load_plugin_textdomain('event-manager', false, plugin_basename(dirname(__FILE__)) . '/languages');
 
 require_once HBGEVENTIMPORTER_PATH . 'source/php/Vendor/Psr4ClassLoader.php';
+require_once HBGEVENTIMPORTER_PATH . 'source/php/Vendor/AcfLoader.php';
 require_once HBGEVENTIMPORTER_PATH . 'Public.php';
 
 // Instantiate and register the autoloader
@@ -42,6 +43,15 @@ $loader = new HbgEventImporter\Vendor\Psr4ClassLoader();
 $loader->addPrefix('HbgEventImporter', HBGEVENTIMPORTER_PATH);
 $loader->addPrefix('HbgEventImporter', HBGEVENTIMPORTER_PATH . 'source/php/');
 $loader->register();
+
+// Acf auto import and export
+$acfLoader = new HelsingborgsStad\AcfLoader();
+$acfLoader->setTextdomain('event-manager');
+$acfLoader->setExportFolder(HBGEVENTIMPORTER_PATH . 'source/php/AcfFields/');
+$acfLoader->autoExport(array(
+    1192
+));
+$acfLoader->import();
 
 // Activation / deactivation hooks
 register_activation_hook(plugin_basename(__FILE__), '\HbgEventImporter\App::addCronJob');
