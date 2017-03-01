@@ -310,46 +310,6 @@ class EventFields extends Fields
      *
      * @return  object|null
      */
-    public function locationData($object, $field_name, $request)
-    {
-        $return_value = self::getFieldGetMetaData($object, $field_name, $request);
-
-        if (is_int($return_value) || is_string($return_value) && ! empty($return_value)) {
-            $location_id = intval($return_value);
-        } else {
-            return null;
-        }
-
-        $location = get_post($location_id);
-
-        if (! $location) {
-            return null;
-        }
-        $parent = ! empty($location->post_parent) ? array('id' => $location->post_parent, 'title' => get_the_title($location->post_parent)) : null;
-        $location_data['id']                = $location_id;
-        $location_data['title']             = $location->post_title;
-        $location_data['parent']            = $parent;
-        $location_data['content']           = $location->post_content;
-        $location_data['street_address']    = get_post_meta($location_id, 'street_address', true);
-        $location_data['postal_code']       = get_post_meta($location_id, 'postal_code', true);
-        $location_data['city']              = get_post_meta($location_id, 'city', true);
-        $location_data['country']           = get_post_meta($location_id, 'country', true);
-        $location_data['formatted_address'] = get_post_meta($location_id, 'formatted_address', true);
-        $location_data['latitude']          = get_post_meta($location_id, 'latitude', true);
-        $location_data['longitude']         = get_post_meta($location_id, 'longitude', true);
-
-        return $location_data;
-    }
-
-    /**
-     * Add data / meta data to additional locations field.
-     *
-     * @param   object  $object      The response object.
-     * @param   string  $field_name  The name of the field to add.
-     * @param   object  $request     The WP_REST_Request object.
-     *
-     * @return  object|null
-     */
     public function additionalLocationData($object, $field_name, $request)
     {
         $return_value = self::getFieldGetMetaData($object, $field_name, $request);

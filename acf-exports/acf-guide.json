@@ -611,7 +611,7 @@
         "title": "Guide Group",
         "fields": [
             {
-                "taxonomy": "guide_group",
+                "taxonomy": "guidegroup",
                 "field_type": "select",
                 "multiple": 0,
                 "allow_null": 0,
@@ -621,7 +621,7 @@
                 "save_terms": 0,
                 "key": "field_589dd138aca7e",
                 "label": "Select the group for this guide",
-                "name": "guide_group",
+                "name": "guidegroup",
                 "type": "taxonomy",
                 "instructions": "",
                 "required": 1,
@@ -843,7 +843,7 @@
                 {
                     "param": "taxonomy",
                     "operator": "==",
-                    "value": "guide_group"
+                    "value": "guidegroup"
                 }
             ]
         ],
@@ -988,7 +988,7 @@
                 {
                     "param": "taxonomy",
                     "operator": "==",
-                    "value": "guide_group"
+                    "value": "guidegroup"
                 }
             ]
         ],
