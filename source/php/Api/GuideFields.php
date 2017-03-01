@@ -9,7 +9,7 @@ namespace HbgEventImporter\Api;
 class GuideFields extends Fields
 {
     private $postType       = 'guide';
-    private $taxonomyName   = 'guidegroup';
+    private $taxonomyName   = 'guide_group';
     private $objectCache    = array();
 
     public function __construct()
@@ -97,7 +97,7 @@ class GuideFields extends Fields
             array(
                 'get_callback' => array($this, 'taxonomyNotice'),
                 'schema' => array(
-                    'description' => 'Describes  main location in generel terms.',
+                    'description' => 'Describes main location in generel terms.',
                     'type' => 'object',
                     'context' => array('view', 'embed')
                 )
@@ -113,6 +113,33 @@ class GuideFields extends Fields
      */
     public static function registerRestFields()
     {
+
+        /* Replace group id with taxonomy name */
+
+        register_rest_field($this->postType,
+            'guide_group',
+            array(
+                'get_callback' => array($this, 'objectGetCallBack'),
+                'update_callback' => array($this, 'objectUpdateCallBack'),
+                'schema' => array(
+                    'description' => 'Describes  main location in generel terms.',
+                    'type' => 'object',
+                    'context' => array('view', 'embed')
+                )
+            )
+        );
+
+        /* Replace group id with taxonomy name */
+
+        register_rest_field($this->postType,
+            'user_groups',
+            array(
+                'get_callback' => array($this, 'userGroups'),
+                'update_callback' => array($this, 'objectUpdateCallBack'),
+                'schema' => null
+            )
+        );
+
         register_rest_field($this->postType,
             'guideBeacon',
             array(
@@ -127,9 +154,10 @@ class GuideFields extends Fields
 
         // Guide media objects
         register_rest_field($this->postType,
-            'guideMedia',
+            'guide_images',
             array(
-                'get_callback' => array($this, 'postMedia'),
+                'get_callback' => array($this, 'objectGetCallBack'),
+                'update_callback' => array($this, 'objectUpdateCallBack'),
                 'schema' => array(
                     'description' => 'Guide main media information.',
                     'type' => 'object',
@@ -261,7 +289,9 @@ class GuideFields extends Fields
         $beacons            = $this->objectGetCallBack($object, 'guide_beacon', $request, true);
         $objects            = $this->getObjects($object, 'guide_content_objects', $request, true);
         $beacon_namespace   = $this->stringGetCallBack($object, 'guide_beacon_namespace', $request, $formatted);
-
+        if (! $beacons) {
+            return null;
+        }
         foreach ($beacons as $key => $item) {
             if (!empty($item['objects'])) {
 
@@ -300,7 +330,9 @@ class GuideFields extends Fields
 
         $beacons            = $this->objectGetCallBack($object, 'guide_beacon', $request, true);
         $objects            = $this->getObjects($object, 'guide_content_objects', $request, true);
-
+        if (! $beacons) {
+            return null;
+        }
         //Create total objects
         foreach ($objects as $key => $item) {
             $objectStash[] = $key;
@@ -357,6 +389,9 @@ class GuideFields extends Fields
         $objects = [];
         $i = 0;
         $beacons = $this->objectGetCallBack($object, 'guide_beacon', $request, true);
+        if (! $beacons) {
+            return null;
+        }
 
         foreach ($this->getObjects($object, 'guide_content_objects', $request, true) as $key => $item) {
 

@@ -148,17 +148,13 @@ class LocationFields extends Fields
             )
         );
 
-
         // Replace category id with taxonomy name
         register_rest_field($this->postType,
             'location_categories',
             array(
                 'get_callback' => array($this, 'renameTaxonomies'),
-                'schema' => array(
-                    'description' => 'Field containing object with taxonomies.',
-                    'type' => 'object',
-                    'context' => array('view', 'edit', 'embed')
-                )
+                'update_callback' => null,
+                'schema' => null
             )
         );
 
@@ -167,11 +163,8 @@ class LocationFields extends Fields
             'user_groups',
             array(
                 'get_callback' => array($this, 'userGroups'),
-                'schema' => array(
-                    'description' => 'Field containing object with taxonomies.',
-                    'type' => 'object',
-                    'context' => array('view', 'edit', 'embed')
-                )
+                'update_callback' => array($this, 'objectUpdateCallBack'),
+                'schema' => null
             )
         );
 

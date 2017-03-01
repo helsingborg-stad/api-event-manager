@@ -61,7 +61,6 @@ abstract class CustomPostType
             $data = $importer->getCreatedData();
 
             wp_send_json($data);
-            wp_die();
         } elseif ($_POST['value'] == 'cbislocation') {
             $api_keys = $_POST['api_keys'];
             $location = $_POST['cbis_location'];
@@ -69,14 +68,12 @@ abstract class CustomPostType
             $data = $importer->getCreatedData();
 
             wp_send_json($data);
-            wp_die();
         } elseif ($_POST['value'] == 'xcap') {
             $api_keys = $_POST['api_keys'];
             $importer = new \HbgEventImporter\Parser\Xcap($api_keys['xcap_api_url'], $api_keys);
             $data = $importer->getCreatedData();
 
             wp_send_json($data);
-            wp_die();
         }
     }
 
