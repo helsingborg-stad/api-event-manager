@@ -500,9 +500,12 @@ class GuideFields extends Fields
      * @return  array
      * @version 0.3.28 Guides
      */
-
     public function sanitinzeMediaObjectArray($objectArray)
     {
+        if (!is_array($objectArray)) {
+            return array();
+        }
+
         if (array_values($objectArray) !== $objectArray) {
             return $objectArray;
         }
