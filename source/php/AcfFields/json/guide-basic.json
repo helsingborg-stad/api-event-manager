@@ -1,0 +1,612 @@
+[{
+    "key": "group_589497ca3741e",
+    "title": "Grundl\u00e4ggande guideinst\u00e4llningar",
+    "fields": [
+        {
+            "placement": "left",
+            "endpoint": 0,
+            "key": "field_58949857fc7b0",
+            "label": "Genrellt\t",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            }
+        },
+        {
+            "tabs": "all",
+            "toolbar": "basic",
+            "media_upload": 0,
+            "default_value": "",
+            "delay": 0,
+            "key": "field_58949813a052c",
+            "label": "Beskrivning",
+            "name": "guide_description",
+            "type": "wysiwyg",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            }
+        },
+        {
+            "placement": "left",
+            "endpoint": 0,
+            "key": "field_5894987dfc7b1",
+            "label": "Media",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            }
+        },
+        {
+            "library": "all",
+            "min": "",
+            "max": 10,
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": "jpg,jpeg,png",
+            "insert": "append",
+            "key": "field_589dc93cde2d7",
+            "label": "Guidebilder",
+            "name": "guide_images",
+            "type": "gallery",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "secondary-panel",
+                "id": ""
+            }
+        },
+        {
+            "placement": "top",
+            "endpoint": 0,
+            "key": "field_5899a94bff0ec",
+            "label": "Inneh\u00e5llsobjekt",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            }
+        },
+        {
+            "sub_fields": [
+                {
+                    "placement": "top",
+                    "endpoint": 0,
+                    "key": "field_589db03e16e51",
+                    "label": "Genrellt\t",
+                    "name": "",
+                    "type": "tab",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    }
+                },
+                {
+                    "default_value": "",
+                    "maxlength": "",
+                    "placeholder": "Titeln p\u00e5 inneh\u00e5llsobjektet",
+                    "prepend": "",
+                    "append": "",
+                    "key": "field_5899aab938d3d",
+                    "label": "Objektets titel",
+                    "name": "guide_object_title",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "75",
+                        "class": "",
+                        "id": ""
+                    }
+                },
+                {
+                    "default_value": "",
+                    "min": "",
+                    "max": "",
+                    "step": "",
+                    "placeholder": "",
+                    "prepend": "#",
+                    "append": "",
+                    "key": "field_589dcc1a7deb3",
+                    "label": "Utst\u00e4llnings ID",
+                    "name": "guide_object_id",
+                    "type": "number",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "25",
+                        "class": "",
+                        "id": ""
+                    }
+                },
+                {
+                    "tabs": "all",
+                    "toolbar": "basic",
+                    "media_upload": 1,
+                    "default_value": "",
+                    "delay": 0,
+                    "key": "field_5899aae338d3e",
+                    "label": "Objektbeskrivning",
+                    "name": "guide_object_description",
+                    "type": "wysiwyg",
+                    "instructions": "",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    }
+                },
+                {
+                    "placement": "top",
+                    "endpoint": 0,
+                    "key": "field_589db05816e52",
+                    "label": "Media",
+                    "name": "",
+                    "type": "tab",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    }
+                },
+                {
+                    "library": "all",
+                    "min": "",
+                    "max": 10,
+                    "min_width": "",
+                    "min_height": "",
+                    "min_size": "",
+                    "max_width": "",
+                    "max_height": "",
+                    "max_size": "",
+                    "mime_types": "jpg,jpeg,png",
+                    "insert": "append",
+                    "key": "field_5899ab0338d3f",
+                    "label": "Objektets bild",
+                    "name": "guide_object_image",
+                    "type": "gallery",
+                    "instructions": "En eller flera bilder i jpg eller png format",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "100",
+                        "class": "",
+                        "id": ""
+                    }
+                },
+                {
+                    "return_format": "array",
+                    "library": "uploadedTo",
+                    "min_size": "",
+                    "max_size": 50,
+                    "mime_types": "m4a,aac,mp3",
+                    "key": "field_5899ab2c38d40",
+                    "label": "Ljud",
+                    "name": "guide_object_audio",
+                    "type": "file",
+                    "instructions": "En ljudfil som beskriver objektet. Filen b\u00f6r vara rimligt komprimerad och vara av AAC+ V2 (m4a) format eller Mp3.",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "50",
+                        "class": "",
+                        "id": ""
+                    }
+                },
+                {
+                    "return_format": "array",
+                    "library": "uploadedTo",
+                    "min_size": "",
+                    "max_size": 50,
+                    "mime_types": "mp4",
+                    "key": "field_5899ac03acc12",
+                    "label": "Film",
+                    "name": "guide_object_video",
+                    "type": "file",
+                    "instructions": "En kortare video som beskrivet objektet. T\u00e4nk p\u00e5 att ett mindre filformat oftast resulterar i fler visningar. F\u00f6redraget format: Mp4. ",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "50",
+                        "class": "",
+                        "id": ""
+                    }
+                },
+                {
+                    "placement": "top",
+                    "endpoint": 0,
+                    "key": "field_589db08d16e53",
+                    "label": "L\u00e4nkar\t",
+                    "name": "",
+                    "type": "tab",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    }
+                },
+                {
+                    "sub_fields": [
+                        {
+                            "default_value": "",
+                            "maxlength": "",
+                            "placeholder": "",
+                            "prepend": "",
+                            "append": "",
+                            "key": "field_5899e5e1a583d",
+                            "label": "L\u00e4nknamn",
+                            "name": "guide_object_link_title",
+                            "type": "text",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "50",
+                                "class": "",
+                                "id": ""
+                            }
+                        },
+                        {
+                            "default_value": "",
+                            "placeholder": "",
+                            "key": "field_5899e64fa583e",
+                            "label": "Webbadress",
+                            "name": "guide_object_link_url",
+                            "type": "url",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "50",
+                                "class": "",
+                                "id": ""
+                            }
+                        }
+                    ],
+                    "min": 0,
+                    "max": 20,
+                    "layout": "block",
+                    "button_label": "L\u00e4gg till l\u00e4nk",
+                    "collapsed": "field_5899e5e1a583d",
+                    "key": "field_5899e5c8a583c",
+                    "label": "L\u00e4nkar och ytterligare resurser",
+                    "name": "guide_object_links",
+                    "type": "repeater",
+                    "instructions": "L\u00e4gg till l\u00e4nkar som har mer information om objektet. Det kan till exempel vara en hemsida eller fil (p\u00e5 webben). ",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "secondary-panel",
+                        "id": ""
+                    }
+                },
+                {
+                    "placement": "top",
+                    "endpoint": 0,
+                    "key": "field_589db114078de",
+                    "label": "Beacons",
+                    "name": "",
+                    "type": "tab",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_58949a8f0c4cd",
+                                "operator": "==",
+                                "value": "1"
+                            }
+                        ]
+                    ],
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    }
+                },
+                {
+                    "default_value": "",
+                    "maxlength": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "key": "field_589db29081803",
+                    "label": "Objektets beacon ID",
+                    "name": "guide_object_beacon_id",
+                    "type": "text",
+                    "instructions": "Ett unikt id f\u00f6r att identifiera en specifik beacon.",
+                    "required": 1,
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_58949a8f0c4cd",
+                                "operator": "==",
+                                "value": "1"
+                            }
+                        ]
+                    ],
+                    "wrapper": {
+                        "width": "60",
+                        "class": "",
+                        "id": ""
+                    }
+                },
+                {
+                    "default_value": 5,
+                    "min": 1,
+                    "max": 70,
+                    "step": 1,
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "meter",
+                    "key": "field_589dc6da3611c",
+                    "label": "Maximalt avst\u00e5nd till beacon. ",
+                    "name": "guide_object_beacon_distance",
+                    "type": "number",
+                    "instructions": "Avst\u00e5nd som ska trigga beacon-s\u00e4ndare.",
+                    "required": 1,
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_58949a8f0c4cd",
+                                "operator": "==",
+                                "value": "1"
+                            }
+                        ]
+                    ],
+                    "wrapper": {
+                        "width": "40",
+                        "class": "",
+                        "id": ""
+                    }
+                },
+                {
+                    "placement": "top",
+                    "endpoint": 0,
+                    "key": "field_58a5c081f4193",
+                    "label": "Synbarhet",
+                    "name": "",
+                    "type": "tab",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    }
+                },
+                {
+                    "default_value": 0,
+                    "message": "Ja, visa detta objekt",
+                    "ui": 0,
+                    "ui_on_text": "Visa",
+                    "ui_off_text": "D\u00f6lj",
+                    "key": "field_58a5c098f4194",
+                    "label": "Objektets synbarhet",
+                    "name": "guide_object_active",
+                    "type": "true_false",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    }
+                },
+                {
+                    "key": "field_58ad84a12d5ac",
+                    "label": "Unikt ID",
+                    "name": "guide_object_uid",
+                    "type": "unique_id",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    }
+                }
+            ],
+            "min": 1,
+            "max": 500,
+            "layout": "block",
+            "button_label": "L\u00e4gg till nytt objekt",
+            "collapsed": "field_5899aab938d3d",
+            "key": "field_5899cc4b59d94",
+            "label": "Inneh\u00e5ll (tavlor, konstverk, tr\u00e4d etc.)",
+            "name": "guide_content_objects",
+            "type": "repeater",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            }
+        },
+        {
+            "placement": "top",
+            "endpoint": 0,
+            "key": "field_58ab0c6354b09",
+            "label": "Beacons",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            }
+        },
+        {
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "key": "field_58ac5c65cdffe",
+            "label": "Beacon namnrymd",
+            "name": "guide_beacon_namespace",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            }
+        },
+        {
+            "sub_fields": [
+                {
+                    "post_type": [
+                        "location"
+                    ],
+                    "taxonomy": [],
+                    "allow_null": 0,
+                    "multiple": 0,
+                    "return_format": "id",
+                    "ui": 1,
+                    "key": "field_58ab0c9554b0a",
+                    "label": "Plats",
+                    "name": "location",
+                    "type": "post_object",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "36",
+                        "class": "",
+                        "id": ""
+                    }
+                },
+                {
+                    "multiple": 1,
+                    "allow_null": 0,
+                    "choices": [],
+                    "default_value": [],
+                    "ui": 1,
+                    "ajax": 1,
+                    "placeholder": "",
+                    "return_format": "value",
+                    "key": "field_58ab0cf054b0b",
+                    "label": "Inneh\u00e5llsobjekt",
+                    "name": "objects",
+                    "type": "select",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "30",
+                        "class": "",
+                        "id": ""
+                    }
+                },
+                {
+                    "default_value": "",
+                    "maxlength": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "key": "field_58ac54a64bb06",
+                    "label": "Beacon ID",
+                    "name": "beacon",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "30",
+                        "class": "",
+                        "id": ""
+                    }
+                }
+            ],
+            "min": 0,
+            "max": 0,
+            "layout": "table",
+            "button_label": "L\u00e4gg till grupp",
+            "collapsed": "field_58ab0cf054b0b",
+            "key": "field_58ab0b4454b08",
+            "label": "Grupper av beacons",
+            "name": "guide_beacon",
+            "type": "repeater",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            }
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "guide"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "field",
+    "hide_on_screen": "",
+    "active": 1,
+    "description": "Manage main guide object details.",
+    "local": "php"
+}]
+
