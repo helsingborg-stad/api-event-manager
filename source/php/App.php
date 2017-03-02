@@ -48,9 +48,6 @@ class App
         new PostTypes\MembershipCards();
         new PostTypes\Guides();
 
-        //Init functions
-        new Acf\AcfFields();
-
         new Taxonomy\EventCategories();
         new Taxonomy\UserGroups();
         new Taxonomy\EventTags();
