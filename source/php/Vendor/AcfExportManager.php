@@ -47,6 +47,10 @@ class AcfExportManager
         add_action('admin_notices', array($this, 'bulkNotice'));
     }
 
+    /**
+     * Displays the fieldgroup key in misc publishing actions
+     * @param WP_Post $post
+     */
     public function addGroupKeyToPostbox($post)
     {
         if ($post->post_type !== 'acf-field-group') {
