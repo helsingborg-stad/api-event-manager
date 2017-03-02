@@ -10,32 +10,15 @@ class AcfExportManager
 
     public function __construct()
     {
+        // Single
         add_action('acf/update_field_group', array($this, 'export'));
         add_action('acf/delete_field_group', array($this, 'deleteExport'));
         add_filter('acf/translate_field', array($this, 'translateFieldParams'));
 
+        // Bulk
         add_filter('bulk_actions-edit-acf-field-group', array($this, 'addExportBulkAction'));
         add_filter('handle_bulk_actions-edit-acf-field-group', array($this, 'handleBulkExport'), 10, 3);
-    }
-
-    public function addExportBulkAction(array $actions) : array
-    {
-        $actions['acfExportManager-export'] = __('Export with AcfExportManager', 'acf-export-manager');
-        return $actions;
-    }
-
-    public function handleBulkExport($redirectTo, $doaction, $postIds)
-    {
-        if ($doaction !== 'acfExportManager-export') {
-            return $redirectTo;
-        }
-
-        foreach ($postIds as $postId) {
-            $this->export(acf_get_field_group($postId), false);
-        }
-
-        $redirect_to = add_query_arg('bulk_exported_posts', count($postIds), $redirectTo);
-        return $redirectTo;
+        add_action('admin_notices', array($this, 'bulkNotice'));
     }
 
     /**
@@ -93,7 +76,7 @@ class AcfExportManager
      * @param  array $fieldgroup  Fieldgroup data
      * @return array              Paths to exported files
      */
-    public function export(array $fieldgroup, $restrictToExportPosts = true) : array
+    public function export(array $fieldgroup, bool $restrictToExportPosts = true, bool $translate = true) : array
     {
         // Bail if the fieldgroup shouldn't be exported
         if ($restrictToExportPosts && !in_array($fieldgroup['ID'], $this->exportPosts)) {
@@ -111,7 +94,7 @@ class AcfExportManager
         $filename = $this->getExportFilename($fieldgroup);
 
         // Export php file
-        $code = $this->generatePhp($fieldgroup['ID']);
+        $code = $this->generatePhp($fieldgroup['ID'], $translate);
         $phpFile = fopen($this->exportFolder . 'php/' . $filename['php'], 'w');
         fwrite($phpFile, $code);
         fclose($phpFile);
@@ -183,7 +166,7 @@ class AcfExportManager
      * @param  int    $fieldgroupId
      * @return string
      */
-    protected function generatePhp(int $fieldgroupId) : string
+    protected function generatePhp(int $fieldgroupId, bool $translate = true) : string
     {
         $strReplace = array(
             "  "      => "    ",
@@ -200,7 +183,7 @@ class AcfExportManager
             '/=>(\s+)array\(/'       => '=> array('
         );
 
-        $fieldgroup = $this->getFieldgroupParams($fieldgroupId);
+        $fieldgroup = $this->getFieldgroupParams($fieldgroupId, $translate);
 
         $code = var_export($fieldgroup, true);
         $code = str_replace(array_keys($strReplace), array_values($strReplace), $code);
@@ -284,52 +267,6 @@ class AcfExportManager
     }
 
     /**
-     * Wraps strings in translation function __()
-     * @param  array  $fieldgroup
-     * @return array
-     */
-    public function translateFieldgroup(array $fieldgroup) : array
-    {
-        $l10nBefore = acf_get_setting('l10n');
-        $l10nVarExportBefore = acf_get_setting('l10n_var_export');
-        $l10nTextdomainBefore = acf_get_setting('l10n_textdomain');
-
-        acf_update_setting('l10n', true);
-        acf_update_setting('l10n_var_export', true);
-        acf_update_setting('l10n_textdomain', $this->textdomain);
-
-        $fieldgroup['title'] = acf_translate($fieldgroup['title']);
-
-        foreach ($fieldgroup['fields'] as &$field) {
-            $keys = array(
-                'default_value',
-                'placeholder',
-                'button_label',
-                'append',
-                'prepend',
-                'label',
-                'instructions',
-                'choices',
-                'sub_fields'
-            );
-
-            foreach ($keys as $key) {
-                if (!isset($field[$key])) {
-                    continue;
-                }
-
-                $field[$key] = acf_translate($field[$key]);
-            }
-        }
-
-        acf_update_setting('l10n', $l10nBefore);
-        acf_update_setting('l10n_var_export', $l10nVarExportBefore);
-        acf_update_setting('l10n_textdomain', $l10nTextdomainBefore);
-
-        return $fieldgroup;
-    }
-
-    /**
      * Set exports folder
      * @param string      $folder  Path to exports folder
      * @return void
@@ -371,5 +308,53 @@ class AcfExportManager
     public function setTextdomain(string $textdomain)
     {
         $this->textdomain = $textdomain;
+    }
+
+    /**
+     * Add bulk action to dropdown list
+     * @param array $actions
+     */
+    public function addExportBulkAction(array $actions) : array
+    {
+        $actions['acfExportManager-export'] = __('Export with AcfExportManager', 'acf-export-manager');
+        return $actions;
+    }
+
+    /**
+     * Handles bulk exporting
+     * @param  string $redirectTo Redirect
+     * @param  string $doaction   The bulk action to do
+     * @param  array  $postIds    Selected posts
+     * @return string             The redirect
+     */
+    public function handleBulkExport($redirectTo, $doaction, $postIds)
+    {
+        if ($doaction !== 'acfExportManager-export') {
+            return $redirectTo;
+        }
+
+        foreach ($postIds as $postId) {
+            $this->export(acf_get_field_group($postId), false, false);
+        }
+
+        $redirectTo = add_query_arg('bulkExportedFieldgroups', count($postIds), $redirectTo);
+        return $redirectTo;
+    }
+
+    /**
+     * Show admin notice when bulk export is done
+     * @return void
+     */
+    public function bulkNotice()
+    {
+        if (empty($_REQUEST['bulkExportedFieldgroups'])) {
+            return;
+        }
+
+        $exportCount = intval($_REQUEST['bulkExportedFieldgroups']);
+        printf(
+            '<div id="message" class="updated notice notice-success is-dismissible"><p>' . __('Exported %d fieldgroup(s).', 'acf-export-manager') . '</p></div>',
+            $exportCount
+        );
     }
 }
