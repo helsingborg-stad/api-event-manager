@@ -1,0 +1,47 @@
+[{
+    "key": "group_589dd0fbd412e",
+    "title": "Guidekategori",
+    "fields": [
+        {
+            "taxonomy": "guidegroup",
+            "field_type": "select",
+            "multiple": 0,
+            "allow_null": 0,
+            "return_format": "object",
+            "add_term": 1,
+            "load_terms": 0,
+            "save_terms": 0,
+            "key": "field_589dd138aca7e",
+            "label": "V\u00e4lj guidens kategori",
+            "name": "guidegroup",
+            "type": "taxonomy",
+            "instructions": "",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            }
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "guide"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "side",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": 1,
+    "description": "",
+    "local": "php"
+}]
+

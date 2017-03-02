@@ -20,10 +20,6 @@ class App
             remove_action('wp_scheduled_delete', 'wp_scheduled_delete');
         });
 
-        // Field mapping
-        add_action('acf/init', array($this, 'acfSettings'));
-        add_filter('acf/translate_field', array($this, 'acfTranslationFilter'));
-
         // Admin scripts
         add_action('admin_enqueue_scripts', array($this, 'enqueueStyles'));
         add_action('admin_enqueue_scripts', array($this, 'enqueueScripts'));
@@ -54,7 +50,6 @@ class App
 
         //Init functions
         new Acf\AcfFields();
-        new Acf\AcfGuide();
 
         new Taxonomy\EventCategories();
         new Taxonomy\UserGroups();
@@ -373,7 +368,9 @@ class App
      */
     public function acfSettings()
     {
-        acf_update_setting('l10n', true);
+        return;
+
+        acf_update_setting('l10n', false);
         acf_update_setting('l10n_textdomain', 'event-manager');
         acf_update_setting('google_api_key', get_option('options_google_geocode_api_key'));
     }
@@ -385,6 +382,8 @@ class App
      */
     public function acfTranslationFilter($field)
     {
+        return $field;
+
         if ($field['type'] == 'text' || $field['type'] == 'number') {
             $field['append'] = acf_translate($field['append']);
             $field['placeholder'] = acf_translate($field['placeholder']);
