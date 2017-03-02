@@ -89,7 +89,7 @@ class App
         if (!is_wp_error($user)) {
             if (user_can($user->ID, 'edit_events')) {
                 $redirect_to = admin_url('edit.php?post_type=event');
-            } elseif(user_can($user->ID, 'edit_guides')) {
+            } elseif (user_can($user->ID, 'edit_guides')) {
                 $redirect_to = admin_url('edit.php?post_type=guide');
             }
         }
@@ -280,7 +280,6 @@ class App
     public function startImport()
     {
         if (get_field('cbis_daily_cron', 'option') == true) {
-
             $api_keys = $this->getCbisKeys();
 
             foreach ($api_keys as $key => $api_key) {
@@ -297,7 +296,6 @@ class App
 
         if (get_field('xcap_daily_cron', 'option') == true) {
             $api_keys = $this->getXcapKeys();
-            var_dump($api_keys);
 
             foreach ($api_keys as $key => $api_key) {
                 $importer = new \HbgEventImporter\Parser\Xcap($api_key['xcap_api_url'], $api_key);

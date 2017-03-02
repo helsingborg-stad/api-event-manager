@@ -1,6 +1,6 @@
 [{
     "key": "group_589dd0fbd412e",
-    "title": "Guidekategori",
+    "title": "Guide Group",
     "fields": [
         {
             "taxonomy": "guidegroup",
@@ -12,8 +12,8 @@
             "load_terms": 0,
             "save_terms": 0,
             "key": "field_589dd138aca7e",
-            "label": "V\u00e4lj guidens kategori",
-            "name": "guidegroup",
+            "label": "Select the group for this guide",
+            "name": "guide_group",
             "type": "taxonomy",
             "instructions": "",
             "required": 1,
@@ -41,7 +41,6 @@
     "instruction_placement": "label",
     "hide_on_screen": "",
     "active": 1,
-    "description": "",
-    "local": "php"
+    "description": ""
 }]
 
