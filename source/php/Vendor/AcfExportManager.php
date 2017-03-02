@@ -1,5 +1,30 @@
 <?php
 
+/**
+ * AcfExportManager dropdin for WordPress
+ * ======================================
+ *
+ * Getting started
+ * ---------------
+ * 1. Require the class
+ *     require_once 'path/to/AcfExportManager.php';
+ * 2. Initialize the class
+ *     $acfExportManager = new HelsingborgsStad\AcfExportManager();
+ * 3. Set your exports destination folder
+ *     $acfExportManager->setExportFolder('path/to/destination/folder');
+ * 4. Set which fieldgroups that should be auto exported ('export-filename' => 'fieldgroup['key']')
+ *     $acfExportManager->autoExport(array(
+ *          'group_58b6e40e5a8f4',
+ *          'halloj' => 'group_58b80e0111556'
+ *     ));
+ * 5. Import exported fieldgroups
+ *     $acfExportManager->import();
+ *
+ * If you want to translate your export files you also need to set a textdomain:
+ *     $acfExportManager->setTextdomain('my-text-domain');
+ *
+ */
+
 namespace HelsingborgsStad;
 
 class AcfExportManager
