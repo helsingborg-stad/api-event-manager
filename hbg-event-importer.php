@@ -35,7 +35,7 @@ define('HBGEVENTIMPORTER_TEMPLATE_PATH', HBGEVENTIMPORTER_PATH . 'templates/');
 load_plugin_textdomain('event-manager', false, plugin_basename(dirname(__FILE__)) . '/languages');
 
 require_once HBGEVENTIMPORTER_PATH . 'source/php/Vendor/Psr4ClassLoader.php';
-require_once HBGEVENTIMPORTER_PATH . 'source/php/Vendor/AcfLoader.php';
+require_once HBGEVENTIMPORTER_PATH . 'source/php/Vendor/AcfExportManager.php';
 require_once HBGEVENTIMPORTER_PATH . 'Public.php';
 
 // Instantiate and register the autoloader
