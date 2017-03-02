@@ -206,7 +206,7 @@ class App
      * Get Xcap keys
      * @return array
      */
-    public function getXcapKeys() : array
+    public function getXcapKeys()
     {
         $xcapKeys = array();
 
@@ -231,7 +231,7 @@ class App
      * Get CBIS keys
      * @return array
      */
-    public function getCbisKeys() : array
+    public function getCbisKeys()
     {
         $cbisKeys = array();
 
@@ -278,9 +278,33 @@ class App
      * Starts the data import
      * @return void
      */
-    public static function startImport()
+    public function startImport()
     {
-        file_put_contents(dirname(__FILE__) . "/log/cron_import.log", "Cron last run: " . date("Y-m-d H:i:s"));
+        if (get_field('cbis_daily_cron', 'option') == true) {
+
+            $api_keys = $this->getCbisKeys();
+
+            foreach ($api_keys as $key => $api_key) {
+                $importer = new \HbgEventImporter\Parser\CbisEvent('http://api.cbis.citybreak.com/Products.asmx?wsdl', $api_key);
+            }
+
+            // Cbis locations
+            foreach ($api_keys as $key => $api_key) {
+                foreach ($api_key['cbis_locations'] as $key => $location) {
+                    $importer = new \HbgEventImporter\Parser\CbisLocation('http://api.cbis.citybreak.com/Products.asmx?wsdl', $api_key, $location);
+                }
+            }
+        }
+
+        if (get_field('xcap_daily_cron', 'option') == true) {
+            $api_keys = $this->getXcapKeys();
+            var_dump($api_keys);
+
+            foreach ($api_keys as $key => $api_key) {
+                $importer = new \HbgEventImporter\Parser\Xcap($api_key['xcap_api_url'], $api_key);
+            }
+        }
+        file_put_contents(dirname(__FILE__) . "/Log/cron_import.log", "Cron last run: " . date("Y-m-d H:i:s"));
     }
 
     /**
