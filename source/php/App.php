@@ -30,6 +30,8 @@ class App
         // Register cron action
         add_action('import_events_daily', array($this, 'startImport'));
 
+        add_action('init', array($this, 'startImport'));
+
         // Redirects
         add_filter('login_redirect', array($this, 'loginRedirect'), 10, 3);
         add_action('admin_init', array($this, 'dashboardRedirect'));
@@ -89,7 +91,7 @@ class App
         if (!is_wp_error($user)) {
             if (user_can($user->ID, 'edit_events')) {
                 $redirect_to = admin_url('edit.php?post_type=event');
-            } elseif(user_can($user->ID, 'edit_guides')) {
+            } elseif (user_can($user->ID, 'edit_guides')) {
                 $redirect_to = admin_url('edit.php?post_type=guide');
             }
         }
@@ -278,15 +280,14 @@ class App
     public function startImport()
     {
         if (get_field('cbis_daily_cron', 'option') == true) {
-
             $api_keys = $this->getCbisKeys();
 
-            foreach ($api_keys as $key => $api_key) {
+            foreach ((array) $api_keys as $key => $api_key) {
                 $importer = new \HbgEventImporter\Parser\CbisEvent('http://api.cbis.citybreak.com/Products.asmx?wsdl', $api_key);
             }
 
             // Cbis locations
-            foreach ($api_keys as $key => $api_key) {
+            foreach ((array) $api_keys as $key => $api_key) {
                 foreach ($api_key['cbis_locations'] as $key => $location) {
                     $importer = new \HbgEventImporter\Parser\CbisLocation('http://api.cbis.citybreak.com/Products.asmx?wsdl', $api_key, $location);
                 }
@@ -295,12 +296,12 @@ class App
 
         if (get_field('xcap_daily_cron', 'option') == true) {
             $api_keys = $this->getXcapKeys();
-            var_dump($api_keys);
 
-            foreach ($api_keys as $key => $api_key) {
+            foreach ((array) $api_keys as $key => $api_key) {
                 $importer = new \HbgEventImporter\Parser\Xcap($api_key['xcap_api_url'], $api_key);
             }
         }
+
         file_put_contents(dirname(__FILE__) . "/Log/cron_import.log", "Cron last run: " . date("Y-m-d H:i:s"));
     }
 
