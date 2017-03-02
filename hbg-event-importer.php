@@ -45,13 +45,13 @@ $loader->addPrefix('HbgEventImporter', HBGEVENTIMPORTER_PATH . 'source/php/');
 $loader->register();
 
 // Acf auto import and export
-$acfLoader = new HelsingborgsStad\AcfLoader();
-$acfLoader->setTextdomain('event-manager');
-$acfLoader->setExportFolder(HBGEVENTIMPORTER_PATH . 'source/php/AcfFields/');
-$acfLoader->autoExport(array(
+$acfExportManager = new HelsingborgsStad\AcfExportManager();
+$acfExportManager->setTextdomain('event-manager');
+$acfExportManager->setExportFolder(HBGEVENTIMPORTER_PATH . 'source/php/AcfFields/');
+$acfExportManager->autoExport(array(
     1192
 ));
-$acfLoader->import();
+$acfExportManager->import();
 
 // Activation / deactivation hooks
 register_activation_hook(plugin_basename(__FILE__), '\HbgEventImporter\App::addCronJob');
