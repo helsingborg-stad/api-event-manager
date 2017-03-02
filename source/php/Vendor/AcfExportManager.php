@@ -119,11 +119,8 @@ class AcfExportManager
      */
     public function export(array $fieldgroup, bool $restrictToExportPosts = true, bool $translate = true) : array
     {
-
-global $locale;
-
-$locale = "en_US";
-
+        global $locale;
+        $locale = "en_US";
 
         // Bail if the fieldgroup shouldn't be exported
         if ($restrictToExportPosts && !in_array($fieldgroup['key'], $this->exportPosts)) {
@@ -220,10 +217,6 @@ $locale = "en_US";
      */
     protected function generatePhp(int $fieldgroupId, bool $translate = true) : string
     {
-global $locale;
-
-$locale = "en_US";
-
         $strReplace = array(
             "  "      => "    ",
             "!!\'"    => "'",
