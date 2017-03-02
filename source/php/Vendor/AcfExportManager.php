@@ -44,11 +44,11 @@ class AcfExportManager
         $filename = $this->getExportFilename($fieldgroup);
 
         if (file_exists($this->exportFolder . $filename['php'])) {
-            unlink($this->exportFolder . $filename['php']);
+            unlink($this->exportFolder . 'php/' . $filename['php']);
         }
 
         if (file_exists($this->exportFolder . $filename['json'])) {
-            unlink($this->exportFolder . $filename['json']);
+            unlink($this->exportFolder . 'json/' . $filename['json']);
         }
 
         return true;
