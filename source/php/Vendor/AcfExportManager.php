@@ -79,7 +79,7 @@ class AcfExportManager
     public function export(array $fieldgroup, bool $restrictToExportPosts = true, bool $translate = true) : array
     {
         // Bail if the fieldgroup shouldn't be exported
-        if ($restrictToExportPosts && !in_array($fieldgroup['ID'], $this->exportPosts)) {
+        if ($restrictToExportPosts && !in_array($fieldgroup['key'], $this->exportPosts)) {
             return array();
         }
 
@@ -151,7 +151,7 @@ class AcfExportManager
      */
     public function getExportFilename(array $fieldgroup) : array
     {
-        if ($key = array_search($fieldgroup['ID'], $this->exportPosts)) {
+        if ($key = array_search($fieldgroup['key'], $this->exportPosts)) {
             return array(
                 'php' => $key . '.php',
                 'json' => $key . '.json'
