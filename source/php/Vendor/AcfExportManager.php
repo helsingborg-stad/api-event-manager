@@ -21,7 +21,7 @@ class AcfExportManager
      */
     public function import() : bool
     {
-        $files = glob($this->exportFolder . '*.php');
+        $files = glob($this->exportFolder . 'php/' . '*.php');
 
         if (empty($files)) {
             return false;
