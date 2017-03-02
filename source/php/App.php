@@ -30,8 +30,6 @@ class App
         // Register cron action
         add_action('import_events_daily', array($this, 'startImport'));
 
-        add_action('init', array($this, 'startImport'));
-
         // Redirects
         add_filter('login_redirect', array($this, 'loginRedirect'), 10, 3);
         add_action('admin_init', array($this, 'dashboardRedirect'));
