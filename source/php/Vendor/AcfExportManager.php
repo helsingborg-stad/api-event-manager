@@ -13,6 +13,29 @@ class AcfExportManager
         add_action('acf/update_field_group', array($this, 'export'));
         add_action('acf/delete_field_group', array($this, 'deleteExport'));
         add_filter('acf/translate_field', array($this, 'translateFieldParams'));
+
+        add_filter('bulk_actions-edit-acf-field-group', array($this, 'addExportBulkAction'));
+        add_filter('handle_bulk_actions-edit-acf-field-group', array($this, 'handleBulkExport'), 10, 3);
+    }
+
+    public function addExportBulkAction(array $actions) : array
+    {
+        $actions['acfExportManager-export'] = __('Export with AcfExportManager', 'acf-export-manager');
+        return $actions;
+    }
+
+    public function handleBulkExport($redirectTo, $doaction, $postIds)
+    {
+        if ($doaction !== 'acfExportManager-export') {
+            return $redirectTo;
+        }
+
+        foreach ($postIds as $postId) {
+            $this->export(acf_get_field_group($postId), false);
+        }
+
+        $redirect_to = add_query_arg('bulk_exported_posts', count($postIds), $redirectTo);
+        return $redirectTo;
     }
 
     /**
@@ -70,10 +93,10 @@ class AcfExportManager
      * @param  array $fieldgroup  Fieldgroup data
      * @return array              Paths to exported files
      */
-    public function export(array $fieldgroup) : array
+    public function export(array $fieldgroup, $restrictToExportPosts = true) : array
     {
         // Bail if the fieldgroup shouldn't be exported
-        if (!in_array($fieldgroup['ID'], $this->exportPosts)) {
+        if ($restrictToExportPosts && !in_array($fieldgroup['ID'], $this->exportPosts)) {
             return array();
         }
 
