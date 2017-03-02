@@ -152,7 +152,10 @@ class AcfExportManager
     public function getExportFilename(array $fieldgroup) : array
     {
         if ($key = array_search($fieldgroup['ID'], $this->exportPosts)) {
-            return rtrim($key, '.php') . '.php';
+            return array(
+                'php' => $key . '.php',
+                'json' => $key . '.json'
+            );
         }
 
         return array(
