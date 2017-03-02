@@ -113,6 +113,8 @@ class AcfExportManager
     public function getJson(array $fieldgroup) : string
     {
         $json = json_encode($fieldgroup, JSON_PRETTY_PRINT);
+
+        // Remove translation stuff from json
         $json = str_replace('!!__(!!\'', '', $json);
         $json = str_replace("!!', !!'" . $this->textdomain . "!!')!!", '', $json);
 
