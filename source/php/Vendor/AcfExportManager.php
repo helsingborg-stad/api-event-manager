@@ -135,12 +135,14 @@ class AcfExportManager
         $filename = $this->getExportFilename($fieldgroup);
 
         // Export php file
+        unlink($this->exportFolder . 'php/' . $filename['php']);
         $code = $this->generatePhp($fieldgroup['ID'], $translate);
         $phpFile = fopen($this->exportFolder . 'php/' . $filename['php'], 'w');
         fwrite($phpFile, $code);
         fclose($phpFile);
 
         // Export json file
+        unlink($this->exportFolder . 'json/' . $filename['json']);
         $jsonFile = fopen($this->exportFolder . 'json/' . $filename['json'], 'w');
         $json = $this->getJson($this->getFieldgroupParams($fieldgroup['ID'], false));
         fwrite($jsonFile, $json);
