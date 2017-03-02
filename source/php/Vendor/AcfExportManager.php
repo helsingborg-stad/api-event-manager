@@ -39,11 +39,23 @@ class AcfExportManager
         add_action('acf/update_field_group', array($this, 'export'));
         add_action('acf/delete_field_group', array($this, 'deleteExport'));
         add_filter('acf/translate_field', array($this, 'translateFieldParams'));
+        add_action('post_submitbox_misc_actions', array($this, 'addGroupKeyToPostbox'));
 
         // Bulk
         add_filter('bulk_actions-edit-acf-field-group', array($this, 'addExportBulkAction'));
         add_filter('handle_bulk_actions-edit-acf-field-group', array($this, 'handleBulkExport'), 10, 3);
         add_action('admin_notices', array($this, 'bulkNotice'));
+    }
+
+    public function addGroupKeyToPostbox($post)
+    {
+        if ($post->post_type !== 'acf-field-group') {
+            return;
+        }
+
+        $fieldgroup = acf_get_field_group($post->ID);
+
+        echo '<div class="misc-pub-section"><span style="color:#82878c;font-size:20px;display:inline-block;width:18px;vertical-align:middle;position:relative;top:-1px;text-align:center;margin-right:8px;">#</span>' . $fieldgroup['key'] . '</div>';
     }
 
     /**
