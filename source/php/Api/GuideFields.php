@@ -308,6 +308,10 @@ class GuideFields extends Fields
                     $item['objects'] = explode("||", $item['objects']);
                 }
 
+                if (is_string($item['objects'])) {
+                    $item['objects'] = explode(",", $item['objects']);
+                }
+
                 $result[] = array(
                     'order' => $key,
                     'nid' => $beacon_namespace,
