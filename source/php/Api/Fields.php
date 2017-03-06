@@ -207,7 +207,7 @@ class Fields
     }
 
     /**
-     * Replace id with array with group id, name and slug
+     * Replace id with array with taxonomy id, name and slug
      *
      * @param   object  $object      The response object.
      * @param   string  $field_name  The name of the field to add.
@@ -216,7 +216,7 @@ class Fields
      * @return  object|null
      */
 
-    public function userGroups($object, $field_name, $request)
+    public function getTaxonomyCallback($object, $field_name, $request)
     {
         if (! empty($object[$field_name])) {
             $taxonomies = $object[$field_name];

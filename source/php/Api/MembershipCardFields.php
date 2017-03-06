@@ -47,7 +47,7 @@ class MembershipCardFields extends Fields
         register_rest_field($this->postType,
             'user_groups',
             array(
-                'get_callback' => array($this, 'userGroups'),
+                'get_callback' => array($this, 'getTaxonomyCallback'),
                 'update_callback' => array($this, 'objectUpdateCallBack'),
                 'schema' => null
             )
