@@ -101,6 +101,10 @@ class Guides extends \HbgEventImporter\Entity\CustomPostType
     {
         global $post;
 
+        if (!is_object($post)) {
+            return $field;
+        }
+
         $field['choices'] = [];
 
         foreach ((array) get_field('guide_content_objects', $post->ID) as $key => $item) {

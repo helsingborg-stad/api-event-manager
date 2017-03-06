@@ -1,0 +1,108 @@
+[{
+    "key": "group_575fe32901927",
+    "title": "Event manager settings",
+    "fields": [
+        {
+            "key": "field_575fe34355309",
+            "label": "Google Api key",
+            "name": "google_geocode_api_key",
+            "type": "text",
+            "instructions": "API-services required:<br> Google Maps JavaScript API<br> Google Maps Geocoding API<br> Google Places API Web Service",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_57fb3d55d2535",
+            "label": "Default city",
+            "name": "default_city",
+            "type": "text",
+            "instructions": "If essential address components are missing during import, this city will be used as default.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_580db5e4967d6",
+            "label": "Import warning",
+            "name": "import_warning",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "Show notification if no events have been imported for a week or more.",
+            "default_value": 1
+        },
+        {
+            "key": "field_588605e9078dc",
+            "label": "Groups",
+            "name": "event_group_select",
+            "type": "checkbox",
+            "instructions": "Activate user groups on selected post types.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "event": "Events",
+                "location": "Locations",
+                "contact": "Contacts",
+                "sponsor": "Sponsors",
+                "package": "Packages",
+                "membership-card": "Membership cards",
+                "guide": "Guides"
+            },
+            "default_value": [
+                "event"
+            ],
+            "layout": "vertical",
+            "toggle": 0,
+            "return_format": "value"
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "options_page",
+                "operator": "==",
+                "value": "acf-options-options"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": 1,
+    "description": "",
+    "local": "json"
+}]
+

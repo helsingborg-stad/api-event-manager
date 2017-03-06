@@ -15,14 +15,12 @@ class App
             }
         });
 
+        add_action('acf/init', array($this, 'acfGoogleKey'));
+
         // Remove auto empty of trash
         add_action('init', function () {
             remove_action('wp_scheduled_delete', 'wp_scheduled_delete');
         });
-
-        // Field mapping
-        add_action('acf/init', array($this, 'acfSettings'));
-        add_filter('acf/translate_field', array($this, 'acfTranslationFilter'));
 
         // Admin scripts
         add_action('admin_enqueue_scripts', array($this, 'enqueueStyles'));
@@ -51,10 +49,6 @@ class App
         new PostTypes\Packages();
         new PostTypes\MembershipCards();
         new PostTypes\Guides();
-
-        //Init functions
-        new Acf\AcfFields();
-        new Acf\AcfGuide();
 
         new Taxonomy\EventCategories();
         new Taxonomy\UserGroups();
@@ -94,7 +88,7 @@ class App
         if (!is_wp_error($user)) {
             if (user_can($user->ID, 'edit_events')) {
                 $redirect_to = admin_url('edit.php?post_type=event');
-            } elseif(user_can($user->ID, 'edit_guides')) {
+            } elseif (user_can($user->ID, 'edit_guides')) {
                 $redirect_to = admin_url('edit.php?post_type=guide');
             }
         }
@@ -162,8 +156,6 @@ class App
             wp_enqueue_script('hbg-event-importer', HBGEVENTIMPORTER_URL . '/dist/js/app.min.js');
         }
 
-        wp_enqueue_script('hbg-event-importer', HBGEVENTIMPORTER_URL . '/dist/js/app.min.js');
-
         wp_localize_script('hbg-event-importer', 'eventmanager', array(
             'ajaxurl'               => admin_url('admin-ajax.php'),
             'wpapiurl'              => home_url('json'),
@@ -210,7 +202,7 @@ class App
      * Get Xcap keys
      * @return array
      */
-    public function getXcapKeys()
+    public function getXcapKeys(): array
     {
         $xcapKeys = array();
 
@@ -235,7 +227,7 @@ class App
      * Get CBIS keys
      * @return array
      */
-    public function getCbisKeys()
+    public function getCbisKeys(): array
     {
         $cbisKeys = array();
 
@@ -285,15 +277,14 @@ class App
     public function startImport()
     {
         if (get_field('cbis_daily_cron', 'option') == true) {
-
             $api_keys = $this->getCbisKeys();
 
-            foreach ($api_keys as $key => $api_key) {
+            foreach ((array) $api_keys as $key => $api_key) {
                 $importer = new \HbgEventImporter\Parser\CbisEvent('http://api.cbis.citybreak.com/Products.asmx?wsdl', $api_key);
             }
 
             // Cbis locations
-            foreach ($api_keys as $key => $api_key) {
+            foreach ((array) $api_keys as $key => $api_key) {
                 foreach ($api_key['cbis_locations'] as $key => $location) {
                     $importer = new \HbgEventImporter\Parser\CbisLocation('http://api.cbis.citybreak.com/Products.asmx?wsdl', $api_key, $location);
                 }
@@ -302,12 +293,12 @@ class App
 
         if (get_field('xcap_daily_cron', 'option') == true) {
             $api_keys = $this->getXcapKeys();
-            var_dump($api_keys);
 
-            foreach ($api_keys as $key => $api_key) {
+            foreach ((array) $api_keys as $key => $api_key) {
                 $importer = new \HbgEventImporter\Parser\Xcap($api_key['xcap_api_url'], $api_key);
             }
         }
+
         file_put_contents(dirname(__FILE__) . "/Log/cron_import.log", "Cron last run: " . date("Y-m-d H:i:s"));
     }
 
@@ -373,10 +364,8 @@ class App
      * ACF settings action
      * @return void
      */
-    public function acfSettings()
+    public function acfGoogleKey()
     {
-        acf_update_setting('l10n', true);
-        acf_update_setting('l10n_textdomain', 'event-manager');
         acf_update_setting('google_api_key', get_option('options_google_geocode_api_key'));
     }
 
@@ -387,6 +376,8 @@ class App
      */
     public function acfTranslationFilter($field)
     {
+        return $field;
+
         if ($field['type'] == 'text' || $field['type'] == 'number') {
             $field['append'] = acf_translate($field['append']);
             $field['placeholder'] = acf_translate($field['placeholder']);
