@@ -30,6 +30,8 @@ class CbisLocation extends \HbgEventImporter\Parser\Cbis
 
         $this->collectDataForLevenshtein();
 
+        $requestParams = array();
+
         // CBIS API keys
         $cbisKey         = $this->apiKeys['cbis_key'];
         $cbisId          = $this->apiKeys['cbis_geonode'];
@@ -47,12 +49,14 @@ class CbisLocation extends \HbgEventImporter\Parser\Cbis
         $postStatus      = get_field('cbis_post_status', 'option') ? get_field('cbis_post_status', 'option') : 'publish';
 
         // Number of arenas/products to get, 500 to get all
-        $getLength = 600;
+        $requestParams['itemsPerPage'] = 600;
 
         if (intval($isArena)) {
+            $requestParams['filter']['ProductType'] = "Arena";
+
             // Get and save event "arenas" to locations
-            $response = $this->soapRequest($cbisKey, $cbisId, $cbisCategory, $getLength);
-            $this->arenas =$response->ListAllResult->Items->Product;
+            $response = $this->soapRequest($cbisKey, $cbisId, $cbisCategory, $requestParams);
+            $this->arenas = $response->ListAllResult->Items->Product;
 
             foreach ($this->arenas as $arena) {
                 $this->saveLocation($arena, 'arena', $defaultLocation, $userGroups, $shortKey, $postStatus);
@@ -64,7 +68,8 @@ class CbisLocation extends \HbgEventImporter\Parser\Cbis
             $requestParams['filter']['ExcludeProductsWithoutOccasions'] = false;
             $requestParams['filter']['StartDate'] = null;
 
-            $this->products = $this->client->ListAll($requestParams)->ListAllResult->Items->Product;
+            $response = $this->soapRequest($cbisKey, $cbisId, $cbisCategory, $requestParams);
+            $this->products = $response->ListAllResult->Items->Product;
 
             // Filter expired products
             $filteredProducts = array_filter($this->products, function ($obj) {

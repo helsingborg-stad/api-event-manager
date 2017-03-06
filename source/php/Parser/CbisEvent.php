@@ -33,6 +33,8 @@ class CbisEvent extends \HbgEventImporter\Parser\Cbis
 
         $this->collectDataForLevenshtein();
 
+        $requestParams = array();
+
         // CBIS API keys and settings
         $cbisKey        = $this->apiKeys['cbis_key'];
         $cbisId         = $this->apiKeys['cbis_geonode'];
@@ -46,10 +48,10 @@ class CbisEvent extends \HbgEventImporter\Parser\Cbis
         $postStatus     = get_field('cbis_post_status', 'option') ? get_field('cbis_post_status', 'option') : 'publish';
 
         // Number of products to get, 2000 to get all
-        $getLength = (int) apply_filters('event/parser/cbis/import/limit', 2000);
+        $requestParams['itemsPerPage'] = (int) apply_filters('event/parser/cbis/import/limit', 2000);
 
         // Get and save "Events"
-        $response = $this->soapRequest($cbisKey, $cbisId, $cbisCategory, $getLength);
+        $response = $this->soapRequest($cbisKey, $cbisId, $cbisCategory, $requestParams);
         $this->events = $response->ListAllResult->Items->Product;
 
         // Filter expired products older than 2 years

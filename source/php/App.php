@@ -15,6 +15,8 @@ class App
             }
         });
 
+        add_action('acf/init', array($this, 'acfGoogleKey'));
+
         // Remove auto empty of trash
         add_action('init', function () {
             remove_action('wp_scheduled_delete', 'wp_scheduled_delete');
@@ -200,7 +202,7 @@ class App
      * Get Xcap keys
      * @return array
      */
-    public function getXcapKeys()
+    public function getXcapKeys(): array
     {
         $xcapKeys = array();
 
@@ -225,7 +227,7 @@ class App
      * Get CBIS keys
      * @return array
      */
-    public function getCbisKeys()
+    public function getCbisKeys(): array
     {
         $cbisKeys = array();
 
@@ -362,12 +364,8 @@ class App
      * ACF settings action
      * @return void
      */
-    public function acfSettings()
+    public function acfGoogleKey()
     {
-        return;
-
-        acf_update_setting('l10n', false);
-        acf_update_setting('l10n_textdomain', 'event-manager');
         acf_update_setting('google_api_key', get_option('options_google_geocode_api_key'));
     }
 

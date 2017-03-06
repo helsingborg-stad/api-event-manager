@@ -109,10 +109,10 @@ abstract class Cbis extends \HbgEventImporter\Parser
      * @param  string    $key        Cbis api key
      * @param  int|array $geonode    Geonode(s) (id)
      * @param  int       $category   Category id
-     * @param  integer $maxLength  Max number of results
-     * @return object              SOAP request result object
+     * @param  array     $params     Other custom request parameters
+     * @return object                SOAP request result object
      */
-    public function soapRequest($key, $geonode, $category = null, $maxLength = 600)
+    public function soapRequest($key, $geonode, $category = null, $params = array())
     {
         if (!isset($key) || empty($key) || !isset($geonode) || empty($geonode)) {
             throw new \Exception('Needed authorization information (CBIS API id and/or CBIS API key) is missing.');
@@ -126,7 +126,7 @@ abstract class Cbis extends \HbgEventImporter\Parser
             'categoryId' => $category,
             'templateId' => 0,
             'pageOffset' => 0,
-            'itemsPerPage' => $maxLength,
+            'itemsPerPage' => 2000,
             'filter' => array(
                 'GeoNodeIds' => array($geonode),
                 'StartDate' => date('c'),
@@ -150,6 +150,8 @@ abstract class Cbis extends \HbgEventImporter\Parser
                 'IncludePendingPublish' => false
             )
         );
+
+        $requestParams = array_replace_recursive($requestParams, $params);
 
         return $this->client->ListAll($requestParams);
     }
