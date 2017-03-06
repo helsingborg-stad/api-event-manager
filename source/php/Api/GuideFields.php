@@ -128,10 +128,10 @@ class GuideFields extends Fields
         register_rest_field($this->postType,
             'guidegroup',
             array(
-                'get_callback' => array($this, 'objectGetCallBack'),
+                'get_callback' => array($this, 'getTaxonomyCallback'),
                 'update_callback' => array($this, 'objectUpdateCallBack'),
                 'schema' => array(
-                    'description' => 'Describes  main location in generel terms.',
+                    'description' => 'Describes main location in generel terms.',
                     'type' => 'object',
                     'context' => array('view', 'embed')
                 )
@@ -143,7 +143,7 @@ class GuideFields extends Fields
         register_rest_field($this->postType,
             'user_groups',
             array(
-                'get_callback' => array($this, 'userGroups'),
+                'get_callback' => array($this, 'getTaxonomyCallback'),
                 'update_callback' => array($this, 'objectUpdateCallBack'),
                 'schema' => null
             )
