@@ -390,6 +390,26 @@ class EventFields extends Fields
     {
         /* Event tab */
 
+        // Title as plain text
+        register_rest_field($this->postType,
+            'title',
+            array(
+                'get_callback'    => array($this, 'addPlaintextField'),
+                'update_callback' => null,
+                'schema'          => null,
+            )
+        );
+
+        // Content as plain text
+        register_rest_field($this->postType,
+            'content',
+            array(
+                'get_callback'    => array($this, 'addPlaintextField'),
+                'update_callback' => null,
+                'schema'          => null,
+            )
+        );
+
         //External event link
         register_rest_field($this->postType,
             'event_link',
@@ -569,7 +589,7 @@ class EventFields extends Fields
         register_rest_field($this->postType,
             'price_information',
             array(
-                'get_callback' => array($this, 'stringGetCallBack'),
+                'get_callback' => array($this, 'unformattedStringGetCallBack'),
                 'update_callback' => array($this, 'stringUpdateCallBack'),
                 'schema' => array(
                     'description' => 'Field containing string with price details.',
@@ -583,7 +603,7 @@ class EventFields extends Fields
         register_rest_field($this->postType,
             'ticket_includes',
             array(
-                'get_callback' => array($this, 'stringGetCallBack'),
+                'get_callback' => array($this, 'unformattedStringGetCallBack'),
                 'update_callback' => array($this, 'stringUpdateCallBack'),
                 'schema' => array(
                     'description' => 'Field containing string with ticket includes information.',

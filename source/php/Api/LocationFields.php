@@ -134,6 +134,17 @@ class LocationFields extends Fields
      */
     public static function registerRestFields()
     {
+
+        // Title as plain text
+        register_rest_field($this->postType,
+            'title',
+            array(
+                'get_callback'    => array($this, 'addPlaintextField'),
+                'update_callback' => null,
+                'schema'          => null,
+            )
+        );
+
         //Parent
         register_rest_field($this->postType,
             'parent',

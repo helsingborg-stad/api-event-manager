@@ -128,9 +128,11 @@ class App
         }
 
         $referer = (isset($_SERVER['HTTP_REFERER'])) ? $_SERVER['HTTP_REFERER'] : null;
+
         if ((isset($_GET['lightbox']) && $_GET['lightbox'] == 'true') || strpos($referer, 'lightbox=true') > -1) {
             wp_enqueue_style('lightbox', plugins_url() . '/api-event-manager/dist/css/modal.min.css', false, '1.0.0');
         }
+
     }
 
     /**

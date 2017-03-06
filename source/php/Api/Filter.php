@@ -29,7 +29,6 @@ class Filter
         add_filter('rest_prepare_location_categories', array($this, 'removeResponseKeys'), 5000, 3);
         add_filter('rest_prepare_guide', array($this, 'removeResponseKeys'), 5000, 3);
         add_filter('rest_prepare_guidegroup', array($this, 'removeResponseKeys'), 5000, 3);
-
     }
 
     /**

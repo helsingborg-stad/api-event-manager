@@ -113,7 +113,17 @@ class GuideFields extends Fields
     public static function registerRestFields()
     {
 
-        /* Replace group id with taxonomy name */
+        // Title as plain text
+        register_rest_field($this->postType,
+            'title',
+            array(
+                'get_callback'    => array($this, 'addPlaintextField'),
+                'update_callback' => null,
+                'schema'          => null,
+            )
+        );
+
+        // Replace group id with taxonomy name
 
         register_rest_field($this->postType,
             'guidegroup',
@@ -128,7 +138,7 @@ class GuideFields extends Fields
             )
         );
 
-        /* Replace group id with taxonomy name */
+        // Replace group id with taxonomy name
 
         register_rest_field($this->postType,
             'user_groups',
@@ -388,24 +398,21 @@ class GuideFields extends Fields
         $objects = [];
         $i = 0;
         $beacons = $this->objectGetCallBack($object, 'guide_beacon', $request, true);
-        if (! $beacons) {
-            return null;
-        }
 
         foreach ($this->getObjects($object, 'guide_content_objects', $request, true) as $key => $item) {
 
             //Get beacon id
-            foreach ($beacons as $beacon) {
+            $beacon_id = null;
+            if ($beacons) {
+                foreach ($beacons as $beacon) {
+                    if (is_string($beacon['objects'])) {
+                        $beacon['objects'] = explode("||", $beacon['objects']);
+                    }
 
-                if (is_string($beacon['objects'])) {
-                    $beacon['objects'] = explode("||", $beacon['objects']);
-                }
-
-                if (in_array($key, $beacon['objects'])) {
-                    $beacon_id = $beacon['beacon'];
-                    break;
-                } else {
-                    $beacon_id = null;
+                    if (in_array($key, $beacon['objects'])) {
+                        $beacon_id = $beacon['beacon'];
+                        break;
+                    }
                 }
             }
 
@@ -413,15 +420,13 @@ class GuideFields extends Fields
                 'order' => $i,
                 'active' => ($item['guide_object_active'] == 1) ? true : false,
                 'id' => empty($item['guide_object_id']) ? null : $item['guide_object_id'],
-
                 'title' => empty($item['guide_object_title']) ? null : $item['guide_object_title'],
                 'description' => empty($item['guide_object_description']) ? null : $item['guide_object_description'],
-
+                'description_plain' => empty($item['guide_object_description']) ? null : strip_tags(html_entity_decode($item['guide_object_description'])),
                 'image' => !is_array($item['guide_object_image']) ? null : $this->sanitizeMediaObject($item['guide_object_image']),
                 'audio' => !is_array($item['guide_object_audio']) ? null : $this->sanitizeMediaObject($item['guide_object_audio']),
                 'video' => !is_array($item['guide_object_video']) ? null : $this->sanitizeMediaObject($item['guide_object_video']),
                 'links' => !is_array($item['guide_object_links']) ? null : $this->sanitizeLinkObject($item['guide_object_links']),
-
                 'bid'   => $beacon_id,
             );
             $i++;
