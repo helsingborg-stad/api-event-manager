@@ -275,4 +275,19 @@ class Fields
 
         return $location_data;
     }
+
+    /**
+     * Return plaintext field for posts
+     *
+     * @param   object  $object      The response object.
+     * @param   string  $field_name  The name of the field to add.
+     * @param   object  $request     The WP_REST_Request object.
+     *
+     * @return  object|null
+     */
+    public function addPlaintextField($object, $field_name, $request) {
+        $object[$field_name]['plain_text'] = strip_tags(html_entity_decode($object[$field_name]['rendered']));
+        return $object[$field_name];
+    }
+
 }
