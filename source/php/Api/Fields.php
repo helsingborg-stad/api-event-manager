@@ -57,7 +57,7 @@ class Fields
      */
     public function stringGetCallBack($object, $field_name, $request, $formatted = true)
     {
-        $return_value = self::getFieldGetMetaData($object, $field_name, $request);
+        $return_value = self::getFieldGetMetaData($object, $field_name, $request, $formatted);
 
         if (is_string($return_value) && !empty($return_value)) {
             return $return_value;
