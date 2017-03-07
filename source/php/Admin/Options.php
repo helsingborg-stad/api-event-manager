@@ -35,6 +35,17 @@ class Options
         if (isset($_POST['post_title']) && get_post_meta($post_id, 'imported_post', true)) {
             $data = isset($_POST['sync-checkbox']) ? 1 : 0;
             update_post_meta($post_id, 'sync', $data);
+
+            if ($data == 0) {
+                $importClient = get_post_meta($post_id, 'import_client', true);
+                add_post_meta($post_id, 'orig_import_client', $importClient, true);
+                delete_post_meta($post_id, 'import_client');
+            } else {
+                $orig_client = get_post_meta($post_id, 'orig_import_client', true);
+                add_post_meta($post_id, 'import_client', $orig_client, true);
+                delete_post_meta($post_id, 'orig_import_client');
+            }
+
         }
     }
 

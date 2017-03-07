@@ -155,7 +155,7 @@ class App
         );
 
         if (is_object($current_screen) && in_array($current_screen->post_type, $acceptedPostTypes)) {
-            wp_enqueue_script('hbg-event-importer', HBGEVENTIMPORTER_URL . '/dist/js/app.dev.js');
+            wp_enqueue_script('hbg-event-importer', HBGEVENTIMPORTER_URL . '/dist/js/app.min.js');
         }
 
         wp_localize_script('hbg-event-importer', 'eventmanager', array(
