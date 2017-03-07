@@ -400,7 +400,7 @@ ImportEvents.Admin.Guide = (function ($) {
     Guide.prototype.getObjects = function() {
         var objects = [];
 
-        $('[data-name="guide_content_objects"] tr.acf-row:not(.acf-clone)').each(function (index, item) {
+        $('[data-name="guide_content_objects"] table tbody').first().children('tr.acf-row:not(.acf-clone)').each(function (index, item) {
             var $item = $(item);
 
             var uid = $item.find('[data-name="guide_object_uid"] input').val();
