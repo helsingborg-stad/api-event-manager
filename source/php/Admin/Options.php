@@ -26,7 +26,7 @@ class Options
     }
 
     /**
-     * Save sync option
+     * Save sync option. Remove import client and save to new meta field
      * @param  int $post_id current post id
      * @return void
      */
@@ -45,8 +45,29 @@ class Options
                 add_post_meta($post_id, 'import_client', $orig_client, true);
                 delete_post_meta($post_id, 'orig_import_client');
             }
-
         }
+    }
+
+    /**
+     * When unchecking sync option, remove import client and save to new meta field
+     * @param  string $value   the value of the field
+     * @param  int    $post_id the post id to save against
+     * @param  array  $field   the field object
+     * @return string          the new value
+     */
+    public function acfUpdateSync($value, $post_id, $field)
+    {
+        if (!$value) {
+            $importClient = get_post_meta($post_id, 'import_client', true);
+            add_post_meta($post_id, 'orig_import_client', $importClient, true);
+            delete_post_meta($post_id, 'import_client');
+        } else {
+            $orig_client = get_post_meta($post_id, 'orig_import_client', true);
+            add_post_meta($post_id, 'import_client', $orig_client, true);
+            delete_post_meta($post_id, 'orig_import_client');
+        }
+
+        return $value;
     }
 
     /**
