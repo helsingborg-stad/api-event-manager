@@ -52,16 +52,9 @@
     "location": [
         [
             {
-                "param": "post_type",
+                "param": "settings",
                 "operator": "==",
-                "value": "event"
-            }
-        ],
-        [
-            {
-                "param": "post_type",
-                "operator": "==",
-                "value": "package"
+                "value": "0"
             }
         ]
     ],
@@ -72,6 +65,6 @@
     "instruction_placement": "label",
     "hide_on_screen": "",
     "active": 1,
-    "description": "",
-    "local": "json"
+    "description": ""
 }]
+

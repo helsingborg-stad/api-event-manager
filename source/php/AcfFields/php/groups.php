@@ -3,7 +3,7 @@
 if (function_exists('acf_add_local_field_group')) {
     acf_add_local_field_group(array(
     'key' => 'group_5885f51260b61',
-    'title' => 'Groups',
+    'title' => __('Groups', 'event-manager'),
     'fields' => array(
         0 => array(
             'key' => 'field_5885f58a36f81',
@@ -55,16 +55,9 @@
     'location' => array(
         0 => array(
             0 => array(
-                'param' => 'post_type',
+                'param' => 'settings',
                 'operator' => '==',
-                'value' => 'event',
-            ),
-        ),
-        1 => array(
-            0 => array(
-                'param' => 'post_type',
-                'operator' => '==',
-                'value' => 'package',
+                'value' => '0',
             ),
         ),
     ),
@@ -76,6 +69,5 @@
     'hide_on_screen' => '',
     'active' => 1,
     'description' => '',
-    'local' => 'json',
 ));
 }

@@ -15,8 +15,6 @@ class App
             }
         });
 
-        add_action('acf/init', array($this, 'acfGoogleKey'));
-
         // Remove auto empty of trash
         add_action('init', function () {
             remove_action('wp_scheduled_delete', 'wp_scheduled_delete');
@@ -36,10 +34,18 @@ class App
         add_filter('login_redirect', array($this, 'loginRedirect'), 10, 3);
         add_action('admin_init', array($this, 'dashboardRedirect'));
 
-        //Load acf plugins
+        // Load acf plugins
         add_action('init', function () {
             require_once HBGEVENTIMPORTER_PATH . 'source/php/Vendor/acf-unique-id/acf-unique_id-v5.php';
         });
+
+        // Acf setting: Google API key
+        add_action('acf/init', array($this, 'acfGoogleKey'));
+
+        // Create custom ACF location rule. Adds 'user groups' to selected post types
+        add_filter('acf/location/rule_types', array($this, 'acfLocationRulesTypes'));
+        add_filter('acf/location/rule_values/settings', array($this, 'acfLocationRuleValues'));
+        add_filter('acf/location/rule_match/settings', array($this, 'acfLocationRulesMatch'), 10, 3);
 
         //Init post types
         new PostTypes\Events();
@@ -132,7 +138,6 @@ class App
         if ((isset($_GET['lightbox']) && $_GET['lightbox'] == 'true') || strpos($referer, 'lightbox=true') > -1) {
             wp_enqueue_style('lightbox', plugins_url() . '/api-event-manager/dist/css/modal.min.css', false, '1.0.0');
         }
-
     }
 
     /**
@@ -393,5 +398,46 @@ class App
             $field['button_label'] = acf_translate($field['button_label']);
         }
         return $field;
+    }
+    /**
+     * Add new location rule type 'Group settings'
+     * @param  array $choices Location rule types
+     * @return array
+     */
+    public function acfLocationRulesTypes($choices)
+    {
+        $choices['Event']['settings'] = 'Group settings';
+        return $choices;
+    }
+
+    /**
+     * Location rule type choices
+     * @param  array $choices Location rule choices
+     * @return array
+     */
+    public function acfLocationRuleValues($choices)
+    {
+        return $choices['post_types'] = "Post types";
+    }
+
+    /**
+     * Matching custom location rule
+     * @param  boolean $match   If rule match or not
+     * @param  array   $rule    Current rule that to match against
+     * @param  array   $options Data about the current edit screen
+     * @return boolean
+     */
+    public function acfLocationRulesMatch($match, $rule, $options)
+    {
+        $screen = get_current_screen();
+        $groups = get_field('event_group_select', 'option');
+
+        if ($rule['operator'] == "==") {
+            $match = (in_array($options['post_type'], $groups) && $screen->base == 'post');
+        } elseif ($rule['operator'] == "!=") {
+            $match = (! in_array($options['post_type'], $groups) && $screen->base == 'post');
+        }
+
+        return $match;
     }
 }
