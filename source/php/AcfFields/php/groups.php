@@ -55,16 +55,9 @@
     'location' => array(
         0 => array(
             0 => array(
-                'param' => 'post_type',
+                'param' => 'settings',
                 'operator' => '==',
-                'value' => 'event',
-            ),
-        ),
-        1 => array(
-            0 => array(
-                'param' => 'post_type',
-                'operator' => '==',
-                'value' => 'package',
+                'value' => '0',
             ),
         ),
     ),

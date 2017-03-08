@@ -3,7 +3,7 @@
 if (function_exists('acf_add_local_field_group')) {
     acf_add_local_field_group(array(
     'key' => 'group_575fe32901927',
-    'title' => 'Event manager settings',
+    'title' => __('Event manager settings', 'event-manager'),
     'fields' => array(
         0 => array(
             'key' => 'field_575fe34355309',
@@ -61,10 +61,10 @@
         ),
         3 => array(
             'key' => 'field_588605e9078dc',
-            'label' => 'Groups',
+            'label' => __('Groups', 'event-manager'),
             'name' => 'event_group_select',
             'type' => 'checkbox',
-            'instructions' => 'Activate user groups on selected post types.',
+            'instructions' => __('Activate user groups on selected post types.', 'event-manager'),
             'required' => 0,
             'conditional_logic' => 0,
             'wrapper' => array(
@@ -73,13 +73,13 @@
                 'id' => '',
             ),
             'choices' => array(
-                'event' => 'Events',
-                'location' => 'Locations',
-                'contact' => 'Contacts',
-                'sponsor' => 'Sponsors',
-                'package' => 'Packages',
-                'membership-card' => 'Membership cards',
-                'guide' => 'Guides',
+                'event' => __('Events', 'event-manager'),
+                'location' => __('Locations', 'event-manager'),
+                'contact' => __('Contacts', 'event-manager'),
+                'sponsor' => __('Sponsors', 'event-manager'),
+                'package' => __('Packages', 'event-manager'),
+                'membership-card' => __('Membership cards', 'event-manager'),
+                'guide' => __('Guides', 'event-manager'),
             ),
             'default_value' => array(
                 0 => 'event',
