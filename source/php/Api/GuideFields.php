@@ -163,6 +163,20 @@ class GuideFields extends Fields
 
         // Guide media objects
         register_rest_field($this->postType,
+            'guide_location',
+            array(
+                'get_callback' => array($this, 'numericGetCallBack'),
+                'update_callback' => array($this, 'objectUpdateCallBack'),
+                'schema' => array(
+                    'description' => 'Guide main location object id.',
+                    'type' => 'object',
+                    'context' => array('view', 'embed')
+                )
+            )
+        );
+
+        // Guide media objects
+        register_rest_field($this->postType,
             'guide_images',
             array(
                 'get_callback' => array($this, 'objectGetCallBack'),
