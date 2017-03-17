@@ -21,6 +21,7 @@ class GuideFields extends Fields
 
         //Api filter querys
         add_filter('rest_guide_query', array($this, 'addBeaconFilter'), 10, 2);
+        add_filter('rest_prepare_guide', array($this, 'addObjectFilter'), 6000, 3);
     }
 
      /**
@@ -58,6 +59,35 @@ class GuideFields extends Fields
         }
 
         return $args;
+    }
+
+    /**
+     * Filter by object
+     * @param  array           $args    The query arguments.
+     * @param  WP_REST_Request $request Full details about the request.
+     * @return array $response.
+     **/
+    public function addObjectFilter($response, $post, $request)
+    {
+        if (isset($_GET['object'])) {
+
+            //Parse content object
+            if (isset($response->data['contentObjects'][$_GET['object']])) {
+                $response->data['contentObject'] = $response->data['contentObjects'][$_GET['object']];
+            } else {
+                $response->data['contentObject'] = null;
+            }
+
+            //Define allowed keys
+            $keys = array('contentObject');
+
+            //Do filtering
+            $response->data = array_filter($response->data, function ($k) use ($keys) {
+                return in_array($k, $keys, true);
+            }, ARRAY_FILTER_USE_KEY);
+        }
+
+        return $response;
     }
 
     /**
@@ -317,7 +347,6 @@ class GuideFields extends Fields
         }
         foreach ($beacons as $key => $item) {
             if (!empty($item['objects'])) {
-
                 if (is_string($item['objects'])) {
                     $item['objects'] = explode("||", $item['objects']);
                 }
