@@ -41,6 +41,29 @@
             ),
         ),
         2 => array(
+            'post_type' => array(
+                0 => 'location',
+            ),
+            'taxonomy' => array(
+            ),
+            'allow_null' => 0,
+            'multiple' => 0,
+            'return_format' => 'id',
+            'ui' => 1,
+            'key' => 'field_58cbfb6e8d677',
+            'label' => __('Location', 'event-manager'),
+            'name' => 'guide_location',
+            'type' => 'post_object',
+            'instructions' => '',
+            'required' => 0,
+            'conditional_logic' => 0,
+            'wrapper' => array(
+                'width' => '',
+                'class' => '',
+                'id' => '',
+            ),
+        ),
+        3 => array(
             'placement' => 'left',
             'endpoint' => 0,
             'key' => 'field_5894987dfc7b1',
@@ -56,7 +79,7 @@
                 'id' => '',
             ),
         ),
-        3 => array(
+        4 => array(
             'library' => 'all',
             'min' => '',
             'max' => 10,
@@ -81,7 +104,7 @@
                 'id' => '',
             ),
         ),
-        4 => array(
+        5 => array(
             'placement' => 'top',
             'endpoint' => 0,
             'key' => 'field_5899a94bff0ec',
@@ -97,7 +120,7 @@
                 'id' => '',
             ),
         ),
-        5 => array(
+        6 => array(
             'sub_fields' => array(
                 0 => array(
                     'placement' => 'top',
@@ -473,7 +496,7 @@
                 'id' => '',
             ),
         ),
-        6 => array(
+        7 => array(
             'placement' => 'top',
             'endpoint' => 0,
             'key' => 'field_58ab0c6354b09',
@@ -489,7 +512,7 @@
                 'id' => '',
             ),
         ),
-        7 => array(
+        8 => array(
             'default_value' => '',
             'maxlength' => '',
             'placeholder' => '',
@@ -508,7 +531,7 @@
                 'id' => '',
             ),
         ),
-        8 => array(
+        9 => array(
             'sub_fields' => array(
                 0 => array(
                     'post_type' => array(
