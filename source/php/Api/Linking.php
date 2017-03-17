@@ -29,8 +29,9 @@ class Linking extends Fields
         add_filter('rest_prepare_package', array($this, 'addIncludedEvents'), 20, 3);
         add_filter('rest_prepare_package', array($this, 'addEmbedLink'), 20, 3);
 
-        add_filter('rest_prepare_guidegroup', array($this, 'addGuideLocation'), 20, 3);
-        add_filter('rest_prepare_guide', array($this, 'addGuideSubLocation'), 20, 3);
+        add_filter('rest_prepare_guidegroup', array($this, 'addGuideLocation'), 20, 3); //Taxonomy locations
+        add_filter('rest_prepare_guide', array($this, 'addGuideMainLocation'), 20, 3); //Guide locations
+        add_filter('rest_prepare_guide', array($this, 'addGuideSubLocation'), 20, 3); //Beacon locations
         add_filter('rest_prepare_guide', array($this, 'addEmbedLink'), 20, 3);
     }
 
@@ -204,15 +205,30 @@ class Linking extends Fields
         $id = get_field('guide_taxonomy_location', $taxonomy->taxonomy. '_' . $taxonomy->term_id);
 
         if (!is_null($id)) {
+            $response->add_link(
+                'location',
+                rest_url('/wp/v2/location/' . $id),
+                array( 'embeddable' => true )
+            );
+        }
 
-                $response->add_link(
-                    'location',
-                    rest_url('/wp/v2/location/' . $id),
-                    array( 'embeddable' => true )
-                );
+        return $response;
+    }
 
+    /**
+     * Register link to connected locations, embeddable
+     * @return  object
+     */
+    public function addGuideMainLocation($response, $post, $request)
+    {
+        $id = get_field('guide_location', $post->ID);
 
-
+        if (!is_null($id)) {
+            $response->add_link(
+                'location',
+                rest_url('/wp/v2/location/' . $id),
+                array( 'embeddable' => true )
+            );
         }
 
         return $response;
