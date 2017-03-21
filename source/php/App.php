@@ -399,6 +399,7 @@ class App
         }
         return $field;
     }
+
     /**
      * Add new location rule type 'Group settings'
      * @param  array $choices Location rule types
@@ -429,13 +430,14 @@ class App
      */
     public function acfLocationRulesMatch($match, $rule, $options)
     {
-        $screen = get_current_screen();
         $groups = get_field('event_group_select', 'option');
 
-        if ($rule['operator'] == "==") {
-            $match = (in_array($options['post_type'], $groups) && $screen->base == 'post');
-        } elseif ($rule['operator'] == "!=") {
-            $match = (! in_array($options['post_type'], $groups) && $screen->base == 'post');
+        if ($groups) {
+            if ($rule['operator'] == "==") {
+                $match = (in_array($options['post_type'], $groups) && $options['post_id'] > 0);
+            } elseif ($rule['operator'] == "!=") {
+                $match = (! in_array($options['post_type'], $groups) && $options['post_id'] > 0);
+            }
         }
 
         return $match;

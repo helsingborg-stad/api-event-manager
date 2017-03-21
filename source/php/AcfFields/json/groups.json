@@ -16,7 +16,10 @@
                 "id": ""
             },
             "message": "Check this box if the post does not belong to any user groups. This post will be available to all users.",
-            "default_value": 0
+            "default_value": 0,
+            "ui": 0,
+            "ui_on_text": "",
+            "ui_off_text": ""
         },
         {
             "key": "field_5885f58c36f82",

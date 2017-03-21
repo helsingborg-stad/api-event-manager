@@ -20,6 +20,9 @@
             ),
             'message' => __('Check this box if the post does not belong to any user groups. This post will be available to all users.', 'event-manager'),
             'default_value' => 0,
+            'ui' => 0,
+            'ui_on_text' => '',
+            'ui_off_text' => '',
         ),
         1 => array(
             'key' => 'field_5885f58c36f82',
