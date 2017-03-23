@@ -154,7 +154,7 @@ class GuideFields extends Fields
         );
 
         //Main content object
-        register_rest_field($this->taxonomyName,
+        register_rest_field($this->postType,
             'content',
             array(
                 'get_callback' => array($this, 'addDescription'),
