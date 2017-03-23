@@ -7,7 +7,6 @@ namespace HbgEventImporter\Admin;
 */
 class UserRoles
 {
-
 	public function __construct()
 	{
         add_action('admin_init', array($this, 'addCapabilities'));
@@ -21,16 +20,33 @@ class UserRoles
     {
         add_role('guide_administrator', __("Guide administrator", 'event-manager'), array(
             'read' => true,
-            'level_7' => true
+            'level_7' => true,
+            'upload_files' => true
         ));
         add_role('event_contributor', __("Event contributor", 'event-manager'), array(
             'read' => true,
-            'level_4' => true
+            'level_4' => true,
+            'upload_files' => true
         ));
         add_role('guide_editor', __("Guide editor", 'event-manager'), array(
             'read' => true,
-            'level_4' => true
+            'level_4' => true,
+           	'upload_files' => true
         ));
+    }
+
+    /**
+     * Remove custom user roles
+     * @return void
+     */
+    public static function removeUserRoles()
+    {
+    	$roles = array('guide_administrator', 'event_contributor', 'guide_editor');
+    	foreach ($roles as $role) {
+    		if (get_role($role)) {
+    			remove_role($role);
+    		}
+    	}
     }
 
     /**

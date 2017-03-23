@@ -71,6 +71,7 @@ $acfExportManager->import();
 register_activation_hook(plugin_basename(__FILE__), '\HbgEventImporter\App::addCronJob');
 register_deactivation_hook(plugin_basename(__FILE__), '\HbgEventImporter\App::removeCronJob');
 register_activation_hook(plugin_basename(__FILE__), '\HbgEventImporter\Admin\UserRoles::createUserRoles');
+register_deactivation_hook(plugin_basename(__FILE__), '\HbgEventImporter\Admin\UserRoles::removeUserRoles');
 
 // Create necessary database tables when plugin is activated
 register_activation_hook(plugin_basename(__FILE__), '\HbgEventImporter\App::initDatabaseTable');
