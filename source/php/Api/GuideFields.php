@@ -153,8 +153,20 @@ class GuideFields extends Fields
             )
         );
 
-        // Replace group id with taxonomy name
+        //Main content object
+        register_rest_field($this->taxonomyName,
+            'content',
+            array(
+                'get_callback' => array($this, 'addDescription'),
+                'schema' => array(
+                    'description' => 'The guide main description of the guide.',
+                    'type' => 'object',
+                    'context' => array('view', 'embed')
+                )
+            )
+        );
 
+        // Replace group id with taxonomy name
         register_rest_field($this->postType,
             'guidegroup',
             array(
@@ -169,7 +181,6 @@ class GuideFields extends Fields
         );
 
         // Replace group id with taxonomy name
-
         register_rest_field($this->postType,
             'user_groups',
             array(
@@ -500,6 +511,21 @@ class GuideFields extends Fields
             return $media;
         }
     }
+
+    /**
+     * Get post main description
+     * @return  array/null
+     * @version 0.3.28 Guides
+     */
+
+    public function addDescription($object, $field_name, $request, $formatted = true)
+    {
+        return array(
+            'rendered' => $this->stringGetCallBack($object, 'guide_description', $request, $formatted),
+            'plain_text' => $this->stringGetCallBack($object, 'guide_description', $request, false)
+        );
+    }
+
 
     /**
      * Get objects of this guide
