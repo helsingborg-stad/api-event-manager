@@ -60,6 +60,25 @@
             }
         },
         {
+            "default_value": 0,
+            "message": "This guide is har target group \"kids\".",
+            "ui": 0,
+            "ui_on_text": "",
+            "ui_off_text": "",
+            "key": "field_58d4e9a227c41",
+            "label": "For kids",
+            "name": "guide_kids",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            }
+        },
+        {
             "placement": "left",
             "endpoint": 0,
             "key": "field_5894987dfc7b1",
@@ -546,7 +565,7 @@
                     "required": 0,
                     "conditional_logic": 0,
                     "wrapper": {
-                        "width": "36",
+                        "width": "37",
                         "class": "",
                         "id": ""
                     }
@@ -568,7 +587,7 @@
                     "required": 0,
                     "conditional_logic": 0,
                     "wrapper": {
-                        "width": "30",
+                        "width": "20",
                         "class": "",
                         "id": ""
                     }
@@ -587,7 +606,28 @@
                     "required": 0,
                     "conditional_logic": 0,
                     "wrapper": {
-                        "width": "30",
+                        "width": "20",
+                        "class": "",
+                        "id": ""
+                    }
+                },
+                {
+                    "default_value": 5,
+                    "min": 1,
+                    "max": 50,
+                    "step": 1,
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "meters",
+                    "key": "field_58d4e9dcfd6e8",
+                    "label": "Beacon distance",
+                    "name": "distance",
+                    "type": "number",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "20",
                         "class": "",
                         "id": ""
                     }

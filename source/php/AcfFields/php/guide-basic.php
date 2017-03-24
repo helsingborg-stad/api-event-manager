@@ -64,6 +64,25 @@
             ),
         ),
         3 => array(
+            'default_value' => 0,
+            'message' => __('This guide is har target group "kids".', 'event-manager'),
+            'ui' => 0,
+            'ui_on_text' => '',
+            'ui_off_text' => '',
+            'key' => 'field_58d4e9a227c41',
+            'label' => __('For kids', 'event-manager'),
+            'name' => 'guide_kids',
+            'type' => 'true_false',
+            'instructions' => '',
+            'required' => 0,
+            'conditional_logic' => 0,
+            'wrapper' => array(
+                'width' => '',
+                'class' => '',
+                'id' => '',
+            ),
+        ),
+        4 => array(
             'placement' => 'left',
             'endpoint' => 0,
             'key' => 'field_5894987dfc7b1',
@@ -79,7 +98,7 @@
                 'id' => '',
             ),
         ),
-        4 => array(
+        5 => array(
             'library' => 'all',
             'min' => '',
             'max' => 10,
@@ -104,7 +123,7 @@
                 'id' => '',
             ),
         ),
-        5 => array(
+        6 => array(
             'placement' => 'top',
             'endpoint' => 0,
             'key' => 'field_5899a94bff0ec',
@@ -120,7 +139,7 @@
                 'id' => '',
             ),
         ),
-        6 => array(
+        7 => array(
             'sub_fields' => array(
                 0 => array(
                     'placement' => 'top',
@@ -496,7 +515,7 @@
                 'id' => '',
             ),
         ),
-        7 => array(
+        8 => array(
             'placement' => 'top',
             'endpoint' => 0,
             'key' => 'field_58ab0c6354b09',
@@ -512,7 +531,7 @@
                 'id' => '',
             ),
         ),
-        8 => array(
+        9 => array(
             'default_value' => '',
             'maxlength' => '',
             'placeholder' => '',
@@ -531,7 +550,7 @@
                 'id' => '',
             ),
         ),
-        9 => array(
+        10 => array(
             'sub_fields' => array(
                 0 => array(
                     'post_type' => array(
@@ -551,7 +570,7 @@
                     'required' => 0,
                     'conditional_logic' => 0,
                     'wrapper' => array(
-                        'width' => '36',
+                        'width' => '37',
                         'class' => '',
                         'id' => '',
                     ),
@@ -575,7 +594,7 @@
                     'required' => 0,
                     'conditional_logic' => 0,
                     'wrapper' => array(
-                        'width' => '30',
+                        'width' => '20',
                         'class' => '',
                         'id' => '',
                     ),
@@ -594,7 +613,28 @@
                     'required' => 0,
                     'conditional_logic' => 0,
                     'wrapper' => array(
-                        'width' => '30',
+                        'width' => '20',
+                        'class' => '',
+                        'id' => '',
+                    ),
+                ),
+                3 => array(
+                    'default_value' => 5,
+                    'min' => 1,
+                    'max' => 50,
+                    'step' => 1,
+                    'placeholder' => '',
+                    'prepend' => '',
+                    'append' => __('meters', 'event-manager'),
+                    'key' => 'field_58d4e9dcfd6e8',
+                    'label' => __('Beacon distance', 'event-manager'),
+                    'name' => 'distance',
+                    'type' => 'number',
+                    'instructions' => '',
+                    'required' => 0,
+                    'conditional_logic' => 0,
+                    'wrapper' => array(
+                        'width' => '20',
                         'class' => '',
                         'id' => '',
                     ),
