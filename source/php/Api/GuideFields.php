@@ -166,6 +166,20 @@ class GuideFields extends Fields
             )
         );
 
+        // Guide media objects
+        register_rest_field($this->postType,
+            'guide_kids',
+            array(
+                'get_callback' => array($this, 'boolGetCallBack'),
+                'update_callback' => array($this, 'objectUpdateCallBack'),
+                'schema' => array(
+                    'description' => 'Guide main location object id.',
+                    'type' => 'object',
+                    'context' => array('view', 'embed')
+                )
+            )
+        );
+
         // Replace group id with taxonomy name
         register_rest_field($this->postType,
             'guidegroup',
@@ -190,8 +204,21 @@ class GuideFields extends Fields
             )
         );
 
+        //TODO: REMOVE DEPRICATED
         register_rest_field($this->postType,
             'guideBeacon',
+            array(
+                'get_callback' => array($this, 'postBeacon'),
+                'schema' => array(
+                    'description' => 'Objects of this guide.',
+                    'type' => 'object',
+                    'context' => array('view', 'embed')
+                )
+            )
+        );
+
+        register_rest_field($this->postType,
+            'guide_beacon',
             array(
                 'get_callback' => array($this, 'postBeacon'),
                 'schema' => array(
@@ -230,6 +257,7 @@ class GuideFields extends Fields
             )
         );
 
+        //TODO: REMOVE DEPRICATED
         register_rest_field($this->postType,
             'contentObjects',
             array(
@@ -243,6 +271,19 @@ class GuideFields extends Fields
         );
 
         register_rest_field($this->postType,
+            'content_objects',
+            array(
+                'get_callback' => array($this, 'postObjects'),
+                'schema' => array(
+                    'description' => 'Objects of this guide.',
+                    'type' => 'object',
+                    'context' => array('view', 'embed')
+                )
+            )
+        );
+
+         //TODO: REMOVE DEPRICATED
+        register_rest_field($this->postType,
             'subAttractions',
             array(
                 'get_callback' => array($this, 'subAttractionBeacons'),
@@ -255,7 +296,32 @@ class GuideFields extends Fields
         );
 
         register_rest_field($this->postType,
+            'sub_attractions',
+            array(
+                'get_callback' => array($this, 'subAttractionBeacons'),
+                'schema' => array(
+                    'description' => 'Describes the guides colors, logo, moodimage and main location.',
+                    'type' => 'object',
+                    'context' => array('view', 'embed')
+                )
+            )
+        );
+
+        //TODO: REMOVE DEPRICATED
+        register_rest_field($this->postType,
             'orphanContentObjects',
+            array(
+                'get_callback' => array($this, 'orphanPostObjects'),
+                'schema' => array(
+                    'description' => 'Objects of this guide.',
+                    'type' => 'object',
+                    'context' => array('view', 'embed')
+                )
+            )
+        );
+
+        register_rest_field($this->postType,
+            'orphan_content_objects',
             array(
                 'get_callback' => array($this, 'orphanPostObjects'),
                 'schema' => array(
@@ -353,6 +419,7 @@ class GuideFields extends Fields
         $beacons            = $this->objectGetCallBack($object, 'guide_beacon', $request, true);
         $objects            = $this->getObjects($object, 'guide_content_objects', $request, true);
         $beacon_namespace   = $this->stringGetCallBack($object, 'guide_beacon_namespace', $request, $formatted);
+
         if (! $beacons) {
             return null;
         }
@@ -370,6 +437,7 @@ class GuideFields extends Fields
                     'order' => $key,
                     'nid' => $beacon_namespace,
                     'bid' => $item['beacon'],
+                    'beacon_distance' => $item['distance'],
                     'content' => $item['objects'],
                     'location' => is_numeric($item['location']) ? $item['location'] : null
                 );
@@ -461,6 +529,7 @@ class GuideFields extends Fields
 
             //Get beacon id
             $beacon_id = null;
+            $beacon_distance = null;
             if ($beacons) {
                 foreach ($beacons as $beacon) {
                     if (is_string($beacon['objects'])) {
@@ -469,6 +538,7 @@ class GuideFields extends Fields
 
                     if (in_array($key, $beacon['objects'])) {
                         $beacon_id = $beacon['beacon'];
+                        $beacon_distance = $beacon['distance'];
                         break;
                     }
                 }
@@ -486,6 +556,7 @@ class GuideFields extends Fields
                 'video' => !is_array($item['guide_object_video']) ? null : $this->sanitizeMediaObject($item['guide_object_video']),
                 'links' => !is_array($item['guide_object_links']) ? null : $this->sanitizeLinkObject($item['guide_object_links']),
                 'bid'   => $beacon_id,
+                'beacon_distance' => $beacon_distance
             );
             $i++;
         }
