@@ -5,6 +5,7 @@ ImportEvents.Admin.Suggestions = (function ($) {
 
     var typingTimer;
     var lastTerm;
+    var suggestionString;
 
     var acceptedPagenow = [
         'contact',
@@ -12,13 +13,16 @@ ImportEvents.Admin.Suggestions = (function ($) {
         'event',
         'sponsor',
         'package',
-        'membership-card'
+        'membership-card',
+        'guide'
     ];
 
     function Suggestions() {
         if (acceptedPagenow.indexOf(pagenow) < 0) {
             return;
         }
+
+        this.switchName();
 
         $(document).on('keyup', 'input[name="post_title"]', function (e) {
             var $this = $(e.target);
@@ -83,7 +87,7 @@ ImportEvents.Admin.Suggestions = (function ($) {
 
         $suggestions.find('ul').empty();
 
-        $suggestions.find('ul').append('<li><strong>' + eventmanager.similar_posts + ':</strong> <button type="button" class="notice-dismiss suggestion-hide" data-action="suggestions-close"></button></li>');
+        $suggestions.find('ul').append('<li><strong>' + suggestionString + ':</strong> <button type="button" class="notice-dismiss suggestion-hide" data-action="suggestions-close"></button></li>');
 
         $.each(suggestions, function (index, suggestion) {
             var title = pagenow === 'event' ? suggestion.title : suggestion.title.rendered;
@@ -106,6 +110,31 @@ ImportEvents.Admin.Suggestions = (function ($) {
         $('#title-suggestions').slideUp(200, function () {
             $('#title-suggestions').remove();
         });
+    };
+
+    Suggestions.prototype.switchName = function() {
+        switch(pagenow) {
+            case 'contact':
+                suggestionString = eventmanager.contacts + ' ' + eventmanager.with_similar_name;
+                break;
+            case 'location':
+                suggestionString = eventmanager.locations + ' ' + eventmanager.with_similar_name;
+                break;
+            case 'sponsor':
+                suggestionString = eventmanager.sponsors + ' ' + eventmanager.with_similar_name;
+                break;
+            case 'package':
+                suggestionString = eventmanager.packages + ' ' + eventmanager.with_similar_name;
+                break;
+            case 'membership-card':
+                suggestionString = eventmanager.membership_cards + ' ' + eventmanager.with_similar_name;
+                break;
+            case 'guide':
+                suggestionString = eventmanager.guides + ' ' + eventmanager.with_similar_name;
+                break;
+            default:
+                suggestionString = eventmanager.events + ' ' + eventmanager.with_similar_name;
+        }
     };
 
     return new Suggestions();

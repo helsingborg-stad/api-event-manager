@@ -156,7 +156,7 @@ class App
             'package',
             'membership-card',
             'guide',
-            'term'
+            'term',
         );
 
         if (is_object($current_screen) && in_array($current_screen->post_type, $acceptedPostTypes)) {
@@ -175,7 +175,6 @@ class App
             'new_membership-card'   => __("Create new membership card", 'event-manager'),
             'close'                 => __("Close", 'event-manager'),
             'add_images'            => __("Add images", 'event-manager'),
-            'similar_posts'         => __("Similar posts", 'event-manager'),
             'new_data_imported'     => __("Imported data", 'event-manager'),
             'events'                => __("Events", 'event-manager'),
             'locations'             => __("Locations", 'event-manager'),
@@ -188,6 +187,11 @@ class App
             'minute'                => __("Minute", 'event-manager'),
             'done'                  => __("Done", 'event-manager'),
             'now'                   => __("Now", 'event-manager'),
+            'with_similar_name'     => __("with similar name", 'event-manager'),
+            'sponsors'              => __("Sponsors", 'event-manager'),
+            'packages'              => __("Packages", 'event-manager'),
+            'membership_cards'      => __("Membership cards", 'event-manager'),
+            'guides'                => __("Guides", 'event-manager'),
         ));
     }
 
