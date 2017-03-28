@@ -19,6 +19,25 @@ class FilterRestrictions
     }
 
     /**
+     * Return all term children
+     * @param  int $id term id
+     * @return array
+     */
+    public static function getTermChildren($id)
+    {
+        $groups = get_field('event_user_groups', 'user_' . $id);
+        if (is_array($groups) && ! empty($groups)) {
+            foreach ($groups as $group) {
+                if (! empty(get_term_children($group, 'user_groups'))) {
+                    $groups = array_merge($groups, get_term_children($group, 'user_groups'));
+                }
+            }
+
+        return array_unique($groups);
+        }
+    }
+
+    /**
      * Filter post types by users publishing groups
      * @param  object $query object WP Query
      */
@@ -72,12 +91,12 @@ class FilterRestrictions
         global $wpdb;
 
         $id = get_current_user_id();
-        $groups = get_field('event_user_groups', 'user_' . $id);
-        $groups = (! empty($groups) && is_array($groups)) ? implode(', ', $groups) : false;
+        $groups = $this->getTermChildren($id);
+        $group_string = ($groups) ? implode(',', $groups) : false;
 
         $where .= " AND ($wpdb->posts.post_author = $id ";
         $where .= "OR ($wpdb->postmeta.meta_key = 'missing_user_group' AND $wpdb->postmeta.meta_value = 1) ";
-        $where .= ($groups) ? " OR ($wpdb->term_taxonomy.taxonomy = 'user_groups' AND $wpdb->term_taxonomy.term_id IN($groups))" : '';
+        $where .= ($group_string) ? " OR ($wpdb->term_taxonomy.taxonomy = 'user_groups' AND $wpdb->term_taxonomy.term_id IN($group_string))" : '';
         $where .= ") ";
 
         return $where;
@@ -190,8 +209,8 @@ class FilterRestrictions
         if (current_user_can('editor') || current_user_can('administrator')) {
             $groups = array();
         } else {
-            $id = 'user_' . get_current_user_id();
-            $groups = get_field('event_user_groups', $id);
+            $id = get_current_user_id();
+            $groups = $this->getTermChildren($id);
 
             if (empty($groups)) {
                 return;
@@ -207,8 +226,8 @@ class FilterRestrictions
             'name'            =>  'user_groups',
             'orderby'         =>  'name',
             'selected'        =>  $term,
-            'hierarchical'    =>  false,
-            'show_count'      =>  true,
+            'hierarchical'    =>  true,
+            'show_count'      =>  false,
             'hide_empty'      =>  true,
             'hide_if_empty'   =>  true,
             'include'         =>  $groups,

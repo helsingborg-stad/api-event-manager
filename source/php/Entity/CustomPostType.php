@@ -326,7 +326,7 @@ abstract class CustomPostType
 
             // Get users groups
             $user_id = get_current_user_id();
-            $user_groups = get_field('event_user_groups', 'user_' . $user_id);
+            $user_groups = \HbgEventImporter\Admin\FilterRestrictions::getTermChildren($user_id);
 
             // Remove publish capability if user don't exist in a group
             if (empty($user_groups) || ! is_array($user_groups)) {
@@ -422,8 +422,8 @@ abstract class CustomPostType
             return $args;
         }
 
-        $id = 'user_' . $current_user->ID;
-        $groups = get_field('event_user_groups', $id);
+        $id = $current_user->ID;
+        $groups = \HbgEventImporter\Admin\FilterRestrictions::getTermChildren($id);
 
         // Return the assigned groups for the user
         if (! empty($groups) && is_array($groups)) {
