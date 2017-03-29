@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Event Manager\n"
 "POT-Creation-Date: 2017-03-29 09:17+0200\n"
-"PO-Revision-Date: 2017-03-29 09:17+0200\n"
+"PO-Revision-Date: 2017-03-29 10:02+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: sv\n"
@@ -2241,64 +2241,64 @@ msgstr "Platskategori"
 #: source/php/Taxonomy/UserGroups.php:19
 msgctxt "Taxonomy plural name"
 msgid "Groups"
-msgstr "Grupper"
+msgstr "Organisationer"
 
 #: source/php/Taxonomy/UserGroups.php:20
 msgctxt "Taxonomy singular name"
 msgid "Group"
-msgstr "Grupp"
+msgstr "Organisation"
 
 #: source/php/Taxonomy/UserGroups.php:21
 msgid "Search groups"
-msgstr "Sök grupper"
+msgstr "Sök organisation"
 
 #: source/php/Taxonomy/UserGroups.php:22
 msgid "Popular groups"
-msgstr "Populära grupper"
+msgstr "Populära organisationer"
 
 #: source/php/Taxonomy/UserGroups.php:24 source/php/Taxonomy/UserGroups.php:25
 msgid "Parent group"
-msgstr "Föräldergrupp"
+msgstr "Förälderorganisation"
 
 #: source/php/Taxonomy/UserGroups.php:26
 msgid "Edit group"
-msgstr "Ändra grupp"
+msgstr "Ändra organisation"
 
 #: source/php/Taxonomy/UserGroups.php:27
 msgid "Update group"
-msgstr "Uppdatera grupp"
+msgstr "Uppdatera organisation"
 
 #: source/php/Taxonomy/UserGroups.php:28
 msgid "Add new group"
-msgstr "Lägg till ny grupp"
+msgstr "Lägg till ny organisation"
 
 #: source/php/Taxonomy/UserGroups.php:29
 msgid "New group"
-msgstr "Ny grupp"
+msgstr "Ny organisation"
 
 #: source/php/Taxonomy/UserGroups.php:30
 msgid "Add or remove groups"
-msgstr "Lägg till eller ta bort grupper"
+msgstr "Lägg till eller ta bort organisationer"
 
 #: source/php/Taxonomy/UserGroups.php:31
 msgid "Choose from most used groups"
-msgstr "Välj från de mest använda grupperna"
+msgstr "Välj från de mest använda organisationerna"
 
 #: source/php/Taxonomy/UserGroups.php:73
 msgid "User groups"
-msgstr "Användargrupper"
+msgstr "Användarorganisationer"
 
 #: source/php/Taxonomy/UserGroups.php:108
 msgid "Event publishing groups"
-msgstr "Publiceringsgrupper"
+msgstr "Publiceringsorganisationer"
 
 #: source/php/Taxonomy/UserGroups.php:111
 msgid "Assigned groups"
-msgstr "Dina grupper"
+msgstr "Dina organisationer"
 
 #: source/php/Taxonomy/UserGroups.php:119
 msgid "There are no groups assigned to your account."
-msgstr "Du ingår inte i någon grupp."
+msgstr "Du ingår inte i någon organisation."
 
 #. Plugin Name of the plugin/theme
 msgid "Event Manager"
