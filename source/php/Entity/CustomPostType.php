@@ -325,8 +325,7 @@ abstract class CustomPostType
             $post_terms = wp_get_post_terms($post_id, 'user_groups', array("fields" => "ids"));
 
             // Get users groups
-            $user_id = get_current_user_id();
-            $user_groups = \HbgEventImporter\Admin\FilterRestrictions::getTermChildren($user_id);
+            $user_groups = \HbgEventImporter\Admin\FilterRestrictions::getTermChildren(get_current_user_id());
 
             // Remove publish capability if user don't exist in a group
             if (empty($user_groups) || ! is_array($user_groups)) {

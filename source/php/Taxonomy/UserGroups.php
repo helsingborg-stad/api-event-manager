@@ -6,6 +6,7 @@ class UserGroups
 {
     public function __construct()
     {
+        add_filter('taxonomy_parent_dropdown_args', array($this, 'limitDropdownDepth'), 10, 2 );
         add_action('init', array($this, 'registerTaxonomy'));
         add_action('admin_menu', array($this, 'manageAdminMenu'), 999);
         add_filter('parent_file', array($this, 'highlightAdminMenu'));
@@ -55,6 +56,18 @@ class UserGroups
 
         $user_groups = get_field('event_group_select', 'option');
         register_taxonomy('user_groups', $user_groups, $args);
+    }
+
+    /**
+     * Limit taxonomy dropdown depth
+     * @param  array  $args     args
+     * @param  string $taxonomy taxonomy
+     * @return array
+     */
+    public function limitDropdownDepth($args, $taxonomy) {
+        if ($taxonomy != 'user_groups') return $args;
+        $args['depth'] = '2';
+        return $args;
     }
 
     /**
