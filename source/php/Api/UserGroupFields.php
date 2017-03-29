@@ -34,6 +34,7 @@ class UserGroupFields extends Fields
                 $children[$key]["children"][] = array("id" => $term_child->term_id, "name" => $term_child->name, "slug" => $term_child->slug);
            }
         }
+        $children = (! empty($children)) ? $children : null;
         return $children;
     }
 
