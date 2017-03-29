@@ -3,14 +3,14 @@ msgid ""
 msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "Project-Id-Version: Event Manager\n"
-"POT-Creation-Date: 2017-03-28 13:19+0200\n"
+"POT-Creation-Date: 2017-03-29 09:17+0200\n"
 "PO-Revision-Date: 2016-10-26 08:27+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.11\n"
+"X-Generator: Poedit 1.8.12\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-WPHeader: hbg-event-importer.php\n"
 "X-Poedit-SourceCharset: UTF-8\n"
@@ -40,12 +40,12 @@ msgid "Select status of imported events."
 msgstr ""
 
 #: source/php/AcfFields/php/cbis.php:38 source/php/AcfFields/php/xcap.php:38
-#: source/php/Admin/FilterRestrictions.php:112
+#: source/php/Admin/FilterRestrictions.php:131
 msgid "Draft"
 msgstr ""
 
 #: source/php/AcfFields/php/cbis.php:39 source/php/AcfFields/php/xcap.php:39
-#: source/php/Admin/FilterRestrictions.php:108
+#: source/php/Admin/FilterRestrictions.php:127
 msgid "Published"
 msgstr ""
 
@@ -189,40 +189,39 @@ msgid "Activate user groups on selected post types."
 msgstr ""
 
 #: source/php/AcfFields/php/event-manager-settings.php:76
-#: source/php/App.php:179 source/php/App.php:191
+#: source/php/App.php:179
 msgid "Events"
 msgstr ""
 
 #: source/php/AcfFields/php/event-manager-settings.php:77
-#: source/php/App.php:180 source/php/App.php:192
-#: source/php/PostTypes/Locations.php:12
+#: source/php/App.php:180 source/php/PostTypes/Locations.php:12
 msgid "Locations"
 msgstr ""
 
 #: source/php/AcfFields/php/event-manager-settings.php:78
 #: source/php/AcfFields/php/event.php:718 source/php/App.php:181
-#: source/php/App.php:193 source/php/PostTypes/Contacts.php:10
+#: source/php/PostTypes/Contacts.php:10
 msgid "Contacts"
 msgstr ""
 
 #: source/php/AcfFields/php/event-manager-settings.php:79
-#: source/php/AcfFields/php/event.php:743 source/php/App.php:194
+#: source/php/AcfFields/php/event.php:743 source/php/App.php:191
 #: source/php/PostTypes/Sponsors.php:10
 msgid "Sponsors"
 msgstr ""
 
 #: source/php/AcfFields/php/event-manager-settings.php:80
-#: source/php/App.php:195 source/php/PostTypes/Packages.php:10
+#: source/php/App.php:192 source/php/PostTypes/Packages.php:10
 msgid "Packages"
 msgstr ""
 
 #: source/php/AcfFields/php/event-manager-settings.php:81
-#: source/php/App.php:196
+#: source/php/App.php:193
 msgid "Membership cards"
 msgstr ""
 
 #: source/php/AcfFields/php/event-manager-settings.php:82
-#: source/php/App.php:197 source/php/PostTypes/Guides.php:12
+#: source/php/App.php:194 source/php/PostTypes/Guides.php:12
 msgid "Guides"
 msgstr ""
 
@@ -296,7 +295,7 @@ msgid "Select if event is on schedule or not."
 msgstr ""
 
 #: source/php/AcfFields/php/event.php:166
-#: source/php/Admin/FilterRestrictions.php:111
+#: source/php/Admin/FilterRestrictions.php:130
 msgid "Scheduled"
 msgstr ""
 
@@ -1122,10 +1121,7 @@ msgid "For kids"
 msgstr ""
 
 #: source/php/AcfFields/php/guide-basic.php:89
-#: source/php/AcfFields/php/guide-basic.php:223
-#: source/php/AcfFields/php/guide-settings.php:47
-#: source/php/AcfFields/php/guide-settings.php:181
-msgid "Media"
+msgid "Images (guide)"
 msgstr ""
 
 #: source/php/AcfFields/php/guide-basic.php:114
@@ -1161,6 +1157,12 @@ msgstr ""
 #: source/php/AcfFields/php/guide-basic.php:207
 #: source/php/AcfFields/php/guide-settings.php:165
 msgid "Object description"
+msgstr ""
+
+#: source/php/AcfFields/php/guide-basic.php:223
+#: source/php/AcfFields/php/guide-settings.php:47
+#: source/php/AcfFields/php/guide-settings.php:181
+msgid "Media"
 msgstr ""
 
 #: source/php/AcfFields/php/guide-basic.php:248
@@ -1564,55 +1566,55 @@ msgstr ""
 msgid "API link"
 msgstr ""
 
-#: source/php/Admin/FilterRestrictions.php:107
+#: source/php/Admin/FilterRestrictions.php:126
 msgid "All"
 msgstr ""
 
-#: source/php/Admin/FilterRestrictions.php:109
+#: source/php/Admin/FilterRestrictions.php:128
 msgid "Private"
 msgstr ""
 
-#: source/php/Admin/FilterRestrictions.php:110
+#: source/php/Admin/FilterRestrictions.php:129
 msgid "Pending Review"
 msgstr ""
 
-#: source/php/Admin/FilterRestrictions.php:113
+#: source/php/Admin/FilterRestrictions.php:132
 msgid "Trash"
 msgstr ""
 
-#: source/php/Admin/FilterRestrictions.php:165
+#: source/php/Admin/FilterRestrictions.php:184
 #: source/php/Taxonomy/EventCategories.php:19
 #: source/php/Taxonomy/EventCategories.php:58
 #: source/php/Taxonomy/LocationCategories.php:19
 msgid "All categories"
 msgstr ""
 
-#: source/php/Admin/FilterRestrictions.php:205
+#: source/php/Admin/FilterRestrictions.php:224
 #: source/php/Taxonomy/UserGroups.php:23
 msgid "All groups"
 msgstr ""
 
-#: source/php/Admin/FilterRestrictions.php:251
+#: source/php/Admin/FilterRestrictions.php:270
 msgid "Time interval"
 msgstr ""
 
-#: source/php/Admin/FilterRestrictions.php:252
+#: source/php/Admin/FilterRestrictions.php:271
 msgid "Today"
 msgstr ""
 
-#: source/php/Admin/FilterRestrictions.php:253
+#: source/php/Admin/FilterRestrictions.php:272
 msgid "Tomorrow"
 msgstr ""
 
-#: source/php/Admin/FilterRestrictions.php:254
+#: source/php/Admin/FilterRestrictions.php:273
 msgid "This week"
 msgstr ""
 
-#: source/php/Admin/FilterRestrictions.php:255
+#: source/php/Admin/FilterRestrictions.php:274
 msgid "This month"
 msgstr ""
 
-#: source/php/Admin/FilterRestrictions.php:256
+#: source/php/Admin/FilterRestrictions.php:275
 msgid "Passed events"
 msgstr ""
 

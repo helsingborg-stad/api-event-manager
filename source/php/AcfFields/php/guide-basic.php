@@ -86,7 +86,7 @@
             'placement' => 'left',
             'endpoint' => 0,
             'key' => 'field_5894987dfc7b1',
-            'label' => __('Media', 'event-manager'),
+            'label' => __('Images (guide)', 'event-manager'),
             'name' => '',
             'type' => 'tab',
             'instructions' => '',
