@@ -43,19 +43,35 @@ class Guides extends \HbgEventImporter\Entity\CustomPostType
         add_filter('acf/update_value/name=guidegroup', array($this, 'updateTaxonomyRelation'), 10, 3);
 
         //Only main locations selectable
-        //add_filter('acf/fields/post_object/query/name=guide_taxonomy_location', array($this, 'getMainLocations'), 10, 3);
+        add_filter('acf/fields/post_object/query/name=guide_taxonomy_location', array($this, 'getMainLocations'), 10, 3);
 
         //Only sublocations selectable (if set)
         add_filter('acf/fields/post_object/query/key=field_58ab0c9554b0a', array($this, 'getSublocationsOnly'), 10, 3);
 
-        // Objects populator
-        //add_filter('acf/fields/select/query/key=field_58ab0cf054b0b', array($this, 'populateNonSavedObjects'), 10, 3);
-        //add_filter('the_posts', array($this, 'objects'), 10, 2);
-
         //Objects
         add_filter('acf/load_field/key=field_58ab0cf054b0b', array($this, 'getPostObjects'), 10, 1);
+
+        //Pad exhibition id on save
+        add_filter('acf/update_value/key=field_589dcc1a7deb3', array($this, 'padExhibitionID'), 10, 3);
     }
 
+    /**
+     * Pad the exhibition id
+     * @param  $value     Value before save
+     * @param  $post_id   Id of the post being saved or updated
+     * @param  $field     Array containing field details
+     */
+
+    public function padExhibitionID($value, $post_id, $field)
+    {
+        return str_pad((string) $value, 3, "0", STR_PAD_LEFT);
+    }
+
+    /**
+     * Filter objects
+     * @param  $posts   List of posts
+     * @param  $query   Id of the post being saved or updated
+     */
     public function objects($posts, $query)
     {
         if (!defined('DOING_AJAX') || !DOING_AJAX || $query->query['post_type'] !== 'acf-field' || !isset($_POST['objects'])) {

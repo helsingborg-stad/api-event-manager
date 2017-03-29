@@ -178,9 +178,9 @@
                 ),
                 2 => array(
                     'default_value' => '',
-                    'min' => '',
-                    'max' => '',
-                    'step' => '',
+                    'min' => 1,
+                    'max' => 999,
+                    'step' => 1,
                     'placeholder' => '',
                     'prepend' => __('#', 'event-manager'),
                     'append' => '',
