@@ -3,7 +3,7 @@
 namespace HbgEventImporter\Api;
 
 /**
- * Adding meta fields to location post type
+ * Adding meta fields to user groups taxonomy
  */
 
 class UserGroupFields extends Fields
@@ -26,13 +26,17 @@ class UserGroupFields extends Fields
     {
         $children = array();
         $terms = get_terms($this->taxonomy, array('parent' =>  $object['id']));
-        foreach($terms as $key => $term) {
-           $term_children = get_term_children($term->term_id, $this->taxonomy);
-           $children[] = array("id" => $term->term_id, "name" => $term->name, "slug" => $term->slug);
-           foreach($term_children as $term_child_id) {
-                $term_child = get_term_by('id', $term_child_id, $this->taxonomy);
-                $children[$key]["children"][] = array("id" => $term_child->term_id, "name" => $term_child->name, "slug" => $term_child->slug);
-           }
+        foreach ($terms as $key => $term) {
+            $term_children = get_term_children($term->term_id, $this->taxonomy);
+            $children[] = array("id" => $term->term_id, "name" => $term->name, "slug" => $term->slug);
+            if ($term_children) {
+                foreach ($term_children as $term_child_id) {
+                    $term_child = get_term_by('id', $term_child_id, $this->taxonomy);
+                    $children[$key]["children"][] = array("id" => $term_child->term_id, "name" => $term_child->name, "slug" => $term_child->slug);
+                }
+            } else {
+                $children[$key]["children"] = null;
+            }
         }
         $children = (! empty($children)) ? $children : null;
         return $children;
@@ -58,6 +62,5 @@ class UserGroupFields extends Fields
                 )
             )
         );
-
     }
 }
