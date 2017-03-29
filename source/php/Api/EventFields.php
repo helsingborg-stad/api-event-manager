@@ -15,7 +15,7 @@ class EventFields extends Fields
         add_action('rest_api_init', array($this, 'registerRestRoute'));
         add_action('rest_api_init', array($this, 'registerRestRouteSearch'));
         add_action('rest_api_init', array($this, 'registerRestFields'));
-        add_filter('rest_prepare_event', array($this, 'setCurrentOccasion'), 10, 3 );
+        add_filter('rest_prepare_event', array($this, 'setCurrentOccasion'), 10, 3);
     }
 
     public static function registerRestRoute()
@@ -92,19 +92,26 @@ class EventFields extends Fields
         if (isset($_GET['latlng'])) {
             $distance   = (isset($_GET['distance'])) ? str_replace(',', '.', $_GET['distance']) : 0;
             $latlng     = explode(',', preg_replace('/\s+/', '', urldecode($_GET['latlng'])));
-            if(count($latlng) != 2) return new \WP_Error('error_message', 'Parameter \'latlng\' is in wrong format', array( 'status' => 404 ));
+            if (count($latlng) != 2) {
+                return new \WP_Error('error_message', 'Parameter \'latlng\' is in wrong format', array( 'status' => 404 ));
+            }
             $locations  = \HbgEventImporter\Helper\Address::getNearbyLocations($latlng[0], $latlng[1], floatval($distance));
             // Return if locations is empty
-            if (! $locations) return new \WP_Error('error_message', 'There are no events', array( 'status' => 404 ));
+            if (! $locations) {
+                return new \WP_Error('error_message', 'There are no events', array( 'status' => 404 ));
+            }
             $idString   = implode(',', array_column($locations, 'post_id'));
         }
 
-        $limit = (isset($_GET['post-limit']) && is_numeric($_GET['post-limit'])) ? $_GET['post-limit'] : null;
-        $groupId = (isset($_GET['group-id'])) ? trim($_GET['group-id'], ',') : '';
-        $categoryId = (isset($_GET['category-id'])) ? trim($_GET['category-id'], ',') : '';
-        $taxonomies  = $groupId;
-        $taxonomies .= ($groupId) ? ',' . $categoryId : $categoryId;
-        $taxonomies = trim($taxonomies, ',');
+        $limit       = (isset($_GET['post-limit']) && is_numeric($_GET['post-limit'])) ? $_GET['post-limit'] : null;
+        $groupId     = (isset($_GET['group-id']) && !empty($_GET['group-id'])) ? explode(',', trim($_GET['group-id'], ',')) : null;
+        if (! empty($groupId)) {
+            $groupId = $this->getTaxonomyChildren($groupId, 'user_groups');
+            $groupId = implode(',', $groupId);
+        }
+        $categoryId  = (isset($_GET['category-id'])) ? trim($_GET['category-id'], ',') : '';
+        $taxonomies  = ($groupId) ? $groupId . ',' . $categoryId : $categoryId;
+        $taxonomies  = trim($taxonomies, ',');
 
         $db_occasions = $wpdb->prefix . "occasions";
         $query =
@@ -166,15 +173,33 @@ class EventFields extends Fields
     }
 
     /**
+     * Return term id and its children
+     * @param  array  $ids       taxnomy ids
+     * @param  string $taxonoym  taxonomy name
+     * @return array
+     */
+    public function getTaxonomyChildren($ids, $taxonomy)
+    {
+        foreach ($ids as $id) {
+            if (! empty(get_term_children($id, $taxonomy))) {
+                $ids = array_merge($ids, get_term_children($id, $taxonomy));
+            }
+        }
+
+        return array_unique($ids);
+    }
+
+    /**
      * Set current occasion when getting multiple events.
      * @return object
      */
-    public function setCurrentOccasion( $data, $post, $context ) {
+    public function setCurrentOccasion($data, $post, $context)
+    {
         $start_date = (! empty($post->timestamp_start)) ? date('Y-m-d H:i', $post->timestamp_start) : null;
         $end_date = (! empty($post->timestamp_end)) ? date('Y-m-d H:i', $post->timestamp_end) : null;
         $door_time = (! empty($post->timestamp_door)) ? date('Y-m-d H:i', $post->timestamp_door) : null;
 
-        if (! empty ($data->data['occasions'])) {
+        if (! empty($data->data['occasions'])) {
             foreach ($data->data['occasions'] as $key => $val) {
                 if ($val['start_date'] == $start_date && $val['end_date'] == $end_date && $val['door_time'] == $door_time) {
                     $data->data['occasions'][$key]['current_occasion'] = true;
@@ -294,7 +319,7 @@ class EventFields extends Fields
                     'email' => get_field('email', $contact->ID),
                     );
                 }
-            $organizer['contacts'] = $contacts_array;
+                $organizer['contacts'] = $contacts_array;
             }
             $organizers_arr[] = $organizer;
         }
@@ -931,5 +956,4 @@ class EventFields extends Fields
             )
         );
     }
-
 }
