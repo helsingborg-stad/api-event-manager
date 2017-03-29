@@ -6,12 +6,12 @@ class UserGroups
 {
     public function __construct()
     {
-        add_filter('taxonomy_parent_dropdown_args', array($this, 'limitDropdownDepth'), 10, 2 );
         add_action('init', array($this, 'registerTaxonomy'));
         add_action('admin_menu', array($this, 'manageAdminMenu'), 999);
         add_filter('parent_file', array($this, 'highlightAdminMenu'));
         add_action('show_user_profile', array($this, 'displayUserGroups'));
         add_action('edit_user_profile', array($this, 'displayUserGroups'));
+        add_filter('taxonomy_parent_dropdown_args', array($this, 'limitDropdownDepth'), 10, 2 );
     }
 
     public function registerTaxonomy()

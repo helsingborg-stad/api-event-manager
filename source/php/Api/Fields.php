@@ -189,7 +189,6 @@ class Fields
      *
      * @return  object|null
      */
-
     public function renameTaxonomies($object, $field_name, $request)
     {
         if (! empty($object[$field_name])) {
@@ -215,7 +214,6 @@ class Fields
      *
      * @return  object|null
      */
-
     public function getTaxonomyCallback($object, $field_name, $request)
     {
         if (! empty($object[$field_name])) {

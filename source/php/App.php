@@ -79,6 +79,7 @@ class App
         new Api\PackageFields();
         new Api\MembershipCardFields();
         new Api\GuideFields();
+        new Api\UserGroupFields();
     }
 
     /**
