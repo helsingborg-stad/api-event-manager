@@ -15,6 +15,9 @@ class App
             }
         });
 
+        // Add theme support.
+        add_action('after_setup_theme', array($this, 'themeSupport'));
+
         // Remove auto empty of trash
         add_action('init', function () {
             remove_action('wp_scheduled_delete', 'wp_scheduled_delete');
@@ -80,6 +83,30 @@ class App
         new Api\MembershipCardFields();
         new Api\GuideFields();
         new Api\UserGroupFields();
+    }
+
+    /**
+     * Add theme support
+     */
+    public function themeSupport()
+    {
+        add_theme_support('menus');
+        add_theme_support('post-thumbnails');
+        add_theme_support('html5');
+        add_theme_support(
+            'post-formats',
+            array(
+                'aside',
+                'gallery',
+                'link',
+                'image',
+                'quote',
+                'status',
+                'video',
+                'audio',
+                'chat'
+            )
+        );
     }
 
     /**
