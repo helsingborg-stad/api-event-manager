@@ -69,7 +69,7 @@ class Locations extends \HbgEventImporter\Entity\CustomPostType
         add_filter('acf/update_value/name=geo_map', array($this, 'acfUpdateMap'), 10, 3);
         add_filter('manage_edit-' . $this->slug . '_columns', array($this, 'addAcceptDenyTable'));
         add_action('manage_' . $this->slug . '_posts_custom_column', array($this, 'addAcceptDenyButtons'), 10, 2);
-        add_filter('admin_body_class', array($this, 'addParentBodyClass'));
+        add_filter('admin_body_class', array($this, 'addBodyClass'));
         add_filter('enter_title_here', array($this, 'replacePlaceholder'));
 
         add_filter('page_attributes_dropdown_pages_args', array($this, 'limitPostTypeHierarchy'));
@@ -174,15 +174,19 @@ class Locations extends \HbgEventImporter\Entity\CustomPostType
     }
 
     /**
-     * Add new body class 'child-location' if child
+     * Add new body classes: 'child-location' & 'imported'
      * @param string $classes body classes
      */
-    public function addParentBodyClass($classes) {
+    public function addBodyClass($classes) {
         global $post;
         $screen = get_current_screen();
         $parent = ($screen->base == 'post' && $post->post_parent > 0) ? get_the_title($post->post_parent) : null;
         if ($parent) {
             $classes .= ' child-location ';
+        }
+
+        if ($screen->base == 'post' && get_post_meta($post->ID, 'imported_post', true) == true) {
+            $classes .= ' imported ';
         }
 
         return $classes;

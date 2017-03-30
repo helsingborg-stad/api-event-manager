@@ -1,15 +1,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Event Manager\n"
-"POT-Creation-Date: 2017-03-29 09:17+0200\n"
-"PO-Revision-Date: 2017-03-29 10:02+0200\n"
+"POT-Creation-Date: 2017-03-30 11:42+0200\n"
+"PO-Revision-Date: 2017-03-30 11:42+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.12\n"
+"X-Generator: Poedit 2.0\n"
 "X-Poedit-Basepath: .\n"
 "X-Poedit-WPHeader: hbg-event-importer.php\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -178,7 +178,7 @@ msgstr "Visar varning om inga evenemang har importerats senaste veckan."
 #: source/php/AcfFields/php/event-manager-settings.php:64
 #: source/php/AcfFields/php/groups.php:6 source/php/AcfFields/php/groups.php:29
 #: source/php/AcfFields/php/publishing-groups.php:10
-#: source/php/Taxonomy/UserGroups.php:32
+#: source/php/Taxonomy/UserGroups.php:33
 msgid "Groups"
 msgstr "Grupper"
 
@@ -187,39 +187,39 @@ msgid "Activate user groups on selected post types."
 msgstr "Aktivera användargrupper för valda posttyper."
 
 #: source/php/AcfFields/php/event-manager-settings.php:76
-#: source/php/App.php:179
+#: source/php/App.php:181
 msgid "Events"
 msgstr "Evenemang"
 
 #: source/php/AcfFields/php/event-manager-settings.php:77
-#: source/php/App.php:180 source/php/PostTypes/Locations.php:12
+#: source/php/App.php:182 source/php/PostTypes/Locations.php:12
 msgid "Locations"
 msgstr "Platser"
 
 #: source/php/AcfFields/php/event-manager-settings.php:78
-#: source/php/AcfFields/php/event.php:718 source/php/App.php:181
+#: source/php/AcfFields/php/event.php:718 source/php/App.php:183
 #: source/php/PostTypes/Contacts.php:10
 msgid "Contacts"
 msgstr "Kontakter"
 
 #: source/php/AcfFields/php/event-manager-settings.php:79
-#: source/php/AcfFields/php/event.php:743 source/php/App.php:191
+#: source/php/AcfFields/php/event.php:743 source/php/App.php:193
 #: source/php/PostTypes/Sponsors.php:10
 msgid "Sponsors"
 msgstr "Sponsorer"
 
 #: source/php/AcfFields/php/event-manager-settings.php:80
-#: source/php/App.php:192 source/php/PostTypes/Packages.php:10
+#: source/php/App.php:194 source/php/PostTypes/Packages.php:10
 msgid "Packages"
 msgstr "Paket"
 
 #: source/php/AcfFields/php/event-manager-settings.php:81
-#: source/php/App.php:193
+#: source/php/App.php:195
 msgid "Membership cards"
 msgstr "Medlemskort"
 
 #: source/php/AcfFields/php/event-manager-settings.php:82
-#: source/php/App.php:194 source/php/PostTypes/Guides.php:12
+#: source/php/App.php:196 source/php/PostTypes/Guides.php:12
 msgid "Guides"
 msgstr "Guider"
 
@@ -1606,7 +1606,7 @@ msgid "All categories"
 msgstr "Alla kategorier"
 
 #: source/php/Admin/FilterRestrictions.php:224
-#: source/php/Taxonomy/UserGroups.php:23
+#: source/php/Taxonomy/UserGroups.php:24
 msgid "All groups"
 msgstr "Alla grupper"
 
@@ -1654,7 +1654,7 @@ msgid ""
 "Only fields with sync icon is affected by this option."
 msgstr ""
 "Avmarkering av denna rutan stänger av automatiska API-uppdateringar. Detta "
-"gäller endast fält med sync-symbol. "
+"gäller endast fält med sync-symbol."
 
 #: source/php/Admin/Options.php:95
 msgid "Sync event information with API"
@@ -1680,71 +1680,75 @@ msgstr "Evenemangshanterare"
 msgid "Guide editor"
 msgstr "Guideredakör"
 
-#: source/php/App.php:170
-msgid "Title is missing"
-msgstr "Titel saknas"
-
 #: source/php/App.php:171
+msgid "\"Title\" is missing"
+msgstr "“Titel” saknas"
+
+#: source/php/App.php:172
+msgid "\"Featured\" image is missing"
+msgstr "“Utvald bild” saknas"
+
+#: source/php/App.php:173
 msgid "Create new contact"
 msgstr "Skapa ny kontakt"
 
-#: source/php/App.php:172
+#: source/php/App.php:174
 msgid "Create new sponsor"
 msgstr "Skapa ny sponsor"
 
-#: source/php/App.php:173
+#: source/php/App.php:175
 msgid "Create new location"
 msgstr "Skapa ny plats"
 
-#: source/php/App.php:174 source/php/App.php:175
+#: source/php/App.php:176 source/php/App.php:177
 msgid "Create new membership card"
 msgstr "Skapa nytt medlemskort"
 
-#: source/php/App.php:176
+#: source/php/App.php:178
 msgid "Close"
 msgstr "Stäng"
 
-#: source/php/App.php:177
+#: source/php/App.php:179
 msgid "Add images"
 msgstr "Lägg till bilder"
 
-#: source/php/App.php:178
+#: source/php/App.php:180
 msgid "Imported data"
 msgstr "Imorterad data"
 
-#: source/php/App.php:182
+#: source/php/App.php:184
 msgid "Time until reload"
 msgstr "Laddar om sidan"
 
-#: source/php/App.php:183
+#: source/php/App.php:185
 msgid "Loading"
 msgstr "Hämtar"
 
-#: source/php/App.php:184
+#: source/php/App.php:186
 msgid "Choose time"
 msgstr "Välj tidpunkt"
 
-#: source/php/App.php:185
+#: source/php/App.php:187
 msgid "Time"
 msgstr "Tid"
 
-#: source/php/App.php:186
+#: source/php/App.php:188
 msgid "Hour"
 msgstr "Timme"
 
-#: source/php/App.php:187
+#: source/php/App.php:189
 msgid "Minute"
 msgstr "Minut"
 
-#: source/php/App.php:188
+#: source/php/App.php:190
 msgid "Done"
 msgstr "Klar"
 
-#: source/php/App.php:189
+#: source/php/App.php:191
 msgid "Now"
 msgstr "Nu"
 
-#: source/php/App.php:190
+#: source/php/App.php:192
 msgid "with similar name"
 msgstr "med liknande namn"
 
@@ -1809,7 +1813,7 @@ msgstr "Inlägget uppdaterades."
 msgid "Post draft updated."
 msgstr "Utkast uppdaterades."
 
-#: source/php/Entity/CustomPostType.php:362
+#: source/php/Entity/CustomPostType.php:361
 msgid ""
 "You don't have access to edit this event. Contact an administrator for "
 "further information."
@@ -1817,31 +1821,31 @@ msgstr ""
 "Ni saknar rättigheter att uppdatera evenemanget. Vid frågor kontakta en "
 "administratör."
 
-#: source/php/Entity/CustomPostType.php:445
+#: source/php/Entity/CustomPostType.php:444
 msgid "Public"
 msgstr "Offentlig"
 
-#: source/php/Entity/CustomPostType.php:478
+#: source/php/Entity/CustomPostType.php:477
 msgid "This post must be updated before it can be published."
 msgstr "Evenemanget behöver uppdateras innan det kan publiceras"
 
-#: source/php/Entity/CustomPostType.php:478
+#: source/php/Entity/CustomPostType.php:477
 msgid "Edit draft"
 msgstr "Redigera utkast"
 
-#: source/php/Entity/CustomPostType.php:481
+#: source/php/Entity/CustomPostType.php:480
 msgid "Accept"
 msgstr "Godkänn"
 
-#: source/php/Entity/CustomPostType.php:482
+#: source/php/Entity/CustomPostType.php:481
 msgid "Deny"
 msgstr "Neka"
 
-#: source/php/Entity/CustomPostType.php:493
+#: source/php/Entity/CustomPostType.php:492
 msgid "Something went wrong!"
 msgstr "Något gick fel!"
 
-#: source/php/Entity/CustomPostType.php:510
+#: source/php/Entity/CustomPostType.php:509
 msgid "Error"
 msgstr "Fel"
 
@@ -2238,65 +2242,65 @@ msgctxt "Taxonomy singular name"
 msgid "Location category"
 msgstr "Platskategori"
 
-#: source/php/Taxonomy/UserGroups.php:19
+#: source/php/Taxonomy/UserGroups.php:20
 msgctxt "Taxonomy plural name"
 msgid "Groups"
 msgstr "Organisationer"
 
-#: source/php/Taxonomy/UserGroups.php:20
+#: source/php/Taxonomy/UserGroups.php:21
 msgctxt "Taxonomy singular name"
 msgid "Group"
 msgstr "Organisation"
 
-#: source/php/Taxonomy/UserGroups.php:21
+#: source/php/Taxonomy/UserGroups.php:22
 msgid "Search groups"
 msgstr "Sök organisation"
 
-#: source/php/Taxonomy/UserGroups.php:22
+#: source/php/Taxonomy/UserGroups.php:23
 msgid "Popular groups"
 msgstr "Populära organisationer"
 
-#: source/php/Taxonomy/UserGroups.php:24 source/php/Taxonomy/UserGroups.php:25
+#: source/php/Taxonomy/UserGroups.php:25 source/php/Taxonomy/UserGroups.php:26
 msgid "Parent group"
 msgstr "Förälderorganisation"
 
-#: source/php/Taxonomy/UserGroups.php:26
+#: source/php/Taxonomy/UserGroups.php:27
 msgid "Edit group"
 msgstr "Ändra organisation"
 
-#: source/php/Taxonomy/UserGroups.php:27
+#: source/php/Taxonomy/UserGroups.php:28
 msgid "Update group"
 msgstr "Uppdatera organisation"
 
-#: source/php/Taxonomy/UserGroups.php:28
+#: source/php/Taxonomy/UserGroups.php:29
 msgid "Add new group"
 msgstr "Lägg till ny organisation"
 
-#: source/php/Taxonomy/UserGroups.php:29
+#: source/php/Taxonomy/UserGroups.php:30
 msgid "New group"
 msgstr "Ny organisation"
 
-#: source/php/Taxonomy/UserGroups.php:30
+#: source/php/Taxonomy/UserGroups.php:31
 msgid "Add or remove groups"
 msgstr "Lägg till eller ta bort organisationer"
 
-#: source/php/Taxonomy/UserGroups.php:31
+#: source/php/Taxonomy/UserGroups.php:32
 msgid "Choose from most used groups"
 msgstr "Välj från de mest använda organisationerna"
 
-#: source/php/Taxonomy/UserGroups.php:73
+#: source/php/Taxonomy/UserGroups.php:86
 msgid "User groups"
 msgstr "Användarorganisationer"
 
-#: source/php/Taxonomy/UserGroups.php:108
+#: source/php/Taxonomy/UserGroups.php:121
 msgid "Event publishing groups"
 msgstr "Publiceringsorganisationer"
 
-#: source/php/Taxonomy/UserGroups.php:111
+#: source/php/Taxonomy/UserGroups.php:124
 msgid "Assigned groups"
 msgstr "Dina organisationer"
 
-#: source/php/Taxonomy/UserGroups.php:119
+#: source/php/Taxonomy/UserGroups.php:132
 msgid "There are no groups assigned to your account."
 msgstr "Du ingår inte i någon organisation."
 

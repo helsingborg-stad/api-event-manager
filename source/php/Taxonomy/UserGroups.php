@@ -11,7 +11,7 @@ class UserGroups
         add_filter('parent_file', array($this, 'highlightAdminMenu'));
         add_action('show_user_profile', array($this, 'displayUserGroups'));
         add_action('edit_user_profile', array($this, 'displayUserGroups'));
-        add_filter('taxonomy_parent_dropdown_args', array($this, 'limitDropdownDepth'), 10, 2 );
+        add_filter('taxonomy_parent_dropdown_args', array($this, 'limitDropdownDepth'), 10, 2);
     }
 
     public function registerTaxonomy()
