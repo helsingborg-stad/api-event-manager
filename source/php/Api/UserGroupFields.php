@@ -25,21 +25,22 @@ class UserGroupFields extends Fields
     public function taxonomyChildren($object, $field_name, $request)
     {
         $children = array();
-        $terms = get_terms($this->taxonomy, array('parent' =>  $object['id']));
+        $terms = get_terms($this->taxonomy, array('parent' => $object['id']));
         foreach ($terms as $key => $term) {
             $term_children = get_term_children($term->term_id, $this->taxonomy);
-            $children[] = array("id" => $term->term_id, "name" => $term->name, "slug" => $term->slug);
             if ($term_children) {
-                foreach ($term_children as $term_child_id) {
+                foreach ($term_children as &$term_child_id) {
                     $term_child = get_term_by('id', $term_child_id, $this->taxonomy);
-                    $children[$key]["children"][] = array("id" => $term_child->term_id, "name" => $term_child->name, "slug" => $term_child->slug);
+                    $term_child_id = array("id" => $term_child->term_id, "name" => $term_child->name, "slug" => $term_child->slug);
                 }
             } else {
-                $children[$key]["children"] = null;
+                $term_children = null;
             }
+
+            $children[] = array("id" => $term->term_id, "name" => $term->name, "slug" => $term->slug, "children" => $term_children);
         }
-        $children = (! empty($children)) ? $children : null;
-        return $children;
+
+        return (! empty($children)) ? $children : null;
     }
 
     /**
