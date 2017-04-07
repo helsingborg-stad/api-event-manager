@@ -77,7 +77,8 @@ ImportEvents.Admin.Fields = (function ($) {
      */
     Fields.prototype.eventDatepickerRange = function() {
         $(document).on('click', '.acf-field-576110e583969 .hasDatepicker, .acf-field-5761169e07309 .hasDatepicker', function () {
-            var date = $(this).parents('.acf-fields').find('[data-name="start_date"] .hasDatepicker').val();
+
+            var date = $(this).parentsUntil('.acf-fields').siblings('.start_date').find('.hasDatepicker').val();
 
             if (!date) {
                 return;
