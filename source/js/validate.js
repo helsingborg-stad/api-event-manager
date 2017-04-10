@@ -4,9 +4,7 @@ ImportEvents.Admin = ImportEvents.Admin || {};
 ImportEvents.Admin.Validate = (function ($) {
     function Validate() {
         $(document).on('click', '#publish', function (e) {
-            var image = this.image();
-            var title = this.post_title();
-            return (image && title) ? true : false;
+            return this.post_title();
         }.bind(this));
 
         $(document).on('keypress', 'input[name="post_title"]', function (e) {
