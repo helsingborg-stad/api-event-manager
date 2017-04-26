@@ -101,6 +101,7 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
 
         add_action('admin_action_duplicate_post', array($this, 'duplicatePost'));
 
+        add_filter('the_content', array($this, 'replaceWhitespace'), 9);
         add_filter('post_row_actions', array($this, 'duplicatePostLink'), 10, 2);
 
         add_filter('acf/validate_value/name=end_date', array($this, 'validateEndDate'), 10, 4);
@@ -702,5 +703,19 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
         }
 
         return $title;
+    }
+
+    /**
+     * Replace unwanted whitespaces coming from different text editors
+     * @param  string $content Defualt content
+     * @return string          Modified content string
+     */
+    public function replaceWhitespace($content)
+    {
+        $string  = htmlentities($content, null, 'utf-8');
+        $content = str_replace('&nbsp;', ' ', $string);
+        $content = html_entity_decode($content);
+
+        return $content;
     }
 }
