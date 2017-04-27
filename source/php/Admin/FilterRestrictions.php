@@ -260,7 +260,7 @@ class FilterRestrictions
      */
     public function restrictEventsByInterval($post_type)
     {
-        if ($post_type == 'event') {
+        if ($post_type !== 'event') {
             return;
         }
 
