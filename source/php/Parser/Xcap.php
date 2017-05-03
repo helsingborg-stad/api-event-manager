@@ -109,7 +109,6 @@ class Xcap extends \HbgEventImporter\Parser
 
         $postContent = $description;
         $postTitle = $name;
-        $locationId = null;
         $organizers = array();
 
         $eventId = $this->checkIfPostExists('event', $postTitle);
