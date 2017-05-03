@@ -50,6 +50,9 @@ class App
         add_filter('acf/location/rule_values/settings', array($this, 'acfLocationRuleValues'));
         add_filter('acf/location/rule_match/settings', array($this, 'acfLocationRulesMatch'), 10, 3);
 
+        //Init translation extension configuration
+        new Translation();
+
         //Init post types
         new PostTypes\Events();
         new PostTypes\Locations();
