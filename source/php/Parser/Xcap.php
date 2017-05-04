@@ -112,20 +112,19 @@ class Xcap extends \HbgEventImporter\Parser
         $organizers = array();
 
         $eventId = $this->checkIfPostExists('event', $postTitle);
-        $isUpdate = false;
+        $occurred = false;
 
-        // Check if this is a duplicate or update and if "sync" option is set.
-        if ($eventId && get_post_meta($eventId, '_event_manager_uid', true)) {
-            $existingUid = get_post_meta( $eventId, '_event_manager_uid', true);
-            $sync = get_post_meta($eventId, 'sync', true);
-            $postStatus = get_post_status($eventId);
+        $eventManagerUid = (get_post_meta($eventId, '_event_manager_uid', true)) ? get_post_meta($eventId, '_event_manager_uid', true) : $shortKey . '-' . $eventData->uid;
 
-            if ($existingUid == $shortKey . '-' . $eventData->uid && $sync == 1) {
-                $isUpdate = true;
-            }
+        // Get existing event meta data
+        if ($eventId) {
+            $sync           = get_post_meta($eventId, 'sync', true);
+            $postStatus     = get_post_status($eventId);
+            $levenshteinKey = array_search($eventId, array_column($this->levenshteinTitles['event'], 'ID'));
+            $occurred       = $this->levenshteinTitles['event'][$levenshteinKey]['occurred'];
         }
 
-        if (($eventId && !$isUpdate) || !$this->filter($categories)) {
+        if (($eventId && !$sync) || !$this->filter($categories)) {
             return $eventId;
         }
 
@@ -136,7 +135,7 @@ class Xcap extends \HbgEventImporter\Parser
                 'post_status'             => $postStatus,
             ),
             array(
-                '_event_manager_uid'      => $shortKey . '-' . $eventData->uid,
+                '_event_manager_uid'      => $eventManagerUid,
                 'sync'                    => 1,
                 'status'                  => 'Active',
                 'image'                   => !empty($image) ? $image : null,
@@ -156,6 +155,7 @@ class Xcap extends \HbgEventImporter\Parser
                 'imported_post'           => 1,
                 'user_groups'             => $user_groups,
                 'missing_user_group'      => $user_groups == null ? 1 : 0,
+                'occurred'                => $occurred,
             )
         );
 
@@ -163,14 +163,16 @@ class Xcap extends \HbgEventImporter\Parser
             return false;
         }
 
-        if ($isUpdate == false) {
+        if (!$eventId) {
             $this->nrOfNewEvents++;
+            $this->levenshteinTitles['event'][] = array(
+                'ID'         => $event->ID,
+                'post_title' => $postTitle,
+                'occurred'   => true,
+            );
+        } else {
+            $this->levenshteinTitles['event'][$levenshteinKey]['occurred'] = true;
         }
-
-        $this->levenshteinTitles['event'][] = array(
-            'ID' => $event->ID,
-            'post_title' => $postTitle
-        );
 
         if (!is_null($event->image)) {
             $event->setFeaturedImageFromUrl($event->image);

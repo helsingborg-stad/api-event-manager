@@ -110,30 +110,52 @@ class Event extends \HbgEventImporter\Entity\PostManager
     }
 
     /**
-     * Saves occasions to the occasions repeater
-     * @return void
-     */
-    public function saveOccasions()
-    {
-        $occasionError = false;
-
-        foreach ($this->occasions as $o) {
-            $occasionError = $this->extractEventOccasion($o['start_date'], $o['end_date'], $o['door_time']);
-        }
-
-        update_field('field_5761106783967', $this->occasions, $this->ID);
-
-        // Use this to say something is wrong with occasions and someone need to look over the data
-        return $occasionError;
-    }
-
-    /**
      * Saves Organizers to the organizers repeater
      * @return void
      */
     public function saveOrganizers()
     {
         update_field('field_57ebb36142843', $this->organizers, $this->ID);
+    }
+
+    /**
+     * Saves occasions to the occasions repeater
+     * @return void
+     */
+    public function saveOccasions()
+    {
+        global $wpdb;
+
+        $occasionError = false;
+        $dbOccasions = $wpdb->prefix . "occasions";
+
+        // Delete event occasions if this is the first occurance in the loop
+        if (!$this->occurred) {
+            $wpdb->delete($dbOccasions, array('event' => $this->ID), array('%d'));
+        }
+
+        // Save new occasions to occasion table
+        foreach ($this->occasions as $o) {
+            $occasionError = $this->extractEventOccasion($o['start_date'], $o['end_date'], $o['door_time']);
+        }
+
+        // Save new list of occasion to meta
+        $query = $wpdb->prepare("SELECT timestamp_start, timestamp_end, timestamp_door FROM $dbOccasions WHERE event = %d", $this->ID);
+        $getOccasions = $wpdb->get_results($query, ARRAY_A);
+        $newOccasions = array();
+        foreach ($getOccasions as $occasion) {
+            $newOccasions[] = array(
+                                'start_date' => date('Y-m-d H:i:s', $occasion['timestamp_start']),
+                                'end_date'   => date('Y-m-d H:i:s', $occasion['timestamp_end']),
+                                'door_time'  => date('Y-m-d H:i:s', $occasion['timestamp_door']),
+                                );
+        }
+
+        update_field('field_5761106783967', $newOccasions, $this->ID);
+        delete_post_meta($this->ID, 'occurred');
+
+        // Use this to say something is wrong with occasions and someone need to look over the data
+        return $occasionError;
     }
 
     public function extractEventOccasion($startDate, $endDate, $doorTime)
@@ -145,14 +167,10 @@ class Event extends \HbgEventImporter\Entity\PostManager
 
         $timestampStart = strtotime($startDate);
         $timestampEnd = strtotime($endDate);
-        $timestampDoor = null;
-
-        if (!empty($doorTime)) {
-            $timestampDoor = strtotime($doorTime);
-        }
+        $timestampDoor = (!empty($doorTime)) ? strtotime($doorTime) : null;
 
         if ($timestampStart <= 0 || $timestampEnd <= 0 || $timestampStart == false || $timestampEnd == false) {
-            return true;
+            return false;
         }
 
         // We do not need to get all fields, they are just for debugging
@@ -176,6 +194,6 @@ class Event extends \HbgEventImporter\Entity\PostManager
             $resultString .= "Already exists! Event: " . $existing[0]->event . ', timestamp: ' . $existing[0]->timestamp_start . ", timestamp_end: " . $existing[0]->timestamp_end . "\n";
         }
 
-        return false;
+        return true;
     }
 }

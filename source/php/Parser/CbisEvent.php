@@ -386,21 +386,17 @@ class CbisEvent extends \HbgEventImporter\Parser\Cbis
 
         $newImage = isset($eventData->Image->Url) ? $eventData->Image->Url : null;
         $eventId = $this->checkIfPostExists('event', $title);
-        $uid = 'cbis-' . $shortKey . '-' . $eventData->Id;
-        $isUpdate = false;
+        $occurred = false;
+        $eventManagerUid = (get_post_meta($eventId, '_event_manager_uid', true)) ? get_post_meta($eventId, '_event_manager_uid', true) : 'cbis-' . $shortKey . '-' . $eventData->Id;
 
-        // Check if this is a duplicate or update and if "sync" option is set.
-        if ($eventId && get_post_meta($eventId, '_event_manager_uid', true)) {
-            $existingUid = get_post_meta($eventId, '_event_manager_uid', true);
-            $sync = get_post_meta($eventId, 'sync', true);
-            $postStatus = get_post_status($eventId);
-
-            if ($existingUid === $uid && $sync == 1) {
-                $isUpdate = true;
-            }
+        if ($eventId) {
+            $sync           = get_post_meta($eventId, 'sync', true);
+            $postStatus     = get_post_status($eventId);
+            $levenshteinKey = array_search($eventId, array_column($this->levenshteinTitles['event'], 'ID'));
+            $occurred       = $this->levenshteinTitles['event'][$levenshteinKey]['occurred'];
         }
 
-        if (($eventId && !$isUpdate) || !$this->filter($categories)) {
+        if (($eventId && !$sync) || !$this->filter($categories)) {
             return $eventId;
         }
 
@@ -411,7 +407,7 @@ class CbisEvent extends \HbgEventImporter\Parser\Cbis
                 'post_status'             => $postStatus
             ),
             array(
-                '_event_manager_uid'      => 'cbis-' . $shortKey . '-' . $eventData->Id,
+                '_event_manager_uid'      => $eventManagerUid,
                 'sync'                    => 1,
                 'status'                  => isset($eventData->Status) && !empty($eventData->Status) ? $eventData->Status : null,
                 'image'                   => $newImage,
@@ -431,6 +427,7 @@ class CbisEvent extends \HbgEventImporter\Parser\Cbis
                 'imported_post'           => 1,
                 'user_groups'             => $userGroups,
                 'missing_user_group'      => $userGroups == null ? 1 : 0,
+                'occurred'                => $occurred,
             )
         );
 
@@ -438,14 +435,16 @@ class CbisEvent extends \HbgEventImporter\Parser\Cbis
             return false;
         }
 
-        if ($isUpdate == false) {
+        if (!$eventId) {
             $this->nrOfNewEvents++;
+            $this->levenshteinTitles['event'][] = array(
+                'ID'         => $event->ID,
+                'post_title' => $title,
+                'occurred'   => true,
+            );
+        } else {
+            $this->levenshteinTitles['event'][$levenshteinKey]['occurred'] = true;
         }
-
-        $this->levenshteinTitles['event'][] = array(
-            'ID' => $event->ID,
-            'post_title' => $title
-        );
 
         if (!is_null($event->image)) {
             $event->setFeaturedImageFromUrl($event->image);

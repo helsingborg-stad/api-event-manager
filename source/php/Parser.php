@@ -72,7 +72,7 @@ abstract class Parser
 
             if (is_array($allOfCertainType)) {
                 foreach ($allOfCertainType as $post) {
-                    $this->levenshteinTitles[$type][] = array('ID' => $post->ID, 'post_title' => $post->post_title);
+                    $this->levenshteinTitles[$type][] = array('ID' => $post->ID, 'post_title' => $post->post_title, 'occurred' => false);
                 }
             }
         }
@@ -116,9 +116,9 @@ abstract class Parser
     public function getCreatedData()
     {
         return array(
-            'events' => $this->nrOfNewEvents,
+            'events'    => $this->nrOfNewEvents,
             'locations' => $this->nrOfNewLocations,
-            'contacts' => $this->nrOfNewContacts
+            'contacts'  => $this->nrOfNewContacts
         );
     }
 
