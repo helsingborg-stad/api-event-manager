@@ -493,7 +493,7 @@
                     }
                 }
             ],
-            "min": 1,
+            "min": 0,
             "max": 500,
             "layout": "block",
             "button_label": "Add new object",
@@ -670,4 +670,3 @@
     "active": 1,
     "description": "Manage main guide object details."
 }]
-

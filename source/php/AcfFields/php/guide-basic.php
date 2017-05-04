@@ -1,7 +1,7 @@
-<?php 
+<?php
 
-if (function_exists('acf_add_local_field_group')) {
-    acf_add_local_field_group(array(
+if (function_exists('acf_add_local_field_group')) {
+    acf_add_local_field_group(array(
     'key' => 'group_589497ca3741e',
     'title' => __('Basic Guide Settings', 'event-manager'),
     'fields' => array(
@@ -497,7 +497,7 @@
                     ),
                 ),
             ),
-            'min' => 1,
+            'min' => 0,
             'max' => 500,
             'layout' => 'block',
             'button_label' => __('Add new object', 'event-manager'),
@@ -677,4 +677,4 @@
     'active' => 1,
     'description' => 'Manage main guide object details.',
 ));
-}
+}
