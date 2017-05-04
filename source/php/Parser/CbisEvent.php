@@ -54,16 +54,7 @@ class CbisEvent extends \HbgEventImporter\Parser\Cbis
         $response = $this->soapRequest($cbisKey, $cbisId, $cbisCategory, $requestParams);
         $this->events = $response->ListAllResult->Items->Product;
 
-        // Filter expired products older than 2 years
-        $filteredProducts = array_filter($this->events, function ($obj) {
-            if (isset($obj->ExpirationDate) && strtotime($obj->ExpirationDate) < strtotime("-2 years")) {
-                return false;
-            }
-
-            return true;
-        });
-
-        foreach ($filteredProducts as $key => $eventData) {
+        foreach ($this->events as $key => $eventData) {
             $this->saveEvent($eventData, $postStatus, $userGroups, $shortKey);
         }
     }

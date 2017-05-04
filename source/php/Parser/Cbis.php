@@ -129,7 +129,7 @@ abstract class Cbis extends \HbgEventImporter\Parser
             'itemsPerPage' => 2000,
             'filter' => array(
                 'GeoNodeIds' => array($geonode),
-                'StartDate' => date('c'),
+                'StartDate' => date('c', strtotime("-2 years")),
                 'Highlights' => 0,
                 'OrderBy' => 'Date',
                 'SortOrder' => 'Descending',
@@ -147,7 +147,7 @@ abstract class Cbis extends \HbgEventImporter\Parser
                 'BookableProductsFirst' => false,
                 'RandomSortSeed' => 0,
                 'ExcludeProductsWhereNameNotInCurrentLanguage' => false,
-                'IncludePendingPublish' => false
+                'IncludePendingPublish' => false,
             )
         );
 

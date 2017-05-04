@@ -50,6 +50,7 @@ class CbisLocation extends \HbgEventImporter\Parser\Cbis
 
         // Number of arenas/products to get, 500 to get all
         $requestParams['itemsPerPage'] = 600;
+        $requestParams['filter']['StartDate'] = null;
 
         if (intval($isArena)) {
             $requestParams['filter']['ProductType'] = "Arena";
@@ -57,6 +58,8 @@ class CbisLocation extends \HbgEventImporter\Parser\Cbis
             // Get and save event "arenas" to locations
             $response = $this->soapRequest($cbisKey, $cbisId, $cbisCategory, $requestParams);
             $this->arenas = $response->ListAllResult->Items->Product;
+
+            wp_die(count($this->arenas));
 
             foreach ($this->arenas as $arena) {
                 $this->saveLocation($arena, 'arena', $defaultLocation, $userGroups, $shortKey, $postStatus);
@@ -66,7 +69,6 @@ class CbisLocation extends \HbgEventImporter\Parser\Cbis
             $requestParams['filter']['ProductType'] = "Product";
             $requestParams['filter']['WithOccasionsOnly'] = false;
             $requestParams['filter']['ExcludeProductsWithoutOccasions'] = false;
-            $requestParams['filter']['StartDate'] = null;
 
             $response = $this->soapRequest($cbisKey, $cbisId, $cbisCategory, $requestParams);
             $this->products = $response->ListAllResult->Items->Product;
