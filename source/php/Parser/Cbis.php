@@ -129,7 +129,7 @@ abstract class Cbis extends \HbgEventImporter\Parser
             'itemsPerPage' => 2000,
             'filter' => array(
                 'GeoNodeIds' => array($geonode),
-                'StartDate' => date('c', strtotime("-2 years")),
+                'StartDate' => date('c', strtotime("-130 days")),
                 'Highlights' => 0,
                 'OrderBy' => 'Date',
                 'SortOrder' => 'Descending',
