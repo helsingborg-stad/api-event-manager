@@ -309,14 +309,14 @@ abstract class CustomPostType
     public function removePublishBox()
     {
         $post_id = (isset($_GET['post'])) ? $_GET['post'] : false;
-
-        // Return if user is admin/editor or the event don't have any publishing groups
-        if (current_user_can('administrator') || current_user_can('editor') || $post_id == false || get_field('missing_user_group', $post_id) == true) {
-            return;
-        }
-
         // Get current post object
         $post = get_post($post_id);
+        $user = wp_get_current_user();
+
+        // Return if user is admin/editor or the event don't have any publishing groups or if user is 'post_author'
+        if (current_user_can('administrator') || current_user_can('editor') || $post_id == false || get_field('missing_user_group', $post_id) == true || $post->post_author == $user->ID) {
+            return;
+        }
 
         $post_types = get_field('event_group_select', 'option') ? get_field('event_group_select', 'option') : array();
 
