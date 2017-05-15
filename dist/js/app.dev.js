@@ -936,9 +936,7 @@ ImportEvents.Admin.Validate = (function ($) {
                 return true;
             }
 
-            var image = this.image();
-            var title = this.post_title();
-            return (image && title) ? true : false;
+            return this.post_title();
         }.bind(this));
     }
 
