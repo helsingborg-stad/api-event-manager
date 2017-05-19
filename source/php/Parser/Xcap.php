@@ -109,7 +109,6 @@ class Xcap extends \HbgEventImporter\Parser
 
         $postContent = $description;
         $postTitle = $name;
-        $organizers = array();
 
         $eventId = $this->checkIfPostExists('event', $postTitle);
         $occurred = false;
@@ -144,7 +143,7 @@ class Xcap extends \HbgEventImporter\Parser
                 'categories'              => $categories,
                 'occasions'               => $occasions,
                 'location'                => $locationId != null ? $locationId : null,
-                'organizers'              => $organizers,
+                'organizers'              => null,
                 'booking_link'            => is_string($ticketUrl) ? $ticketUrl : null,
                 'booking_phone'           => null,
                 'age_restriction'         => null,

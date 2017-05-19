@@ -64,6 +64,7 @@ $acfExportManager->autoExport(array(
 	'publishing-groups' => 'group_585a4624de2e9',
 	'sponsor' => 'group_57a9bf12ef1a3',
 	'xcap' => 'group_56af507bbd485',
+	'organizer' => 'field_591eefdc13c43',
 ));
 $acfExportManager->import();
 

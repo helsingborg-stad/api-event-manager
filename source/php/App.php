@@ -56,6 +56,7 @@ class App
         //Init post types
         new PostTypes\Events();
         new PostTypes\Locations();
+        new PostTypes\Organizers();
         new PostTypes\Contacts();
         new PostTypes\Sponsors();
         new PostTypes\Packages();
@@ -86,7 +87,85 @@ class App
         new Api\MembershipCardFields();
         new Api\GuideFields();
         new Api\UserGroupFields();
+
+        // Debug code, TA BORT
+        add_action('admin_menu', array($this, 'createParsePage'));
     }
+
+     /** Debug code
+      * Creates a admin page to trigger update data function
+      * TA BORT
+      * @return void
+      */
+    public function createParsePage()
+     {
+         add_submenu_page(
+            null,
+             __('Import CBIS events', 'hbg-event-importer'),
+             __('Import CBIS events', 'hbg-event-importer'),
+             'edit_posts',
+             'import-cbis-events',
+             function () {
+                $api_keys = $this->getCbisKeys();
+                foreach ((array) $api_keys as $key => $api_key) {
+                    var_dump($api_key);
+                    $importer = new \HbgEventImporter\Parser\CbisEvent('http://api.cbis.citybreak.com/Products.asmx?wsdl', $api_key);
+                }
+            }
+         );
+
+         add_submenu_page(
+             null,
+             __('Import CBIS locations', 'hbg-event-importer'),
+            __('Import CBIS locations', 'hbg-event-importer'),
+             'edit_posts',
+             'import-cbis-locations',
+             function () {
+                    $api_keys = $this->getCbisKeys();
+                    // Cbis locations
+                    foreach ((array) $api_keys as $key => $api_key) {
+                        foreach ($api_key['cbis_locations'] as $key => $location) {
+                            $importer = new \HbgEventImporter\Parser\CbisLocation('http://api.cbis.citybreak.com/Products.asmx?wsdl', $api_key, $location);
+                        }
+                    }
+             }
+        );
+
+        add_submenu_page(
+             null,
+             __('Import XCAP', 'hbg-event-importer'),
+             __('Import XCAP', 'hbg-event-importer'),
+             'edit_posts',
+             'import-events',
+             function () {
+            $api_keys = $this->getXcapKeys();
+                foreach ((array) $api_keys as $key => $api_key) {
+                    $importer = new \HbgEventImporter\Parser\Xcap($api_key['xcap_api_url'], $api_key);
+                }
+            }
+         );
+
+         add_submenu_page(
+             null,
+             __('Delete all events', 'hbg-event-importer'),
+            __('Delete all events', 'hbg-event-importer'),
+             'edit_posts',
+             'delete-all-events',
+            function () {
+                 global $wpdb;
+                 $delete = $wpdb->query("TRUNCATE TABLE `cbis_data`");
+                 $delete = $wpdb->query("TRUNCATE TABLE `event_occasions`");
+                 $delete = $wpdb->query("TRUNCATE TABLE `event_postmeta`");
+                 $delete = $wpdb->query("TRUNCATE TABLE `event_posts`");
+                 $delete = $wpdb->query("TRUNCATE TABLE `event_stream`");
+                 $delete = $wpdb->query("TRUNCATE TABLE `event_stream_meta`");
+                 $delete = $wpdb->query("TRUNCATE TABLE `event_term_relationships`");
+                 $delete = $wpdb->query("TRUNCATE TABLE `event_term_taxonomy`");
+                 $delete = $wpdb->query("TRUNCATE TABLE `event_termmeta`");
+                 $delete = $wpdb->query("TRUNCATE TABLE `event_terms`");
+             }
+         );
+     }
 
     /**
      * Add theme support
@@ -160,7 +239,7 @@ class App
     {
         global $current_screen;
 
-        if (in_array($current_screen->post_type, array('event', 'location', 'contact', 'sponsor', 'package', 'membership-card', 'guide'))) {
+        if (in_array($current_screen->post_type, array('event', 'location', 'contact', 'sponsor', 'package', 'membership-card', 'guide', 'organizer'))) {
             wp_enqueue_style('hbg-event-importer', HBGEVENTIMPORTER_URL . '/dist/css/app.min.css');
         }
 

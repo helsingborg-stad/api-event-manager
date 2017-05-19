@@ -54,6 +54,7 @@ class CbisEvent extends \HbgEventImporter\Parser\Cbis
         $response = $this->soapRequest($cbisKey, $cbisId, $cbisCategory, $requestParams);
         $this->events = $response->ListAllResult->Items->Product;
 
+        echo '<br>' . count($this->events) . '<br>';
         foreach ($this->events as $key => $eventData) {
             $this->saveEvent($eventData, $postStatus, $userGroups, $shortKey);
         }
@@ -146,15 +147,55 @@ class CbisEvent extends \HbgEventImporter\Parser\Cbis
      * Cleans a single events data into correct format and saves it to db
      * @param  object   $eventData      Event data
      * @param  string   $postStatus     default post status
-     * @param  array    $userGroups  default user groups
+     * @param  array    $userGroups     default user groups
      * @param  int      $shortKey       shortened api key
      * @return void
      */
     public function saveEvent($eventData, $postStatus, $userGroups, $shortKey)
     {
+
+// TA BORT
+// echo $this->getAttributeValue(self::ATTRIBUTE_NAME, $attributes, $eventData->Name) . '<br>';
+
+// echo "Contact data<br>";
+
+// if ($this->getAttributeValue(self::ATTRIBUTE_CONTACT_EMAIL, $attributes)) {
+//     echo "ATTRIBUTE_CONTACT_EMAIL<br>";
+//     var_dump($this->getAttributeValue(self::ATTRIBUTE_CONTACT_EMAIL, $attributes));
+// }
+
+// if ($this->getAttributeValue(self::ATTRIBUTE_CONTACT_PERSON, $attributes)) {
+// echo "ATTRIBUTE_CONTACT_PERSON<br>";
+// var_dump($this->getAttributeValue(self::ATTRIBUTE_CONTACT_PERSON, $attributes));
+// }
+// if ($this->getAttributeValue(self::ATTRIBUTE_PHONE_NUMBER, $attributes)) {
+//    echo "ATTRIBUTE_PHONE_NUMBER";
+//     var_dump($this->getAttributeValue(self::ATTRIBUTE_PHONE_NUMBER, $attributes));
+// }
+
+// echo "Organizer data<br>";
+// if ($this->getAttributeValue(self::ATTRIBUTE_ORGANIZER_EMAIL, $attributes)) {
+//     echo "ATTRIBUTE_ORGANIZER_EMAIL<br>";
+//     var_dump($this->getAttributeValue(self::ATTRIBUTE_ORGANIZER_EMAIL, $attributes));
+// }
+// if ($this->getAttributeValue(self::ATTRIBUTE_ORGANIZER, $attributes)) {
+//     echo "ATTRIBUTE_ORGANIZER (Används inte)<br>";
+//     var_dump($this->getAttributeValue(self::ATTRIBUTE_ORGANIZER, $attributes));
+// }
+
+// echo "CO ORGANIZER data<br>";
+// if ($this->getAttributeValue(self::ATTRIBUTE_CO_ORGANIZER, $attributes)) {
+//     echo "ATTRIBUTE_CO_ORGANIZER<br>";
+//     var_dump($this->getAttributeValue(self::ATTRIBUTE_CO_ORGANIZER, $attributes));
+// }
+
+// echo ("<br>----------------------------<br>");
+
         $locationId = $this->maybeCreateLocation($eventData, $postStatus, $userGroups, $shortKey);
         $contactId = $this->maybeCreateContact($eventData, $postStatus, $userGroups, $shortKey);
         $organizers = $this->getOrganizers($eventData, $contactId);
+
+        $newOrganizers = $this->createOrganizer($eventData, $postStatus, $userGroups, $shortKey);
 
         $eventId = $this->maybeCreateEvent($eventData, $postStatus, $userGroups, $shortKey, $locationId, $organizers);
     }
@@ -254,6 +295,97 @@ class CbisEvent extends \HbgEventImporter\Parser\Cbis
 
         return $location->ID;
     }
+
+
+
+    /**
+     * Creates or updates an organizer if possible
+     * @param  object   $eventData      The event data
+     * @param  string   $postStatus     Default post status
+     * @param  array    $userGroups     User groups
+     * @param  string   $shortKey       UUID short key
+     * @return boolean|int              False if fail else contact id
+     */
+    public function createOrganizer($eventData, $postStatus, $userGroups, $shortKey)
+    {
+        $attributes = $this->getAttributes($eventData);
+
+        $title = $this->getAttributeValue(self::ATTRIBUTE_ORGANIZER, $attributes);
+        $email = $this->getAttributeValue(self::ATTRIBUTE_CONTACT_EMAIL, $attributes);
+        $phone = $this->getAttributeValue(self::ATTRIBUTE_PHONE_NUMBER, $attributes);
+        $phone = strlen($phone) >= 5 ? $phone : null;
+
+        if (empty($title) && ! empty($email)) {
+            $title = $email;
+        }
+
+        // Bail if title is empty
+        if (empty($title)) {
+            return false;
+        }
+
+        $contactId = $this->checkIfPostExists('organizer', $title);
+
+        // Get unique string
+        $uniqueString = ($email) ? strtolower($email) : str_replace(' ', '', $title);
+
+        $uid = 'cbis-' . $shortKey . '-' . $uniqueString;
+        $orgPostStatus = $postStatus;
+        $isUpdate = false;
+
+        // Check if this is a duplicate or update and if "sync" option is set.
+        if ($contactId && get_post_meta($contactId, '_event_manager_uid', true)) {
+            $existingUid = get_post_meta($contactId, '_event_manager_uid', true);
+            $sync = get_post_meta($contactId, 'sync', true);
+            $orgPostStatus = get_post_status($contactId);
+
+            if ($existingUid == $uid && $sync == 1) {
+                $isUpdate = true;
+            }
+        }
+
+        if ($contactId && !$isUpdate) {
+            return $contactId;
+        }
+
+        // Save contact
+        $organizer = new Organizer(
+            array(
+                'post_title'            => $title,
+                'post_status'           => $orgPostStatus,
+            ),
+            array(
+                'organizer_email'       => strtolower($this->getAttributeValue(self::ATTRIBUTE_CONTACT_EMAIL, $attributes)),
+                'organizer_phone'       => $phone,
+                '_event_manager_uid'    => $uid,
+                'user_groups'           => $userGroups,
+                'missing_user_group'    => $userGroups == null ? 1 : 0,
+                'sync'                  => 1,
+                'imported_post'         => 1,
+                'import_client'         => 'cbis',
+            )
+        );
+
+        if (!$organizer->save()) {
+            return false;
+        }
+
+        if ($isUpdate == false) {
+            $this->nrOfNewOrganizers++;
+        }
+
+        $this->levenshteinTitles['organizer'][] = array(
+            'ID' => $organizer->ID,
+            'post_title' => $title
+        );
+
+        return $organizer->ID;
+    }
+
+
+
+
+
 
     /**
      * Creates or updates a contact if possible

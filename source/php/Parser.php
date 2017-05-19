@@ -12,6 +12,7 @@ abstract class Parser
     protected $nrOfNewEvents;
     protected $nrOfNewLocations;
     protected $nrOfNewContacts;
+    protected $nrOfNewOrganizers;
 
     /**
      * Holds all titles of existing locations, contacts and events in wordpress
@@ -34,12 +35,13 @@ abstract class Parser
         ini_set('max_execution_time', 60*5);
 
         // Setup vars
-        $this->url              = $url;
-        $this->apiKeys          = $apiKeys;
-        $this->cbisLocation     = $cbisLocation;
-        $this->nrOfNewEvents    = 0;
-        $this->nrOfNewLocations = 0;
-        $this->nrOfNewContacts  = 0;
+        $this->url               = $url;
+        $this->apiKeys           = $apiKeys;
+        $this->cbisLocation      = $cbisLocation;
+        $this->nrOfNewEvents     = 0;
+        $this->nrOfNewLocations  = 0;
+        $this->nrOfNewContacts   = 0;
+        $this->nrOfNewOrganizers = 0;
 
         // Run import
         $this->start();
@@ -116,9 +118,10 @@ abstract class Parser
     public function getCreatedData()
     {
         return array(
-            'events'    => $this->nrOfNewEvents,
-            'locations' => $this->nrOfNewLocations,
-            'contacts'  => $this->nrOfNewContacts
+            'events'      => $this->nrOfNewEvents,
+            'locations'   => $this->nrOfNewLocations,
+            'contacts'    => $this->nrOfNewContacts,
+            'organizers'  => $this->nrOfNewOrganizers,
         );
     }
 

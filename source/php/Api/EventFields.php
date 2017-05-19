@@ -3,7 +3,7 @@
 namespace HbgEventImporter\Api;
 
 /**
- * Adding meta fields to location post type
+ * Adding meta fields to event post type
  */
 
 class EventFields extends Fields
@@ -504,7 +504,7 @@ class EventFields extends Fields
                 'schema' => array(
                     'description' => 'Field containing object with location data.',
                     'type' => 'object',
-                    'context' => array('view', 'edit')
+                    'context' => array('view', 'edit', 'embed')
                 )
             )
         );
