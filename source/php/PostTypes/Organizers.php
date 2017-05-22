@@ -42,6 +42,7 @@ class Organizers extends \HbgEventImporter\Entity\CustomPostType
 
         add_action('do_meta_boxes', array($this, 'changeImageBox'), 10, 3);
         add_filter('acf/update_value/key=field_591eefdc13c43', array($this, 'acfUpdatePhone'), 10, 3);
+        add_filter('acf/update_value/key=field_591ef12413c49', array($this, 'acfUpdatePhone'), 10, 3);
         add_filter('manage_edit-' . $this->slug . '_columns', array($this, 'addAcceptDenyTable'));
         add_action('manage_' . $this->slug . '_posts_custom_column', array($this, 'addAcceptDenyButtons'), 10, 2);
     }
