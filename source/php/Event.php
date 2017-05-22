@@ -21,13 +21,6 @@ class Event extends \HbgEventImporter\Entity\PostManager
         // Format phone number
         $this->booking_phone = DataCleaner::phoneNumber($this->booking_phone);
 
-        // Format and validate organizers phone and email
-        foreach ($this->organizers as $key => $value) {
-            $this->organizers[$key]['organizer_phone'] = DataCleaner::phoneNumber($this->organizers[$key]['organizer_phone']);
-            $this->organizers[$key]['organizer_email'] = DataCleaner::email($this->organizers[$key]['organizer_email']);
-            $this->organizers[$key]['organizer'] = DataCleaner::string($this->organizers[$key]['organizer']);
-        }
-
         // Clean strings
         $this->post_title = DataCleaner::string($this->post_title);
         $this->post_content = DataCleaner::string($this->post_content);

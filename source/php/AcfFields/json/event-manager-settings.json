@@ -54,7 +54,10 @@
                 "id": ""
             },
             "message": "Show notification if no events have been imported for a week or more.",
-            "default_value": 1
+            "default_value": 1,
+            "ui": 0,
+            "ui_on_text": "",
+            "ui_off_text": ""
         },
         {
             "key": "field_588605e9078dc",
@@ -72,12 +75,14 @@
             "choices": {
                 "event": "Events",
                 "location": "Locations",
-                "contact": "Contacts",
                 "sponsor": "Sponsors",
                 "package": "Packages",
                 "membership-card": "Membership cards",
+                "organizer": "Organizers",
                 "guide": "Guides"
             },
+            "allow_custom": 0,
+            "save_custom": 0,
             "default_value": [
                 "event"
             ],
@@ -102,7 +107,6 @@
     "instruction_placement": "label",
     "hide_on_screen": "",
     "active": 1,
-    "description": "",
-    "local": "json"
+    "description": ""
 }]
 

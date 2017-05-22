@@ -789,7 +789,7 @@ ImportEvents.Admin.Suggestions = (function ($) {
     var suggestionString;
 
     var acceptedPagenow = [
-        'contact',
+        'organizer',
         'location',
         'event',
         'sponsor',
@@ -895,8 +895,8 @@ ImportEvents.Admin.Suggestions = (function ($) {
 
     Suggestions.prototype.switchName = function() {
         switch(pagenow) {
-            case 'contact':
-                suggestionString = eventmanager.contacts + ' ' + eventmanager.with_similar_name;
+            case 'organizer':
+                suggestionString = eventmanager.organizers + ' ' + eventmanager.with_similar_name;
                 break;
             case 'location':
                 suggestionString = eventmanager.locations + ' ' + eventmanager.with_similar_name;

@@ -5,6 +5,7 @@ namespace HbgEventImporter\Parser;
 use \HbgEventImporter\Event as Event;
 use \HbgEventImporter\Location as Location;
 use \HbgEventImporter\Contact as Contact;
+use \HbgEventImporter\Organizer as Organizer;
 
 ini_set('memory_limit', '256M');
 ini_set('default_socket_timeout', 60*10);
@@ -192,12 +193,14 @@ class CbisEvent extends \HbgEventImporter\Parser\Cbis
 // echo ("<br>----------------------------<br>");
 
         $locationId = $this->maybeCreateLocation($eventData, $postStatus, $userGroups, $shortKey);
-        $contactId = $this->maybeCreateContact($eventData, $postStatus, $userGroups, $shortKey);
-        $organizers = $this->getOrganizers($eventData, $contactId);
 
-        $newOrganizers = $this->createOrganizer($eventData, $postStatus, $userGroups, $shortKey);
+        // TA BORT
+        // $contactId = $this->maybeCreateContact($eventData, $postStatus, $userGroups, $shortKey);
+        // $organizers = $this->getOrganizers($eventData, $contactId);
 
-        $eventId = $this->maybeCreateEvent($eventData, $postStatus, $userGroups, $shortKey, $locationId, $organizers);
+        $organizer = $this->createOrganizer($eventData, $postStatus, $userGroups, $shortKey);
+
+        $eventId = $this->maybeCreateEvent($eventData, $postStatus, $userGroups, $shortKey, $locationId, $organizer);
     }
 
     /**
@@ -493,7 +496,7 @@ class CbisEvent extends \HbgEventImporter\Parser\Cbis
      * @param  string $shortKey   UUID short key
      * @return boolean|int        False if fail else contact id
      */
-    public function maybeCreateEvent($eventData, $postStatus, $userGroups, $shortKey, $locationId = null, $organizers = null)
+    public function maybeCreateEvent($eventData, $postStatus, $userGroups, $shortKey, $locationId = null, $organizer = null)
     {
         $attributes = $this->getAttributes($eventData);
         $categories = $this->getCategories($eventData);
@@ -539,7 +542,7 @@ class CbisEvent extends \HbgEventImporter\Parser\Cbis
                 'categories'              => $categories,
                 'occasions'               => $occasions,
                 'location'                => !is_null($locationId) ? $locationId : null,
-                'organizers'              => $organizers,
+                'organizer'               => $organizer,
                 'booking_link'            => $this->getAttributeValue(self::ATTRIBUTE_BOOKING_LINK, $attributes),
                 'booking_phone'           => $this->getAttributeValue(self::ATTRIBUTE_BOOKING_PHONE_NUMBER, $attributes),
                 'age_restriction'         => $this->getAttributeValue(self::ATTRIBUTE_AGE_RESTRICTION, $attributes),

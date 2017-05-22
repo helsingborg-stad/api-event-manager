@@ -1,4 +1,4 @@
-.wp-admin.post-type-event, .wp-admin.post-type-location, .wp-admin.post-type-contact {
+.wp-admin.post-type-event, .wp-admin.post-type-location, .wp-admin.post-type-organizer {
 
     &.post-php.no-sync {
         .postbox:not(#submitdiv):not(.acf-postbox):not(#lix-calculator):not(#revisionsdiv):not(#sync-meta-box),
@@ -23,10 +23,10 @@
         .acf-field[data-name="municipality"],
         .acf-field[data-name="country"],
         .acf-field[data-name="geo_map"],
-        // Contact
-        .acf-field[data-name="name"],
-        .acf-field[data-name="phone_number"],
-        .acf-field[data-name="email"]
+        //Organizer
+        .acf-field[data-name="organizer_website"],
+        .acf-field[data-name="organizer_phone"],
+        .acf-field[data-name="organizer_email"]
         {
             position: relative;
 

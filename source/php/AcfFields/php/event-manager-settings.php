@@ -3,7 +3,7 @@
 if (function_exists('acf_add_local_field_group')) {
     acf_add_local_field_group(array(
     'key' => 'group_575fe32901927',
-    'title' => __('Event manager settings', 'event-manager'),
+    'title' => 'Event manager settings',
     'fields' => array(
         0 => array(
             'key' => 'field_575fe34355309',
@@ -58,13 +58,16 @@
             ),
             'message' => __('Show notification if no events have been imported for a week or more.', 'event-manager'),
             'default_value' => 1,
+            'ui' => 0,
+            'ui_on_text' => '',
+            'ui_off_text' => '',
         ),
         3 => array(
             'key' => 'field_588605e9078dc',
-            'label' => __('Groups', 'event-manager'),
+            'label' => 'Groups',
             'name' => 'event_group_select',
             'type' => 'checkbox',
-            'instructions' => __('Activate user groups on selected post types.', 'event-manager'),
+            'instructions' => 'Activate user groups on selected post types.',
             'required' => 0,
             'conditional_logic' => 0,
             'wrapper' => array(
@@ -73,14 +76,16 @@
                 'id' => '',
             ),
             'choices' => array(
-                'event' => __('Events', 'event-manager'),
-                'location' => __('Locations', 'event-manager'),
-                'contact' => __('Contacts', 'event-manager'),
-                'sponsor' => __('Sponsors', 'event-manager'),
-                'package' => __('Packages', 'event-manager'),
-                'membership-card' => __('Membership cards', 'event-manager'),
-                'guide' => __('Guides', 'event-manager'),
+                'event' => 'Events',
+                'location' => 'Locations',
+                'sponsor' => 'Sponsors',
+                'package' => 'Packages',
+                'membership-card' => 'Membership cards',
+                'organizer' => 'Organizers',
+                'guide' => 'Guides',
             ),
+            'allow_custom' => 0,
+            'save_custom' => 0,
             'default_value' => array(
                 0 => 'event',
             ),
@@ -106,6 +111,5 @@
     'hide_on_screen' => '',
     'active' => 1,
     'description' => '',
-    'local' => 'json',
 ));
 }

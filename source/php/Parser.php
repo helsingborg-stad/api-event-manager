@@ -21,7 +21,8 @@ abstract class Parser
     protected $levenshteinTitles = array(
         'location' => array(),
         'contact' => array(),
-        'event' => array()
+        'event' => array(),
+        'organizer' => array()
     );
 
     public function __construct($url, $apiKeys = null, $cbisLocation = null)

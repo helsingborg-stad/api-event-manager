@@ -261,7 +261,7 @@ class App
         $acceptedPostTypes = array(
             'event',
             'location',
-            'contact',
+            'organizer',
             'sponsor',
             'package',
             'membership-card',
@@ -290,6 +290,7 @@ class App
             'events'                => __("Events", 'event-manager'),
             'locations'             => __("Locations", 'event-manager'),
             'contacts'              => __("Contacts", 'event-manager'),
+            'organizers'            => __("Organizers", 'event-manager'),
             'time_until_reload'     => __("Time until reload", 'event-manager'),
             'loading'               => __("Loading", 'event-manager'),
             'choose_time'           => __("Choose time", 'event-manager'),

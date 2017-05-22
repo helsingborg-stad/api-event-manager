@@ -19,7 +19,7 @@ class Options
         add_action('add_meta_boxes', array($this, 'registerSyncBox'));
         add_action('save_post', array($this, 'saveSyncMeta'));
 
-        $postTypes = array('event', 'location', 'contact');
+        $postTypes = array('event', 'location', 'organizer');
         foreach ($postTypes as $val) {
             add_filter('get_user_option_meta-box-order_' . $val, array($this, 'metaboxOrder'));
         }
@@ -78,7 +78,7 @@ class Options
     {
         global $post;
         if (get_post_meta($post->ID, 'imported_post', true)) {
-            add_meta_box('sync-meta-box', esc_html__('API synchronization', 'event-manager'), array($this, 'syncMetaBoxCallback'), array('event', 'location', 'contact'), 'side', 'default');
+            add_meta_box('sync-meta-box', esc_html__('API synchronization', 'event-manager'), array($this, 'syncMetaBoxCallback'), array('event', 'location', 'organizer'), 'side', 'default');
         }
     }
 
