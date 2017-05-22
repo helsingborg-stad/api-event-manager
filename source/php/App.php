@@ -108,7 +108,6 @@ class App
              function () {
                 $api_keys = $this->getCbisKeys();
                 foreach ((array) $api_keys as $key => $api_key) {
-                    var_dump($api_key);
                     $importer = new \HbgEventImporter\Parser\CbisEvent('http://api.cbis.citybreak.com/Products.asmx?wsdl', $api_key);
                 }
             }

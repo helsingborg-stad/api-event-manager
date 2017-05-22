@@ -8,7 +8,7 @@ ImportEvents.Parser.Eventhandling = (function ($) {
     var newPosts = {
         events: 0,
         locations: 0,
-        contacts: 0
+        organizers: 0
     };
 
     var data = {
@@ -112,8 +112,8 @@ ImportEvents.Parser.Eventhandling = (function ($) {
             $('.wrap').append('\
                 <div id="importResponse">\
                     <div><h3>'+ eventmanager.new_data_imported +'</h3></div>\
-                    <div class="inline"><p><strong>'+ eventmanager.events +'</strong></p></div><div class="inline"><p><strong>'+ eventmanager.locations +'</strong></p></div><div class="inline"><p><strong>'+ eventmanager.contacts +'</strong></p></div>\
-                    <div class="inline"><p id="event">0</p></div><div class="inline"><p id="location">0</p></div><div class="inline"><p id="contact">0</p></div>\
+                    <div class="inline"><p><strong>'+ eventmanager.events +'</strong></p></div><div class="inline"><p><strong>'+ eventmanager.locations +'</strong></p></div><div class="inline"><p><strong>'+ eventmanager.organizers +'</strong></p></div>\
+                    <div class="inline"><p id="event">0</p></div><div class="inline"><p id="location">0</p></div><div class="inline"><p id="organizer">0</p></div>\
                     <div id="untilReload"><div id="meter"></div><p>'+ eventmanager.time_until_reload +'</p></div>\
                 </div>\
             ');
@@ -153,9 +153,9 @@ ImportEvents.Parser.Eventhandling = (function ($) {
             data: data,
             success: function(response) {
                 // Update response object
-                newPosts.events    += response.events;
-                newPosts.locations += response.locations;
-                newPosts.contacts  += response.contacts;
+                newPosts.events      += response.events;
+                newPosts.locations   += response.locations;
+                newPosts.organizers  += response.organizers;
 
                 // Run function again
                 i++;
@@ -237,9 +237,9 @@ ImportEvents.Parser.Eventhandling = (function ($) {
             data: data,
             success: function(response) {
                 // Update response object
-                newPosts.events    += response.events;
-                newPosts.locations += response.locations;
-                newPosts.contacts  += response.contacts;
+                newPosts.events      += response.events;
+                newPosts.locations   += response.locations;
+                newPosts.organizers  += response.organizers;
             }
         });
     };
@@ -254,19 +254,19 @@ ImportEvents.Parser.Eventhandling = (function ($) {
         var responsePopup = $('#importResponse');
 
         responsePopup.show(500, function() {
-            var eventNumber = responsePopup.find('#event');
-            var locationNumber = responsePopup.find('#location');
-            var contactNumber = responsePopup.find('#contact');
-            var normalTextSize = eventNumber.css('fontSize');
-            var bigTextSize = '26px';
+            var eventNumber     = responsePopup.find('#event');
+            var locationNumber  = responsePopup.find('#location');
+            var organizerNumber = responsePopup.find('#organizer');
+            var normalTextSize  = eventNumber.css('fontSize');
+            var bigTextSize     = '26px';
 
             eventNumber.text(newData.events);
             locationNumber.text(newData.locations);
-            contactNumber.text(newData.contacts);
+            organizerNumber.text(newData.organizers);
 
             eventNumber.animate({opacity: 1}, long).animate({fontSize: bigTextSize}, short).animate({fontSize: normalTextSize}, short, function() {
                 locationNumber.animate({opacity: 1}, long).animate({fontSize: bigTextSize}, short).animate({fontSize: normalTextSize}, short, function() {
-                    contactNumber.animate({opacity: 1}, long).animate({fontSize: bigTextSize}, short).animate({fontSize: normalTextSize}, short, function() {
+                    organizerNumber.animate({opacity: 1}, long).animate({fontSize: bigTextSize}, short).animate({fontSize: normalTextSize}, short, function() {
                         var loadingBar = responsePopup.find('#untilReload #meter');
                         loadingBar.animate({width: '100%'}, 7000, function() {
                             location.reload();

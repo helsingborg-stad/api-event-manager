@@ -55,7 +55,6 @@ class CbisEvent extends \HbgEventImporter\Parser\Cbis
         $response = $this->soapRequest($cbisKey, $cbisId, $cbisCategory, $requestParams);
         $this->events = $response->ListAllResult->Items->Product;
 
-        echo '<br>' . count($this->events) . '<br>';
         foreach ($this->events as $key => $eventData) {
             $this->saveEvent($eventData, $postStatus, $userGroups, $shortKey);
         }

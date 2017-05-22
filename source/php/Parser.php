@@ -11,16 +11,14 @@ abstract class Parser
     protected $cbisLocation;
     protected $nrOfNewEvents;
     protected $nrOfNewLocations;
-    protected $nrOfNewContacts;
     protected $nrOfNewOrganizers;
 
     /**
-     * Holds all titles of existing locations, contacts and events in wordpress
+     * Holds all titles of existing locations, organizers and events in wordpress
      * @var array
      */
     protected $levenshteinTitles = array(
         'location' => array(),
-        'contact' => array(),
         'event' => array(),
         'organizer' => array()
     );
@@ -41,7 +39,6 @@ abstract class Parser
         $this->cbisLocation      = $cbisLocation;
         $this->nrOfNewEvents     = 0;
         $this->nrOfNewLocations  = 0;
-        $this->nrOfNewContacts   = 0;
         $this->nrOfNewOrganizers = 0;
 
         // Run import
@@ -54,7 +51,7 @@ abstract class Parser
     abstract public function start();
 
     /**
-     * Collecting titles of existing events, locations and contacts
+     * Collecting titles of existing events, locations and organizers
      * @return void
      */
     public function collectDataForLevenshtein()
@@ -64,7 +61,7 @@ abstract class Parser
             array(
                 'event',
                 'location',
-                'contact'
+                'organizer'
             )
         );
 
@@ -121,7 +118,6 @@ abstract class Parser
         return array(
             'events'      => $this->nrOfNewEvents,
             'locations'   => $this->nrOfNewLocations,
-            'contacts'    => $this->nrOfNewContacts,
             'organizers'  => $this->nrOfNewOrganizers,
         );
     }

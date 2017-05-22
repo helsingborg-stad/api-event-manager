@@ -45,7 +45,7 @@ class Event extends \HbgEventImporter\Entity\PostManager
         $this->saveGroups();
         $this->saveOccasions();
         $this->saveTags();
-        $this->saveOrganizers();
+        $this->saveOrganizer();
 
         return true;
     }
@@ -106,9 +106,9 @@ class Event extends \HbgEventImporter\Entity\PostManager
      * Saves Organizers to the organizers repeater
      * @return void
      */
-    public function saveOrganizers()
+    public function saveOrganizer()
     {
-        update_field('field_57ebb36142843', $this->organizers, $this->ID);
+        //update_field('field_57ebb36142843', $this->organizer, $this->ID);
     }
 
     /**
