@@ -108,7 +108,7 @@ class Event extends \HbgEventImporter\Entity\PostManager
      */
     public function saveOrganizer()
     {
-        //update_field('field_57ebb36142843', $this->organizer, $this->ID);
+        update_field('field_5922a161ab32f', $this->organizer, $this->ID);
     }
 
     /**

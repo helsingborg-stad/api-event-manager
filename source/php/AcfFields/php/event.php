@@ -3,7 +3,7 @@
 if (function_exists('acf_add_local_field_group')) {
     acf_add_local_field_group(array(
     'key' => 'group_57610ebadcee8',
-    'title' => 'Event',
+    'title' => __('Event', 'event-manager'),
     'fields' => array(
         0 => array(
             'key' => 'field_5761103c83966',
@@ -51,10 +51,10 @@
                 'id' => '',
             ),
             'collapsed' => '',
-            'min' => '',
-            'max' => '',
+            'min' => 0,
+            'max' => 0,
             'layout' => 'block',
-            'button_label' => 'Add link',
+            'button_label' => __('Add link', 'event-manager'),
             'sub_fields' => array(
                 0 => array(
                     'key' => 'field_57c7fd2381ffb',
@@ -144,10 +144,10 @@
                 'id' => '',
             ),
             'collapsed' => '',
-            'min' => '',
-            'max' => '',
+            'min' => 0,
+            'max' => 0,
             'layout' => 'block',
-            'button_label' => 'Add occasion',
+            'button_label' => __('Add occasion', 'event-manager'),
             'sub_fields' => array(
                 0 => array(
                     'key' => 'field_5761164591649',
@@ -301,6 +301,7 @@
                     'tabs' => 'all',
                     'toolbar' => 'full',
                     'media_upload' => 1,
+                    'delay' => 0,
                 ),
             ),
         ),
@@ -318,10 +319,10 @@
                 'id' => '',
             ),
             'collapsed' => '',
-            'min' => '',
-            'max' => '',
+            'min' => 0,
+            'max' => 0,
             'layout' => 'row',
-            'button_label' => 'Add rule',
+            'button_label' => __('Add rule', 'event-manager'),
             'sub_fields' => array(
                 0 => array(
                     'key' => 'field_57d275713bf4e',
@@ -450,10 +451,10 @@
                         'id' => '',
                     ),
                     'collapsed' => '',
-                    'min' => '',
-                    'max' => '',
+                    'min' => 0,
+                    'max' => 0,
                     'layout' => 'block',
-                    'button_label' => 'Add exception',
+                    'button_label' => __('Add exception', 'event-manager'),
                     'sub_fields' => array(
                         0 => array(
                             'key' => 'field_57d279f8db0cc',
@@ -608,7 +609,7 @@
         ),
         12 => array(
             'key' => 'field_57ebb36142843',
-            'label' => __('Organizers', 'event-manager'),
+            'label' => __('Organizers (old)', 'event-manager'),
             'name' => 'organizers',
             'type' => 'repeater',
             'instructions' => '',
@@ -620,10 +621,10 @@
                 'id' => '',
             ),
             'collapsed' => '',
-            'min' => '',
-            'max' => '',
+            'min' => 0,
+            'max' => 0,
             'layout' => 'block',
-            'button_label' => 'Add organizer',
+            'button_label' => __('Add organizer', 'event-manager'),
             'sub_fields' => array(
                 0 => array(
                     'key' => 'field_57ecf8598ff0d',
@@ -640,6 +641,9 @@
                     ),
                     'message' => __('Check the box if this is the main organizer for the event.', 'event-manager'),
                     'default_value' => 0,
+                    'ui' => 0,
+                    'ui_on_text' => '',
+                    'ui_off_text' => '',
                 ),
                 1 => array(
                     'key' => 'field_57ebb3a242844',
@@ -739,6 +743,69 @@
             ),
         ),
         13 => array(
+            'key' => 'field_5922a161ab32f',
+            'label' => __('Organizers', 'event-manager'),
+            'name' => 'event_organizers',
+            'type' => 'repeater',
+            'instructions' => '',
+            'required' => 0,
+            'conditional_logic' => 0,
+            'wrapper' => array(
+                'width' => '',
+                'class' => '',
+                'id' => '',
+            ),
+            'collapsed' => 'field_5922a161ab331',
+            'min' => 0,
+            'max' => 0,
+            'layout' => 'block',
+            'button_label' => __('Add organizer', 'event-manager'),
+            'sub_fields' => array(
+                0 => array(
+                    'key' => 'field_5922a161ab330',
+                    'label' => __('Main organizer', 'event-manager'),
+                    'name' => 'main_organizer',
+                    'type' => 'true_false',
+                    'instructions' => '',
+                    'required' => 0,
+                    'conditional_logic' => 0,
+                    'wrapper' => array(
+                        'width' => '',
+                        'class' => '',
+                        'id' => '',
+                    ),
+                    'message' => __('Check the box if this is the main organizer for the event.', 'event-manager'),
+                    'default_value' => 0,
+                    'ui' => 0,
+                    'ui_on_text' => '',
+                    'ui_off_text' => '',
+                ),
+                1 => array(
+                    'key' => 'field_5922a161ab331',
+                    'label' => __('Organizer', 'event-manager'),
+                    'name' => 'organizer',
+                    'type' => 'post_object',
+                    'instructions' => __('Select the company, organization or person that organizes the event.', 'event-manager'),
+                    'required' => 1,
+                    'conditional_logic' => 0,
+                    'wrapper' => array(
+                        'width' => '',
+                        'class' => '',
+                        'id' => '',
+                    ),
+                    'post_type' => array(
+                        0 => 'organizer',
+                    ),
+                    'taxonomy' => array(
+                    ),
+                    'allow_null' => 0,
+                    'multiple' => 0,
+                    'return_format' => 'id',
+                    'ui' => 1,
+                ),
+            ),
+        ),
+        14 => array(
             'key' => 'field_57a9d5f3804e1',
             'label' => __('Sponsors', 'event-manager'),
             'name' => 'supporters',
@@ -761,7 +828,7 @@
             'return_format' => 'object',
             'ui' => 1,
         ),
-        14 => array(
+        15 => array(
             'key' => 'field_57611b73acf19',
             'label' => __('Booking', 'event-manager'),
             'name' => '',
@@ -777,7 +844,7 @@
             'placement' => 'left',
             'endpoint' => 0,
         ),
-        15 => array(
+        16 => array(
             'key' => 'field_57611b82acf1a',
             'label' => __('Booking link', 'event-manager'),
             'name' => 'booking_link',
@@ -793,7 +860,7 @@
             'default_value' => '',
             'placeholder' => '',
         ),
-        16 => array(
+        17 => array(
             'key' => 'field_57611bffacf1d',
             'label' => __('Booking phone', 'event-manager'),
             'name' => 'booking_phone',
@@ -812,7 +879,7 @@
             'append' => '',
             'maxlength' => '',
         ),
-        17 => array(
+        18 => array(
             'key' => 'field_57611befacf1c',
             'label' => __('Minimum age to attend the event', 'event-manager'),
             'name' => 'age_restriction',
@@ -833,7 +900,7 @@
             'max' => '',
             'step' => '',
         ),
-        18 => array(
+        19 => array(
             'key' => 'field_57c7ed92054e6',
             'label' => __('Included in membership cards', 'event-manager'),
             'name' => 'membership_cards',
@@ -856,7 +923,7 @@
             'return_format' => 'object',
             'ui' => 1,
         ),
-        19 => array(
+        20 => array(
             'key' => 'field_57611c0cacf1e',
             'label' => __('Default price / Adult', 'event-manager'),
             'name' => 'price_adult',
@@ -875,7 +942,7 @@
             'append' => __('SEK', 'event-manager'),
             'maxlength' => '',
         ),
-        20 => array(
+        21 => array(
             'key' => 'field_57b6fe18e65c4',
             'label' => __('Price student', 'event-manager'),
             'name' => 'price_student',
@@ -894,7 +961,7 @@
             'append' => __('SEK', 'event-manager'),
             'maxlength' => '',
         ),
-        21 => array(
+        22 => array(
             'key' => 'field_57611c23acf1f',
             'label' => __('Price children', 'event-manager'),
             'name' => 'price_children',
@@ -913,7 +980,7 @@
             'append' => __('SEK', 'event-manager'),
             'maxlength' => '',
         ),
-        22 => array(
+        23 => array(
             'key' => 'field_57f4fe8866a2d',
             'label' => __('Age restriction for children price', 'event-manager'),
             'name' => 'children_age',
@@ -964,7 +1031,7 @@
             'return_format' => 'value',
             'placeholder' => '',
         ),
-        23 => array(
+        24 => array(
             'key' => 'field_57b6fe5ee65c5',
             'label' => __('Price senior', 'event-manager'),
             'name' => 'price_senior',
@@ -983,7 +1050,7 @@
             'append' => __('SEK', 'event-manager'),
             'maxlength' => '',
         ),
-        24 => array(
+        25 => array(
             'key' => 'field_57f4fbaa4365e',
             'label' => __('Age restriction for senior price', 'event-manager'),
             'name' => 'senior_age',
@@ -1044,7 +1111,7 @@
             'return_format' => 'value',
             'placeholder' => '',
         ),
-        25 => array(
+        26 => array(
             'key' => 'field_57f4f4ac7479f',
             'label' => __('Price group', 'event-manager'),
             'name' => 'booking_group',
@@ -1058,10 +1125,10 @@
                 'id' => '',
             ),
             'collapsed' => '',
-            'min' => '',
-            'max' => '',
+            'min' => 0,
+            'max' => 0,
             'layout' => 'block',
-            'button_label' => 'Add group',
+            'button_label' => __('Add group', 'event-manager'),
             'sub_fields' => array(
                 0 => array(
                     'key' => 'field_57f4f6dc747a1',
@@ -1126,7 +1193,7 @@
                 ),
             ),
         ),
-        26 => array(
+        27 => array(
             'key' => 'field_57611bd8acf1b',
             'label' => __('Price information', 'event-manager'),
             'name' => 'price_information',
@@ -1145,7 +1212,7 @@
             'rows' => 3,
             'new_lines' => 'wpautop',
         ),
-        27 => array(
+        28 => array(
             'key' => 'field_57b70267e1f32',
             'label' => __('Ticket includes', 'event-manager'),
             'name' => 'ticket_includes',
@@ -1164,7 +1231,7 @@
             'rows' => 3,
             'new_lines' => 'wpautop',
         ),
-        28 => array(
+        29 => array(
             'key' => 'field_577a326b71ba8',
             'label' => __('Gallery', 'event-manager'),
             'name' => '',
@@ -1180,7 +1247,7 @@
             'placement' => 'top',
             'endpoint' => 0,
         ),
-        29 => array(
+        30 => array(
             'key' => 'field_577a312acd95d',
             'label' => __('Gallery', 'event-manager'),
             'name' => 'gallery',
@@ -1205,7 +1272,7 @@
             'max_size' => '',
             'mime_types' => '',
         ),
-        30 => array(
+        31 => array(
             'key' => 'field_57a9d7f655152',
             'label' => __('Links', 'event-manager'),
             'name' => '',
@@ -1221,7 +1288,7 @@
             'placement' => 'left',
             'endpoint' => 0,
         ),
-        31 => array(
+        32 => array(
             'key' => 'field_58188dfcfc3b9',
             'label' => __('Links', 'event-manager'),
             'name' => '',
@@ -1238,7 +1305,7 @@
             'new_lines' => 'wpautop',
             'esc_html' => 0,
         ),
-        32 => array(
+        33 => array(
             'key' => 'field_57a9d81f55153',
             'label' => __('Facebook', 'event-manager'),
             'name' => 'facebook',
@@ -1254,7 +1321,7 @@
             'default_value' => '',
             'placeholder' => '',
         ),
-        33 => array(
+        34 => array(
             'key' => 'field_57a9d82b55154',
             'label' => __('Twitter', 'event-manager'),
             'name' => 'twitter',
@@ -1270,7 +1337,7 @@
             'default_value' => '',
             'placeholder' => '',
         ),
-        34 => array(
+        35 => array(
             'key' => 'field_57a9d83355155',
             'label' => __('Instagram', 'event-manager'),
             'name' => 'instagram',
@@ -1286,7 +1353,7 @@
             'default_value' => '',
             'placeholder' => '',
         ),
-        35 => array(
+        36 => array(
             'key' => 'field_57c82373297f1',
             'label' => __('Google Music', 'event-manager'),
             'name' => 'google_music',
@@ -1302,7 +1369,7 @@
             'default_value' => '',
             'placeholder' => '',
         ),
-        36 => array(
+        37 => array(
             'key' => 'field_57c82396297f2',
             'label' => __('Apple Music', 'event-manager'),
             'name' => 'apple_music',
@@ -1318,7 +1385,7 @@
             'default_value' => '',
             'placeholder' => '',
         ),
-        37 => array(
+        38 => array(
             'key' => 'field_57c823a8297f3',
             'label' => __('Spotify', 'event-manager'),
             'name' => 'spotify',
@@ -1334,7 +1401,7 @@
             'default_value' => '',
             'placeholder' => '',
         ),
-        38 => array(
+        39 => array(
             'key' => 'field_57c826af782b0',
             'label' => __('Soundcloud', 'event-manager'),
             'name' => 'soundcloud',
@@ -1350,7 +1417,7 @@
             'default_value' => '',
             'placeholder' => '',
         ),
-        39 => array(
+        40 => array(
             'key' => 'field_57c823d7297f4',
             'label' => __('Deezer', 'event-manager'),
             'name' => 'deezer',
@@ -1366,7 +1433,7 @@
             'default_value' => '',
             'placeholder' => '',
         ),
-        40 => array(
+        41 => array(
             'key' => 'field_57a9d84055156',
             'label' => __('YouTube', 'event-manager'),
             'name' => 'youtube',
@@ -1381,9 +1448,9 @@
             ),
             'collapsed' => '',
             'min' => 0,
-            'max' => '',
+            'max' => 0,
             'layout' => 'block',
-            'button_label' => 'Add link',
+            'button_label' => __('Add link', 'event-manager'),
             'sub_fields' => array(
                 0 => array(
                     'key' => 'field_57c8153ecca56',
@@ -1403,7 +1470,7 @@
                 ),
             ),
         ),
-        41 => array(
+        42 => array(
             'key' => 'field_57a9d84955157',
             'label' => __('Vimeo', 'event-manager'),
             'name' => 'vimeo',
@@ -1418,9 +1485,9 @@
             ),
             'collapsed' => '',
             'min' => 0,
-            'max' => '',
+            'max' => 0,
             'layout' => 'block',
-            'button_label' => 'Add link',
+            'button_label' => __('Add link', 'event-manager'),
             'sub_fields' => array(
                 0 => array(
                     'key' => 'field_57c817b7a3395',
@@ -1458,6 +1525,5 @@
     'hide_on_screen' => '',
     'active' => 1,
     'description' => '',
-    'local' => 'json',
 ));
 }

@@ -4,7 +4,6 @@ namespace HbgEventImporter\Parser;
 
 use \HbgEventImporter\Event as Event;
 use \HbgEventImporter\Location as Location;
-use \HbgEventImporter\Contact as Contact;
 use \HbgEventImporter\Organizer as Organizer;
 
 ini_set('memory_limit', '256M');
@@ -197,9 +196,9 @@ class CbisEvent extends \HbgEventImporter\Parser\Cbis
         // $contactId = $this->maybeCreateContact($eventData, $postStatus, $userGroups, $shortKey);
         // $organizers = $this->getOrganizers($eventData, $contactId);
 
-        $organizer = $this->createOrganizer($eventData, $postStatus, $userGroups, $shortKey);
+        $organizer  = $this->createOrganizer($eventData, $postStatus, $userGroups, $shortKey);
 
-        $eventId = $this->maybeCreateEvent($eventData, $postStatus, $userGroups, $shortKey, $locationId, $organizer);
+        $eventId    = $this->maybeCreateEvent($eventData, $postStatus, $userGroups, $shortKey, $locationId, $organizer);
     }
 
     /**
@@ -298,22 +297,20 @@ class CbisEvent extends \HbgEventImporter\Parser\Cbis
         return $location->ID;
     }
 
-
-
     /**
      * Creates or updates an organizer if possible
      * @param  object   $eventData      The event data
      * @param  string   $postStatus     Default post status
      * @param  array    $userGroups     User groups
      * @param  string   $shortKey       UUID short key
-     * @return boolean|int              False if fail else contact id
+     * @return boolean|array            False if fail else organizer array
      */
     public function createOrganizer($eventData, $postStatus, $userGroups, $shortKey)
     {
         $attributes = $this->getAttributes($eventData);
 
         $title = $this->getAttributeValue(self::ATTRIBUTE_ORGANIZER, $attributes);
-        $email = $this->getAttributeValue(self::ATTRIBUTE_CONTACT_EMAIL, $attributes);
+        $email = ($this->getAttributeValue(self::ATTRIBUTE_ORGANIZER_EMAIL, $attributes)) ? $this->getAttributeValue(self::ATTRIBUTE_ORGANIZER_EMAIL, $attributes) : $this->getAttributeValue(self::ATTRIBUTE_CONTACT_EMAIL, $attributes);
         $phone = $this->getAttributeValue(self::ATTRIBUTE_PHONE_NUMBER, $attributes);
         $phone = strlen($phone) >= 5 ? $phone : null;
 
@@ -381,13 +378,13 @@ class CbisEvent extends \HbgEventImporter\Parser\Cbis
             'post_title' => $title
         );
 
-        return $organizer->ID;
+        $organizerArray = array(array(
+                            'main_organizer' => true,
+                            'organizer'      => intval($organizer->ID)
+                            ));
+
+        return $organizerArray;
     }
-
-
-
-
-
 
     /**
      * Creates or updates a contact if possible

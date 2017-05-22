@@ -48,8 +48,8 @@
                 "id": ""
             },
             "collapsed": "",
-            "min": "",
-            "max": "",
+            "min": 0,
+            "max": 0,
             "layout": "block",
             "button_label": "Add link",
             "sub_fields": [
@@ -140,8 +140,8 @@
                 "id": ""
             },
             "collapsed": "",
-            "min": "",
-            "max": "",
+            "min": 0,
+            "max": 0,
             "layout": "block",
             "button_label": "Add occasion",
             "sub_fields": [
@@ -296,7 +296,8 @@
                     "default_value": "",
                     "tabs": "all",
                     "toolbar": "full",
-                    "media_upload": 1
+                    "media_upload": 1,
+                    "delay": 0
                 }
             ]
         },
@@ -314,8 +315,8 @@
                 "id": ""
             },
             "collapsed": "",
-            "min": "",
-            "max": "",
+            "min": 0,
+            "max": 0,
             "layout": "row",
             "button_label": "Add rule",
             "sub_fields": [
@@ -445,8 +446,8 @@
                         "id": ""
                     },
                     "collapsed": "",
-                    "min": "",
-                    "max": "",
+                    "min": 0,
+                    "max": 0,
                     "layout": "block",
                     "button_label": "Add exception",
                     "sub_fields": [
@@ -601,7 +602,7 @@
         },
         {
             "key": "field_57ebb36142843",
-            "label": "Organizers",
+            "label": "Organizers (old)",
             "name": "organizers",
             "type": "repeater",
             "instructions": "",
@@ -613,8 +614,8 @@
                 "id": ""
             },
             "collapsed": "",
-            "min": "",
-            "max": "",
+            "min": 0,
+            "max": 0,
             "layout": "block",
             "button_label": "Add organizer",
             "sub_fields": [
@@ -632,7 +633,10 @@
                         "id": ""
                     },
                     "message": "Check the box if this is the main organizer for the event.",
-                    "default_value": 0
+                    "default_value": 0,
+                    "ui": 0,
+                    "ui_on_text": "",
+                    "ui_off_text": ""
                 },
                 {
                     "key": "field_57ebb3a242844",
@@ -726,6 +730,68 @@
                     "allow_null": 0,
                     "multiple": 1,
                     "return_format": "object",
+                    "ui": 1
+                }
+            ]
+        },
+        {
+            "key": "field_5922a161ab32f",
+            "label": "Organizers",
+            "name": "event_organizers",
+            "type": "repeater",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "collapsed": "field_5922a161ab331",
+            "min": 0,
+            "max": 0,
+            "layout": "block",
+            "button_label": "Add organizer",
+            "sub_fields": [
+                {
+                    "key": "field_5922a161ab330",
+                    "label": "Main organizer",
+                    "name": "main_organizer",
+                    "type": "true_false",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "message": "Check the box if this is the main organizer for the event.",
+                    "default_value": 0,
+                    "ui": 0,
+                    "ui_on_text": "",
+                    "ui_off_text": ""
+                },
+                {
+                    "key": "field_5922a161ab331",
+                    "label": "Organizer",
+                    "name": "organizer",
+                    "type": "post_object",
+                    "instructions": "Select the company, organization or person that organizes the event.",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "post_type": [
+                        "organizer"
+                    ],
+                    "taxonomy": [],
+                    "allow_null": 0,
+                    "multiple": 0,
+                    "return_format": "id",
                     "ui": 1
                 }
             ]
@@ -1048,8 +1114,8 @@
                 "id": ""
             },
             "collapsed": "",
-            "min": "",
-            "max": "",
+            "min": 0,
+            "max": 0,
             "layout": "block",
             "button_label": "Add group",
             "sub_fields": [
@@ -1371,7 +1437,7 @@
             },
             "collapsed": "",
             "min": 0,
-            "max": "",
+            "max": 0,
             "layout": "block",
             "button_label": "Add link",
             "sub_fields": [
@@ -1408,7 +1474,7 @@
             },
             "collapsed": "",
             "min": 0,
-            "max": "",
+            "max": 0,
             "layout": "block",
             "button_label": "Add link",
             "sub_fields": [
@@ -1447,7 +1513,6 @@
     "instruction_placement": "label",
     "hide_on_screen": "",
     "active": 1,
-    "description": "",
-    "local": "json"
+    "description": ""
 }]
 
