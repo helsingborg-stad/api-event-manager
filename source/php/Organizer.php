@@ -15,8 +15,8 @@ class Organizer extends \HbgEventImporter\Entity\PostManager
     public function beforeSave()
     {
         $this->post_title         = DataCleaner::string($this->post_title);
-        $this->organizer_phone    = DataCleaner::phoneNumber($this->organizer_phone);
-        $this->organizer_email    = DataCleaner::email($this->organizer_email);
+        $this->phone              = DataCleaner::phoneNumber($this->phone);
+        $this->email              = DataCleaner::email($this->email);
         $this->_event_manager_uid = DataCleaner::string($this->_event_manager_uid);
     }
 

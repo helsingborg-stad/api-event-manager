@@ -82,6 +82,7 @@ class App
         new Api\EventFields();
         new Api\LocationFields();
         new Api\ContactFields();
+        new Api\OrganizerFields();
         new Api\SponsorFields();
         new Api\PackageFields();
         new Api\MembershipCardFields();

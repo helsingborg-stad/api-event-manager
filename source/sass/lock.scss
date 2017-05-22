@@ -7,7 +7,7 @@
         .acf-field[data-name="event_link"],
         .acf-field[data-name="occasions"],
         .acf-field[data-name="location"],
-        .acf-field[data-name="organizers"],
+        .acf-field[data-name="event_organizers"],
         .acf-field[data-name="booking_link"],
         .acf-field[data-name="booking_phone"],
         .acf-field[data-name="age_restriction"],
@@ -24,9 +24,9 @@
         .acf-field[data-name="country"],
         .acf-field[data-name="geo_map"],
         //Organizer
-        .acf-field[data-name="organizer_website"],
-        .acf-field[data-name="organizer_phone"],
-        .acf-field[data-name="organizer_email"]
+        .acf-field[data-name="website"],
+        .acf-field[data-name="phone"],
+        .acf-field[data-name="email"]
         {
             position: relative;
 

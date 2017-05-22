@@ -354,8 +354,8 @@ class CbisEvent extends \HbgEventImporter\Parser\Cbis
                 'post_status'           => $orgPostStatus,
             ),
             array(
-                'organizer_email'       => strtolower($this->getAttributeValue(self::ATTRIBUTE_CONTACT_EMAIL, $attributes)),
-                'organizer_phone'       => $phone,
+                'email'                 => strtolower($this->getAttributeValue(self::ATTRIBUTE_CONTACT_EMAIL, $attributes)),
+                'phone'                 => $phone,
                 '_event_manager_uid'    => $uid,
                 'user_groups'           => $userGroups,
                 'missing_user_group'    => $userGroups == null ? 1 : 0,

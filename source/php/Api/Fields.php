@@ -288,4 +288,38 @@ class Fields
         return $object[$field_name];
     }
 
+    /**
+     * Adds additional data to featured_media field.
+     *
+     * @param   object  $object      The response object.
+     * @param   string  $field_name  The name of the field to add.
+     * @param   object  $request     The WP_REST_Request object.
+     *
+     * @return  object|null
+     */
+    public function featuredImageData($object, $field_name, $request)
+    {
+        // Proceed if the post has a featured image.
+        if (! empty($object['featured_media'])) {
+            $image_id = (int)$object['featured_media'];
+        } else {
+            return null;
+        }
+
+        $image = get_post($image_id);
+
+        if (! $image) {
+            return null;
+        }
+
+        $featured_image['id']            = $image_id;
+        $featured_image['alt_text']      = get_post_meta($image_id, '_wp_attachment_image_alt', true);
+        $featured_image['caption']       = $image->post_excerpt;
+        $featured_image['description']   = $image->post_content;
+        $featured_image['media_type']    = wp_attachment_is_image($image_id) ? 'image' : 'file';
+        $featured_image['post']          = ! empty($image->post_parent) ? (int) $image->post_parent : null;
+        $featured_image['source_url']    = wp_get_attachment_url($image_id);
+
+        return apply_filters('featured_image_data', $featured_image, $image_id);
+    }
 }

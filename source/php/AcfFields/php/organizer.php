@@ -8,7 +8,7 @@
         0 => array(
             'key' => 'field_591eefdc13c43',
             'label' => __('Phone', 'event-manager'),
-            'name' => 'organizer_phone',
+            'name' => 'phone',
             'type' => 'text',
             'instructions' => '',
             'required' => 0,
@@ -27,7 +27,7 @@
         1 => array(
             'key' => 'field_591ef00b13c44',
             'label' => __('Email', 'event-manager'),
-            'name' => 'organizer_email',
+            'name' => 'email',
             'type' => 'email',
             'instructions' => '',
             'required' => 0,
@@ -45,7 +45,7 @@
         2 => array(
             'key' => 'field_591ef02113c45',
             'label' => __('Website', 'event-manager'),
-            'name' => 'organizer_website',
+            'name' => 'website',
             'type' => 'url',
             'instructions' => '',
             'required' => 0,
@@ -61,7 +61,7 @@
         3 => array(
             'key' => 'field_591ef0c113c46',
             'label' => __('Contact persons', 'event-manager'),
-            'name' => 'organizer_contact_persons',
+            'name' => 'contact_persons',
             'type' => 'repeater',
             'instructions' => '',
             'required' => 0,
@@ -80,7 +80,7 @@
                 0 => array(
                     'key' => 'field_591ef0df13c47',
                     'label' => __('Name', 'event-manager'),
-                    'name' => 'organizer_person_name',
+                    'name' => 'person_name',
                     'type' => 'text',
                     'instructions' => '',
                     'required' => 1,
@@ -99,7 +99,7 @@
                 1 => array(
                     'key' => 'field_591ef0fc13c48',
                     'label' => __('Email', 'event-manager'),
-                    'name' => 'organizer_person_email',
+                    'name' => 'person_email',
                     'type' => 'text',
                     'instructions' => '',
                     'required' => 0,
@@ -118,7 +118,7 @@
                 2 => array(
                     'key' => 'field_591ef12413c49',
                     'label' => __('Phone', 'event-manager'),
-                    'name' => 'organizer_person_phone',
+                    'name' => 'person_phone',
                     'type' => 'text',
                     'instructions' => '',
                     'required' => 0,

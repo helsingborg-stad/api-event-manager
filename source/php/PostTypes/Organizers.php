@@ -33,10 +33,10 @@ class Organizers extends \HbgEventImporter\Entity\CustomPostType
         $this->addTableColumn('cb', '<input type="checkbox">');
         $this->addTableColumn('title', __('Title', 'event-manager'));
         $this->addTableColumn('email', __('Email', 'event-manager'), true, function ($column, $postId) {
-            echo get_post_meta($postId, 'organizer_email', true) ? get_post_meta($postId, 'organizer_email', true) :  __('n/a', 'event-manager');
+            echo get_post_meta($postId, 'email', true) ? get_post_meta($postId, 'email', true) :  __('n/a', 'event-manager');
         });
         $this->addTableColumn('phone', __('Phone', 'event-manager'), true, function ($column, $postId) {
-            echo get_post_meta($postId, 'organizer_phone', true) ? get_post_meta($postId, 'organizer_phone', true) : __('n/a', 'event-manager');
+            echo get_post_meta($postId, 'phone', true) ? get_post_meta($postId, 'phone', true) : __('n/a', 'event-manager');
         });
         $this->addTableColumn('date', __('Date', 'event-manager'));
 
