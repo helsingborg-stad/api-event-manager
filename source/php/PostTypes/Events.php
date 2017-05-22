@@ -54,11 +54,10 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
             if (have_rows('event_organizers')) {
                 while (have_rows('event_organizers')) {
                     the_row();
-
                     if (get_sub_field('main_organizer')) {
-                        $value = (get_sub_field('organizer')) ? (get_sub_field('organizer')) : null;
-                    } elseif (count(get_field('organizers')) == 1) {
-                        $value = (get_sub_field('organizer')) ? (get_sub_field('organizer')) : null;
+                        if (! empty(get_sub_field('organizer'))) {
+                            $value = get_the_title(get_sub_field('organizer'));
+                        }
                     }
                 }
             }
