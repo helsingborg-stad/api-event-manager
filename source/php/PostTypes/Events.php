@@ -51,8 +51,8 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
         $this->addTableColumn('organizer', _x('Main organizer', 'Main organizer column name', 'event-manager'), true, function ($column, $postId) {
             $value = null;
 
-            if (have_rows('event_organizers')) {
-                while (have_rows('event_organizers')) {
+            if (have_rows('organizers')) {
+                while (have_rows('organizers')) {
                     the_row();
                     if (get_sub_field('main_organizer')) {
                         if (! empty(get_sub_field('organizer'))) {

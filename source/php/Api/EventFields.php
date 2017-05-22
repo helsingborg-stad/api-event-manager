@@ -307,23 +307,19 @@ class EventFields extends Fields
             return null;
         }
 
-        $organizers_arr = array();
-        foreach ($organizers as $organizer) {
-            $contacts_array = array();
-            if (! empty($organizer['contacts']) && is_array($organizer['contacts'])) {
-                foreach ($organizer['contacts'] as $contact) {
-                    $contacts_array[] = array(
-                    'title' => get_the_title($contact->ID),
-                    'name' => get_field('name', $contact->ID),
-                    'phone_number' => get_field('phone_number', $contact->ID),
-                    'email' => get_field('email', $contact->ID),
-                    );
-                }
-                $organizer['contacts'] = $contacts_array;
-            }
-            $organizers_arr[] = $organizer;
+        foreach ($organizers as &$organizer) {
+            $organizer = array(
+                                'main_organizer'    => $organizer['main_organizer'],
+                                'organizer'         => get_the_title($organizer['organizer']),
+                                'organizer_link'    => get_field('website', $organizer['organizer']),
+                                'organizer_phone'   => get_field('phone', $organizer['organizer']),
+                                'organizer_email'   => get_field('email', $organizer['organizer']),
+                                'contact_persons'   => get_field('contact_persons', $organizer['organizer']),
+                                'contacts'          => null,
+                            );
         }
-        return $organizers_arr;
+
+        return $organizers;
     }
 
     /**
