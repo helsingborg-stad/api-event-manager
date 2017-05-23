@@ -635,7 +635,7 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
             return;
         }
 
-        $latestPost = get_posts("post_type=event&numberposts=1&meta_key=import_client&meta_value=cbis");
+        $latestPost = get_posts("post_type=event&numberposts=1&meta_key=import_client&meta_value=cbis&post_status=any");
         if (empty($latestPost[0]) || strtotime($latestPost[0]->post_date) > strtotime('-1 week')) {
             return;
         }
@@ -659,7 +659,7 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
             return;
         }
 
-        $latestPost = get_posts("post_type=event&numberposts=1&meta_key=import_client&meta_value=xcap");
+        $latestPost = get_posts("post_type=event&numberposts=1&meta_key=import_client&meta_value=xcap&post_status=any");
         if (empty($latestPost[0]) || strtotime($latestPost[0]->post_date) > strtotime('-1 week')) {
             return;
         }
