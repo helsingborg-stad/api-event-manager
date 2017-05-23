@@ -110,7 +110,7 @@ class UserGroups
     {
 
         // Return if admin or editor
-        if (current_user_can('editor') || current_user_can('administrator')) {
+        if (current_user_can('editor') || current_user_can('administrator') || current_user_can('guide_administrator')) {
             return;
         }
 

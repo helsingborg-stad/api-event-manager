@@ -314,7 +314,7 @@ abstract class CustomPostType
         $user = wp_get_current_user();
 
         // Return if user is admin/editor or the event don't have any publishing groups or if user is 'post_author'
-        if (current_user_can('administrator') || current_user_can('editor') || $post_id == false || get_field('missing_user_group', $post_id) == true || $post->post_author == $user->ID) {
+        if (current_user_can('administrator') || current_user_can('editor') || current_user_can('guide_administrator') || $post_id == false || get_field('missing_user_group', $post_id) == true || $post->post_author == $user->ID) {
             return;
         }
 
@@ -372,7 +372,7 @@ abstract class CustomPostType
      */
     public function updateuserGroups($value, $post_id, $field)
     {
-        if (current_user_can('administrator') || current_user_can('editor')) {
+        if (current_user_can('administrator') || current_user_can('editor') || current_user_can('guide_administrator')) {
             return $value;
         }
 
@@ -417,7 +417,7 @@ abstract class CustomPostType
         $current_user = wp_get_current_user();
 
         // Return if admin or editor
-        if (current_user_can('administrator') || current_user_can('editor')) {
+        if (current_user_can('administrator') || current_user_can('editor') || current_user_can('guide_administrator')) {
             return $args;
         }
 
