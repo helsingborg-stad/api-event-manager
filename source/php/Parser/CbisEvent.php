@@ -152,52 +152,8 @@ class CbisEvent extends \HbgEventImporter\Parser\Cbis
      */
     public function saveEvent($eventData, $postStatus, $userGroups, $shortKey)
     {
-
-// TA BORT
-// echo $this->getAttributeValue(self::ATTRIBUTE_NAME, $attributes, $eventData->Name) . '<br>';
-
-// echo "Contact data<br>";
-
-// if ($this->getAttributeValue(self::ATTRIBUTE_CONTACT_EMAIL, $attributes)) {
-//     echo "ATTRIBUTE_CONTACT_EMAIL<br>";
-//     var_dump($this->getAttributeValue(self::ATTRIBUTE_CONTACT_EMAIL, $attributes));
-// }
-
-// if ($this->getAttributeValue(self::ATTRIBUTE_CONTACT_PERSON, $attributes)) {
-// echo "ATTRIBUTE_CONTACT_PERSON<br>";
-// var_dump($this->getAttributeValue(self::ATTRIBUTE_CONTACT_PERSON, $attributes));
-// }
-// if ($this->getAttributeValue(self::ATTRIBUTE_PHONE_NUMBER, $attributes)) {
-//    echo "ATTRIBUTE_PHONE_NUMBER";
-//     var_dump($this->getAttributeValue(self::ATTRIBUTE_PHONE_NUMBER, $attributes));
-// }
-
-// echo "Organizer data<br>";
-// if ($this->getAttributeValue(self::ATTRIBUTE_ORGANIZER_EMAIL, $attributes)) {
-//     echo "ATTRIBUTE_ORGANIZER_EMAIL<br>";
-//     var_dump($this->getAttributeValue(self::ATTRIBUTE_ORGANIZER_EMAIL, $attributes));
-// }
-// if ($this->getAttributeValue(self::ATTRIBUTE_ORGANIZER, $attributes)) {
-//     echo "ATTRIBUTE_ORGANIZER (Används inte)<br>";
-//     var_dump($this->getAttributeValue(self::ATTRIBUTE_ORGANIZER, $attributes));
-// }
-
-// echo "CO ORGANIZER data<br>";
-// if ($this->getAttributeValue(self::ATTRIBUTE_CO_ORGANIZER, $attributes)) {
-//     echo "ATTRIBUTE_CO_ORGANIZER<br>";
-//     var_dump($this->getAttributeValue(self::ATTRIBUTE_CO_ORGANIZER, $attributes));
-// }
-
-// echo ("<br>----------------------------<br>");
-
         $locationId = $this->maybeCreateLocation($eventData, $postStatus, $userGroups, $shortKey);
-
-        // TA BORT
-        // $contactId = $this->maybeCreateContact($eventData, $postStatus, $userGroups, $shortKey);
-        // $organizers = $this->getOrganizers($eventData, $contactId);
-
         $organizer  = $this->createOrganizer($eventData, $postStatus, $userGroups, $shortKey);
-
         $eventId    = $this->maybeCreateEvent($eventData, $postStatus, $userGroups, $shortKey, $locationId, $organizer);
     }
 
@@ -299,6 +255,7 @@ class CbisEvent extends \HbgEventImporter\Parser\Cbis
 
     /**
      * Creates or updates an organizer if possible
+     * Not used anymore
      * @param  object   $eventData      The event data
      * @param  string   $postStatus     Default post status
      * @param  array    $userGroups     User groups
@@ -388,6 +345,7 @@ class CbisEvent extends \HbgEventImporter\Parser\Cbis
 
     /**
      * Creates or updates a contact if possible
+     * Not used anymore
      * @param  object $eventData  The event data
      * @param  string $postStatus Default post status
      * @param  array $userGroups  User groups

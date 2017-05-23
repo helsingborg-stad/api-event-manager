@@ -44,6 +44,7 @@ abstract class Cbis extends \HbgEventImporter\Parser
     const ATTRIBUTE_CO_ORGANIZER                =   262;
     const ATTRIBUTE_MUNICIPALITY                =   356;
     const ATTRIBUTE_COUNTRY_CODE2               =   556; //Examples I have seen '46', '+46', '046', '0046', '042-107400'
+    const ATTRIBUTE_ORGANIZER                   =   261;
 
     /**
      * CBIS attributes we need to decide if we want to use
@@ -81,7 +82,6 @@ abstract class Cbis extends \HbgEventImporter\Parser
      * CBIS attribute id's we chose not to use
      */
     const ATTRIBUTE_DIRECTIONS                  =   103;
-    const ATTRIBUTE_ORGANIZER                   =   261;
     const ATTRIBUTE_EXTERNAL_BOOKING_LINK       =   283;
     const ATTRIBUTE_ZOOM_LEVEL                  =   297;
     const ATTRIBUTE_CURRENCY                    =   402;
@@ -129,7 +129,6 @@ abstract class Cbis extends \HbgEventImporter\Parser
             'itemsPerPage' => 2000,
             'filter' => array(
                 'GeoNodeIds' => array($geonode),
-// TA BORT
                 'StartDate' => date('c'),
                 //'StartDate' => date('c', strtotime("-130 days")),
                 'Highlights' => 0,
