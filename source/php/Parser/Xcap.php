@@ -241,7 +241,7 @@ class Xcap extends \HbgEventImporter\Parser
             return false;
         }
 
-        if ($isUpdate == false) {
+        if (! isset($location->duplicate)) {
             $this->nrOfNewLocations++;
         }
 

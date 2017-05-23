@@ -177,11 +177,14 @@ abstract class PostManager
             );
         }
 
-        // Update if duplicate
-        if (isset($duplicate->ID)) {
+        // Update if duplicate and sync is set to true
+        if (isset($duplicate->ID) && get_post_meta($duplicate->ID, 'sync', true) == true) {
             $post['ID'] = $duplicate->ID;
             $this->ID = wp_update_post($post);
-            $isDuplicate = true;
+            $this->duplicate = true;
+        } elseif (isset($duplicate->ID) && get_post_meta($duplicate->ID, 'sync', true) == false) {
+            $this->ID = $duplicate->ID;
+            $this->duplicate = true;
         } else {
             // Create if not duplicate
             $this->ID = wp_insert_post($post, true);
@@ -189,7 +192,6 @@ abstract class PostManager
 
         return $this->afterSave();
     }
-
 
     /**
      * Uploads an image from a specified url and sets it as the current post's featured image

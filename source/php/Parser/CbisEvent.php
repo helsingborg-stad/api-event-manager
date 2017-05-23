@@ -153,7 +153,7 @@ class CbisEvent extends \HbgEventImporter\Parser\Cbis
     public function saveEvent($eventData, $postStatus, $userGroups, $shortKey)
     {
         $locationId = $this->maybeCreateLocation($eventData, $postStatus, $userGroups, $shortKey);
-        $organizer  = $this->createOrganizer($eventData, $postStatus, $userGroups, $shortKey);
+        $organizer  = $this->maybeCreateOrganizer($eventData, $postStatus, $userGroups, $shortKey);
         $eventId    = $this->maybeCreateEvent($eventData, $postStatus, $userGroups, $shortKey, $locationId, $organizer);
     }
 
@@ -241,7 +241,7 @@ class CbisEvent extends \HbgEventImporter\Parser\Cbis
             return false;
         }
 
-        if ($isUpdate == false) {
+        if (! isset($location->duplicate)) {
             $this->nrOfNewLocations++;
         }
 
@@ -260,9 +260,9 @@ class CbisEvent extends \HbgEventImporter\Parser\Cbis
      * @param  string   $postStatus     Default post status
      * @param  array    $userGroups     User groups
      * @param  string   $shortKey       UUID short key
-     * @return boolean|array            False if fail else organizer array
+     * @return boolean|int              False if fail else organizer ID
      */
-    public function createOrganizer($eventData, $postStatus, $userGroups, $shortKey)
+    public function maybeCreateOrganizer($eventData, $postStatus, $userGroups, $shortKey)
     {
         $attributes = $this->getAttributes($eventData);
 
@@ -322,11 +322,11 @@ class CbisEvent extends \HbgEventImporter\Parser\Cbis
             )
         );
 
-        if (!$organizer->save()) {
+        if (! $organizer->save()) {
             return false;
         }
 
-        if ($isUpdate == false) {
+        if (! isset($organizer->duplicate)) {
             $this->nrOfNewOrganizers++;
         }
 
@@ -335,12 +335,7 @@ class CbisEvent extends \HbgEventImporter\Parser\Cbis
             'post_title' => $title
         );
 
-        $organizerArray = array(array(
-                            'main_organizer' => true,
-                            'organizer'      => intval($organizer->ID)
-                            ));
-
-        return $organizerArray;
+        return $organizer->ID;
     }
 
     /**
@@ -469,6 +464,11 @@ class CbisEvent extends \HbgEventImporter\Parser\Cbis
         $occurred = false;
         $eventManagerUid = (get_post_meta($eventId, '_event_manager_uid', true)) ? get_post_meta($eventId, '_event_manager_uid', true) : 'cbis-' . $shortKey . '-' . $eventData->Id;
 
+        $organizerArray = (! empty($organizer)) ? array(array(
+                            'main_organizer' => true,
+                            'organizer'      => intval($organizer)
+                        )) : null;
+
         if ($eventId) {
             $sync           = get_post_meta($eventId, 'sync', true);
             $postStatus     = get_post_status($eventId);
@@ -496,7 +496,7 @@ class CbisEvent extends \HbgEventImporter\Parser\Cbis
                 'categories'              => $categories,
                 'occasions'               => $occasions,
                 'location'                => !is_null($locationId) ? $locationId : null,
-                'organizer'               => $organizer,
+                'organizer'               => $organizerArray,
                 'booking_link'            => $this->getAttributeValue(self::ATTRIBUTE_BOOKING_LINK, $attributes),
                 'booking_phone'           => $this->getAttributeValue(self::ATTRIBUTE_BOOKING_PHONE_NUMBER, $attributes),
                 'age_restriction'         => $this->getAttributeValue(self::ATTRIBUTE_AGE_RESTRICTION, $attributes),
