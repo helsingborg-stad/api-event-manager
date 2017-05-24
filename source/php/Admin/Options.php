@@ -16,7 +16,7 @@ class Options
             ));
         }
 
-        add_action('add_meta_boxes', array($this, 'registerSyncBox'));
+        add_action('add_meta_boxes', array($this, 'registerMetaBoxes'));
         add_action('save_post', array($this, 'saveSyncMeta'));
 
         $postTypes = array('event', 'location', 'organizer');
@@ -71,15 +71,89 @@ class Options
     }
 
     /**
-     * Register api sync meta box
+     * Register custom meta boxes
      * @return void
      */
-    public function registerSyncBox()
+    public function registerMetaBoxes()
     {
         global $post;
-        if (get_post_meta($post->ID, 'imported_post', true)) {
+
+        // Add sync meta box
+        if (is_object($post) && get_post_meta($post->ID, 'imported_post', true)) {
             add_meta_box('sync-meta-box', esc_html__('API synchronization', 'event-manager'), array($this, 'syncMetaBoxCallback'), array('event', 'location', 'organizer'), 'side', 'default');
         }
+
+        // Add meta box linked events
+        if (current_user_can('administrator')) {
+            add_meta_box('linked-events-box', esc_html__('Linked events', 'event-manager'), array($this, 'linkedEventsCallback'), array('location', 'organizer', 'membership-card', 'sponsor'), 'side', 'low');
+        }
+    }
+
+    /**
+     * Return linked events
+     * @param  obj $post current post object
+     * @return string
+     */
+    public function linkedEventsCallback($post)
+    {
+        $markup = '';
+
+        if (is_object($post)) {
+            switch ($post->post_type) {
+                case 'organizer':
+                    add_filter('posts_where', array($this, 'allowKeyWildcards'));
+                    $value = 'organizers_%';
+                    break;
+                case 'sponsor':
+                    $value = 'supporters';
+                    break;
+                case 'membership-card':
+                    $value = 'membership_cards';
+                    break;
+                default:
+                    $value = $post->post_type;
+            }
+
+            $args = array(
+                'numberposts' => -1,
+                'post_type'   => 'event',
+                'post_status' => 'any',
+                'meta_query'  => array(
+                    array(
+                        'key'     => $value,
+                        'value'   => $post->ID,
+                        'compare' => 'LIKE',
+                    )
+                )
+            );
+            $query = new \WP_Query($args);
+
+            if ($query && ! empty($query->posts)) {
+                foreach ($query->posts as $post) {
+                    $markup .= '<p><a href="'. get_edit_post_link($post->ID) .'">' . $post->post_title . '</a></p>';
+                }
+            }
+
+            wp_reset_postdata();
+        }
+
+        $markup = (! empty($markup)) ? $markup : '<p>' . __('This post is not linked to any events.', 'event-manager') . '</p>';
+
+        echo $markup;
+    }
+
+    /**
+     * Allow wild cards when quering organizers
+     * @param  string $where Default where statement
+     * @return string
+     */
+    public function allowKeyWildcards($where)
+    {
+        if (get_post_type() == 'organizer' && is_admin()) {
+            $where = str_replace("meta_key = 'organizers_%", "meta_key LIKE 'organizers_%", $where);
+        }
+
+        return $where;
     }
 
     /**
@@ -100,7 +174,8 @@ class Options
      * Set meta box order
      * @return array
      */
-    public function metaboxOrder() {
+    public function metaboxOrder()
+    {
         return array(
             'side' => join(
                 ",",
