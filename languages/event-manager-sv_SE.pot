@@ -3,14 +3,14 @@ msgid ""
 msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "Project-Id-Version: Event Manager\n"
-"POT-Creation-Date: 2017-05-22 16:54+0200\n"
+"POT-Creation-Date: 2017-06-05 09:36+0200\n"
 "PO-Revision-Date: 2016-10-26 08:27+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0.1\n"
+"X-Generator: Poedit 2.0.2\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-WPHeader: hbg-event-importer.php\n"
 "X-Poedit-SourceCharset: UTF-8\n"
@@ -454,7 +454,7 @@ msgstr ""
 msgid "Organizer"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:612 source/php/App.php:293
+#: source/php/AcfFields/php/event.php:612 source/php/App.php:216
 #: source/php/PostTypes/Organizers.php:10
 msgid "Organizers"
 msgstr ""
@@ -475,7 +475,7 @@ msgstr ""
 msgid "Select the company, organization or person that organizes the event."
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:675 source/php/App.php:303
+#: source/php/AcfFields/php/event.php:675 source/php/App.php:226
 #: source/php/PostTypes/Sponsors.php:10
 msgid "Sponsors"
 msgstr ""
@@ -1612,24 +1612,32 @@ msgctxt "Event manager options"
 msgid "Options"
 msgstr ""
 
-#: source/php/Admin/Options.php:81
+#: source/php/Admin/UI.php:58
+msgid ""
+"Please upload images that are as large as possible and that are not "
+"sensitive to cropping (eg. images with text overlay)."
+msgstr ""
+
+#: source/php/Admin/UI.php:94
 msgid "API synchronization"
 msgstr ""
 
-#: source/php/Admin/Options.php:94
+#: source/php/Admin/UI.php:99
+msgid "Linked events"
+msgstr ""
+
+#: source/php/Admin/UI.php:151
+msgid "This post is not linked to any events."
+msgstr ""
+
+#: source/php/Admin/UI.php:179
 msgid ""
 "Unchecking this box will disable API updates sync for this particular "
 "event. Only fields with sync icon is affected by this option."
 msgstr ""
 
-#: source/php/Admin/Options.php:95
+#: source/php/Admin/UI.php:180
 msgid "Sync event information with API"
-msgstr ""
-
-#: source/php/Admin/UI.php:52
-msgid ""
-"Please upload images that are as large as possible and that are not "
-"sensitive to cropping (eg. images with text overlay)."
 msgstr ""
 
 #: source/php/Admin/UserRoles.php:21
@@ -1644,117 +1652,99 @@ msgstr ""
 msgid "Guide editor"
 msgstr ""
 
-#: source/php/App.php:105 source/php/App.php:106
-msgid "Import CBIS events"
-msgstr ""
-
-#: source/php/App.php:119 source/php/App.php:120
-#: source/php/PostTypes/Locations.php:166
-msgid "Import CBIS locations"
-msgstr ""
-
-#: source/php/App.php:136 source/php/App.php:137
-#: source/php/PostTypes/Events.php:464
-msgid "Import XCAP"
-msgstr ""
-
-#: source/php/App.php:150 source/php/App.php:151
-msgid "Delete all events"
-msgstr ""
-
-#: source/php/App.php:280
+#: source/php/App.php:203
 msgid "\"Title\" is missing"
 msgstr ""
 
-#: source/php/App.php:281
+#: source/php/App.php:204
 msgid "\"Featured\" image is missing"
 msgstr ""
 
-#: source/php/App.php:282
+#: source/php/App.php:205
 msgid "Create new contact"
 msgstr ""
 
-#: source/php/App.php:283
+#: source/php/App.php:206
 msgid "Create new sponsor"
 msgstr ""
 
-#: source/php/App.php:284
+#: source/php/App.php:207
 msgid "Create new location"
 msgstr ""
 
-#: source/php/App.php:285 source/php/App.php:286
+#: source/php/App.php:208 source/php/App.php:209
 msgid "Create new membership card"
 msgstr ""
 
-#: source/php/App.php:287
+#: source/php/App.php:210
 msgid "Close"
 msgstr ""
 
-#: source/php/App.php:288
+#: source/php/App.php:211
 msgid "Add images"
 msgstr ""
 
-#: source/php/App.php:289
+#: source/php/App.php:212
 msgid "Imported data"
 msgstr ""
 
-#: source/php/App.php:290
+#: source/php/App.php:213
 msgid "Events"
 msgstr ""
 
-#: source/php/App.php:291 source/php/PostTypes/Locations.php:12
+#: source/php/App.php:214 source/php/PostTypes/Locations.php:12
 msgid "Locations"
 msgstr ""
 
-#: source/php/App.php:292 source/php/PostTypes/Contacts.php:10
+#: source/php/App.php:215 source/php/PostTypes/Contacts.php:10
 msgid "Contacts"
 msgstr ""
 
-#: source/php/App.php:294
+#: source/php/App.php:217
 msgid "Time until reload"
 msgstr ""
 
-#: source/php/App.php:295
+#: source/php/App.php:218
 msgid "Loading"
 msgstr ""
 
-#: source/php/App.php:296
+#: source/php/App.php:219
 msgid "Choose time"
 msgstr ""
 
-#: source/php/App.php:297
+#: source/php/App.php:220
 msgid "Time"
 msgstr ""
 
-#: source/php/App.php:298
+#: source/php/App.php:221
 msgid "Hour"
 msgstr ""
 
-#: source/php/App.php:299
+#: source/php/App.php:222
 msgid "Minute"
 msgstr ""
 
-#: source/php/App.php:300
+#: source/php/App.php:223
 msgid "Done"
 msgstr ""
 
-#: source/php/App.php:301
+#: source/php/App.php:224
 msgid "Now"
 msgstr ""
 
-#: source/php/App.php:302
+#: source/php/App.php:225
 msgid "with similar name"
 msgstr ""
 
-#: source/php/App.php:304 source/php/PostTypes/Packages.php:10
+#: source/php/App.php:227 source/php/PostTypes/Packages.php:10
 msgid "Packages"
 msgstr ""
 
-#: source/php/App.php:305
+#: source/php/App.php:228
 msgid "Membership cards"
 msgstr ""
 
-#: source/php/App.php:306 source/php/PostTypes/Guides.php:12
+#: source/php/App.php:229 source/php/PostTypes/Guides.php:12
 msgid "Guides"
 msgstr ""
 
@@ -1853,11 +1843,11 @@ msgstr ""
 msgid "Error"
 msgstr ""
 
-#: source/php/Entity/PostManager.php:216
+#: source/php/Entity/PostManager.php:218
 msgid "Could not create folder"
 msgstr ""
 
-#: source/php/Entity/PostManager.php:216
+#: source/php/Entity/PostManager.php:218
 msgid "please go ahead and create it manually and rerun the import."
 msgstr ""
 
@@ -1932,59 +1922,63 @@ msgstr ""
 msgid "Door time cannot be after start time"
 msgstr ""
 
+#: source/php/PostTypes/Events.php:464
+msgid "Import XCAP"
+msgstr ""
+
 #: source/php/PostTypes/Events.php:468
 msgid "Import CBIS"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:477
+#: source/php/PostTypes/Events.php:470
 msgid "Collect event timestamps"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:494
+#: source/php/PostTypes/Events.php:487
 msgid "No post to duplicate has been supplied!"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:504
+#: source/php/PostTypes/Events.php:497
 msgid "Event creation failed, could not find original event"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:581
+#: source/php/PostTypes/Events.php:574
 msgid "Create similar item"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:581
+#: source/php/PostTypes/Events.php:574
 msgid "Are you sure you want to clone this event?"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:581
+#: source/php/PostTypes/Events.php:574
 msgid "Clone"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:599
+#: source/php/PostTypes/Events.php:592
 #, php-format
 msgid ""
 "This is a duplicate of the event: %s. If this is a new occasion for the "
 "same event, please %s and republish the original event"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:599
+#: source/php/PostTypes/Events.php:592
 msgid "edit"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:620
+#: source/php/PostTypes/Events.php:613
 msgid ""
 "Please do not enter information that refers to information in another text "
 "field. It is not certain that all fields will be presented to the consumer "
 "and would thefore be missguiding."
 msgstr ""
 
-#: source/php/PostTypes/Events.php:644
+#: source/php/PostTypes/Events.php:637
 msgid ""
 "CBIS have not imported any events for atleast 7 days. Please control the "
 "importer."
 msgstr ""
 
-#: source/php/PostTypes/Events.php:668
+#: source/php/PostTypes/Events.php:661
 msgid ""
 "XCAP have not imported any events for atleast 7 days. Please control the "
 "importer."
@@ -2000,6 +1994,10 @@ msgstr ""
 
 #: source/php/PostTypes/Locations.php:54
 msgid "Import client"
+msgstr ""
+
+#: source/php/PostTypes/Locations.php:166
+msgid "Import CBIS locations"
 msgstr ""
 
 #: source/php/PostTypes/MembershipCards.php:10
