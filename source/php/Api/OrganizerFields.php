@@ -13,6 +13,43 @@ class OrganizerFields extends Fields
     public function __construct()
     {
         add_action('rest_api_init', array($this, 'registerRestFields'));
+        add_action('rest_api_init', array($this, 'registerRestRoute'));
+    }
+
+    public static function registerRestRoute()
+    {
+        $response = register_rest_route('wp/v2', '/'.$this->postType.'/'.'complete', array(
+            'methods'  => \WP_REST_Server::READABLE,
+            'callback' => array($this, 'getAllOrganizers'),
+        ));
+    }
+
+    /**
+     * End point to get all organizers, with id and title
+     * @return WP_REST_Response / WP_Error
+     */
+    public function getAllOrganizers($request)
+    {
+        global $wpdb;
+
+        $post_status = 'publish';
+        $query =
+        "
+        SELECT      ID as id, post_title as title
+        FROM        $wpdb->posts
+        WHERE       $wpdb->posts.post_type = %s
+                    AND $wpdb->posts.post_status = %s
+        ORDER BY post_title ASC
+        ";
+
+        $completeQuery = $wpdb->prepare($query, $this->postType, $post_status);
+        $allOrganizers = $wpdb->get_results($completeQuery);
+
+        if (empty($allOrganizers)) {
+            return new \WP_Error('Error', 'There are no Organizers', array( 'status' => 404 ));
+        } else {
+            return new \WP_REST_Response($allOrganizers, 200);
+        }
     }
 
     /**
