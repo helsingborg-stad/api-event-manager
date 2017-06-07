@@ -1,15 +1,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Event Manager\n"
-"POT-Creation-Date: 2017-05-22 16:54+0200\n"
-"PO-Revision-Date: 2017-05-22 16:57+0200\n"
+"POT-Creation-Date: 2017-06-07 16:05+0200\n"
+"PO-Revision-Date: 2017-06-07 16:08+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0.1\n"
+"X-Generator: Poedit 2.0.2\n"
 "X-Poedit-Basepath: .\n"
 "X-Poedit-WPHeader: hbg-event-importer.php\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -458,7 +458,7 @@ msgstr "Lägg till platser om evenemanget äger rum på flera platser."
 msgid "Organizer"
 msgstr "Arrangör"
 
-#: source/php/AcfFields/php/event.php:612 source/php/App.php:293
+#: source/php/AcfFields/php/event.php:612 source/php/App.php:216
 #: source/php/PostTypes/Organizers.php:10
 msgid "Organizers"
 msgstr "Arrangörer"
@@ -481,7 +481,7 @@ msgstr ""
 "Välj företaget, organisationen eller privatpersonen som står bakom "
 "evenemanget."
 
-#: source/php/AcfFields/php/event.php:675 source/php/App.php:303
+#: source/php/AcfFields/php/event.php:675 source/php/App.php:226
 #: source/php/PostTypes/Sponsors.php:10
 msgid "Sponsors"
 msgstr "Sponsorer"
@@ -1630,11 +1630,27 @@ msgctxt "Event manager options"
 msgid "Options"
 msgstr "Inställningar"
 
-#: source/php/Admin/Options.php:81
+#: source/php/Admin/UI.php:58
+msgid ""
+"Please upload images that are as large as possible and that are not "
+"sensitive to cropping (eg. images with text overlay)."
+msgstr ""
+"Vänligen ladda upp bilder som är så stora som möjligt och som kan beskäras "
+"utan att förstöra det bilden vill förmedla (t.ex. bilder med text)."
+
+#: source/php/Admin/UI.php:94
 msgid "API synchronization"
 msgstr "API synkronisering"
 
-#: source/php/Admin/Options.php:94
+#: source/php/Admin/UI.php:99
+msgid "Linked events"
+msgstr "Länkade evenemang"
+
+#: source/php/Admin/UI.php:151
+msgid "This post is not linked to any events."
+msgstr "Det finns inga länkade evenemang."
+
+#: source/php/Admin/UI.php:179
 msgid ""
 "Unchecking this box will disable API updates sync for this particular event. "
 "Only fields with sync icon is affected by this option."
@@ -1642,17 +1658,9 @@ msgstr ""
 "Avmarkering av denna rutan stänger av automatiska API-uppdateringar. Detta "
 "gäller endast fält med sync-symbol."
 
-#: source/php/Admin/Options.php:95
+#: source/php/Admin/UI.php:180
 msgid "Sync event information with API"
 msgstr "Synkronisera med API"
-
-#: source/php/Admin/UI.php:52
-msgid ""
-"Please upload images that are as large as possible and that are not "
-"sensitive to cropping (eg. images with text overlay)."
-msgstr ""
-"Vänligen ladda upp bilder som är så stora som möjligt och som kan beskäras "
-"utan att förstöra det bilden vill förmedla (t.ex. bilder med text)."
 
 #: source/php/Admin/UserRoles.php:21
 msgid "Guide administrator"
@@ -1666,117 +1674,99 @@ msgstr "Evenemangshanterare"
 msgid "Guide editor"
 msgstr "Guideredakör"
 
-#: source/php/App.php:105 source/php/App.php:106
-msgid "Import CBIS events"
-msgstr "Importera CBIS evenemang"
-
-#: source/php/App.php:119 source/php/App.php:120
-#: source/php/PostTypes/Locations.php:166
-msgid "Import CBIS locations"
-msgstr "Importera CBIS platser"
-
-#: source/php/App.php:136 source/php/App.php:137
-#: source/php/PostTypes/Events.php:464
-msgid "Import XCAP"
-msgstr "Importera XCAP"
-
-#: source/php/App.php:150 source/php/App.php:151
-msgid "Delete all events"
-msgstr "Ta bort alla evenemang"
-
-#: source/php/App.php:280
+#: source/php/App.php:203
 msgid "\"Title\" is missing"
 msgstr "“Titel” saknas"
 
-#: source/php/App.php:281
+#: source/php/App.php:204
 msgid "\"Featured\" image is missing"
 msgstr "“Utvald bild” saknas"
 
-#: source/php/App.php:282
+#: source/php/App.php:205
 msgid "Create new contact"
 msgstr "Skapa ny kontakt"
 
-#: source/php/App.php:283
+#: source/php/App.php:206
 msgid "Create new sponsor"
 msgstr "Skapa ny sponsor"
 
-#: source/php/App.php:284
+#: source/php/App.php:207
 msgid "Create new location"
 msgstr "Skapa ny plats"
 
-#: source/php/App.php:285 source/php/App.php:286
+#: source/php/App.php:208 source/php/App.php:209
 msgid "Create new membership card"
 msgstr "Skapa nytt medlemskort"
 
-#: source/php/App.php:287
+#: source/php/App.php:210
 msgid "Close"
 msgstr "Stäng"
 
-#: source/php/App.php:288
+#: source/php/App.php:211
 msgid "Add images"
 msgstr "Lägg till bilder"
 
-#: source/php/App.php:289
+#: source/php/App.php:212
 msgid "Imported data"
 msgstr "Imorterad data"
 
-#: source/php/App.php:290
+#: source/php/App.php:213
 msgid "Events"
 msgstr "Evenemang"
 
-#: source/php/App.php:291 source/php/PostTypes/Locations.php:12
+#: source/php/App.php:214 source/php/PostTypes/Locations.php:12
 msgid "Locations"
 msgstr "Platser"
 
-#: source/php/App.php:292 source/php/PostTypes/Contacts.php:10
+#: source/php/App.php:215 source/php/PostTypes/Contacts.php:10
 msgid "Contacts"
 msgstr "Kontakter"
 
-#: source/php/App.php:294
+#: source/php/App.php:217
 msgid "Time until reload"
 msgstr "Laddar om sidan"
 
-#: source/php/App.php:295
+#: source/php/App.php:218
 msgid "Loading"
 msgstr "Hämtar"
 
-#: source/php/App.php:296
+#: source/php/App.php:219
 msgid "Choose time"
 msgstr "Välj tidpunkt"
 
-#: source/php/App.php:297
+#: source/php/App.php:220
 msgid "Time"
 msgstr "Tid"
 
-#: source/php/App.php:298
+#: source/php/App.php:221
 msgid "Hour"
 msgstr "Timme"
 
-#: source/php/App.php:299
+#: source/php/App.php:222
 msgid "Minute"
 msgstr "Minut"
 
-#: source/php/App.php:300
+#: source/php/App.php:223
 msgid "Done"
 msgstr "Klar"
 
-#: source/php/App.php:301
+#: source/php/App.php:224
 msgid "Now"
 msgstr "Nu"
 
-#: source/php/App.php:302
+#: source/php/App.php:225
 msgid "with similar name"
 msgstr "med liknande namn"
 
-#: source/php/App.php:304 source/php/PostTypes/Packages.php:10
+#: source/php/App.php:227 source/php/PostTypes/Packages.php:10
 msgid "Packages"
 msgstr "Paket"
 
-#: source/php/App.php:305
+#: source/php/App.php:228
 msgid "Membership cards"
 msgstr "Medlemskort"
 
-#: source/php/App.php:306 source/php/PostTypes/Guides.php:12
+#: source/php/App.php:229 source/php/PostTypes/Guides.php:12
 msgid "Guides"
 msgstr "Guider"
 
@@ -1877,11 +1867,11 @@ msgstr "Något gick fel!"
 msgid "Error"
 msgstr "Fel"
 
-#: source/php/Entity/PostManager.php:216
+#: source/php/Entity/PostManager.php:218
 msgid "Could not create folder"
 msgstr "Kunde inte skapa mappen"
 
-#: source/php/Entity/PostManager.php:216
+#: source/php/Entity/PostManager.php:218
 msgid "please go ahead and create it manually and rerun the import."
 msgstr "vänligen skapa den manuellt och gör om importen."
 
@@ -1956,35 +1946,39 @@ msgstr "Sluttid får inte vara före starttid"
 msgid "Door time cannot be after start time"
 msgstr "Dörrtid får inte vara efter starttid"
 
+#: source/php/PostTypes/Events.php:464
+msgid "Import XCAP"
+msgstr "Importera XCAP"
+
 #: source/php/PostTypes/Events.php:468
 msgid "Import CBIS"
 msgstr "Importera CBIS"
 
-#: source/php/PostTypes/Events.php:477
+#: source/php/PostTypes/Events.php:470
 msgid "Collect event timestamps"
 msgstr "Spara tidsstämplar"
 
-#: source/php/PostTypes/Events.php:494
+#: source/php/PostTypes/Events.php:487
 msgid "No post to duplicate has been supplied!"
 msgstr "Post att duplicera saknas!"
 
-#: source/php/PostTypes/Events.php:504
+#: source/php/PostTypes/Events.php:497
 msgid "Event creation failed, could not find original event"
 msgstr "Dupliceringen misslyckades, kunde inte hitta originalevenemanget"
 
-#: source/php/PostTypes/Events.php:581
+#: source/php/PostTypes/Events.php:574
 msgid "Create similar item"
 msgstr "Skapa ett liknande evenemang"
 
-#: source/php/PostTypes/Events.php:581
+#: source/php/PostTypes/Events.php:574
 msgid "Are you sure you want to clone this event?"
 msgstr "Är du säker på att du vill skapa en dubblett av evenemanget?"
 
-#: source/php/PostTypes/Events.php:581
+#: source/php/PostTypes/Events.php:574
 msgid "Clone"
 msgstr "Duplicera"
 
-#: source/php/PostTypes/Events.php:599
+#: source/php/PostTypes/Events.php:592
 #, php-format
 msgid ""
 "This is a duplicate of the event: %s. If this is a new occasion for the same "
@@ -1994,11 +1988,11 @@ msgstr ""
 "tidpunkt för ett redan existerande evenemang, vänligen %s och publicera "
 "originalversionen."
 
-#: source/php/PostTypes/Events.php:599
+#: source/php/PostTypes/Events.php:592
 msgid "edit"
 msgstr "uppdatera"
 
-#: source/php/PostTypes/Events.php:620
+#: source/php/PostTypes/Events.php:613
 msgid ""
 "Please do not enter information that refers to information in another text "
 "field. It is not certain that all fields will be presented to the consumer "
@@ -2008,7 +2002,7 @@ msgstr ""
 "textfält. Det är inte säkert att alla fält kommer att presenteras för "
 "konsumenten och kan därför bli missledande."
 
-#: source/php/PostTypes/Events.php:644
+#: source/php/PostTypes/Events.php:637
 msgid ""
 "CBIS have not imported any events for atleast 7 days. Please control the "
 "importer."
@@ -2016,7 +2010,7 @@ msgstr ""
 "Inga evenemang från CBIS har importerats de senaste 7 dagarna. Vänligen "
 "kontrollera inställningarna och importen."
 
-#: source/php/PostTypes/Events.php:668
+#: source/php/PostTypes/Events.php:661
 msgid ""
 "XCAP have not imported any events for atleast 7 days. Please control the "
 "importer."
@@ -2035,6 +2029,10 @@ msgstr "Koordinater"
 #: source/php/PostTypes/Locations.php:54
 msgid "Import client"
 msgstr "Klient"
+
+#: source/php/PostTypes/Locations.php:166
+msgid "Import CBIS locations"
+msgstr "Importera CBIS platser"
 
 #: source/php/PostTypes/MembershipCards.php:10
 msgid "Membership Cards"
@@ -2348,6 +2346,12 @@ msgstr ""
 #. Author URI of the plugin/theme
 msgid "http://www.helsingborg.se"
 msgstr ""
+
+#~ msgid "Import CBIS events"
+#~ msgstr "Importera CBIS evenemang"
+
+#~ msgid "Delete all events"
+#~ msgstr "Ta bort alla evenemang"
 
 #~ msgid "Event manager settings"
 #~ msgstr "Event Manager inställningar"
@@ -3118,9 +3122,6 @@ msgstr ""
 
 #~ msgid "contact"
 #~ msgstr "kontakt"
-
-#~ msgid "This is a duplicate of the event"
-#~ msgstr "Detta är en dubblett av evenemanget"
 
 #~ msgid "If this is a new occasion for the same event, please"
 #~ msgstr ""
