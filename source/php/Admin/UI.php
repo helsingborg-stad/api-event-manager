@@ -126,7 +126,7 @@ class UI
             }
 
             $args = array(
-                'numberposts' => -1,
+                'posts_per_page' => -1,
                 'post_type'   => 'event',
                 'post_status' => 'any',
                 'meta_query'  => array(
