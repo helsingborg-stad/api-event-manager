@@ -53,5 +53,19 @@ class MembershipCardFields extends Fields
             )
         );
 
+        // External website
+        register_rest_field($this->postType,
+            'website',
+            array(
+                'get_callback' => array($this, 'stringGetCallBack'),
+                'update_callback' => array($this, 'stringUpdateCallBack'),
+                'schema' => array(
+                    'description' => 'Field containing string value with website.',
+                    'type' => 'string',
+                    'context' => array('view', 'edit')
+                )
+            )
+        );
+
     }
 }
