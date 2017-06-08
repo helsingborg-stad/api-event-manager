@@ -62,7 +62,7 @@ class MembershipCardFields extends Fields
                 'schema' => array(
                     'description' => 'Field containing string value with website.',
                     'type' => 'string',
-                    'context' => array('view', 'edit')
+                    'context' => array('view', 'edit', 'embed')
                 )
             )
         );
