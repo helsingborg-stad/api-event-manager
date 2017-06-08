@@ -82,11 +82,11 @@
                     'label' => __('Name', 'event-manager'),
                     'name' => 'person_name',
                     'type' => 'text',
-                    'instructions' => '',
+                    'instructions' => __('First and last name.', 'event-manager'),
                     'required' => 1,
                     'conditional_logic' => 0,
                     'wrapper' => array(
-                        'width' => '',
+                        'width' => '50',
                         'class' => '',
                         'id' => '',
                     ),
@@ -97,6 +97,25 @@
                     'maxlength' => '',
                 ),
                 1 => array(
+                    'key' => 'field_593934c29d186',
+                    'label' => __('Title', 'event-manager'),
+                    'name' => 'job_title',
+                    'type' => 'text',
+                    'instructions' => __('Job title or role.', 'event-manager'),
+                    'required' => 0,
+                    'conditional_logic' => 0,
+                    'wrapper' => array(
+                        'width' => '50',
+                        'class' => '',
+                        'id' => '',
+                    ),
+                    'default_value' => '',
+                    'placeholder' => '',
+                    'prepend' => '',
+                    'append' => '',
+                    'maxlength' => '',
+                ),
+                2 => array(
                     'key' => 'field_591ef0fc13c48',
                     'label' => __('Email', 'event-manager'),
                     'name' => 'person_email',
@@ -115,7 +134,7 @@
                     'append' => '',
                     'maxlength' => '',
                 ),
-                2 => array(
+                3 => array(
                     'key' => 'field_591ef12413c49',
                     'label' => __('Phone', 'event-manager'),
                     'name' => 'person_phone',

@@ -79,11 +79,30 @@
                     "label": "Name",
                     "name": "person_name",
                     "type": "text",
-                    "instructions": "",
+                    "instructions": "First and last name.",
                     "required": 1,
                     "conditional_logic": 0,
                     "wrapper": {
-                        "width": "",
+                        "width": "50",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "maxlength": ""
+                },
+                {
+                    "key": "field_593934c29d186",
+                    "label": "Title",
+                    "name": "job_title",
+                    "type": "text",
+                    "instructions": "Job title or role.",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "50",
                         "class": "",
                         "id": ""
                     },
