@@ -227,6 +227,12 @@ class App
             'packages'              => __("Packages", 'event-manager'),
             'membership_cards'      => __("Membership cards", 'event-manager'),
             'guides'                => __("Guides", 'event-manager'),
+            'yes'                   => __("Yes", 'event-manager'),
+            'no'                    => __("No", 'event-manager'),
+            'confirm_statements'    => __("To upload an image, you need to confirm the statements below", 'event-manager'),
+            'promote_event'         => __("I have the right to use this image to promote this event.", 'event-manager'),
+            'identifiable_persons'  => __("Are there identifiable persons on the image/images?", 'event-manager'),
+            'persons_approve'       => __("They have accepted that the image is used to promote this event and have been informed that after the image has been added to the database, it may appear in different channels to promote the event.", 'event-manager'),
         ));
     }
 
