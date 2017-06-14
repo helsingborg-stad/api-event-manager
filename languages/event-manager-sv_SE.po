@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Event Manager\n"
-"POT-Creation-Date: 2017-06-08 14:26+0200\n"
-"PO-Revision-Date: 2017-06-08 14:31+0200\n"
+"POT-Creation-Date: 2017-06-14 11:10+0200\n"
+"PO-Revision-Date: 2017-06-14 11:12+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: sv\n"
@@ -1792,6 +1792,37 @@ msgstr "Medlemskort"
 msgid "Guides"
 msgstr "Guider"
 
+#: source/php/App.php:230
+msgid "Yes"
+msgstr "Ja"
+
+#: source/php/App.php:231
+msgid "No"
+msgstr "Nej"
+
+#: source/php/App.php:232
+msgid "To upload an image, you need to confirm the statements below"
+msgstr "För att ladda upp en bild behöver du bekräfta nedanstående punkter"
+
+#: source/php/App.php:233
+msgid "I have the right to use this image to promote this event."
+msgstr ""
+"Jag har rätt att använda denna bild för att marknadsföra detta evenemang."
+
+#: source/php/App.php:234
+msgid "Are there identifiable persons on the image/images?"
+msgstr "Finns det identifierbara personer på bilden/bilderna?"
+
+#: source/php/App.php:235
+msgid ""
+"They have accepted that the image is used to promote this event and have "
+"been informed that after the image has been added to the database, it may "
+"appear in different channels to promote the event."
+msgstr ""
+"De har godkänt att bilden används för att marknadsföra detta evenemang och "
+"har informerats om att efter att bilden lagts in i databasen kan komma att "
+"synas i olika kanaler för att marknadsföra evenemanget."
+
 #: source/php/Entity/CustomPostType.php:87
 msgid "API-url"
 msgstr "API-url"
@@ -3169,12 +3200,6 @@ msgstr ""
 
 #~ msgid "phone"
 #~ msgstr "telefon"
-
-#~ msgid "Yes"
-#~ msgstr "Ja"
-
-#~ msgid "No"
-#~ msgstr "Nej"
 
 #~ msgid "Prev"
 #~ msgstr "Föregående"
