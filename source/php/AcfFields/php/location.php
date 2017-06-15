@@ -1,9 +1,9 @@
-<?php
+<?php 
 
-if (function_exists('acf_add_local_field_group')) {
-    acf_add_local_field_group(array(
+if (function_exists('acf_add_local_field_group')) {
+    acf_add_local_field_group(array(
     'key' => 'group_57612f9baa78b',
-    'title' => 'Location',
+    'title' => __('Location', 'event-manager'),
     'fields' => array(
         0 => array(
             'key' => 'field_57d26cffc2f68',
@@ -172,10 +172,10 @@ if (function_exists('acf_add_local_field_group')) {
                 'id' => '',
             ),
             'collapsed' => '',
-            'min' => '',
-            'max' => '',
+            'min' => 0,
+            'max' => 0,
             'layout' => 'block',
-            'button_label' => 'Add',
+            'button_label' => __('Lägg till', 'event-manager'),
             'sub_fields' => array(
                 0 => array(
                     'key' => 'field_58a2cbc24c79d',
@@ -223,6 +223,9 @@ if (function_exists('acf_add_local_field_group')) {
                     ),
                     'message' => '',
                     'default_value' => 0,
+                    'ui' => 0,
+                    'ui_on_text' => '',
+                    'ui_off_text' => '',
                 ),
                 2 => array(
                     'key' => 'field_58a2cd9e4c79f',
@@ -276,10 +279,10 @@ if (function_exists('acf_add_local_field_group')) {
         ),
         9 => array(
             'key' => 'field_57cfba70697e1',
-            'label' => __('Exceptions to opening hours', 'event-manager'),
+            'label' => __('Undantag för öppettider', 'event-manager'),
             'name' => 'open_hour_exceptions',
             'type' => 'repeater',
-            'instructions' => __('Add one or more exceptions to this scheme.', 'event-manager'),
+            'instructions' => __('Lägg till ett eller flera undantag.', 'event-manager'),
             'required' => 0,
             'conditional_logic' => 0,
             'wrapper' => array(
@@ -288,10 +291,10 @@ if (function_exists('acf_add_local_field_group')) {
                 'id' => '',
             ),
             'collapsed' => '',
-            'min' => '',
-            'max' => '',
+            'min' => 0,
+            'max' => 0,
             'layout' => 'table',
-            'button_label' => 'Add exception',
+            'button_label' => __('Lägg till undantag', 'event-manager'),
             'sub_fields' => array(
                 0 => array(
                     'key' => 'field_57cfbb60697e2',
@@ -372,6 +375,89 @@ if (function_exists('acf_add_local_field_group')) {
             'max_size' => '',
             'mime_types' => '',
         ),
+        12 => array(
+            'key' => 'field_59426f53ca437',
+            'label' => __('Social media', 'event-manager'),
+            'name' => '',
+            'type' => 'tab',
+            'instructions' => '',
+            'required' => 0,
+            'conditional_logic' => 0,
+            'wrapper' => array(
+                'width' => '',
+                'class' => '',
+                'id' => '',
+            ),
+            'placement' => 'top',
+            'endpoint' => 0,
+        ),
+        13 => array(
+            'key' => 'field_5942707eca439',
+            'label' => __('Social media', 'event-manager'),
+            'name' => 'links',
+            'type' => 'repeater',
+            'instructions' => '',
+            'required' => 0,
+            'conditional_logic' => 0,
+            'wrapper' => array(
+                'width' => '',
+                'class' => '',
+                'id' => '',
+            ),
+            'collapsed' => '',
+            'min' => 0,
+            'max' => 0,
+            'layout' => 'table',
+            'button_label' => '',
+            'sub_fields' => array(
+                0 => array(
+                    'key' => 'field_59427095ca43a',
+                    'label' => __('Social media', 'event-manager'),
+                    'name' => 'social_media',
+                    'type' => 'select',
+                    'instructions' => '',
+                    'required' => 1,
+                    'conditional_logic' => 0,
+                    'wrapper' => array(
+                        'width' => '',
+                        'class' => '',
+                        'id' => '',
+                    ),
+                    'choices' => array(
+                        'bambuser' => __('Bambuser', 'event-manager'),
+                        'facebook' => __('Facebook', 'event-manager'),
+                        'instagram' => __('Instagram', 'event-manager'),
+                        'twitter' => __('Twitter', 'event-manager'),
+                        'vimeo' => __('Vimeo', 'event-manager'),
+                        'youtube' => __('Youtube', 'event-manager'),
+                    ),
+                    'default_value' => array(
+                    ),
+                    'allow_null' => 0,
+                    'multiple' => 0,
+                    'ui' => 0,
+                    'ajax' => 0,
+                    'return_format' => 'value',
+                    'placeholder' => '',
+                ),
+                1 => array(
+                    'key' => 'field_5942725dca43b',
+                    'label' => __('Url', 'event-manager'),
+                    'name' => 'url',
+                    'type' => 'url',
+                    'instructions' => '',
+                    'required' => 1,
+                    'conditional_logic' => 0,
+                    'wrapper' => array(
+                        'width' => '',
+                        'class' => '',
+                        'id' => '',
+                    ),
+                    'default_value' => '',
+                    'placeholder' => '',
+                ),
+            ),
+        ),
     ),
     'location' => array(
         0 => array(
@@ -390,6 +476,5 @@ if (function_exists('acf_add_local_field_group')) {
     'hide_on_screen' => '',
     'active' => 1,
     'description' => '',
-    'local' => 'json',
 ));
-}
+}

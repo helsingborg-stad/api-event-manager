@@ -169,10 +169,10 @@
                 "id": ""
             },
             "collapsed": "",
-            "min": "",
-            "max": "",
+            "min": 0,
+            "max": 0,
             "layout": "block",
-            "button_label": "Add",
+            "button_label": "L\u00e4gg till",
             "sub_fields": [
                 {
                     "key": "field_58a2cbc24c79d",
@@ -218,7 +218,10 @@
                         "id": ""
                     },
                     "message": "",
-                    "default_value": 0
+                    "default_value": 0,
+                    "ui": 0,
+                    "ui_on_text": "",
+                    "ui_off_text": ""
                 },
                 {
                     "key": "field_58a2cd9e4c79f",
@@ -272,10 +275,10 @@
         },
         {
             "key": "field_57cfba70697e1",
-            "label": "Exceptions to opening hours",
+            "label": "Undantag f\u00f6r \u00f6ppettider",
             "name": "open_hour_exceptions",
             "type": "repeater",
-            "instructions": "Add one or more exceptions to this scheme.",
+            "instructions": "L\u00e4gg till ett eller flera undantag.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -284,10 +287,10 @@
                 "id": ""
             },
             "collapsed": "",
-            "min": "",
-            "max": "",
+            "min": 0,
+            "max": 0,
             "layout": "table",
-            "button_label": "Add exception",
+            "button_label": "L\u00e4gg till undantag",
             "sub_fields": [
                 {
                     "key": "field_57cfbb60697e2",
@@ -367,6 +370,88 @@
             "max_height": "",
             "max_size": "",
             "mime_types": ""
+        },
+        {
+            "key": "field_59426f53ca437",
+            "label": "Social media",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_5942707eca439",
+            "label": "Social media",
+            "name": "links",
+            "type": "repeater",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "collapsed": "",
+            "min": 0,
+            "max": 0,
+            "layout": "table",
+            "button_label": "",
+            "sub_fields": [
+                {
+                    "key": "field_59427095ca43a",
+                    "label": "Social media",
+                    "name": "social_media",
+                    "type": "select",
+                    "instructions": "",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "choices": {
+                        "bambuser": "Bambuser",
+                        "facebook": "Facebook",
+                        "instagram": "Instagram",
+                        "twitter": "Twitter",
+                        "vimeo": "Vimeo",
+                        "youtube": "Youtube"
+                    },
+                    "default_value": [],
+                    "allow_null": 0,
+                    "multiple": 0,
+                    "ui": 0,
+                    "ajax": 0,
+                    "return_format": "value",
+                    "placeholder": ""
+                },
+                {
+                    "key": "field_5942725dca43b",
+                    "label": "Url",
+                    "name": "url",
+                    "type": "url",
+                    "instructions": "",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "placeholder": ""
+                }
+            ]
         }
     ],
     "location": [
@@ -385,7 +470,6 @@
     "instruction_placement": "label",
     "hide_on_screen": "",
     "active": 1,
-    "description": "",
-    "local": "json"
+    "description": ""
 }]
 
