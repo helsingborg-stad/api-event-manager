@@ -275,10 +275,10 @@
         },
         {
             "key": "field_57cfba70697e1",
-            "label": "Undantag f\u00f6r \u00f6ppettider",
+            "label": "Exceptions to opening hours",
             "name": "open_hour_exceptions",
             "type": "repeater",
-            "instructions": "L\u00e4gg till ett eller flera undantag.",
+            "instructions": "Add one or more exceptions to this scheme.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -331,6 +331,89 @@
             ]
         },
         {
+            "key": "field_59426f53ca437",
+            "label": "Links",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_5942707eca439",
+            "label": "Links",
+            "name": "links",
+            "type": "repeater",
+            "instructions": "Add external links to different social media and streaming services.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "collapsed": "",
+            "min": 0,
+            "max": 0,
+            "layout": "table",
+            "button_label": "",
+            "sub_fields": [
+                {
+                    "key": "field_59427095ca43a",
+                    "label": "Service",
+                    "name": "social_media",
+                    "type": "select",
+                    "instructions": "",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "choices": {
+                        "bambuser": "Bambuser",
+                        "facebook": "Facebook",
+                        "instagram": "Instagram",
+                        "spotify": "Spotify",
+                        "twitter": "Twitter",
+                        "vimeo": "Vimeo",
+                        "youtube": "Youtube"
+                    },
+                    "default_value": [],
+                    "allow_null": 0,
+                    "multiple": 0,
+                    "ui": 0,
+                    "ajax": 0,
+                    "return_format": "value",
+                    "placeholder": ""
+                },
+                {
+                    "key": "field_5942725dca43b",
+                    "label": "Url",
+                    "name": "url",
+                    "type": "url",
+                    "instructions": "",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "placeholder": ""
+                }
+            ]
+        },
+        {
             "key": "field_57fca1e1dc2f0",
             "label": "Gallery",
             "name": "",
@@ -372,8 +455,8 @@
             "mime_types": ""
         },
         {
-            "key": "field_59426f53ca437",
-            "label": "Social media",
+            "key": "field_59427dee1dee8",
+            "label": "Organizer",
             "name": "",
             "type": "tab",
             "instructions": "",
@@ -384,14 +467,36 @@
                 "class": "",
                 "id": ""
             },
-            "placement": "top",
+            "placement": "left",
             "endpoint": 0
         },
         {
-            "key": "field_5942707eca439",
-            "label": "Social media",
-            "name": "links",
-            "type": "repeater",
+            "key": "field_59427caf1dee6",
+            "label": "Organizer",
+            "name": "organizer",
+            "type": "post_object",
+            "instructions": "Add an organizer that manages the location.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "post_type": [
+                "organizer"
+            ],
+            "taxonomy": [],
+            "allow_null": 0,
+            "multiple": 0,
+            "return_format": "id",
+            "ui": 1
+        },
+        {
+            "key": "field_5942843f6867f",
+            "label": "Prices",
+            "name": "",
+            "type": "tab",
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -400,58 +505,258 @@
                 "class": "",
                 "id": ""
             },
-            "collapsed": "",
+            "placement": "left",
+            "endpoint": 0
+        },
+        {
+            "key": "field_594282f5719a1",
+            "label": "Included in membership cards",
+            "name": "membership_cards",
+            "type": "post_object",
+            "instructions": "Add membership cards where this event is included.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "post_type": [
+                "membership-card"
+            ],
+            "taxonomy": [],
+            "allow_null": 0,
+            "multiple": 1,
+            "return_format": "object",
+            "ui": 1
+        },
+        {
+            "key": "field_594282f8719a2",
+            "label": "Default price \/ Adult",
+            "name": "price_adult",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "SEK",
+            "maxlength": ""
+        },
+        {
+            "key": "field_594282fc719a3",
+            "label": "Price student",
+            "name": "price_student",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "SEK",
+            "maxlength": ""
+        },
+        {
+            "key": "field_594282ff719a4",
+            "label": "Price children",
+            "name": "price_children",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "SEK",
+            "maxlength": ""
+        },
+        {
+            "key": "field_59428302719a5",
+            "label": "Age restriction for children price",
+            "name": "children_age",
+            "type": "select",
+            "instructions": "Children price is valid up to this age.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "choices": [
+                "0",
+                "1",
+                "2",
+                "3",
+                "4",
+                "5",
+                "6",
+                "7",
+                "8",
+                "9",
+                "10",
+                "11",
+                "12",
+                "13",
+                "14",
+                "15",
+                "16",
+                "17",
+                "18",
+                "19",
+                "20",
+                "21",
+                "22",
+                "23",
+                "24",
+                "25"
+            ],
+            "default_value": [
+                18
+            ],
+            "allow_null": 0,
+            "multiple": 0,
+            "ui": 0,
+            "ajax": 0,
+            "return_format": "value",
+            "placeholder": ""
+        },
+        {
+            "key": "field_59428305719a6",
+            "label": "Price senior",
+            "name": "price_senior",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "SEK",
+            "maxlength": ""
+        },
+        {
+            "key": "field_5942830a719a7",
+            "label": "Age restriction for senior price",
+            "name": "senior_age",
+            "type": "select",
+            "instructions": "Senior price is valid from this age.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "50": "50",
+                "51": "51",
+                "52": "52",
+                "53": "53",
+                "54": "54",
+                "55": "55",
+                "56": "56",
+                "57": "57",
+                "58": "58",
+                "59": "59",
+                "60": "60",
+                "61": "61",
+                "62": "62",
+                "63": "63",
+                "64": "64",
+                "65": "65",
+                "66": "66",
+                "67": "67",
+                "68": "68",
+                "69": "69",
+                "70": "70",
+                "71": "71",
+                "72": "72",
+                "73": "73",
+                "74": "74",
+                "75": "75",
+                "76": "76",
+                "77": "77",
+                "78": "78",
+                "79": "79",
+                "80": "80",
+                "81": "81",
+                "82": "82",
+                "83": "83",
+                "84": "84",
+                "85": "85"
+            },
+            "default_value": [
+                65
+            ],
+            "allow_null": 0,
+            "multiple": 0,
+            "ui": 0,
+            "ajax": 0,
+            "return_format": "value",
+            "placeholder": ""
+        },
+        {
+            "key": "field_594282ed719a0",
+            "label": "Minimum age to enter",
+            "name": "age_restriction",
+            "type": "number",
+            "instructions": "Enter age if this event is age restricted.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "e.g. 15",
+            "prepend": "",
+            "append": "year",
             "min": 0,
-            "max": 0,
-            "layout": "table",
-            "button_label": "",
-            "sub_fields": [
-                {
-                    "key": "field_59427095ca43a",
-                    "label": "Social media",
-                    "name": "social_media",
-                    "type": "select",
-                    "instructions": "",
-                    "required": 1,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "choices": {
-                        "bambuser": "Bambuser",
-                        "facebook": "Facebook",
-                        "instagram": "Instagram",
-                        "twitter": "Twitter",
-                        "vimeo": "Vimeo",
-                        "youtube": "Youtube"
-                    },
-                    "default_value": [],
-                    "allow_null": 0,
-                    "multiple": 0,
-                    "ui": 0,
-                    "ajax": 0,
-                    "return_format": "value",
-                    "placeholder": ""
-                },
-                {
-                    "key": "field_5942725dca43b",
-                    "label": "Url",
-                    "name": "url",
-                    "type": "url",
-                    "instructions": "",
-                    "required": 1,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "default_value": "",
-                    "placeholder": ""
-                }
-            ]
+            "max": "",
+            "step": ""
+        },
+        {
+            "key": "field_59428314719a8",
+            "label": "Price information",
+            "name": "price_information",
+            "type": "textarea",
+            "instructions": "Write additional information about prices.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "maxlength": "",
+            "rows": 3,
+            "new_lines": "wpautop"
         }
     ],
     "location": [
