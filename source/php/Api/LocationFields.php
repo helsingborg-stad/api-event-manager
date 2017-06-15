@@ -318,6 +318,20 @@ class LocationFields extends Fields
             )
         );
 
+        // Links
+        register_rest_field($this->postType,
+            'links',
+            array(
+                'get_callback' => array($this, 'objectGetCallBack'),
+                'update_callback' => array($this, 'objectUpdateCallBack'),
+                'schema' => array(
+                    'description' => 'Field containing object with links.',
+                    'type' => 'object',
+                    'context' => array('view', 'edit', 'embed')
+                )
+            )
+        );
+
         // Gallery
         register_rest_field($this->postType,
             'gallery',
@@ -327,6 +341,146 @@ class LocationFields extends Fields
                 'schema' => array(
                     'description' => 'Field containing object with gallery.',
                     'type' => 'object',
+                    'context' => array('view', 'edit', 'embed')
+                )
+            )
+        );
+
+        // Age restriction details
+        register_rest_field($this->postType,
+            'age_restriction',
+            array(
+                'get_callback' => array($this, 'stringGetCallBack'),
+                'update_callback' => array($this, 'stringUpdateCallBack'),
+                'schema' => array(
+                    'description' => 'Field containing string with age restriction details.',
+                    'type' => 'string',
+                    'context' => array('view', 'edit')
+                )
+            )
+        );
+
+        // Included in member cards
+        register_rest_field($this->postType,
+            'membership_cards',
+            array(
+                'get_callback' => array($this, 'objectGetCallBack'),
+                'update_callback' => array($this, 'objectGetCallBack'),
+                'schema' => array(
+                    'description' => 'Field containing array with membership cards.',
+                    'type' => 'object',
+                    'context' => array('view', 'edit', 'embed')
+                )
+            )
+        );
+
+        //Price details
+        register_rest_field($this->postType,
+            'price_information',
+            array(
+                'get_callback' => array($this, 'unformattedStringGetCallBack'),
+                'update_callback' => array($this, 'stringUpdateCallBack'),
+                'schema' => array(
+                    'description' => 'Field containing string with price details.',
+                    'type' => 'string',
+                    'context' => array('view', 'edit')
+                )
+            )
+        );
+
+        //Price details
+        register_rest_field($this->postType,
+            'price_adult',
+            array(
+                'get_callback' => array($this, 'stringGetCallBack'),
+                'update_callback' => array($this, 'stringUpdateCallBack'),
+                'schema' => array(
+                    'description' => 'Field containing string with price details.',
+                    'type' => 'string',
+                    'context' => array('view', 'edit')
+                )
+            )
+        );
+
+        //Price details
+        register_rest_field($this->postType,
+            'price_children',
+            array(
+                'get_callback' => array($this, 'stringGetCallBack'),
+                'update_callback' => array($this, 'stringUpdateCallBack'),
+                'schema' => array(
+                    'description' => 'Field containing string with price details.',
+                    'type' => 'string',
+                    'context' => array('view', 'edit')
+                )
+            )
+        );
+
+        //Price details
+        register_rest_field($this->postType,
+            'children_age',
+            array(
+                'get_callback' => array($this, 'stringGetCallBack'),
+                'update_callback' => array($this, 'stringUpdateCallBack'),
+                'schema' => array(
+                    'description' => 'Field containing string with age restrictions.',
+                    'type' => 'string',
+                    'context' => array('view', 'edit')
+                )
+            )
+        );
+
+        //Price details
+        register_rest_field($this->postType,
+            'price_student',
+            array(
+                'get_callback' => array($this, 'stringGetCallBack'),
+                'update_callback' => array($this, 'stringUpdateCallBack'),
+                'schema' => array(
+                    'description' => 'Field containing string with price details.',
+                    'type' => 'string',
+                    'context' => array('view', 'edit')
+                )
+            )
+        );
+
+        //Price details
+        register_rest_field($this->postType,
+            'price_senior',
+            array(
+                'get_callback' => array($this, 'stringGetCallBack'),
+                'update_callback' => array($this, 'stringUpdateCallBack'),
+                'schema' => array(
+                    'description' => 'Field containing string with price details.',
+                    'type' => 'string',
+                    'context' => array('view', 'edit')
+                )
+            )
+        );
+
+        //Price details
+        register_rest_field($this->postType,
+            'senior_age',
+            array(
+                'get_callback' => array($this, 'numericGetCallBack'),
+                'update_callback' => array($this, 'numericUpdateCallBack'),
+                'schema' => array(
+                    'description' => 'Field containing numeric with age restrictions.',
+                    'type' => 'numeric',
+                    'context' => array('view', 'edit')
+                )
+            )
+        );
+
+        // Organizer
+        register_rest_field($this->postType,
+            'organizer',
+            array(
+                'get_callback' => array($this, 'stringGetCallBack'),
+                'update_callback' => array($this, 'stringUpdateCallBack'),
+                'schema' => array(
+                    'description' => 'Field containing object with organizer data.',
+                    'type' => 'string',
                     'context' => array('view', 'edit', 'embed')
                 )
             )

@@ -3,7 +3,7 @@
 if (function_exists('acf_add_local_field_group')) {
     acf_add_local_field_group(array(
     'key' => 'group_57612f9baa78b',
-    'title' => __('Location', 'event-manager'),
+    'title' => 'Location',
     'fields' => array(
         0 => array(
             'key' => 'field_57d26cffc2f68',
@@ -372,7 +372,7 @@
                 0 => array(
                     'key' => 'field_59427095ca43a',
                     'label' => __('Service', 'event-manager'),
-                    'name' => 'social_media',
+                    'name' => 'service',
                     'type' => 'select',
                     'instructions' => '',
                     'required' => 1,
@@ -534,7 +534,7 @@
             ),
             'allow_null' => 0,
             'multiple' => 1,
-            'return_format' => 'object',
+            'return_format' => 'id',
             'ui' => 1,
         ),
         18 => array(

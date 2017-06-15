@@ -368,7 +368,7 @@
                 {
                     "key": "field_59427095ca43a",
                     "label": "Service",
-                    "name": "social_media",
+                    "name": "service",
                     "type": "select",
                     "instructions": "",
                     "required": 1,
@@ -527,7 +527,7 @@
             "taxonomy": [],
             "allow_null": 0,
             "multiple": 1,
-            "return_format": "object",
+            "return_format": "id",
             "ui": 1
         },
         {
