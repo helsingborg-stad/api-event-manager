@@ -474,16 +474,16 @@ class LocationFields extends Fields
 
         // Organizer
         register_rest_field($this->postType,
-            'organizer',
+            'organizers',
             array(
-                'get_callback' => array($this, 'stringGetCallBack'),
-                'update_callback' => array($this, 'stringUpdateCallBack'),
+                'get_callback' => array($this, 'numericGetCallBack'),
+                'update_callback' => array($this, 'numericUpdateCallBack'),
                 'schema' => array(
-                    'description' => 'Field containing object with organizer data.',
-                    'type' => 'string',
+                    'description' => 'Field containing numeric with organizers.',
+                    'type' => 'numeric',
                     'context' => array('view', 'edit', 'embed')
                 )
             )
         );
-    }
+   }
 }

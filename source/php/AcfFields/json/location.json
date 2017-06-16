@@ -473,7 +473,7 @@
         {
             "key": "field_59427caf1dee6",
             "label": "Organizer",
-            "name": "organizer",
+            "name": "organizers",
             "type": "post_object",
             "instructions": "Add an organizer that manages the location.",
             "required": 0,

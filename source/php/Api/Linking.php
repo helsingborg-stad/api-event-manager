@@ -12,7 +12,7 @@ class Linking extends Fields
 
     public function __construct()
     {
-        add_filter('rest_prepare_event', array($this, 'addEventContacts'), 10, 3);
+        add_filter('rest_prepare_event', array($this, 'addOrganizers'), 10, 3);
         add_filter('rest_prepare_event', array($this, 'addEventGallery'), 15, 3);
         add_filter('rest_prepare_event', array($this, 'addEventLocation'), 20, 3);
         add_filter('rest_prepare_event', array($this, 'addEventAddLocations'), 20, 3);
@@ -21,9 +21,11 @@ class Linking extends Fields
         add_filter('rest_prepare_event', array($this, 'addEventMemberCards'), 20, 3);
         add_filter('rest_prepare_event', array($this, 'addEmbedLink'), 20, 3);
 
+        add_filter('rest_prepare_location', array($this, 'addOrganizers'), 10, 3);
         add_filter('rest_prepare_location', array($this, 'addEventGallery'), 15, 3);
         add_filter('rest_prepare_location', array($this, 'addEmbedLink'), 20, 3);
         add_filter('rest_prepare_location', array($this, 'addPostParent'), 20, 3);
+        add_filter('rest_prepare_location', array($this, 'addEventMemberCards'), 20, 3);
 
         add_filter('rest_prepare_package', array($this, 'addEventMemberCards'), 20, 3);
         add_filter('rest_prepare_package', array($this, 'addIncludedEvents'), 20, 3);
@@ -33,6 +35,8 @@ class Linking extends Fields
         add_filter('rest_prepare_guide', array($this, 'addGuideMainLocation'), 20, 3); //Guide locations
         add_filter('rest_prepare_guide', array($this, 'addGuideSubLocation'), 20, 3); //Beacon locations
         add_filter('rest_prepare_guide', array($this, 'addEmbedLink'), 20, 3);
+
+        add_filter('rest_prepare_organizer', array($this, 'addEmbedLink'), 20, 3);
     }
 
     /**
@@ -51,22 +55,22 @@ class Linking extends Fields
     }
 
     /**
-     * Register link to contacts, embeddable
+     * Register link to organizers, embeddable
      * @return  object
      */
-    public function addEventContacts($response, $post, $request)
+    public function addOrganizers($response, $post, $request)
     {
-        $repeater  = 'organizers';
-        $count = intval(get_post_meta($post->ID, $repeater, true));
-        for ($i=0; $i<$count; $i++) {
-            $getField   = $repeater.'_'.$i.'_'.'contacts';
-            $contacts   = get_post_meta($post->ID, $getField, true);
-            if (is_array($contacts) && !empty($contacts)) {
-                foreach ($contacts as $item) {
-                    $response->add_link('contacts', rest_url('/wp/v2/contact/' . $item), array( 'embeddable' => true ));
-                }
+        $organizers = get_field('organizers', $post->ID);
+
+        if (is_numeric($organizers)) {
+            $response->add_link('organizers', rest_url('/wp/v2/organizer/' . $organizers), array( 'embeddable' => true ));
+        } elseif (is_array($organizers) && !empty($organizers)) {
+            foreach ($organizers as $organizer) {
+                $id = (is_array($organizer) && isset($organizer['organizer'])) ? $organizer['organizer'] : $organizer;
+                $response->add_link('organizers', rest_url('/wp/v2/organizer/' . $id), array( 'embeddable' => true ));
             }
         }
+
         return $response;
     }
 

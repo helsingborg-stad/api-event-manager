@@ -3,7 +3,7 @@
 if (function_exists('acf_add_local_field_group')) {
     acf_add_local_field_group(array(
     'key' => 'group_57612f9baa78b',
-    'title' => 'Location',
+    'title' => __('Location', 'event-manager'),
     'fields' => array(
         0 => array(
             'key' => 'field_57d26cffc2f68',
@@ -478,7 +478,7 @@
         15 => array(
             'key' => 'field_59427caf1dee6',
             'label' => __('Organizer', 'event-manager'),
-            'name' => 'organizer',
+            'name' => 'organizers',
             'type' => 'post_object',
             'instructions' => __('Add an organizer that manages the location.', 'event-manager'),
             'required' => 0,
