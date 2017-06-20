@@ -167,7 +167,7 @@ class Linking extends Fields
 
         if (is_array($cards) && !empty($cards)) {
             foreach ($cards as $item) {
-                $response->add_link('membership-cards', rest_url('/wp/v2/membership-card/' . $item), array( 'embeddable' => true ));
+                $response->add_link('membership_cards', rest_url('/wp/v2/membership-card/' . $item), array( 'embeddable' => true ));
             }
         }
         return $response;
