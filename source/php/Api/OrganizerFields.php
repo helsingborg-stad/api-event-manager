@@ -130,6 +130,20 @@ class OrganizerFields extends Fields
             )
         );
 
+        // Website
+        register_rest_field($this->postType,
+            'website',
+            array(
+                'get_callback' => array($this, 'stringGetCallBack'),
+                'update_callback' => array($this, 'stringUpdateCallBack'),
+                'schema' => array(
+                    'description' => 'Field contianing string value with website.',
+                    'type' => 'string',
+                    'context' => array('view', 'edit', 'embed')
+                )
+            )
+        );
+
         // Contact persons
         register_rest_field($this->postType,
             'contact_persons',
