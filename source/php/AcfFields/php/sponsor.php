@@ -3,7 +3,7 @@
 if (function_exists('acf_add_local_field_group')) {
     acf_add_local_field_group(array(
     'key' => 'group_57a9bf12ef1a3',
-    'title' => 'Sponsor',
+    'title' => __('Sponsor', 'event-manager'),
     'fields' => array(
         0 => array(
             'key' => 'field_57a9bf570710e',
@@ -140,6 +140,5 @@
     'hide_on_screen' => '',
     'active' => 1,
     'description' => '',
-    'local' => 'json',
 ));
 }
