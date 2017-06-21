@@ -175,7 +175,7 @@
             'min' => 0,
             'max' => 0,
             'layout' => 'block',
-            'button_label' => __('Lägg till', 'event-manager'),
+            'button_label' => __('Add', 'event-manager'),
             'sub_fields' => array(
                 0 => array(
                     'key' => 'field_58a2cbc24c79d',
@@ -294,7 +294,7 @@
             'min' => 0,
             'max' => 0,
             'layout' => 'table',
-            'button_label' => __('Lägg till undantag', 'event-manager'),
+            'button_label' => __('Add exception', 'event-manager'),
             'sub_fields' => array(
                 0 => array(
                     'key' => 'field_57cfbb60697e2',
@@ -367,7 +367,7 @@
             'min' => 0,
             'max' => 0,
             'layout' => 'table',
-            'button_label' => '',
+            'button_label' => __('Add link', 'event-manager'),
             'sub_fields' => array(
                 0 => array(
                     'key' => 'field_59427095ca43a',
@@ -484,7 +484,7 @@
             'required' => 0,
             'conditional_logic' => 0,
             'wrapper' => array(
-                'width' => '',
+                'width' => '50',
                 'class' => '',
                 'id' => '',
             ),
@@ -493,7 +493,7 @@
             ),
             'taxonomy' => array(
             ),
-            'allow_null' => 0,
+            'allow_null' => 1,
             'multiple' => 0,
             'return_format' => 'id',
             'ui' => 1,
@@ -519,7 +519,7 @@
             'label' => __('Included in membership cards', 'event-manager'),
             'name' => 'membership_cards',
             'type' => 'post_object',
-            'instructions' => __('Add membership cards where this event is included.', 'event-manager'),
+            'instructions' => __('Add membership cards where entry is included.', 'event-manager'),
             'required' => 0,
             'conditional_logic' => 0,
             'wrapper' => array(
@@ -636,9 +636,8 @@
                 25 => __('25', 'event-manager'),
             ),
             'default_value' => array(
-                0 => 18,
             ),
-            'allow_null' => 0,
+            'allow_null' => 1,
             'multiple' => 0,
             'ui' => 0,
             'ajax' => 0,
@@ -716,9 +715,8 @@
                 85 => __('85', 'event-manager'),
             ),
             'default_value' => array(
-                0 => 65,
             ),
-            'allow_null' => 0,
+            'allow_null' => 1,
             'multiple' => 0,
             'ui' => 0,
             'ajax' => 0,
@@ -730,7 +728,7 @@
             'label' => __('Minimum age to enter', 'event-manager'),
             'name' => 'age_restriction',
             'type' => 'number',
-            'instructions' => __('Enter age if this event is age restricted.', 'event-manager'),
+            'instructions' => __('Enter age if this location is age restricted.', 'event-manager'),
             'required' => 0,
             'conditional_logic' => 0,
             'wrapper' => array(

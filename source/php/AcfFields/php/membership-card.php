@@ -3,7 +3,7 @@
 if (function_exists('acf_add_local_field_group')) {
     acf_add_local_field_group(array(
     'key' => 'group_593938d452989',
-    'title' => 'Membership card',
+    'title' => __('Membership card', 'event-manager'),
     'fields' => array(
         0 => array(
             'key' => 'field_593938dcd06c0',

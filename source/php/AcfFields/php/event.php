@@ -887,9 +887,8 @@
                 25 => __('25', 'event-manager'),
             ),
             'default_value' => array(
-                0 => 18,
             ),
-            'allow_null' => 0,
+            'allow_null' => 1,
             'multiple' => 0,
             'ui' => 0,
             'ajax' => 0,
@@ -967,9 +966,8 @@
                 85 => __('85', 'event-manager'),
             ),
             'default_value' => array(
-                0 => 65,
             ),
-            'allow_null' => 0,
+            'allow_null' => 1,
             'multiple' => 0,
             'ui' => 0,
             'ajax' => 0,
