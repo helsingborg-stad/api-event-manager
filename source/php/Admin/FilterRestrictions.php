@@ -33,7 +33,7 @@ class FilterRestrictions
                 }
             }
 
-        return array_unique($groups);
+            return array_unique($groups);
         }
     }
 
@@ -289,6 +289,7 @@ class FilterRestrictions
 
         if ($query->is_admin && $pagenow == 'edit.php' && isset($_GET['time_interval']) && $_GET['time_interval'] != '' && $_GET['post_type'] == 'event') {
             $time_now = strtotime("midnight now");
+            $passed_event = false;
 
             switch (esc_attr($_GET['time_interval'])) {
                 case '1':
@@ -312,31 +313,47 @@ class FilterRestrictions
                     break;
 
                 case '5':
-                    $date_begin = 0;
-                    $date_end = strtotime("today", $time_now) - 1;
+                    $passed_event = true;
                     break;
             }
 
             $db_occasions = $wpdb->prefix . "occasions";
-            $joinquery = "
-                SELECT      $wpdb->posts.ID
-                FROM        $wpdb->posts
-                LEFT JOIN   $db_occasions
-                            ON $wpdb->posts.ID = $db_occasions.event
-                WHERE       $wpdb->posts.post_type = %s
-                            AND ($db_occasions.timestamp_start BETWEEN %d AND %d OR $db_occasions.timestamp_end BETWEEN %d AND %d)
-                            ORDER BY $db_occasions.timestamp_start ASC";
+            // Custom query to get passed events
+            if ($passed_event) {
+                $today = strtotime("today", $time_now) - 1;
+                // Gets the latest ending occasion of multiple event occasions
+                $new_query = "
+                    SELECT MAX($db_occasions.timestamp_end) as end_date, $db_occasions.event as id
+                    FROM $db_occasions
+                    GROUP BY $db_occasions.event";
+                $results = $wpdb->get_results($new_query, ARRAY_A);
+                // Filter result array to only consist of passed events
+                foreach ($results as $key => &$result) {
+                    if ($result['end_date'] < $today) {
+                        $result = $result['id'];
+                    } else {
+                        unset($results[$key]);
+                    }
+                }
+            } else {
+                // Query to get events occurring between certain dates
+                $new_query = "
+                    SELECT      $db_occasions.event as id
+                    FROM        $db_occasions
+                    WHERE       ($db_occasions.timestamp_start
+                                BETWEEN {$date_begin} AND {$date_end}
+                                OR $db_occasions.timestamp_end
+                                BETWEEN {$date_begin} AND {$date_end})
+                    GROUP BY $db_occasions.event";
 
-            $completeQuery = $wpdb->prepare($joinquery, 'event', $date_begin, $date_end, $date_begin, $date_end);
-            $results = $wpdb->get_results($completeQuery);
-
-            $allEventIds = array();
-            foreach ($results as $key => $value) {
-                $allEventIds[] = $value->ID;
+                $results = $wpdb->get_results($new_query, ARRAY_A);
+                foreach ($results as &$result) {
+                    $result = $result['id'];
+                }
             }
 
-            if (!empty($allEventIds)) {
-                $query->set('post__in', $allEventIds);
+            if (!empty($results)) {
+                $query->set('post__in', $results);
             } else {
                 $query->set('post__in', array(0));
             }
