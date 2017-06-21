@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "Project-Id-Version: Event Manager\n"
-"POT-Creation-Date: 2017-06-21 09:41+0200\n"
+"POT-Creation-Date: 2017-06-21 10:01+0200\n"
 "PO-Revision-Date: 2016-10-26 08:27+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -996,6 +996,7 @@ msgid "Add prices for group bookings."
 msgstr ""
 
 #: source/php/AcfFields/php/event.php:994
+#: source/php/AcfFields/php/package.php:331
 msgid "Add group"
 msgstr ""
 
@@ -1653,6 +1654,7 @@ msgstr ""
 msgid "Job title or role."
 msgstr ""
 
+#: source/php/AcfFields/php/package.php:6
 #: source/php/AcfFields/php/package.php:10
 #: source/php/PostTypes/Packages.php:11
 msgid "Package"

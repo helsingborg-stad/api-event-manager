@@ -3,7 +3,7 @@
 if (function_exists('acf_add_local_field_group')) {
     acf_add_local_field_group(array(
     'key' => 'group_57c94757c2169',
-    'title' => 'Package',
+    'title' => __('Package', 'event-manager'),
     'fields' => array(
         0 => array(
             'key' => 'field_5885b8a1f95bc',
@@ -222,9 +222,8 @@
                 25 => __('25', 'event-manager'),
             ),
             'default_value' => array(
-                0 => 18,
             ),
-            'allow_null' => 0,
+            'allow_null' => 1,
             'multiple' => 0,
             'ui' => 0,
             'ajax' => 0,
@@ -302,9 +301,8 @@
                 85 => __('85', 'event-manager'),
             ),
             'default_value' => array(
-                0 => 65,
             ),
-            'allow_null' => 0,
+            'allow_null' => 1,
             'multiple' => 0,
             'ui' => 0,
             'ajax' => 0,
@@ -325,10 +323,10 @@
                 'id' => '',
             ),
             'collapsed' => '',
-            'min' => '',
-            'max' => '',
+            'min' => 0,
+            'max' => 0,
             'layout' => 'block',
-            'button_label' => 'Add group',
+            'button_label' => __('Add group', 'event-manager'),
             'sub_fields' => array(
                 0 => array(
                     'key' => 'field_5818498949eaa',
@@ -449,6 +447,5 @@
     'hide_on_screen' => '',
     'active' => 1,
     'description' => '',
-    'local' => 'json',
 ));
 }

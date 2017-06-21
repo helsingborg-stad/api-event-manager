@@ -216,10 +216,8 @@
                 "24",
                 "25"
             ],
-            "default_value": [
-                18
-            ],
-            "allow_null": 0,
+            "default_value": [],
+            "allow_null": 1,
             "multiple": 0,
             "ui": 0,
             "ajax": 0,
@@ -296,10 +294,8 @@
                 "84": "84",
                 "85": "85"
             },
-            "default_value": [
-                65
-            ],
-            "allow_null": 0,
+            "default_value": [],
+            "allow_null": 1,
             "multiple": 0,
             "ui": 0,
             "ajax": 0,
@@ -320,8 +316,8 @@
                 "id": ""
             },
             "collapsed": "",
-            "min": "",
-            "max": "",
+            "min": 0,
+            "max": 0,
             "layout": "block",
             "button_label": "Add group",
             "sub_fields": [
@@ -443,7 +439,6 @@
     "instruction_placement": "label",
     "hide_on_screen": "",
     "active": 1,
-    "description": "",
-    "local": "json"
+    "description": ""
 }]
 
