@@ -41,7 +41,6 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
             $locationId = get_field('location', $postId);
 
             if (!$locationId) {
-                echo __('n/a', 'event-manager');
                 return;
             }
 
@@ -63,7 +62,6 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
             }
 
             if (!$value) {
-                echo __('n/a', 'event-manager');
                 return;
             }
 
