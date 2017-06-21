@@ -563,7 +563,7 @@
             ),
             'taxonomy' => array(
             ),
-            'allow_null' => 0,
+            'allow_null' => 1,
             'multiple' => 0,
             'return_format' => 'id',
             'ui' => 1,
