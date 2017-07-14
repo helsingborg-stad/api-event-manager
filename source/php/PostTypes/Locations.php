@@ -177,7 +177,8 @@ class Locations extends \HbgEventImporter\Entity\CustomPostType
      * Add new body classes: 'child-location' & 'imported'
      * @param string $classes body classes
      */
-    public function addBodyClass($classes) {
+    public function addBodyClass($classes)
+    {
         global $post;
         $screen = get_current_screen();
         $parent = ($screen->base == 'post' && $post->post_parent > 0) ? get_the_title($post->post_parent) : null;
@@ -197,7 +198,8 @@ class Locations extends \HbgEventImporter\Entity\CustomPostType
      * @param  string   $title  placeholder string
      * @return string           new string
      */
-    public function replacePlaceholder($title){
+    public function replacePlaceholder($title)
+    {
         global $post;
         $parent = ($post->post_parent > 0) ? get_the_title($post->post_parent) : null;
         $screen = get_current_screen();

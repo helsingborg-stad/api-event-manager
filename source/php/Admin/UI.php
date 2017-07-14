@@ -16,6 +16,8 @@ class UI
         add_filter('admin_post_thumbnail_html', array($this, 'editFeaturedImageInstruction'));
         add_action('add_meta_boxes', array($this, 'registerMetaBoxes'));
         add_action('save_post', array($this, 'saveSyncMeta'));
+        add_filter('post_row_actions', array($this, 'removeRowActions'), 10, 1);
+        add_filter('page_row_actions', array($this, 'removeRowActions'), 10, 1);
         $postTypes = array('event', 'location', 'organizer');
         foreach ($postTypes as $val) {
             add_filter('get_user_option_meta-box-order_' . $val, array($this, 'metaboxOrder'));
@@ -44,6 +46,17 @@ class UI
         $wp_admin_bar->remove_menu('updates');              // Remove the updates link
         $wp_admin_bar->remove_menu('comments');             // Remove the comments link
         $wp_admin_bar->remove_menu('new-content');          // Remove the content link
+    }
+
+    /**
+     * Remove view/preview post link from admin ui
+     * @param   array $actions Default actions
+     * @return  array          Modified actions
+     */
+    public function removeRowActions($actions)
+    {
+        unset($actions['view']);
+        return $actions;
     }
 
     // Remove Permalink meta box on edit posts
