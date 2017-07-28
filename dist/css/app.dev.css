@@ -2,9 +2,6 @@
   color: #F55E4F;
   float: right; }
 
-.createContact {
-  margin-top: 15px !important; }
-
 /* Hide meta box content from publish */
 .misc-pub-visibility, .misc-pub-curtime, #preview-action {
   display: none !important; }
@@ -161,7 +158,7 @@
   width: 0%;
   height: 100%; }
 
-#importResponse #event, #importResponse #location, #importResponse #contact {
+#importResponse #event, #importResponse #location, #importResponse #organizer {
   opacity: 0; }
 
 .createNewPost.button {

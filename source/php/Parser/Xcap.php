@@ -4,7 +4,6 @@ namespace HbgEventImporter\Parser;
 
 use \HbgEventImporter\Event as Event;
 use \HbgEventImporter\Location as Location;
-use \HbgEventImporter\Contact as Contact;
 use \HbgEventImporter\Helper\Address as Address;
 
 class Xcap extends \HbgEventImporter\Parser

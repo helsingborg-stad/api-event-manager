@@ -307,6 +307,7 @@ class EventFields extends Fields
             return null;
         }
 
+        // 'contacts' field is deprecated, remove in the future
         foreach ($organizers as &$organizer) {
             $organizer = array(
                                 'main_organizer'    => $organizer['main_organizer'],

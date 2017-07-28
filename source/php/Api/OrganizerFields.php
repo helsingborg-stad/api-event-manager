@@ -109,7 +109,7 @@ class OrganizerFields extends Fields
                 'get_callback' => array($this, 'stringGetCallBack'),
                 'update_callback' => array($this, 'stringUpdateCallBack'),
                 'schema' => array(
-                    'description' => 'Field contianing string value with contact phone number.',
+                    'description' => 'Field contianing string value with organizer phone number.',
                     'type' => 'string',
                     'context' => array('view', 'edit', 'embed')
                 )
@@ -123,7 +123,7 @@ class OrganizerFields extends Fields
                 'get_callback' => array($this, 'stringGetCallBack'),
                 'update_callback' => array($this, 'stringUpdateCallBack'),
                 'schema' => array(
-                    'description' => 'Field contianing string value with contact email.',
+                    'description' => 'Field contianing string value with organizer email.',
                     'type' => 'string',
                     'context' => array('view', 'edit', 'embed')
                 )

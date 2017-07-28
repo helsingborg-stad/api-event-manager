@@ -19,7 +19,6 @@ class Filter
         add_filter('rest_url_prefix', array($this, 'apiBasePrefix'), 5000, 1);
         add_filter('rest_prepare_event', array($this, 'removeResponseKeys'), 5000, 3);
         add_filter('rest_prepare_location', array($this, 'removeResponseKeys'), 5000, 3);
-        add_filter('rest_prepare_contact', array($this, 'removeResponseKeys'), 5000, 3);
         add_filter('rest_prepare_organizer', array($this, 'removeResponseKeys'), 5000, 3);
         add_filter('rest_prepare_sponsor', array($this, 'removeResponseKeys'), 5000, 3);
         add_filter('rest_prepare_package', array($this, 'removeResponseKeys'), 5000, 3);
@@ -62,8 +61,8 @@ class Filter
         //Common keys
         $keys = array('author','acf','guid','type','link', 'template', 'meta', 'taxonomy', 'menu_order');
 
-        //Only for location and contact
-        if (in_array($post->post_type, array("location", "contact"))) {
+        //Only for location and organizer
+        if (in_array($post->post_type, array("location", "organizer"))) {
             $keys[] = "content";
         }
 

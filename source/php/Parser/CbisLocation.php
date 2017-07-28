@@ -4,7 +4,6 @@ namespace HbgEventImporter\Parser;
 
 use \HbgEventImporter\Event as Event;
 use \HbgEventImporter\Location as Location;
-use \HbgEventImporter\Contact as Contact;
 
 class CbisLocation extends \HbgEventImporter\Parser\Cbis
 {

@@ -7,7 +7,7 @@ ImportEvents.Admin.NewPostModal = (function ($) {
         $(function(){
 
             this.createTrigger('location', '.acf-field-576117c423a52');
-            this.createTrigger('contact', '.acf-field-57ebb807988f8');
+            this.createTrigger('organizer', '.acf-field-5922a161ab32f');
             this.createTrigger('sponsor', '.acf-field-57a9d5f3804e1');
             this.createTrigger('membership-card', '.acf-field-57c7ed92054e6');
             this.createTrigger('membership-card', '.acf-field-581847f9642dc');

@@ -54,7 +54,6 @@ $acfExportManager->autoExport(array(
     'guide-group-settings' => 'group_589dcf7e047a8',
     'guide-group-notices' => 'group_58ab055a4b3b8',
     'cbis' => 'group_5760fe97e3be1',
-	'contact' => 'group_57445bbce8b05',
 	'event-categories' => 'group_5889f976dfb2d',
 	'event-manager-settings' => 'group_575fe32901927',
 	'event' => 'group_57610ebadcee8',

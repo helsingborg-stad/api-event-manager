@@ -304,7 +304,7 @@ class CbisEvent extends \HbgEventImporter\Parser\Cbis
             return $contactId;
         }
 
-        // Save contact
+        // Save organizer
         $organizer = new Organizer(
             array(
                 'post_title'            => $title,
@@ -336,105 +336,6 @@ class CbisEvent extends \HbgEventImporter\Parser\Cbis
         );
 
         return $organizer->ID;
-    }
-
-    /**
-     * Creates or updates a contact if possible
-     * Not used anymore
-     * @param  object $eventData  The event data
-     * @param  string $postStatus Default post status
-     * @param  array $userGroups  User groups
-     * @param  string $shortKey   UUID short key
-     * @return boolean|int        False if fail else contact id
-     */
-    public function maybeCreateContact($eventData, $postStatus, $userGroups, $shortKey)
-    {
-        $attributes = $this->getAttributes($eventData);
-        $contactEmail = $this->getAttributeValue(self::ATTRIBUTE_CONTACT_EMAIL, $attributes);
-
-        $title = $this->getAttributeValue(self::ATTRIBUTE_CONTACT_PERSON, $attributes);
-
-        // Append contact email to title
-        if ($contactEmail = $this->getAttributeValue(self::ATTRIBUTE_CONTACT_EMAIL, $attributes)) {
-            if (!empty($title)) {
-                $title .= ' : ';
-            }
-
-            $title .= $contactEmail;
-        }
-
-        // Bail if title is empty
-        if (empty($title)) {
-            return false;
-        }
-
-        $contactId = $this->checkIfPostExists('contact', $title);
-
-        // Get unique string
-        $uniqueString = strtolower(str_replace(' ', '', $title));
-
-        if ($contactEmail) {
-            $uniqueString = strtolower($this->getAttributeValue(self::ATTRIBUTE_CONTACT_EMAIL, $attributes));
-        }
-
-        $uid = 'cbis-' . $shortKey . '-' . $uniqueString;
-        $conPostStatus = $postStatus;
-        $isUpdate = false;
-
-        // Check if this is a duplicate or update and if "sync" option is set.
-        if ($contactId && get_post_meta($contactId, '_event_manager_uid', true)) {
-            $existingUid = get_post_meta($contactId, '_event_manager_uid', true);
-            $sync = get_post_meta($contactId, 'sync', true);
-            $conPostStatus = get_post_status($contactId);
-
-            if ($existingUid == $uid && $sync == 1) {
-                $isUpdate = true;
-            }
-        }
-
-        if ($contactId && !$isUpdate) {
-            return $contactId;
-        }
-
-        // Only use phone number if it's longer than 5 charachters
-        $phoneNumber = $this->getAttributeValue(self::ATTRIBUTE_PHONE_NUMBER, $attributes);
-        if (strlen($phoneNumber) <= 5) {
-            $phoneNumber = null;
-        }
-
-        // Save contact
-        $contact = new Contact(
-            array(
-                'post_title'            => $title,
-                'post_status'           => $conPostStatus,
-            ),
-            array(
-                'name'                  => $this->getAttributeValue(self::ATTRIBUTE_CONTACT_PERSON, $attributes),
-                'email'                 => strtolower($this->getAttributeValue(self::ATTRIBUTE_CONTACT_EMAIL, $attributes)),
-                'phone_number'          => $phoneNumber,
-                '_event_manager_uid'    => $uid,
-                'user_groups'           => $userGroups,
-                'missing_user_group'    => $userGroups == null ? 1 : 0,
-                'sync'                  => 1,
-                'imported_post'         => 1,
-                'import_client'         => 'cbis',
-            )
-        );
-
-        if (!$contact->save()) {
-            return false;
-        }
-
-        if ($isUpdate == false) {
-            $this->nrOfNewContacts++;
-        }
-
-        $this->levenshteinTitles['contact'][] = array(
-            'ID' => $contact->ID,
-            'post_title' => $title
-        );
-
-        return $contact->ID;
     }
 
     /**
@@ -531,42 +432,6 @@ class CbisEvent extends \HbgEventImporter\Parser\Cbis
         }
 
         return $event->ID;
-    }
-
-    /**
-     * Get organizers
-     * @return array
-     */
-    public function getOrganizers($eventData, $contactId = null)
-    {
-        $attributes = $this->getAttributes($eventData);
-        $organizers = array();
-
-        if (empty($this->getAttributeValue(self::ATTRIBUTE_PHONE_NUMBER, $attributes)) && empty($this->getAttributeValue(self::ATTRIBUTE_ORGANIZER_EMAIL, $attributes)) && is_null($contactId)) {
-            return $organizers;
-        }
-
-        $organizers[] = array(
-            'organizer'       => '',
-            'organizer_link'  => '',
-            'organizer_phone' => $this->getAttributeValue(self::ATTRIBUTE_PHONE_NUMBER, $attributes),
-            'organizer_email' => $this->getAttributeValue(self::ATTRIBUTE_ORGANIZER_EMAIL, $attributes),
-            'contacts'        => !is_null($contactId) ? (array) $contactId : null,
-            'main_organizer'  => true
-        );
-
-        if (!empty($this->getAttributeValue(self::ATTRIBUTE_CO_ORGANIZER, $attributes))) {
-            $organizers[] = array(
-                'organizer'       => $this->getAttributeValue(self::ATTRIBUTE_CO_ORGANIZER, $attributes),
-                'organizer_link'  => '',
-                'organizer_phone' => '',
-                'organizer_email' => '',
-                'contacts'        => '',
-                'main_organizer'  => false
-            );
-        }
-
-        return $organizers;
     }
 
     /**

@@ -57,7 +57,6 @@ class App
         new PostTypes\Events();
         new PostTypes\Locations();
         new PostTypes\Organizers();
-        new PostTypes\Contacts();
         new PostTypes\Sponsors();
         new PostTypes\Packages();
         new PostTypes\MembershipCards();
@@ -81,7 +80,6 @@ class App
 
         new Api\EventFields();
         new Api\LocationFields();
-        new Api\ContactFields();
         new Api\OrganizerFields();
         new Api\SponsorFields();
         new Api\PackageFields();
@@ -162,7 +160,7 @@ class App
     {
         global $current_screen;
 
-        if (in_array($current_screen->post_type, array('event', 'location', 'contact', 'sponsor', 'package', 'membership-card', 'guide', 'organizer'))) {
+        if (in_array($current_screen->post_type, array('event', 'location', 'sponsor', 'package', 'membership-card', 'guide', 'organizer'))) {
             wp_enqueue_style('hbg-event-importer', HBGEVENTIMPORTER_URL . '/dist/css/app.min.css');
         }
 
@@ -202,7 +200,7 @@ class App
             'adminurl'              => get_admin_url(),
             'require_title'         => __("\"Title\" is missing", 'event-manager'),
             'require_image'         => __("\"Featured\" image is missing", 'event-manager'),
-            'new_contact'           => __("Create new contact", 'event-manager'),
+            'new_organizer'         => __("Create new organizer", 'event-manager'),
             'new_sponsor'           => __("Create new sponsor", 'event-manager'),
             'new_location'          => __("Create new location", 'event-manager'),
             'new_card'              => __("Create new membership card", 'event-manager'),
@@ -212,7 +210,6 @@ class App
             'new_data_imported'     => __("Imported data", 'event-manager'),
             'events'                => __("Events", 'event-manager'),
             'locations'             => __("Locations", 'event-manager'),
-            'contacts'              => __("Contacts", 'event-manager'),
             'organizers'            => __("Organizers", 'event-manager'),
             'time_until_reload'     => __("Time until reload", 'event-manager'),
             'loading'               => __("Loading", 'event-manager'),
