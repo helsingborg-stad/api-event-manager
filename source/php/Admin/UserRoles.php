@@ -18,6 +18,11 @@ class UserRoles
      */
     public static function createUserRoles()
     {
+        add_role('event_administrator', __("Event administrator", 'event-manager'), array(
+            'read' => true,
+            'level_8' => true,
+            'upload_files' => true
+        ));
         add_role('guide_administrator', __("Guide administrator", 'event-manager'), array(
             'read' => true,
             'level_7' => true,
@@ -71,6 +76,32 @@ class UserRoles
 	        $role->add_cap('delete_others_' . $type . 's');
 	        $role->add_cap('edit_private_' . $type . 's');
 	        $role->add_cap('edit_published_' . $type . 's');
+	    }
+
+	    // Event administrator
+	    $postTypes = array('event', 'location', 'sponsor', 'package', 'membership-card', 'organizer');
+	    $role = get_role('event_administrator');
+	    foreach ($postTypes as $key => $type) {
+	        $role->add_cap('edit_' . $type);
+	        $role->add_cap('read_' . $type);
+	        $role->add_cap('delete_' . $type);
+	        $role->add_cap('edit_' . $type . 's');
+	        $role->add_cap('edit_others_' . $type . 's');
+	        $role->add_cap('publish_' . $type . 's');
+	        $role->add_cap('read_private_' . $type . 's');
+	        $role->add_cap('delete_' . $type . 's');
+	        $role->add_cap('delete_private_' . $type . 's');
+	        $role->add_cap('delete_published_' . $type . 's');
+	        $role->add_cap('delete_others_' . $type . 's');
+	        $role->add_cap('edit_private_' . $type . 's');
+	        $role->add_cap('edit_published_' . $type . 's');
+	        // Edit user capabilities
+	        $role->add_cap('edit_users');
+	        $role->add_cap('list_users');
+	        $role->add_cap('promote_users');
+	        $role->add_cap('create_users');
+	        $role->add_cap('add_users');
+	        $role->add_cap('delete_users');
 	    }
 
 	    // Editor

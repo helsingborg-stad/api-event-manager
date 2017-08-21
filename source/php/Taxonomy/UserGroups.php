@@ -12,6 +12,36 @@ class UserGroups
         add_action('show_user_profile', array($this, 'displayUserGroups'));
         add_action('edit_user_profile', array($this, 'displayUserGroups'));
         add_filter('taxonomy_parent_dropdown_args', array($this, 'limitDropdownDepth'), 10, 2);
+        add_filter('acf/fields/taxonomy/wp_list_categories/name=user_groups', array($this, 'filterGroupTaxonomy'), 10, 3);
+        add_filter('acf/fields/taxonomy/wp_list_categories/name=event_user_groups', array($this, 'filterGroupTaxonomy'), 10, 3);
+    }
+
+    /**
+     * Filter to display users group taxonomies
+     * @param  array  $args   An array of arguments passed to the wp_list_categories function
+     * @param  array  $field  An array containing all the field settings
+     * @return array  $args
+     */
+    public function filterGroupTaxonomy($args, $field)
+    {
+        $current_user = wp_get_current_user();
+
+        // Return if admin or editor
+        if (current_user_can('administrator') || current_user_can('editor') || current_user_can('guide_administrator')) {
+            return $args;
+        }
+
+        $id = $current_user->ID;
+        $groups = \HbgEventImporter\Admin\FilterRestrictions::getTermChildren($id);
+
+        // Return the assigned groups for the user
+        if (! empty($groups) && is_array($groups)) {
+            $args['include'] = $groups;
+        } else {
+            return false;
+        }
+
+        return $args;
     }
 
     public function registerTaxonomy()
@@ -110,7 +140,7 @@ class UserGroups
     {
 
         // Return if admin or editor
-        if (current_user_can('editor') || current_user_can('administrator') || current_user_can('guide_administrator')) {
+        if (current_user_can('editor') || current_user_can('administrator') || current_user_can('guide_administrator') || current_user_can('event_administrator')) {
             return;
         }
 

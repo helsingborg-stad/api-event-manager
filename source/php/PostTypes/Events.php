@@ -456,7 +456,7 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
     public function addImportButtons($views)
     {
         if (current_user_can('administrator')) {
-            $button  = '<div class="import-buttons actions">';
+            $button = '<div class="import-buttons actions">';
 
             if (have_rows('xcap_api_urls', 'option')) {
                 $button .= '<div class="button-primary extraspace" id="xcap">' . __('Import XCAP', 'event-manager') . '</div>';

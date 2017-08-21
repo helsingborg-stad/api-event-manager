@@ -47,7 +47,6 @@ abstract class CustomPostType
         add_filter('post_updated_messages', array($this, 'postPublishedMsg'));
         add_action('admin_menu', array($this, 'removePublishBox'));
         add_filter('acf/update_value/name=user_groups', array($this, 'updateuserGroups'), 10, 3);
-        add_filter('acf/fields/taxonomy/wp_list_categories/name=user_groups', array($this, 'filterGroupTaxonomy'), 10, 3);
     }
 
     /**
@@ -404,34 +403,6 @@ abstract class CustomPostType
         $new_array = array_unique($new_array);
 
         return $new_array;
-    }
-
-    /**
-     * Filter to display users group taxonomies
-     * @param  array  $args   An array of arguments passed to the wp_list_categories function
-     * @param  array  $field  An array containing all the field settings
-     * @return array  $args
-     */
-    public function filterGroupTaxonomy($args, $field)
-    {
-        $current_user = wp_get_current_user();
-
-        // Return if admin or editor
-        if (current_user_can('administrator') || current_user_can('editor') || current_user_can('guide_administrator')) {
-            return $args;
-        }
-
-        $id = $current_user->ID;
-        $groups = \HbgEventImporter\Admin\FilterRestrictions::getTermChildren($id);
-
-        // Return the assigned groups for the user
-        if (! empty($groups) && is_array($groups)) {
-            $args['include'] = $groups;
-        } else {
-            return false;
-        }
-
-        return $args;
     }
 
     /**

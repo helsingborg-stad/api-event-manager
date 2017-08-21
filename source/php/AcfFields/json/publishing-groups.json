@@ -37,6 +37,18 @@
                 "operator": "==",
                 "value": "all"
             }
+        ],
+        [
+            {
+                "param": "current_user_role",
+                "operator": "==",
+                "value": "event_administrator"
+            },
+            {
+                "param": "user_form",
+                "operator": "==",
+                "value": "all"
+            }
         ]
     ],
     "menu_order": 0,
@@ -46,7 +58,6 @@
     "instruction_placement": "label",
     "hide_on_screen": "",
     "active": 1,
-    "description": "",
-    "local": "json"
+    "description": ""
 }]
 
