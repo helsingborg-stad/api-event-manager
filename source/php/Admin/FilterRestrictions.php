@@ -26,7 +26,7 @@ class FilterRestrictions
     public static function getTermChildren($id)
     {
         $groups = get_field('event_user_groups', 'user_' . $id);
-        if (is_array($groups) && ! empty($groups)) {
+        if (is_array($groups) && !empty($groups)) {
             foreach ($groups as $group) {
                 if (! empty(get_term_children($group, 'user_groups'))) {
                     $groups = array_merge($groups, get_term_children($group, 'user_groups'));
