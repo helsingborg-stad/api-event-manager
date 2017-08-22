@@ -10,7 +10,71 @@ class UserRoles
 	public function __construct()
 	{
         add_action('admin_init', array($this, 'addCapabilities'));
+        add_action('pre_get_users', array($this, 'filterUserList'));
+        add_filter('editable_roles', array($this, 'filterEditableRoles'));
+        add_filter('views_users', array($this, 'hideUserRoleQuicklinks'));
 	}
+
+    /**
+     * Remove certain editable user roles for non admins
+     * @param  array $roles List of user roles
+     * @return array        Altered list of roles
+     */
+    public function filterEditableRoles($roles)
+    {
+        if (!current_user_can('administrator')) {
+            unset($roles['editor'], $roles['administrator'], $roles['guide_editor'], $roles['guide_administrator'], $roles['author']);
+        }
+
+        return $roles;
+    }
+
+    /**
+     * Remove user role quicklinks for non admins
+     * @param  array $views List of user role links
+     * @return array
+     */
+    public function hideUserRoleQuicklinks($views) {
+        if (!current_user_can('administrator')) {
+            $views = array();
+        }
+
+        return $views;
+    }
+
+    /**
+     * Filter user list for non admins
+     * @param  obj $query User query
+     * @return void
+     */
+    public function filterUserList( $query ) {
+        if (!current_user_can('administrator')) {
+            global $wpdb;
+
+            $current_user = wp_get_current_user();
+            $groups = \HbgEventImporter\Admin\FilterRestrictions::getTermChildren($current_user->ID);
+
+            if ($groups) {
+                $meta_query = array(
+                    'relation' => 'OR'
+                );
+
+                foreach ($groups as $group) {
+                    $meta_query[] = array(
+                                        'key' => 'event_user_groups',
+                                        'value' => '"' . $group . '"',
+                                        'compare' => 'LIKE'
+                                    );
+                }
+
+                $query->set('meta_key', 'event_user_groups');
+                $query->set('meta_query', $meta_query );
+                $query->set('role__not_in', array('administrator'));
+            } else {
+                $query->set('include', array(0));
+            }
+        }
+    }
 
     /**
      * Create custom user roles
