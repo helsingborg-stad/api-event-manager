@@ -13,6 +13,17 @@ class UserRoles
         add_action('pre_get_users', array($this, 'filterUserList'));
         add_filter('editable_roles', array($this, 'filterEditableRoles'));
         add_filter('views_users', array($this, 'hideUserRoleQuicklinks'));
+        add_action('admin_menu', array($this, 'my_remove_menu_pages'));
+	}
+
+	/**
+	 * Hide options for non admins
+	 * @return void
+	 */
+	public function my_remove_menu_pages() {
+		if (!current_user_can('administrator')) {
+	    	remove_submenu_page('users.php', 'rest-oauth1-apps');
+	    }
 	}
 
     /**
