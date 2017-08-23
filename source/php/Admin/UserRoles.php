@@ -155,16 +155,14 @@ class UserRoles
 	        $role->add_cap('delete_' . $type . 's');
 	        $role->add_cap('delete_published_' . $type . 's');
 	        $role->add_cap('delete_others_' . $type . 's');
-	        $role->add_cap('edit_published_' . $type . 's');
-
-	        // Edit user capabilities
-	        $role->add_cap('edit_users');
-	        $role->add_cap('list_users');
-	        $role->add_cap('promote_users');
-	        $role->add_cap('create_users');
-	        $role->add_cap('add_users');
-	        $role->add_cap('delete_users');
+	        $role->add_cap('edit_published_' . $type );
 	    }
+        $role->add_cap('edit_users');
+        $role->add_cap('list_users');
+        $role->add_cap('promote_users');
+        $role->add_cap('create_users');
+        $role->add_cap('add_users');
+        $role->add_cap('delete_users');
 
 	    // Editor
 	    $postTypes = array('event', 'location', 'sponsor', 'package', 'membership-card', 'guide', 'organizer');

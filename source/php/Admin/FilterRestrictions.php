@@ -202,7 +202,8 @@ class FilterRestrictions
     {
         global $post_type, $wp_query;
 
-        if ($post_type !== 'event') {
+        $post_types = get_field('event_group_select', 'option');
+        if (! in_array($post_type, $post_types)) {
             return;
         }
 

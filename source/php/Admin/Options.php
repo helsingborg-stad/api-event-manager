@@ -12,7 +12,7 @@ class Options
                 'menu_title'    => _x('Options', 'Event manager options', 'event-manager'),
                 'menu_slug'     => 'acf-options-options',
                 'parent_slug'   => 'edit.php?post_type=event',
-                'capability'    => 'edit_users'
+                'capability'    => 'install_themes'
             ));
         }
     }

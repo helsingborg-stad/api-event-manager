@@ -64,9 +64,9 @@ class UserGroups
         );
 
         $capabilities = array(
-            'manage_terms' => 'manage_options',
-            'edit_terms'   => 'manage_options',
-            'delete_terms' => 'manage_options',
+            'manage_terms' => 'edit_users',
+            'edit_terms'   => 'edit_users',
+            'delete_terms' => 'edit_users',
             'assign_terms' => 'read',
         );
 
