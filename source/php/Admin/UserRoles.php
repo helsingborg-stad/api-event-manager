@@ -10,17 +10,42 @@ class UserRoles
 	public function __construct()
 	{
         add_action('admin_init', array($this, 'addCapabilities'));
+		add_action('current_screen', array($this, 'restrictUserPages'));
         add_action('pre_get_users', array($this, 'filterUserList'));
         add_filter('editable_roles', array($this, 'filterEditableRoles'));
         add_filter('views_users', array($this, 'hideUserRoleQuicklinks'));
-        add_action('admin_menu', array($this, 'my_remove_menu_pages'));
+        add_action('admin_menu', array($this, 'removeMenuItems'));
 	}
 
 	/**
-	 * Hide options for non admins
+	 * Check if event admin have permission to edit user
 	 * @return void
 	 */
-	public function my_remove_menu_pages() {
+	public function restrictUserPages() {
+		if (!current_user_can('administrator')) {
+	    	$screen = get_current_screen();
+
+	    	if ($screen->base == 'user-edit' && !empty($_GET['user_id'])) {
+	    		$current_user = wp_get_current_user();
+	    		$edited_user_groups  = \HbgEventImporter\Admin\FilterRestrictions::getTermChildren($_GET['user_id']);
+	    		$current_user_groups = \HbgEventImporter\Admin\FilterRestrictions::getTermChildren($current_user->ID);
+				$matches = array_intersect($edited_user_groups, $current_user_groups);
+				if (!$matches) {
+					wp_die(
+						'<h1>' . __( 'Cheatin&#8217; uh?' ) . '</h1>' .
+						'<p>' . __( 'You don\'t have permissions to edit this user.' ) . '</p>',
+						403
+					);
+				}
+	    	}
+	    }
+	}
+
+	/**
+	 * Hide menu items for non admins
+	 * @return void
+	 */
+	public function removeMenuItems() {
 		if (!current_user_can('administrator')) {
 	    	remove_submenu_page('users.php', 'rest-oauth1-apps');
 	    }
