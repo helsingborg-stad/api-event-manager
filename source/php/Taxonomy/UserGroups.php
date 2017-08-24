@@ -6,7 +6,7 @@ class UserGroups
 {
     public function __construct()
     {
-        add_action('init', array($this, 'registerTaxonomy'));
+        add_action('init', array($this, 'registerTaxonomy'), 9);
         add_action('admin_menu', array($this, 'manageAdminMenu'), 999);
         add_action('show_user_profile', array($this, 'displayUserGroups'));
         add_action('edit_user_profile', array($this, 'displayUserGroups'));
@@ -14,6 +14,31 @@ class UserGroups
         add_filter('taxonomy_parent_dropdown_args', array($this, 'limitDropdownDepth'), 10, 2);
         add_filter('acf/fields/taxonomy/wp_list_categories/name=user_groups', array($this, 'filterGroupTaxonomy'), 10, 3);
         add_filter('acf/fields/taxonomy/wp_list_categories/name=event_user_groups', array($this, 'filterGroupTaxonomy'), 10, 3);
+        add_filter('list_terms_exclusions', array($this, 'excludeEventGroups'), 10, 2);
+    }
+
+    /**
+     * Only display assigned user groups for event admins
+     * @param  string $exclusions Clauses of the terms query
+     * @return string             Altered exclusion string
+     */
+    public function excludeEventGroups($exclusions)
+    {
+        if (current_user_can('administrator') || current_user_can('editor')) {
+            return $exclusions;
+        }
+
+        require_once(ABSPATH . 'wp-admin/includes/screen.php');
+        $current_screen = get_current_screen();
+
+        if (is_object($current_screen) && $current_screen->id == 'edit-user_groups' && $current_screen->taxonomy == 'user_groups' ) {
+            $user = wp_get_current_user();
+            $user_groups = \HbgEventImporter\Admin\FilterRestrictions::getTermChildren($user->ID);
+            $groups = ($user_groups) ? implode(',', $user_groups) : '0';
+            $exclusions = ' AND' . ' t.term_id IN (' . $groups . ')';
+        }
+
+        return $exclusions;
     }
 
     /**
@@ -138,7 +163,6 @@ class UserGroups
      */
     public function displayUserGroups($user)
     {
-
         // Return if admin or editor
         if (current_user_can('editor') || current_user_can('administrator') || current_user_can('guide_administrator') || current_user_can('event_administrator')) {
             return;
