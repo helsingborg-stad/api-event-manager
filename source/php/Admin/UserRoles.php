@@ -17,6 +17,40 @@ class UserRoles
         add_action('delete_user', array($this, 'restrictDeleteUsers'));
         add_filter('editable_roles', array($this, 'filterEditableRoles'));
         add_filter('views_users', array($this, 'hideUserRoleQuicklinks'));
+        add_filter('map_meta_cap', array($this, 'addAdminUserCap'), 10, 4);
+        add_filter('enable_edit_any_user_configuration', '__return_true');
+    }
+
+    /**
+     * Gives users with capability 'edit_users' to edit other users on multisite
+     * @param array     $caps       Returns the user's actual capabilities
+     * @param string    $cap        Capability name
+     * @param int       $user_id    The user ID
+     * @param array     $args       Adds the context to the cap. Typically the object ID
+     */
+    public function addAdminUserCap($caps, $cap, $user_id, $args)
+    {
+        foreach ($caps as $key => $capability) {
+            if ($capability != 'do_not_allow') {
+                continue;
+            }
+
+            switch ($cap) {
+                case 'edit_user':
+                case 'edit_users':
+                    $caps[$key] = 'edit_users';
+                    break;
+                case 'delete_user':
+                case 'delete_users':
+                    $caps[$key] = 'delete_users';
+                    break;
+                case 'create_users':
+                    $caps[$key] = $cap;
+                    break;
+            }
+        }
+
+        return $caps;
     }
 
     /**
