@@ -9,6 +9,7 @@ class UserRoles
 {
     public function __construct()
     {
+    	add_action('init', array($this, 'removeUserRoles'));
         add_action('admin_init', array($this, 'addCapabilities'));
         add_action('pre_get_users', array($this, 'filterUserList'));
         add_action('admin_menu', array($this, 'removeMenuItems'));
@@ -183,15 +184,27 @@ class UserRoles
      * Remove custom user roles
      * @return void
      */
-    public static function removeUserRoles()
+    public static function removeCustomUserRoles()
     {
-        $roles = array('guide_administrator', 'event_contributor', 'guide_editor');
+        $roles = array('guide_administrator', 'event_contributor', 'guide_editor', 'event_administrator');
         foreach ($roles as $role) {
             if (get_role($role)) {
                 remove_role($role);
             }
         }
     }
+
+    /**
+     * Remove user roles
+     * @return void
+     */
+    public function removeUserRoles()
+    {
+		if (get_role('author')) {
+			remove_role('author');
+		}
+    }
+
 
     /**
      * Add user capabilities to custom post types
