@@ -179,7 +179,7 @@ class UserRoles
 
                 $query->set('meta_key', 'event_user_groups');
                 $query->set('meta_query', $meta_query);
-                $query->set('role__not_in', array('administrator'));
+                $query->set('role__in', array('event_administrator', 'event_contributor'));
             } else {
                 $query->set('include', array(0));
             }
