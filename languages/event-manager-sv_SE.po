@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Event Manager\n"
-"POT-Creation-Date: 2017-07-28 09:50+0200\n"
-"PO-Revision-Date: 2017-07-28 09:50+0200\n"
+"POT-Creation-Date: 2017-08-24 14:13+0200\n"
+"PO-Revision-Date: 2017-08-24 14:14+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: sv\n"
@@ -1129,7 +1129,7 @@ msgstr "Vimeo-länk"
 
 #: source/php/AcfFields/php/groups.php:6 source/php/AcfFields/php/groups.php:29
 #: source/php/AcfFields/php/publishing-groups.php:10
-#: source/php/Taxonomy/UserGroups.php:33
+#: source/php/Taxonomy/UserGroups.php:92
 msgid "Groups"
 msgstr "Grupper"
 
@@ -1680,6 +1680,10 @@ msgstr "Välj evenemang som ingår i paketet."
 msgid "Add membership cards where this package is included."
 msgstr "Välj medlemskort där paketet ingår."
 
+#: source/php/AcfFields/php/publishing-groups.php:6
+msgid "Publishing groups"
+msgstr "Publiceringsgrupper"
+
 #: source/php/AcfFields/php/sponsor.php:6 source/php/PostTypes/Sponsors.php:11
 msgid "Sponsor"
 msgstr "Sponsor"
@@ -1743,32 +1747,32 @@ msgstr "Papperskorg"
 msgid "All categories"
 msgstr "Alla kategorier"
 
-#: source/php/Admin/FilterRestrictions.php:224
-#: source/php/Taxonomy/UserGroups.php:24
+#: source/php/Admin/FilterRestrictions.php:225
+#: source/php/Taxonomy/UserGroups.php:83
 msgid "All groups"
 msgstr "Alla grupper"
 
-#: source/php/Admin/FilterRestrictions.php:270
+#: source/php/Admin/FilterRestrictions.php:271
 msgid "Time interval"
 msgstr "Tidsperiod"
 
-#: source/php/Admin/FilterRestrictions.php:271
+#: source/php/Admin/FilterRestrictions.php:272
 msgid "Today"
 msgstr "Idag"
 
-#: source/php/Admin/FilterRestrictions.php:272
+#: source/php/Admin/FilterRestrictions.php:273
 msgid "Tomorrow"
 msgstr "I morgon"
 
-#: source/php/Admin/FilterRestrictions.php:273
+#: source/php/Admin/FilterRestrictions.php:274
 msgid "This week"
 msgstr "Denna veckan"
 
-#: source/php/Admin/FilterRestrictions.php:274
+#: source/php/Admin/FilterRestrictions.php:275
 msgid "This month"
 msgstr "Denna månaden"
 
-#: source/php/Admin/FilterRestrictions.php:275
+#: source/php/Admin/FilterRestrictions.php:276
 msgid "Passed events"
 msgstr "Passerade evenemang"
 
@@ -1814,15 +1818,31 @@ msgstr ""
 msgid "Sync event information with API"
 msgstr "Synkronisera med API"
 
-#: source/php/Admin/UserRoles.php:21
+#: source/php/Admin/UserRoles.php:43 source/php/Admin/UserRoles.php:73
+msgid "Cheatin&#8217; uh?"
+msgstr ""
+
+#: source/php/Admin/UserRoles.php:44
+msgid "You don't have permissions to delete this user."
+msgstr ""
+
+#: source/php/Admin/UserRoles.php:74
+msgid "You don't have permissions to edit this user."
+msgstr ""
+
+#: source/php/Admin/UserRoles.php:161
+msgid "Event administrator"
+msgstr "Evenemangsadministratör"
+
+#: source/php/Admin/UserRoles.php:166
 msgid "Guide administrator"
 msgstr "Guideadministratör"
 
-#: source/php/Admin/UserRoles.php:26
+#: source/php/Admin/UserRoles.php:171
 msgid "Event contributor"
 msgstr "Evenemangshanterare"
 
-#: source/php/Admin/UserRoles.php:31
+#: source/php/Admin/UserRoles.php:176
 msgid "Guide editor"
 msgstr "Guideredakör"
 
@@ -1949,68 +1969,68 @@ msgstr ""
 "har informerats om att efter att bilden lagts in i databasen kan komma att "
 "synas i olika kanaler för att marknadsföra evenemanget."
 
-#: source/php/Entity/CustomPostType.php:87
+#: source/php/Entity/CustomPostType.php:86
 msgid "API-url"
 msgstr "API-url"
 
+#: source/php/Entity/CustomPostType.php:168
 #: source/php/Entity/CustomPostType.php:169
-#: source/php/Entity/CustomPostType.php:170
 #, php-format
 msgid "Add new %s"
 msgstr "Lägg till %s"
 
-#: source/php/Entity/CustomPostType.php:171
+#: source/php/Entity/CustomPostType.php:170
 #, php-format
 msgid "Edit %s"
 msgstr "Redigera %s"
 
-#: source/php/Entity/CustomPostType.php:172
+#: source/php/Entity/CustomPostType.php:171
 #, php-format
 msgid "New %s"
 msgstr "Nytt %s"
 
-#: source/php/Entity/CustomPostType.php:173
+#: source/php/Entity/CustomPostType.php:172
 #, php-format
 msgid "View %s"
 msgstr "Visa %s"
 
-#: source/php/Entity/CustomPostType.php:174
+#: source/php/Entity/CustomPostType.php:173
 #, php-format
 msgid "Search %s"
 msgstr "Sök %s"
 
-#: source/php/Entity/CustomPostType.php:175
+#: source/php/Entity/CustomPostType.php:174
 #, php-format
 msgid "No %s found"
 msgstr "Inga %s hittades"
 
-#: source/php/Entity/CustomPostType.php:176
+#: source/php/Entity/CustomPostType.php:175
 #, php-format
 msgid "No %s found in trash"
 msgstr "Inga %s hittades i papperskorgen"
 
-#: source/php/Entity/CustomPostType.php:177
+#: source/php/Entity/CustomPostType.php:176
 #, php-format
 msgid "Parent %s:"
 msgstr "Förälder %s:"
 
-#: source/php/Entity/CustomPostType.php:282
+#: source/php/Entity/CustomPostType.php:281
 msgid "Post updated."
 msgstr "Inlägget uppdaterades."
 
-#: source/php/Entity/CustomPostType.php:283
+#: source/php/Entity/CustomPostType.php:282
 msgid "Post published."
 msgstr "Inlägget publicerades."
 
-#: source/php/Entity/CustomPostType.php:284
+#: source/php/Entity/CustomPostType.php:283
 msgid "Post submitted."
 msgstr "Inlägget uppdaterades."
 
-#: source/php/Entity/CustomPostType.php:285
+#: source/php/Entity/CustomPostType.php:284
 msgid "Post draft updated."
 msgstr "Utkast uppdaterades."
 
-#: source/php/Entity/CustomPostType.php:361
+#: source/php/Entity/CustomPostType.php:360
 msgid ""
 "You don't have access to edit this event. Contact an administrator for "
 "further information."
@@ -2018,31 +2038,31 @@ msgstr ""
 "Ni saknar rättigheter att uppdatera evenemanget. Vid frågor kontakta en "
 "administratör."
 
-#: source/php/Entity/CustomPostType.php:444
+#: source/php/Entity/CustomPostType.php:415
 msgid "Public"
 msgstr "Offentlig"
 
-#: source/php/Entity/CustomPostType.php:477
+#: source/php/Entity/CustomPostType.php:448
 msgid "This post must be updated before it can be published."
 msgstr "Evenemanget behöver uppdateras innan det kan publiceras"
 
-#: source/php/Entity/CustomPostType.php:477
+#: source/php/Entity/CustomPostType.php:448
 msgid "Edit draft"
 msgstr "Redigera utkast"
 
-#: source/php/Entity/CustomPostType.php:480
+#: source/php/Entity/CustomPostType.php:451
 msgid "Accept"
 msgstr "Godkänn"
 
-#: source/php/Entity/CustomPostType.php:481
+#: source/php/Entity/CustomPostType.php:452
 msgid "Deny"
 msgstr "Neka"
 
-#: source/php/Entity/CustomPostType.php:492
+#: source/php/Entity/CustomPostType.php:463
 msgid "Something went wrong!"
 msgstr "Något gick fel!"
 
-#: source/php/Entity/CustomPostType.php:509
+#: source/php/Entity/CustomPostType.php:480
 msgid "Error"
 msgstr "Fel"
 
@@ -2414,65 +2434,65 @@ msgctxt "Taxonomy singular name"
 msgid "Location category"
 msgstr "Platskategori"
 
-#: source/php/Taxonomy/UserGroups.php:20
+#: source/php/Taxonomy/UserGroups.php:79
 msgctxt "Taxonomy plural name"
 msgid "Groups"
 msgstr "Organisationer"
 
-#: source/php/Taxonomy/UserGroups.php:21
+#: source/php/Taxonomy/UserGroups.php:80
 msgctxt "Taxonomy singular name"
 msgid "Group"
 msgstr "Organisation"
 
-#: source/php/Taxonomy/UserGroups.php:22
+#: source/php/Taxonomy/UserGroups.php:81
 msgid "Search groups"
 msgstr "Sök organisation"
 
-#: source/php/Taxonomy/UserGroups.php:23
+#: source/php/Taxonomy/UserGroups.php:82
 msgid "Popular groups"
 msgstr "Populära organisationer"
 
-#: source/php/Taxonomy/UserGroups.php:25 source/php/Taxonomy/UserGroups.php:26
+#: source/php/Taxonomy/UserGroups.php:84 source/php/Taxonomy/UserGroups.php:85
 msgid "Parent group"
 msgstr "Förälderorganisation"
 
-#: source/php/Taxonomy/UserGroups.php:27
+#: source/php/Taxonomy/UserGroups.php:86
 msgid "Edit group"
 msgstr "Ändra organisation"
 
-#: source/php/Taxonomy/UserGroups.php:28
+#: source/php/Taxonomy/UserGroups.php:87
 msgid "Update group"
 msgstr "Uppdatera organisation"
 
-#: source/php/Taxonomy/UserGroups.php:29
+#: source/php/Taxonomy/UserGroups.php:88
 msgid "Add new group"
 msgstr "Lägg till ny organisation"
 
-#: source/php/Taxonomy/UserGroups.php:30
+#: source/php/Taxonomy/UserGroups.php:89
 msgid "New group"
 msgstr "Ny organisation"
 
-#: source/php/Taxonomy/UserGroups.php:31
+#: source/php/Taxonomy/UserGroups.php:90
 msgid "Add or remove groups"
 msgstr "Lägg till eller ta bort organisationer"
 
-#: source/php/Taxonomy/UserGroups.php:32
+#: source/php/Taxonomy/UserGroups.php:91
 msgid "Choose from most used groups"
 msgstr "Välj från de mest använda organisationerna"
 
-#: source/php/Taxonomy/UserGroups.php:86
+#: source/php/Taxonomy/UserGroups.php:148
 msgid "User groups"
 msgstr "Användarorganisationer"
 
-#: source/php/Taxonomy/UserGroups.php:121
+#: source/php/Taxonomy/UserGroups.php:182
 msgid "Event publishing groups"
 msgstr "Publiceringsorganisationer"
 
-#: source/php/Taxonomy/UserGroups.php:124
+#: source/php/Taxonomy/UserGroups.php:185
 msgid "Assigned groups"
 msgstr "Dina organisationer"
 
-#: source/php/Taxonomy/UserGroups.php:132
+#: source/php/Taxonomy/UserGroups.php:193
 msgid "There are no groups assigned to your account."
 msgstr "Du ingår inte i någon organisation."
 
@@ -2553,9 +2573,6 @@ msgstr ""
 
 #~ msgid "Add key"
 #~ msgstr "Lägg till nyckel"
-
-#~ msgid "Publishing groups"
-#~ msgstr "Publiceringsgrupper"
 
 #~ msgid "Event categories"
 #~ msgstr "Evenemangskategorier"
