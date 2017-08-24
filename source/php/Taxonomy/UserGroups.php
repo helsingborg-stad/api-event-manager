@@ -114,13 +114,16 @@ class UserGroups
     }
 
     /**
-     * Limit taxonomy dropdown depth
+     * Update taxonomy dropdown args
      * @param  array  $args     args
      * @param  string $taxonomy taxonomy
      * @return array
      */
     public function limitDropdownDepth($args, $taxonomy) {
         if ($taxonomy != 'user_groups') return $args;
+        if (!current_user_can('administrator')) {
+             $args['show_option_none'] = '';
+        }
         $args['depth'] = '2';
         return $args;
     }
