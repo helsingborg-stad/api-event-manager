@@ -56,11 +56,12 @@ class UserRoles
             $screen = get_current_screen();
 
             if ($screen->base == 'user-edit' && !empty($_GET['user_id'])) {
+            	$user_info = get_userdata($_GET['user_id']);
                 $current_user = wp_get_current_user();
                 $edited_user_groups  = \HbgEventImporter\Admin\FilterRestrictions::getTermChildren($_GET['user_id']);
                 $current_user_groups = \HbgEventImporter\Admin\FilterRestrictions::getTermChildren($current_user->ID);
 
-                if ($edited_user_groups && $current_user_groups) {
+                if (!in_array('administrator', $user_info->roles) && $edited_user_groups && $current_user_groups) {
                     $matches = array_intersect($edited_user_groups, $current_user_groups);
                     if ($matches) {
                         return;
