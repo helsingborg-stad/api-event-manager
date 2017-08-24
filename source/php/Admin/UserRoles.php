@@ -237,6 +237,9 @@ class UserRoles
 		if (get_role('author')) {
 			remove_role('author');
 		}
+		if (get_role('subscriber')) {
+			remove_role('subscriber');
+		}
     }
 
 
