@@ -28,7 +28,15 @@ class EventTags
             'menu_name'             => __('Tags', 'event-manager'),
         );
 
+        $capabilities = array(
+            'manage_terms' => 'edit_posts',
+            'edit_terms'   => 'edit_posts',
+            'delete_terms' => 'edit_posts',
+            'assign_terms' => 'read',
+        );
+
         $args = array(
+            'capabilities'          => $capabilities,
             'labels'                => $labels,
             'public'                => true,
             'show_in_nav_menus'     => true,
