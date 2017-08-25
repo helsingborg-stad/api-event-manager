@@ -60,25 +60,11 @@ class UserRoles
      */
     public function restrictDeleteUsers($user_id)
     {
-        if (!current_user_can('administrator')) {
-            $user_info = get_userdata($user_id);
-            $current_user = wp_get_current_user();
-            $user_groups = \HbgEventImporter\Admin\FilterRestrictions::getTermChildren($user_id);
-            $current_user_groups = \HbgEventImporter\Admin\FilterRestrictions::getTermChildren($current_user->ID);
-
-            if (!in_array('administrator', $user_info->roles) && $user_groups && $current_user_groups) {
-                $matches = array_intersect($user_groups, $current_user_groups);
-                if ($matches) {
-                    return;
-                }
-            }
-
-            wp_die(
-                '<h1>' . __('Cheatin&#8217; uh?') . '</h1>' .
-                '<p>' . __('You don\'t have permissions to delete this user.') . '</p>',
-                403
-            );
+        if (current_user_can('administrator')) {
+        	return;
         }
+
+        $this->checkPermission($user_id);
     }
 
     /**
@@ -87,29 +73,39 @@ class UserRoles
      */
     public function restrictUserPages()
     {
-        if (!current_user_can('administrator')) {
-            $screen = get_current_screen();
-
-            if ($screen->base == 'user-edit' && !empty($_GET['user_id'])) {
-            	$user_info = get_userdata($_GET['user_id']);
-                $current_user = wp_get_current_user();
-                $edited_user_groups  = \HbgEventImporter\Admin\FilterRestrictions::getTermChildren($_GET['user_id']);
-                $current_user_groups = \HbgEventImporter\Admin\FilterRestrictions::getTermChildren($current_user->ID);
-
-                if (!in_array('administrator', $user_info->roles) && $edited_user_groups && $current_user_groups) {
-                    $matches = array_intersect($edited_user_groups, $current_user_groups);
-                    if ($matches) {
-                        return;
-                    }
-                }
-
-                wp_die(
-                    '<h1>' . __('Cheatin&#8217; uh?') . '</h1>' .
-                    '<p>' . __('You don\'t have permissions to edit this user.') . '</p>',
-                    403
-                );
-            }
+        if (current_user_can('administrator')) {
+        	return;
         }
+
+        $screen = get_current_screen();
+        if ($screen->base == 'user-edit' && !empty($_GET['user_id'])) {
+        	$this->checkPermission($_GET['user_id']);
+        }
+    }
+
+    public function checkPermission($profile_id)
+    {
+    	global $current_user;
+
+    	$profile_user = get_userdata($profile_id);
+        $profile_user_groups = \HbgEventImporter\Admin\FilterRestrictions::getTermChildren($profile_id);
+        $current_user_groups = \HbgEventImporter\Admin\FilterRestrictions::getTermChildren($current_user->ID);
+
+        if ((in_array('event_administrator', $profile_user->roles) || in_array('event_contributor', $profile_user->roles))
+        	&& !is_super_admin($profile_id)
+        	&& $profile_user_groups
+        	&& $current_user_groups) {
+	            $matches = array_intersect($profile_user_groups, $current_user_groups);
+	            if ($matches) {
+	                return;
+	            }
+        }
+
+        wp_die(
+            '<h1>' . __('Cheatin&#8217; uh?') . '</h1>' .
+            '<p>' . __('Missing permissions') . '</p>',
+            403
+        );
     }
 
     /**

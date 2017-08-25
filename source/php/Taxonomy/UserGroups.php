@@ -30,7 +30,6 @@ class UserGroups
 
         require_once(ABSPATH . 'wp-admin/includes/screen.php');
         $current_screen = get_current_screen();
-
         remove_filter( 'list_terms_exclusions', array($this, 'excludeEventGroups'), 10, 2 );
 
         if (is_object($current_screen) && $current_screen->id == 'edit-user_groups' && $current_screen->taxonomy == 'user_groups' ) {
