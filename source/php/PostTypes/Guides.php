@@ -43,7 +43,7 @@ class Guides extends \HbgEventImporter\Entity\CustomPostType
         add_filter('acf/update_value/name=guidegroup', array($this, 'updateTaxonomyRelation'), 10, 3);
 
         //Only main locations selectable
-        add_filter('acf/fields/post_object/query/name=guide_taxonomy_location', array($this, 'getMainLocations'), 10, 3);
+        //add_filter('acf/fields/post_object/query/name=guide_taxonomy_location', array($this, 'getMainLocations'), 10, 3);
 
         //Only sublocations selectable (if set)
         add_filter('acf/fields/post_object/query/key=field_58ab0c9554b0a', array($this, 'getSublocationsOnly'), 10, 3);
