@@ -95,7 +95,6 @@ class FilterRestrictions
         $group_string = ($groups) ? implode(',', $groups) : false;
 
         $where .= " AND ($wpdb->posts.post_author = $id ";
-        $where .= "OR ($wpdb->postmeta.meta_key = 'missing_user_group' AND $wpdb->postmeta.meta_value = 1) ";
         $where .= ($group_string) ? " OR ($wpdb->term_taxonomy.taxonomy = 'user_groups' AND $wpdb->term_taxonomy.term_id IN($group_string))" : '';
         $where .= ") ";
 

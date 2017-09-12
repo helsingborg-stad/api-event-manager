@@ -231,7 +231,6 @@ class CbisEvent extends \HbgEventImporter\Parser\Cbis
                 'import_client'         => $importClient,
                 '_event_manager_uid'    => $uid,
                 'user_groups'           => $userGroups,
-                'missing_user_group'    => $userGroups == null ? 1 : 0,
                 'sync'                  => 1,
                 'imported_post'         => 1,
             )
@@ -315,7 +314,6 @@ class CbisEvent extends \HbgEventImporter\Parser\Cbis
                 'phone'                 => $phone,
                 '_event_manager_uid'    => $uid,
                 'user_groups'           => $userGroups,
-                'missing_user_group'    => $userGroups == null ? 1 : 0,
                 'sync'                  => 1,
                 'imported_post'         => 1,
                 'import_client'         => 'cbis',
@@ -407,7 +405,6 @@ class CbisEvent extends \HbgEventImporter\Parser\Cbis
                 'import_client'           => 'cbis',
                 'imported_post'           => 1,
                 'user_groups'             => $userGroups,
-                'missing_user_group'      => $userGroups == null ? 1 : 0,
                 'occurred'                => $occurred,
             )
         );

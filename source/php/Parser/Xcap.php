@@ -152,7 +152,6 @@ class Xcap extends \HbgEventImporter\Parser
                 'import_client'           => 'xcap',
                 'imported_post'           => 1,
                 'user_groups'             => $user_groups,
-                'missing_user_group'      => $user_groups == null ? 1 : 0,
                 'occurred'                => $occurred,
             )
         );
@@ -230,7 +229,6 @@ class Xcap extends \HbgEventImporter\Parser
                 'import_client'         => 'xcap',
                 '_event_manager_uid'    => 'xcap-' . $shortKey . '-' . $this->cleanString($address),
                 'user_groups'           => $user_groups,
-                'missing_user_group'    => $user_groups == null ? 1 : 0,
                 'sync'                  => 1,
                 'imported_post'         => 1,
             )

@@ -36,7 +36,6 @@ abstract class CustomPostType
         add_filter('manage_edit-' . $this->slug . '_sortable_columns', array($this, 'tableSortableColumns'));
         add_action('manage_' . $this->slug . '_posts_custom_column', array($this, 'tableColumnsContent'), 10, 2);
 
-        add_action('publish_' . $this->slug, array($this, 'addAcfGroupMeta'), 10, 2);
         add_action('wp_ajax_accept_or_deny', array($this, 'acceptAndDeny'));
         add_action('wp_ajax_collect_occasions', array($this, 'collectOccasions'));
         add_action('wp_ajax_import_events', array($this, 'importEvents'));
@@ -312,8 +311,8 @@ abstract class CustomPostType
         $post = get_post($post_id);
         $user = wp_get_current_user();
 
-        // Return if user is admin/editor or the event don't have any publishing groups or if user is 'post_author'
-        if (current_user_can('administrator') || current_user_can('editor') || current_user_can('guide_administrator') || $post_id == false || get_field('missing_user_group', $post_id) == true || $post->post_author == $user->ID) {
+        // Return if user is admin/editor or if user is 'post_author'
+        if (current_user_can('administrator') || current_user_can('editor') || current_user_can('guide_administrator') || $post_id == false || $post->post_author == $user->ID) {
             return;
         }
 
@@ -484,18 +483,4 @@ abstract class CustomPostType
         echo $value;
         wp_die();
     }
-
-    /**
-     * Adds "missing user" meta field if groups are missing
-     * @param int $post_id post object id
-     */
-    public function addAcfGroupMeta($post_id)
-    {
-        if (get_post_meta($post_id, 'missing_user_group', true)) {
-            return;
-        }
-
-        add_post_meta($post_id, 'missing_user_group', 1, true);
-    }
-
 }

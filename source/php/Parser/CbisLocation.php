@@ -148,7 +148,6 @@ class CbisLocation extends \HbgEventImporter\Parser\Cbis
                     'import_client'      => $import_client,
                     '_event_manager_uid' => $uid,
                     'user_groups'        => $userGroups,
-                    'missing_user_group' => $userGroups == null ? 1 : 0,
                     'sync'               => 1,
                     'imported_post'      => 1,
                 )
