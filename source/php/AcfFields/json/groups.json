@@ -3,40 +3,13 @@
     "title": "Groups",
     "fields": [
         {
-            "key": "field_5885f58a36f81",
-            "label": "Missing user group",
-            "name": "missing_user_group",
-            "type": "true_false",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "message": "Check this box if the post does not belong to any user groups. This post will be available to all users.",
-            "default_value": 0,
-            "ui": 0,
-            "ui_on_text": "",
-            "ui_off_text": ""
-        },
-        {
             "key": "field_5885f58c36f82",
             "label": "Groups",
             "name": "user_groups",
             "type": "taxonomy",
             "instructions": "Select one or many user groups.",
             "required": 1,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_5885f58a36f81",
-                        "operator": "!=",
-                        "value": "1"
-                    }
-                ]
-            ],
+            "conditional_logic": 0,
             "wrapper": {
                 "width": "",
                 "class": "",
