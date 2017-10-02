@@ -72,6 +72,7 @@ class App
         new Admin\UI();
         new Admin\FilterRestrictions();
         new Admin\UserRoles();
+        new Admin\FileUploads();
 
         new Api\Filter();
         new Api\PostTypes();
