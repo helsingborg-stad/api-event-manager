@@ -142,7 +142,7 @@ class Xcap extends \HbgEventImporter\Parser
                 'categories'              => $categories,
                 'occasions'               => $occasions,
                 'location'                => $locationId != null ? $locationId : null,
-                'organizers'              => null,
+                'organizer'              => null,
                 'booking_link'            => is_string($ticketUrl) ? $ticketUrl : null,
                 'booking_phone'           => null,
                 'age_restriction'         => null,
