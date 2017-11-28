@@ -478,9 +478,9 @@ class App
 
         if ($groups) {
             if ($rule['operator'] == "==") {
-                $match = (in_array($options['post_type'], $groups) && $options['post_id'] > 0);
+                $match = (isset($options['post_type']) && in_array($options['post_type'], $groups) && $options['post_id'] > 0);
             } elseif ($rule['operator'] == "!=") {
-                $match = (! in_array($options['post_type'], $groups) && $options['post_id'] > 0);
+                $match = (isset($options['post_type']) && !in_array($options['post_type'], $groups) && $options['post_id'] > 0);
             }
         }
 
