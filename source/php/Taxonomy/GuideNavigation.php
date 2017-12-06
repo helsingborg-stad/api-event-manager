@@ -7,6 +7,8 @@ class GuideNavigation
     public function __construct()
     {
         add_action('init', array($this, 'registerTaxonomy'));
+
+        add_filter('acf/update_value/name=included_posts', array($this, 'addPostToTerm'), 10, 3);
     }
 
     public function registerTaxonomy()
@@ -50,5 +52,29 @@ class GuideNavigation
         );
 
         register_taxonomy('navigation', array('guide'), $args);
+    }
+
+    /**
+     * Update taxonomy connection to selected posts
+     * @param  $value     Value before save
+     * @param  $post_id   Id of the post being saved or updated
+     * @param  $field     Array containing field details
+     */
+    public function addPostToTerm($value, $post_id, $field)
+    {
+
+        /*
+
+        var_dump($post_id);
+        var_dump($value);
+        exit;
+
+/*
+        if(!is_numeric($post_id)) {
+            $post_id = get_term( $term, $taxonomy = '', $output = OBJECT, $filter = 'raw' )
+        }
+
+        //wp_set_object_terms((int) $post_id, array((int) $value), 'navigation');*/
+        return $value;
     }
 }
