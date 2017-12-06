@@ -53,18 +53,19 @@ $acfExportManager->autoExport(array(
     'guide-group-select' => 'group_589dd0fbd412e',
     'guide-group-settings' => 'group_589dcf7e047a8',
     'guide-group-notices' => 'group_58ab055a4b3b8',
+    'guide-navigation' => 'group_5a27f69d7c9cc',
     'cbis' => 'group_5760fe97e3be1',
-	'event-categories' => 'group_5889f976dfb2d',
-	'event-manager-settings' => 'group_575fe32901927',
-	'event' => 'group_57610ebadcee8',
-	'groups' => 'group_5885f51260b61',
-	'location' => 'group_57612f9baa78b',
-	'package' => 'group_57c94757c2169',
-	'publishing-groups' => 'group_585a4624de2e9',
-	'sponsor' => 'group_57a9bf12ef1a3',
-	'xcap' => 'group_56af507bbd485',
-	'organizer' => 'group_591eefa30b5fa',
-	'membership-card' => 'group_593938d452989',
+    'event-categories' => 'group_5889f976dfb2d',
+    'event-manager-settings' => 'group_575fe32901927',
+    'event' => 'group_57610ebadcee8',
+    'groups' => 'group_5885f51260b61',
+    'location' => 'group_57612f9baa78b',
+    'package' => 'group_57c94757c2169',
+    'publishing-groups' => 'group_585a4624de2e9',
+    'sponsor' => 'group_57a9bf12ef1a3',
+    'xcap' => 'group_56af507bbd485',
+    'organizer' => 'group_591eefa30b5fa',
+    'membership-card' => 'group_593938d452989',
 ));
 $acfExportManager->import();
 
@@ -86,4 +87,3 @@ add_action('init', function () use ($apiEventManager) {
     new \HbgEventImporter\Parser\Xcap($apiEventManager->getXcapKeys()[0]['xcap_api_url'], $apiEventManager->getXcapKeys()[0]);
 });
 */
-

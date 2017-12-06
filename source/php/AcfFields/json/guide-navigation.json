@@ -1,0 +1,125 @@
+[{
+    "key": "group_5a27f69d7c9cc",
+    "title": "Include in category",
+    "fields": [
+        {
+            "key": "field_5a27fe465a89c",
+            "label": "Type of data in category",
+            "name": "type_of_data",
+            "type": "radio",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "organisation": "Organisation",
+                "trail": "Trails"
+            },
+            "allow_null": 0,
+            "other_choice": 0,
+            "save_other_choice": 0,
+            "default_value": "organisation",
+            "layout": "horizontal",
+            "return_format": "value"
+        },
+        {
+            "key": "field_5a27f6ab57d2f",
+            "label": "Include these items (posts)",
+            "name": "included_posts",
+            "type": "post_object",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5a27fe465a89c",
+                        "operator": "==",
+                        "value": "trail"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "post_type": [
+                "guide"
+            ],
+            "taxonomy": [],
+            "allow_null": 0,
+            "multiple": 1,
+            "return_format": "object",
+            "ui": 1
+        },
+        {
+            "key": "field_5a27fed65a89d",
+            "label": "Include these items (taxonomy)",
+            "name": "included_taxonomys",
+            "type": "taxonomy",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5a27fe465a89c",
+                        "operator": "==",
+                        "value": "organisation"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "taxonomy": "guidegroup",
+            "field_type": "multi_select",
+            "allow_null": 0,
+            "add_term": 0,
+            "save_terms": 0,
+            "load_terms": 0,
+            "return_format": "object",
+            "multiple": 0
+        },
+        {
+            "key": "field_5a28020b09d68",
+            "label": "About",
+            "name": "",
+            "type": "message",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "<span style=\"color: #ff0000;\">There are not need to add the navigation alternative \"all\" due to the fact that this item is a combination of all other navigation items. This item will automatically be created. <\/span>",
+            "new_lines": "",
+            "esc_html": 0
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "taxonomy",
+                "operator": "==",
+                "value": "navigation"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": 1,
+    "description": ""
+}]
+

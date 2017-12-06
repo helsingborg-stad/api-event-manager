@@ -67,7 +67,7 @@ class App
         new Taxonomy\EventTags();
         new Taxonomy\LocationCategories();
         new Taxonomy\GuideCategories();
-        new Taxonomy\GuideType();
+        new Taxonomy\GuideNavigation();
 
         new Admin\Options();
         new Admin\UI();
