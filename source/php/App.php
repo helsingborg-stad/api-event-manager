@@ -90,6 +90,7 @@ class App
         new Api\MembershipCardFields();
         new Api\GuideFields();
         new Api\UserGroupFields();
+        new Api\PointPropertyFields();
     }
 
     /**
