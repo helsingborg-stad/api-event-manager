@@ -145,7 +145,7 @@ class GuideFields extends Fields
 
         // Embed type of guide as property
         register_rest_field($this->postType,
-            'typeofguide',
+            'content_type',
             array(
                 'get_callback'    => array($this, 'stringGetCallBack'),
                 'update_callback' => null,

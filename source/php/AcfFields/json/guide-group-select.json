@@ -3,26 +3,26 @@
     "title": "Guide Group",
     "fields": [
         {
-            "taxonomy": "guidegroup",
-            "field_type": "select",
-            "multiple": 0,
-            "allow_null": 0,
-            "return_format": "id",
-            "add_term": 1,
-            "load_terms": 0,
-            "save_terms": 0,
             "key": "field_589dd138aca7e",
             "label": "Select the group for this guide",
             "name": "guidegroup",
             "type": "taxonomy",
-            "instructions": "",
-            "required": 1,
+            "instructions": "This field is mandatory for v1 of the app. This will not be required to be set after January 1:st 2018.",
+            "required": 0,
             "conditional_logic": 0,
             "wrapper": {
                 "width": "",
                 "class": "",
                 "id": ""
-            }
+            },
+            "taxonomy": "guidegroup",
+            "field_type": "select",
+            "allow_null": 0,
+            "add_term": 1,
+            "save_terms": 0,
+            "load_terms": 0,
+            "return_format": "id",
+            "multiple": 0
         }
     ],
     "location": [
@@ -43,3 +43,4 @@
     "active": 1,
     "description": ""
 }]
+

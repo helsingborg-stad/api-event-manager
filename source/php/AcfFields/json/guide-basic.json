@@ -3,8 +3,6 @@
     "title": "Basic Guide Settings",
     "fields": [
         {
-            "placement": "left",
-            "endpoint": 0,
             "key": "field_58949857fc7b0",
             "label": "General",
             "name": "",
@@ -16,14 +14,11 @@
                 "width": "",
                 "class": "",
                 "id": ""
-            }
+            },
+            "placement": "left",
+            "endpoint": 0
         },
         {
-            "tabs": "all",
-            "toolbar": "basic",
-            "media_upload": 0,
-            "default_value": "",
-            "delay": 0,
             "key": "field_58949813a052c",
             "label": "Beskrivning",
             "name": "guide_description",
@@ -35,17 +30,14 @@
                 "width": "",
                 "class": "",
                 "id": ""
-            }
+            },
+            "tabs": "all",
+            "toolbar": "basic",
+            "media_upload": 0,
+            "default_value": "",
+            "delay": 0
         },
         {
-            "post_type": [
-                "location"
-            ],
-            "taxonomy": [],
-            "allow_null": 0,
-            "multiple": 0,
-            "return_format": "id",
-            "ui": 1,
             "key": "field_58cbfb6e8d677",
             "label": "Location",
             "name": "guide_location",
@@ -57,14 +49,17 @@
                 "width": "",
                 "class": "",
                 "id": ""
-            }
+            },
+            "post_type": [
+                "location"
+            ],
+            "taxonomy": [],
+            "allow_null": 0,
+            "multiple": 0,
+            "return_format": "id",
+            "ui": 1
         },
         {
-            "default_value": 0,
-            "message": "This guide is har target group \"kids\".",
-            "ui": 0,
-            "ui_on_text": "",
-            "ui_off_text": "",
             "key": "field_58d4e9a227c41",
             "label": "For kids",
             "name": "guide_kids",
@@ -76,11 +71,14 @@
                 "width": "",
                 "class": "",
                 "id": ""
-            }
+            },
+            "default_value": 0,
+            "message": "This guide is har target group \"kids\".",
+            "ui": 0,
+            "ui_on_text": "",
+            "ui_off_text": ""
         },
         {
-            "placement": "left",
-            "endpoint": 0,
             "key": "field_5894987dfc7b1",
             "label": "Images (guide)",
             "name": "",
@@ -92,20 +90,11 @@
                 "width": "",
                 "class": "",
                 "id": ""
-            }
+            },
+            "placement": "left",
+            "endpoint": 0
         },
         {
-            "library": "all",
-            "min": "",
-            "max": 10,
-            "min_width": "",
-            "min_height": "",
-            "min_size": "",
-            "max_width": "",
-            "max_height": "",
-            "max_size": "",
-            "mime_types": "jpg,jpeg,png",
-            "insert": "append",
             "key": "field_589dc93cde2d7",
             "label": "Guide images",
             "name": "guide_images",
@@ -117,11 +106,20 @@
                 "width": "",
                 "class": "secondary-panel",
                 "id": ""
-            }
+            },
+            "library": "all",
+            "min": "",
+            "max": 10,
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": "jpg,jpeg,png",
+            "insert": "append"
         },
         {
-            "placement": "top",
-            "endpoint": 0,
             "key": "field_5899a94bff0ec",
             "label": "Content objects",
             "name": "",
@@ -133,13 +131,25 @@
                 "width": "",
                 "class": "",
                 "id": ""
-            }
+            },
+            "placement": "top",
+            "endpoint": 0
         },
         {
+            "key": "field_5899cc4b59d94",
+            "label": "Content (paintings, art, flowers etc.)",
+            "name": "guide_content_objects",
+            "type": "repeater",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
             "sub_fields": [
                 {
-                    "placement": "top",
-                    "endpoint": 0,
                     "key": "field_589db03e16e51",
                     "label": "General",
                     "name": "",
@@ -151,14 +161,11 @@
                         "width": "",
                         "class": "",
                         "id": ""
-                    }
+                    },
+                    "placement": "top",
+                    "endpoint": 0
                 },
                 {
-                    "default_value": "",
-                    "maxlength": "",
-                    "placeholder": "The title of the object",
-                    "prepend": "",
-                    "append": "",
                     "key": "field_5899aab938d3d",
                     "label": "Object title",
                     "name": "guide_object_title",
@@ -170,16 +177,14 @@
                         "width": "75",
                         "class": "",
                         "id": ""
-                    }
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "placeholder": "The title of the object",
+                    "prepend": "",
+                    "append": ""
                 },
                 {
-                    "default_value": "",
-                    "min": 1,
-                    "max": 999,
-                    "step": 1,
-                    "placeholder": "",
-                    "prepend": "#",
-                    "append": "",
                     "key": "field_589dcc1a7deb3",
                     "label": "Exhibition ID",
                     "name": "guide_object_id",
@@ -191,14 +196,16 @@
                         "width": "25",
                         "class": "",
                         "id": ""
-                    }
+                    },
+                    "default_value": "",
+                    "min": 1,
+                    "max": 999,
+                    "step": 1,
+                    "placeholder": "",
+                    "prepend": "#",
+                    "append": ""
                 },
                 {
-                    "tabs": "all",
-                    "toolbar": "basic",
-                    "media_upload": 1,
-                    "default_value": "",
-                    "delay": 0,
                     "key": "field_5899aae338d3e",
                     "label": "Object description",
                     "name": "guide_object_description",
@@ -210,11 +217,14 @@
                         "width": "",
                         "class": "",
                         "id": ""
-                    }
+                    },
+                    "tabs": "all",
+                    "toolbar": "basic",
+                    "media_upload": 1,
+                    "default_value": "",
+                    "delay": 0
                 },
                 {
-                    "placement": "top",
-                    "endpoint": 0,
                     "key": "field_589db05816e52",
                     "label": "Media",
                     "name": "",
@@ -226,20 +236,11 @@
                         "width": "",
                         "class": "",
                         "id": ""
-                    }
+                    },
+                    "placement": "top",
+                    "endpoint": 0
                 },
                 {
-                    "library": "all",
-                    "min": "",
-                    "max": 10,
-                    "min_width": "",
-                    "min_height": "",
-                    "min_size": "",
-                    "max_width": "",
-                    "max_height": "",
-                    "max_size": "",
-                    "mime_types": "jpg,jpeg,png",
-                    "insert": "append",
                     "key": "field_5899ab0338d3f",
                     "label": "Object image",
                     "name": "guide_object_image",
@@ -251,14 +252,20 @@
                         "width": "100",
                         "class": "",
                         "id": ""
-                    }
+                    },
+                    "library": "all",
+                    "min": "",
+                    "max": 10,
+                    "min_width": "",
+                    "min_height": "",
+                    "min_size": "",
+                    "max_width": "",
+                    "max_height": "",
+                    "max_size": "",
+                    "mime_types": "jpg,jpeg,png",
+                    "insert": "append"
                 },
                 {
-                    "return_format": "array",
-                    "library": "uploadedTo",
-                    "min_size": "",
-                    "max_size": 50,
-                    "mime_types": "m4a,aac,mp3",
                     "key": "field_5899ab2c38d40",
                     "label": "Object audio",
                     "name": "guide_object_audio",
@@ -270,14 +277,14 @@
                         "width": "50",
                         "class": "",
                         "id": ""
-                    }
-                },
-                {
+                    },
                     "return_format": "array",
                     "library": "uploadedTo",
                     "min_size": "",
                     "max_size": 50,
-                    "mime_types": "mp4",
+                    "mime_types": "m4a,aac,mp3"
+                },
+                {
                     "key": "field_5899ac03acc12",
                     "label": "Object video",
                     "name": "guide_object_video",
@@ -289,11 +296,14 @@
                         "width": "50",
                         "class": "",
                         "id": ""
-                    }
+                    },
+                    "return_format": "array",
+                    "library": "uploadedTo",
+                    "min_size": "",
+                    "max_size": 50,
+                    "mime_types": "mp4"
                 },
                 {
-                    "placement": "top",
-                    "endpoint": 0,
                     "key": "field_589db08d16e53",
                     "label": "L\u00e4nkar",
                     "name": "",
@@ -305,51 +315,11 @@
                         "width": "",
                         "class": "",
                         "id": ""
-                    }
+                    },
+                    "placement": "top",
+                    "endpoint": 0
                 },
                 {
-                    "sub_fields": [
-                        {
-                            "default_value": "",
-                            "maxlength": "",
-                            "placeholder": "",
-                            "prepend": "",
-                            "append": "",
-                            "key": "field_5899e5e1a583d",
-                            "label": "Linkname",
-                            "name": "guide_object_link_title",
-                            "type": "text",
-                            "instructions": "",
-                            "required": 0,
-                            "conditional_logic": 0,
-                            "wrapper": {
-                                "width": "50",
-                                "class": "",
-                                "id": ""
-                            }
-                        },
-                        {
-                            "default_value": "",
-                            "placeholder": "",
-                            "key": "field_5899e64fa583e",
-                            "label": "Web adress",
-                            "name": "guide_object_link_url",
-                            "type": "url",
-                            "instructions": "",
-                            "required": 0,
-                            "conditional_logic": 0,
-                            "wrapper": {
-                                "width": "50",
-                                "class": "",
-                                "id": ""
-                            }
-                        }
-                    ],
-                    "min": 0,
-                    "max": 20,
-                    "layout": "block",
-                    "button_label": "Add new link",
-                    "collapsed": "field_5899e5e1a583d",
                     "key": "field_5899e5c8a583c",
                     "label": "Links & Resources",
                     "name": "guide_object_links",
@@ -361,11 +331,51 @@
                         "width": "",
                         "class": "secondary-panel",
                         "id": ""
-                    }
+                    },
+                    "sub_fields": [
+                        {
+                            "key": "field_5899e5e1a583d",
+                            "label": "Linkname",
+                            "name": "guide_object_link_title",
+                            "type": "text",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "50",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": "",
+                            "maxlength": "",
+                            "placeholder": "",
+                            "prepend": "",
+                            "append": ""
+                        },
+                        {
+                            "key": "field_5899e64fa583e",
+                            "label": "Web adress",
+                            "name": "guide_object_link_url",
+                            "type": "url",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "50",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": "",
+                            "placeholder": ""
+                        }
+                    ],
+                    "min": 0,
+                    "max": 20,
+                    "layout": "block",
+                    "button_label": "Add new link",
+                    "collapsed": "field_5899e5e1a583d"
                 },
                 {
-                    "placement": "top",
-                    "endpoint": 0,
                     "key": "field_589db114078de",
                     "label": "Beacons",
                     "name": "",
@@ -385,14 +395,11 @@
                         "width": "",
                         "class": "",
                         "id": ""
-                    }
+                    },
+                    "placement": "top",
+                    "endpoint": 0
                 },
                 {
-                    "default_value": "",
-                    "maxlength": "",
-                    "placeholder": "",
-                    "prepend": "",
-                    "append": "",
                     "key": "field_589db29081803",
                     "label": "Object beacon ID",
                     "name": "guide_object_beacon_id",
@@ -412,16 +419,14 @@
                         "width": "60",
                         "class": "",
                         "id": ""
-                    }
-                },
-                {
-                    "default_value": 5,
-                    "min": 1,
-                    "max": 70,
-                    "step": 1,
+                    },
+                    "default_value": "",
+                    "maxlength": "",
                     "placeholder": "",
                     "prepend": "",
-                    "append": "meters",
+                    "append": ""
+                },
+                {
                     "key": "field_589dc6da3611c",
                     "label": "Beacon trigger distance",
                     "name": "guide_object_beacon_distance",
@@ -441,11 +446,16 @@
                         "width": "40",
                         "class": "",
                         "id": ""
-                    }
+                    },
+                    "default_value": 5,
+                    "min": 1,
+                    "max": 70,
+                    "step": 1,
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "meters"
                 },
                 {
-                    "placement": "top",
-                    "endpoint": 0,
                     "key": "field_58a5c081f4193",
                     "label": "Visibility",
                     "name": "",
@@ -457,14 +467,11 @@
                         "width": "",
                         "class": "",
                         "id": ""
-                    }
+                    },
+                    "placement": "top",
+                    "endpoint": 0
                 },
                 {
-                    "default_value": 0,
-                    "message": "Yes, show this object",
-                    "ui": 0,
-                    "ui_on_text": "Show",
-                    "ui_off_text": "Hide",
                     "key": "field_58a5c098f4194",
                     "label": "Object visibility",
                     "name": "guide_object_active",
@@ -476,7 +483,12 @@
                         "width": "",
                         "class": "",
                         "id": ""
-                    }
+                    },
+                    "default_value": 0,
+                    "message": "Yes, show this object",
+                    "ui": 0,
+                    "ui_on_text": "Show",
+                    "ui_off_text": "Hide"
                 },
                 {
                     "key": "field_58ad84a12d5ac",
@@ -497,23 +509,9 @@
             "max": 500,
             "layout": "block",
             "button_label": "Add new object",
-            "collapsed": "field_5899aab938d3d",
-            "key": "field_5899cc4b59d94",
-            "label": "Content (paintings, art, flowers etc.)",
-            "name": "guide_content_objects",
-            "type": "repeater",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            }
+            "collapsed": "field_5899aab938d3d"
         },
         {
-            "placement": "top",
-            "endpoint": 0,
             "key": "field_58ab0c6354b09",
             "label": "Beacons",
             "name": "",
@@ -525,14 +523,11 @@
                 "width": "",
                 "class": "",
                 "id": ""
-            }
+            },
+            "placement": "top",
+            "endpoint": 0
         },
         {
-            "default_value": "",
-            "maxlength": "",
-            "placeholder": "",
-            "prepend": "",
-            "append": "",
             "key": "field_58ac5c65cdffe",
             "label": "Beacon namespace",
             "name": "guide_beacon_namespace",
@@ -544,100 +539,14 @@
                 "width": "",
                 "class": "",
                 "id": ""
-            }
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
         },
         {
-            "sub_fields": [
-                {
-                    "post_type": [
-                        "location"
-                    ],
-                    "taxonomy": [],
-                    "allow_null": 0,
-                    "multiple": 0,
-                    "return_format": "id",
-                    "ui": 1,
-                    "key": "field_58ab0c9554b0a",
-                    "label": "Plats",
-                    "name": "location",
-                    "type": "post_object",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "37",
-                        "class": "",
-                        "id": ""
-                    }
-                },
-                {
-                    "multiple": 1,
-                    "allow_null": 0,
-                    "choices": [],
-                    "default_value": [],
-                    "ui": 1,
-                    "ajax": 1,
-                    "placeholder": "",
-                    "return_format": "value",
-                    "key": "field_58ab0cf054b0b",
-                    "label": "Objects",
-                    "name": "objects",
-                    "type": "select",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "20",
-                        "class": "",
-                        "id": ""
-                    }
-                },
-                {
-                    "default_value": "",
-                    "maxlength": "",
-                    "placeholder": "",
-                    "prepend": "",
-                    "append": "",
-                    "key": "field_58ac54a64bb06",
-                    "label": "Beacon ID",
-                    "name": "beacon",
-                    "type": "text",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "20",
-                        "class": "",
-                        "id": ""
-                    }
-                },
-                {
-                    "default_value": 5,
-                    "min": 1,
-                    "max": 50,
-                    "step": 1,
-                    "placeholder": "",
-                    "prepend": "",
-                    "append": "meters",
-                    "key": "field_58d4e9dcfd6e8",
-                    "label": "Beacon distance",
-                    "name": "distance",
-                    "type": "number",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "20",
-                        "class": "",
-                        "id": ""
-                    }
-                }
-            ],
-            "min": 0,
-            "max": 0,
-            "layout": "table",
-            "button_label": "L\u00e4gg till grupp",
-            "collapsed": "field_58ab0cf054b0b",
             "key": "field_58ab0b4454b08",
             "label": "Beacon groups",
             "name": "guide_beacon",
@@ -649,7 +558,98 @@
                 "width": "",
                 "class": "",
                 "id": ""
-            }
+            },
+            "sub_fields": [
+                {
+                    "key": "field_58ab0c9554b0a",
+                    "label": "Plats",
+                    "name": "location",
+                    "type": "post_object",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "37",
+                        "class": "",
+                        "id": ""
+                    },
+                    "post_type": [
+                        "location"
+                    ],
+                    "taxonomy": [],
+                    "allow_null": 0,
+                    "multiple": 0,
+                    "return_format": "id",
+                    "ui": 1
+                },
+                {
+                    "key": "field_58ab0cf054b0b",
+                    "label": "Objects",
+                    "name": "objects",
+                    "type": "select",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "20",
+                        "class": "",
+                        "id": ""
+                    },
+                    "multiple": 1,
+                    "allow_null": 0,
+                    "choices": [],
+                    "default_value": [],
+                    "ui": 1,
+                    "ajax": 1,
+                    "placeholder": "",
+                    "return_format": "value"
+                },
+                {
+                    "key": "field_58ac54a64bb06",
+                    "label": "Beacon ID",
+                    "name": "beacon",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "20",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": ""
+                },
+                {
+                    "key": "field_58d4e9dcfd6e8",
+                    "label": "Beacon distance",
+                    "name": "distance",
+                    "type": "number",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "20",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": 5,
+                    "min": 1,
+                    "max": 50,
+                    "step": 1,
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "meters"
+                }
+            ],
+            "min": 0,
+            "max": 0,
+            "layout": "table",
+            "button_label": "L\u00e4gg till grupp",
+            "collapsed": "field_58ab0cf054b0b"
         }
     ],
     "location": [
@@ -670,3 +670,4 @@
     "active": 1,
     "description": "Manage main guide object details."
 }]
+
