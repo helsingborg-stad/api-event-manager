@@ -104,23 +104,6 @@
             'return_format' => 'object',
             'multiple' => 0,
         ),
-        4 => array(
-            'key' => 'field_5a28020b09d68',
-            'label' => __('About', 'event-manager'),
-            'name' => '',
-            'type' => 'message',
-            'instructions' => '',
-            'required' => 0,
-            'conditional_logic' => 0,
-            'wrapper' => array(
-                'width' => '',
-                'class' => '',
-                'id' => '',
-            ),
-            'message' => __('<span style="color: #ff0000;">There are not need to add the navigation alternative "all" due to the fact that this item is a combination of all other navigation items. This item will automatically be created. </span>', 'event-manager'),
-            'new_lines' => '',
-            'esc_html' => 0,
-        ),
     ),
     'location' => array(
         0 => array(
