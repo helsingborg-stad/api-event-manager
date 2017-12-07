@@ -6,45 +6,13 @@
     'title' => __('Include in category', 'event-manager'),
     'fields' => array(
         0 => array(
-            'key' => 'field_5a27fe465a89c',
-            'label' => __('Type of data in category', 'event-manager'),
-            'name' => 'type_of_data',
-            'type' => 'radio',
-            'instructions' => '',
-            'required' => 0,
-            'conditional_logic' => 0,
-            'wrapper' => array(
-                'width' => '',
-                'class' => '',
-                'id' => '',
-            ),
-            'choices' => array(
-                'organisation' => __('Organisation', 'event-manager'),
-                'trail' => __('Trails', 'event-manager'),
-            ),
-            'allow_null' => 0,
-            'other_choice' => 0,
-            'save_other_choice' => 0,
-            'default_value' => 'organisation',
-            'layout' => 'horizontal',
-            'return_format' => 'value',
-        ),
-        1 => array(
             'key' => 'field_5a27f6ab57d2f',
             'label' => __('Include these items (posts)', 'event-manager'),
             'name' => 'included_posts',
             'type' => 'post_object',
             'instructions' => '',
             'required' => 0,
-            'conditional_logic' => array(
-                0 => array(
-                    0 => array(
-                        'field' => 'field_5a27fe465a89c',
-                        'operator' => '==',
-                        'value' => 'trail',
-                    ),
-                ),
-            ),
+            'conditional_logic' => 0,
             'wrapper' => array(
                 'width' => '',
                 'class' => '',
@@ -60,22 +28,14 @@
             'return_format' => 'object',
             'ui' => 1,
         ),
-        2 => array(
+        1 => array(
             'key' => 'field_5a27fed65a89d',
             'label' => __('Include these items (taxonomy)', 'event-manager'),
             'name' => 'included_taxonomys',
             'type' => 'taxonomy',
             'instructions' => '',
             'required' => 0,
-            'conditional_logic' => array(
-                0 => array(
-                    0 => array(
-                        'field' => 'field_5a27fe465a89c',
-                        'operator' => '==',
-                        'value' => 'organisation',
-                    ),
-                ),
-            ),
+            'conditional_logic' => 0,
             'wrapper' => array(
                 'width' => '',
                 'class' => '',
@@ -90,7 +50,7 @@
             'return_format' => 'object',
             'multiple' => 0,
         ),
-        3 => array(
+        2 => array(
             'key' => 'field_5a28020b09d68',
             'label' => __('About', 'event-manager'),
             'name' => '',

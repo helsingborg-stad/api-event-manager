@@ -3,45 +3,13 @@
     "title": "Include in category",
     "fields": [
         {
-            "key": "field_5a27fe465a89c",
-            "label": "Type of data in category",
-            "name": "type_of_data",
-            "type": "radio",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "choices": {
-                "organisation": "Organisation",
-                "trail": "Trails"
-            },
-            "allow_null": 0,
-            "other_choice": 0,
-            "save_other_choice": 0,
-            "default_value": "organisation",
-            "layout": "horizontal",
-            "return_format": "value"
-        },
-        {
             "key": "field_5a27f6ab57d2f",
             "label": "Include these items (posts)",
             "name": "included_posts",
             "type": "post_object",
             "instructions": "",
             "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_5a27fe465a89c",
-                        "operator": "==",
-                        "value": "trail"
-                    }
-                ]
-            ],
+            "conditional_logic": 0,
             "wrapper": {
                 "width": "",
                 "class": "",
@@ -63,15 +31,7 @@
             "type": "taxonomy",
             "instructions": "",
             "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_5a27fe465a89c",
-                        "operator": "==",
-                        "value": "organisation"
-                    }
-                ]
-            ],
+            "conditional_logic": 0,
             "wrapper": {
                 "width": "",
                 "class": "",

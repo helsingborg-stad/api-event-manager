@@ -32,6 +32,10 @@ class Linking extends Fields
         add_filter('rest_prepare_package', array($this, 'addEmbedLink'), 20, 3);
 
         add_filter('rest_prepare_guidegroup', array($this, 'addGuideLocation'), 20, 3); //Taxonomy locations
+
+        add_filter('rest_prepare_navigation', array($this, 'addGuideNavigationPostRelations'), 20, 3); //Taxonomy -> post locations
+        add_filter('rest_prepare_navigation', array($this, 'addGuideNavigationTaxonomyRelations'), 20, 3); //Taxonomy -> post locations
+
         add_filter('rest_prepare_guide', array($this, 'addGuideMainLocation'), 20, 3); //Guide locations
         add_filter('rest_prepare_guide', array($this, 'addGuideSubLocation'), 20, 3); //Beacon locations
         add_filter('rest_prepare_guide', array($this, 'addEmbedLink'), 20, 3);
@@ -197,6 +201,58 @@ class Linking extends Fields
                 $response->add_link('events_included', rest_url('/wp/v2/event/' . $item), array( 'embeddable' => true ));
             }
         }
+        return $response;
+    }
+
+    /**
+     * Register link to connected guides, embeddable
+     * @return  object
+     */
+    public function addGuideNavigationPostRelations($response, $taxonomy, $request)
+    {
+        $related = get_field('included_posts', $taxonomy->taxonomy. '_' . $taxonomy->term_id);
+
+        if (!is_null($related) && is_array($related) && !empty($related)) {
+            foreach ($related as $relation) {
+
+                if (!isset($relation->ID)) {
+                    continue;
+                }
+
+                $response->add_link(
+                    'guide',
+                    rest_url('/wp/v2/guide/' . $relation->ID),
+                    array( 'embeddable' => true )
+                );
+            }
+        }
+
+        return $response;
+    }
+
+    /**
+     * Register link to connected organisations, embeddable
+     * @return  object
+     */
+    public function addGuideNavigationTaxonomyRelations($response, $taxonomy, $request)
+    {
+        $related = get_field('included_taxonomys', $taxonomy->taxonomy. '_' . $taxonomy->term_id);
+
+        if (!is_null($related) && is_array($related) && !empty($related)) {
+            foreach ($related as $relation) {
+
+                if (!isset($relation->term_id)) {
+                    continue;
+                }
+
+                $response->add_link(
+                    'guidegroup',
+                    rest_url('/wp/v2/guidegroup/' . $relation->term_id),
+                    array( 'embeddable' => true )
+                );
+            }
+        }
+
         return $response;
     }
 

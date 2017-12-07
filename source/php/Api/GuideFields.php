@@ -210,7 +210,7 @@ class GuideFields extends Fields
             array(
                 'get_callback' => array($this, 'postBeacon'),
                 'schema' => array(
-                    'description' => 'Objects of this guide.',
+                    'description' => 'Depricated: Objects of this guide.',
                     'type' => 'object',
                     'context' => array('view', 'embed')
                 )
@@ -263,7 +263,7 @@ class GuideFields extends Fields
             array(
                 'get_callback' => array($this, 'postObjects'),
                 'schema' => array(
-                    'description' => 'Objects of this guide.',
+                    'description' => 'Depricated: Objects of this guide.',
                     'type' => 'object',
                     'context' => array('view', 'embed')
                 )
@@ -288,7 +288,7 @@ class GuideFields extends Fields
             array(
                 'get_callback' => array($this, 'subAttractionBeacons'),
                 'schema' => array(
-                    'description' => 'Describes the guides colors, logo, moodimage and main location.',
+                    'description' => 'Depricated: Describes the guides colors, logo, moodimage and main location.',
                     'type' => 'object',
                     'context' => array('view', 'embed')
                 )
@@ -313,7 +313,7 @@ class GuideFields extends Fields
             array(
                 'get_callback' => array($this, 'orphanPostObjects'),
                 'schema' => array(
-                    'description' => 'Objects of this guide.',
+                    'description' => 'Depricated: Objects of this guide.',
                     'type' => 'object',
                     'context' => array('view', 'embed')
                 )
