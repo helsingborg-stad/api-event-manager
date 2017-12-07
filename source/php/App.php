@@ -68,6 +68,7 @@ class App
         new Taxonomy\LocationCategories();
         new Taxonomy\GuideCategories();
         new Taxonomy\GuideNavigation();
+        new Taxonomy\GuideType(); //DEPRICATED
 
         new Admin\Options();
         new Admin\UI();
