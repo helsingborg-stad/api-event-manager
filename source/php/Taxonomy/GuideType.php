@@ -9,6 +9,7 @@ class GuideType
     public function __construct()
     {
         add_action('init', array($this, 'registerTaxonomy'));
+        add_action('admin_menu', array($this, 'unregisterMetaBox'));
     }
 
     public function registerTaxonomy()
@@ -52,5 +53,10 @@ class GuideType
         );
 
         register_taxonomy('guidetype', array('guide'), $args);
+    }
+
+    public function unregisterMetaBox()
+    {
+        remove_meta_box('tagsdiv-guidetype', 'guide', 'side');
     }
 }
