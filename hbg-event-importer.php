@@ -67,6 +67,7 @@ $acfExportManager->autoExport(array(
     'xcap' => 'group_56af507bbd485',
     'organizer' => 'group_591eefa30b5fa',
     'membership-card' => 'group_593938d452989',
+    'point-property' => 'group_5a2958bfd292c',
 ));
 $acfExportManager->import();
 

@@ -69,6 +69,7 @@ class App
         new Taxonomy\GuideCategories();
         new Taxonomy\GuideNavigation();
         new Taxonomy\GuideType(); //DEPRICATED
+        new Taxonomy\PointProperty();
 
         new Admin\Options();
         new Admin\UI();
