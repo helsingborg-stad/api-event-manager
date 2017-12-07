@@ -1,0 +1,51 @@
+[{
+    "key": "group_5a2940e03054a",
+    "title": "Type of guide",
+    "fields": [
+        {
+            "key": "field_5a2940e52d4c8",
+            "label": "Select content type",
+            "name": "content_type",
+            "type": "select",
+            "instructions": "Select trail for wider areas or guide for more narrow areas.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "guide": "Guide",
+                "trail": "Trail"
+            },
+            "default_value": [
+                "guide"
+            ],
+            "allow_null": 0,
+            "multiple": 0,
+            "ui": 0,
+            "ajax": 0,
+            "return_format": "value",
+            "placeholder": ""
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "guide"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "side",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": 1,
+    "description": ""
+}]
+
