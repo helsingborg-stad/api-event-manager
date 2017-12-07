@@ -45,7 +45,7 @@
             'label' => __('Date start', 'event-manager'),
             'name' => 'guide_date_start',
             'type' => 'date_picker',
-            'instructions' => '',
+            'instructions' => __('This field is strictly informative', 'event-manager'),
             'required' => 0,
             'conditional_logic' => 0,
             'wrapper' => array(
@@ -62,7 +62,7 @@
             'label' => __('Date end', 'event-manager'),
             'name' => 'guide_date_end',
             'type' => 'date_picker',
-            'instructions' => '',
+            'instructions' => __('This field is strictly informative', 'event-manager'),
             'required' => 0,
             'conditional_logic' => 0,
             'wrapper' => array(

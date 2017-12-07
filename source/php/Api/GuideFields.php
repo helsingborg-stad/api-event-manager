@@ -153,6 +153,36 @@ class GuideFields extends Fields
             )
         );
 
+        // Add a tagline datafield
+        register_rest_field($this->postType,
+            'guide_tagline',
+            array(
+                'get_callback'    => array($this, 'stringGetCallBack'),
+                'update_callback' => null,
+                'schema'          => null,
+            )
+        );
+
+        // When does the guide start?
+        register_rest_field($this->postType,
+            'guide_date_start',
+            array(
+                'get_callback'    => array($this, 'stringGetCallBack'),
+                'update_callback' => null,
+                'schema'          => null,
+            )
+        );
+
+        // When does the guide end?
+        register_rest_field($this->postType,
+            'guide_date_end',
+            array(
+                'get_callback'    => array($this, 'stringGetCallBack'),
+                'update_callback' => null,
+                'schema'          => null,
+            )
+        );
+
         // Title as plain text
         register_rest_field($this->postType,
             'title',

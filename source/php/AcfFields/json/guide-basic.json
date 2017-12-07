@@ -42,7 +42,7 @@
             "label": "Date start",
             "name": "guide_date_start",
             "type": "date_picker",
-            "instructions": "",
+            "instructions": "This field is strictly informative",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -59,7 +59,7 @@
             "label": "Date end",
             "name": "guide_date_end",
             "type": "date_picker",
-            "instructions": "",
+            "instructions": "This field is strictly informative",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
