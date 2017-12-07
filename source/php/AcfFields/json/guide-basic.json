@@ -19,8 +19,61 @@
             "endpoint": 0
         },
         {
+            "key": "field_5a2946555fd0e",
+            "label": "Guide tagline",
+            "name": "guide_tagline",
+            "type": "text",
+            "instructions": "Short tagline that descibes what this is about",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "E.g: Swedish contemporary glassware",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_5a2946e05fd0f",
+            "label": "Date start",
+            "name": "guide_date_start",
+            "type": "date_picker",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "display_format": "Y-m-d",
+            "return_format": "Y-m-d",
+            "first_day": 1
+        },
+        {
+            "key": "field_5a2947095fd10",
+            "label": "Date end",
+            "name": "guide_date_end",
+            "type": "date_picker",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "display_format": "Y-m-d",
+            "return_format": "Y-m-d",
+            "first_day": 1
+        },
+        {
             "key": "field_58949813a052c",
-            "label": "Beskrivning",
+            "label": "Description",
             "name": "guide_description",
             "type": "wysiwyg",
             "instructions": "",
@@ -31,10 +84,10 @@
                 "class": "",
                 "id": ""
             },
+            "default_value": "",
             "tabs": "all",
             "toolbar": "basic",
             "media_upload": 0,
-            "default_value": "",
             "delay": 0
         },
         {
@@ -148,6 +201,11 @@
                 "class": "",
                 "id": ""
             },
+            "min": 0,
+            "max": 500,
+            "layout": "block",
+            "button_label": "Add new object",
+            "collapsed": "field_5899aab938d3d",
             "sub_fields": [
                 {
                     "key": "field_589db03e16e51",
@@ -332,6 +390,11 @@
                         "class": "secondary-panel",
                         "id": ""
                     },
+                    "min": 0,
+                    "max": 20,
+                    "layout": "block",
+                    "button_label": "Add new link",
+                    "collapsed": "field_5899e5e1a583d",
                     "sub_fields": [
                         {
                             "key": "field_5899e5e1a583d",
@@ -368,12 +431,7 @@
                             "default_value": "",
                             "placeholder": ""
                         }
-                    ],
-                    "min": 0,
-                    "max": 20,
-                    "layout": "block",
-                    "button_label": "Add new link",
-                    "collapsed": "field_5899e5e1a583d"
+                    ]
                 },
                 {
                     "key": "field_589db114078de",
@@ -504,12 +562,7 @@
                         "id": ""
                     }
                 }
-            ],
-            "min": 0,
-            "max": 500,
-            "layout": "block",
-            "button_label": "Add new object",
-            "collapsed": "field_5899aab938d3d"
+            ]
         },
         {
             "key": "field_58ab0c6354b09",
@@ -559,6 +612,11 @@
                 "class": "",
                 "id": ""
             },
+            "min": 0,
+            "max": 0,
+            "layout": "table",
+            "button_label": "L\u00e4gg till grupp",
+            "collapsed": "field_58ab0cf054b0b",
             "sub_fields": [
                 {
                     "key": "field_58ab0c9554b0a",
@@ -644,12 +702,7 @@
                     "prepend": "",
                     "append": "meters"
                 }
-            ],
-            "min": 0,
-            "max": 0,
-            "layout": "table",
-            "button_label": "L\u00e4gg till grupp",
-            "collapsed": "field_58ab0cf054b0b"
+            ]
         }
     ],
     "location": [

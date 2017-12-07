@@ -22,8 +22,61 @@
             'endpoint' => 0,
         ),
         1 => array(
+            'key' => 'field_5a2946555fd0e',
+            'label' => __('Guide tagline', 'event-manager'),
+            'name' => 'guide_tagline',
+            'type' => 'text',
+            'instructions' => __('Short tagline that descibes what this is about', 'event-manager'),
+            'required' => 0,
+            'conditional_logic' => 0,
+            'wrapper' => array(
+                'width' => '',
+                'class' => '',
+                'id' => '',
+            ),
+            'default_value' => '',
+            'placeholder' => __('E.g: Swedish contemporary glassware', 'event-manager'),
+            'prepend' => '',
+            'append' => '',
+            'maxlength' => '',
+        ),
+        2 => array(
+            'key' => 'field_5a2946e05fd0f',
+            'label' => __('Date start', 'event-manager'),
+            'name' => 'guide_date_start',
+            'type' => 'date_picker',
+            'instructions' => '',
+            'required' => 0,
+            'conditional_logic' => 0,
+            'wrapper' => array(
+                'width' => '50',
+                'class' => '',
+                'id' => '',
+            ),
+            'display_format' => 'Y-m-d',
+            'return_format' => 'Y-m-d',
+            'first_day' => 1,
+        ),
+        3 => array(
+            'key' => 'field_5a2947095fd10',
+            'label' => __('Date end', 'event-manager'),
+            'name' => 'guide_date_end',
+            'type' => 'date_picker',
+            'instructions' => '',
+            'required' => 0,
+            'conditional_logic' => 0,
+            'wrapper' => array(
+                'width' => '50',
+                'class' => '',
+                'id' => '',
+            ),
+            'display_format' => 'Y-m-d',
+            'return_format' => 'Y-m-d',
+            'first_day' => 1,
+        ),
+        4 => array(
             'key' => 'field_58949813a052c',
-            'label' => __('Beskrivning', 'event-manager'),
+            'label' => __('Description', 'event-manager'),
             'name' => 'guide_description',
             'type' => 'wysiwyg',
             'instructions' => '',
@@ -34,13 +87,13 @@
                 'class' => '',
                 'id' => '',
             ),
+            'default_value' => '',
             'tabs' => 'all',
             'toolbar' => 'basic',
             'media_upload' => 0,
-            'default_value' => '',
             'delay' => 0,
         ),
-        2 => array(
+        5 => array(
             'key' => 'field_58cbfb6e8d677',
             'label' => __('Location', 'event-manager'),
             'name' => 'guide_location',
@@ -63,7 +116,7 @@
             'return_format' => 'id',
             'ui' => 1,
         ),
-        3 => array(
+        6 => array(
             'key' => 'field_58d4e9a227c41',
             'label' => __('For kids', 'event-manager'),
             'name' => 'guide_kids',
@@ -82,7 +135,7 @@
             'ui_on_text' => '',
             'ui_off_text' => '',
         ),
-        4 => array(
+        7 => array(
             'key' => 'field_5894987dfc7b1',
             'label' => __('Images (guide)', 'event-manager'),
             'name' => '',
@@ -98,7 +151,7 @@
             'placement' => 'left',
             'endpoint' => 0,
         ),
-        5 => array(
+        8 => array(
             'key' => 'field_589dc93cde2d7',
             'label' => __('Guide images', 'event-manager'),
             'name' => 'guide_images',
@@ -123,7 +176,7 @@
             'mime_types' => 'jpg,jpeg,png',
             'insert' => 'append',
         ),
-        6 => array(
+        9 => array(
             'key' => 'field_5899a94bff0ec',
             'label' => __('Content objects', 'event-manager'),
             'name' => '',
@@ -139,7 +192,7 @@
             'placement' => 'top',
             'endpoint' => 0,
         ),
-        7 => array(
+        10 => array(
             'key' => 'field_5899cc4b59d94',
             'label' => __('Content (paintings, art, flowers etc.)', 'event-manager'),
             'name' => 'guide_content_objects',
@@ -152,6 +205,11 @@
                 'class' => '',
                 'id' => '',
             ),
+            'min' => 0,
+            'max' => 500,
+            'layout' => 'block',
+            'button_label' => __('Add new object', 'event-manager'),
+            'collapsed' => 'field_5899aab938d3d',
             'sub_fields' => array(
                 0 => array(
                     'key' => 'field_589db03e16e51',
@@ -336,6 +394,11 @@
                         'class' => 'secondary-panel',
                         'id' => '',
                     ),
+                    'min' => 0,
+                    'max' => 20,
+                    'layout' => 'block',
+                    'button_label' => __('Add new link', 'event-manager'),
+                    'collapsed' => 'field_5899e5e1a583d',
                     'sub_fields' => array(
                         0 => array(
                             'key' => 'field_5899e5e1a583d',
@@ -373,11 +436,6 @@
                             'placeholder' => '',
                         ),
                     ),
-                    'min' => 0,
-                    'max' => 20,
-                    'layout' => 'block',
-                    'button_label' => __('Add new link', 'event-manager'),
-                    'collapsed' => 'field_5899e5e1a583d',
                 ),
                 10 => array(
                     'key' => 'field_589db114078de',
@@ -509,13 +567,8 @@
                     ),
                 ),
             ),
-            'min' => 0,
-            'max' => 500,
-            'layout' => 'block',
-            'button_label' => __('Add new object', 'event-manager'),
-            'collapsed' => 'field_5899aab938d3d',
         ),
-        8 => array(
+        11 => array(
             'key' => 'field_58ab0c6354b09',
             'label' => __('Beacons', 'event-manager'),
             'name' => '',
@@ -531,7 +584,7 @@
             'placement' => 'top',
             'endpoint' => 0,
         ),
-        9 => array(
+        12 => array(
             'key' => 'field_58ac5c65cdffe',
             'label' => __('Beacon namespace', 'event-manager'),
             'name' => 'guide_beacon_namespace',
@@ -550,7 +603,7 @@
             'prepend' => '',
             'append' => '',
         ),
-        10 => array(
+        13 => array(
             'key' => 'field_58ab0b4454b08',
             'label' => __('Beacon groups', 'event-manager'),
             'name' => 'guide_beacon',
@@ -563,6 +616,11 @@
                 'class' => '',
                 'id' => '',
             ),
+            'min' => 0,
+            'max' => 0,
+            'layout' => 'table',
+            'button_label' => __('Lägg till grupp', 'event-manager'),
+            'collapsed' => 'field_58ab0cf054b0b',
             'sub_fields' => array(
                 0 => array(
                     'key' => 'field_58ab0c9554b0a',
@@ -652,11 +710,6 @@
                     'append' => __('meters', 'event-manager'),
                 ),
             ),
-            'min' => 0,
-            'max' => 0,
-            'layout' => 'table',
-            'button_label' => __('Lägg till grupp', 'event-manager'),
-            'collapsed' => 'field_58ab0cf054b0b',
         ),
     ),
     'location' => array(
