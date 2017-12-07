@@ -6,13 +6,40 @@
     'title' => __('Include in category', 'event-manager'),
     'fields' => array(
         0 => array(
+            'key' => 'field_5a292d1f8d9ec',
+            'label' => __('Select specific items (posts)', 'event-manager'),
+            'name' => 'include_specific_posts',
+            'type' => 'true_false',
+            'instructions' => __('Set this option to "yes" if you want to include all guides', 'event-manager'),
+            'required' => 0,
+            'conditional_logic' => 0,
+            'wrapper' => array(
+                'width' => '',
+                'class' => '',
+                'id' => '',
+            ),
+            'message' => '',
+            'default_value' => 1,
+            'ui' => 1,
+            'ui_on_text' => '',
+            'ui_off_text' => '',
+        ),
+        1 => array(
             'key' => 'field_5a27f6ab57d2f',
             'label' => __('Include these items (posts)', 'event-manager'),
             'name' => 'included_posts',
             'type' => 'post_object',
             'instructions' => '',
             'required' => 0,
-            'conditional_logic' => 0,
+            'conditional_logic' => array(
+                0 => array(
+                    0 => array(
+                        'field' => 'field_5a292d1f8d9ec',
+                        'operator' => '==',
+                        'value' => '1',
+                    ),
+                ),
+            ),
             'wrapper' => array(
                 'width' => '',
                 'class' => '',
@@ -28,14 +55,41 @@
             'return_format' => 'object',
             'ui' => 1,
         ),
-        1 => array(
+        2 => array(
+            'key' => 'field_5a292cbd8d9eb',
+            'label' => __('Select specific items (taxonomy)', 'event-manager'),
+            'name' => 'include_specific_taxonomys',
+            'type' => 'true_false',
+            'instructions' => __('Set this option to "yes" if you want to include all organisations', 'event-manager'),
+            'required' => 0,
+            'conditional_logic' => 0,
+            'wrapper' => array(
+                'width' => '',
+                'class' => '',
+                'id' => '',
+            ),
+            'message' => '',
+            'default_value' => 1,
+            'ui' => 1,
+            'ui_on_text' => '',
+            'ui_off_text' => '',
+        ),
+        3 => array(
             'key' => 'field_5a27fed65a89d',
             'label' => __('Include these items (taxonomy)', 'event-manager'),
             'name' => 'included_taxonomys',
             'type' => 'taxonomy',
             'instructions' => '',
             'required' => 0,
-            'conditional_logic' => 0,
+            'conditional_logic' => array(
+                0 => array(
+                    0 => array(
+                        'field' => 'field_5a292cbd8d9eb',
+                        'operator' => '==',
+                        'value' => '1',
+                    ),
+                ),
+            ),
             'wrapper' => array(
                 'width' => '',
                 'class' => '',
@@ -50,7 +104,7 @@
             'return_format' => 'object',
             'multiple' => 0,
         ),
-        2 => array(
+        4 => array(
             'key' => 'field_5a28020b09d68',
             'label' => __('About', 'event-manager'),
             'name' => '',
