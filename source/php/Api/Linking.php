@@ -210,42 +210,20 @@ class Linking extends Fields
      */
     public function addGuideNavigationPostRelations($response, $taxonomy, $request)
     {
-        if (!get_field('include_specific_posts', $taxonomy->taxonomy. '_' . $taxonomy->term_id)) {
-            $posts = get_posts(array(
-                'post_type' => 'guide',
-                'posts_per_page' => -1,
-            ));
+        $navigtionFields = new NavigationFields();
+        $related = $navigtionFields->getGuideNavigationPostRelations($taxonomy);
 
-            if (!empty($posts) && is_array($posts)) {
-                foreach ($posts as $relation) {
-
-                    if (!isset($relation->ID)) {
-                        continue;
-                    }
-
-                    $response->add_link(
-                        'guide',
-                        rest_url('/wp/v2/guide/' . $relation->ID),
-                        array( 'embeddable' => true )
-                    );
+        if (!is_null($related) && is_array($related) && !empty($related)) {
+            foreach ($related as $relation) {
+                if (!is_numeric($relation)) {
+                    continue;
                 }
-            }
-        } else {
-            $related = get_field('included_posts', $taxonomy->taxonomy. '_' . $taxonomy->term_id);
 
-            if (!is_null($related) && is_array($related) && !empty($related)) {
-                foreach ($related as $relation) {
-
-                    if (!isset($relation->ID)) {
-                        continue;
-                    }
-
-                    $response->add_link(
-                        'guide',
-                        rest_url('/wp/v2/guide/' . $relation->ID),
-                        array( 'embeddable' => true )
-                    );
-                }
+                $response->add_link(
+                    'guide',
+                    rest_url('/wp/v2/guide/' . $relation),
+                    array( 'embeddable' => true )
+                );
             }
         }
 
@@ -258,33 +236,20 @@ class Linking extends Fields
      */
     public function addGuideNavigationTaxonomyRelations($response, $taxonomy, $request)
     {
-        if (!get_field('include_specific_taxonomys', $taxonomy->taxonomy. '_' . $taxonomy->term_id)) {
-            $terms = get_terms(array('taxonomy' => 'guidegroup'));
+        $navigtionFields = new NavigationFields();
+        $related = $navigtionFields->getGuideNavigationTaxonomyRelations($taxonomy);
 
-            if (!empty($terms) && is_array($terms)) {
-                foreach ($terms as $relation) {
-                    $response->add_link(
-                        'guidegroup',
-                        rest_url('/wp/v2/guidegroup/' . $relation->term_id),
-                        array( 'embeddable' => true )
-                    );
+        if (!is_null($related) && is_array($related) && !empty($related)) {
+            foreach ($related as $relation) {
+                if (!is_numeric($relation)) {
+                    continue;
                 }
-            }
-        } else {
-            $related = get_field('included_taxonomys', $taxonomy->taxonomy. '_' . $taxonomy->term_id);
 
-            if (!is_null($related) && is_array($related) && !empty($related)) {
-                foreach ($related as $relation) {
-                    if (!isset($relation->term_id)) {
-                        continue;
-                    }
-
-                    $response->add_link(
-                        'guidegroup',
-                        rest_url('/wp/v2/guidegroup/' . $relation->term_id),
-                        array( 'embeddable' => true )
-                    );
-                }
+                $response->add_link(
+                    'guidegroup',
+                    rest_url('/wp/v2/guidegroup/' . $relation),
+                    array( 'embeddable' => true )
+                );
             }
         }
 
