@@ -40,7 +40,7 @@ class NavigationFields extends Fields
     public function combineGuideOrganisation($object, $field_name, $request)
     {
 
-        $postRelations = $this->getGuideNavigationPostRelations($object);
+        $postRelations = $this->getGuideNavigationPostRelations((object) $object);
 
         if (!empty($postRelations) && is_array($postRelations)) {
             foreach ($postRelations as $postRelation) {
@@ -48,7 +48,7 @@ class NavigationFields extends Fields
             }
         }
 
-        $taxonomyRelations = $this->getGuideNavigationTaxonomyRelations($object);
+        $taxonomyRelations = $this->getGuideNavigationTaxonomyRelations((object) $object);
 
         if (!empty($taxonomyRelations) && is_array($taxonomyRelations)) {
             foreach ($taxonomyRelations as $taxonomyRelation) {
@@ -67,7 +67,7 @@ class NavigationFields extends Fields
     {
         $result = array();
 
-        if (!get_field('include_specific_posts', $taxonomy->taxonomy. '_' . $taxonomy->term_id)) {
+        if (!get_field('include_specific_posts', $taxonomy->taxonomy. '_' . $taxonomy->id)) {
             $posts = get_posts(array(
                 'post_type' => 'guide',
                 'posts_per_page' => -1,
@@ -83,7 +83,7 @@ class NavigationFields extends Fields
                 }
             }
         } else {
-            $related = get_field('included_posts', $taxonomy->taxonomy. '_' . $taxonomy->term_id);
+            $related = get_field('included_posts', $taxonomy->taxonomy. '_' . $taxonomy->id);
 
             if (!is_null($related) && is_array($related) && !empty($related)) {
                 foreach ($related as $relation) {
@@ -103,11 +103,11 @@ class NavigationFields extends Fields
      * Get connected organisations
      * @return array
      */
-    public function getGuideNavigationTaxonomyRelations()
+    public function getGuideNavigationTaxonomyRelations($taxonomy)
     {
         $result = array();
 
-        if (!get_field('include_specific_taxonomys', $taxonomy->taxonomy. '_' . $taxonomy->term_id)) {
+        if (!get_field('include_specific_taxonomys', $taxonomy->taxonomy. '_' . $taxonomy->id)) {
             $terms = get_terms(array('taxonomy' => 'guidegroup'));
 
             if (!empty($terms) && is_array($terms)) {
@@ -120,7 +120,7 @@ class NavigationFields extends Fields
                 }
             }
         } else {
-            $related = get_field('included_taxonomys', $taxonomy->taxonomy. '_' . $taxonomy->term_id);
+            $related = get_field('included_taxonomys', $taxonomy->taxonomy. '_' . $taxonomy->id);
 
             if (!is_null($related) && is_array($related) && !empty($related)) {
                 foreach ($related as $relation) {
