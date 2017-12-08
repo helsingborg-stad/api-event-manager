@@ -91,6 +91,7 @@ class App
         new Api\GuideFields();
         new Api\UserGroupFields();
         new Api\PointPropertyFields();
+        new Api\NavigationFields();
     }
 
     /**
