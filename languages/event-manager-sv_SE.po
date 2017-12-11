@@ -2,14 +2,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Event Manager\n"
 "POT-Creation-Date: 2017-08-24 14:13+0200\n"
-"PO-Revision-Date: 2017-08-24 14:14+0200\n"
+"PO-Revision-Date: 2017-12-11 11:29+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0.3\n"
+"X-Generator: Poedit 1.8.12\n"
 "X-Poedit-Basepath: .\n"
 "X-Poedit-WPHeader: hbg-event-importer.php\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -1176,7 +1176,7 @@ msgstr "För barn"
 
 #: source/php/AcfFields/php/guide-basic.php:89
 msgid "Images (guide)"
-msgstr ""
+msgstr "Bilder (guide)"
 
 #: source/php/AcfFields/php/guide-basic.php:114
 #: source/php/AcfFields/php/guide-settings.php:72
@@ -1411,7 +1411,7 @@ msgstr ""
 #: source/php/AcfFields/php/guide-group-notices.php:35
 #: source/php/AcfFields/php/guide-group-notices.php:96
 msgid "Delay"
-msgstr ""
+msgstr "Fördröjning"
 
 #: source/php/AcfFields/php/guide-group-notices.php:36
 #: source/php/AcfFields/php/guide-group-notices.php:97
@@ -1585,7 +1585,7 @@ msgstr ""
 
 #: source/php/AcfFields/php/location.php:405
 msgid "Url"
-msgstr ""
+msgstr "Webbadress"
 
 #: source/php/AcfFields/php/location.php:442
 msgid ""
@@ -1825,10 +1825,12 @@ msgstr ""
 #: source/php/Admin/UserRoles.php:44
 msgid "You don't have permissions to delete this user."
 msgstr ""
+"Du har inte tillräckliga rättigheter för att ta bort den här användaren."
 
 #: source/php/Admin/UserRoles.php:74
 msgid "You don't have permissions to edit this user."
 msgstr ""
+"Du har inte tillräckliga rättigheter för att redigera den här användaren."
 
 #: source/php/Admin/UserRoles.php:161
 msgid "Event administrator"
