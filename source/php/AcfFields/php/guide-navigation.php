@@ -21,8 +21,8 @@
             'message' => '',
             'default_value' => 1,
             'ui' => 1,
-            'ui_on_text' => __('Include all items', 'event-manager'),
-            'ui_off_text' => __('Select specific items', 'event-manager'),
+            'ui_on_text' => __('Select specific items', 'event-manager'),
+            'ui_off_text' => __('Include all items', 'event-manager'),
         ),
         1 => array(
             'key' => 'field_5a27f6ab57d2f',
@@ -71,8 +71,8 @@
             'message' => '',
             'default_value' => 1,
             'ui' => 1,
-            'ui_on_text' => __('Include all items', 'event-manager'),
-            'ui_off_text' => __('Select specific items', 'event-manager'),
+            'ui_on_text' => __('Select specific items', 'event-manager'),
+            'ui_off_text' => __('Include all items', 'event-manager'),
         ),
         3 => array(
             'key' => 'field_5a27fed65a89d',

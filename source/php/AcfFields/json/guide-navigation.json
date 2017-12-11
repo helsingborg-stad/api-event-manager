@@ -18,8 +18,8 @@
             "message": "",
             "default_value": 1,
             "ui": 1,
-            "ui_on_text": "Include all items",
-            "ui_off_text": "Select specific items"
+            "ui_on_text": "Select specific items",
+            "ui_off_text": "Include all items"
         },
         {
             "key": "field_5a27f6ab57d2f",
@@ -67,8 +67,8 @@
             "message": "",
             "default_value": 1,
             "ui": 1,
-            "ui_on_text": "Include all items",
-            "ui_off_text": "Select specific items"
+            "ui_on_text": "Select specific items",
+            "ui_off_text": "Include all items"
         },
         {
             "key": "field_5a27fed65a89d",
