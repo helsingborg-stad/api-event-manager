@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Event Manager\n"
-"POT-Creation-Date: 2017-08-24 14:13+0200\n"
-"PO-Revision-Date: 2017-12-11 11:29+0100\n"
+"POT-Creation-Date: 2017-12-11 11:30+0100\n"
+"PO-Revision-Date: 2017-12-11 11:37+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: sv\n"
@@ -36,12 +36,12 @@ msgid "Select status of imported events."
 msgstr "Välj status för importerade evenemang."
 
 #: source/php/AcfFields/php/cbis.php:38 source/php/AcfFields/php/xcap.php:38
-#: source/php/Admin/FilterRestrictions.php:131
+#: source/php/Admin/FilterRestrictions.php:130
 msgid "Draft"
 msgstr "Utkast"
 
 #: source/php/AcfFields/php/cbis.php:39 source/php/AcfFields/php/xcap.php:39
-#: source/php/Admin/FilterRestrictions.php:127
+#: source/php/Admin/FilterRestrictions.php:126
 msgid "Published"
 msgstr "Publicerad"
 
@@ -238,7 +238,7 @@ msgid "Select if event is on schedule or not."
 msgstr "Välj om evenemanget inträffar som planerat."
 
 #: source/php/AcfFields/php/event.php:166
-#: source/php/Admin/FilterRestrictions.php:130
+#: source/php/Admin/FilterRestrictions.php:129
 msgid "Scheduled"
 msgstr "Enligt planering"
 
@@ -410,7 +410,7 @@ msgstr "Standard"
 
 #: source/php/AcfFields/php/event.php:534
 #: source/php/AcfFields/php/event.php:550
-#: source/php/AcfFields/php/guide-basic.php:54
+#: source/php/AcfFields/php/guide-basic.php:98
 #: source/php/AcfFields/php/location.php:6 source/php/PostTypes/Events.php:40
 #: source/php/PostTypes/Locations.php:13
 msgid "Location"
@@ -438,7 +438,7 @@ msgstr "Lägg till platser om evenemanget äger rum på flera platser."
 msgid "Organizer"
 msgstr "Arrangör"
 
-#: source/php/AcfFields/php/event.php:612 source/php/App.php:213
+#: source/php/AcfFields/php/event.php:612 source/php/App.php:219
 #: source/php/PostTypes/Organizers.php:10
 msgid "Organizers"
 msgstr "Arrangörer"
@@ -461,7 +461,7 @@ msgstr ""
 "Välj företaget, organisationen eller privatpersonen som står bakom "
 "evenemanget."
 
-#: source/php/AcfFields/php/event.php:675 source/php/App.php:223
+#: source/php/AcfFields/php/event.php:675 source/php/App.php:229
 #: source/php/PostTypes/Sponsors.php:10
 msgid "Sponsors"
 msgstr "Sponsorer"
@@ -1127,25 +1127,13 @@ msgstr "Lägg till en eller flera Vimero-länkar."
 msgid "Vimeo link"
 msgstr "Vimeo-länk"
 
-#: source/php/AcfFields/php/groups.php:6 source/php/AcfFields/php/groups.php:29
+#: source/php/AcfFields/php/groups.php:6 source/php/AcfFields/php/groups.php:10
 #: source/php/AcfFields/php/publishing-groups.php:10
-#: source/php/Taxonomy/UserGroups.php:92
+#: source/php/Taxonomy/UserGroups.php:91
 msgid "Groups"
 msgstr "Grupper"
 
-#: source/php/AcfFields/php/groups.php:10
-msgid "Missing user group"
-msgstr "Saknar användargrupp"
-
-#: source/php/AcfFields/php/groups.php:21
-msgid ""
-"Check this box if the post does not belong to any user groups. This post "
-"will be available to all users."
-msgstr ""
-"Kryssa i rutan om posten inte ska tilldelas någon användargrupp. Detta gör "
-"att posten blir tillgängligt för samtliga användare."
-
-#: source/php/AcfFields/php/groups.php:32
+#: source/php/AcfFields/php/groups.php:13
 msgid "Select one or many user groups."
 msgstr "Välj en eller flera användargrupper."
 
@@ -1154,87 +1142,121 @@ msgstr "Välj en eller flera användargrupper."
 msgid "Basic Guide Settings"
 msgstr "Grundläggande guideinställningar"
 
-#: source/php/AcfFields/php/guide-basic.php:12
-#: source/php/AcfFields/php/guide-basic.php:148
+#: source/php/AcfFields/php/guide-basic.php:10
+#: source/php/AcfFields/php/guide-basic.php:216
 #: source/php/AcfFields/php/guide-settings.php:12
 #: source/php/AcfFields/php/guide-settings.php:106
 msgid "General"
 msgstr "Generellt"
 
-#: source/php/AcfFields/php/guide-basic.php:31
-#: source/php/AcfFields/php/guide-settings.php:31
-msgid "Beskrivning"
+#: source/php/AcfFields/php/guide-basic.php:26
+msgid "Guide tagline"
+msgstr ""
+
+#: source/php/AcfFields/php/guide-basic.php:29
+msgid "Short tagline that descibes what this is about"
+msgstr ""
+
+#: source/php/AcfFields/php/guide-basic.php:38
+msgid "E.g: Swedish contemporary glassware"
+msgstr ""
+
+#: source/php/AcfFields/php/guide-basic.php:45
+msgid "Date start"
+msgstr ""
+
+#: source/php/AcfFields/php/guide-basic.php:48
+#: source/php/AcfFields/php/guide-basic.php:65
+msgid "This field is strictly informative"
+msgstr ""
+
+#: source/php/AcfFields/php/guide-basic.php:62
+msgid "Date end"
+msgstr ""
+
+#: source/php/AcfFields/php/guide-basic.php:79
+msgid "Description"
 msgstr "Beskrivning"
 
-#: source/php/AcfFields/php/guide-basic.php:68
-msgid "This guide is har target group \"kids\"."
-msgstr "Den här guiden är anpassad för barn"
-
-#: source/php/AcfFields/php/guide-basic.php:73
+#: source/php/AcfFields/php/guide-basic.php:121
 msgid "For kids"
 msgstr "För barn"
 
-#: source/php/AcfFields/php/guide-basic.php:89
+#: source/php/AcfFields/php/guide-basic.php:133
+msgid "This guide is har target group \"kids\"."
+msgstr "Den här guiden är anpassad för barn"
+
+#: source/php/AcfFields/php/guide-basic.php:140
 msgid "Images (guide)"
 msgstr "Bilder (guide)"
 
-#: source/php/AcfFields/php/guide-basic.php:114
+#: source/php/AcfFields/php/guide-basic.php:156
 #: source/php/AcfFields/php/guide-settings.php:72
 msgid "Guide images"
 msgstr "Guidebilder"
 
-#: source/php/AcfFields/php/guide-basic.php:130
+#: source/php/AcfFields/php/guide-basic.php:181
 #: source/php/AcfFields/php/guide-settings.php:88
 msgid "Content objects"
 msgstr "Innehållsobjekt"
 
-#: source/php/AcfFields/php/guide-basic.php:163
-#: source/php/AcfFields/php/guide-settings.php:121
-msgid "The title of the object"
-msgstr "Titeln på innehållsobjektet"
+#: source/php/AcfFields/php/guide-basic.php:197
+#: source/php/AcfFields/php/guide-settings.php:464
+msgid "Content (paintings, art, flowers etc.)"
+msgstr "Innehåll (tavlor, konstverk, träd etc.)"
 
-#: source/php/AcfFields/php/guide-basic.php:167
+#: source/php/AcfFields/php/guide-basic.php:211
+#: source/php/AcfFields/php/guide-settings.php:461
+msgid "Add new object"
+msgstr "Lägg till nytt objekt"
+
+#: source/php/AcfFields/php/guide-basic.php:232
 #: source/php/AcfFields/php/guide-settings.php:125
 msgid "Object title"
 msgstr "Objektets titel"
 
-#: source/php/AcfFields/php/guide-basic.php:185
-#: source/php/AcfFields/php/guide-settings.php:143
-msgid "#"
-msgstr ""
+#: source/php/AcfFields/php/guide-basic.php:245
+#: source/php/AcfFields/php/guide-settings.php:121
+msgid "The title of the object"
+msgstr "Titeln på innehållsobjektet"
 
-#: source/php/AcfFields/php/guide-basic.php:188
+#: source/php/AcfFields/php/guide-basic.php:251
 #: source/php/AcfFields/php/guide-settings.php:146
 msgid "Exhibition ID"
 msgstr "Utställnings ID"
 
-#: source/php/AcfFields/php/guide-basic.php:207
+#: source/php/AcfFields/php/guide-basic.php:267
+#: source/php/AcfFields/php/guide-settings.php:143
+msgid "#"
+msgstr ""
+
+#: source/php/AcfFields/php/guide-basic.php:272
 #: source/php/AcfFields/php/guide-settings.php:165
 msgid "Object description"
 msgstr "Objektbeskrivning"
 
-#: source/php/AcfFields/php/guide-basic.php:223
+#: source/php/AcfFields/php/guide-basic.php:291
 #: source/php/AcfFields/php/guide-settings.php:47
 #: source/php/AcfFields/php/guide-settings.php:181
 msgid "Media"
 msgstr "Media"
 
-#: source/php/AcfFields/php/guide-basic.php:248
+#: source/php/AcfFields/php/guide-basic.php:307
 #: source/php/AcfFields/php/guide-settings.php:206
 msgid "Object image"
 msgstr "Objektets bild"
 
-#: source/php/AcfFields/php/guide-basic.php:251
+#: source/php/AcfFields/php/guide-basic.php:310
 #: source/php/AcfFields/php/guide-settings.php:209
 msgid "Multiple images in jpg or png format of the object."
 msgstr "En eller flera bilder i jpg eller png format"
 
-#: source/php/AcfFields/php/guide-basic.php:267
+#: source/php/AcfFields/php/guide-basic.php:332
 #: source/php/AcfFields/php/guide-settings.php:225
 msgid "Object audio"
 msgstr "Ljud"
 
-#: source/php/AcfFields/php/guide-basic.php:270
+#: source/php/AcfFields/php/guide-basic.php:335
 #: source/php/AcfFields/php/guide-settings.php:228
 msgid ""
 "An audiofile describing the object. This should be fairly compressed. "
@@ -1243,12 +1265,12 @@ msgstr ""
 "En ljudfil som beskriver objektet. Filen bör vara rimligt komprimerad och "
 "vara av AAC+ V2 (m4a) format eller Mp3."
 
-#: source/php/AcfFields/php/guide-basic.php:286
+#: source/php/AcfFields/php/guide-basic.php:351
 #: source/php/AcfFields/php/guide-settings.php:244
 msgid "Object video"
 msgstr "Film"
 
-#: source/php/AcfFields/php/guide-basic.php:289
+#: source/php/AcfFields/php/guide-basic.php:354
 #: source/php/AcfFields/php/guide-settings.php:247
 msgid ""
 "An videofile describing the object. This should be fairly compressed. "
@@ -1257,32 +1279,17 @@ msgstr ""
 "En kortare video som beskrivet objektet. Tänk på att ett mindre filformat "
 "oftast resulterar i fler visningar. Föredraget format: Mp4. "
 
-#: source/php/AcfFields/php/guide-basic.php:302
+#: source/php/AcfFields/php/guide-basic.php:370
 #: source/php/AcfFields/php/guide-settings.php:260
 msgid "Länkar"
 msgstr "Länkar\t"
 
-#: source/php/AcfFields/php/guide-basic.php:323
-#: source/php/AcfFields/php/guide-settings.php:281
-msgid "Linkname"
-msgstr "Länknamn"
-
-#: source/php/AcfFields/php/guide-basic.php:339
-#: source/php/AcfFields/php/guide-settings.php:297
-msgid "Web adress"
-msgstr "Webbadress"
-
-#: source/php/AcfFields/php/guide-basic.php:355
-#: source/php/AcfFields/php/guide-settings.php:313
-msgid "Add new link"
-msgstr "Lägg till länk"
-
-#: source/php/AcfFields/php/guide-basic.php:358
+#: source/php/AcfFields/php/guide-basic.php:386
 #: source/php/AcfFields/php/guide-settings.php:316
 msgid "Links & Resources"
 msgstr "Länkar och ytterligare resurser"
 
-#: source/php/AcfFields/php/guide-basic.php:361
+#: source/php/AcfFields/php/guide-basic.php:389
 #: source/php/AcfFields/php/guide-settings.php:319
 msgid ""
 "Add links related to the object. This can be a website or a published file "
@@ -1291,113 +1298,139 @@ msgstr ""
 "Lägg till länkar som har mer information om objektet. Det kan till exempel "
 "vara en hemsida eller fil (på webben). "
 
-#: source/php/AcfFields/php/guide-basic.php:374
-#: source/php/AcfFields/php/guide-basic.php:522
+#: source/php/AcfFields/php/guide-basic.php:400
+#: source/php/AcfFields/php/guide-settings.php:313
+msgid "Add new link"
+msgstr "Lägg till länk"
+
+#: source/php/AcfFields/php/guide-basic.php:405
+#: source/php/AcfFields/php/guide-settings.php:281
+msgid "Linkname"
+msgstr "Länknamn"
+
+#: source/php/AcfFields/php/guide-basic.php:424
+#: source/php/AcfFields/php/guide-settings.php:297
+msgid "Web adress"
+msgstr "Webbadress"
+
+#: source/php/AcfFields/php/guide-basic.php:442
+#: source/php/AcfFields/php/guide-basic.php:573
 #: source/php/AcfFields/php/guide-settings.php:332
 #: source/php/AcfFields/php/guide-settings.php:480
 msgid "Beacons"
 msgstr "Beacons"
 
-#: source/php/AcfFields/php/guide-basic.php:401
+#: source/php/AcfFields/php/guide-basic.php:466
 #: source/php/AcfFields/php/guide-settings.php:359
 msgid "Object beacon ID"
 msgstr "Objektets beacon ID"
 
-#: source/php/AcfFields/php/guide-basic.php:404
+#: source/php/AcfFields/php/guide-basic.php:469
 #: source/php/AcfFields/php/guide-settings.php:362
 msgid "A unique id for a specific    bluetooth beacon."
 msgstr "Ett unikt id för att identifiera en specifik beacon."
 
-#: source/php/AcfFields/php/guide-basic.php:428
-#: source/php/AcfFields/php/guide-basic.php:628
-#: source/php/AcfFields/php/guide-settings.php:386
-msgid "meters"
-msgstr "meter"
-
-#: source/php/AcfFields/php/guide-basic.php:430
+#: source/php/AcfFields/php/guide-basic.php:493
 #: source/php/AcfFields/php/guide-settings.php:388
 msgid "Beacon trigger distance"
 msgstr "Maximalt avstånd till beacon. "
 
-#: source/php/AcfFields/php/guide-basic.php:433
+#: source/php/AcfFields/php/guide-basic.php:496
 #: source/php/AcfFields/php/guide-settings.php:391
 msgid "Distance that the beacon should be triggered at."
 msgstr "Avstånd som ska trigga beacon-sändare."
 
-#: source/php/AcfFields/php/guide-basic.php:454
+#: source/php/AcfFields/php/guide-basic.php:518
+#: source/php/AcfFields/php/guide-basic.php:710
+#: source/php/AcfFields/php/guide-settings.php:386
+msgid "meters"
+msgstr "meter"
+
+#: source/php/AcfFields/php/guide-basic.php:522
 #: source/php/AcfFields/php/guide-settings.php:412
 msgid "Visibility"
 msgstr "Synbarhet"
 
-#: source/php/AcfFields/php/guide-basic.php:468
-#: source/php/AcfFields/php/guide-settings.php:426
-msgid "Yes, show this object"
-msgstr "Ja, visa detta objekt"
-
-#: source/php/AcfFields/php/guide-basic.php:470
-#: source/php/AcfFields/php/guide-settings.php:428
-msgid "Show"
-msgstr "Visa"
-
-#: source/php/AcfFields/php/guide-basic.php:471
-#: source/php/AcfFields/php/guide-settings.php:429
-msgid "Hide"
-msgstr "Dölj"
-
-#: source/php/AcfFields/php/guide-basic.php:473
+#: source/php/AcfFields/php/guide-basic.php:538
 #: source/php/AcfFields/php/guide-settings.php:431
 msgid "Object visibility"
 msgstr "Objektets synbarhet"
 
-#: source/php/AcfFields/php/guide-basic.php:487
+#: source/php/AcfFields/php/guide-basic.php:550
+#: source/php/AcfFields/php/guide-settings.php:426
+msgid "Yes, show this object"
+msgstr "Ja, visa detta objekt"
+
+#: source/php/AcfFields/php/guide-basic.php:552
+#: source/php/AcfFields/php/guide-settings.php:428
+msgid "Show"
+msgstr "Visa"
+
+#: source/php/AcfFields/php/guide-basic.php:553
+#: source/php/AcfFields/php/guide-settings.php:429
+msgid "Hide"
+msgstr "Dölj"
+
+#: source/php/AcfFields/php/guide-basic.php:557
 #: source/php/AcfFields/php/guide-settings.php:445
 msgid "Unique ID"
 msgstr "Unikt ID"
 
-#: source/php/AcfFields/php/guide-basic.php:503
-#: source/php/AcfFields/php/guide-settings.php:461
-msgid "Add new object"
-msgstr "Lägg till nytt objekt"
-
-#: source/php/AcfFields/php/guide-basic.php:506
-#: source/php/AcfFields/php/guide-settings.php:464
-msgid "Content (paintings, art, flowers etc.)"
-msgstr "Innehåll (tavlor, konstverk, träd etc.)"
-
-#: source/php/AcfFields/php/guide-basic.php:541
+#: source/php/AcfFields/php/guide-basic.php:589
 #: source/php/AcfFields/php/guide-settings.php:499
 msgid "Beacon namespace"
 msgstr "Beacon namnrymd"
 
-#: source/php/AcfFields/php/guide-basic.php:566
+#: source/php/AcfFields/php/guide-basic.php:608
+#: source/php/AcfFields/php/guide-settings.php:586
+msgid "Beacon groups"
+msgstr "Grupper av beacons"
+
+#: source/php/AcfFields/php/guide-basic.php:622
+#: source/php/AcfFields/php/guide-settings.php:583
+msgid "Lägg till grupp"
+msgstr "Lägg till grupp"
+
+#: source/php/AcfFields/php/guide-basic.php:627
 #: source/php/AcfFields/php/guide-group-settings.php:101
 #: source/php/AcfFields/php/guide-settings.php:524
 msgid "Plats"
 msgstr "Plats"
 
-#: source/php/AcfFields/php/guide-basic.php:590
+#: source/php/AcfFields/php/guide-basic.php:650
 #: source/php/AcfFields/php/guide-settings.php:548
 msgid "Objects"
 msgstr "Innehållsobjekt"
 
-#: source/php/AcfFields/php/guide-basic.php:609
+#: source/php/AcfFields/php/guide-basic.php:674
 #: source/php/AcfFields/php/guide-settings.php:567
 msgid "Beacon ID"
 msgstr "Beacon ID"
 
-#: source/php/AcfFields/php/guide-basic.php:630
+#: source/php/AcfFields/php/guide-basic.php:693
 msgid "Beacon distance"
 msgstr "Avstånd till beacon sändare"
 
-#: source/php/AcfFields/php/guide-basic.php:646
-#: source/php/AcfFields/php/guide-settings.php:583
-msgid "Lägg till grupp"
-msgstr "Lägg till grupp"
+#: source/php/AcfFields/php/guide-content-type.php:6
+msgid "Type of guide"
+msgstr ""
 
-#: source/php/AcfFields/php/guide-basic.php:649
-#: source/php/AcfFields/php/guide-settings.php:586
-msgid "Beacon groups"
-msgstr "Grupper av beacons"
+#: source/php/AcfFields/php/guide-content-type.php:10
+msgid "Select content type"
+msgstr ""
+
+#: source/php/AcfFields/php/guide-content-type.php:13
+msgid "Select trail for wider areas or guide for more narrow areas."
+msgstr ""
+
+#: source/php/AcfFields/php/guide-content-type.php:22
+#: source/php/PostTypes/Guides.php:13
+msgid "Guide"
+msgstr "Guide"
+
+#: source/php/AcfFields/php/guide-content-type.php:23
+msgid "Trail"
+msgstr ""
 
 #: source/php/AcfFields/php/guide-group-notices.php:14
 msgid "Vad vill du säga? "
@@ -1440,9 +1473,15 @@ msgstr ""
 msgid "Guide Group"
 msgstr "Guidekategori"
 
-#: source/php/AcfFields/php/guide-group-select.php:18
+#: source/php/AcfFields/php/guide-group-select.php:10
 msgid "Select the group for this guide"
 msgstr "Välj guidens kategori"
+
+#: source/php/AcfFields/php/guide-group-select.php:13
+msgid ""
+"This field is mandatory for v1 of the app. This will not be required to be "
+"set after January 1:st 2018."
+msgstr ""
 
 #: source/php/AcfFields/php/guide-group-settings.php:10
 msgid "Ja, den här gruppen är aktiv. "
@@ -1503,6 +1542,47 @@ msgstr "Ja, den här platsen kan använda google maps. "
 #: source/php/AcfFields/php/guide-group-settings.php:179
 msgid "Karta"
 msgstr "Karta"
+
+#: source/php/AcfFields/php/guide-navigation.php:6
+msgid "Include in category"
+msgstr "Inkludera innehåll i kategori"
+
+#: source/php/AcfFields/php/guide-navigation.php:10
+msgid "Select specific items (posts)"
+msgstr ""
+
+#: source/php/AcfFields/php/guide-navigation.php:13
+#: source/php/AcfFields/php/guide-navigation.php:63
+msgid ""
+"To select none, please switch to \"select specific items\" and leave "
+"specific items field blank."
+msgstr ""
+
+#: source/php/AcfFields/php/guide-navigation.php:24
+#: source/php/AcfFields/php/guide-navigation.php:74
+msgid "Include all items"
+msgstr ""
+
+#: source/php/AcfFields/php/guide-navigation.php:25
+#: source/php/AcfFields/php/guide-navigation.php:75
+msgid "Select specific items"
+msgstr ""
+
+#: source/php/AcfFields/php/guide-navigation.php:29
+msgid "Include these items (posts)"
+msgstr "Inkludera följande innehåll"
+
+#: source/php/AcfFields/php/guide-navigation.php:60
+msgid "Select specific items (taxonomy)"
+msgstr "Välj ut innehåll manuellt (guide-platser)"
+
+#: source/php/AcfFields/php/guide-navigation.php:79
+msgid "Include these items (taxonomy)"
+msgstr "Inkludera följande innehåll"
+
+#: source/php/AcfFields/php/guide-settings.php:31
+msgid "Beskrivning"
+msgstr "Beskrivning"
 
 #: source/php/AcfFields/php/location.php:10
 #: source/php/PostTypes/Locations.php:39
@@ -1680,6 +1760,18 @@ msgstr "Välj evenemang som ingår i paketet."
 msgid "Add membership cards where this package is included."
 msgstr "Välj medlemskort där paketet ingår."
 
+#: source/php/AcfFields/php/point-property.php:6
+msgid "Point property icon"
+msgstr ""
+
+#: source/php/AcfFields/php/point-property.php:10
+msgid "Image for this property"
+msgstr ""
+
+#: source/php/AcfFields/php/point-property.php:13
+msgid "Add an image with the format SVG to illustrate this property."
+msgstr ""
+
 #: source/php/AcfFields/php/publishing-groups.php:6
 msgid "Publishing groups"
 msgstr "Publiceringsgrupper"
@@ -1724,55 +1816,55 @@ msgstr "Lägg till en eller flera API-länkar till Xcap"
 msgid "API link"
 msgstr "API-länk"
 
-#: source/php/Admin/FilterRestrictions.php:126
+#: source/php/Admin/FilterRestrictions.php:125
 msgid "All"
 msgstr "Alla"
 
-#: source/php/Admin/FilterRestrictions.php:128
+#: source/php/Admin/FilterRestrictions.php:127
 msgid "Private"
 msgstr "Privat"
 
-#: source/php/Admin/FilterRestrictions.php:129
+#: source/php/Admin/FilterRestrictions.php:128
 msgid "Pending Review"
 msgstr "Inväntar granskning"
 
-#: source/php/Admin/FilterRestrictions.php:132
+#: source/php/Admin/FilterRestrictions.php:131
 msgid "Trash"
 msgstr "Papperskorg"
 
-#: source/php/Admin/FilterRestrictions.php:184
+#: source/php/Admin/FilterRestrictions.php:183
 #: source/php/Taxonomy/EventCategories.php:19
 #: source/php/Taxonomy/EventCategories.php:58
 #: source/php/Taxonomy/LocationCategories.php:19
 msgid "All categories"
 msgstr "Alla kategorier"
 
-#: source/php/Admin/FilterRestrictions.php:225
-#: source/php/Taxonomy/UserGroups.php:83
+#: source/php/Admin/FilterRestrictions.php:224
+#: source/php/Taxonomy/UserGroups.php:82
 msgid "All groups"
 msgstr "Alla grupper"
 
-#: source/php/Admin/FilterRestrictions.php:271
+#: source/php/Admin/FilterRestrictions.php:270
 msgid "Time interval"
 msgstr "Tidsperiod"
 
-#: source/php/Admin/FilterRestrictions.php:272
+#: source/php/Admin/FilterRestrictions.php:271
 msgid "Today"
 msgstr "Idag"
 
-#: source/php/Admin/FilterRestrictions.php:273
+#: source/php/Admin/FilterRestrictions.php:272
 msgid "Tomorrow"
 msgstr "I morgon"
 
-#: source/php/Admin/FilterRestrictions.php:274
+#: source/php/Admin/FilterRestrictions.php:273
 msgid "This week"
 msgstr "Denna veckan"
 
-#: source/php/Admin/FilterRestrictions.php:275
+#: source/php/Admin/FilterRestrictions.php:274
 msgid "This month"
 msgstr "Denna månaden"
 
-#: source/php/Admin/FilterRestrictions.php:276
+#: source/php/Admin/FilterRestrictions.php:275
 msgid "Passed events"
 msgstr "Passerade evenemang"
 
@@ -1818,150 +1910,144 @@ msgstr ""
 msgid "Sync event information with API"
 msgstr "Synkronisera med API"
 
-#: source/php/Admin/UserRoles.php:43 source/php/Admin/UserRoles.php:73
+#: source/php/Admin/UserRoles.php:105
 msgid "Cheatin&#8217; uh?"
 msgstr ""
 
-#: source/php/Admin/UserRoles.php:44
-msgid "You don't have permissions to delete this user."
+#: source/php/Admin/UserRoles.php:106
+msgid "Missing permissions"
 msgstr ""
-"Du har inte tillräckliga rättigheter för att ta bort den här användaren."
 
-#: source/php/Admin/UserRoles.php:74
-msgid "You don't have permissions to edit this user."
-msgstr ""
-"Du har inte tillräckliga rättigheter för att redigera den här användaren."
-
-#: source/php/Admin/UserRoles.php:161
+#: source/php/Admin/UserRoles.php:191
 msgid "Event administrator"
 msgstr "Evenemangsadministratör"
 
-#: source/php/Admin/UserRoles.php:166
+#: source/php/Admin/UserRoles.php:196
 msgid "Guide administrator"
 msgstr "Guideadministratör"
 
-#: source/php/Admin/UserRoles.php:171
+#: source/php/Admin/UserRoles.php:201
 msgid "Event contributor"
 msgstr "Evenemangshanterare"
 
-#: source/php/Admin/UserRoles.php:176
+#: source/php/Admin/UserRoles.php:206
 msgid "Guide editor"
 msgstr "Guideredakör"
 
-#: source/php/App.php:201
+#: source/php/App.php:207
 msgid "\"Title\" is missing"
 msgstr "“Titel” saknas"
 
-#: source/php/App.php:202
+#: source/php/App.php:208
 msgid "\"Featured\" image is missing"
 msgstr "“Utvald bild” saknas"
 
-#: source/php/App.php:203
+#: source/php/App.php:209
 msgid "Create new organizer"
 msgstr "Skapa ny arrangör"
 
-#: source/php/App.php:204
+#: source/php/App.php:210
 msgid "Create new sponsor"
 msgstr "Skapa ny sponsor"
 
-#: source/php/App.php:205
+#: source/php/App.php:211
 msgid "Create new location"
 msgstr "Skapa ny plats"
 
-#: source/php/App.php:206 source/php/App.php:207
+#: source/php/App.php:212 source/php/App.php:213
 msgid "Create new membership card"
 msgstr "Skapa nytt medlemskort"
 
-#: source/php/App.php:208
+#: source/php/App.php:214
 msgid "Close"
 msgstr "Stäng"
 
-#: source/php/App.php:209
+#: source/php/App.php:215
 msgid "Add images"
 msgstr "Lägg till bilder"
 
-#: source/php/App.php:210
+#: source/php/App.php:216
 msgid "Imported data"
 msgstr "Imorterad data"
 
-#: source/php/App.php:211
+#: source/php/App.php:217
 msgid "Events"
 msgstr "Evenemang"
 
-#: source/php/App.php:212 source/php/PostTypes/Locations.php:12
+#: source/php/App.php:218 source/php/PostTypes/Locations.php:12
 msgid "Locations"
 msgstr "Platser"
 
-#: source/php/App.php:214
+#: source/php/App.php:220
 msgid "Time until reload"
 msgstr "Laddar om sidan"
 
-#: source/php/App.php:215
+#: source/php/App.php:221
 msgid "Loading"
 msgstr "Hämtar"
 
-#: source/php/App.php:216
+#: source/php/App.php:222
 msgid "Choose time"
 msgstr "Välj tidpunkt"
 
-#: source/php/App.php:217
+#: source/php/App.php:223
 msgid "Time"
 msgstr "Tid"
 
-#: source/php/App.php:218
+#: source/php/App.php:224
 msgid "Hour"
 msgstr "Timme"
 
-#: source/php/App.php:219
+#: source/php/App.php:225
 msgid "Minute"
 msgstr "Minut"
 
-#: source/php/App.php:220
+#: source/php/App.php:226
 msgid "Done"
 msgstr "Klar"
 
-#: source/php/App.php:221
+#: source/php/App.php:227
 msgid "Now"
 msgstr "Nu"
 
-#: source/php/App.php:222
+#: source/php/App.php:228
 msgid "with similar name"
 msgstr "med liknande namn"
 
-#: source/php/App.php:224 source/php/PostTypes/Packages.php:10
+#: source/php/App.php:230 source/php/PostTypes/Packages.php:10
 msgid "Packages"
 msgstr "Paket"
 
-#: source/php/App.php:225
+#: source/php/App.php:231
 msgid "Membership cards"
 msgstr "Medlemskort"
 
-#: source/php/App.php:226 source/php/PostTypes/Guides.php:12
+#: source/php/App.php:232 source/php/PostTypes/Guides.php:12
 msgid "Guides"
 msgstr "Guider"
 
-#: source/php/App.php:227
+#: source/php/App.php:233
 msgid "Yes"
 msgstr "Ja"
 
-#: source/php/App.php:228
+#: source/php/App.php:234
 msgid "No"
 msgstr "Nej"
 
-#: source/php/App.php:229
+#: source/php/App.php:235
 msgid "To upload an image, you need to confirm the statements below"
 msgstr "För att ladda upp en bild behöver du bekräfta nedanstående punkter"
 
-#: source/php/App.php:230
+#: source/php/App.php:236
 msgid "I have the right to use this image to promote this event."
 msgstr ""
 "Jag har rätt att använda denna bild för att marknadsföra detta evenemang."
 
-#: source/php/App.php:231
+#: source/php/App.php:237
 msgid "Are there identifiable persons on the image/images?"
 msgstr "Finns det identifierbara personer på bilden/bilderna?"
 
-#: source/php/App.php:232
+#: source/php/App.php:238
 msgid ""
 "They have accepted that the image is used to promote this event and have "
 "been informed that after the image has been added to the database, it may "
@@ -1971,68 +2057,68 @@ msgstr ""
 "har informerats om att efter att bilden lagts in i databasen kan komma att "
 "synas i olika kanaler för att marknadsföra evenemanget."
 
-#: source/php/Entity/CustomPostType.php:86
+#: source/php/Entity/CustomPostType.php:85
 msgid "API-url"
 msgstr "API-url"
 
+#: source/php/Entity/CustomPostType.php:167
 #: source/php/Entity/CustomPostType.php:168
-#: source/php/Entity/CustomPostType.php:169
 #, php-format
 msgid "Add new %s"
 msgstr "Lägg till %s"
 
-#: source/php/Entity/CustomPostType.php:170
+#: source/php/Entity/CustomPostType.php:169
 #, php-format
 msgid "Edit %s"
 msgstr "Redigera %s"
 
-#: source/php/Entity/CustomPostType.php:171
+#: source/php/Entity/CustomPostType.php:170
 #, php-format
 msgid "New %s"
 msgstr "Nytt %s"
 
-#: source/php/Entity/CustomPostType.php:172
+#: source/php/Entity/CustomPostType.php:171
 #, php-format
 msgid "View %s"
 msgstr "Visa %s"
 
-#: source/php/Entity/CustomPostType.php:173
+#: source/php/Entity/CustomPostType.php:172
 #, php-format
 msgid "Search %s"
 msgstr "Sök %s"
 
-#: source/php/Entity/CustomPostType.php:174
+#: source/php/Entity/CustomPostType.php:173
 #, php-format
 msgid "No %s found"
 msgstr "Inga %s hittades"
 
-#: source/php/Entity/CustomPostType.php:175
+#: source/php/Entity/CustomPostType.php:174
 #, php-format
 msgid "No %s found in trash"
 msgstr "Inga %s hittades i papperskorgen"
 
-#: source/php/Entity/CustomPostType.php:176
+#: source/php/Entity/CustomPostType.php:175
 #, php-format
 msgid "Parent %s:"
 msgstr "Förälder %s:"
 
-#: source/php/Entity/CustomPostType.php:281
+#: source/php/Entity/CustomPostType.php:280
 msgid "Post updated."
 msgstr "Inlägget uppdaterades."
 
-#: source/php/Entity/CustomPostType.php:282
+#: source/php/Entity/CustomPostType.php:281
 msgid "Post published."
 msgstr "Inlägget publicerades."
 
-#: source/php/Entity/CustomPostType.php:283
+#: source/php/Entity/CustomPostType.php:282
 msgid "Post submitted."
 msgstr "Inlägget uppdaterades."
 
-#: source/php/Entity/CustomPostType.php:284
+#: source/php/Entity/CustomPostType.php:283
 msgid "Post draft updated."
 msgstr "Utkast uppdaterades."
 
-#: source/php/Entity/CustomPostType.php:360
+#: source/php/Entity/CustomPostType.php:359
 msgid ""
 "You don't have access to edit this event. Contact an administrator for "
 "further information."
@@ -2040,31 +2126,31 @@ msgstr ""
 "Ni saknar rättigheter att uppdatera evenemanget. Vid frågor kontakta en "
 "administratör."
 
-#: source/php/Entity/CustomPostType.php:415
+#: source/php/Entity/CustomPostType.php:414
 msgid "Public"
 msgstr "Offentlig"
 
-#: source/php/Entity/CustomPostType.php:448
+#: source/php/Entity/CustomPostType.php:447
 msgid "This post must be updated before it can be published."
 msgstr "Evenemanget behöver uppdateras innan det kan publiceras"
 
-#: source/php/Entity/CustomPostType.php:448
+#: source/php/Entity/CustomPostType.php:447
 msgid "Edit draft"
 msgstr "Redigera utkast"
 
-#: source/php/Entity/CustomPostType.php:451
+#: source/php/Entity/CustomPostType.php:450
 msgid "Accept"
 msgstr "Godkänn"
 
-#: source/php/Entity/CustomPostType.php:452
+#: source/php/Entity/CustomPostType.php:451
 msgid "Deny"
 msgstr "Neka"
 
-#: source/php/Entity/CustomPostType.php:463
+#: source/php/Entity/CustomPostType.php:462
 msgid "Something went wrong!"
 msgstr "Något gick fel!"
 
-#: source/php/Entity/CustomPostType.php:480
+#: source/php/Entity/CustomPostType.php:479
 msgid "Error"
 msgstr "Fel"
 
@@ -2194,10 +2280,6 @@ msgid ""
 msgstr ""
 "Inga evenemang från XCAP har importerats de senaste 7 dagarna. Vänligen "
 "kontrollera inställningarna och importen."
-
-#: source/php/PostTypes/Guides.php:13
-msgid "Guide"
-msgstr "Guide"
 
 #: source/php/PostTypes/Locations.php:43
 msgid "Coordinates"
@@ -2426,6 +2508,115 @@ msgstr "Välj från vanliga guidekategorier"
 msgid "Guide groups"
 msgstr "Guidekategorier"
 
+#: source/php/Taxonomy/GuideNavigation.php:16
+msgctxt "Taxonomy plural name"
+msgid "Guide navigation"
+msgstr "Navigationslänkar guide"
+
+#: source/php/Taxonomy/GuideNavigation.php:17
+msgctxt "Taxonomy singular name"
+msgid "Guide navigation item"
+msgstr "Navigationslänk guide"
+
+#: source/php/Taxonomy/GuideNavigation.php:18
+msgid "Search navigation item"
+msgstr "Sök efter navigationslänk"
+
+#: source/php/Taxonomy/GuideNavigation.php:19
+msgid "Popular navigation items"
+msgstr "Populära navigationslänkar"
+
+#: source/php/Taxonomy/GuideNavigation.php:20
+msgid "All navigation items"
+msgstr "Alla navigationslänkar"
+
+#: source/php/Taxonomy/GuideNavigation.php:21
+#: source/php/Taxonomy/GuideNavigation.php:22
+msgid "Parent navigation item"
+msgstr "Förälder navigationslänkar"
+
+#: source/php/Taxonomy/GuideNavigation.php:23
+msgid "Edit navigation item"
+msgstr "Redigera navigationslänk"
+
+#: source/php/Taxonomy/GuideNavigation.php:24
+msgid "Update navigation item"
+msgstr "Uppdatera navigationslänk"
+
+#: source/php/Taxonomy/GuideNavigation.php:25
+msgid "Add new navigation item"
+msgstr "Lägg till ny navigationslänk"
+
+#: source/php/Taxonomy/GuideNavigation.php:26
+msgid "New navigation item"
+msgstr "Ny navigationslänk"
+
+#: source/php/Taxonomy/GuideNavigation.php:27
+msgid "Add or remove navigation item"
+msgstr "Lägg till eller ta bort navigationslänk"
+
+#: source/php/Taxonomy/GuideNavigation.php:28
+msgid "Choose from most used navigation items"
+msgstr "Välj bland de mest populära navigationslänkarna"
+
+#: source/php/Taxonomy/GuideNavigation.php:29
+msgid "Guide navigation"
+msgstr "Guide navigation"
+
+#: source/php/Taxonomy/GuideType.php:18
+msgctxt "Taxonomy plural name"
+msgid "Guide type"
+msgstr ""
+
+#: source/php/Taxonomy/GuideType.php:19
+msgctxt "Taxonomy singular name"
+msgid "Guide type"
+msgstr ""
+
+#: source/php/Taxonomy/GuideType.php:20
+msgid "Search guide type"
+msgstr ""
+
+#: source/php/Taxonomy/GuideType.php:21
+msgid "Popular guide types"
+msgstr ""
+
+#: source/php/Taxonomy/GuideType.php:22
+msgid "All guide types"
+msgstr ""
+
+#: source/php/Taxonomy/GuideType.php:23 source/php/Taxonomy/GuideType.php:24
+msgid "Parent guide type"
+msgstr ""
+
+#: source/php/Taxonomy/GuideType.php:25
+msgid "Edit guide type"
+msgstr ""
+
+#: source/php/Taxonomy/GuideType.php:26
+msgid "Update guide type"
+msgstr ""
+
+#: source/php/Taxonomy/GuideType.php:27
+msgid "Add new guide type"
+msgstr ""
+
+#: source/php/Taxonomy/GuideType.php:28
+msgid "New guide type"
+msgstr ""
+
+#: source/php/Taxonomy/GuideType.php:29
+msgid "Add or remove guide type"
+msgstr ""
+
+#: source/php/Taxonomy/GuideType.php:30
+msgid "Choose from most used guide types"
+msgstr ""
+
+#: source/php/Taxonomy/GuideType.php:31
+msgid "Guide types"
+msgstr ""
+
 #: source/php/Taxonomy/LocationCategories.php:15
 msgctxt "Taxonomy plural name"
 msgid "Location categories"
@@ -2436,65 +2627,120 @@ msgctxt "Taxonomy singular name"
 msgid "Location category"
 msgstr "Platskategori"
 
-#: source/php/Taxonomy/UserGroups.php:79
+#: source/php/Taxonomy/PointProperty.php:17
+msgctxt "Taxonomy plural name"
+msgid "Point properties"
+msgstr "Punktegenskaper"
+
+#: source/php/Taxonomy/PointProperty.php:18
+msgctxt "Taxonomy singular name"
+msgid "Point propery"
+msgstr "Punktegenskap"
+
+#: source/php/Taxonomy/PointProperty.php:19
+msgid "Search properties"
+msgstr "Sök efter punktegenskaper"
+
+#: source/php/Taxonomy/PointProperty.php:20
+msgid "Popular properties"
+msgstr "Populära punktegenskaper"
+
+#: source/php/Taxonomy/PointProperty.php:21
+msgid "All properties types"
+msgstr "Alla punktegenskaper"
+
+#: source/php/Taxonomy/PointProperty.php:22
+#: source/php/Taxonomy/PointProperty.php:23
+msgid "Parent properties"
+msgstr "Förälder punktegenskaper"
+
+#: source/php/Taxonomy/PointProperty.php:24
+msgid "Edit property"
+msgstr "Redigera punktegenskap"
+
+#: source/php/Taxonomy/PointProperty.php:25
+msgid "Update property"
+msgstr "Uppdatera punktegenskap"
+
+#: source/php/Taxonomy/PointProperty.php:26
+msgid "Add new property"
+msgstr "Lägg till ny punktegenskap"
+
+#: source/php/Taxonomy/PointProperty.php:27
+msgid "New property"
+msgstr "Ny punktegenskap"
+
+#: source/php/Taxonomy/PointProperty.php:28
+msgid "Add or remove property"
+msgstr "Lägg till eller ta bort punktegenskaper"
+
+#: source/php/Taxonomy/PointProperty.php:29
+msgid "Choose from most used properties"
+msgstr "Välj mellan de mest använda punktegenskaperna"
+
+#: source/php/Taxonomy/PointProperty.php:30
+msgid "Point properties"
+msgstr "Punktegenskaper"
+
+#: source/php/Taxonomy/UserGroups.php:78
 msgctxt "Taxonomy plural name"
 msgid "Groups"
 msgstr "Organisationer"
 
-#: source/php/Taxonomy/UserGroups.php:80
+#: source/php/Taxonomy/UserGroups.php:79
 msgctxt "Taxonomy singular name"
 msgid "Group"
 msgstr "Organisation"
 
-#: source/php/Taxonomy/UserGroups.php:81
+#: source/php/Taxonomy/UserGroups.php:80
 msgid "Search groups"
 msgstr "Sök organisation"
 
-#: source/php/Taxonomy/UserGroups.php:82
+#: source/php/Taxonomy/UserGroups.php:81
 msgid "Popular groups"
 msgstr "Populära organisationer"
 
-#: source/php/Taxonomy/UserGroups.php:84 source/php/Taxonomy/UserGroups.php:85
+#: source/php/Taxonomy/UserGroups.php:83 source/php/Taxonomy/UserGroups.php:84
 msgid "Parent group"
 msgstr "Förälderorganisation"
 
-#: source/php/Taxonomy/UserGroups.php:86
+#: source/php/Taxonomy/UserGroups.php:85
 msgid "Edit group"
 msgstr "Ändra organisation"
 
-#: source/php/Taxonomy/UserGroups.php:87
+#: source/php/Taxonomy/UserGroups.php:86
 msgid "Update group"
 msgstr "Uppdatera organisation"
 
-#: source/php/Taxonomy/UserGroups.php:88
+#: source/php/Taxonomy/UserGroups.php:87
 msgid "Add new group"
 msgstr "Lägg till ny organisation"
 
-#: source/php/Taxonomy/UserGroups.php:89
+#: source/php/Taxonomy/UserGroups.php:88
 msgid "New group"
 msgstr "Ny organisation"
 
-#: source/php/Taxonomy/UserGroups.php:90
+#: source/php/Taxonomy/UserGroups.php:89
 msgid "Add or remove groups"
 msgstr "Lägg till eller ta bort organisationer"
 
-#: source/php/Taxonomy/UserGroups.php:91
+#: source/php/Taxonomy/UserGroups.php:90
 msgid "Choose from most used groups"
 msgstr "Välj från de mest använda organisationerna"
 
-#: source/php/Taxonomy/UserGroups.php:148
+#: source/php/Taxonomy/UserGroups.php:147
 msgid "User groups"
 msgstr "Användarorganisationer"
 
-#: source/php/Taxonomy/UserGroups.php:182
+#: source/php/Taxonomy/UserGroups.php:181
 msgid "Event publishing groups"
 msgstr "Publiceringsorganisationer"
 
-#: source/php/Taxonomy/UserGroups.php:185
+#: source/php/Taxonomy/UserGroups.php:184
 msgid "Assigned groups"
 msgstr "Dina organisationer"
 
-#: source/php/Taxonomy/UserGroups.php:193
+#: source/php/Taxonomy/UserGroups.php:192
 msgid "There are no groups assigned to your account."
 msgstr "Du ingår inte i någon organisation."
 
@@ -2519,6 +2765,24 @@ msgstr ""
 #. Author URI of the plugin/theme
 msgid "http://www.helsingborg.se"
 msgstr ""
+
+#~ msgid "Missing user group"
+#~ msgstr "Saknar användargrupp"
+
+#~ msgid ""
+#~ "Check this box if the post does not belong to any user groups. This post "
+#~ "will be available to all users."
+#~ msgstr ""
+#~ "Kryssa i rutan om posten inte ska tilldelas någon användargrupp. Detta "
+#~ "gör att posten blir tillgängligt för samtliga användare."
+
+#~ msgid "You don't have permissions to delete this user."
+#~ msgstr ""
+#~ "Du har inte tillräckliga rättigheter för att ta bort den här användaren."
+
+#~ msgid "You don't have permissions to edit this user."
+#~ msgstr ""
+#~ "Du har inte tillräckliga rättigheter för att redigera den här användaren."
 
 #~ msgid "Contact person or company name."
 #~ msgstr "Kontaktperson eller företagsnamn."
@@ -2648,9 +2912,6 @@ msgstr ""
 
 #~ msgid "Departure notice"
 #~ msgstr "Avresemeddelande"
-
-#~ msgid "Description"
-#~ msgstr "Beskrivning"
 
 #~ msgid "Use beacons (bluetooth transmitters)"
 #~ msgstr "Använd beacons (bluetooth sändare)"
