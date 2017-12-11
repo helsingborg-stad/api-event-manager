@@ -7,7 +7,7 @@
             "label": "Select specific items (posts)",
             "name": "include_specific_posts",
             "type": "true_false",
-            "instructions": "Set this option to \"yes\" if you want to include all guides",
+            "instructions": "To select none, please switch to \"select specific items\" and leave specific items field blank.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -18,8 +18,8 @@
             "message": "",
             "default_value": 1,
             "ui": 1,
-            "ui_on_text": "",
-            "ui_off_text": ""
+            "ui_on_text": "Include all items",
+            "ui_off_text": "Select specific items"
         },
         {
             "key": "field_5a27f6ab57d2f",
@@ -56,7 +56,7 @@
             "label": "Select specific items (taxonomy)",
             "name": "include_specific_taxonomys",
             "type": "true_false",
-            "instructions": "Set this option to \"yes\" if you want to include all organisations",
+            "instructions": "To select none, please switch to \"select specific items\" and leave specific items field blank.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -67,8 +67,8 @@
             "message": "",
             "default_value": 1,
             "ui": 1,
-            "ui_on_text": "",
-            "ui_off_text": ""
+            "ui_on_text": "Include all items",
+            "ui_off_text": "Select specific items"
         },
         {
             "key": "field_5a27fed65a89d",

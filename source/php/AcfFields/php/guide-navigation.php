@@ -10,7 +10,7 @@
             'label' => __('Select specific items (posts)', 'event-manager'),
             'name' => 'include_specific_posts',
             'type' => 'true_false',
-            'instructions' => __('Set this option to "yes" if you want to include all guides', 'event-manager'),
+            'instructions' => __('To select none, please switch to "select specific items" and leave specific items field blank.', 'event-manager'),
             'required' => 0,
             'conditional_logic' => 0,
             'wrapper' => array(
@@ -21,8 +21,8 @@
             'message' => '',
             'default_value' => 1,
             'ui' => 1,
-            'ui_on_text' => '',
-            'ui_off_text' => '',
+            'ui_on_text' => __('Include all items', 'event-manager'),
+            'ui_off_text' => __('Select specific items', 'event-manager'),
         ),
         1 => array(
             'key' => 'field_5a27f6ab57d2f',
@@ -60,7 +60,7 @@
             'label' => __('Select specific items (taxonomy)', 'event-manager'),
             'name' => 'include_specific_taxonomys',
             'type' => 'true_false',
-            'instructions' => __('Set this option to "yes" if you want to include all organisations', 'event-manager'),
+            'instructions' => __('To select none, please switch to "select specific items" and leave specific items field blank.', 'event-manager'),
             'required' => 0,
             'conditional_logic' => 0,
             'wrapper' => array(
@@ -71,8 +71,8 @@
             'message' => '',
             'default_value' => 1,
             'ui' => 1,
-            'ui_on_text' => '',
-            'ui_off_text' => '',
+            'ui_on_text' => __('Include all items', 'event-manager'),
+            'ui_off_text' => __('Select specific items', 'event-manager'),
         ),
         3 => array(
             'key' => 'field_5a27fed65a89d',
