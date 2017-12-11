@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Event Manager\n"
-"POT-Creation-Date: 2017-12-11 11:30+0100\n"
-"PO-Revision-Date: 2017-12-11 11:37+0100\n"
+"POT-Creation-Date: 2017-12-11 13:39+0100\n"
+"PO-Revision-Date: 2017-12-11 13:46+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: sv\n"
@@ -1151,28 +1151,30 @@ msgstr "Generellt"
 
 #: source/php/AcfFields/php/guide-basic.php:26
 msgid "Guide tagline"
-msgstr ""
+msgstr "Guidens sammanfattning"
 
 #: source/php/AcfFields/php/guide-basic.php:29
 msgid "Short tagline that descibes what this is about"
-msgstr ""
+msgstr "En kort text som beskriver vad guiden handlar om eller innehåller. "
 
 #: source/php/AcfFields/php/guide-basic.php:38
 msgid "E.g: Swedish contemporary glassware"
-msgstr ""
+msgstr "T.ex. Svenskt samtida glas"
 
 #: source/php/AcfFields/php/guide-basic.php:45
 msgid "Date start"
-msgstr ""
+msgstr "Datum start"
 
 #: source/php/AcfFields/php/guide-basic.php:48
 #: source/php/AcfFields/php/guide-basic.php:65
 msgid "This field is strictly informative"
 msgstr ""
+"Det här fältet är endast informativt. Guiden avpubliceras inte automatiskt "
+"efter periodens slut. "
 
 #: source/php/AcfFields/php/guide-basic.php:62
 msgid "Date end"
-msgstr ""
+msgstr "Datum slut"
 
 #: source/php/AcfFields/php/guide-basic.php:79
 msgid "Description"
@@ -1413,15 +1415,17 @@ msgstr "Avstånd till beacon sändare"
 
 #: source/php/AcfFields/php/guide-content-type.php:6
 msgid "Type of guide"
-msgstr ""
+msgstr "Typ av guide"
 
 #: source/php/AcfFields/php/guide-content-type.php:10
 msgid "Select content type"
-msgstr ""
+msgstr "Välj innehållstyp"
 
 #: source/php/AcfFields/php/guide-content-type.php:13
 msgid "Select trail for wider areas or guide for more narrow areas."
 msgstr ""
+"Välj slinga för större områden (t.ex stadsvandring) och guide för mindre "
+"områden (t.ex en inomhusguide)"
 
 #: source/php/AcfFields/php/guide-content-type.php:22
 #: source/php/PostTypes/Guides.php:13
@@ -1430,7 +1434,7 @@ msgstr "Guide"
 
 #: source/php/AcfFields/php/guide-content-type.php:23
 msgid "Trail"
-msgstr ""
+msgstr "Slinga"
 
 #: source/php/AcfFields/php/guide-group-notices.php:14
 msgid "Vad vill du säga? "
@@ -1482,6 +1486,8 @@ msgid ""
 "This field is mandatory for v1 of the app. This will not be required to be "
 "set after January 1:st 2018."
 msgstr ""
+"Det här fältet är obligatoriskt för version 1 av appen. Det här fältelt "
+"behöver du inte fylla i efter Januari 2018. "
 
 #: source/php/AcfFields/php/guide-group-settings.php:10
 msgid "Ja, den här gruppen är aktiv. "
@@ -1549,7 +1555,7 @@ msgstr "Inkludera innehåll i kategori"
 
 #: source/php/AcfFields/php/guide-navigation.php:10
 msgid "Select specific items (posts)"
-msgstr ""
+msgstr "Manuellt urval av guider & slingor"
 
 #: source/php/AcfFields/php/guide-navigation.php:13
 #: source/php/AcfFields/php/guide-navigation.php:63
@@ -1557,16 +1563,18 @@ msgid ""
 "To select none, please switch to \"select specific items\" and leave "
 "specific items field blank."
 msgstr ""
+"Om du inte vill hämta någon information till listan från den här kategorin "
+"kan du välja manuellt urval och lämna fältet tomt. "
 
 #: source/php/AcfFields/php/guide-navigation.php:24
 #: source/php/AcfFields/php/guide-navigation.php:74
 msgid "Include all items"
-msgstr ""
+msgstr "Inkludera alla inlägg"
 
 #: source/php/AcfFields/php/guide-navigation.php:25
 #: source/php/AcfFields/php/guide-navigation.php:75
 msgid "Select specific items"
-msgstr ""
+msgstr "Manuellt urval"
 
 #: source/php/AcfFields/php/guide-navigation.php:29
 msgid "Include these items (posts)"
@@ -1762,15 +1770,15 @@ msgstr "Välj medlemskort där paketet ingår."
 
 #: source/php/AcfFields/php/point-property.php:6
 msgid "Point property icon"
-msgstr ""
+msgstr "Ikon för egenskap"
 
 #: source/php/AcfFields/php/point-property.php:10
 msgid "Image for this property"
-msgstr ""
+msgstr "Bild för den här egenskapen"
 
 #: source/php/AcfFields/php/point-property.php:13
 msgid "Add an image with the format SVG to illustrate this property."
-msgstr ""
+msgstr "En bild som illustrerar punktegenskapen i SVG format. "
 
 #: source/php/AcfFields/php/publishing-groups.php:6
 msgid "Publishing groups"
@@ -1912,11 +1920,11 @@ msgstr "Synkronisera med API"
 
 #: source/php/Admin/UserRoles.php:105
 msgid "Cheatin&#8217; uh?"
-msgstr ""
+msgstr "Fuskar du? "
 
 #: source/php/Admin/UserRoles.php:106
 msgid "Missing permissions"
-msgstr ""
+msgstr "Behörigheten för att göra detta saknas."
 
 #: source/php/Admin/UserRoles.php:191
 msgid "Event administrator"
