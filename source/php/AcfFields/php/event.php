@@ -1,7 +1,8 @@
 <?php 
 
-if (function_exists('acf_add_local_field_group')) {
-    acf_add_local_field_group(array(
+if (function_exists('acf_add_local_field_group')) {
+
+    acf_add_local_field_group(array(
     'key' => 'group_57610ebadcee8',
     'title' => __('Event', 'event-manager'),
     'fields' => array(
@@ -1370,6 +1371,38 @@
                 ),
             ),
         ),
+        42 => array(
+            'key' => 'field_4556677889997',
+            'label' => __('Calendar', 'event-manager'),
+            'name' => '',
+            'type' => 'tab',
+            'instructions' => '',
+            'required' => 0,
+            'conditional_logic' => 0,
+            'wrapper' => array(
+                'width' => '',
+                'class' => '',
+                'id' => '',
+            ),
+            'placement' => 'left',
+            'endpoint' => 0,
+        ),
+        43 => array(
+            'key' => 'field_3837c37d37f32',
+            'label' => __('Internal event', 'event-manager'),
+            'name' => 'internal_event',
+            'type' => 'true_false',
+            'instructions' => __('Is the event internal?', 'event-manager'),
+            'conditional_logic' => 0,
+            'wrapper' => array(
+                'width' => '',
+                'class' => '',
+                'id' => '',
+            ),
+            'default_value' => 0,
+            'ui'          => 1,
+        ),
+ 
     ),
     'location' => array(
         0 => array(
@@ -1389,4 +1422,4 @@
     'active' => 1,
     'description' => '',
 ));
-}
+}
