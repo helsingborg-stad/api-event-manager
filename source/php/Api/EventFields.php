@@ -144,9 +144,11 @@ class EventFields extends Fields
             LEFT JOIN   $db_occasions ON ($wpdb->posts.ID = $db_occasions.event)
             LEFT JOIN   $wpdb->postmeta postmeta ON $wpdb->posts.ID = postmeta.post_id
             LEFT JOIN   $wpdb->term_relationships ON ($wpdb->posts.ID = $wpdb->term_relationships.object_id)
+            LEFT JOIN   $wpdb->postmeta AS pm2 ON $wpdb->posts.ID = pm2.post_id
             WHERE       $wpdb->posts.post_type = %s
                         AND $wpdb->posts.post_status = %s
                         AND ($db_occasions.timestamp_start BETWEEN %d AND %d OR $db_occasions.timestamp_end BETWEEN %d AND %d)
+                        AND pm2.meta_key = 'internal_event' AND pm2.meta_value != '1'
             ";
         }
 
