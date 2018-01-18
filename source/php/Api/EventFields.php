@@ -152,7 +152,7 @@ class EventFields extends Fields
 
         $query .= (! empty($taxonomies)) ? "AND ($wpdb->term_relationships.term_taxonomy_id IN ($taxonomies)) " : "";
         $query .= (! empty($idString)) ? "AND (postmeta.meta_key = 'location' AND postmeta.meta_value IN ($idString)) " : "";
-        $query .= "GROUP BY $db_occasions.timestamp_start, $db_occasions.timestamp_end ";
+        $query .= "GROUP BY $wpdb->posts.ID, $db_occasions.timestamp_start, $db_occasions.timestamp_end ";
         $query .= "ORDER BY $db_occasions.timestamp_start ASC";
         $query .= ($limit != null) ? " LIMIT " . $limit : "";
 
