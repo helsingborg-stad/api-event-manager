@@ -143,6 +143,83 @@
             'height' => '',
         ),
         7 => array(
+            'key' => 'field_5a6ed716688b8',
+            'label' => __('Coordinates', 'event-manager'),
+            'name' => 'manual_coordinates',
+            'type' => 'true_false',
+            'instructions' => '',
+            'required' => 0,
+            'conditional_logic' => 0,
+            'wrapper' => array(
+                'width' => '',
+                'class' => '',
+                'id' => '',
+            ),
+            'message' => __('Yes, I want to enter the coordinates manually for this location.', 'event-manager'),
+            'default_value' => 0,
+            'ui' => 0,
+            'ui_on_text' => '',
+            'ui_off_text' => '',
+        ),
+        8 => array(
+            'key' => 'field_5a6edfd13840c',
+            'label' => __('Latitude', 'event-manager'),
+            'name' => 'manual_latitude',
+            'type' => 'number',
+            'instructions' => __('Use the ISO 6709 standard when entering data.', 'event-manager'),
+            'required' => 1,
+            'conditional_logic' => array(
+                0 => array(
+                    0 => array(
+                        'field' => 'field_5a6ed716688b8',
+                        'operator' => '==',
+                        'value' => '1',
+                    ),
+                ),
+            ),
+            'wrapper' => array(
+                'width' => '50',
+                'class' => '',
+                'id' => '',
+            ),
+            'default_value' => '',
+            'placeholder' => '',
+            'prepend' => '',
+            'append' => '',
+            'min' => '',
+            'max' => '',
+            'step' => '',
+        ),
+        9 => array(
+            'key' => 'field_5a6edf9e3840b',
+            'label' => __('Longitude', 'event-manager'),
+            'name' => 'manual_longitude',
+            'type' => 'number',
+            'instructions' => __('Use the ISO 6709 standard when entering data.', 'event-manager'),
+            'required' => 1,
+            'conditional_logic' => array(
+                0 => array(
+                    0 => array(
+                        'field' => 'field_5a6ed716688b8',
+                        'operator' => '==',
+                        'value' => '1',
+                    ),
+                ),
+            ),
+            'wrapper' => array(
+                'width' => '50',
+                'class' => '',
+                'id' => '',
+            ),
+            'default_value' => '',
+            'placeholder' => '',
+            'prepend' => '',
+            'append' => '',
+            'min' => '',
+            'max' => '',
+            'step' => '',
+        ),
+        10 => array(
             'key' => 'field_57cfba1b54b27',
             'label' => __('Open hours', 'event-manager'),
             'name' => '',
@@ -158,7 +235,7 @@
             'placement' => 'left',
             'endpoint' => 0,
         ),
-        8 => array(
+        11 => array(
             'key' => 'field_58a2cba44c79c',
             'label' => __('Open hours', 'event-manager'),
             'name' => 'open_hours',
@@ -277,7 +354,7 @@
                 ),
             ),
         ),
-        9 => array(
+        12 => array(
             'key' => 'field_57cfba70697e1',
             'label' => __('Exceptions to opening hours', 'event-manager'),
             'name' => 'open_hour_exceptions',
@@ -334,7 +411,7 @@
                 ),
             ),
         ),
-        10 => array(
+        13 => array(
             'key' => 'field_59426f53ca437',
             'label' => __('Links', 'event-manager'),
             'name' => '',
@@ -350,7 +427,7 @@
             'placement' => 'top',
             'endpoint' => 0,
         ),
-        11 => array(
+        14 => array(
             'key' => 'field_5942707eca439',
             'label' => __('Links', 'event-manager'),
             'name' => 'links',
@@ -418,7 +495,7 @@
                 ),
             ),
         ),
-        12 => array(
+        15 => array(
             'key' => 'field_57fca1e1dc2f0',
             'label' => __('Gallery', 'event-manager'),
             'name' => '',
@@ -434,7 +511,7 @@
             'placement' => 'top',
             'endpoint' => 0,
         ),
-        13 => array(
+        16 => array(
             'key' => 'field_57fca1efdc2f1',
             'label' => __('Gallery', 'event-manager'),
             'name' => 'gallery',
@@ -459,7 +536,7 @@
             'max_size' => '',
             'mime_types' => '',
         ),
-        14 => array(
+        17 => array(
             'key' => 'field_59427dee1dee8',
             'label' => __('Organizer', 'event-manager'),
             'name' => '',
@@ -475,7 +552,7 @@
             'placement' => 'left',
             'endpoint' => 0,
         ),
-        15 => array(
+        18 => array(
             'key' => 'field_59427caf1dee6',
             'label' => __('Organizer', 'event-manager'),
             'name' => 'organizers',
@@ -498,7 +575,7 @@
             'return_format' => 'id',
             'ui' => 1,
         ),
-        16 => array(
+        19 => array(
             'key' => 'field_5942843f6867f',
             'label' => __('Prices', 'event-manager'),
             'name' => '',
@@ -514,7 +591,7 @@
             'placement' => 'left',
             'endpoint' => 0,
         ),
-        17 => array(
+        20 => array(
             'key' => 'field_594282f5719a1',
             'label' => __('Included in membership cards', 'event-manager'),
             'name' => 'membership_cards',
@@ -537,7 +614,7 @@
             'return_format' => 'id',
             'ui' => 1,
         ),
-        18 => array(
+        21 => array(
             'key' => 'field_594282f8719a2',
             'label' => __('Default price / Adult', 'event-manager'),
             'name' => 'price_adult',
@@ -556,7 +633,7 @@
             'append' => __('SEK', 'event-manager'),
             'maxlength' => '',
         ),
-        19 => array(
+        22 => array(
             'key' => 'field_594282fc719a3',
             'label' => __('Price student', 'event-manager'),
             'name' => 'price_student',
@@ -575,7 +652,7 @@
             'append' => __('SEK', 'event-manager'),
             'maxlength' => '',
         ),
-        20 => array(
+        23 => array(
             'key' => 'field_594282ff719a4',
             'label' => __('Price children', 'event-manager'),
             'name' => 'price_children',
@@ -594,7 +671,7 @@
             'append' => __('SEK', 'event-manager'),
             'maxlength' => '',
         ),
-        21 => array(
+        24 => array(
             'key' => 'field_59428302719a5',
             'label' => __('Age restriction for children price', 'event-manager'),
             'name' => 'children_age',
@@ -644,7 +721,7 @@
             'return_format' => 'value',
             'placeholder' => '',
         ),
-        22 => array(
+        25 => array(
             'key' => 'field_59428305719a6',
             'label' => __('Price senior', 'event-manager'),
             'name' => 'price_senior',
@@ -663,7 +740,7 @@
             'append' => __('SEK', 'event-manager'),
             'maxlength' => '',
         ),
-        23 => array(
+        26 => array(
             'key' => 'field_5942830a719a7',
             'label' => __('Age restriction for senior price', 'event-manager'),
             'name' => 'senior_age',
@@ -723,7 +800,7 @@
             'return_format' => 'value',
             'placeholder' => '',
         ),
-        24 => array(
+        27 => array(
             'key' => 'field_594282ed719a0',
             'label' => __('Minimum age to enter', 'event-manager'),
             'name' => 'age_restriction',
@@ -744,7 +821,7 @@
             'max' => '',
             'step' => '',
         ),
-        25 => array(
+        28 => array(
             'key' => 'field_59428314719a8',
             'label' => __('Price information', 'event-manager'),
             'name' => 'price_information',

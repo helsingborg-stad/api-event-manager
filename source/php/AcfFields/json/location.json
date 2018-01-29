@@ -140,6 +140,83 @@
             "height": ""
         },
         {
+            "key": "field_5a6ed716688b8",
+            "label": "Coordinates",
+            "name": "manual_coordinates",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "Yes, I want to enter the coordinates manually for this location.",
+            "default_value": 0,
+            "ui": 0,
+            "ui_on_text": "",
+            "ui_off_text": ""
+        },
+        {
+            "key": "field_5a6edfd13840c",
+            "label": "Latitude",
+            "name": "manual_latitude",
+            "type": "number",
+            "instructions": "Use the ISO 6709 standard when entering data.",
+            "required": 1,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5a6ed716688b8",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "min": "",
+            "max": "",
+            "step": ""
+        },
+        {
+            "key": "field_5a6edf9e3840b",
+            "label": "Longitude",
+            "name": "manual_longitude",
+            "type": "number",
+            "instructions": "Use the ISO 6709 standard when entering data.",
+            "required": 1,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5a6ed716688b8",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "min": "",
+            "max": "",
+            "step": ""
+        },
+        {
             "key": "field_57cfba1b54b27",
             "label": "Open hours",
             "name": "",

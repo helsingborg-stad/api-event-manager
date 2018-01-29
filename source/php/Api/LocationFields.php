@@ -59,7 +59,8 @@ class LocationFields extends Fields
      * @param  WP_REST_Request $request Full details about the request.
      * @return array $args.
      **/
-    public function addCoordinateFilter($args, $request) {
+    public function addCoordinateFilter($args, $request)
+    {
         if (empty($request['latlng'])) {
             return $args;
         }
@@ -68,7 +69,9 @@ class LocationFields extends Fields
         $filter = $request['latlng'];
         $latlng = explode(',', preg_replace('/\s+/', '', urldecode($filter)));
 
-        if(count($latlng) != 2) return $args;
+        if (count($latlng) != 2) {
+            return $args;
+        }
         $locations = \HbgEventImporter\Helper\Address::getNearbyLocations($latlng[0], $latlng[1], floatval($distance));
         $idArray = ($locations) ? array_column($locations, 'post_id') : array(0);
         $args['post__in'] = $idArray;
@@ -120,11 +123,36 @@ class LocationFields extends Fields
     /**
      * Usort comparer for weekdays
      */
-    public function compareDays($a, $b) {
+    public function compareDays($a, $b)
+    {
         if ($a['weekday'] == $b['weekday']) {
             return 0;
         }
         return ($a['weekday'] < $b['weekday']) ? -1 : 1;
+    }
+
+    /**
+     * Get value of latitude (auto or manual)
+     * @return string Decimal value of latitude location
+     */
+    public function getLatitude() : string
+    {
+        if (get_field('manual_coordinates')) {
+            return get_field('manual_latitude');
+        }
+        return get_field('latitude');
+    }
+
+    /**
+     * Get value of longitude (auto or manual)
+     * @return string Decimal value of longitude location
+     */
+    public function getLongitude() : string
+    {
+        if (get_field('manual_coordinates')) {
+            return get_field('manual_longitude');
+        }
+        return get_field('longitude');
     }
 
     /**
@@ -253,7 +281,7 @@ class LocationFields extends Fields
         register_rest_field($this->postType,
             'latitude',
             array(
-                'get_callback' => array($this, 'stringGetCallBack'),
+                'get_callback' => array($this, 'getLatitude'),
                 'update_callback' => array($this, 'stringUpdateCallBack'),
                 'schema' => array(
                     'description' => 'Field containing string value with coordinates.',
@@ -267,7 +295,7 @@ class LocationFields extends Fields
         register_rest_field($this->postType,
             'longitude',
             array(
-                'get_callback' => array($this, 'stringGetCallBack'),
+                'get_callback' => array($this, 'getLongitude'),
                 'update_callback' => array($this, 'stringUpdateCallBack'),
                 'schema' => array(
                     'description' => 'Field containing string value with coordinates.',
@@ -485,5 +513,5 @@ class LocationFields extends Fields
                 )
             )
         );
-   }
+    }
 }
