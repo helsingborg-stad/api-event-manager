@@ -138,7 +138,7 @@ class LocationFields extends Fields
     public function getLatitude($object) : string
     {
         if (get_field('manual_coordinates', $object['id'])) {
-            return get_field('manual_latitude', $object['id']);
+            return str_replace(",", ".", get_field('manual_latitude', $object['id']));
         }
         return get_field('latitude', $object['id']);
     }
@@ -150,7 +150,7 @@ class LocationFields extends Fields
     public function getLongitude($object) : string
     {
         if (get_field('manual_coordinates', $object['id'])) {
-            return get_field('manual_longitude', $object['id']);
+            return str_replace(",", ".", get_field('manual_longitude', $object['id']));
         }
         return get_field('longitude', $object['id']);
     }
