@@ -460,6 +460,7 @@
                         'id' => '',
                     ),
                     'choices' => array(
+                        'webpage' => __('Webpage', 'event-manager'),
                         'bambuser' => __('Bambuser', 'event-manager'),
                         'facebook' => __('Facebook', 'event-manager'),
                         'instagram' => __('Instagram', 'event-manager'),
@@ -846,7 +847,7 @@
             0 => array(
                 'param' => 'post_type',
                 'operator' => '==',
-                'value' => 'location',
+                'value' => 'post',
             ),
         ),
     ),

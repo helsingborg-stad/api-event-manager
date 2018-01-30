@@ -456,6 +456,7 @@
                         "id": ""
                     },
                     "choices": {
+                        "webpage": "Webpage",
                         "bambuser": "Bambuser",
                         "facebook": "Facebook",
                         "instagram": "Instagram",
@@ -837,7 +838,7 @@
             {
                 "param": "post_type",
                 "operator": "==",
-                "value": "location"
+                "value": "post"
             }
         ]
     ],
