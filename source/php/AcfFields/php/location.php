@@ -847,7 +847,7 @@
             0 => array(
                 'param' => 'post_type',
                 'operator' => '==',
-                'value' => 'post',
+                'value' => 'location',
             ),
         ),
     ),
