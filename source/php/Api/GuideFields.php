@@ -460,9 +460,10 @@ class GuideFields extends Fields
         $objects            = $this->getObjects($object, 'guide_content_objects', $request, true);
         $beacon_namespace   = $this->stringGetCallBack($object, 'guide_beacon_namespace', $request, $formatted);
 
-        if (! $beacons) {
+        if (!$beacons) {
             return null;
         }
+
         foreach ($beacons as $key => $item) {
             if (!empty($item['objects'])) {
                 if (is_string($item['objects'])) {
@@ -473,14 +474,16 @@ class GuideFields extends Fields
                     $item['objects'] = explode(",", $item['objects']);
                 }
 
-                $result[] = array(
-                    'order' => $key,
-                    'nid' => $beacon_namespace,
-                    'bid' => $item['beacon'],
-                    'beacon_distance' => $item['distance'],
-                    'content' => $item['objects'],
-                    'location' => is_numeric($item['location']) ? $item['location'] : null
-                );
+                if (!empty($item['objects'])) {
+                    $result[] = array(
+                        'order' => $key,
+                        'nid' => $beacon_namespace,
+                        'bid' => $item['beacon'],
+                        'beacon_distance' => $item['distance'],
+                        'content' => $item['objects'],
+                        'location' => is_numeric($item['location']) ? $item['location'] : null
+                    );
+                }
             }
         }
 
