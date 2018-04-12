@@ -117,13 +117,17 @@ class Guides extends \HbgEventImporter\Entity\CustomPostType
     {
         global $post;
 
-        if (!is_object($post)) {
-            return $field;
+        if (is_object($post) && isset($post->ID)) {
+            $postId = $post->ID;
+        } elseif(isset($_REQUEST['post_id']) && is_numeric($_REQUEST['post_id'])) {
+            $postId = $_REQUEST['post_id'];
+        } else {
+            return;
         }
 
         $field['choices'] = [];
 
-        foreach ((array) get_field('guide_content_objects', $post->ID) as $key => $item) {
+        foreach ((array) get_field('guide_content_objects', $postId) as $key => $item) {
             if (!empty($item['guide_object_id'])) {
                 $field['choices'][$item['guide_object_uid']] = $item['guide_object_title'] . " (" . $item['guide_object_id'] . ")";
             } else {
