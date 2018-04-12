@@ -10,8 +10,8 @@
             'label' => __('Select the group for this guide', 'event-manager'),
             'name' => 'guidegroup',
             'type' => 'taxonomy',
-            'instructions' => __('This field is mandatory for v1 of the app. This will not be required to be set after January 1:st 2018.', 'event-manager'),
-            'required' => 0,
+            'instructions' => '',
+            'required' => 1,
             'conditional_logic' => 0,
             'wrapper' => array(
                 'width' => '',
