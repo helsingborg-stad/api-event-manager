@@ -86,7 +86,7 @@
                     "name": "transticket_username",
                     "type": "text",
                     "instructions": "",
-                    "required": 0,
+                    "required": 1,
                     "conditional_logic": 0,
                     "wrapper": {
                         "width": "50",
@@ -105,10 +105,29 @@
                     "name": "transticket_password",
                     "type": "text",
                     "instructions": "",
-                    "required": 0,
+                    "required": 1,
                     "conditional_logic": 0,
                     "wrapper": {
                         "width": "50",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "maxlength": ""
+                },
+                {
+                    "key": "field_5ae1e653aa68d",
+                    "label": "Ticket URL",
+                    "name": "transticket_ticket_url",
+                    "type": "text",
+                    "instructions": "URL to single ticket purchase, exclude ID.",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
                         "class": "",
                         "id": ""
                     },

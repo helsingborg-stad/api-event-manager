@@ -3,7 +3,7 @@
 if (function_exists('acf_add_local_field_group')) {
     acf_add_local_field_group(array(
     'key' => 'group_5ae188afeb965',
-    'title' => 'Transticket',
+    'title' => __('Transticket', 'event-manager'),
     'fields' => array(
         0 => array(
             'key' => 'field_5ae188b002bf0',
@@ -89,7 +89,7 @@
                     'name' => 'transticket_username',
                     'type' => 'text',
                     'instructions' => '',
-                    'required' => 0,
+                    'required' => 1,
                     'conditional_logic' => 0,
                     'wrapper' => array(
                         'width' => '50',
@@ -108,7 +108,7 @@
                     'name' => 'transticket_password',
                     'type' => 'text',
                     'instructions' => '',
-                    'required' => 0,
+                    'required' => 1,
                     'conditional_logic' => 0,
                     'wrapper' => array(
                         'width' => '50',
@@ -122,6 +122,25 @@
                     'maxlength' => '',
                 ),
                 3 => array(
+                    'key' => 'field_5ae1e653aa68d',
+                    'label' => __('Ticket URL', 'event-manager'),
+                    'name' => 'transticket_ticket_url',
+                    'type' => 'text',
+                    'instructions' => __('URL to single ticket purchase, exclude ID.', 'event-manager'),
+                    'required' => 1,
+                    'conditional_logic' => 0,
+                    'wrapper' => array(
+                        'width' => '',
+                        'class' => '',
+                        'id' => '',
+                    ),
+                    'default_value' => '',
+                    'placeholder' => '',
+                    'prepend' => '',
+                    'append' => '',
+                    'maxlength' => '',
+                ),
+                4 => array(
                     'key' => 'field_5ae188b03e4f7',
                     'label' => __('Exclude tags', 'event-manager'),
                     'name' => 'transticket_filter_tags',
@@ -140,7 +159,7 @@
                     'append' => '',
                     'maxlength' => '',
                 ),
-                4 => array(
+                5 => array(
                     'key' => 'field_5ae188b03e51a',
                     'label' => __('Default user groups', 'event-manager'),
                     'name' => 'transticket_publishing_groups',
