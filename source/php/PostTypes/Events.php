@@ -94,6 +94,7 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
         add_action('admin_notices', array($this, 'duplicateNotice'));
         add_action('admin_notices', array($this, 'importCbisWarning'));
         add_action('admin_notices', array($this, 'importXcapWarning'));
+        add_action('admin_notices', array($this, 'importTransticketWarning'));
         add_action('admin_notices', array($this, 'eventInstructions'));
 
         add_action('admin_action_duplicate_post', array($this, 'duplicatePost'));
@@ -465,6 +466,11 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
             if (have_rows('cbis_api_keys', 'option')) {
                 $button .= '<div class="button-primary extraspace" id="cbis">' . __('Import CBIS', 'event-manager') . '</div>';
             }
+
+            if (have_rows('transticket_api_keys', 'option')) {
+                $button .= '<div class="button-primary extraspace" id="transticket">' . __('Import Transticket', 'event-manager') . '</div>';
+            }
+
             $button .= '<div class="button-primary extraspace" id="occasions">'.__('Collect event timestamps', 'event-manager').'</div>';
             $button .= '</div>';
             $views['import-buttons'] = $button;
@@ -658,6 +664,31 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
         _e('XCAP have not imported any events for atleast 7 days. Please control the importer.', 'event-manager');
         echo '</p></div>';
     }
+
+    /**
+     * Show warning if Transticket haven't imported any events the last 7 days.
+     * @return void
+     */
+    public function importTransticketWarning()
+    {
+        $screen = get_current_screen();
+        $filter = (isset($_GET['filter_action'])) ? $_GET['filter_action'] : false;
+
+        $optionsChecked = (get_field('import_warning', 'option') == true && get_field('transticket_daily_cron', 'option') == true) ? true : false;
+        if ($screen->post_type != 'event' || $optionsChecked != true || $filter || ! current_user_can('administrator')) {
+            return;
+        }
+
+        $latestPost = get_posts("post_type=event&numberposts=1&meta_key=import_client&meta_value=transticket&post_status=any");
+        if (empty($latestPost[0]) || strtotime($latestPost[0]->post_date) > strtotime('-1 week')) {
+            return;
+        }
+
+        echo '<div class="notice notice-warning is-dismissible"><p>';
+        _e('Transticket have not imported any events for atleast 7 days. Please control the importer.', 'event-manager');
+        echo '</p></div>';
+    }
+
 
     /**
      * Saves hashtags from content as event_tags

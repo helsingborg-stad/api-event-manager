@@ -20,9 +20,10 @@ class TransTicket extends \HbgEventImporter\Parser
      * Get Event data from TransTicket
      * @return array data
      */
-    private static function getEventData()
+    private function getEventData()
     {
-        return json_decode( \HbgEventImporter\Helper\Curl::request('GET', curlAPIUrl, curlApiUsrData, false, 'json', array('Content-Type: application/json')) );
+        $url = $this->url. '&FromDate='.date("Y-m-d").'&ToDate='.date("Y-m-d", strtotime("+12 months"));
+        return json_decode( \HbgEventImporter\Helper\Curl::request('GET', $url, $this->apiKeys, false, 'json', array('Content-Type: application/json')) );
     }
 
 
@@ -32,7 +33,7 @@ class TransTicket extends \HbgEventImporter\Parser
      */
     public function start()
     {
-        $eventData = $this::getEventData();
+        $eventData = $this->getEventData();
         $this->collectDataForLevenshtein();
 
         // Used to set unique key on events
