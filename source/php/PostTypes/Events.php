@@ -467,7 +467,7 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
                 $button .= '<div class="button-primary extraspace" id="cbis">' . __('Import CBIS', 'event-manager') . '</div>';
             }
 
-            if (have_rows('transticket_api_keys', 'option')) {
+            if (have_rows('transticket_api_urls', 'option')) {
                 $button .= '<div class="button-primary extraspace" id="transticket">' . __('Import Transticket', 'event-manager') . '</div>';
             }
 

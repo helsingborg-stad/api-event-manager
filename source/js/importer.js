@@ -26,10 +26,9 @@ ImportEvents.Parser.Eventhandling = (function ($) {
     var j = 0;
 
     function Eventhandling() {
-
         $(document).on('click', '#transticket', function (e) {
             e.preventDefault();
-            data.value = 'xcap';
+            data.value = 'transticket';
 
             if (!loadingOccasions) {
                 loadingOccasions = true;
@@ -150,8 +149,7 @@ ImportEvents.Parser.Eventhandling = (function ($) {
             data.api_keys = cbis_ajax_vars.cbis_keys[i];
         } else if (data.value === 'xcap') {
             data.api_keys = xcap_ajax_vars.xcap_keys[i];
-        }
-        else if (data.value === 'transticket') {
+        } else if (data.value === 'transticket') {
             data.api_keys = transticket_ajax_vars.transticket_keys[i];
         }
 

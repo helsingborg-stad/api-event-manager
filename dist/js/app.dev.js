@@ -453,6 +453,23 @@ ImportEvents.Parser.Eventhandling = (function ($) {
     var j = 0;
 
     function Eventhandling() {
+        $(document).on('click', '#transticket', function (e) {
+            e.preventDefault();
+            data.value = 'transticket';
+
+            if (!loadingOccasions) {
+                loadingOccasions = true;
+
+                var button = $(e.target).closest('#transticket');
+                var storedCss = this.collectCssFromButton(button);
+
+                this.redLoadingButton(button, function() {
+                    this.parseEvents(data, button, storedCss);
+                    return;
+                }.bind(this));
+            }
+        }.bind(this));
+
         $(document).on('click', '#xcap', function (e) {
             e.preventDefault();
             data.value = 'xcap';
@@ -548,7 +565,7 @@ ImportEvents.Parser.Eventhandling = (function ($) {
     };
 
     /**
-     * Parse CBIS & XCAP events, loop through each API key
+     * Parse CBIS, XCAP, TransTicket events, loop through each API key
      * @param  {array}   data        Data to parse
      * @param  {element} button      Clicked button
      * @param  {object}  storedCss   Default button  css
@@ -559,6 +576,8 @@ ImportEvents.Parser.Eventhandling = (function ($) {
             data.api_keys = cbis_ajax_vars.cbis_keys[i];
         } else if (data.value === 'xcap') {
             data.api_keys = xcap_ajax_vars.xcap_keys[i];
+        } else if (data.value === 'transticket') {
+            data.api_keys = transticket_ajax_vars.transticket_keys[i];
         }
 
         // Show result if there's no API keys left to parse

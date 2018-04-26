@@ -13,6 +13,7 @@ class TransTicket extends \HbgEventImporter\Parser
 
     public function __construct($url, $apiKeys)
     {
+        error_log(print_r($apiKeys, true));
         parent::__construct($url, $apiKeys);
     }
 
@@ -23,7 +24,7 @@ class TransTicket extends \HbgEventImporter\Parser
     private function getEventData()
     {
         $url = $this->url. '&FromDate='.date("Y-m-d").'&ToDate='.date("Y-m-d", strtotime("+12 months"));
-        return json_decode( \HbgEventImporter\Helper\Curl::request('GET', $url, $this->apiKeys, false, 'json', array('Content-Type: application/json')) );
+        return json_decode( \HbgEventImporter\Helper\Curl::request('GET', $url, $this->apiKeys['transticket_api_key'], false, 'json', array('Content-Type: application/json')) );
     }
 
 
@@ -40,7 +41,7 @@ class TransTicket extends \HbgEventImporter\Parser
         $shortKey = substr(intval($this->url, 36), 0, 4);
 
         foreach ($eventData as $key => $event) {
-            if (!isset($event->uid) || empty($event->uid)) {
+            if (!isset($event->Id) || empty($event->Id)) {
                 continue;
             }
 
@@ -57,26 +58,30 @@ class TransTicket extends \HbgEventImporter\Parser
     public function saveEvent($eventData, $shortKey)
     {
 
-        $data['post_content'] =  isset($eventData->Description) && !empty($eventData->Description) ? $eventData->Description : null;
-        $data['post_title'] =  isset($eventData->VenueName) && !empty($eventData->VenueName) ? $eventData->VenueName : null;
-        $data['uId'] =  isset($eventData->VenueId) && !empty($eventData->VenueId) ? $eventData->VenueId : null;
-        $data['city'] =  isset($eventData->VenueCity) && !empty($eventData->VenueCity) ? $eventData->VenueCity : null;
-        $data['post_title'] =  isset($eventData->Name) && !empty($eventData->Name) ? $eventData->Name : null;
+        $data['postTitle'] =  isset($eventData->Name) && !empty($eventData->Name) ? $eventData->Name : null;
+        $data['postContent'] =  isset($eventData->Description) && !empty($eventData->Description) ? $eventData->Description : '';
+        $data['uId'] = $eventData->Id;
+        //$data['city'] =  isset($eventData->VenueCity) && !empty($eventData->VenueCity) ? $eventData->VenueCity : null;
 
-        $data['start_date'] =  isset($eventData->EventDate) && !empty($eventData->EventDate) ? $eventData->EventDate : null;
-        $data['end_date'] =  isset($eventData->EndDate) && !empty($eventData->EndDate) ? $eventData->EndDate : null;
-        $data['event_categories'] =  isset($eventData->Tags) && !empty($eventData->Tags) ? $eventData->Tags : null;
+        $data['startDate'] =  isset($eventData->EventDate) && !empty($eventData->EventDate) ? $eventData->EventDate : null;
+        $data['endDate'] =  isset($eventData->EndDate) && !empty($eventData->EndDate) ? $eventData->EndDate : null;
+
+        // Fixa
+        // $data['event_categories'] =  isset($eventData->Tags) && !empty($eventData->Tags) ? $eventData->Tags : null;
+        $data['categories'] = array();
+
+        $data['postStatus'] = get_field('transticket_post_status', 'option') ? get_field('transticket_post_status', 'option') : 'publish';
+        $data['user_groups'] = (is_array($this->apiKeys['transticket_groups']) && ! empty($this->apiKeys['transticket_groups'])) ? array_map('intval', $this->apiKeys['transticket_groups']) : null;
+
+        // Fixa
+        $data['ticketUrl'] = null;
 
         $data['image'] = null;
-
         if (isset($eventData->{'ImageURL'}) && !empty($eventData->{'ImageURL'}) && $eventData->{'ImageURL'} != 'null') {
             $data['image'] = $eventData->{'ImageURL'};
         }
 
-        //var_dump($data);
-        //exit;
-
-        if (!is_string($data['post_title'])) {
+        if (!is_string($data['postTitle'])) {
             return;
         }
 
@@ -89,9 +94,9 @@ class TransTicket extends \HbgEventImporter\Parser
             );
         }
 
-        $locationId = $this->maybeCreateLocation($data, $shortKey);
+        //$locationId = $this->maybeCreateLocation($data, $shortKey);
+        $locationId = null;
         $this->maybeCreateEvent($data, $shortKey, $locationId);
-
     }
 
     /**
@@ -104,9 +109,6 @@ class TransTicket extends \HbgEventImporter\Parser
     public function maybeCreateEvent($data, $shortKey, $locationId)
     {
         extract($data);
-
-        $postContent = $description;
-        $postTitle = $post_title;
 
         $eventId = $this->checkIfPostExists('event', $postTitle);
         $occurred = false;
@@ -136,7 +138,6 @@ class TransTicket extends \HbgEventImporter\Parser
                 'sync'                    => 1,
                 'status'                  => 'Active',
                 'image'                   => !empty($image) ? $image : null,
-                'alternate_name'          => $alternateName,
                 'event_link'              => null,
                 'categories'              => $categories,
                 'occasions'               => $occasions,
@@ -254,7 +255,7 @@ class TransTicket extends \HbgEventImporter\Parser
     public function filter($categories)
     {
         $passes = true;
-        $exclude = $this->apiKeys['transticket_exclude'];
+        $exclude = $this->apiKeys['transticket_filter_tags'];
 
         if (! empty($exclude)) {
             $filters = array_map('trim', explode(',', $exclude));

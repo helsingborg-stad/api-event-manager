@@ -272,7 +272,6 @@ class App
             $transticketKeys[] = array(
                 'transticket_api_url'       => get_sub_field('transticket_api_url'),
                 'transticket_api_key'       => get_sub_field('transticket_username').":".get_sub_field('transticket_password'),
-                'transticket_exclude'       => get_sub_field('transticket_filter_categories'),
                 'transticket_filter_tags'   => get_sub_field('transticket_filter_tags'),
                 'transticket_groups'        => get_sub_field('transticket_publishing_groups')
             );
@@ -280,8 +279,6 @@ class App
 
         return $transticketKeys;
     }
-
-
 
     /**
      * Get Xcap keys

@@ -69,6 +69,11 @@ abstract class CustomPostType
             $importer = new \HbgEventImporter\Parser\Xcap($api_keys['xcap_api_url'], $api_keys);
             $data = $importer->getCreatedData();
             wp_send_json($data);
+        } elseif ($_POST['value'] == 'transticket') {
+            $api_keys = $_POST['api_keys'];
+            $importer = new \HbgEventImporter\Parser\TransTicket($api_keys['transticket_api_url'], $api_keys);
+            $data = $importer->getCreatedData();
+            wp_send_json($data);
         }
     }
 
