@@ -56,26 +56,6 @@ class TransTicket extends \HbgEventImporter\Parser
     public function saveEvent($eventData, $shortKey)
     {
 
-        /*
-        $data['address'] = isset($eventData->{'x-xcap-address'}) && !empty($eventData->{'x-xcap-address'}) ? $eventData->{'x-xcap-address'} : null;
-        $data['alternateName'] = isset($eventData->uid) && !empty($eventData->uid) ? $eventData->uid : null;
-        $data['categories'] = isset($eventData->categories) && !empty($eventData->categories) ? array_map('ucwords', array_map('trim', explode(',', $eventData->categories))) : null;
-        $data['description'] = isset($eventData->description) && !empty($eventData->description) ? $eventData->description : null;
-        $data['doorTime'] = isset($eventData->dtstart) && !empty($eventData->dtstart) ? $eventData->dtstart : null;
-        $data['doorTime'] = $this->formatDate($data['doorTime']);
-        $data['endDate'] = isset($eventData->dtend) && !empty($eventData->dtend) ? $eventData->dtend : null;
-        $data['endDate'] = $this->formatDate($data['endDate']);
-        $data['location'] = isset($eventData->location) && !empty($eventData->location) ? $eventData->location : null;
-        $data['name'] = isset($eventData->summary) && !empty($eventData->summary) ? $eventData->summary : null;
-        $data['startDate'] = isset($eventData->dtstart) && !empty($eventData->dtstart) ? $eventData->dtstart : null;
-        $data['startDate'] = $this->formatDate($data['startDate']);
-        $data['ticketUrl'] = isset($eventData->{'x-xcap-ticketlink'}) && !empty($eventData->{'x-xcap-ticketlink'}) ? $eventData->{'x-xcap-ticketlink'} : null;
-        $data['defaultLocation'] = get_field('default_city', 'option') ? get_field('default_city', 'option') : null;
-        $data['city'] = ($data['location'] != null) ? $data['location'] : $data['defaultLocation'];
-        $data['postStatus'] = get_field('xcap_post_status', 'option') ? get_field('xcap_post_status', 'option') : 'publish';
-        $data['user_groups'] = (is_array($this->apiKeys['xcap_groups']) && ! empty($this->apiKeys['xcap_groups'])) ? array_map('intval', $this->apiKeys['xcap_groups']) : null;
-        */
-
         $data['post_content'] =  isset($eventData->Description) && !empty($eventData->Description) ? $eventData->Description : null;
         $data['post_title'] =  isset($eventData->VenueName) && !empty($eventData->VenueName) ? $eventData->VenueName : null;
         $data['uId'] =  isset($eventData->VenueId) && !empty($eventData->VenueId) ? $eventData->VenueId : null;
@@ -92,8 +72,8 @@ class TransTicket extends \HbgEventImporter\Parser
             $data['image'] = $eventData->{'ImageURL'};
         }
 
-        var_dump($data);
-        exit;
+        //var_dump($data);
+        //exit;
 
         if (!is_string($data['post_title'])) {
             return;
