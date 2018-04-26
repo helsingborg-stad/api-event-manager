@@ -26,7 +26,6 @@ class Event extends \HbgEventImporter\Entity\PostManager
         $this->post_content = DataCleaner::string($this->post_content);
         $this->_event_manager_uid = DataCleaner::string($this->_event_manager_uid);
         $this->status = DataCleaner::string($this->status);
-        $this->alternate_name = DataCleaner::string($this->alternate_name);
         $this->event_link = DataCleaner::string($this->event_link);
         $this->booking_link = DataCleaner::string($this->booking_link);
         $this->age_restriction = DataCleaner::string($this->age_restriction);
