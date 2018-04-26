@@ -249,37 +249,9 @@ class App
             return;
         }
 
-        wp_localize_script('hbg-event-importer', 'transticket_ajax_vars', array('transticket_keys' => $this->getTransTicketKeys()));
         wp_localize_script('hbg-event-importer', 'cbis_ajax_vars', array('cbis_keys' => $this->getCbisKeys()));
         wp_localize_script('hbg-event-importer', 'xcap_ajax_vars', array('xcap_keys' => $this->getXcapKeys()));
     }
-
-    /**
-     * Get Xcap keys
-     * @return array
-     */
-    public function getTransTicketKeys(): array
-    {
-        $transticketKeys = array();
-
-        if (!have_rows('transticket_api_urls', 'option')) {
-            return array();
-        }
-
-        while (have_rows('transticket_api_urls', 'option')) {
-            the_row();
-
-            $transticketKeys[] = array(
-                'transticket_api_url'       => get_sub_field('transticket_api_url'),
-                'transticket_exclude'       => get_sub_field('transticket_filter_categories'),
-                'transticket_groups'        => get_sub_field('transticket_publishing_groups')
-            );
-        }
-
-        return $transticketKeys;
-    }
-
-
 
     /**
      * Get Xcap keys
@@ -381,16 +353,6 @@ class App
                 $importer = new \HbgEventImporter\Parser\Xcap($api_key['xcap_api_url'], $api_key);
             }
         }
-
-
-        if (get_field('transticket_daily_cron', 'option') == true) {
-            $api_keys = $this->getTransTicketKeys();
-
-            foreach ((array) $api_keys as $key => $api_key) {
-                $importer = new \HbgEventImporter\Parser\TransTicket($api_key['transticket_api_url'], $api_key);
-            }
-        }
-
 
         file_put_contents(dirname(__FILE__) . "/Log/cron_import.log", "Cron last run: " . date("Y-m-d H:i:s"));
     }
