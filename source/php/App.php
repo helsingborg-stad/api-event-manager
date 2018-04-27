@@ -92,51 +92,6 @@ class App
         new Api\UserGroupFields();
         new Api\PointPropertyFields();
         new Api\NavigationFields();
-
-        add_action('init', array($this, 'test'));
-    }
-
-    function test()
-    {
-        if (!isset($_GET['transticket'])) {
-            return;
-        }
-
-        /* 500 error on live */
-        ini_set('max_execution_time', 0);
-
-        /*$userName = "herman_helkon";
-        $password = "vbCfggmE";
-        $fromDate = '2016-12-01';
-        $toDate = '2017-12-31';
-        $apiURL = "http://api.transticket.nu/v12/api/EventListable/List?FromDate=$fromDate&ToDate=$toDate&LoadReleaseDates=true&LoadTags=true&LoadSales=true&LoadPrices=true&IncludeFreeTickets=true&Pos={Pos}&IncludeServiceFeeInPrices=true";*/
-
-        $userName = "HASApi.";
-        $password = "KULAJ59X";
-        //$fromDate = '2016-12-01';
-        $fromDate = date("Y-m-d");
-        //$toDate = '2018-12-31';
-        $toDate = date("Y-m-d", strtotime("+12 months"));
-        $apiURL = "https://api.ebiljett.nu/latest/api/EventListable/Coming?FromDate=$fromDate&ToDate=$toDate&LoadReleaseDates=true&LoadTags=true&LoadSales=true&LoadPrices=true&IncludeFreeTickets=true&IncludeServiceFeeInPrices=true";
-
-        //$apiURL = "https://api.ebiljett.nu/latest/api/EventListable/List?FromDate=$fromDate&ToDate=$toDate&LoadReleaseDates=true&LoadTags=true&LoadSales=true&LoadPrices=true&IncludeFreeTickets=true&IncludeServiceFeeInPrices=true";
-
-
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL,$apiURL);
-        curl_setopt($ch, CURLOPT_TIMEOUT, 30); //timeout after 30 seconds
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
-        curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_ANY);
-        curl_setopt($ch, CURLOPT_USERPWD, "$userName:$password");
-        $status_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);   //get status code
-        $jsonString = curl_exec($ch);
-        curl_close ($ch);
-
-        $jsonArray = json_decode($jsonString,true);
-
-        echo "<pre>";
-        print_r($jsonArray);
-        wp_die();
     }
 
     /**
