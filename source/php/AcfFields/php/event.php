@@ -1034,6 +1034,112 @@
             'placeholder' => '',
         ),
         28 => array(
+            'key' => 'field_5ae2e55f94974',
+            'label' => __('Additional ticket types', 'event-manager'),
+            'name' => 'additional_ticket_types',
+            'type' => 'repeater',
+            'instructions' => __('Additional types of tickets.', 'event-manager'),
+            'required' => 0,
+            'conditional_logic' => 0,
+            'wrapper' => array(
+                'width' => '',
+                'class' => '',
+                'id' => '',
+            ),
+            'collapsed' => '',
+            'min' => 0,
+            'max' => 0,
+            'layout' => 'block',
+            'button_label' => '',
+            'sub_fields' => array(
+                0 => array(
+                    'key' => 'field_5ae2e5bc94975',
+                    'label' => __('Ticket name', 'event-manager'),
+                    'name' => 'ticket_name',
+                    'type' => 'text',
+                    'instructions' => '',
+                    'required' => 1,
+                    'conditional_logic' => 0,
+                    'wrapper' => array(
+                        'width' => '33',
+                        'class' => '',
+                        'id' => '',
+                    ),
+                    'default_value' => '',
+                    'placeholder' => '',
+                    'prepend' => '',
+                    'append' => '',
+                    'maxlength' => '',
+                ),
+                1 => array(
+                    'key' => 'field_5ae2e64294977',
+                    'label' => __('Maximum price', 'event-manager'),
+                    'name' => 'maximum_price',
+                    'type' => 'number',
+                    'instructions' => '',
+                    'required' => 0,
+                    'conditional_logic' => 0,
+                    'wrapper' => array(
+                        'width' => '33',
+                        'class' => '',
+                        'id' => '',
+                    ),
+                    'default_value' => '',
+                    'placeholder' => '',
+                    'prepend' => '',
+                    'append' => '',
+                    'min' => 0,
+                    'max' => '',
+                    'step' => '',
+                ),
+                2 => array(
+                    'key' => 'field_5ae2e5d094976',
+                    'label' => __('Minimum price', 'event-manager'),
+                    'name' => 'minimum_price',
+                    'type' => 'number',
+                    'instructions' => '',
+                    'required' => 0,
+                    'conditional_logic' => 0,
+                    'wrapper' => array(
+                        'width' => '33',
+                        'class' => '',
+                        'id' => '',
+                    ),
+                    'default_value' => '',
+                    'placeholder' => '',
+                    'prepend' => '',
+                    'append' => '',
+                    'min' => 0,
+                    'max' => '',
+                    'step' => '',
+                ),
+                3 => array(
+                    'key' => 'field_5ae2e65394978',
+                    'label' => __('Ticket type', 'event-manager'),
+                    'name' => 'ticket_type',
+                    'type' => 'radio',
+                    'instructions' => '',
+                    'required' => 1,
+                    'conditional_logic' => 0,
+                    'wrapper' => array(
+                        'width' => '',
+                        'class' => '',
+                        'id' => '',
+                    ),
+                    'choices' => array(
+                        0 => __('Standing', 'event-manager'),
+                        1 => __('Seated', 'event-manager'),
+                    ),
+                    'allow_null' => 0,
+                    'other_choice' => 0,
+                    'save_other_choice' => 0,
+                    'default_value' => '',
+                    'layout' => 'horizontal',
+                    'return_format' => 'value',
+                ),
+            ),
+        ),
+        29 => array(
             'key' => 'field_57f4f4ac7479f',
             'label' => __('Price group', 'event-manager'),
             'name' => 'booking_group',
@@ -1115,7 +1221,7 @@
                 ),
             ),
         ),
-        29 => array(
+        30 => array(
             'key' => 'field_5ae2e0ececa4c',
             'label' => __('Price range', 'event-manager'),
             'name' => 'price_range',
@@ -1216,7 +1322,7 @@
                 ),
             ),
         ),
-        30 => array(
+        31 => array(
             'key' => 'field_57611bd8acf1b',
             'label' => __('Price information', 'event-manager'),
             'name' => 'price_information',
@@ -1235,7 +1341,7 @@
             'rows' => 3,
             'new_lines' => 'wpautop',
         ),
-        31 => array(
+        32 => array(
             'key' => 'field_57b70267e1f32',
             'label' => __('Ticket includes', 'event-manager'),
             'name' => 'ticket_includes',
@@ -1254,7 +1360,7 @@
             'rows' => 3,
             'new_lines' => 'wpautop',
         ),
-        32 => array(
+        33 => array(
             'key' => 'field_577a326b71ba8',
             'label' => __('Gallery', 'event-manager'),
             'name' => '',
@@ -1270,7 +1376,7 @@
             'placement' => 'top',
             'endpoint' => 0,
         ),
-        33 => array(
+        34 => array(
             'key' => 'field_577a312acd95d',
             'label' => __('Gallery', 'event-manager'),
             'name' => 'gallery',
@@ -1295,7 +1401,7 @@
             'max_size' => '',
             'mime_types' => '',
         ),
-        34 => array(
+        35 => array(
             'key' => 'field_57a9d7f655152',
             'label' => __('Links', 'event-manager'),
             'name' => '',
@@ -1311,7 +1417,7 @@
             'placement' => 'left',
             'endpoint' => 0,
         ),
-        35 => array(
+        36 => array(
             'key' => 'field_58188dfcfc3b9',
             'label' => __('Links', 'event-manager'),
             'name' => '',
@@ -1328,7 +1434,7 @@
             'new_lines' => 'wpautop',
             'esc_html' => 0,
         ),
-        36 => array(
+        37 => array(
             'key' => 'field_57a9d81f55153',
             'label' => __('Facebook', 'event-manager'),
             'name' => 'facebook',
@@ -1344,7 +1450,7 @@
             'default_value' => '',
             'placeholder' => '',
         ),
-        37 => array(
+        38 => array(
             'key' => 'field_57a9d82b55154',
             'label' => __('Twitter', 'event-manager'),
             'name' => 'twitter',
@@ -1360,7 +1466,7 @@
             'default_value' => '',
             'placeholder' => '',
         ),
-        38 => array(
+        39 => array(
             'key' => 'field_57a9d83355155',
             'label' => __('Instagram', 'event-manager'),
             'name' => 'instagram',
@@ -1376,7 +1482,7 @@
             'default_value' => '',
             'placeholder' => '',
         ),
-        39 => array(
+        40 => array(
             'key' => 'field_57c82373297f1',
             'label' => __('Google Music', 'event-manager'),
             'name' => 'google_music',
@@ -1392,7 +1498,7 @@
             'default_value' => '',
             'placeholder' => '',
         ),
-        40 => array(
+        41 => array(
             'key' => 'field_57c82396297f2',
             'label' => __('Apple Music', 'event-manager'),
             'name' => 'apple_music',
@@ -1408,7 +1514,7 @@
             'default_value' => '',
             'placeholder' => '',
         ),
-        41 => array(
+        42 => array(
             'key' => 'field_57c823a8297f3',
             'label' => __('Spotify', 'event-manager'),
             'name' => 'spotify',
@@ -1424,7 +1530,7 @@
             'default_value' => '',
             'placeholder' => '',
         ),
-        42 => array(
+        43 => array(
             'key' => 'field_57c826af782b0',
             'label' => __('Soundcloud', 'event-manager'),
             'name' => 'soundcloud',
@@ -1440,7 +1546,7 @@
             'default_value' => '',
             'placeholder' => '',
         ),
-        43 => array(
+        44 => array(
             'key' => 'field_57c823d7297f4',
             'label' => __('Deezer', 'event-manager'),
             'name' => 'deezer',
@@ -1456,7 +1562,7 @@
             'default_value' => '',
             'placeholder' => '',
         ),
-        44 => array(
+        45 => array(
             'key' => 'field_57a9d84055156',
             'label' => __('YouTube', 'event-manager'),
             'name' => 'youtube',
@@ -1493,7 +1599,7 @@
                 ),
             ),
         ),
-        45 => array(
+        46 => array(
             'key' => 'field_57a9d84955157',
             'label' => __('Vimeo', 'event-manager'),
             'name' => 'vimeo',
