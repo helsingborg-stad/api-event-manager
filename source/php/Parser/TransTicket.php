@@ -49,6 +49,7 @@ class TransTicket extends \HbgEventImporter\Parser
         }
     }
 
+
     /**
      * Cleans a single events data into correct format and saves it to db
      * @param  object $eventData  Event data
@@ -58,13 +59,21 @@ class TransTicket extends \HbgEventImporter\Parser
     public function saveEvent($eventData, $shortKey)
     {
 
-        $data['postTitle'] =  isset($eventData->Name) && !empty($eventData->Name) ? $eventData->Name : null;
-        $data['postContent'] =  isset($eventData->Description) && !empty($eventData->Description) ? $eventData->Description : '';
-        $data['uId'] = $eventData->Id;
-        //$data['city'] =  isset($eventData->VenueCity) && !empty($eventData->VenueCity) ? $eventData->VenueCity : null;
+        $data['postTitle'] =  strip_tags (isset($eventData->Name) && !empty($eventData->Name) ? $eventData->Name : null );
+        $data['postContent'] =  strip_tags(isset($eventData->Description) && !empty($eventData->Description) ? $eventData->Description : '' , '<p><br>');
 
-        $data['startDate'] =  isset($eventData->EventDate) && !empty($eventData->EventDate) ? $eventData->EventDate : null;
-        $data['endDate'] =  isset($eventData->EndDate) && !empty($eventData->EndDate) ? $eventData->EndDate : null;
+        //$data['location'] = $this->findWordWithCapLetters($data['postContent']);
+        //echo $data['location'];
+
+        $data['uId'] = $eventData->Id;
+        $data['event_link'] = $this->apiKeys['transticket_ticket_url'] . "/" . $data['uId'] . "/false";
+            //$data['city'] =  isset($eventData->VenueCity) && !empty($eventData->VenueCity) ? $eventData->VenueCity : null;
+
+        $data['startDate'] =  isset($eventData->EventDate) && !empty($eventData->EventDate) ? $eventData->EventDate : null ;
+        $data['endDate'] =  isset($eventData->EndDate) && !empty($eventData->EndDate) ? $eventData->EndDate : null ;
+        if ($data['endDate'] === null) {
+            $data['endDate'] = $this->formatDate( date("Y-m-d H:i:s", strtotime($data['endDate'] . "+1 hour") ));
+        }
 
         // Fixa
         // $data['event_categories'] =  isset($eventData->Tags) && !empty($eventData->Tags) ? $eventData->Tags : null;
@@ -88,9 +97,9 @@ class TransTicket extends \HbgEventImporter\Parser
         $data['occasions'] = array();
         if ($data['startDate'] != null && $data['endDate'] != null) {
             $data['occasions'][] = array(
-                'start_date' => $data['startDate'],
-                'end_date' => $data['endDate'],
-                'door_time' => $data['startDate']
+                'start_date' => $this->formatDate($data['startDate']),
+                'end_date' => $this->formatDate($data['endDate']),
+                'door_time' => $this->formatDate($data['startDate'])
             );
         }
 
@@ -300,4 +309,27 @@ class TransTicket extends \HbgEventImporter\Parser
 
         return str_replace(' ', 'T', $returnDate->format('Y-m-d H:i:s'));
     }
+
+    /**
+     * Washing string from capitalized words. Add capital letter to first word in sentence.
+     * @param  string
+     * @return string
+     */
+    public function ucFirstWordInSentence($str)
+    {
+        $str = ucfirst(strtolower($str));
+        return preg_replace("/([.!?]\s*\w)/e", "strtoupper('$1')", $str);
+    }
+
+    /**
+     * Find word with capital letters
+     * @param  string
+     * @return string
+     */
+    public function findWordWithCapLetters($str) {
+        if (preg_match_all('/\\b(?=[A-Z])[A-Z ]+(?=\\W)/',$str,$match)) {
+            return $match[0];
+        }
+    }
+
 }
