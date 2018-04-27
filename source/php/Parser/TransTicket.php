@@ -69,7 +69,7 @@ class TransTicket extends \HbgEventImporter\Parser
         //echo $data['location'];
 
         $data['uId'] = $eventData->Id;
-        $data['event_link'] = $this->apiKeys['transticket_ticket_url'] . "/" . $data['uId'] . "/false";
+        $data['booking_link'] = $this->apiKeys['transticket_ticket_url'] . "/" . $data['uId'] . "/false";
 
         $data['startDate'] = isset($eventData->EventDate) && !empty($eventData->EventDate) ? $eventData->EventDate : null;
         $data['endDate'] = isset($eventData->EndDate) && !empty($eventData->EndDate) ? $eventData->EndDate : null;
@@ -77,14 +77,12 @@ class TransTicket extends \HbgEventImporter\Parser
             $data['endDate'] = $this->formatDate(date("Y-m-d H:i:s", strtotime($data['endDate'] . "+1 hour")));
         }
 
-        $data['categories'] = array();
+        $data['categories'] = $eventData->Tags;
 
         $data['postStatus'] = get_field('transticket_post_status', 'option') ? get_field('transticket_post_status',
             'option') : 'publish';
         $data['user_groups'] = (is_array($this->apiKeys['transticket_groups']) && !empty($this->apiKeys['transticket_groups'])) ? array_map('intval',
             $this->apiKeys['transticket_groups']) : null;
-
-        $data['ticketUrl'] = $this->apiKeys['transticket_ticket_url'] . "/" . $data['uId'] . "/false";
 
         $data['image'] = null;
         if (isset($eventData->{'ImageURL'}) && !empty($eventData->{'ImageURL'}) && $eventData->{'ImageURL'} != 'null') {
@@ -98,29 +96,23 @@ class TransTicket extends \HbgEventImporter\Parser
         // Various data vars not in default setup
         $data['ticket_stock'] = isset($eventData->Stock) && !empty($eventData->Stock) ? $eventData->Stock : null;
         $data['ticket_release_date'] = $this->formatDate(isset($eventData->ReleaseDate) && !empty($eventData->ReleaseDate) ? $eventData->ReleaseDate : null);
-        $data['tickets_remaining'] = isset($eventData->Sales['RemainingTickets']) && !empty($eventData->Sales['RemainingTickets']) ? $eventData->Sales['RemainingTickets'] : null;
+        $data['tickets_remaining'] = isset($eventData->Sales->RemainingTickets) && !empty($eventData->Sales->RemainingTickets) ? $eventData->Sales->RemainingTickets : null;
 
         if (!empty($eventData->Prices)) {
-            $data['ticket_price_range'] = array(
-                "seated_minimum_price" => isset($eventData->Prices['SeatedMinPrice']) && !empty($eventData->Prices['SeatedMinPrice']) ? $eventData->Prices['SeatedMinPrice'] : null,
-                "seated_maximum_price" => isset($eventData->Prices['SeatedMaxPrice']) && !empty($eventData->Prices['SeatedMaxPrice']) ? $eventData->Prices['SeatedMaxPrice'] : null,
-                "standing_minimum_price" => isset($eventData->Prices['StandingMinPrice']) && !empty($eventData->Prices['StandingMinPrice']) ? $eventData->Prices['StandingMinPrice'] : null,
-                "standing_maximum_price" => isset($eventData->Prices['StandingMaxPrice']) && !empty($eventData->Prices['StandingMaxPrice']) ? $eventData->Prices['StandingMaxPrice'] : null,
-            );
-        }
-        else {
+            $data['ticket_price_range']['seated_minimum_price'] = $eventData->Prices->SeatedMinPrice ?? null;
+            $data['ticket_price_range']['seated_maximum_price'] = $eventData->Prices->SeatedMaxPrice ?? null;
+            $data['ticket_price_range']['standing_minimum_price'] = $eventData->Prices->StandingMinPrice ?? null;
+            $data['ticket_price_range']['standing_maximum_price'] = $eventData->Prices->StandingMaxPrice ?? null;
+        } else {
             $data['ticket_price_range'] = null;
         }
 
         if (!empty($eventData->TicketPrices)) {
-            $data['additional_ticket_types'] = array(
-                "ticket_name" => isset($eventData->TicketPrices['TicketName']) && !empty($eventData->TicketPrices['TicketName']) ? $eventData->TicketPrices['TicketName'] : null,
-                "maximum_price" => isset($eventData->TicketPrices['MinPrice']) && !empty($eventData->TicketPrices['MinPrice']) ? $eventData->TicketPrices['MinPrice'] : null,
-                "minimum_price" => isset($eventData->TicketPrices['MaxPrice']) && !empty($eventData->TicketPrices['MaxPrice']) ? $eventData->TicketPrices['MaxPrice'] : null,
-                "ticket_type" => isset($eventData->TicketPrices['IsSeated']) && !empty($eventData->TicketPrices['IsSeated'] && $eventData->TicketPrices['IsSeated'] !== 1) ? $eventData->TicketPrices['IsSeated'] : 0,
-            );
-        }
-        else {
+            $data['additional_ticket_types']['ticket_name'] = isset($eventData->TicketPrices->TicketName) && !empty($eventData->TicketPrices->TicketName) ? $eventData->TicketPrices->TicketName : null;
+            $data['additional_ticket_types']['maximum_price'] = $eventData->TicketPrices->TicketName ?? null;
+            $data['additional_ticket_types']['minimum_price'] = $eventData->TicketPrices->MaxPrice ?? null;
+            $data['additional_ticket_types']['ticket_type'] = isset($eventData->TicketPrices->IsSeated) && $eventData->TicketPrices->IsSeated !== 1 ? $eventData->TicketPrices->IsSeated : 0;
+        } else {
             $data['additional_ticket_types'] = null;
         }
 
@@ -172,6 +164,7 @@ class TransTicket extends \HbgEventImporter\Parser
         $categories = $this->getCategories($data['event_categories']);
 
         try {
+
             $event = new Event(
                 array(
                     'post_title' => $data['postTitle'],
@@ -183,12 +176,12 @@ class TransTicket extends \HbgEventImporter\Parser
                     'sync' => 1,
                     'status' => 'Active',
                     'image' => !empty($data['image']) ? $data['image'] : null,
-                    'event_link' => !empty($data['ticketUrl']) ? $data['ticketUrl'] : null,
+                    'event_link' => null,
                     'categories' => $categories,
                     'occasions' => $data['occasions'],
                     'location' => $locationId != null ? $locationId : null,
                     'organizer' => null,
-                    'booking_link' => is_string($data['ticketUrl']) ? $data['ticketUrl'] : null,
+                    'booking_link' => is_string($data['booking_link']) ? $data['booking_link'] : null,
                     'booking_phone' => null,
                     'age_restriction' => null,
                     'price_information' => null,
@@ -368,19 +361,18 @@ class TransTicket extends \HbgEventImporter\Parser
      */
     public function getCategories($eventData)
     {
+
+        var_dump($eventData);
+
         $categories = array();
 
-        if (is_array($eventData->Categories->Category)) {
-            foreach ($eventData->Categories->Category as $category) {
-                $categories[] = $category->Name;
+        if ($eventData['Tags']) {
+            foreach ($eventData['Tags'] as $category) {
+                $categories[] = $category['Name'];
             }
-        } else {
-            $categories[] = $eventData->Categories->Category->Name;
+            $categories = array_map('trim', $categories);
+            $categories = array_map('ucwords', $categories);
         }
-
-        $categories = array_map('trim', $categories);
-        $categories = array_map('ucwords', $categories);
-
         return $categories;
     }
 
