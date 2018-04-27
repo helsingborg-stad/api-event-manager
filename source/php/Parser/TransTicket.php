@@ -23,7 +23,7 @@ class TransTicket extends \HbgEventImporter\Parser
      */
     private function getEventData()
     {
-        $url = $this->url . '&FromDate=' . date("Y-m-d") . '&ToDate=' . date("Y-m-d", strtotime("+12 months"));
+        $url = $this->url . '&FromDate=' . date("Y-m-d") . '&ToDate=' . date("Y-m-d", strtotime("+2 weeks"));
         return json_decode(\HbgEventImporter\Helper\Curl::request('GET', $url, $this->apiKeys['transticket_api_key'],
             false, 'json', array('Content-Type: application/json')));
     }
@@ -60,7 +60,6 @@ class TransTicket extends \HbgEventImporter\Parser
      */
     public function saveEvent($eventData, $shortKey)
     {
-
         $data['postTitle'] = strip_tags(isset($eventData->Name) && !empty($eventData->Name) ? $eventData->Name : null);
         $data['postContent'] = strip_tags(isset($eventData->Description) && !empty($eventData->Description) ? $eventData->Description : '',
             '<p><br>');
@@ -74,15 +73,14 @@ class TransTicket extends \HbgEventImporter\Parser
         $data['startDate'] = isset($eventData->EventDate) && !empty($eventData->EventDate) ? $eventData->EventDate : null;
         $data['endDate'] = isset($eventData->EndDate) && !empty($eventData->EndDate) ? $eventData->EndDate : null;
         if ($data['endDate'] === null) {
-            $data['endDate'] = $this->formatDate(date("Y-m-d H:i:s", strtotime($data['endDate'] . "+1 hour")));
+            $data['endDate'] = $this->formatDate(date("Y-m-d H:i:s", strtotime($data['startDate'] . "+1 hour")));
         }
 
-        $data['categories'] = $eventData->Tags;
+        $data['categories'] = isset($eventData->Tags) && is_array($eventData->Tags) ? $this->getCategories($eventData->Tags) : array();
+        error_log(print_r($data['categories'], true));
 
-        $data['postStatus'] = get_field('transticket_post_status', 'option') ? get_field('transticket_post_status',
-            'option') : 'publish';
-        $data['user_groups'] = (is_array($this->apiKeys['transticket_groups']) && !empty($this->apiKeys['transticket_groups'])) ? array_map('intval',
-            $this->apiKeys['transticket_groups']) : null;
+        $data['postStatus'] = get_field('transticket_post_status', 'option') ? get_field('transticket_post_status', 'option') : 'publish';
+        $data['user_groups'] = (is_array($this->apiKeys['transticket_groups']) && !empty($this->apiKeys['transticket_groups'])) ? array_map('intval', $this->apiKeys['transticket_groups']) : null;
 
         $data['image'] = null;
         if (isset($eventData->{'ImageURL'}) && !empty($eventData->{'ImageURL'}) && $eventData->{'ImageURL'} != 'null') {
@@ -142,7 +140,6 @@ class TransTicket extends \HbgEventImporter\Parser
      */
     public function maybeCreateEvent($data, $shortKey, $locationId)
     {
-
         $eventId = $this->checkIfPostExists('event', $data['postTitle']);
         $occurred = false;
 
@@ -161,10 +158,7 @@ class TransTicket extends \HbgEventImporter\Parser
             return $eventId;
         }
 
-        $categories = $this->getCategories($data['event_categories']);
-
         try {
-
             $event = new Event(
                 array(
                     'post_title' => $data['postTitle'],
@@ -353,29 +347,24 @@ class TransTicket extends \HbgEventImporter\Parser
         return str_replace(' ', 'T', $returnDate->format('Y-m-d H:i:s'));
     }
 
-
     /**
      * Get categories from event data
      * @param  object $eventData Event data object
      * @return array             Categories
      */
-    public function getCategories($eventData)
+    public function getCategories($eventCategories)
     {
-
-        var_dump($eventData);
-
         $categories = array();
 
-        if ($eventData['Tags']) {
-            foreach ($eventData['Tags'] as $category) {
-                $categories[] = $category['Name'];
-            }
-            $categories = array_map('trim', $categories);
-            $categories = array_map('ucwords', $categories);
+        foreach ($eventCategories as $category) {
+            $categories[] = $category->Name;
         }
+
+        $categories = array_map('trim', $categories);
+        $categories = array_map('ucwords', $categories);
+
         return $categories;
     }
-
 
     /**
      * Washing string from capitalized words. Add capital letter to first word in sentence.
@@ -399,5 +388,4 @@ class TransTicket extends \HbgEventImporter\Parser
             return $match[0];
         }
     }
-
 }
