@@ -709,7 +709,7 @@
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
-                "width": "",
+                "width": "50",
                 "class": "",
                 "id": ""
             },
@@ -734,6 +734,23 @@
             "prepend": "",
             "append": "",
             "maxlength": ""
+        },
+        {
+            "key": "field_5ae2d2fe2f26e",
+            "label": "Ticket release date",
+            "name": "ticket_release_date",
+            "type": "date_time_picker",
+            "instructions": "Date when the tickets is released.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "display_format": "Y-m-d H:i",
+            "return_format": "Y-m-d H:i",
+            "first_day": 1
         },
         {
             "key": "field_57611befacf1c",
@@ -799,11 +816,11 @@
             "step": ""
         },
         {
-            "key": "field_5ae2d2fe2f26e",
-            "label": "Ticket release date",
-            "name": "ticket_release_date",
-            "type": "date_time_picker",
-            "instructions": "Date when the tickets is released.",
+            "key": "field_5ae320279d7e0",
+            "label": "Additional ticket retailers",
+            "name": "additional_ticket_retailers",
+            "type": "repeater",
+            "instructions": "",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -811,9 +828,82 @@
                 "class": "",
                 "id": ""
             },
-            "display_format": "Y-m-d H:i",
-            "return_format": "Y-m-d H:i",
-            "first_day": 1
+            "collapsed": "",
+            "min": 0,
+            "max": 0,
+            "layout": "block",
+            "button_label": "Add",
+            "sub_fields": [
+                {
+                    "key": "field_5ae322b4caede",
+                    "label": "Retailer name",
+                    "name": "retailer_name",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "50",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "maxlength": ""
+                },
+                {
+                    "key": "field_5ae3251dcb3b0",
+                    "label": "Retailer booking url",
+                    "name": "booking_url",
+                    "type": "url",
+                    "instructions": "External link to booking website.",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "50",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "placeholder": ""
+                },
+                {
+                    "key": "field_5ae3213f9d7e3",
+                    "label": "Ticket release date",
+                    "name": "ticket_release_date",
+                    "type": "date_time_picker",
+                    "instructions": "Date when the tickets is released.",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "50",
+                        "class": "",
+                        "id": ""
+                    },
+                    "display_format": "Y-m-d H:i",
+                    "return_format": "Y-m-d H:i",
+                    "first_day": 1
+                },
+                {
+                    "key": "field_5ae321bd9d7e4",
+                    "label": "Ticket stop date",
+                    "name": "ticket_stop_date",
+                    "type": "date_time_picker",
+                    "instructions": "Date when the retailer stops selling tickets.",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "50",
+                        "class": "",
+                        "id": ""
+                    },
+                    "display_format": "Y-m-d H:i",
+                    "return_format": "Y-m-d H:i",
+                    "first_day": 1
+                }
+            ]
         },
         {
             "key": "field_57c7ed92054e6",
