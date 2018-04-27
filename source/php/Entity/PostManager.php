@@ -231,7 +231,7 @@ abstract class PostManager
         }
 
         // Save file to server
-        $contents = file_get_contents($url);
+        $contents = file_get_contents(str_replace(' ', '%20', $url));
         $save = fopen($uploadDir . '/' . $filename, 'w');
         fwrite($save, $contents);
         fclose($save);
