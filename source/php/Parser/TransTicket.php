@@ -99,8 +99,31 @@ class TransTicket extends \HbgEventImporter\Parser
         $data['ticket_stock'] = isset($eventData->Stock) && !empty($eventData->Stock) ? $eventData->Stock : null;
         $data['ticket_release_date'] = $this->formatDate(isset($eventData->ReleaseDate) && !empty($eventData->ReleaseDate) ? $eventData->ReleaseDate : null);
         $data['tickets_remaining'] = isset($eventData->Sales['RemainingTickets']) && !empty($eventData->Sales['RemainingTickets']) ? $eventData->Sales['RemainingTickets'] : null;
-        $data['tickets_remaining'] = $this->formatDate(isset($eventData->Sales['RemainingTickets']) && !empty($eventData->Sales['RemainingTickets']) ? $eventData->Sales['RemainingTickets'] : null);
-        $data['ticket_price_range'] = isset($eventData->Sales['TicketPrices']) && !empty($eventData->Sales['TicketPrices']) ? $eventData->Sales['TicketPrices'] : null;
+
+        if (!empty($eventData->Prices)) {
+            $data['ticket_price_range'] = array(
+                "seated_minimum_price" => isset($eventData->Prices['SeatedMinPrice']) && !empty($eventData->Prices['SeatedMinPrice']) ? $eventData->Prices['SeatedMinPrice'] : null,
+                "seated_maximum_price" => isset($eventData->Prices['SeatedMaxPrice']) && !empty($eventData->Prices['SeatedMaxPrice']) ? $eventData->Prices['SeatedMaxPrice'] : null,
+                "standing_minimum_price" => isset($eventData->Prices['StandingMinPrice']) && !empty($eventData->Prices['StandingMinPrice']) ? $eventData->Prices['StandingMinPrice'] : null,
+                "standing_maximum_price" => isset($eventData->Prices['StandingMaxPrice']) && !empty($eventData->Prices['StandingMaxPrice']) ? $eventData->Prices['StandingMaxPrice'] : null,
+            );
+        }
+        else {
+            $data['ticket_price_range'] = null;
+        }
+
+        if (!empty($eventData->TicketPrices)) {
+            $data['additional_ticket_types'] = array(
+                "ticket_name" => isset($eventData->TicketPrices['TicketName']) && !empty($eventData->TicketPrices['TicketName']) ? $eventData->TicketPrices['TicketName'] : null,
+                "maximum_price" => isset($eventData->TicketPrices['MinPrice']) && !empty($eventData->TicketPrices['MinPrice']) ? $eventData->TicketPrices['MinPrice'] : null,
+                "minimum_price" => isset($eventData->TicketPrices['MaxPrice']) && !empty($eventData->TicketPrices['MaxPrice']) ? $eventData->TicketPrices['MaxPrice'] : null,
+                "ticket_type" => isset($eventData->TicketPrices['IsSeated']) && !empty($eventData->TicketPrices['IsSeated'] && $eventData->TicketPrices['IsSeated'] !== 1) ? $eventData->TicketPrices['IsSeated'] : 0,
+            );
+        }
+        else {
+            $data['additional_ticket_types'] = null;
+        }
+
 
         $data['occasions'] = array();
         if ($data['startDate'] != null && $data['endDate'] != null) {
@@ -147,15 +170,6 @@ class TransTicket extends \HbgEventImporter\Parser
         }
 
         $categories = $this->getCategories($data['event_categories']);
-
-        if (!empty($data['ticket_price_range'])) {
-            $data['ticket_price_range'] = array(
-                "seated_minimum_price" => $data['ticket_price_range']['SeatedMinPrice'],
-                "seated_maximum_price" => $data['ticket_price_range']['SeatedMaxPrice'],
-                "standing_minimum_price" => $data['ticket_price_range']['StandingMinPrice'],
-                "standing_maximum_price" => $data['ticket_price_range']['StandingMaxPrice'],
-            );
-        }
 
         try {
             $event = new Event(
