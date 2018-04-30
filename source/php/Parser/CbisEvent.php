@@ -92,7 +92,7 @@ class CbisEvent extends \HbgEventImporter\Parser\Cbis
         $occasionsToRegister = array();
         $occasions = $eventData->Occasions;
 
-        if (isset($eventData->Occasions->OccasionObject) && count($eventData->Occasions->OccasionObject) > 0) {
+        if (isset($eventData->Occasions->OccasionObject) && !empty((array)$eventData->Occasions->OccasionObject)) {
             $occasions = $eventData->Occasions->OccasionObject;
         }
 
