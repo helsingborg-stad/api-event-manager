@@ -79,12 +79,8 @@ class EventFields extends Fields
 
         $post_status = 'publish';
 
-        //Check if only internal (organization) event should be fetched
-        if (isset($_GET['internal'])) {
-            $internalevent = empty($_GET['internal']) ? false : true;
-        } else {
-            $internalevent = false;
-        }
+        // Check if only internal (organization) event should be fetched
+        $internalEvent = isset($_GET['internal']) && !empty($_GET['internal']) ? 1 : 0;
 
         if (!is_numeric($time1)) {
             $timestamp = strtotime($timestamp);
@@ -122,36 +118,18 @@ class EventFields extends Fields
 
         $db_occasions = $wpdb->prefix . "occasions";
 
-        if ($internalevent === true) {
-            $query =
+        $query =
             "
             SELECT      *
             FROM        $wpdb->posts
             LEFT JOIN   $db_occasions ON ($wpdb->posts.ID = $db_occasions.event)
             LEFT JOIN   $wpdb->postmeta postmeta ON $wpdb->posts.ID = postmeta.post_id
             LEFT JOIN   $wpdb->term_relationships ON ($wpdb->posts.ID = $wpdb->term_relationships.object_id)
-            LEFT JOIN   $wpdb->postmeta AS pm2 ON $wpdb->posts.ID = pm2.post_id
             WHERE       $wpdb->posts.post_type = %s
                         AND $wpdb->posts.post_status = %s
                         AND ($db_occasions.timestamp_start BETWEEN %d AND %d OR $db_occasions.timestamp_end BETWEEN %d AND %d)
-                        AND pm2.meta_key = 'internal_event' AND pm2.meta_value = '1'
+                        AND postmeta.meta_key = 'internal_event' AND postmeta.meta_value = $internalEvent
             ";
-        } else {
-            $query =
-            "
-            SELECT      *
-            FROM        $wpdb->posts
-            LEFT JOIN   $db_occasions ON ($wpdb->posts.ID = $db_occasions.event)
-            LEFT JOIN   $wpdb->postmeta postmeta ON $wpdb->posts.ID = postmeta.post_id
-            LEFT JOIN   $wpdb->term_relationships ON ($wpdb->posts.ID = $wpdb->term_relationships.object_id)
-            LEFT JOIN   $wpdb->postmeta AS pm2 ON $wpdb->posts.ID = pm2.post_id
-            WHERE       $wpdb->posts.post_type = %s
-                        AND $wpdb->posts.post_status = %s
-                        AND ($db_occasions.timestamp_start BETWEEN %d AND %d OR $db_occasions.timestamp_end BETWEEN %d AND %d)
-                        AND pm2.meta_key = 'internal_event' AND pm2.meta_value != '1'
-            ";
-        }
-
         $query .= (! empty($taxonomies)) ? "AND ($wpdb->term_relationships.term_taxonomy_id IN ($taxonomies)) " : "";
         $query .= (! empty($idString)) ? "AND (postmeta.meta_key = 'location' AND postmeta.meta_value IN ($idString)) " : "";
         $query .= "GROUP BY $wpdb->posts.ID, $db_occasions.timestamp_start, $db_occasions.timestamp_end ";

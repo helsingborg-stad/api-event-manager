@@ -153,6 +153,7 @@ class Xcap extends \HbgEventImporter\Parser
                 'imported_post'           => 1,
                 'user_groups'             => $user_groups,
                 'occurred'                => $occurred,
+                'internal_event'          => 0
             )
         );
 

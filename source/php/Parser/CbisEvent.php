@@ -406,6 +406,7 @@ class CbisEvent extends \HbgEventImporter\Parser\Cbis
                 'imported_post'           => 1,
                 'user_groups'             => $userGroups,
                 'occurred'                => $occurred,
+                'internal_event'          => 0
             )
         );
 
