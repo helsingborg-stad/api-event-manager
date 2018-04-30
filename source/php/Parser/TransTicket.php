@@ -23,11 +23,10 @@ class TransTicket extends \HbgEventImporter\Parser
      */
     private function getEventData()
     {
-        $url = $this->url . '&FromDate=' . date("Y-m-d") . '&ToDate=' . date("Y-m-d", strtotime("+2 weeks"));
+        $url = $this->url . '&FromDate=' . date("Y-m-d") . '&ToDate=' . date("Y-m-d", strtotime("+1 weeks"));
         return json_decode(\HbgEventImporter\Helper\Curl::request('GET', $url, $this->apiKeys['transticket_api_key'],
             false, 'json', array('Content-Type: application/json')));
     }
-
 
     /**
      * Start the parsing!
@@ -61,24 +60,33 @@ class TransTicket extends \HbgEventImporter\Parser
     public function saveEvent($eventData, $shortKey)
     {
         $data['postTitle'] = strip_tags(isset($eventData->Name) && !empty($eventData->Name) ? $eventData->Name : null);
+        error_log($data['postTitle']);
         $data['postContent'] = strip_tags(isset($eventData->Description) && !empty($eventData->Description) ? $eventData->Description : '',
             '<p><br>');
 
+        // Fixa locations
         //$data['location'] = $this->findWordWithCapLetters($data['postContent']);
         //echo $data['location'];
 
         $data['uId'] = $eventData->Id;
         $data['booking_link'] = $this->apiKeys['transticket_ticket_url'] . "/" . $data['uId'] . "/false";
 
-        $data['startDate'] = isset($eventData->EventDate) && !empty($eventData->EventDate) ? $eventData->EventDate : null;
-        $data['endDate'] = isset($eventData->EndDate) && !empty($eventData->EndDate) ? $eventData->EndDate : null;
+        $data['startDate'] = !empty($eventData->EventDate) ? $eventData->EventDate : null;
+        $data['endDate'] = !empty($eventData->EndDate) ? $eventData->EndDate : null;
         if ($data['endDate'] === null) {
-            $data['endDate'] = $this->formatDate(date("Y-m-d H:i:s", strtotime($data['startDate'] . "+1 hour")));
+            $data['endDate'] = date("Y-m-d H:i:s", strtotime($data['startDate'] . "+1 hour"));
+        }
+
+        $data['occasions'] = array();
+        if ($data['startDate'] != null && $data['endDate'] != null) {
+            $data['occasions'][] = array(
+                'start_date' => $data['startDate'],
+                'end_date' =>$data['endDate'],
+                'door_time' => $data['startDate']
+            );
         }
 
         $data['categories'] = isset($eventData->Tags) && is_array($eventData->Tags) ? $this->getCategories($eventData->Tags) : array();
-        error_log(print_r($data['categories'], true));
-
         $data['postStatus'] = get_field('transticket_post_status', 'option') ? get_field('transticket_post_status', 'option') : 'publish';
         $data['user_groups'] = (is_array($this->apiKeys['transticket_groups']) && !empty($this->apiKeys['transticket_groups'])) ? array_map('intval', $this->apiKeys['transticket_groups']) : null;
 
@@ -92,9 +100,9 @@ class TransTicket extends \HbgEventImporter\Parser
         }
 
         // Various data vars not in default setup
-        $data['ticket_stock'] = isset($eventData->Stock) && !empty($eventData->Stock) ? $eventData->Stock : null;
-        $data['ticket_release_date'] = $this->formatDate(isset($eventData->ReleaseDate) && !empty($eventData->ReleaseDate) ? $eventData->ReleaseDate : null);
-        $data['tickets_remaining'] = isset($eventData->Sales->RemainingTickets) && !empty($eventData->Sales->RemainingTickets) ? $eventData->Sales->RemainingTickets : null;
+        $data['ticket_stock'] = $eventData->Stock ?? null;
+        $data['ticket_release_date'] = !empty($eventData->ReleaseDate) ? $eventData->ReleaseDate : null;
+        $data['tickets_remaining'] = $eventData->Sales->RemainingTickets ?? null;
 
         if (!empty($eventData->Prices)) {
             $data['ticket_price_range']['seated_minimum_price'] = $eventData->Prices->SeatedMinPrice ?? null;
@@ -114,21 +122,10 @@ class TransTicket extends \HbgEventImporter\Parser
             $data['additional_ticket_types'] = null;
         }
 
-
-        $data['occasions'] = array();
-        if ($data['startDate'] != null && $data['endDate'] != null) {
-            $data['occasions'][] = array(
-                'start_date' => $this->formatDate($data['startDate']),
-                'end_date' => $this->formatDate($data['endDate']),
-                'door_time' => $this->formatDate($data['startDate'])
-            );
-        }
-
         //$locationId = $this->maybeCreateLocation($data, $shortKey);
         $locationId = null;
         $this->maybeCreateEvent($data, $shortKey, $locationId);
     }
-
 
     /**
      * Creates or updates an event if possible
@@ -140,6 +137,8 @@ class TransTicket extends \HbgEventImporter\Parser
      */
     public function maybeCreateEvent($data, $shortKey, $locationId)
     {
+        extract($data);
+
         $eventId = $this->checkIfPostExists('event', $data['postTitle']);
         $occurred = false;
 
@@ -189,12 +188,11 @@ class TransTicket extends \HbgEventImporter\Parser
                     'ticket_release_date' => $data['ticket_release_date'],
                     'tickets_remaining' => $data['tickets_remaining'],
                     'ticket_price_range' => $data['ticket_price_range'],
-
                 )
             );
         } catch (\Exception $e) {
-            $event = false;
             error_log($e);
+            return false;
         }
 
         if (!$event->save()) {
@@ -314,37 +312,6 @@ class TransTicket extends \HbgEventImporter\Parser
         }
 
         return $passes;
-    }
-
-    /**
-     * Edit the date format we get from transticket api
-     * @param  string $date example 20160105T141429Z
-     * @return string example
-     */
-    public function formatDate($date)
-    {
-        if ($date == null) {
-            return $date;
-        }
-        // Format the date string corretly
-        $dateParts = explode("T", $date);
-        $dateString = substr($dateParts[0], 0, 4) . '-' . substr($dateParts[0], 4, 2) . '-' . substr($dateParts[0], 6,
-                2);
-        $timeString = substr($dateParts[1], 0, 4);
-        $timeString = substr($timeString, 0, 2) . ':' . substr($timeString, 2, 2);
-        $dateString = $dateString . ' ' . $timeString;
-
-        //Get timezon from wp
-        if (!$this->timeZoneString) {
-            $this->timeZoneString = get_option('timezone_string');
-        }
-
-        // Create UTC date object
-        $returnDate = new \DateTime(date('Y-m-d H:i', strtotime($dateString)));
-        $timeZone = new \DateTimeZone($this->timeZoneString);
-        $returnDate->setTimezone($timeZone);
-
-        return str_replace(' ', 'T', $returnDate->format('Y-m-d H:i:s'));
     }
 
     /**
