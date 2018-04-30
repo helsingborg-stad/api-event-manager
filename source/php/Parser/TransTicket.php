@@ -122,6 +122,16 @@ class TransTicket extends \HbgEventImporter\Parser
             $data['additional_ticket_types'] = null;
         }
 
+        if (!empty($eventData->ReleaseDates)) {
+            $data['additional_ticket_retailers']['retailer_name'] = $eventData->ReleaseDates->PointOfSale ?? null;
+            $data['additional_ticket_retailers']['booking_url'] = null;
+            $data['additional_ticket_retailers']['ticket_start_date'] = $eventData->ReleaseDates->StartDate ?? null;
+            $data['additional_ticket_retailers']['ticket_stop_date'] = $eventData->ReleaseDates->StopDate ?? null;
+
+        } else {
+            $data['additional_ticket_retailers'] = null;
+        }
+
         //$locationId = $this->maybeCreateLocation($data, $shortKey);
         $locationId = null;
         $this->maybeCreateEvent($data, $shortKey, $locationId);
@@ -137,7 +147,6 @@ class TransTicket extends \HbgEventImporter\Parser
      */
     public function maybeCreateEvent($data, $shortKey, $locationId)
     {
-        extract($data);
 
         $eventId = $this->checkIfPostExists('event', $data['postTitle']);
         $occurred = false;
@@ -170,7 +179,7 @@ class TransTicket extends \HbgEventImporter\Parser
                     'status' => 'Active',
                     'image' => !empty($data['image']) ? $data['image'] : null,
                     'event_link' => null,
-                    'categories' => $categories,
+                    'categories' => $data['categories'],
                     'occasions' => $data['occasions'],
                     'location' => $locationId != null ? $locationId : null,
                     'organizer' => null,
@@ -188,6 +197,7 @@ class TransTicket extends \HbgEventImporter\Parser
                     'ticket_release_date' => $data['ticket_release_date'],
                     'tickets_remaining' => $data['tickets_remaining'],
                     'price_range' => $data['price_range'],
+                    'additional_ticket_retailers' => $data['additional_ticket_retailers'],
                 )
             );
         } catch (\Exception $e) {
@@ -260,7 +270,8 @@ class TransTicket extends \HbgEventImporter\Parser
                 array(
                     'street_address' => null,
                     'postal_code' => null,
-                    'city' => $data['city'],
+                    //'city' => $data['city'],
+                    'city' => $data['VenueId'],
                     'municipality' => null,
                     'country' => null,
                     'latitude' => null,
