@@ -105,12 +105,12 @@ class TransTicket extends \HbgEventImporter\Parser
         $data['tickets_remaining'] = $eventData->Sales->RemainingTickets ?? null;
 
         if (!empty($eventData->Prices)) {
-            $data['ticket_price_range']['seated_minimum_price'] = $eventData->Prices->SeatedMinPrice ?? null;
-            $data['ticket_price_range']['seated_maximum_price'] = $eventData->Prices->SeatedMaxPrice ?? null;
-            $data['ticket_price_range']['standing_minimum_price'] = $eventData->Prices->StandingMinPrice ?? null;
-            $data['ticket_price_range']['standing_maximum_price'] = $eventData->Prices->StandingMaxPrice ?? null;
+            $data['price_range']['seated_minimum_price'] = $eventData->Prices->SeatedMinPrice ?? null;
+            $data['price_range']['seated_maximum_price'] = $eventData->Prices->SeatedMaxPrice ?? null;
+            $data['price_range']['standing_minimum_price'] = $eventData->Prices->StandingMinPrice ?? null;
+            $data['price_range']['standing_maximum_price'] = $eventData->Prices->StandingMaxPrice ?? null;
         } else {
-            $data['ticket_price_range'] = null;
+            $data['price_range'] = null;
         }
 
         if (!empty($eventData->TicketPrices)) {
@@ -187,7 +187,7 @@ class TransTicket extends \HbgEventImporter\Parser
                     'ticket_stock' => $data['ticket_stock'],
                     'ticket_release_date' => $data['ticket_release_date'],
                     'tickets_remaining' => $data['tickets_remaining'],
-                    'ticket_price_range' => $data['ticket_price_range'],
+                    'price_range' => $data['price_range'],
                 )
             );
         } catch (\Exception $e) {
