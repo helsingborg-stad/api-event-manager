@@ -18,7 +18,7 @@ class EventFields extends Fields
         add_filter('rest_prepare_event', array($this, 'setCurrentOccasion'), 10, 3);
     }
 
-    public static function registerRestRoute()
+    public function registerRestRoute()
     {
         $response = register_rest_route('wp/v2', '/'.$this->postType.'/'.'time', array(
             'methods'  => \WP_REST_Server::READABLE,
@@ -26,7 +26,7 @@ class EventFields extends Fields
         ));
     }
 
-    public static function registerRestRouteSearch()
+    public function registerRestRouteSearch()
     {
         register_rest_route('wp/v2', '/event/search', array(
             'methods'  => \WP_REST_Server::READABLE,
@@ -124,7 +124,7 @@ class EventFields extends Fields
 
         if ($internalevent === true) {
             $query =
-            "
+                "
             SELECT      *
             FROM        $wpdb->posts
             LEFT JOIN   $db_occasions ON ($wpdb->posts.ID = $db_occasions.event)
@@ -138,7 +138,7 @@ class EventFields extends Fields
             ";
         } else {
             $query =
-            "
+                "
             SELECT      *
             FROM        $wpdb->posts
             LEFT JOIN   $db_occasions ON ($wpdb->posts.ID = $db_occasions.event)
@@ -254,7 +254,7 @@ class EventFields extends Fields
         // Get upcoming occasions
         $timestamp = strtotime("midnight now") - 1;
         $query =
-        "
+            "
         SELECT * FROM $db_occasions
         WHERE event = $id
         AND timestamp_end > $timestamp
@@ -270,13 +270,13 @@ class EventFields extends Fields
                     continue;
                 }
                 $data[] = array(
-                'start_date'               => ($value['start_date']) ? $value['start_date'] : null,
-                'end_date'                 => ($value['end_date']) ? $value['end_date'] : null,
-                'door_time'                => ($value['door_time']) ? $value['door_time'] : null,
-                'status'                   => ($value['status']) ? $value['status'] : null,
-                'occ_exeption_information' => ($value['occ_exeption_information']) ? $value['occ_exeption_information'] : null,
-                'content_mode'             => ($value['content_mode']) ? $value['content_mode'] : null,
-                'content'                  => ($value['content']) ? $value['content'] : null,
+                    'start_date'               => ($value['start_date']) ? $value['start_date'] : null,
+                    'end_date'                 => ($value['end_date']) ? $value['end_date'] : null,
+                    'door_time'                => ($value['door_time']) ? $value['door_time'] : null,
+                    'status'                   => ($value['status']) ? $value['status'] : null,
+                    'occ_exeption_information' => ($value['occ_exeption_information']) ? $value['occ_exeption_information'] : null,
+                    'content_mode'             => ($value['content_mode']) ? $value['content_mode'] : null,
+                    'content'                  => ($value['content']) ? $value['content'] : null,
                 );
             }
         }
@@ -290,7 +290,7 @@ class EventFields extends Fields
                 'occ_exeption_information' => null,
                 'content_mode'             => null,
                 'content'                  => null,
-                );
+            );
         }
         $temp = array();
         $keys = array();
@@ -336,14 +336,14 @@ class EventFields extends Fields
         // 'contacts' field is deprecated, remove in the future
         foreach ($organizers as &$organizer) {
             $organizer = array(
-                                'main_organizer'    => $organizer['main_organizer'],
-                                'organizer'         => get_the_title($organizer['organizer']),
-                                'organizer_link'    => get_field('website', $organizer['organizer']),
-                                'organizer_phone'   => get_field('phone', $organizer['organizer']),
-                                'organizer_email'   => get_field('email', $organizer['organizer']),
-                                'contact_persons'   => get_field('contact_persons', $organizer['organizer']),
-                                'contacts'          => null,
-                            );
+                'main_organizer'    => $organizer['main_organizer'],
+                'organizer'         => get_the_title($organizer['organizer']),
+                'organizer_link'    => get_field('website', $organizer['organizer']),
+                'organizer_phone'   => get_field('phone', $organizer['organizer']),
+                'organizer_email'   => get_field('email', $organizer['organizer']),
+                'contact_persons'   => get_field('contact_persons', $organizer['organizer']),
+                'contacts'          => null,
+            );
         }
 
         return $organizers;
@@ -399,7 +399,7 @@ class EventFields extends Fields
      * @return  void
      * @version 0.3.2 creating consumer accessable meta values.
      */
-    public static function registerRestFields()
+    public function registerRestFields()
     {
         /* Event tab */
 
@@ -451,7 +451,7 @@ class EventFields extends Fields
             )
         );
 
-       //Related events
+        //Related events
         register_rest_field($this->postType,
             'related_events',
             array(
@@ -570,6 +570,20 @@ class EventFields extends Fields
             )
         );
 
+        // Realsed date of tickets
+        register_rest_field($this->postType,
+            'ticket_release_date',
+            array(
+                'get_callback' => array($this, 'stringGetCallBack'),
+                'update_callback' => array($this, 'stringUpdateCallBack'),
+                'schema' => array(
+                    'description' => 'Field containing date and time when tickets are released',
+                    'type' => 'string',
+                    'context' => array('view', 'edit')
+                )
+            )
+        );
+
         // Age restriction details
         register_rest_field($this->postType,
             'age_restriction',
@@ -583,6 +597,35 @@ class EventFields extends Fields
                 )
             )
         );
+
+        // Total amount of tickets
+        register_rest_field($this->postType,
+            'ticket_stock',
+            array(
+                'get_callback' => array($this, 'stringGetCallBack'),
+                'update_callback' => array($this, 'stringUpdateCallBack'),
+                'schema' => array(
+                    'description' => 'Field containing total amount of tickers',
+                    'type' => 'numeric',
+                    'context' => array('view', 'edit')
+                )
+            )
+        );
+
+        // Remaining tickets of tickets for sale
+        register_rest_field($this->postType,
+            'tickets_remaining',
+            array(
+                'get_callback' => array($this, 'stringGetCallBack'),
+                'update_callback' => array($this, 'stringUpdateCallBack'),
+                'schema' => array(
+                    'description' => 'Field containing remaining amount of tickets for sale.',
+                    'type' => 'numeric',
+                    'context' => array('view', 'edit')
+                )
+            )
+        );
+
 
         // Included in member cards
         register_rest_field($this->postType,
@@ -695,6 +738,21 @@ class EventFields extends Fields
                 )
             )
         );
+
+        //Additional types of tickets
+        register_rest_field($this->postType,
+            'additional_ticket_types',
+            array(
+                'get_callback' => array($this, 'objectGetCallBack'),
+                'update_callback' => array($this, 'objectUpdateCallBack'),
+                'schema' => array(
+                    'description' => 'Field containing object additional types of tickets.',
+                    'type' => 'object',
+                    'context' => array('view', 'edit')
+                )
+            )
+        );
+
 
         //Price details
         register_rest_field($this->postType,
