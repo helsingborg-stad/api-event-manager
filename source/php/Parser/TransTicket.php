@@ -46,11 +46,10 @@ class TransTicket extends \HbgEventImporter\Parser
         }
     }
 
-
     /**
      * Cleans a single events data into correct format and saves it to db
      * @param  object $eventData Event data
-     * @param  int $shortKey unique key, created from the api url
+     * @param  int    $shortKey  unique key, created from the api url
      * @throws \Exception
      * @return void
      */
@@ -61,7 +60,7 @@ class TransTicket extends \HbgEventImporter\Parser
         $data['postContent'] = strip_tags(isset($eventData->Description) && !empty($eventData->Description) ? $eventData->Description : '',
             '<p><br>');
 
-        // Fixa locations
+        // TODO Fixa location
         //$data['location'] = $this->findWordWithCapLetters($data['postContent']);
         //echo $data['location'];
 
@@ -78,7 +77,7 @@ class TransTicket extends \HbgEventImporter\Parser
         if ($data['startDate'] != null && $data['endDate'] != null) {
             $data['occasions'][] = array(
                 'start_date' => $data['startDate'],
-                'end_date' =>$data['endDate'],
+                'end_date' => $data['endDate'],
                 'door_time' => $data['startDate']
             );
         }
@@ -106,23 +105,28 @@ class TransTicket extends \HbgEventImporter\Parser
         $data['price_range_standing_minimum_price'] = $eventData->Prices->StandingMinPrice ?? null;
         $data['price_range_standing_maximum_price'] = $eventData->Prices->StandingMaxPrice ?? null;
 
-        if (!empty($eventData->TicketPrices)) {
-            $data['additional_ticket_types']['ticket_name'] = isset($eventData->TicketPrices->TicketName) && !empty($eventData->TicketPrices->TicketName) ? $eventData->TicketPrices->TicketName : null;
-            $data['additional_ticket_types']['maximum_price'] = $eventData->TicketPrices->TicketName ?? null;
-            $data['additional_ticket_types']['minimum_price'] = $eventData->TicketPrices->MaxPrice ?? null;
-            $data['additional_ticket_types']['ticket_type'] = isset($eventData->TicketPrices->IsSeated) && $eventData->TicketPrices->IsSeated !== 1 ? $eventData->TicketPrices->IsSeated : 0;
-        } else {
-            $data['additional_ticket_types'] = null;
+        $data['additional_ticket_types'] = array();
+        if (isset($eventData->TicketPrices) && !empty($eventData->TicketPrices)) {
+            foreach ($eventData->TicketPrices as $price) {
+                $data['additional_ticket_types'][] = array(
+                    'ticket_name' => isset($price->TicketName) && !empty($price->TicketName) ? $price->TicketName : null,
+                    'minimum_price' => $price->MinPrice ?? null,
+                    'maximum_price' => $price->MaxPrice ?? null,
+                    'ticket_type' => !empty($price->IsSeated) ? 'Seated' : 'Standing'
+                );
+            }
         }
 
-        if (!empty($eventData->ReleaseDates)) {
-            $data['additional_ticket_retailers']['retailer_name'] = $eventData->ReleaseDates->PointOfSale ?? null;
-            $data['additional_ticket_retailers']['booking_url'] = null;
-            $data['additional_ticket_retailers']['ticket_start_date'] = $eventData->ReleaseDates->StartDate ?? null;
-            $data['additional_ticket_retailers']['ticket_stop_date'] = $eventData->ReleaseDates->StopDate ?? null;
-
-        } else {
-            $data['additional_ticket_retailers'] = null;
+        $data['additional_ticket_retailers'] = array();
+        if (isset($eventData->ReleaseDates) && !empty($eventData->ReleaseDates)) {
+            foreach ($eventData->ReleaseDates as $retailer) {
+                $data['additional_ticket_retailers'][] = array(
+                    'retailer_name' => $retailer->PointOfSale ?? null,
+                    'booking_url' => null,
+                    'ticket_start_date' => $retailer->StartDate ?? null,
+                    'ticket_stop_date' => $retailer->StopDate ?? null
+                );
+            }
         }
 
         //$locationId = $this->maybeCreateLocation($data, $shortKey);
@@ -132,9 +136,9 @@ class TransTicket extends \HbgEventImporter\Parser
 
     /**
      * Creates or updates an event if possible
-     * @param  array $data Event data
-     * @param  string $shortKey Event unique short key
-     * @param  int $locationId Location id
+     * @param  array  $data       Event data
+     * @param  string $shortKey   Event unique short key
+     * @param  int    $locationId Location id
      * @return boolean|int          Event id or false
      * @throws \Exception
      */
@@ -144,8 +148,7 @@ class TransTicket extends \HbgEventImporter\Parser
         $eventId = $this->checkIfPostExists('event', $data['postTitle']);
         $occurred = false;
 
-        $eventManagerUid = (get_post_meta($eventId, '_event_manager_uid', true)) ? get_post_meta($eventId,
-            '_event_manager_uid', true) : 'transticket-' . $shortKey . '-' . $data['uId'];
+        $eventManagerUid = (get_post_meta($eventId, '_event_manager_uid', true)) ? get_post_meta($eventId, '_event_manager_uid', true) : 'transticket-' . $shortKey . '-' . $data['uId'];
         $postStatus = $data['postStatus'];
         // Get existing event meta data
         if ($eventId) {
@@ -194,6 +197,7 @@ class TransTicket extends \HbgEventImporter\Parser
                     'price_range_seated_maximum_price' => $data['price_range_seated_maximum_price'],
                     'price_range_standing_minimum_price' => $data['price_range_standing_minimum_price'],
                     'price_range_standing_maximum_price' => $data['price_range_standing_maximum_price'],
+                    'additional_ticket_types' => $data['additional_ticket_types'],
                     'internal_event' => 0
                 )
             );
