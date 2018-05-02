@@ -274,7 +274,8 @@ class App
                 'transticket_api_key'       => get_sub_field('transticket_username').":".get_sub_field('transticket_password'),
                 'transticket_filter_tags'   => get_sub_field('transticket_filter_tags'),
                 'transticket_groups'        => get_sub_field('transticket_publishing_groups'),
-                'transticket_ticket_url'        => get_sub_field('transticket_ticket_url')
+                'transticket_ticket_url'    => get_sub_field('transticket_ticket_url'),
+                'transticket_end_import_date'    => get_sub_field('transticket_end_import_date')
             );
         }
 
