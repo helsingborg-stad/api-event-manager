@@ -23,7 +23,7 @@ class TransTicket extends \HbgEventImporter\Parser
      */
     private function getEventData()
     {
-        $endImportDate = ($this->apiKeys['transticket_end_import_date'] !== '') ? $this->apiKeys['transticket_end_import_date'] :  date("Y-m-d", strtotime("+1 weeks"));
+        $endImportDate = ($this->apiKeys['week_to_import'] !== '') ? date("Y-m-d", strtotime("+".$this->apiKeys['week_to_import']." weeks"))  :  date("Y-m-d", strtotime("+1 weeks"));
         $url = $this->url . '&FromDate=' . date("Y-m-d") . '&ToDate=' . $endImportDate;
         return json_decode(\HbgEventImporter\Helper\Curl::request('GET', $url, $this->apiKeys['transticket_api_key'],
             false, 'json', array('Content-Type: application/json')));
