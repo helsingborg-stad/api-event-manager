@@ -383,15 +383,13 @@ class App
             }
         }
 
-
         if (get_field('transticket_daily_cron', 'option') == true) {
             $api_keys = $this->getTransTicketKeys();
 
             foreach ((array) $api_keys as $key => $api_key) {
-                $importer = new \HbgEventImporter\Parser\TransTicket($api_key['transticket_api_url'], $api_key['transticket_api_key']);
+                $importer = new \HbgEventImporter\Parser\TransTicket($api_key['transticket_api_url'], $api_key);
             }
         }
-
 
         file_put_contents(dirname(__FILE__) . "/Log/cron_import.log", "Cron last run: " . date("Y-m-d H:i:s"));
     }
