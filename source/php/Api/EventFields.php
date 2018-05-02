@@ -782,6 +782,21 @@ class EventFields extends Fields
             )
         );
 
+        //Price range
+        register_rest_field($this->postType,
+            'price_range',
+            array(
+                'get_callback' => array($this, 'objectGetCallBack'),
+                'update_callback' => array($this, 'objectUpdateCallBack'),
+                'schema' => array(
+                    'description' => 'Field containing object with information about the price range for tickets.',
+                    'type' => 'object',
+                    'context' => array('view', 'edit')
+                )
+            )
+        );
+
+
         /* Organizer tab */
         register_rest_field($this->postType,
             'gallery',
