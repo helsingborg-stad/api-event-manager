@@ -275,7 +275,7 @@ class App
                 'transticket_filter_tags'   => get_sub_field('transticket_filter_tags'),
                 'transticket_groups'        => get_sub_field('transticket_publishing_groups'),
                 'transticket_ticket_url'    => get_sub_field('transticket_ticket_url'),
-                'week_to_import'    => get_sub_field('week_to_import')
+                'transticket_weeks'         => get_sub_field('transticket_weeks')
             );
         }
 

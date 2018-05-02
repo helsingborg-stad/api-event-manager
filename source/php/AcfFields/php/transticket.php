@@ -184,7 +184,7 @@
                 6 => array(
                     'key' => 'field_5ae9d19c0881e',
                     'label' => __('Weeks to import', 'event-manager'),
-                    'name' => 'week_to_import',
+                    'name' => 'transticket_weeks',
                     'type' => 'range',
                     'instructions' => __('Select how many weeks ahead you want to import', 'event-manager'),
                     'required' => 1,
