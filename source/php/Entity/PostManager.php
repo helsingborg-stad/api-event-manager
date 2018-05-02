@@ -65,7 +65,7 @@ abstract class PostManager
     /**
      * Save hooks
      * @param  string $postType Saved post type
-     * @param  object $object   Saved object
+     * @param  object $object Saved object
      * @return void
      */
     public function beforeSave()
@@ -80,19 +80,19 @@ abstract class PostManager
 
     /**
      * Get  posts
-     * @param  integer        $count       Number of posts to get
-     * @param  array          $metaQuery   Meta query
-     * @param  string         $postType    Post type
-     * @param  array|string   $postStatus  Post status
+     * @param  integer $count Number of posts to get
+     * @param  array $metaQuery Meta query
+     * @param  string $postType Post type
+     * @param  array|string $postStatus Post status
      * @return array                       Found posts
      */
     public static function get($count, $metaQuery, $postType, $postStatus = array('publish', 'draft'))
     {
         $args = array(
             'posts_per_page' => $count,
-            'post_type'      => $postType,
-            'orderby'        => 'date',
-            'order'          => 'DESC'
+            'post_type' => $postType,
+            'orderby' => 'date',
+            'order' => 'DESC'
         );
 
         $args['post_status'] = (array)$postStatus;
@@ -215,7 +215,9 @@ abstract class PostManager
 
         if (!is_dir($uploadDir)) {
             if (!mkdir($uploadDir, 0776)) {
-                return new WP_Error('event', __('Could not create folder', 'event-manager').' "' . $uploadDir . '", '. __('please go ahead and create it manually and rerun the import.', 'event-manager'));
+                return new WP_Error('event', __('Could not create folder',
+                        'event-manager') . ' "' . $uploadDir . '", ' . __('please go ahead and create it manually and rerun the import.',
+                        'event-manager'));
             }
         }
 
@@ -259,12 +261,13 @@ abstract class PostManager
 
     /**
      * Validates url
-     * @param  string  $url Url to validate
+     * @param  string $url Url to validate
      * @return boolean
      */
     private function isUrl($url)
     {
-        if (is_string($url) && preg_match('/^(?:[;\/?:@&=+$,]|(?:[^\W_]|[-_.!~*\()\[\] ])|(?:%[\da-fA-F]{2}))*$/', $url)) {
+        if (is_string($url) && preg_match('/^(?:[;\/?:@&=+$,]|(?:[^\W_]|[-_.!~*\()\[\] ])|(?:%[\da-fA-F]{2}))*$/',
+                $url)) {
             return true;
         }
 
