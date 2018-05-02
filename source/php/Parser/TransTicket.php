@@ -7,7 +7,7 @@ use \HbgEventImporter\Location as Location;
 use \HbgEventImporter\Helper\Address as Address;
 
 ini_set('memory_limit', '256M');
-ini_set('default_socket_timeout', 60*10);
+ini_set('default_socket_timeout', 60 * 10);
 
 class TransTicket extends \HbgEventImporter\Parser
 {
@@ -23,7 +23,8 @@ class TransTicket extends \HbgEventImporter\Parser
      */
     private function getEventData()
     {
-        $endImportDate = ($this->apiKeys['week_to_import'] !== '') ? date("Y-m-d", strtotime("+".$this->apiKeys['week_to_import']." weeks"))  :  date("Y-m-d", strtotime("+1 weeks"));
+        $endImportDate = ($this->apiKeys['week_to_import'] !== '') ? date("Y-m-d",
+            strtotime("+" . $this->apiKeys['week_to_import'] . " weeks")) : date("Y-m-d", strtotime("+1 weeks"));
         $url = $this->url . '&FromDate=' . date("Y-m-d") . '&ToDate=' . $endImportDate;
         return json_decode(\HbgEventImporter\Helper\Curl::request('GET', $url, $this->apiKeys['transticket_api_key'],
             false, 'json', array('Content-Type: application/json')));
@@ -53,7 +54,7 @@ class TransTicket extends \HbgEventImporter\Parser
     /**
      * Cleans a single events data into correct format and saves it to db
      * @param  object $eventData Event data
-     * @param  int    $shortKey  unique key, created from the api url
+     * @param  int $shortKey unique key, created from the api url
      * @throws \Exception
      * @return void
      */
@@ -87,8 +88,10 @@ class TransTicket extends \HbgEventImporter\Parser
         }
 
         $data['categories'] = isset($eventData->Tags) && is_array($eventData->Tags) ? $this->getCategories($eventData->Tags) : array();
-        $data['postStatus'] = get_field('transticket_post_status', 'option') ? get_field('transticket_post_status', 'option') : 'publish';
-        $data['user_groups'] = (is_array($this->apiKeys['transticket_groups']) && !empty($this->apiKeys['transticket_groups'])) ? array_map('intval', $this->apiKeys['transticket_groups']) : null;
+        $data['postStatus'] = get_field('transticket_post_status', 'option') ? get_field('transticket_post_status',
+            'option') : 'publish';
+        $data['user_groups'] = (is_array($this->apiKeys['transticket_groups']) && !empty($this->apiKeys['transticket_groups'])) ? array_map('intval',
+            $this->apiKeys['transticket_groups']) : null;
 
         $data['image'] = null;
         if (isset($eventData->{'ImageURL'}) && !empty($eventData->{'ImageURL'}) && $eventData->{'ImageURL'} != 'null') {
@@ -140,9 +143,9 @@ class TransTicket extends \HbgEventImporter\Parser
 
     /**
      * Creates or updates an event if possible
-     * @param  array  $data       Event data
-     * @param  string $shortKey   Event unique short key
-     * @param  int    $locationId Location id
+     * @param  array $data Event data
+     * @param  string $shortKey Event unique short key
+     * @param  int $locationId Location id
      * @return boolean|int          Event id or false
      * @throws \Exception
      */
@@ -152,7 +155,8 @@ class TransTicket extends \HbgEventImporter\Parser
         $eventId = $this->checkIfPostExists('event', $data['postTitle']);
         $occurred = false;
 
-        $eventManagerUid = (get_post_meta($eventId, '_event_manager_uid', true)) ? get_post_meta($eventId, '_event_manager_uid', true) : 'transticket-' . $shortKey . '-' . $data['uId'];
+        $eventManagerUid = (get_post_meta($eventId, '_event_manager_uid', true)) ? get_post_meta($eventId,
+            '_event_manager_uid', true) : 'transticket-' . $shortKey . '-' . $data['uId'];
         $postStatus = $data['postStatus'];
         // Get existing event meta data
         if ($eventId) {
