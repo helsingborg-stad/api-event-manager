@@ -45,6 +45,8 @@ class Event extends \HbgEventImporter\Entity\PostManager
         $this->saveOccasions();
         $this->saveTags();
         $this->saveOrganizer();
+        $this->saveTicketTypes();
+        $this->saveTicketRetailers();
 
         return true;
     }
@@ -137,10 +139,10 @@ class Event extends \HbgEventImporter\Entity\PostManager
         $newOccasions = array();
         foreach ($getOccasions as $occasion) {
             $newOccasions[] = array(
-                                'start_date' => date('Y-m-d H:i:s', $occasion['timestamp_start']),
-                                'end_date'   => date('Y-m-d H:i:s', $occasion['timestamp_end']),
-                                'door_time'  => date('Y-m-d H:i:s', $occasion['timestamp_door']),
-                                );
+                'start_date' => date('Y-m-d H:i:s', $occasion['timestamp_start']),
+                'end_date' => date('Y-m-d H:i:s', $occasion['timestamp_end']),
+                'door_time' => date('Y-m-d H:i:s', $occasion['timestamp_door']),
+            );
         }
 
         update_field('field_5761106783967', $newOccasions, $this->ID);
@@ -187,5 +189,25 @@ class Event extends \HbgEventImporter\Entity\PostManager
         }
 
         return true;
+    }
+
+    /**
+     * Save Additional ticket types with ACF
+     */
+    public function saveTicketTypes()
+    {
+        if (isset($this->additional_ticket_types)) {
+            update_field('field_5ae2e55f94974', $this->additional_ticket_types, $this->ID);
+        }
+    }
+
+    /**
+     * Save Additional ticket retailers with ACF
+     */
+    public function saveTicketRetailers()
+    {
+        if (isset($this->additional_ticket_types)) {
+            update_field('field_5ae320279d7e0', $this->additional_ticket_retailers, $this->ID);
+        }
     }
 }
