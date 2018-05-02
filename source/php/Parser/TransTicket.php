@@ -6,6 +6,9 @@ use \HbgEventImporter\Event as Event;
 use \HbgEventImporter\Location as Location;
 use \HbgEventImporter\Helper\Address as Address;
 
+ini_set('memory_limit', '256M');
+ini_set('default_socket_timeout', 60*10);
+
 class TransTicket extends \HbgEventImporter\Parser
 {
     public function __construct($url, $apiKeys)
