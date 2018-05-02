@@ -626,6 +626,20 @@ class EventFields extends Fields
             )
         );
 
+        //Additional ticket retailers
+        register_rest_field($this->postType,
+            'additional_ticket_retailers',
+            array(
+                'get_callback' => array($this, 'objectGetCallBack'),
+                'update_callback' => array($this, 'objectUpdateCallBack'),
+                'schema' => array(
+                    'description' => 'Field containing additional ticket retailers.',
+                    'type' => 'object',
+                    'context' => array('view', 'edit')
+                )
+            )
+        );
+
 
         // Included in member cards
         register_rest_field($this->postType,
