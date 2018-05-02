@@ -101,14 +101,10 @@ class TransTicket extends \HbgEventImporter\Parser
         $data['ticket_release_date'] = !empty($eventData->ReleaseDate) ? $eventData->ReleaseDate : null;
         $data['tickets_remaining'] = $eventData->Sales->RemainingTickets ?? null;
 
-        if (!empty($eventData->Prices)) {
-            $data['price_range']['seated_minimum_price'] = $eventData->Prices->SeatedMinPrice ?? null;
-            $data['price_range']['seated_maximum_price'] = $eventData->Prices->SeatedMaxPrice ?? null;
-            $data['price_range']['standing_minimum_price'] = $eventData->Prices->StandingMinPrice ?? null;
-            $data['price_range']['standing_maximum_price'] = $eventData->Prices->StandingMaxPrice ?? null;
-        } else {
-            $data['price_range'] = null;
-        }
+        $data['price_range_seated_minimum_price'] = $eventData->Prices->SeatedMinPrice ?? null;
+        $data['price_range_seated_maximum_price'] = $eventData->Prices->SeatedMaxPrice ?? null;
+        $data['price_range_standing_minimum_price'] = $eventData->Prices->StandingMinPrice ?? null;
+        $data['price_range_standing_maximum_price'] = $eventData->Prices->StandingMaxPrice ?? null;
 
         if (!empty($eventData->TicketPrices)) {
             $data['additional_ticket_types']['ticket_name'] = isset($eventData->TicketPrices->TicketName) && !empty($eventData->TicketPrices->TicketName) ? $eventData->TicketPrices->TicketName : null;
@@ -193,8 +189,11 @@ class TransTicket extends \HbgEventImporter\Parser
                     'ticket_stock' => $data['ticket_stock'],
                     'ticket_release_date' => $data['ticket_release_date'],
                     'tickets_remaining' => $data['tickets_remaining'],
-                    'price_range' => $data['price_range'],
                     'additional_ticket_retailers' => $data['additional_ticket_retailers'],
+                    'price_range_seated_minimum_price' => $data['price_range_seated_minimum_price'],
+                    'price_range_seated_maximum_price' => $data['price_range_seated_maximum_price'],
+                    'price_range_standing_minimum_price' => $data['price_range_standing_minimum_price'],
+                    'price_range_standing_maximum_price' => $data['price_range_standing_maximum_price'],
                     'internal_event' => 0
                 )
             );
