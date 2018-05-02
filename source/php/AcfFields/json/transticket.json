@@ -177,6 +177,23 @@
                     "load_terms": 0,
                     "return_format": "id",
                     "multiple": 0
+                },
+                {
+                    "key": "field_5ae9c1dc54bdc",
+                    "label": "End import date",
+                    "name": "transticket_end_import_date",
+                    "type": "date_picker",
+                    "instructions": "Select end import date",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "display_format": "Y-m-d",
+                    "return_format": "Y-m-d",
+                    "first_day": 1
                 }
             ]
         }
