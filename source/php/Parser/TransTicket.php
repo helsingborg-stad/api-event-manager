@@ -8,9 +8,6 @@ use \HbgEventImporter\Helper\Address as Address;
 
 class TransTicket extends \HbgEventImporter\Parser
 {
-
-    private $timeZoneString;
-
     public function __construct($url, $apiKeys)
     {
         error_log(print_r($apiKeys, true));
@@ -198,6 +195,7 @@ class TransTicket extends \HbgEventImporter\Parser
                     'tickets_remaining' => $data['tickets_remaining'],
                     'price_range' => $data['price_range'],
                     'additional_ticket_retailers' => $data['additional_ticket_retailers'],
+                    'internal_event' => 0
                 )
             );
         } catch (\Exception $e) {
