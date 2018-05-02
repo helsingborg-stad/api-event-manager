@@ -3,7 +3,7 @@
 if (function_exists('acf_add_local_field_group')) {
     acf_add_local_field_group(array(
     'key' => 'group_57610ebadcee8',
-    'title' => __('Event', 'event-manager'),
+    'title' => 'Event',
     'fields' => array(
         0 => array(
             'key' => 'field_5761103c83966',
@@ -1217,8 +1217,8 @@
                         'id' => '',
                     ),
                     'choices' => array(
-                        0 => __('Standing', 'event-manager'),
-                        1 => __('Seated', 'event-manager'),
+                        'Standing' => __('Standing', 'event-manager'),
+                        'Seated' => __('Seated', 'event-manager'),
                     ),
                     'allow_null' => 0,
                     'other_choice' => 0,
