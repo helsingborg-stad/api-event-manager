@@ -20,6 +20,7 @@ class Address
         if ($type) {
             $url = 'https://maps.googleapis.com/maps/api/geocode/json?address=' . urlencode($address) . '&key=' . get_option('options_google_geocode_api_key');
             $data = json_decode(file_get_contents($url));
+
         } else {
             $url = 'https://maps.googleapis.com/maps/api/place/textsearch/json?query=' . urlencode($address) . '&key=' . get_option('options_google_geocode_api_key');
             $data = json_decode(file_get_contents($url));
