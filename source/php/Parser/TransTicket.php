@@ -160,6 +160,7 @@ class TransTicket extends \HbgEventImporter\Parser
             '_event_manager_uid', true) : 'transticket-' . $shortKey . '-' . $data['uId'];
         $postStatus = $data['postStatus'];
         // Get existing event meta data
+        $sync = true;
         if ($eventId) {
             $sync = get_post_meta($eventId, 'sync', true);
             $postStatus = get_post_status($eventId);
