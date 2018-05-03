@@ -161,6 +161,11 @@ abstract class PostManager
         $post['post_type'] = $this->post_type;
         $post['meta_input'] = $meta;
 
+        // Skip these meta values, it will be saved later with ACF
+        unset($post['meta_input']['occasions']);
+        unset($post['meta_input']['additional_ticket_types']);
+        unset($post['meta_input']['additional_ticket_retailers']);
+
         // Check if duplicate by matching "_event_manager_uid" meta value
         if (isset($meta['_event_manager_uid'])) {
             $duplicate = self::get(
