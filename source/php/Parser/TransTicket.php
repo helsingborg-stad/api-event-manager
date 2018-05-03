@@ -71,6 +71,7 @@ class TransTicket extends \HbgEventImporter\Parser
         $data['endDate'] = !empty($eventData->EndDate) ? $eventData->EndDate : null;
         if ($data['endDate'] === null) {
             $data['endDate'] = date("Y-m-d H:i:s", strtotime($data['startDate'] . "+1 hour"));
+            $data['endDate'] = str_replace(' ', 'T', $data['endDate']);
         }
 
         $data['occasions'] = array();
@@ -183,6 +184,7 @@ class TransTicket extends \HbgEventImporter\Parser
             '_event_manager_uid', true) : 'transticket-' . $shortKey . '-' . $data['uId'];
         $postStatus = $data['postStatus'];
         // Get existing event meta data
+        $sync = true;
         if ($eventId) {
             $sync = get_post_meta($eventId, 'sync', true);
             $postStatus = get_post_status($eventId);

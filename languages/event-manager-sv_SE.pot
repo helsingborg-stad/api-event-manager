@@ -3,14 +3,14 @@ msgid ""
 msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "Project-Id-Version: Event Manager\n"
-"POT-Creation-Date: 2018-01-29 10:42+0100\n"
+"POT-Creation-Date: 2018-05-03 13:28+0200\n"
 "PO-Revision-Date: 2016-10-26 08:27+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.12\n"
+"X-Generator: Poedit 2.0.6\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-WPHeader: hbg-event-importer.php\n"
 "X-Poedit-SourceCharset: UTF-8\n"
@@ -23,7 +23,9 @@ msgstr ""
 "X-Poedit-SearchPathExcluded-2: node_modules\n"
 "X-Poedit-SearchPathExcluded-3: source/php/Vendor\n"
 
-#: source/php/AcfFields/php/cbis.php:10 source/php/AcfFields/php/xcap.php:10
+#: source/php/AcfFields/php/cbis.php:10
+#: source/php/AcfFields/php/transticket.php:10
+#: source/php/AcfFields/php/xcap.php:10
 msgid "Daily import"
 msgstr ""
 
@@ -31,20 +33,28 @@ msgstr ""
 msgid "Enable daily automatic import from CBIS"
 msgstr ""
 
-#: source/php/AcfFields/php/cbis.php:26 source/php/AcfFields/php/xcap.php:26
+#: source/php/AcfFields/php/cbis.php:26
+#: source/php/AcfFields/php/transticket.php:29
+#: source/php/AcfFields/php/xcap.php:26
 msgid "Post status"
 msgstr ""
 
-#: source/php/AcfFields/php/cbis.php:29 source/php/AcfFields/php/xcap.php:29
+#: source/php/AcfFields/php/cbis.php:29
+#: source/php/AcfFields/php/transticket.php:32
+#: source/php/AcfFields/php/xcap.php:29
 msgid "Select status of imported events."
 msgstr ""
 
-#: source/php/AcfFields/php/cbis.php:38 source/php/AcfFields/php/xcap.php:38
+#: source/php/AcfFields/php/cbis.php:38
+#: source/php/AcfFields/php/transticket.php:41
+#: source/php/AcfFields/php/xcap.php:38
 #: source/php/Admin/FilterRestrictions.php:130
 msgid "Draft"
 msgstr ""
 
-#: source/php/AcfFields/php/cbis.php:39 source/php/AcfFields/php/xcap.php:39
+#: source/php/AcfFields/php/cbis.php:39
+#: source/php/AcfFields/php/transticket.php:42
+#: source/php/AcfFields/php/xcap.php:39
 #: source/php/Admin/FilterRestrictions.php:126
 msgid "Published"
 msgstr ""
@@ -104,11 +114,13 @@ msgid ""
 msgstr ""
 
 #: source/php/AcfFields/php/cbis.php:206
+#: source/php/AcfFields/php/transticket.php:164
 #: source/php/AcfFields/php/xcap.php:104
 msgid "Default user groups"
 msgstr ""
 
 #: source/php/AcfFields/php/cbis.php:209
+#: source/php/AcfFields/php/transticket.php:167
 #: source/php/AcfFields/php/xcap.php:107
 msgid ""
 "Select the user groups that you want to set as default to imported posts."
@@ -151,63 +163,63 @@ msgstr ""
 msgid "Show notification if no events have been imported for a week or more."
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:7 source/php/AcfFields/php/event.php:11
+#: source/php/AcfFields/php/event.php:6 source/php/AcfFields/php/event.php:10
 msgid "Event"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:27
+#: source/php/AcfFields/php/event.php:26
 #: source/php/AcfFields/php/membership-card.php:10
 #: source/php/AcfFields/php/organizer.php:47
 #: source/php/AcfFields/php/sponsor.php:10
 msgid "Website"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:30
+#: source/php/AcfFields/php/event.php:29
 msgid "Link to event website."
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:43
+#: source/php/AcfFields/php/event.php:42
 msgid "Additional links"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:46
+#: source/php/AcfFields/php/event.php:45
 msgid "Additional links to websites."
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:58
-#: source/php/AcfFields/php/event.php:1317
-#: source/php/AcfFields/php/event.php:1354
+#: source/php/AcfFields/php/event.php:57
+#: source/php/AcfFields/php/event.php:1672
+#: source/php/AcfFields/php/event.php:1709
 #: source/php/AcfFields/php/location.php:447
 msgid "Add link"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:62
+#: source/php/AcfFields/php/event.php:61
 msgid "Link"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:80
+#: source/php/AcfFields/php/event.php:79
 msgid "Related events"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:83
+#: source/php/AcfFields/php/event.php:82
 msgid "Links to other events associated with this event."
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:103
+#: source/php/AcfFields/php/event.php:102
 msgid "Occasions"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:119
+#: source/php/AcfFields/php/event.php:118
 msgid "Event occasions"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:130
+#: source/php/AcfFields/php/event.php:129
 msgid ""
 "Add occasions to this event. Does the event occur each week? Then add a "
 "rule for recurring events."
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:136
+#: source/php/AcfFields/php/event.php:135
 #: source/php/AcfFields/php/location.php:378
 #: source/php/PostTypes/Events.php:84 source/php/PostTypes/Locations.php:63
 #: source/php/PostTypes/MembershipCards.php:35
@@ -216,323 +228,380 @@ msgstr ""
 msgid "Date"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:139
+#: source/php/AcfFields/php/event.php:138
 msgid "Start and end time of the event."
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:151
+#: source/php/AcfFields/php/event.php:150
 msgid "Add occasion"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:155
-#: source/php/AcfFields/php/event.php:479
+#: source/php/AcfFields/php/event.php:154
+#: source/php/AcfFields/php/event.php:478
 msgid "Status"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:158
+#: source/php/AcfFields/php/event.php:157
 msgid "Select if event is on schedule or not."
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:167
+#: source/php/AcfFields/php/event.php:166
 #: source/php/Admin/FilterRestrictions.php:129
 msgid "Scheduled"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:168
-#: source/php/AcfFields/php/event.php:492
+#: source/php/AcfFields/php/event.php:167
+#: source/php/AcfFields/php/event.php:491
 msgid "Rescheduled"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:169
-#: source/php/AcfFields/php/event.php:493
+#: source/php/AcfFields/php/event.php:168
+#: source/php/AcfFields/php/event.php:492
 msgid "Cancelled"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:180
-#: source/php/AcfFields/php/event.php:504
+#: source/php/AcfFields/php/event.php:179
+#: source/php/AcfFields/php/event.php:503
 #: source/php/AcfFields/php/location.php:395
 msgid "Exeption information"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:183
+#: source/php/AcfFields/php/event.php:182
 msgid "Information about why there have been an exception."
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:207
-#: source/php/AcfFields/php/event.php:409
+#: source/php/AcfFields/php/event.php:206
+#: source/php/AcfFields/php/event.php:408
 msgid "Start date"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:224
-#: source/php/AcfFields/php/event.php:426
+#: source/php/AcfFields/php/event.php:223
+#: source/php/AcfFields/php/event.php:425
 msgid "End date"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:241
-#: source/php/AcfFields/php/event.php:393
+#: source/php/AcfFields/php/event.php:240
+#: source/php/AcfFields/php/event.php:392
 msgid "Door time"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:258
+#: source/php/AcfFields/php/event.php:257
 msgid "Override content"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:261
+#: source/php/AcfFields/php/event.php:260
 msgid "Use master or custom content for this occasion."
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:270
+#: source/php/AcfFields/php/event.php:269
 msgid "Use master content"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:271
+#: source/php/AcfFields/php/event.php:270
 msgid "Use custom content"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:282
+#: source/php/AcfFields/php/event.php:281
 msgid "Content"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:285
+#: source/php/AcfFields/php/event.php:284
 msgid "Override the post content of the event."
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:311
+#: source/php/AcfFields/php/event.php:310
 msgid "Recurrence rules"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:314
+#: source/php/AcfFields/php/event.php:313
 msgid "Weekly recurring event."
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:326
+#: source/php/AcfFields/php/event.php:325
 msgid "Add rule"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:330
+#: source/php/AcfFields/php/event.php:329
 #: source/php/AcfFields/php/location.php:259
 msgid "Weekday"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:333
+#: source/php/AcfFields/php/event.php:332
 msgid "The event will occur on this weekday"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:342
+#: source/php/AcfFields/php/event.php:341
 #: source/php/AcfFields/php/location.php:271
 msgid "Monday"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:343
+#: source/php/AcfFields/php/event.php:342
 #: source/php/AcfFields/php/location.php:272
 msgid "Tuesday"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:344
+#: source/php/AcfFields/php/event.php:343
 #: source/php/AcfFields/php/location.php:273
 msgid "Wednesday"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:345
+#: source/php/AcfFields/php/event.php:344
 #: source/php/AcfFields/php/location.php:274
 msgid "Thursday"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:346
+#: source/php/AcfFields/php/event.php:345
 #: source/php/AcfFields/php/location.php:275
 msgid "Friday"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:347
+#: source/php/AcfFields/php/event.php:346
 #: source/php/AcfFields/php/location.php:276
 msgid "Saturday"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:348
+#: source/php/AcfFields/php/event.php:347
 #: source/php/AcfFields/php/location.php:277
 msgid "Sunday"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:361
+#: source/php/AcfFields/php/event.php:360
 msgid "Start time"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:364
+#: source/php/AcfFields/php/event.php:363
 msgid "Start time of the event"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:377
+#: source/php/AcfFields/php/event.php:376
 msgid "End time"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:380
+#: source/php/AcfFields/php/event.php:379
 msgid "End time of the event"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:396
+#: source/php/AcfFields/php/event.php:395
 msgid "Door time of the event"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:412
+#: source/php/AcfFields/php/event.php:411
 msgid "When the recurring event period starts."
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:429
+#: source/php/AcfFields/php/event.php:428
 msgid "When the reccurring event period ends"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:443
+#: source/php/AcfFields/php/event.php:442
 msgid "Exceptions"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:446
+#: source/php/AcfFields/php/event.php:445
 msgid "Add exceptions to this scheme."
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:458
+#: source/php/AcfFields/php/event.php:457
 #: source/php/AcfFields/php/location.php:374
 msgid "Add exception"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:462
+#: source/php/AcfFields/php/event.php:461
 msgid "Exception date"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:491
+#: source/php/AcfFields/php/event.php:490
 msgid "Default"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:535
-#: source/php/AcfFields/php/event.php:551
+#: source/php/AcfFields/php/event.php:534
+#: source/php/AcfFields/php/event.php:550
 #: source/php/AcfFields/php/guide-basic.php:98
 #: source/php/AcfFields/php/location.php:6 source/php/PostTypes/Events.php:40
 #: source/php/PostTypes/Locations.php:13
 msgid "Location"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:554
+#: source/php/AcfFields/php/event.php:553
 msgid "Location or address for the event."
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:574
+#: source/php/AcfFields/php/event.php:573
 msgid "Additional locations"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:577
+#: source/php/AcfFields/php/event.php:576
 msgid ""
 "Add additional locations if the event takes place on more than one address."
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:597
-#: source/php/AcfFields/php/event.php:651
-#: source/php/AcfFields/php/location.php:541
-#: source/php/AcfFields/php/location.php:557
+#: source/php/AcfFields/php/event.php:596
+#: source/php/AcfFields/php/event.php:650
+#: source/php/AcfFields/php/location.php:542
+#: source/php/AcfFields/php/location.php:558
 #: source/php/AcfFields/php/organizer.php:6
 #: source/php/PostTypes/Organizers.php:11
 msgid "Organizer"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:613 source/php/App.php:219
+#: source/php/AcfFields/php/event.php:612 source/php/App.php:219
 #: source/php/PostTypes/Organizers.php:10
 msgid "Organizers"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:628
+#: source/php/AcfFields/php/event.php:627
 msgid "Add organizer"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:632
+#: source/php/AcfFields/php/event.php:631
 msgid "Main organizer"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:643
+#: source/php/AcfFields/php/event.php:642
 msgid "Check the box if this is the main organizer for the event."
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:654
+#: source/php/AcfFields/php/event.php:653
 msgid "Select the company, organization or person that organizes the event."
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:676 source/php/App.php:229
+#: source/php/AcfFields/php/event.php:675 source/php/App.php:229
 #: source/php/PostTypes/Sponsors.php:10
 msgid "Sponsors"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:679
+#: source/php/AcfFields/php/event.php:678
 msgid "Add sponsors to the event."
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:699
-msgid "Booking"
+#: source/php/AcfFields/php/event.php:698
+msgid "Booking & tickets"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:715
+#: source/php/AcfFields/php/event.php:714
 #: source/php/AcfFields/php/package.php:49
 msgid "Booking link"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:718
+#: source/php/AcfFields/php/event.php:717
 #: source/php/AcfFields/php/package.php:52
 msgid "External link to booking website."
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:731
+#: source/php/AcfFields/php/event.php:730
 #: source/php/AcfFields/php/package.php:65
 msgid "Booking phone"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:734
+#: source/php/AcfFields/php/event.php:733
 #: source/php/AcfFields/php/package.php:68
 msgid "Phone number to make bookings."
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:750
+#: source/php/AcfFields/php/event.php:749
+#: source/php/AcfFields/php/event.php:883
+msgid "Ticket release date"
+msgstr ""
+
+#: source/php/AcfFields/php/event.php:752
+#: source/php/AcfFields/php/event.php:886
+msgid "Date when the tickets is released."
+msgstr ""
+
+#: source/php/AcfFields/php/event.php:766
 #: source/php/AcfFields/php/package.php:84
 msgid "Minimum age to attend the event"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:753
+#: source/php/AcfFields/php/event.php:769
 #: source/php/AcfFields/php/package.php:87
 msgid "Enter age if this event is age restricted."
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:762
-#: source/php/AcfFields/php/location.php:817
+#: source/php/AcfFields/php/event.php:778
+#: source/php/AcfFields/php/location.php:818
 #: source/php/AcfFields/php/package.php:96
 msgid "e.g. 15"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:764
-#: source/php/AcfFields/php/location.php:819
+#: source/php/AcfFields/php/event.php:780
+#: source/php/AcfFields/php/location.php:820
 #: source/php/AcfFields/php/package.php:98
 msgid "year"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:771
-#: source/php/AcfFields/php/location.php:596
+#: source/php/AcfFields/php/event.php:787
+msgid "Ticket stock"
+msgstr ""
+
+#: source/php/AcfFields/php/event.php:790
+msgid "Total amount of tickets."
+msgstr ""
+
+#: source/php/AcfFields/php/event.php:808
+msgid "Tickets remaining"
+msgstr ""
+
+#: source/php/AcfFields/php/event.php:811
+msgid "Remaining amount of tickets for sale."
+msgstr ""
+
+#: source/php/AcfFields/php/event.php:829
+msgid "Additional ticket retailers"
+msgstr ""
+
+#: source/php/AcfFields/php/event.php:844
+#: source/php/AcfFields/php/location.php:255
+#: source/php/AcfFields/php/organizer.php:78
+#: source/php/AcfFields/php/transticket.php:68
+msgid "Add"
+msgstr ""
+
+#: source/php/AcfFields/php/event.php:848
+msgid "Retailer"
+msgstr ""
+
+#: source/php/AcfFields/php/event.php:851
+msgid "Name of the retailer."
+msgstr ""
+
+#: source/php/AcfFields/php/event.php:867
+msgid "Ticket purchase URL"
+msgstr ""
+
+#: source/php/AcfFields/php/event.php:900
+msgid "Ticket stop date"
+msgstr ""
+
+#: source/php/AcfFields/php/event.php:903
+msgid "Date when the retailer stops selling tickets."
+msgstr ""
+
+#: source/php/AcfFields/php/event.php:919
+#: source/php/AcfFields/php/location.php:597
 #: source/php/AcfFields/php/package.php:105
 msgid "Included in membership cards"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:774
+#: source/php/AcfFields/php/event.php:922
 msgid "Add membership cards where this event is included."
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:794
-#: source/php/AcfFields/php/location.php:619
+#: source/php/AcfFields/php/event.php:942
+#: source/php/AcfFields/php/location.php:620
 #: source/php/AcfFields/php/package.php:128
 msgid "Default price / Adult"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:808
-#: source/php/AcfFields/php/event.php:827
-#: source/php/AcfFields/php/event.php:846
-#: source/php/AcfFields/php/event.php:915
-#: source/php/AcfFields/php/event.php:1013
-#: source/php/AcfFields/php/location.php:633
-#: source/php/AcfFields/php/location.php:652
-#: source/php/AcfFields/php/location.php:671
-#: source/php/AcfFields/php/location.php:740
+#: source/php/AcfFields/php/event.php:956
+#: source/php/AcfFields/php/event.php:975
+#: source/php/AcfFields/php/event.php:994
+#: source/php/AcfFields/php/event.php:1063
+#: source/php/AcfFields/php/event.php:1267
+#: source/php/AcfFields/php/location.php:634
+#: source/php/AcfFields/php/location.php:653
+#: source/php/AcfFields/php/location.php:672
+#: source/php/AcfFields/php/location.php:741
 #: source/php/AcfFields/php/package.php:142
 #: source/php/AcfFields/php/package.php:161
 #: source/php/AcfFields/php/package.php:180
@@ -541,591 +610,635 @@ msgstr ""
 msgid "SEK"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:813
-#: source/php/AcfFields/php/location.php:638
+#: source/php/AcfFields/php/event.php:961
+#: source/php/AcfFields/php/location.php:639
 #: source/php/AcfFields/php/package.php:147
 msgid "Price student"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:832
-#: source/php/AcfFields/php/location.php:657
+#: source/php/AcfFields/php/event.php:980
+#: source/php/AcfFields/php/location.php:658
 #: source/php/AcfFields/php/package.php:166
 msgid "Price children"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:851
-#: source/php/AcfFields/php/location.php:676
+#: source/php/AcfFields/php/event.php:999
+#: source/php/AcfFields/php/location.php:677
 #: source/php/AcfFields/php/package.php:185
 msgid "Age restriction for children price"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:854
-#: source/php/AcfFields/php/location.php:679
+#: source/php/AcfFields/php/event.php:1002
+#: source/php/AcfFields/php/location.php:680
 #: source/php/AcfFields/php/package.php:188
 msgid "Children price is valid up to this age."
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:863
-#: source/php/AcfFields/php/location.php:688
+#: source/php/AcfFields/php/event.php:1011
+#: source/php/AcfFields/php/location.php:689
 #: source/php/AcfFields/php/package.php:197
 msgid "0"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:864
-#: source/php/AcfFields/php/location.php:689
+#: source/php/AcfFields/php/event.php:1012
+#: source/php/AcfFields/php/location.php:690
 #: source/php/AcfFields/php/package.php:198
 msgid "1"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:865
-#: source/php/AcfFields/php/location.php:690
+#: source/php/AcfFields/php/event.php:1013
+#: source/php/AcfFields/php/location.php:691
 #: source/php/AcfFields/php/package.php:199
 msgid "2"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:866
-#: source/php/AcfFields/php/location.php:691
+#: source/php/AcfFields/php/event.php:1014
+#: source/php/AcfFields/php/location.php:692
 #: source/php/AcfFields/php/package.php:200
 msgid "3"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:867
-#: source/php/AcfFields/php/location.php:692
+#: source/php/AcfFields/php/event.php:1015
+#: source/php/AcfFields/php/location.php:693
 #: source/php/AcfFields/php/package.php:201
 msgid "4"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:868
-#: source/php/AcfFields/php/location.php:693
+#: source/php/AcfFields/php/event.php:1016
+#: source/php/AcfFields/php/location.php:694
 #: source/php/AcfFields/php/package.php:202
 msgid "5"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:869
-#: source/php/AcfFields/php/location.php:694
+#: source/php/AcfFields/php/event.php:1017
+#: source/php/AcfFields/php/location.php:695
 #: source/php/AcfFields/php/package.php:203
 msgid "6"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:870
-#: source/php/AcfFields/php/location.php:695
+#: source/php/AcfFields/php/event.php:1018
+#: source/php/AcfFields/php/location.php:696
 #: source/php/AcfFields/php/package.php:204
 msgid "7"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:871
-#: source/php/AcfFields/php/location.php:696
+#: source/php/AcfFields/php/event.php:1019
+#: source/php/AcfFields/php/location.php:697
 #: source/php/AcfFields/php/package.php:205
 msgid "8"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:872
-#: source/php/AcfFields/php/location.php:697
+#: source/php/AcfFields/php/event.php:1020
+#: source/php/AcfFields/php/location.php:698
 #: source/php/AcfFields/php/package.php:206
 msgid "9"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:873
-#: source/php/AcfFields/php/location.php:698
+#: source/php/AcfFields/php/event.php:1021
+#: source/php/AcfFields/php/location.php:699
 #: source/php/AcfFields/php/package.php:207
 msgid "10"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:874
-#: source/php/AcfFields/php/location.php:699
+#: source/php/AcfFields/php/event.php:1022
+#: source/php/AcfFields/php/location.php:700
 #: source/php/AcfFields/php/package.php:208
 msgid "11"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:875
-#: source/php/AcfFields/php/location.php:700
+#: source/php/AcfFields/php/event.php:1023
+#: source/php/AcfFields/php/location.php:701
 #: source/php/AcfFields/php/package.php:209
 msgid "12"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:876
-#: source/php/AcfFields/php/location.php:701
+#: source/php/AcfFields/php/event.php:1024
+#: source/php/AcfFields/php/location.php:702
 #: source/php/AcfFields/php/package.php:210
 msgid "13"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:877
-#: source/php/AcfFields/php/location.php:702
+#: source/php/AcfFields/php/event.php:1025
+#: source/php/AcfFields/php/location.php:703
 #: source/php/AcfFields/php/package.php:211
 msgid "14"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:878
-#: source/php/AcfFields/php/location.php:703
+#: source/php/AcfFields/php/event.php:1026
+#: source/php/AcfFields/php/location.php:704
 #: source/php/AcfFields/php/package.php:212
 msgid "15"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:879
-#: source/php/AcfFields/php/location.php:704
+#: source/php/AcfFields/php/event.php:1027
+#: source/php/AcfFields/php/location.php:705
 #: source/php/AcfFields/php/package.php:213
 msgid "16"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:880
-#: source/php/AcfFields/php/location.php:705
+#: source/php/AcfFields/php/event.php:1028
+#: source/php/AcfFields/php/location.php:706
 #: source/php/AcfFields/php/package.php:214
 msgid "17"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:881
-#: source/php/AcfFields/php/location.php:706
+#: source/php/AcfFields/php/event.php:1029
+#: source/php/AcfFields/php/location.php:707
 #: source/php/AcfFields/php/package.php:215
 msgid "18"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:882
-#: source/php/AcfFields/php/location.php:707
+#: source/php/AcfFields/php/event.php:1030
+#: source/php/AcfFields/php/location.php:708
 #: source/php/AcfFields/php/package.php:216
 msgid "19"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:883
-#: source/php/AcfFields/php/location.php:708
+#: source/php/AcfFields/php/event.php:1031
+#: source/php/AcfFields/php/location.php:709
 #: source/php/AcfFields/php/package.php:217
 msgid "20"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:884
-#: source/php/AcfFields/php/location.php:709
+#: source/php/AcfFields/php/event.php:1032
+#: source/php/AcfFields/php/location.php:710
 #: source/php/AcfFields/php/package.php:218
 msgid "21"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:885
-#: source/php/AcfFields/php/location.php:710
+#: source/php/AcfFields/php/event.php:1033
+#: source/php/AcfFields/php/location.php:711
 #: source/php/AcfFields/php/package.php:219
 msgid "22"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:886
-#: source/php/AcfFields/php/location.php:711
+#: source/php/AcfFields/php/event.php:1034
+#: source/php/AcfFields/php/location.php:712
 #: source/php/AcfFields/php/package.php:220
 msgid "23"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:887
-#: source/php/AcfFields/php/location.php:712
+#: source/php/AcfFields/php/event.php:1035
+#: source/php/AcfFields/php/location.php:713
 #: source/php/AcfFields/php/package.php:221
 msgid "24"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:888
-#: source/php/AcfFields/php/location.php:713
+#: source/php/AcfFields/php/event.php:1036
+#: source/php/AcfFields/php/location.php:714
 #: source/php/AcfFields/php/package.php:222
 msgid "25"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:901
-#: source/php/AcfFields/php/location.php:726
+#: source/php/AcfFields/php/event.php:1049
+#: source/php/AcfFields/php/location.php:727
 #: source/php/AcfFields/php/package.php:235
 msgid "Price senior"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:920
-#: source/php/AcfFields/php/location.php:745
+#: source/php/AcfFields/php/event.php:1068
+#: source/php/AcfFields/php/location.php:746
 #: source/php/AcfFields/php/package.php:254
 msgid "Age restriction for senior price"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:923
-#: source/php/AcfFields/php/location.php:748
+#: source/php/AcfFields/php/event.php:1071
+#: source/php/AcfFields/php/location.php:749
 #: source/php/AcfFields/php/package.php:257
 msgid "Senior price is valid from this age."
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:932
-#: source/php/AcfFields/php/location.php:757
+#: source/php/AcfFields/php/event.php:1080
+#: source/php/AcfFields/php/location.php:758
 #: source/php/AcfFields/php/package.php:266
 msgid "50"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:933
-#: source/php/AcfFields/php/location.php:758
+#: source/php/AcfFields/php/event.php:1081
+#: source/php/AcfFields/php/location.php:759
 #: source/php/AcfFields/php/package.php:267
 msgid "51"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:934
-#: source/php/AcfFields/php/location.php:759
+#: source/php/AcfFields/php/event.php:1082
+#: source/php/AcfFields/php/location.php:760
 #: source/php/AcfFields/php/package.php:268
 msgid "52"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:935
-#: source/php/AcfFields/php/location.php:760
+#: source/php/AcfFields/php/event.php:1083
+#: source/php/AcfFields/php/location.php:761
 #: source/php/AcfFields/php/package.php:269
 msgid "53"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:936
-#: source/php/AcfFields/php/location.php:761
+#: source/php/AcfFields/php/event.php:1084
+#: source/php/AcfFields/php/location.php:762
 #: source/php/AcfFields/php/package.php:270
 msgid "54"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:937
-#: source/php/AcfFields/php/location.php:762
+#: source/php/AcfFields/php/event.php:1085
+#: source/php/AcfFields/php/location.php:763
 #: source/php/AcfFields/php/package.php:271
 msgid "55"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:938
-#: source/php/AcfFields/php/location.php:763
+#: source/php/AcfFields/php/event.php:1086
+#: source/php/AcfFields/php/location.php:764
 #: source/php/AcfFields/php/package.php:272
 msgid "56"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:939
-#: source/php/AcfFields/php/location.php:764
+#: source/php/AcfFields/php/event.php:1087
+#: source/php/AcfFields/php/location.php:765
 #: source/php/AcfFields/php/package.php:273
 msgid "57"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:940
-#: source/php/AcfFields/php/location.php:765
+#: source/php/AcfFields/php/event.php:1088
+#: source/php/AcfFields/php/location.php:766
 #: source/php/AcfFields/php/package.php:274
 msgid "58"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:941
-#: source/php/AcfFields/php/location.php:766
+#: source/php/AcfFields/php/event.php:1089
+#: source/php/AcfFields/php/location.php:767
 #: source/php/AcfFields/php/package.php:275
 msgid "59"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:942
-#: source/php/AcfFields/php/location.php:767
+#: source/php/AcfFields/php/event.php:1090
+#: source/php/AcfFields/php/location.php:768
 #: source/php/AcfFields/php/package.php:276
 msgid "60"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:943
-#: source/php/AcfFields/php/location.php:768
+#: source/php/AcfFields/php/event.php:1091
+#: source/php/AcfFields/php/location.php:769
 #: source/php/AcfFields/php/package.php:277
 msgid "61"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:944
-#: source/php/AcfFields/php/location.php:769
+#: source/php/AcfFields/php/event.php:1092
+#: source/php/AcfFields/php/location.php:770
 #: source/php/AcfFields/php/package.php:278
 msgid "62"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:945
-#: source/php/AcfFields/php/location.php:770
+#: source/php/AcfFields/php/event.php:1093
+#: source/php/AcfFields/php/location.php:771
 #: source/php/AcfFields/php/package.php:279
 msgid "63"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:946
-#: source/php/AcfFields/php/location.php:771
+#: source/php/AcfFields/php/event.php:1094
+#: source/php/AcfFields/php/location.php:772
 #: source/php/AcfFields/php/package.php:280
 msgid "64"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:947
-#: source/php/AcfFields/php/location.php:772
+#: source/php/AcfFields/php/event.php:1095
+#: source/php/AcfFields/php/location.php:773
 #: source/php/AcfFields/php/package.php:281
 msgid "65"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:948
-#: source/php/AcfFields/php/location.php:773
+#: source/php/AcfFields/php/event.php:1096
+#: source/php/AcfFields/php/location.php:774
 #: source/php/AcfFields/php/package.php:282
 msgid "66"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:949
-#: source/php/AcfFields/php/location.php:774
+#: source/php/AcfFields/php/event.php:1097
+#: source/php/AcfFields/php/location.php:775
 #: source/php/AcfFields/php/package.php:283
 msgid "67"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:950
-#: source/php/AcfFields/php/location.php:775
+#: source/php/AcfFields/php/event.php:1098
+#: source/php/AcfFields/php/location.php:776
 #: source/php/AcfFields/php/package.php:284
 msgid "68"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:951
-#: source/php/AcfFields/php/location.php:776
+#: source/php/AcfFields/php/event.php:1099
+#: source/php/AcfFields/php/location.php:777
 #: source/php/AcfFields/php/package.php:285
 msgid "69"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:952
-#: source/php/AcfFields/php/location.php:777
+#: source/php/AcfFields/php/event.php:1100
+#: source/php/AcfFields/php/location.php:778
 #: source/php/AcfFields/php/package.php:286
 msgid "70"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:953
-#: source/php/AcfFields/php/location.php:778
+#: source/php/AcfFields/php/event.php:1101
+#: source/php/AcfFields/php/location.php:779
 #: source/php/AcfFields/php/package.php:287
 msgid "71"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:954
-#: source/php/AcfFields/php/location.php:779
+#: source/php/AcfFields/php/event.php:1102
+#: source/php/AcfFields/php/location.php:780
 #: source/php/AcfFields/php/package.php:288
 msgid "72"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:955
-#: source/php/AcfFields/php/location.php:780
+#: source/php/AcfFields/php/event.php:1103
+#: source/php/AcfFields/php/location.php:781
 #: source/php/AcfFields/php/package.php:289
 msgid "73"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:956
-#: source/php/AcfFields/php/location.php:781
+#: source/php/AcfFields/php/event.php:1104
+#: source/php/AcfFields/php/location.php:782
 #: source/php/AcfFields/php/package.php:290
 msgid "74"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:957
-#: source/php/AcfFields/php/location.php:782
+#: source/php/AcfFields/php/event.php:1105
+#: source/php/AcfFields/php/location.php:783
 #: source/php/AcfFields/php/package.php:291
 msgid "75"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:958
-#: source/php/AcfFields/php/location.php:783
+#: source/php/AcfFields/php/event.php:1106
+#: source/php/AcfFields/php/location.php:784
 #: source/php/AcfFields/php/package.php:292
 msgid "76"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:959
-#: source/php/AcfFields/php/location.php:784
+#: source/php/AcfFields/php/event.php:1107
+#: source/php/AcfFields/php/location.php:785
 #: source/php/AcfFields/php/package.php:293
 msgid "77"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:960
-#: source/php/AcfFields/php/location.php:785
+#: source/php/AcfFields/php/event.php:1108
+#: source/php/AcfFields/php/location.php:786
 #: source/php/AcfFields/php/package.php:294
 msgid "78"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:961
-#: source/php/AcfFields/php/location.php:786
+#: source/php/AcfFields/php/event.php:1109
+#: source/php/AcfFields/php/location.php:787
 #: source/php/AcfFields/php/package.php:295
 msgid "79"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:962
-#: source/php/AcfFields/php/location.php:787
+#: source/php/AcfFields/php/event.php:1110
+#: source/php/AcfFields/php/location.php:788
 #: source/php/AcfFields/php/package.php:296
 msgid "80"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:963
-#: source/php/AcfFields/php/location.php:788
+#: source/php/AcfFields/php/event.php:1111
+#: source/php/AcfFields/php/location.php:789
 #: source/php/AcfFields/php/package.php:297
 msgid "81"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:964
-#: source/php/AcfFields/php/location.php:789
+#: source/php/AcfFields/php/event.php:1112
+#: source/php/AcfFields/php/location.php:790
 #: source/php/AcfFields/php/package.php:298
 msgid "82"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:965
-#: source/php/AcfFields/php/location.php:790
+#: source/php/AcfFields/php/event.php:1113
+#: source/php/AcfFields/php/location.php:791
 #: source/php/AcfFields/php/package.php:299
 msgid "83"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:966
-#: source/php/AcfFields/php/location.php:791
+#: source/php/AcfFields/php/event.php:1114
+#: source/php/AcfFields/php/location.php:792
 #: source/php/AcfFields/php/package.php:300
 msgid "84"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:967
-#: source/php/AcfFields/php/location.php:792
+#: source/php/AcfFields/php/event.php:1115
+#: source/php/AcfFields/php/location.php:793
 #: source/php/AcfFields/php/package.php:301
 msgid "85"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:980
+#: source/php/AcfFields/php/event.php:1128
+msgid "Additional ticket types"
+msgstr ""
+
+#: source/php/AcfFields/php/event.php:1131
+msgid "Additional types of tickets."
+msgstr ""
+
+#: source/php/AcfFields/php/event.php:1147
+msgid "Ticket name"
+msgstr ""
+
+#: source/php/AcfFields/php/event.php:1166
+msgid "Maximum price"
+msgstr ""
+
+#: source/php/AcfFields/php/event.php:1187
+msgid "Minimum price"
+msgstr ""
+
+#: source/php/AcfFields/php/event.php:1208
+msgid "Ticket type"
+msgstr ""
+
+#: source/php/AcfFields/php/event.php:1220
+msgid "Standing"
+msgstr ""
+
+#: source/php/AcfFields/php/event.php:1221
+msgid "Seated"
+msgstr ""
+
+#: source/php/AcfFields/php/event.php:1234
 #: source/php/AcfFields/php/package.php:314
 #: source/php/AcfFields/php/package.php:333
 msgid "Price group"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:983
+#: source/php/AcfFields/php/event.php:1237
 #: source/php/AcfFields/php/package.php:317
 msgid "Add prices for group bookings."
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:995
+#: source/php/AcfFields/php/event.php:1249
 #: source/php/AcfFields/php/package.php:329
 msgid "Add group"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:999
+#: source/php/AcfFields/php/event.php:1253
 msgid "Price"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:1002
+#: source/php/AcfFields/php/event.php:1256
 #: source/php/AcfFields/php/package.php:336
 msgid "Price for this group."
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:1018
+#: source/php/AcfFields/php/event.php:1272
 #: source/php/AcfFields/php/package.php:352
 msgid "Min persons"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:1021
+#: source/php/AcfFields/php/event.php:1275
 #: source/php/AcfFields/php/package.php:355
 msgid "Minimum number of people."
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:1039
+#: source/php/AcfFields/php/event.php:1293
 #: source/php/AcfFields/php/package.php:373
 msgid "Max persons"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:1042
+#: source/php/AcfFields/php/event.php:1296
 #: source/php/AcfFields/php/package.php:376
 msgid "Maximum number of people."
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:1062
-#: source/php/AcfFields/php/location.php:826
+#: source/php/AcfFields/php/event.php:1316
+msgid "Price range"
+msgstr ""
+
+#: source/php/AcfFields/php/event.php:1319
+msgid "Information about the price range for tickets."
+msgstr ""
+
+#: source/php/AcfFields/php/event.php:1331
+msgid "Seated minimum price"
+msgstr ""
+
+#: source/php/AcfFields/php/event.php:1352
+msgid "Seated maximum price"
+msgstr ""
+
+#: source/php/AcfFields/php/event.php:1373
+msgid "Standing minimum price"
+msgstr ""
+
+#: source/php/AcfFields/php/event.php:1394
+msgid "Standing maximum price"
+msgstr ""
+
+#: source/php/AcfFields/php/event.php:1417
+#: source/php/AcfFields/php/location.php:827
 #: source/php/AcfFields/php/package.php:396
 msgid "Price information"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:1065
-#: source/php/AcfFields/php/location.php:829
+#: source/php/AcfFields/php/event.php:1420
+#: source/php/AcfFields/php/location.php:830
 #: source/php/AcfFields/php/package.php:399
 msgid "Write additional information about prices."
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:1081
+#: source/php/AcfFields/php/event.php:1436
 #: source/php/AcfFields/php/package.php:415
 msgid "Ticket includes"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:1084
+#: source/php/AcfFields/php/event.php:1439
 #: source/php/AcfFields/php/package.php:418
 msgid ""
 "Does the ticket include more than entry? Then write what's included in one "
 "ticket."
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:1093
+#: source/php/AcfFields/php/event.php:1448
 #: source/php/AcfFields/php/package.php:427
 msgid "e.g. entry, checkroom, meal"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:1100
-#: source/php/AcfFields/php/event.php:1116
-#: source/php/AcfFields/php/location.php:500
-#: source/php/AcfFields/php/location.php:516
+#: source/php/AcfFields/php/event.php:1455
+#: source/php/AcfFields/php/event.php:1471
+#: source/php/AcfFields/php/location.php:501
+#: source/php/AcfFields/php/location.php:517
 msgid "Gallery"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:1119
+#: source/php/AcfFields/php/event.php:1474
 msgid ""
 "Add images to this event.<br> Please upload images that are as large as "
 "possible and that are not sensitive to cropping (eg. images with text "
 "overlay)."
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:1141
-#: source/php/AcfFields/php/event.php:1157
+#: source/php/AcfFields/php/event.php:1496
+#: source/php/AcfFields/php/event.php:1512
 #: source/php/AcfFields/php/location.php:416
 #: source/php/AcfFields/php/location.php:432
 msgid "Links"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:1168
+#: source/php/AcfFields/php/event.php:1523
 #: source/php/AcfFields/php/location.php:435
 msgid "Add external links to different social media and streaming services."
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:1174
-#: source/php/AcfFields/php/location.php:464
+#: source/php/AcfFields/php/event.php:1529
+#: source/php/AcfFields/php/location.php:465
 msgid "Facebook"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:1190
-#: source/php/AcfFields/php/location.php:467
+#: source/php/AcfFields/php/event.php:1545
+#: source/php/AcfFields/php/location.php:468
 msgid "Twitter"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:1206
-#: source/php/AcfFields/php/location.php:465
+#: source/php/AcfFields/php/event.php:1561
+#: source/php/AcfFields/php/location.php:466
 msgid "Instagram"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:1222
+#: source/php/AcfFields/php/event.php:1577
 msgid "Google Music"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:1238
+#: source/php/AcfFields/php/event.php:1593
 msgid "Apple Music"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:1254
-#: source/php/AcfFields/php/location.php:466
+#: source/php/AcfFields/php/event.php:1609
+#: source/php/AcfFields/php/location.php:467
 msgid "Spotify"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:1270
+#: source/php/AcfFields/php/event.php:1625
 msgid "Soundcloud"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:1286
+#: source/php/AcfFields/php/event.php:1641
 msgid "Deezer"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:1302
+#: source/php/AcfFields/php/event.php:1657
 msgid "YouTube"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:1305
+#: source/php/AcfFields/php/event.php:1660
 msgid "Add one or multiple YouTube links."
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:1321
+#: source/php/AcfFields/php/event.php:1676
 msgid "YouTube link"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:1339
-#: source/php/AcfFields/php/location.php:468
+#: source/php/AcfFields/php/event.php:1694
+#: source/php/AcfFields/php/location.php:469
 msgid "Vimeo"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:1342
+#: source/php/AcfFields/php/event.php:1697
 msgid "Add one or multiple Vimeo links."
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:1358
+#: source/php/AcfFields/php/event.php:1713
 msgid "Vimeo link"
-msgstr ""
-
-#: source/php/AcfFields/php/event.php:1376
-msgid "Calendar"
-msgstr ""
-
-#: source/php/AcfFields/php/event.php:1392
-msgid "Internal event"
-msgstr ""
-
-#: source/php/AcfFields/php/event.php:1395
-msgid "Is the event internal?"
 msgstr ""
 
 #: source/php/AcfFields/php/groups.php:6
@@ -1388,7 +1501,7 @@ msgid "Lägg till grupp"
 msgstr ""
 
 #: source/php/AcfFields/php/guide-basic.php:627
-#: source/php/AcfFields/php/guide-group-settings.php:101
+#: source/php/AcfFields/php/guide-group-settings.php:92
 #: source/php/AcfFields/php/guide-settings.php:524
 msgid "Plats"
 msgstr ""
@@ -1473,70 +1586,68 @@ msgstr ""
 msgid "Select the group for this guide"
 msgstr ""
 
-#: source/php/AcfFields/php/guide-group-select.php:13
-msgid ""
-"This field is mandatory for v1 of the app. This will not be required to be "
-"set after January 1:st 2018."
+#: source/php/AcfFields/php/guide-group-settings.php:6
+msgid "Inställningar för kategori"
 msgstr ""
 
 #: source/php/AcfFields/php/guide-group-settings.php:10
-msgid "Ja, den här gruppen är aktiv. "
-msgstr ""
-
-#: source/php/AcfFields/php/guide-group-settings.php:15
 msgid "Aktiv"
 msgstr ""
 
-#: source/php/AcfFields/php/guide-group-settings.php:39
+#: source/php/AcfFields/php/guide-group-settings.php:22
+msgid "Ja, den här gruppen är aktiv."
+msgstr ""
+
+#: source/php/AcfFields/php/guide-group-settings.php:29
 msgid "Logotyp"
 msgstr ""
 
-#: source/php/AcfFields/php/guide-group-settings.php:42
+#: source/php/AcfFields/php/guide-group-settings.php:32
 msgid "En logotyp som visas i samband med guider kopplade till kategorin."
 msgstr ""
 
-#: source/php/AcfFields/php/guide-group-settings.php:54
+#: source/php/AcfFields/php/guide-group-settings.php:53
 msgid "Färg"
 msgstr ""
 
-#: source/php/AcfFields/php/guide-group-settings.php:78
+#: source/php/AcfFields/php/guide-group-settings.php:68
 msgid "Stämningsbild"
 msgstr ""
 
-#: source/php/AcfFields/php/guide-group-settings.php:120
-msgid "meter"
-msgstr ""
-
-#: source/php/AcfFields/php/guide-group-settings.php:122
+#: source/php/AcfFields/php/guide-group-settings.php:115
 msgid "Platsens radie"
 msgstr ""
 
-#: source/php/AcfFields/php/guide-group-settings.php:125
+#: source/php/AcfFields/php/guide-group-settings.php:118
 msgid "Visa den här platsen inom en radie av X meter"
 msgstr ""
 
-#: source/php/AcfFields/php/guide-group-settings.php:136
-msgid "Ja, filtrera bort samtliga platser som inte matchar förälderplatsen"
+#: source/php/AcfFields/php/guide-group-settings.php:132
+msgid "meter"
 msgstr ""
 
-#: source/php/AcfFields/php/guide-group-settings.php:141
+#: source/php/AcfFields/php/guide-group-settings.php:136
 msgid "Tillåt endast underordnade platser"
 msgstr ""
 
-#: source/php/AcfFields/php/guide-group-settings.php:155
-msgid "Ja, den här platsen har full täckning"
+#: source/php/AcfFields/php/guide-group-settings.php:148
+msgid "Ja, filtrera bort samtliga platser som inte matchar förälderplatsen"
 msgstr ""
 
-#: source/php/AcfFields/php/guide-group-settings.php:160
+#: source/php/AcfFields/php/guide-group-settings.php:155
 msgid "Platsen har trådlöst nätverk"
 msgstr ""
 
-#: source/php/AcfFields/php/guide-group-settings.php:174
-msgid "Ja, den här platsen kan använda google maps. "
+#: source/php/AcfFields/php/guide-group-settings.php:167
+msgid "Ja, den här platsen har full täckning"
 msgstr ""
 
-#: source/php/AcfFields/php/guide-group-settings.php:179
+#: source/php/AcfFields/php/guide-group-settings.php:174
 msgid "Karta"
+msgstr ""
+
+#: source/php/AcfFields/php/guide-group-settings.php:186
+msgid "Ja, den här platsen kan använda google maps."
 msgstr ""
 
 #: source/php/AcfFields/php/guide-navigation.php:6
@@ -1644,11 +1755,6 @@ msgstr ""
 msgid "Add open hours for this location."
 msgstr ""
 
-#: source/php/AcfFields/php/location.php:255
-#: source/php/AcfFields/php/organizer.php:78
-msgid "Add"
-msgstr ""
-
 #: source/php/AcfFields/php/location.php:290
 msgid "Closed"
 msgstr ""
@@ -1674,41 +1780,45 @@ msgid "Service"
 msgstr ""
 
 #: source/php/AcfFields/php/location.php:463
+msgid "Webpage"
+msgstr ""
+
+#: source/php/AcfFields/php/location.php:464
 msgid "Bambuser"
 msgstr ""
 
-#: source/php/AcfFields/php/location.php:469
+#: source/php/AcfFields/php/location.php:470
 msgid "Youtube"
 msgstr ""
 
-#: source/php/AcfFields/php/location.php:482
+#: source/php/AcfFields/php/location.php:483
 msgid "Url"
 msgstr ""
 
-#: source/php/AcfFields/php/location.php:519
+#: source/php/AcfFields/php/location.php:520
 msgid ""
 "Add images to this location. Please upload images that are as large as "
 "possible and that are not sensitive to cropping (eg. images with text "
 "overlay)."
 msgstr ""
 
-#: source/php/AcfFields/php/location.php:560
+#: source/php/AcfFields/php/location.php:561
 msgid "Add an organizer that manages the location."
 msgstr ""
 
-#: source/php/AcfFields/php/location.php:580
+#: source/php/AcfFields/php/location.php:581
 msgid "Prices"
 msgstr ""
 
-#: source/php/AcfFields/php/location.php:599
+#: source/php/AcfFields/php/location.php:600
 msgid "Add membership cards where entry is included."
 msgstr ""
 
-#: source/php/AcfFields/php/location.php:805
+#: source/php/AcfFields/php/location.php:806
 msgid "Minimum age to enter"
 msgstr ""
 
-#: source/php/AcfFields/php/location.php:808
+#: source/php/AcfFields/php/location.php:809
 msgid "Enter age if this location is age restricted."
 msgstr ""
 
@@ -1817,20 +1927,74 @@ msgstr ""
 msgid "Facebook link"
 msgstr ""
 
-#: source/php/AcfFields/php/xcap.php:21
-msgid "Enable daily automatic import from XCAP"
+#: source/php/AcfFields/php/transticket.php:6
+msgid "Transticket"
 msgstr ""
 
+#: source/php/AcfFields/php/transticket.php:21
+msgid "Enable daily automatic import from Transticket"
+msgstr ""
+
+#: source/php/AcfFields/php/transticket.php:53
 #: source/php/AcfFields/php/xcap.php:50
 msgid "API links"
 msgstr ""
 
-#: source/php/AcfFields/php/xcap.php:53
-msgid "Add one or many API links to Xcap"
+#: source/php/AcfFields/php/transticket.php:56
+msgid "Add one or many API links to Transticket"
 msgstr ""
 
+#: source/php/AcfFields/php/transticket.php:72
 #: source/php/AcfFields/php/xcap.php:69
 msgid "API link"
+msgstr ""
+
+#: source/php/AcfFields/php/transticket.php:75
+msgid ""
+"Add the Transticket API-URL without 'FromDate' and 'ToDate' parameters, "
+"they will be added automatically."
+msgstr ""
+
+#: source/php/AcfFields/php/transticket.php:88
+msgid "Username"
+msgstr ""
+
+#: source/php/AcfFields/php/transticket.php:107
+msgid "Password"
+msgstr ""
+
+#: source/php/AcfFields/php/transticket.php:126
+msgid "Ticket URL"
+msgstr ""
+
+#: source/php/AcfFields/php/transticket.php:129
+msgid "URL to single ticket purchase, exclude ID."
+msgstr ""
+
+#: source/php/AcfFields/php/transticket.php:145
+msgid "Exclude tags"
+msgstr ""
+
+#: source/php/AcfFields/php/transticket.php:148
+msgid ""
+"Enter the name of the tags that you want to exclude from the import. "
+"Separate with commas."
+msgstr ""
+
+#: source/php/AcfFields/php/transticket.php:186
+msgid "Weeks to import"
+msgstr ""
+
+#: source/php/AcfFields/php/transticket.php:189
+msgid "Select how many weeks ahead you want to import"
+msgstr ""
+
+#: source/php/AcfFields/php/xcap.php:21
+msgid "Enable daily automatic import from XCAP"
+msgstr ""
+
+#: source/php/AcfFields/php/xcap.php:53
+msgid "Add one or many API links to Xcap"
 msgstr ""
 
 #: source/php/Admin/FilterRestrictions.php:125
@@ -2066,106 +2230,106 @@ msgid ""
 "appear in different channels to promote the event."
 msgstr ""
 
-#: source/php/Entity/CustomPostType.php:85
+#: source/php/Entity/CustomPostType.php:90
 msgid "API-url"
 msgstr ""
 
-#: source/php/Entity/CustomPostType.php:167
-#: source/php/Entity/CustomPostType.php:168
+#: source/php/Entity/CustomPostType.php:172
+#: source/php/Entity/CustomPostType.php:173
 #, php-format
 msgid "Add new %s"
 msgstr ""
 
-#: source/php/Entity/CustomPostType.php:169
+#: source/php/Entity/CustomPostType.php:174
 #, php-format
 msgid "Edit %s"
 msgstr ""
 
-#: source/php/Entity/CustomPostType.php:170
+#: source/php/Entity/CustomPostType.php:175
 #, php-format
 msgid "New %s"
 msgstr ""
 
-#: source/php/Entity/CustomPostType.php:171
+#: source/php/Entity/CustomPostType.php:176
 #, php-format
 msgid "View %s"
 msgstr ""
 
-#: source/php/Entity/CustomPostType.php:172
+#: source/php/Entity/CustomPostType.php:177
 #, php-format
 msgid "Search %s"
 msgstr ""
 
-#: source/php/Entity/CustomPostType.php:173
+#: source/php/Entity/CustomPostType.php:178
 #, php-format
 msgid "No %s found"
 msgstr ""
 
-#: source/php/Entity/CustomPostType.php:174
+#: source/php/Entity/CustomPostType.php:179
 #, php-format
 msgid "No %s found in trash"
 msgstr ""
 
-#: source/php/Entity/CustomPostType.php:175
+#: source/php/Entity/CustomPostType.php:180
 #, php-format
 msgid "Parent %s:"
 msgstr ""
 
-#: source/php/Entity/CustomPostType.php:280
+#: source/php/Entity/CustomPostType.php:285
 msgid "Post updated."
 msgstr ""
 
-#: source/php/Entity/CustomPostType.php:281
+#: source/php/Entity/CustomPostType.php:286
 msgid "Post published."
 msgstr ""
 
-#: source/php/Entity/CustomPostType.php:282
+#: source/php/Entity/CustomPostType.php:287
 msgid "Post submitted."
 msgstr ""
 
-#: source/php/Entity/CustomPostType.php:283
+#: source/php/Entity/CustomPostType.php:288
 msgid "Post draft updated."
 msgstr ""
 
-#: source/php/Entity/CustomPostType.php:359
+#: source/php/Entity/CustomPostType.php:364
 msgid ""
 "You don't have access to edit this event. Contact an administrator for "
 "further information."
 msgstr ""
 
-#: source/php/Entity/CustomPostType.php:414
+#: source/php/Entity/CustomPostType.php:419
 msgid "Public"
 msgstr ""
 
-#: source/php/Entity/CustomPostType.php:447
+#: source/php/Entity/CustomPostType.php:452
 msgid "This post must be updated before it can be published."
 msgstr ""
 
-#: source/php/Entity/CustomPostType.php:447
+#: source/php/Entity/CustomPostType.php:452
 msgid "Edit draft"
 msgstr ""
 
-#: source/php/Entity/CustomPostType.php:450
+#: source/php/Entity/CustomPostType.php:455
 msgid "Accept"
 msgstr ""
 
-#: source/php/Entity/CustomPostType.php:451
+#: source/php/Entity/CustomPostType.php:456
 msgid "Deny"
 msgstr ""
 
-#: source/php/Entity/CustomPostType.php:462
+#: source/php/Entity/CustomPostType.php:467
 msgid "Something went wrong!"
 msgstr ""
 
-#: source/php/Entity/CustomPostType.php:479
+#: source/php/Entity/CustomPostType.php:484
 msgid "Error"
 msgstr ""
 
-#: source/php/Entity/PostManager.php:218
+#: source/php/Entity/PostManager.php:223
 msgid "Could not create folder"
 msgstr ""
 
-#: source/php/Entity/PostManager.php:218
+#: source/php/Entity/PostManager.php:224
 msgid "please go ahead and create it manually and rerun the import."
 msgstr ""
 
@@ -2192,90 +2356,100 @@ msgstr ""
 msgid "Client"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:277 source/php/PostTypes/Events.php:433
+#: source/php/PostTypes/Events.php:278 source/php/PostTypes/Events.php:434
 msgid "End date must be after start date"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:305
+#: source/php/PostTypes/Events.php:306
 msgid "Door time cannot be after start date"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:329
+#: source/php/PostTypes/Events.php:330
 msgid "Please add occasion or recurrence rule"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:353
+#: source/php/PostTypes/Events.php:354
 msgid "Not a valid number"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:380
+#: source/php/PostTypes/Events.php:381
 msgid "End time must be after start time"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:407
+#: source/php/PostTypes/Events.php:408
 msgid "Door time cannot be after start time"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:462
+#: source/php/PostTypes/Events.php:463
 msgid "Import XCAP"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:466
+#: source/php/PostTypes/Events.php:467
 msgid "Import CBIS"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:468
+#: source/php/PostTypes/Events.php:471
+msgid "Import Transticket"
+msgstr ""
+
+#: source/php/PostTypes/Events.php:474
 msgid "Collect event timestamps"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:485
+#: source/php/PostTypes/Events.php:491
 msgid "No post to duplicate has been supplied!"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:495
+#: source/php/PostTypes/Events.php:501
 msgid "Event creation failed, could not find original event"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:571
+#: source/php/PostTypes/Events.php:577
 msgid "Create similar item"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:571
+#: source/php/PostTypes/Events.php:577
 msgid "Are you sure you want to clone this event?"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:571
+#: source/php/PostTypes/Events.php:577
 msgid "Clone"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:589
+#: source/php/PostTypes/Events.php:595
 #, php-format
 msgid ""
 "This is a duplicate of the event: %s. If this is a new occasion for the "
 "same event, please %s and republish the original event"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:589
+#: source/php/PostTypes/Events.php:595
 msgid "edit"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:610
+#: source/php/PostTypes/Events.php:616
 msgid ""
 "Please do not enter information that refers to information in another text "
 "field. It is not certain that all fields will be presented to the consumer "
 "and would thefore be missguiding."
 msgstr ""
 
-#: source/php/PostTypes/Events.php:634
+#: source/php/PostTypes/Events.php:640
 msgid ""
 "CBIS have not imported any events for atleast 7 days. Please control the "
 "importer."
 msgstr ""
 
-#: source/php/PostTypes/Events.php:658
+#: source/php/PostTypes/Events.php:664
 msgid ""
 "XCAP have not imported any events for atleast 7 days. Please control the "
 "importer."
+msgstr ""
+
+#: source/php/PostTypes/Events.php:688
+msgid ""
+"Transticket have not imported any events for atleast 7 days. Please "
+"control the importer."
 msgstr ""
 
 #: source/php/PostTypes/Locations.php:54

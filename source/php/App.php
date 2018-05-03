@@ -387,7 +387,7 @@ class App
             $api_keys = $this->getTransTicketKeys();
 
             foreach ((array) $api_keys as $key => $api_key) {
-                $importer = new \HbgEventImporter\Parser\TransTicket($api_key['transticket_api_url'], $api_key);
+                new Parser\TransTicket($api_key['transticket_api_url'], $api_key);
             }
         }
 
