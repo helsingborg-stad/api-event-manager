@@ -86,7 +86,7 @@ class TransTicket extends \HbgEventImporter\Parser
         $data['categories'] = isset($eventData->Tags) && is_array($eventData->Tags) ? $this->getCategories($eventData->Tags) : array();
         $data['postStatus'] = get_field('transticket_post_status', 'option') ? get_field('transticket_post_status',
             'option') : 'publish';
-        $data['user_groups'] = (is_array($this->apiKeys['transticket_groups']) && !empty($this->apiKeys['transticket_groups'])) ? array_map('intval',
+        $data['userGroups'] = (is_array($this->apiKeys['transticket_groups']) && !empty($this->apiKeys['transticket_groups'])) ? array_map('intval',
             $this->apiKeys['transticket_groups']) : null;
 
         $data['image'] = null;
@@ -138,31 +138,24 @@ class TransTicket extends \HbgEventImporter\Parser
                 if (!empty($venueExtension['Key'])) {
                     switch ($venueExtension['Key']) {
                         case "Address":
-                            $location['street'] = $venueExtension['Value'];
-                            $location['city'] = (!empty($eventData->VenueCity)) ? $eventData->VenueCity : null;
-                            if ($location['street'] && $location['city']) {
-                                $location['address'] = $location['street'] . ", " . $location['city'];
-                            }
+                            $data['address'] = $venueExtension['Value'];
                             break;
                         case "CoordinateX":
-                            $location['coordinateX'] = $venueExtension['Value'];
+                            $data['latitude'] = $venueExtension['Value'];
                             break;
                         case "CoordinateY":
-                            $location['coordinateY'] = $venueExtension['Value'];
+                            $data['longitude'] = $venueExtension['Value'];
                             break;
                     }
                 }
             }
         }
 
-        $location['name'] = !empty($eventData->VenueName) ? $eventData->VenueName : null;
+        $data['name'] = !empty($eventData->VenueName) ? $eventData->VenueName : null;
+        $data['city'] = get_field('default_city', 'option') ? get_field('default_city', 'option') : '';
+        $data['city'] = (!empty($eventData->VenueCity)) ? $eventData->VenueCity : $data['city'];
 
-        if ($location['address']) {
-            $locationId = $this->maybeCreateLocation($location, $shortKey);
-        } else {
-            $location = null;
-        }
-
+        $locationId = $this->maybeCreateLocation($data, $shortKey);
         $this->maybeCreateEvent($data, $shortKey, $locationId);
     }
 
@@ -221,7 +214,7 @@ class TransTicket extends \HbgEventImporter\Parser
                     'price_children' => null,
                     'import_client' => 'transticket',
                     'imported_post' => 1,
-                    'user_groups' => $data['user_groups'],
+                    'user_groups' => $data['userGroups'],
                     'occurred' => $occurred,
                     'ticket_stock' => $data['ticket_stock'],
                     'ticket_release_date' => $data['ticket_release_date'],
@@ -270,7 +263,7 @@ class TransTicket extends \HbgEventImporter\Parser
      */
     public function maybeCreateLocation($data, $shortKey)
     {
-        if (!is_string($data['address']) && !empty($data['address'])) {
+        if (empty($data['address']) && empty($data['name'])) {
             return false;
         }
 
@@ -279,6 +272,8 @@ class TransTicket extends \HbgEventImporter\Parser
 
         $locPostStatus = $data['postStatus'];
         $isUpdate = false;
+        $postTitle = $data['name'] ?? $data['address'] ?? '';
+        $uid = 'transticket-' . $shortKey . '-' . $this->cleanString($postTitle);
 
         // Check if this is a duplicate or update and if "sync" option is set.
         if ($locationId && get_post_meta($locationId, '_event_manager_uid', true)) {
@@ -286,7 +281,7 @@ class TransTicket extends \HbgEventImporter\Parser
             $sync = get_post_meta($locationId, 'sync', true);
             $locPostStatus = get_post_status($locationId);
 
-            if ($existingUid == 'transticket-' . $shortKey . '-' . $this->cleanString($data['address']) && $sync == 1) {
+            if ($existingUid == $uid && $sync == 1) {
                 $isUpdate = true;
             }
         }
@@ -299,25 +294,25 @@ class TransTicket extends \HbgEventImporter\Parser
         try {
             $location = new Location(
                 array(
-                    'post_title' => $data['address'],
+                    'post_title' => $postTitle,
                     'post_status' => $locPostStatus,
                 ),
                 array(
-                    'street_address' => null,
+                    'street_address' => $data['address'] ?? null,
                     'postal_code' => null,
-                    //'city' => $data['city'],
-                    'city' => $data['VenueId'],
+                    'city' => $data['city'],
                     'municipality' => null,
                     'country' => null,
-                    'latitude' => null,
-                    'longitude' => null,
+                    'latitude' => $data['latitude'] ?? null,
+                    'longitude' => $data['longitude'] ?? null,
                     'import_client' => 'transticket',
-                    '_event_manager_uid' => 'transticket-' . $shortKey . '-' . $this->cleanString($data['address']),
-                    'user_groups' => $data['user_groups'],
+                    '_event_manager_uid' => $uid,
+                    'user_groups' => $data['userGroups'],
                     'sync' => 1,
                     'imported_post' => 1,
                 )
             );
+            error_log($data['name']);
         } catch (\Exception $e) {
             $location = false;
             error_log($e);
@@ -331,7 +326,7 @@ class TransTicket extends \HbgEventImporter\Parser
             $this->nrOfNewLocations++;
         }
 
-        $this->levenshteinTitles['location'][] = array('ID' => $location->ID, 'post_title' => $data['address']);
+        $this->levenshteinTitles['location'][] = array('ID' => $location->ID, 'post_title' => $postTitle);
 
         return $location->ID;
     }
