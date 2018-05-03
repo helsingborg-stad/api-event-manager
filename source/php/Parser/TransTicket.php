@@ -76,6 +76,7 @@ class TransTicket extends \HbgEventImporter\Parser
         $data['endDate'] = !empty($eventData->EndDate) ? $eventData->EndDate : null;
         if ($data['endDate'] === null) {
             $data['endDate'] = date("Y-m-d H:i:s", strtotime($data['startDate'] . "+1 hour"));
+            $data['endDate'] = str_replace(' ', 'T', $data['endDate']);
         }
 
         $data['occasions'] = array();
