@@ -64,11 +64,6 @@ class TransTicket extends \HbgEventImporter\Parser
         error_log($data['postTitle']);
         $data['postContent'] = strip_tags(isset($eventData->Description) && !empty($eventData->Description) ? $eventData->Description : '',
             '<p><br>');
-
-        // TODO Fixa location
-        //$data['location'] = $this->findWordWithCapLetters($data['postContent']);
-        //echo $data['location'];
-
         $data['uId'] = $eventData->Id;
         $data['booking_link'] = $this->apiKeys['transticket_ticket_url'] . "/" . $data['uId'] . "/false";
 
@@ -136,8 +131,37 @@ class TransTicket extends \HbgEventImporter\Parser
             }
         }
 
-        //$locationId = $this->maybeCreateLocation($data, $shortKey);
-        $locationId = null;
+        $locationData = json_decode(json_encode($eventData->VenueExtensions), true);
+        if (!empty($locationData)) {
+            foreach ($locationData as $key => $venueExtension) {
+                if (!empty($venueExtension['Key'])) {
+                    switch ($venueExtension['Key']) {
+                        case "Address":
+                            $location['street'] = $venueExtension['Value'];
+                            $location['city'] = (!empty($eventData->VenueCity)) ? $eventData->VenueCity : null;
+                            if ($location['street'] && $location['city']) {
+                                $location['address'] = $location['street'] . ", " . $location['city'];
+                            }
+                            break;
+                        case "CoordinateX":
+                            $location['coordinateX'] = $venueExtension['Value'];
+                            break;
+                        case "CoordinateY":
+                            $location['coordinateY'] = $venueExtension['Value'];
+                            break;
+                    }
+                }
+            }
+        }
+
+        $location['name'] = !empty($eventData->VenueName) ? $eventData->VenueName : null;
+
+        if ($location['address']) {
+            $locationId = $this->maybeCreateLocation($location, $shortKey);
+        } else {
+            $location = null;
+        }
+
         $this->maybeCreateEvent($data, $shortKey, $locationId);
     }
 
@@ -244,12 +268,12 @@ class TransTicket extends \HbgEventImporter\Parser
      */
     public function maybeCreateLocation($data, $shortKey)
     {
-        if (!is_string($data['address'])) {
+        if (!is_string($data['address']) && !empty($data['address'])) {
             return false;
         }
 
         // Checking if there is a location already with this title or similar enough
-        $locationId = $this->checkIfPostExists('location', $data['address']);
+        $locationId = $this->checkIfPostExists('location', $data['name']);
 
         $locPostStatus = $data['postStatus'];
         $isUpdate = false;
