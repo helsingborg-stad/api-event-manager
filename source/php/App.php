@@ -93,7 +93,7 @@ class App
         new Api\PointPropertyFields();
         new Api\NavigationFields();
     }
-    
+
     /**
      * Add theme support
      */
@@ -390,6 +390,8 @@ class App
                 new Parser\TransTicket($api_key['transticket_api_url'], $api_key);
             }
         }
+
+        file_put_contents(dirname(__FILE__) . "/Log/cron_import.log", "Cron last run: " . date("Y-m-d H:i:s"));
     }
 
     /**
