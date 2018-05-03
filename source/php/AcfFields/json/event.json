@@ -775,7 +775,7 @@
         },
         {
             "key": "field_5ae2d0ba2f26c",
-            "label": "Total ticket stock",
+            "label": "Ticket stock",
             "name": "ticket_stock",
             "type": "number",
             "instructions": "Total amount of tickets.",
@@ -836,10 +836,10 @@
             "sub_fields": [
                 {
                     "key": "field_5ae322b4caede",
-                    "label": "Retailer name",
+                    "label": "Retailer",
                     "name": "retailer_name",
                     "type": "text",
-                    "instructions": "",
+                    "instructions": "Name of the retailer.",
                     "required": 1,
                     "conditional_logic": 0,
                     "wrapper": {
@@ -855,10 +855,10 @@
                 },
                 {
                     "key": "field_5ae3251dcb3b0",
-                    "label": "Retailer booking url",
+                    "label": "Ticket purchase URL",
                     "name": "booking_url",
                     "type": "url",
-                    "instructions": "External link to booking website.",
+                    "instructions": "",
                     "required": 0,
                     "conditional_logic": 0,
                     "wrapper": {
@@ -1218,88 +1218,6 @@
             ]
         },
         {
-            "key": "field_57f4f4ac7479f",
-            "label": "Price group",
-            "name": "booking_group",
-            "type": "repeater",
-            "instructions": "Add prices for group bookings.",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "collapsed": "",
-            "min": 0,
-            "max": 0,
-            "layout": "block",
-            "button_label": "Add group",
-            "sub_fields": [
-                {
-                    "key": "field_57f4f6dc747a1",
-                    "label": "Price",
-                    "name": "price_group",
-                    "type": "text",
-                    "instructions": "Price for this group.",
-                    "required": 1,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "33",
-                        "class": "",
-                        "id": ""
-                    },
-                    "default_value": "",
-                    "placeholder": "",
-                    "prepend": "",
-                    "append": "SEK",
-                    "maxlength": ""
-                },
-                {
-                    "key": "field_57f4f74e747a2",
-                    "label": "Min persons",
-                    "name": "min_persons",
-                    "type": "number",
-                    "instructions": "Minimum number of people.",
-                    "required": 1,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "33",
-                        "class": "",
-                        "id": ""
-                    },
-                    "default_value": "",
-                    "placeholder": "",
-                    "prepend": "",
-                    "append": "",
-                    "min": "",
-                    "max": "",
-                    "step": ""
-                },
-                {
-                    "key": "field_57f4f765747a3",
-                    "label": "Max persons",
-                    "name": "max_persons",
-                    "type": "number",
-                    "instructions": "Maximum number of people.",
-                    "required": 1,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "33",
-                        "class": "",
-                        "id": ""
-                    },
-                    "default_value": "",
-                    "placeholder": "",
-                    "prepend": "",
-                    "append": "",
-                    "min": "",
-                    "max": "",
-                    "step": ""
-                }
-            ]
-        },
-        {
             "key": "field_5ae2e0ececa4c",
             "label": "Price range",
             "name": "price_range",
@@ -1387,6 +1305,88 @@
                     "conditional_logic": 0,
                     "wrapper": {
                         "width": "25",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "min": "",
+                    "max": "",
+                    "step": ""
+                }
+            ]
+        },
+        {
+            "key": "field_57f4f4ac7479f",
+            "label": "Price group",
+            "name": "booking_group",
+            "type": "repeater",
+            "instructions": "Add prices for group bookings.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "collapsed": "",
+            "min": 0,
+            "max": 0,
+            "layout": "block",
+            "button_label": "Add group",
+            "sub_fields": [
+                {
+                    "key": "field_57f4f6dc747a1",
+                    "label": "Price",
+                    "name": "price_group",
+                    "type": "text",
+                    "instructions": "Price for this group.",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "33",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "SEK",
+                    "maxlength": ""
+                },
+                {
+                    "key": "field_57f4f74e747a2",
+                    "label": "Min persons",
+                    "name": "min_persons",
+                    "type": "number",
+                    "instructions": "Minimum number of people.",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "33",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "min": "",
+                    "max": "",
+                    "step": ""
+                },
+                {
+                    "key": "field_57f4f765747a3",
+                    "label": "Max persons",
+                    "name": "max_persons",
+                    "type": "number",
+                    "instructions": "Maximum number of people.",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "33",
                         "class": "",
                         "id": ""
                     },
