@@ -201,6 +201,7 @@ abstract class PostManager
     /**
      * Uploads an image from a specified url and sets it as the current post's featured image
      * @param string $url Image url
+     * @return bool|void
      */
     public function setFeaturedImageFromUrl($url)
     {
@@ -214,7 +215,6 @@ abstract class PostManager
 
         // Upload paths
         $uploadDir = wp_upload_dir();
-        $uploadDirUrl = $uploadDir['baseurl'];
         $uploadDir = $uploadDir['basedir'];
         $uploadDir = $uploadDir . '/events';
 
@@ -226,7 +226,7 @@ abstract class PostManager
             }
         }
 
-        $filename = basename($url);
+        $filename = sanitize_file_name(basename($url));
         if (stripos(basename($url), '.aspx')) {
             $filename = md5($filename) . '.jpg';
         }
@@ -243,7 +243,7 @@ abstract class PostManager
         fwrite($save, $contents);
         fclose($save);
 
-        // Detect filetype
+        // Detect file type
         $filetype = wp_check_filetype($filename, null);
 
         // Insert the file to media library

@@ -13,7 +13,6 @@ class TransTicket extends \HbgEventImporter\Parser
 {
     public function __construct($url, $apiKeys)
     {
-        error_log(print_r($apiKeys, true));
         parent::__construct($url, $apiKeys);
     }
 
@@ -61,7 +60,6 @@ class TransTicket extends \HbgEventImporter\Parser
     public function saveEvent($eventData, $shortKey)
     {
         $data['postTitle'] = strip_tags(isset($eventData->Name) && !empty($eventData->Name) ? $eventData->Name : null);
-        error_log($data['postTitle']);
         $data['postContent'] = strip_tags(isset($eventData->Description) && !empty($eventData->Description) ? $eventData->Description : '',
             '<p><br>');
         $data['uId'] = $eventData->Id;
@@ -312,7 +310,6 @@ class TransTicket extends \HbgEventImporter\Parser
                     'imported_post' => 1,
                 )
             );
-            error_log($data['name']);
         } catch (\Exception $e) {
             $location = false;
             error_log($e);
