@@ -167,7 +167,6 @@ class TransTicket extends \HbgEventImporter\Parser
      */
     public function maybeCreateEvent($data, $shortKey, $locationId)
     {
-
         $eventId = $this->checkIfPostExists('event', $data['postTitle']);
         $occurred = false;
 
@@ -369,28 +368,5 @@ class TransTicket extends \HbgEventImporter\Parser
         $categories = array_map('ucwords', $categories);
 
         return $categories;
-    }
-
-    /**
-     * Washing string from capitalized words. Add capital letter to first word in sentence.
-     * @param  string
-     * @return string
-     */
-    public function ucFirstWordInSentence($str)
-    {
-        $str = ucfirst(strtolower($str));
-        return preg_replace("/([.!?]\s*\w)/e", "strtoupper('$1')", $str);
-    }
-
-    /**
-     * Find word with capital letters
-     * @param  string
-     * @return string
-     */
-    public function findWordWithCapLetters($str)
-    {
-        if (preg_match_all('/\\b(?=[A-Z])[A-Z ]+(?=\\W)/', $str, $match)) {
-            return $match[0];
-        }
     }
 }
