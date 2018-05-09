@@ -157,6 +157,25 @@
                     "maxlength": ""
                 },
                 {
+                    "key": "field_5af2f83a8ff16",
+                    "label": "Default city",
+                    "name": "transticket_default_city",
+                    "type": "text",
+                    "instructions": "If essential address components are missing during import, this city will be used as default.",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "maxlength": ""
+                },
+                {
                     "key": "field_5ae188b03e51a",
                     "label": "Default user groups",
                     "name": "transticket_publishing_groups",

@@ -175,8 +175,7 @@ class TransTicket extends \HbgEventImporter\Parser
         }
 
         $data['name'] = !empty($eventData->VenueName) ? $eventData->VenueName : null;
-        $data['city'] = get_field('default_city', 'option') ? get_field('default_city', 'option') : '';
-        $data['city'] = (!empty($eventData->VenueCity)) ? $eventData->VenueCity : $data['city'];
+        $data['city'] = !empty($eventData->VenueCity) ? $eventData->VenueCity : $this->apiKeys['default_city'];
 
         $locationId = $this->maybeCreateLocation($data, $shortKey);
         $this->maybeCreateEvent($data, $shortKey, $locationId);

@@ -275,7 +275,8 @@ class App
                 'transticket_filter_tags'   => get_sub_field('transticket_filter_tags'),
                 'transticket_groups'        => get_sub_field('transticket_publishing_groups'),
                 'transticket_ticket_url'    => get_sub_field('transticket_ticket_url'),
-                'transticket_weeks'         => get_sub_field('transticket_weeks')
+                'transticket_weeks'         => get_sub_field('transticket_weeks'),
+                'default_city'              => get_sub_field('transticket_default_city')
             );
         }
 

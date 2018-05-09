@@ -160,6 +160,25 @@
                     'maxlength' => '',
                 ),
                 5 => array(
+                    'key' => 'field_5af2f83a8ff16',
+                    'label' => __('Default city', 'event-manager'),
+                    'name' => 'transticket_default_city',
+                    'type' => 'text',
+                    'instructions' => __('If essential address components are missing during import, this city will be used as default.', 'event-manager'),
+                    'required' => 0,
+                    'conditional_logic' => 0,
+                    'wrapper' => array(
+                        'width' => '',
+                        'class' => '',
+                        'id' => '',
+                    ),
+                    'default_value' => '',
+                    'placeholder' => '',
+                    'prepend' => '',
+                    'append' => '',
+                    'maxlength' => '',
+                ),
+                6 => array(
                     'key' => 'field_5ae188b03e51a',
                     'label' => __('Default user groups', 'event-manager'),
                     'name' => 'transticket_publishing_groups',
@@ -181,7 +200,7 @@
                     'return_format' => 'id',
                     'multiple' => 0,
                 ),
-                6 => array(
+                7 => array(
                     'key' => 'field_5ae9d19c0881e',
                     'label' => __('Weeks to import', 'event-manager'),
                     'name' => 'transticket_weeks',
