@@ -53,7 +53,7 @@ class TransTicket extends \HbgEventImporter\Parser
     /**
      * Cleans a single events data into correct format and saves it to db
      * @param  object $eventData Event data
-     * @param  int $shortKey unique key, created from the api url
+     * @param  int    $shortKey  unique key, created from the api url
      * @throws \Exception
      * @return void
      */
@@ -101,11 +101,6 @@ class TransTicket extends \HbgEventImporter\Parser
         $data['ticket_release_date'] = !empty($eventData->ReleaseDate) ? $eventData->ReleaseDate : null;
         $data['tickets_remaining'] = $eventData->Sales->RemainingTickets ?? null;
 
-        $data['price_range_seated_minimum_price'] = $eventData->Prices->SeatedMinPrice ?? null;
-        $data['price_range_seated_maximum_price'] = $eventData->Prices->SeatedMaxPrice ?? null;
-        $data['price_range_standing_minimum_price'] = $eventData->Prices->StandingMinPrice ?? null;
-        $data['price_range_standing_maximum_price'] = $eventData->Prices->StandingMaxPrice ?? null;
-
         $data['additional_ticket_types'] = array();
         if (isset($eventData->TicketPrices) && !empty($eventData->TicketPrices)) {
             foreach ($eventData->TicketPrices as $price) {
@@ -116,6 +111,36 @@ class TransTicket extends \HbgEventImporter\Parser
                     'ticket_type' => !empty($price->IsSeated) ? 'Seated' : 'Standing'
                 );
             }
+        }
+
+        // Get price range, if data is missing get data from custom ticket types
+        $data['price_range_seated_minimum_price'] = $eventData->Prices->SeatedMinPrice ?? null;
+        if ($data['price_range_seated_minimum_price'] === null && !empty($data['additional_ticket_types'])) {
+            $seated = array_filter($data['additional_ticket_types'], function($a) {
+                return in_array('Seated', $a) && isset($a['minimum_price']) && $a['minimum_price'] !== '';
+            });
+            $data['price_range_seated_minimum_price'] = (!empty($seated)) ? min(array_column($seated, 'minimum_price')) : null;
+        }
+        $data['price_range_seated_maximum_price'] = $eventData->Prices->SeatedMaxPrice ?? null;
+        if ($data['price_range_seated_maximum_price'] === null && !empty($data['additional_ticket_types'])) {
+            $seated = array_filter($data['additional_ticket_types'], function($a) {
+                return in_array('Seated', $a) && isset($a['maximum_price']) && $a['maximum_price'] !== '';
+            });
+            $data['price_range_seated_maximum_price'] = (!empty($seated)) ? max(array_column($seated, 'maximum_price')) : null;
+        }
+        $data['price_range_standing_minimum_price'] = $eventData->Prices->StandingMinPrice ?? null;
+        if ($data['price_range_standing_minimum_price'] === null && !empty($data['additional_ticket_types'])) {
+            $seated = array_filter($data['additional_ticket_types'], function($a) {
+                return in_array('Standing', $a) && isset($a['minimum_price']) && $a['minimum_price'] !== '';
+            });
+            $data['price_range_standing_minimum_price'] = (!empty($seated)) ? min(array_column($seated, 'minimum_price')) : null;
+        }
+        $data['price_range_standing_maximum_price'] = $eventData->Prices->StandingMaxPrice ?? null;
+        if ($data['price_range_standing_maximum_price'] === null && !empty($data['additional_ticket_types'])) {
+            $seated = array_filter($data['additional_ticket_types'], function($a) {
+                return in_array('Standing', $a) && isset($a['maximum_price']) && $a['maximum_price'] !== '';
+            });
+            $data['price_range_standing_maximum_price'] = (!empty($seated)) ? max(array_column($seated, 'maximum_price')) : null;
         }
 
         $data['additional_ticket_retailers'] = array();
@@ -159,9 +184,9 @@ class TransTicket extends \HbgEventImporter\Parser
 
     /**
      * Creates or updates an event if possible
-     * @param  array $data Event data
-     * @param  string $shortKey Event unique short key
-     * @param  int $locationId Location id
+     * @param  array  $data       Event data
+     * @param  string $shortKey   Event unique short key
+     * @param  int    $locationId Location id
      * @return boolean|int          Event id or false
      * @throws \Exception
      */
