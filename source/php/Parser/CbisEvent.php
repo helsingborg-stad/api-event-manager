@@ -29,8 +29,6 @@ class CbisEvent extends \HbgEventImporter\Parser\Cbis
      */
     public function start()
     {
-        global $wpdb;
-
         $this->collectDataForLevenshtein();
 
         $requestParams = array();
@@ -163,6 +161,7 @@ class CbisEvent extends \HbgEventImporter\Parser\Cbis
      * @param  string $postStatus Default post status
      * @param  string $shortKey   The shortkey for uud
      * @return boolean|integer    False if noting done else the ID of the location
+     * @throws \Exception
      */
     public function maybeCreateLocation($eventData, $postStatus, $userGroups, $shortKey)
     {
@@ -214,27 +213,34 @@ class CbisEvent extends \HbgEventImporter\Parser\Cbis
             $longitude = null;
         }
 
+        $city = !empty($eventData->GeoNode->Name) ? $eventData->GeoNode->Name : $this->apiKeys['default_city'];
+
         // Create the location
-        $location = new Location(
-            array(
-                'post_title'            => $title,
-                'post_status'           => $locPostStatus,
-            ),
-            array(
-                'street_address'        => $this->getAttributeValue(self::ATTRIBUTE_ADDRESS, $attributes),
-                'postal_code'           => $this->getAttributeValue(self::ATTRIBUTE_POSTCODE, $attributes),
-                'city'                  => $eventData->GeoNode->Name,
-                'municipality'          => $this->getAttributeValue(self::ATTRIBUTE_MUNICIPALITY, $attributes),
-                'country'               => $country,
-                'latitude'              => $latitude,
-                'longitude'             => $longitude,
-                'import_client'         => $importClient,
-                '_event_manager_uid'    => $uid,
-                'user_groups'           => $userGroups,
-                'sync'                  => 1,
-                'imported_post'         => 1,
-            )
-        );
+        try {
+            $location = new Location(
+                array(
+                    'post_title' => $title,
+                    'post_status' => $locPostStatus,
+                ),
+                array(
+                    'street_address' => $this->getAttributeValue(self::ATTRIBUTE_ADDRESS, $attributes),
+                    'postal_code' => $this->getAttributeValue(self::ATTRIBUTE_POSTCODE, $attributes),
+                    'city' => $city,
+                    'municipality' => $this->getAttributeValue(self::ATTRIBUTE_MUNICIPALITY, $attributes),
+                    'country' => $country,
+                    'latitude' => $latitude,
+                    'longitude' => $longitude,
+                    'import_client' => $importClient,
+                    '_event_manager_uid' => $uid,
+                    'user_groups' => $userGroups,
+                    'sync' => 1,
+                    'imported_post' => 1,
+                )
+            );
+        } catch (\Exception $e) {
+            error_log(print_r($e, true));
+            return false;
+        }
 
         if (!$location->save()) {
             return false;

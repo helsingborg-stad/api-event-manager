@@ -319,7 +319,8 @@ class App
                 'cbis_event_id'  => get_sub_field('cbis_event_id'),
                 'cbis_exclude'   => get_sub_field('cbis_filter_categories'),
                 'cbis_groups'    => get_sub_field('cbis_publishing_groups'),
-                'cbis_locations' => $locationCategories
+                'cbis_locations' => $locationCategories,
+                'default_city'   => get_sub_field('cbis_default_city')
             );
         }
 

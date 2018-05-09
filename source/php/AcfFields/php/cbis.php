@@ -3,7 +3,7 @@
 if (function_exists('acf_add_local_field_group')) {
     acf_add_local_field_group(array(
     'key' => 'group_5760fe97e3be1',
-    'title' => 'CBIS',
+    'title' => __('CBIS', 'event-manager'),
     'fields' => array(
         0 => array(
             'key' => 'field_57eb99b4b4c2f',
@@ -20,6 +20,9 @@
             ),
             'message' => __('Enable daily automatic import from CBIS', 'event-manager'),
             'default_value' => 1,
+            'ui' => 0,
+            'ui_on_text' => '',
+            'ui_off_text' => '',
         ),
         1 => array(
             'key' => 'field_5812eee2085a8',
@@ -59,10 +62,10 @@
                 'id' => '',
             ),
             'collapsed' => '',
-            'min' => '',
-            'max' => '',
+            'min' => 0,
+            'max' => 0,
             'layout' => 'block',
-            'button_label' => 'Add key',
+            'button_label' => __('Add key', 'event-manager'),
             'sub_fields' => array(
                 0 => array(
                     'key' => 'field_58764910581ea',
@@ -135,10 +138,10 @@
                         'id' => '',
                     ),
                     'collapsed' => '',
-                    'min' => '',
-                    'max' => '',
+                    'min' => 0,
+                    'max' => 0,
                     'layout' => 'table',
-                    'button_label' => 'Add',
+                    'button_label' => __('Add', 'event-manager'),
                     'sub_fields' => array(
                         0 => array(
                             'key' => 'field_5878a7a737d0c',
@@ -202,6 +205,25 @@
                     'maxlength' => '',
                 ),
                 5 => array(
+                    'key' => 'field_5af2cdfa23801',
+                    'label' => __('Default city', 'event-manager'),
+                    'name' => 'cbis_default_city',
+                    'type' => 'text',
+                    'instructions' => __('If essential address components are missing during import, this city will be used as default.', 'event-manager'),
+                    'required' => 0,
+                    'conditional_logic' => 0,
+                    'wrapper' => array(
+                        'width' => '',
+                        'class' => '',
+                        'id' => '',
+                    ),
+                    'default_value' => '',
+                    'placeholder' => '',
+                    'prepend' => '',
+                    'append' => '',
+                    'maxlength' => '',
+                ),
+                6 => array(
                     'key' => 'field_5878a7338bbab',
                     'label' => __('Default user groups', 'event-manager'),
                     'name' => 'cbis_publishing_groups',
@@ -243,6 +265,5 @@
     'hide_on_screen' => '',
     'active' => 1,
     'description' => '',
-    'local' => 'json',
 ));
 }
