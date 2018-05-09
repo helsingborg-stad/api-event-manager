@@ -3,7 +3,7 @@
 if (function_exists('acf_add_local_field_group')) {
     acf_add_local_field_group(array(
     'key' => 'group_56af507bbd485',
-    'title' => 'Xcap',
+    'title' => __('Xcap', 'event-manager'),
     'fields' => array(
         0 => array(
             'key' => 'field_56b055179e151',
@@ -20,6 +20,9 @@
             ),
             'message' => __('Enable daily automatic import from XCAP', 'event-manager'),
             'default_value' => 1,
+            'ui' => 0,
+            'ui_on_text' => '',
+            'ui_off_text' => '',
         ),
         1 => array(
             'key' => 'field_56b06bfae69e2',
@@ -59,10 +62,10 @@
                 'id' => '',
             ),
             'collapsed' => '',
-            'min' => '',
-            'max' => '',
+            'min' => 0,
+            'max' => 0,
             'layout' => 'block',
-            'button_label' => 'Add',
+            'button_label' => __('Add', 'event-manager'),
             'sub_fields' => array(
                 0 => array(
                     'key' => 'field_587cc3c55ebca',
@@ -100,6 +103,25 @@
                     'maxlength' => '',
                 ),
                 2 => array(
+                    'key' => 'field_5af2c33456cdd',
+                    'label' => __('Default city', 'event-manager'),
+                    'name' => 'xcap_default_city',
+                    'type' => 'text',
+                    'instructions' => __('If essential address components are missing during import, this city will be used as default.', 'event-manager'),
+                    'required' => 0,
+                    'conditional_logic' => 0,
+                    'wrapper' => array(
+                        'width' => '',
+                        'class' => '',
+                        'id' => '',
+                    ),
+                    'default_value' => '',
+                    'placeholder' => '',
+                    'prepend' => '',
+                    'append' => '',
+                    'maxlength' => '',
+                ),
+                3 => array(
                     'key' => 'field_587cc3fe5ebcc',
                     'label' => __('Default user groups', 'event-manager'),
                     'name' => 'xcap_publishing_groups',
@@ -141,6 +163,5 @@
     'hide_on_screen' => '',
     'active' => 1,
     'description' => '',
-    'local' => 'json',
 ));
 }

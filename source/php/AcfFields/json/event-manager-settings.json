@@ -22,25 +22,6 @@
             "maxlength": ""
         },
         {
-            "key": "field_57fb3d55d2535",
-            "label": "Default city",
-            "name": "default_city",
-            "type": "text",
-            "instructions": "If essential address components are missing during import, this city will be used as default.",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "placeholder": "",
-            "prepend": "",
-            "append": "",
-            "maxlength": ""
-        },
-        {
             "key": "field_580db5e4967d6",
             "label": "Import warning",
             "name": "import_warning",

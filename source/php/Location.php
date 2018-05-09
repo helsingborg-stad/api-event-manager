@@ -36,7 +36,7 @@ class Location extends \HbgEventImporter\Entity\PostManager
         // Get address and coordinates from post title.
         if ($this->street_address == null && ($this->latitude == null || $this->longitude == null)) {
             $wholeAddress = $this->post_title;
-            $wholeAddress .= $this->city != null ? ', ' . $this->city : '';
+            $wholeAddress .= !empty($this->city) ? ', ' . $this->city : '';
 
              // Search Google places api
             $res = Helper\Address::gmapsGetAddressComponents($wholeAddress, false);

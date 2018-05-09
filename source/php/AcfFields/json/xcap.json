@@ -16,7 +16,10 @@
                 "id": ""
             },
             "message": "Enable daily automatic import from XCAP",
-            "default_value": 1
+            "default_value": 1,
+            "ui": 0,
+            "ui_on_text": "",
+            "ui_off_text": ""
         },
         {
             "key": "field_56b06bfae69e2",
@@ -56,8 +59,8 @@
                 "id": ""
             },
             "collapsed": "",
-            "min": "",
-            "max": "",
+            "min": 0,
+            "max": 0,
             "layout": "block",
             "button_label": "Add",
             "sub_fields": [
@@ -83,6 +86,25 @@
                     "name": "xcap_filter_categories",
                     "type": "text",
                     "instructions": "Enter the name of the categories that you want to exclude from the import. Separate with commas.",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "maxlength": ""
+                },
+                {
+                    "key": "field_5af2c33456cdd",
+                    "label": "Default city",
+                    "name": "xcap_default_city",
+                    "type": "text",
+                    "instructions": "If essential address components are missing during import, this city will be used as default.",
                     "required": 0,
                     "conditional_logic": 0,
                     "wrapper": {
@@ -137,7 +159,6 @@
     "instruction_placement": "label",
     "hide_on_screen": "",
     "active": 1,
-    "description": "",
-    "local": "json"
+    "description": ""
 }]
 

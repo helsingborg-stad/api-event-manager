@@ -56,15 +56,13 @@ class Xcap extends \HbgEventImporter\Parser
         $data['doorTime'] = $this->formatDate($data['doorTime']);
         $data['endDate'] = isset($eventData->dtend) && !empty($eventData->dtend) ? $eventData->dtend : null;
         $data['endDate'] = $this->formatDate($data['endDate']);
-        $data['location'] = isset($eventData->location) && !empty($eventData->location) ? $eventData->location : null;
         $data['name'] = isset($eventData->summary) && !empty($eventData->summary) ? $eventData->summary : null;
         $data['startDate'] = isset($eventData->dtstart) && !empty($eventData->dtstart) ? $eventData->dtstart : null;
         $data['startDate'] = $this->formatDate($data['startDate']);
         $data['ticketUrl'] = isset($eventData->{'x-xcap-ticketlink'}) && !empty($eventData->{'x-xcap-ticketlink'}) ? $eventData->{'x-xcap-ticketlink'} : null;
-        $data['defaultLocation'] = get_field('default_city', 'option') ? get_field('default_city', 'option') : null;
-        $data['city'] = ($data['location'] != null) ? $data['location'] : $data['defaultLocation'];
+        $data['city'] = !empty($eventData->location) ? $eventData->location : $this->apiKeys['default_city'];
         $data['postStatus'] = get_field('xcap_post_status', 'option') ? get_field('xcap_post_status', 'option') : 'publish';
-        $data['user_groups'] = (is_array($this->apiKeys['xcap_groups']) && ! empty($this->apiKeys['xcap_groups'])) ? array_map('intval', $this->apiKeys['xcap_groups']) : null;
+        $data['user_groups'] = (!empty($this->apiKeys['xcap_groups']) && is_array($this->apiKeys['xcap_groups'])) ? array_map('intval', $this->apiKeys['xcap_groups']) : null;
 
         $data['image'] = null;
         if (isset($eventData->{'x-xcap-wideimageid'}) && !empty($eventData->{'x-xcap-wideimageid'}) && $eventData->{'x-xcap-wideimageid'} != 'null') {

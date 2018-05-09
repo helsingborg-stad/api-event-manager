@@ -269,9 +269,10 @@ class App
             the_row();
 
             $xcapKeys[] = array(
-                'xcap_api_url'       => get_sub_field('xcap_api_url'),
-                'xcap_exclude'       => get_sub_field('xcap_filter_categories'),
-                'xcap_groups'        => get_sub_field('xcap_publishing_groups')
+                'xcap_api_url'  => get_sub_field('xcap_api_url'),
+                'xcap_exclude'  => get_sub_field('xcap_filter_categories'),
+                'xcap_groups'   => get_sub_field('xcap_publishing_groups'),
+                'default_city'  => get_sub_field('xcap_default_city')
             );
         }
 
