@@ -165,6 +165,7 @@ abstract class PostManager
         unset($post['meta_input']['occasions']);
         unset($post['meta_input']['additional_ticket_types']);
         unset($post['meta_input']['additional_ticket_retailers']);
+        unset($post['meta_input']['links']);
 
         // Check if duplicate by matching "_event_manager_uid" meta value
         if (isset($meta['_event_manager_uid'])) {

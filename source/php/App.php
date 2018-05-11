@@ -252,10 +252,11 @@ class App
         wp_localize_script('hbg-event-importer', 'transticket_ajax_vars', array('transticket_keys' => $this->getTransTicketKeys()));
         wp_localize_script('hbg-event-importer', 'cbis_ajax_vars', array('cbis_keys' => $this->getCbisKeys()));
         wp_localize_script('hbg-event-importer', 'xcap_ajax_vars', array('xcap_keys' => $this->getXcapKeys()));
+        wp_localize_script('hbg-event-importer', 'arcgis_ajax_vars', array('arcgis_keys' => $this->getArcgisKeys()));
     }
 
     /**
-     * Get Xcap keys
+     * Get Transticket keys
      * @return array
      */
     public function getTransTicketKeys(): array
@@ -356,6 +357,31 @@ class App
     }
 
     /**
+     * Get ArcGIS keys
+     * @return array
+     */
+    public function getArcgisKeys(): array
+    {
+        $arcgisKeys = array();
+
+        if (!have_rows('arcgis_api_urls', 'option')) {
+            return array();
+        }
+
+        while (have_rows('arcgis_api_urls', 'option')) {
+            the_row();
+
+            $arcgisKeys[] = array(
+                'arcgis_api_url' => get_sub_field('arcgis_api_url'),
+                'arcgis_groups'  => get_sub_field('arcgis_publishing_groups'),
+                'default_city'   => get_sub_field('arcgis_default_city')
+            );
+        }
+
+        return $arcgisKeys;
+    }
+
+    /**
      * Starts the data import
      * @return void
      */
@@ -365,13 +391,13 @@ class App
             $api_keys = $this->getCbisKeys();
 
             foreach ((array) $api_keys as $key => $api_key) {
-                $importer = new \HbgEventImporter\Parser\CbisEvent('http://api.cbis.citybreak.com/Products.asmx?wsdl', $api_key);
+                new \HbgEventImporter\Parser\CbisEvent('http://api.cbis.citybreak.com/Products.asmx?wsdl', $api_key);
             }
 
             // Cbis locations
             foreach ((array) $api_keys as $key => $api_key) {
                 foreach ($api_key['cbis_locations'] as $key => $location) {
-                    $importer = new \HbgEventImporter\Parser\CbisLocation('http://api.cbis.citybreak.com/Products.asmx?wsdl', $api_key, $location);
+                    new \HbgEventImporter\Parser\CbisLocation('http://api.cbis.citybreak.com/Products.asmx?wsdl', $api_key, $location);
                 }
             }
         }
@@ -380,7 +406,7 @@ class App
             $api_keys = $this->getXcapKeys();
 
             foreach ((array) $api_keys as $key => $api_key) {
-                $importer = new \HbgEventImporter\Parser\Xcap($api_key['xcap_api_url'], $api_key);
+                new \HbgEventImporter\Parser\Xcap($api_key['xcap_api_url'], $api_key);
             }
         }
 
@@ -389,6 +415,14 @@ class App
 
             foreach ((array) $api_keys as $key => $api_key) {
                 new Parser\TransTicket($api_key['transticket_api_url'], $api_key);
+            }
+        }
+
+        if (get_field('arcgis_daily_cron', 'option') == true) {
+            $api_keys = $this->getArcgisKeys();
+
+            foreach ((array) $api_keys as $key => $api_key) {
+                new Parser\Arcgis($api_key['arcgis_api_url'], $api_key);
             }
         }
 

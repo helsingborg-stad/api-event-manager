@@ -166,6 +166,10 @@ class Locations extends \HbgEventImporter\Entity\CustomPostType
                 $button .= '<div class="button-primary extraspace" id="cbislocation">' . __('Import CBIS locations', 'event-manager') . '</div>';
             }
 
+            if (have_rows('arcgis_api_urls', 'option')) {
+                $button .= '<div class="button-primary extraspace" id="arcgislocation">' . __('Import ArcGIS locations', 'event-manager') . '</div>';
+            }
+
             $button .= '</div>';
             $views['import-buttons'] = $button;
         }
