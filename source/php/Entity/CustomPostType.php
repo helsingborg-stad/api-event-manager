@@ -74,6 +74,11 @@ abstract class CustomPostType
             $importer = new \HbgEventImporter\Parser\TransTicket($api_keys['transticket_api_url'], $api_keys);
             $data = $importer->getCreatedData();
             wp_send_json($data);
+        } elseif ($_POST['value'] == 'arcgislocation') {
+            $api_keys = $_POST['api_keys'];
+            $importer = new \HbgEventImporter\Parser\Arcgis($api_keys['arcgis_api_url'], $api_keys);
+            $data = $importer->getCreatedData();
+            wp_send_json($data);
         }
     }
 
@@ -87,7 +92,7 @@ abstract class CustomPostType
         $jsonUrl = home_url() . '/json/wp/v2/' . $postType . '/';
         $apiUrl = $jsonUrl . $post_id;
 
-        return '<strong>' . __('API-url', 'event-manager').':</strong> <a href="' . $apiUrl . '" target="_blank">' . $apiUrl . '</a>';
+        return '<strong>' . __('API-url', 'event-manager') . ':</strong> <a href="' . $apiUrl . '" target="_blank">' . $apiUrl . '</a>';
     }
 
     /**
@@ -134,7 +139,7 @@ abstract class CustomPostType
 
                 if (empty($existing)) {
                     $newId = $wpdb->insert($db_occasions, array('event' => $event->ID, 'timestamp_start' => $timestampStart, 'timestamp_end' => $timestampEnd, 'timestamp_door' => $timestampDoor));
-                    $resultString .= "New event occasions inserted with event id: " . $event->ID . ', and timestamp_start: ' . $timestampStart . ", timestamp_end: " . $timestampEnd . ", timestamp_door: " . $timestampDoor ."\n";
+                    $resultString .= "New event occasions inserted with event id: " . $event->ID . ', and timestamp_start: ' . $timestampStart . ", timestamp_end: " . $timestampEnd . ", timestamp_door: " . $timestampDoor . "\n";
                 } else {
                     $resultString .= "Already exists! Event: " . $existing[0]->event . ', timestamp_start: ' . $existing[0]->timestamp_start . ", timestamp_end: " . $existing[0]->timestamp_end . "\n";
                 }
@@ -259,8 +264,8 @@ abstract class CustomPostType
 
     /**
      * Redirect post if created within iframe.
-     * @param  string  $location redirection url
-     * @param  int     $post_id event post id
+     * @param  string $location redirection url
+     * @param  int    $post_id  event post id
      */
     public function redirectLightboxLocation($location, $post_id)
     {
@@ -268,7 +273,7 @@ abstract class CustomPostType
 
         if ((isset($_GET['lightbox']) && $_GET['lightbox'] == 'true') || strpos($referer, 'lightbox=true') > -1) {
             if (isset($_POST['save']) || isset($_POST['publish'])) {
-                return $location.'&lightbox=true';
+                return $location . '&lightbox=true';
             }
         }
 
@@ -282,9 +287,9 @@ abstract class CustomPostType
     public function postPublishedMsg($messages)
     {
         foreach ($messages as $key => $value) {
-            $messages['post'][1]  = __('Post updated.', 'event-manager');
-            $messages['post'][6]  = __('Post published.', 'event-manager');
-            $messages['post'][8]  = __('Post submitted.', 'event-manager');
+            $messages['post'][1] = __('Post updated.', 'event-manager');
+            $messages['post'][6] = __('Post published.', 'event-manager');
+            $messages['post'][8] = __('Post submitted.', 'event-manager');
             $messages['post'][10] = __('Post draft updated.', 'event-manager');
         }
 
@@ -331,7 +336,7 @@ abstract class CustomPostType
             $user_groups = \HbgEventImporter\Admin\FilterRestrictions::getTermChildren(get_current_user_id());
 
             // Remove publish capability if user don't exist in a group
-            if (empty($user_groups) || ! is_array($user_groups)) {
+            if (empty($user_groups) || !is_array($user_groups)) {
                 add_action('admin_notices', array($this, 'missingAccessNotice'));
                 remove_meta_box('submitdiv', $this->slug, 'side');
                 return;
@@ -416,7 +421,7 @@ abstract class CustomPostType
     public function addAcceptDenyTable($columns)
     {
         if (current_user_can('administrator') || current_user_can('editor')) {
-            $columns['acceptAndDeny'] =__('Public', 'myplugindomain');
+            $columns['acceptAndDeny'] = __('Public', 'myplugindomain');
         }
 
         return $columns;
@@ -449,7 +454,7 @@ abstract class CustomPostType
         $consumer_client = get_post_meta($post_id, 'consumer_client');
 
         if (!empty($consumer_client) && $post_status == 'draft' && empty($revisions)) {
-           echo '<a href="' . get_edit_post_link($post_id) . '" class="button" title="' . __('This post must be updated before it can be published.', 'event-manager') . '">' . __('Edit draft', 'event-manager') . '</a>';
+            echo '<a href="' . get_edit_post_link($post_id) . '" class="button" title="' . __('This post must be updated before it can be published.', 'event-manager') . '">' . __('Edit draft', 'event-manager') . '</a>';
         } else {
             // Show accept or deny buttons
             echo '<a href="#" class="accept button-primary ' . $first . '" post-id="' . $post_id . '">' . __('Accept', 'event-manager') . '</a>
@@ -463,12 +468,12 @@ abstract class CustomPostType
      */
     public function acceptAndDeny()
     {
-        if (! isset($_POST['postId']) || ! isset($_POST['value'])) {
+        if (!isset($_POST['postId']) || !isset($_POST['value'])) {
             echo __('Something went wrong!', 'event-manager');
             wp_die();
         }
 
-        $postId =  $_POST['postId'];
+        $postId = $_POST['postId'];
         $value = $_POST['value'];
 
         $post = get_post($postId);
