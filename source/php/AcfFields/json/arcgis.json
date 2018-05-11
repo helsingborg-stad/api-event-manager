@@ -1,0 +1,145 @@
+[{
+    "key": "group_5af54f9481184",
+    "title": "ArcGIS",
+    "fields": [
+        {
+            "key": "field_5af54f94967b6",
+            "label": "Daily import",
+            "name": "arcgis_daily_cron",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "Enable daily automatic import from ArcGIS",
+            "default_value": 1,
+            "ui": 0,
+            "ui_on_text": "",
+            "ui_off_text": ""
+        },
+        {
+            "key": "field_5af54f9496b39",
+            "label": "Post status",
+            "name": "arcgis_post_status",
+            "type": "radio",
+            "instructions": "Select status of imported events.",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "draft": "Draft",
+                "publish": "Published"
+            },
+            "allow_null": 0,
+            "other_choice": 0,
+            "save_other_choice": 0,
+            "default_value": "publish",
+            "layout": "vertical",
+            "return_format": "value"
+        },
+        {
+            "key": "field_5af54f9496d23",
+            "label": "API links",
+            "name": "arcgis_api_urls",
+            "type": "repeater",
+            "instructions": "Add one or many API links to ArcGIS",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "collapsed": "",
+            "min": 0,
+            "max": 0,
+            "layout": "block",
+            "button_label": "Add",
+            "sub_fields": [
+                {
+                    "key": "field_5af54f94c7b11",
+                    "label": "API link",
+                    "name": "arcgis_api_url",
+                    "type": "url",
+                    "instructions": "",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "placeholder": ""
+                },
+                {
+                    "key": "field_5af54f94c7c9d",
+                    "label": "Default city",
+                    "name": "arcgis_default_city",
+                    "type": "text",
+                    "instructions": "If essential address components are missing during import, this city will be used as default.",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "maxlength": ""
+                },
+                {
+                    "key": "field_5af54f94c7cfd",
+                    "label": "Default user groups",
+                    "name": "arcgis_publishing_groups",
+                    "type": "taxonomy",
+                    "instructions": "Select the user groups that you want to set as default to imported posts.",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "taxonomy": "user_groups",
+                    "field_type": "checkbox",
+                    "allow_null": 0,
+                    "add_term": 0,
+                    "save_terms": 1,
+                    "load_terms": 0,
+                    "return_format": "id",
+                    "multiple": 0
+                }
+            ]
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "options_page",
+                "operator": "==",
+                "value": "acf-options-options"
+            }
+        ]
+    ],
+    "menu_order": 2,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": 1,
+    "description": ""
+}]
+
