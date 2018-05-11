@@ -39,7 +39,7 @@ class TransTicket extends \HbgEventImporter\Parser
         $this->collectDataForLevenshtein();
 
         // Used to set unique key on events
-        $shortKey = substr(intval($this->url, 36), 0, 4);
+        $shortKey = substr(md5($this->url), 0, 8);
 
         foreach ($eventData as $key => $event) {
             if (!isset($event->Id) || empty($event->Id)) {

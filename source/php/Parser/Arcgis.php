@@ -55,7 +55,7 @@ class Arcgis extends \HbgEventImporter\Parser
         $this->collectDataForLevenshtein();
 
         // Used to set unique key on locations
-        $shortKey = substr(intval($this->url, 36), 0, 4);
+        $shortKey = substr(md5($this->url), 0, 8);
 
         foreach ($locationData as $key => $location) {
             $this->saveLocation($location, $shortKey);
