@@ -164,10 +164,10 @@ class TransTicket extends \HbgEventImporter\Parser
                             $data['address'] = $venueExtension['Value'];
                             break;
                         case "CoordinateX":
-                            $data['latitude'] = $venueExtension['Value'];
+                            $data['longitude'] = $venueExtension['Value'];
                             break;
                         case "CoordinateY":
-                            $data['longitude'] = $venueExtension['Value'];
+                            $data['latitude'] = $venueExtension['Value'];
                             break;
                     }
                 }
