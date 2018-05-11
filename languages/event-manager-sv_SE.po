@@ -1,15 +1,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Event Manager\n"
-"POT-Creation-Date: 2018-05-03 13:28+0200\n"
-"PO-Revision-Date: 2018-05-03 13:43+0200\n"
+"POT-Creation-Date: 2018-05-11 15:27+0200\n"
+"PO-Revision-Date: 2018-05-11 15:33+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0.6\n"
+"X-Generator: Poedit 2.0.7\n"
 "X-Poedit-Basepath: .\n"
 "X-Poedit-WPHeader: hbg-event-importer.php\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -19,41 +19,104 @@ msgstr ""
 "_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
 "X-Poedit-SearchPathExcluded-0: *.js\n"
 
-#: source/php/AcfFields/php/cbis.php:10
+#: source/php/AcfFields/php/arcgis.php:6
+msgid "ArcGIS"
+msgstr ""
+
+#: source/php/AcfFields/php/arcgis.php:10 source/php/AcfFields/php/cbis.php:10
 #: source/php/AcfFields/php/transticket.php:10
 #: source/php/AcfFields/php/xcap.php:10
 msgid "Daily import"
 msgstr "Daglig import"
 
-#: source/php/AcfFields/php/cbis.php:21
-msgid "Enable daily automatic import from CBIS"
-msgstr "Daglig automatisk import från CBIS"
+#: source/php/AcfFields/php/arcgis.php:21
+msgid "Enable daily automatic import from ArcGIS"
+msgstr "Daglig automatisk import från ArcGIS"
 
-#: source/php/AcfFields/php/cbis.php:26
+#: source/php/AcfFields/php/arcgis.php:29 source/php/AcfFields/php/cbis.php:26
 #: source/php/AcfFields/php/transticket.php:29
 #: source/php/AcfFields/php/xcap.php:26
 msgid "Post status"
 msgstr "Poststatus"
 
-#: source/php/AcfFields/php/cbis.php:29
+#: source/php/AcfFields/php/arcgis.php:32 source/php/AcfFields/php/cbis.php:29
 #: source/php/AcfFields/php/transticket.php:32
 #: source/php/AcfFields/php/xcap.php:29
 msgid "Select status of imported events."
 msgstr "Välj status för importerade evenemang."
 
-#: source/php/AcfFields/php/cbis.php:38
+#: source/php/AcfFields/php/arcgis.php:41 source/php/AcfFields/php/cbis.php:38
 #: source/php/AcfFields/php/transticket.php:41
 #: source/php/AcfFields/php/xcap.php:38
 #: source/php/Admin/FilterRestrictions.php:130
 msgid "Draft"
 msgstr "Utkast"
 
-#: source/php/AcfFields/php/cbis.php:39
+#: source/php/AcfFields/php/arcgis.php:42 source/php/AcfFields/php/cbis.php:39
 #: source/php/AcfFields/php/transticket.php:42
 #: source/php/AcfFields/php/xcap.php:39
 #: source/php/Admin/FilterRestrictions.php:126
 msgid "Published"
 msgstr "Publicerad"
+
+#: source/php/AcfFields/php/arcgis.php:53
+#: source/php/AcfFields/php/transticket.php:53
+#: source/php/AcfFields/php/xcap.php:50
+msgid "API links"
+msgstr "API-länkar"
+
+#: source/php/AcfFields/php/arcgis.php:56
+msgid "Add one or many API links to ArcGIS"
+msgstr "Lägg till en eller flera API-länkar till ArcGIS"
+
+#: source/php/AcfFields/php/arcgis.php:68
+#: source/php/AcfFields/php/event.php:844
+#: source/php/AcfFields/php/location.php:255
+#: source/php/AcfFields/php/organizer.php:78
+#: source/php/AcfFields/php/transticket.php:68
+msgid "Add"
+msgstr "Lägg till"
+
+#: source/php/AcfFields/php/arcgis.php:72
+#: source/php/AcfFields/php/transticket.php:72
+#: source/php/AcfFields/php/xcap.php:69
+msgid "API link"
+msgstr "API-länk"
+
+#: source/php/AcfFields/php/arcgis.php:88
+#: source/php/AcfFields/php/event-manager-settings.php:29
+#: source/php/AcfFields/php/transticket.php:164
+msgid "Default city"
+msgstr "Standard stad / ort"
+
+#: source/php/AcfFields/php/arcgis.php:91
+#: source/php/AcfFields/php/event-manager-settings.php:32
+#: source/php/AcfFields/php/transticket.php:167
+msgid ""
+"If essential address components are missing during import, this city will be "
+"used as default."
+msgstr ""
+"Om adressuppgifter saknas för en plats kommer angiven stad användas för att "
+"ge exaktare resultat."
+
+#: source/php/AcfFields/php/arcgis.php:107
+#: source/php/AcfFields/php/cbis.php:206
+#: source/php/AcfFields/php/transticket.php:183
+#: source/php/AcfFields/php/xcap.php:104
+msgid "Default user groups"
+msgstr "Förvalda användargrupper"
+
+#: source/php/AcfFields/php/arcgis.php:110
+#: source/php/AcfFields/php/cbis.php:209
+#: source/php/AcfFields/php/transticket.php:186
+#: source/php/AcfFields/php/xcap.php:107
+msgid ""
+"Select the user groups that you want to set as default to imported posts."
+msgstr "Välj vilka användargrupper som ska tilldelas för importerade poster."
+
+#: source/php/AcfFields/php/cbis.php:21
+msgid "Enable daily automatic import from CBIS"
+msgstr "Daglig automatisk import från CBIS"
 
 #: source/php/AcfFields/php/cbis.php:50
 msgid "API keys"
@@ -113,19 +176,6 @@ msgstr ""
 "Skriv namnet på de kategorier ni vill utesluta från import. Separera med "
 "kommatecken."
 
-#: source/php/AcfFields/php/cbis.php:206
-#: source/php/AcfFields/php/transticket.php:164
-#: source/php/AcfFields/php/xcap.php:104
-msgid "Default user groups"
-msgstr "Förvalda användargrupper"
-
-#: source/php/AcfFields/php/cbis.php:209
-#: source/php/AcfFields/php/transticket.php:167
-#: source/php/AcfFields/php/xcap.php:107
-msgid ""
-"Select the user groups that you want to set as default to imported posts."
-msgstr "Välj vilka användargrupper som ska tilldelas för importerade poster."
-
 #: source/php/AcfFields/php/event-categories.php:10
 msgid "Include imported categories"
 msgstr "Inkludera importerade kategorier"
@@ -146,18 +196,6 @@ msgid ""
 msgstr ""
 "API-tjänster som krävs:<br> Google Maps JavaScript API<br> Google Maps "
 "Geocoding API<br> Google Places API Web Service."
-
-#: source/php/AcfFields/php/event-manager-settings.php:29
-msgid "Default city"
-msgstr "Standard stad / ort"
-
-#: source/php/AcfFields/php/event-manager-settings.php:32
-msgid ""
-"If essential address components are missing during import, this city will be "
-"used as default."
-msgstr ""
-"Om adressuppgifter saknas för en plats kommer angiven stad användas för att "
-"ge exaktare resultat."
 
 #: source/php/AcfFields/php/event-manager-settings.php:48
 msgid "Import warning"
@@ -560,13 +598,6 @@ msgstr "Återstående antal biljetter till salu."
 msgid "Additional ticket retailers"
 msgstr "Fler återförsäljare"
 
-#: source/php/AcfFields/php/event.php:844
-#: source/php/AcfFields/php/location.php:255
-#: source/php/AcfFields/php/organizer.php:78
-#: source/php/AcfFields/php/transticket.php:68
-msgid "Add"
-msgstr "Lägg till"
-
 #: source/php/AcfFields/php/event.php:848
 msgid "Retailer"
 msgstr "Återförsäljare"
@@ -607,7 +638,7 @@ msgstr "Standardpris / Vuxen"
 #: source/php/AcfFields/php/event.php:975
 #: source/php/AcfFields/php/event.php:994
 #: source/php/AcfFields/php/event.php:1063
-#: source/php/AcfFields/php/event.php:1267
+#: source/php/AcfFields/php/event.php:1368
 #: source/php/AcfFields/php/location.php:634
 #: source/php/AcfFields/php/location.php:653
 #: source/php/AcfFields/php/location.php:672
@@ -1067,73 +1098,73 @@ msgid "Seated"
 msgstr "Sittande"
 
 #: source/php/AcfFields/php/event.php:1234
+msgid "Price range"
+msgstr "Prisintervall"
+
+#: source/php/AcfFields/php/event.php:1237
+msgid "Information about the price range for tickets."
+msgstr "Information om biljetternas prisintervall."
+
+#: source/php/AcfFields/php/event.php:1249
+msgid "Seated minimum price"
+msgstr "Minimipris för sittande"
+
+#: source/php/AcfFields/php/event.php:1270
+msgid "Seated maximum price"
+msgstr "Maximipris för sittande"
+
+#: source/php/AcfFields/php/event.php:1291
+msgid "Standing minimum price"
+msgstr "Minimipris för stående"
+
+#: source/php/AcfFields/php/event.php:1312
+msgid "Standing maximum price"
+msgstr "Maximipris för stående"
+
+#: source/php/AcfFields/php/event.php:1335
 #: source/php/AcfFields/php/package.php:314
 #: source/php/AcfFields/php/package.php:333
 msgid "Price group"
 msgstr "Gruppriser"
 
-#: source/php/AcfFields/php/event.php:1237
+#: source/php/AcfFields/php/event.php:1338
 #: source/php/AcfFields/php/package.php:317
 msgid "Add prices for group bookings."
 msgstr "Lägg till priser för grupper."
 
-#: source/php/AcfFields/php/event.php:1249
+#: source/php/AcfFields/php/event.php:1350
 #: source/php/AcfFields/php/package.php:329
 msgid "Add group"
 msgstr "Lägg till grupp"
 
-#: source/php/AcfFields/php/event.php:1253
+#: source/php/AcfFields/php/event.php:1354
 msgid "Price"
 msgstr "Pris"
 
-#: source/php/AcfFields/php/event.php:1256
+#: source/php/AcfFields/php/event.php:1357
 #: source/php/AcfFields/php/package.php:336
 msgid "Price for this group."
 msgstr "Pris för grupp."
 
-#: source/php/AcfFields/php/event.php:1272
+#: source/php/AcfFields/php/event.php:1373
 #: source/php/AcfFields/php/package.php:352
 msgid "Min persons"
 msgstr "Minimum antal"
 
-#: source/php/AcfFields/php/event.php:1275
+#: source/php/AcfFields/php/event.php:1376
 #: source/php/AcfFields/php/package.php:355
 msgid "Minimum number of people."
 msgstr "Minimum antal personer för gruppen."
 
-#: source/php/AcfFields/php/event.php:1293
+#: source/php/AcfFields/php/event.php:1394
 #: source/php/AcfFields/php/package.php:373
 msgid "Max persons"
 msgstr "Maximum antal"
 
-#: source/php/AcfFields/php/event.php:1296
+#: source/php/AcfFields/php/event.php:1397
 #: source/php/AcfFields/php/package.php:376
 msgid "Maximum number of people."
 msgstr "Maximum antal personer för gruppen."
-
-#: source/php/AcfFields/php/event.php:1316
-msgid "Price range"
-msgstr "Prisintervall"
-
-#: source/php/AcfFields/php/event.php:1319
-msgid "Information about the price range for tickets."
-msgstr "Information om biljetternas prisintervall."
-
-#: source/php/AcfFields/php/event.php:1331
-msgid "Seated minimum price"
-msgstr "Minimipris för sittande"
-
-#: source/php/AcfFields/php/event.php:1352
-msgid "Seated maximum price"
-msgstr "Maximipris för sittande"
-
-#: source/php/AcfFields/php/event.php:1373
-msgid "Standing minimum price"
-msgstr "Minimipris för stående"
-
-#: source/php/AcfFields/php/event.php:1394
-msgid "Standing maximum price"
-msgstr "Maximipris för stående"
 
 #: source/php/AcfFields/php/event.php:1417
 #: source/php/AcfFields/php/location.php:827
@@ -1964,19 +1995,9 @@ msgstr ""
 msgid "Enable daily automatic import from Transticket"
 msgstr "Daglig automatisk import från Transticket"
 
-#: source/php/AcfFields/php/transticket.php:53
-#: source/php/AcfFields/php/xcap.php:50
-msgid "API links"
-msgstr "API-länkar"
-
 #: source/php/AcfFields/php/transticket.php:56
 msgid "Add one or many API links to Transticket"
 msgstr "Lägg till en eller flera API-länkar till Transticket"
-
-#: source/php/AcfFields/php/transticket.php:72
-#: source/php/AcfFields/php/xcap.php:69
-msgid "API link"
-msgstr "API-länk"
 
 #: source/php/AcfFields/php/transticket.php:75
 msgid ""
@@ -2014,11 +2035,11 @@ msgstr ""
 "Skriv namnet på de taggar ni vill utesluta från import. Separera med "
 "kommatecken."
 
-#: source/php/AcfFields/php/transticket.php:186
+#: source/php/AcfFields/php/transticket.php:205
 msgid "Weeks to import"
 msgstr "Antal veckor att importera"
 
-#: source/php/AcfFields/php/transticket.php:189
+#: source/php/AcfFields/php/transticket.php:208
 msgid "Select how many weeks ahead you want to import"
 msgstr "Ange hur många veckor framåt du vill importera"
 
@@ -2271,68 +2292,68 @@ msgstr ""
 "har informerats om att efter att bilden lagts in i databasen kan komma att "
 "synas i olika kanaler för att marknadsföra evenemanget."
 
-#: source/php/Entity/CustomPostType.php:90
+#: source/php/Entity/CustomPostType.php:95
 msgid "API-url"
 msgstr "API-url"
 
-#: source/php/Entity/CustomPostType.php:172
-#: source/php/Entity/CustomPostType.php:173
+#: source/php/Entity/CustomPostType.php:177
+#: source/php/Entity/CustomPostType.php:178
 #, php-format
 msgid "Add new %s"
 msgstr "Lägg till %s"
 
-#: source/php/Entity/CustomPostType.php:174
+#: source/php/Entity/CustomPostType.php:179
 #, php-format
 msgid "Edit %s"
 msgstr "Redigera %s"
 
-#: source/php/Entity/CustomPostType.php:175
+#: source/php/Entity/CustomPostType.php:180
 #, php-format
 msgid "New %s"
 msgstr "Nytt %s"
 
-#: source/php/Entity/CustomPostType.php:176
+#: source/php/Entity/CustomPostType.php:181
 #, php-format
 msgid "View %s"
 msgstr "Visa %s"
 
-#: source/php/Entity/CustomPostType.php:177
+#: source/php/Entity/CustomPostType.php:182
 #, php-format
 msgid "Search %s"
 msgstr "Sök %s"
 
-#: source/php/Entity/CustomPostType.php:178
+#: source/php/Entity/CustomPostType.php:183
 #, php-format
 msgid "No %s found"
 msgstr "Inga %s hittades"
 
-#: source/php/Entity/CustomPostType.php:179
+#: source/php/Entity/CustomPostType.php:184
 #, php-format
 msgid "No %s found in trash"
 msgstr "Inga %s hittades i papperskorgen"
 
-#: source/php/Entity/CustomPostType.php:180
+#: source/php/Entity/CustomPostType.php:185
 #, php-format
 msgid "Parent %s:"
 msgstr "Förälder %s:"
 
-#: source/php/Entity/CustomPostType.php:285
+#: source/php/Entity/CustomPostType.php:290
 msgid "Post updated."
 msgstr "Inlägget uppdaterades."
 
-#: source/php/Entity/CustomPostType.php:286
+#: source/php/Entity/CustomPostType.php:291
 msgid "Post published."
 msgstr "Inlägget publicerades."
 
-#: source/php/Entity/CustomPostType.php:287
+#: source/php/Entity/CustomPostType.php:292
 msgid "Post submitted."
 msgstr "Inlägget uppdaterades."
 
-#: source/php/Entity/CustomPostType.php:288
+#: source/php/Entity/CustomPostType.php:293
 msgid "Post draft updated."
 msgstr "Utkast uppdaterades."
 
-#: source/php/Entity/CustomPostType.php:364
+#: source/php/Entity/CustomPostType.php:369
 msgid ""
 "You don't have access to edit this event. Contact an administrator for "
 "further information."
@@ -2340,45 +2361,45 @@ msgstr ""
 "Ni saknar rättigheter att uppdatera evenemanget. Vid frågor kontakta en "
 "administratör."
 
-#: source/php/Entity/CustomPostType.php:419
+#: source/php/Entity/CustomPostType.php:424
 msgid "Public"
 msgstr "Offentlig"
 
-#: source/php/Entity/CustomPostType.php:452
+#: source/php/Entity/CustomPostType.php:457
 msgid "This post must be updated before it can be published."
 msgstr "Evenemanget behöver uppdateras innan det kan publiceras"
 
-#: source/php/Entity/CustomPostType.php:452
+#: source/php/Entity/CustomPostType.php:457
 msgid "Edit draft"
 msgstr "Redigera utkast"
 
-#: source/php/Entity/CustomPostType.php:455
+#: source/php/Entity/CustomPostType.php:460
 msgid "Accept"
 msgstr "Godkänn"
 
-#: source/php/Entity/CustomPostType.php:456
+#: source/php/Entity/CustomPostType.php:461
 msgid "Deny"
 msgstr "Neka"
 
-#: source/php/Entity/CustomPostType.php:467
+#: source/php/Entity/CustomPostType.php:472
 msgid "Something went wrong!"
 msgstr "Något gick fel!"
 
-#: source/php/Entity/CustomPostType.php:484
+#: source/php/Entity/CustomPostType.php:489
 msgid "Error"
 msgstr "Fel"
 
-#: source/php/Entity/PostManager.php:223
+#: source/php/Entity/PostManager.php:224
 msgid "Could not create folder"
 msgstr "Kunde inte skapa mappen"
 
-#: source/php/Entity/PostManager.php:224
+#: source/php/Entity/PostManager.php:225
 msgid "please go ahead and create it manually and rerun the import."
 msgstr "vänligen skapa den manuellt och gör om importen."
 
 #: source/php/Parser.php:131
 msgid "Parser done."
-msgstr "Inläsningen slutförd"
+msgstr "Inläsningen slutförd."
 
 #: source/php/PostTypes/Events.php:12
 msgctxt "Post type plural"
@@ -2467,7 +2488,7 @@ msgid ""
 msgstr ""
 "Detta är en dubblett av evenemanget: %s. Om du vill lägga till en ny "
 "tidpunkt för ett redan existerande evenemang, vänligen %s och publicera "
-"originalversionen."
+"originalversionen"
 
 #: source/php/PostTypes/Events.php:595
 msgid "edit"
@@ -2514,6 +2535,10 @@ msgstr "Klient"
 #: source/php/PostTypes/Locations.php:166
 msgid "Import CBIS locations"
 msgstr "Importera CBIS platser"
+
+#: source/php/PostTypes/Locations.php:170
+msgid "Import ArcGIS locations"
+msgstr "Importera ArcGIS platser"
 
 #: source/php/PostTypes/MembershipCards.php:10
 msgid "Membership Cards"
@@ -2978,7 +3003,7 @@ msgstr ""
 msgid "Manage events locally, and import from XCAP & CBIS."
 msgstr ""
 "Hantera evenemang, platser, kontaktpersoner etc och importera från vanliga "
-"evenemangssystem. "
+"evenemangssystem."
 
 #. Author of the plugin/theme
 msgid "Kristoffer Svanmark, Sebastian Thulin, Tommy Morberg, Jonatan Hanson"

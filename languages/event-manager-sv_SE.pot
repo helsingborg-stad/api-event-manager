@@ -3,14 +3,14 @@ msgid ""
 msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "Project-Id-Version: Event Manager\n"
-"POT-Creation-Date: 2018-05-03 13:28+0200\n"
+"POT-Creation-Date: 2018-05-11 15:27+0200\n"
 "PO-Revision-Date: 2016-10-26 08:27+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0.6\n"
+"X-Generator: Poedit 2.0.7\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-WPHeader: hbg-event-importer.php\n"
 "X-Poedit-SourceCharset: UTF-8\n"
@@ -23,28 +23,36 @@ msgstr ""
 "X-Poedit-SearchPathExcluded-2: node_modules\n"
 "X-Poedit-SearchPathExcluded-3: source/php/Vendor\n"
 
+#: source/php/AcfFields/php/arcgis.php:6
+msgid "ArcGIS"
+msgstr ""
+
+#: source/php/AcfFields/php/arcgis.php:10
 #: source/php/AcfFields/php/cbis.php:10
 #: source/php/AcfFields/php/transticket.php:10
 #: source/php/AcfFields/php/xcap.php:10
 msgid "Daily import"
 msgstr ""
 
-#: source/php/AcfFields/php/cbis.php:21
-msgid "Enable daily automatic import from CBIS"
+#: source/php/AcfFields/php/arcgis.php:21
+msgid "Enable daily automatic import from ArcGIS"
 msgstr ""
 
+#: source/php/AcfFields/php/arcgis.php:29
 #: source/php/AcfFields/php/cbis.php:26
 #: source/php/AcfFields/php/transticket.php:29
 #: source/php/AcfFields/php/xcap.php:26
 msgid "Post status"
 msgstr ""
 
+#: source/php/AcfFields/php/arcgis.php:32
 #: source/php/AcfFields/php/cbis.php:29
 #: source/php/AcfFields/php/transticket.php:32
 #: source/php/AcfFields/php/xcap.php:29
 msgid "Select status of imported events."
 msgstr ""
 
+#: source/php/AcfFields/php/arcgis.php:41
 #: source/php/AcfFields/php/cbis.php:38
 #: source/php/AcfFields/php/transticket.php:41
 #: source/php/AcfFields/php/xcap.php:38
@@ -52,11 +60,69 @@ msgstr ""
 msgid "Draft"
 msgstr ""
 
+#: source/php/AcfFields/php/arcgis.php:42
 #: source/php/AcfFields/php/cbis.php:39
 #: source/php/AcfFields/php/transticket.php:42
 #: source/php/AcfFields/php/xcap.php:39
 #: source/php/Admin/FilterRestrictions.php:126
 msgid "Published"
+msgstr ""
+
+#: source/php/AcfFields/php/arcgis.php:53
+#: source/php/AcfFields/php/transticket.php:53
+#: source/php/AcfFields/php/xcap.php:50
+msgid "API links"
+msgstr ""
+
+#: source/php/AcfFields/php/arcgis.php:56
+msgid "Add one or many API links to ArcGIS"
+msgstr ""
+
+#: source/php/AcfFields/php/arcgis.php:68
+#: source/php/AcfFields/php/event.php:844
+#: source/php/AcfFields/php/location.php:255
+#: source/php/AcfFields/php/organizer.php:78
+#: source/php/AcfFields/php/transticket.php:68
+msgid "Add"
+msgstr ""
+
+#: source/php/AcfFields/php/arcgis.php:72
+#: source/php/AcfFields/php/transticket.php:72
+#: source/php/AcfFields/php/xcap.php:69
+msgid "API link"
+msgstr ""
+
+#: source/php/AcfFields/php/arcgis.php:88
+#: source/php/AcfFields/php/event-manager-settings.php:29
+#: source/php/AcfFields/php/transticket.php:164
+msgid "Default city"
+msgstr ""
+
+#: source/php/AcfFields/php/arcgis.php:91
+#: source/php/AcfFields/php/event-manager-settings.php:32
+#: source/php/AcfFields/php/transticket.php:167
+msgid ""
+"If essential address components are missing during import, this city will "
+"be used as default."
+msgstr ""
+
+#: source/php/AcfFields/php/arcgis.php:107
+#: source/php/AcfFields/php/cbis.php:206
+#: source/php/AcfFields/php/transticket.php:183
+#: source/php/AcfFields/php/xcap.php:104
+msgid "Default user groups"
+msgstr ""
+
+#: source/php/AcfFields/php/arcgis.php:110
+#: source/php/AcfFields/php/cbis.php:209
+#: source/php/AcfFields/php/transticket.php:186
+#: source/php/AcfFields/php/xcap.php:107
+msgid ""
+"Select the user groups that you want to set as default to imported posts."
+msgstr ""
+
+#: source/php/AcfFields/php/cbis.php:21
+msgid "Enable daily automatic import from CBIS"
 msgstr ""
 
 #: source/php/AcfFields/php/cbis.php:50
@@ -113,19 +179,6 @@ msgid ""
 "Separate with commas."
 msgstr ""
 
-#: source/php/AcfFields/php/cbis.php:206
-#: source/php/AcfFields/php/transticket.php:164
-#: source/php/AcfFields/php/xcap.php:104
-msgid "Default user groups"
-msgstr ""
-
-#: source/php/AcfFields/php/cbis.php:209
-#: source/php/AcfFields/php/transticket.php:167
-#: source/php/AcfFields/php/xcap.php:107
-msgid ""
-"Select the user groups that you want to set as default to imported posts."
-msgstr ""
-
 #: source/php/AcfFields/php/event-categories.php:10
 msgid "Include imported categories"
 msgstr ""
@@ -143,16 +196,6 @@ msgstr ""
 msgid ""
 "API-services required:<br> Google Maps JavaScript API<br> Google Maps "
 "Geocoding API<br> Google Places API Web Service"
-msgstr ""
-
-#: source/php/AcfFields/php/event-manager-settings.php:29
-msgid "Default city"
-msgstr ""
-
-#: source/php/AcfFields/php/event-manager-settings.php:32
-msgid ""
-"If essential address components are missing during import, this city will "
-"be used as default."
 msgstr ""
 
 #: source/php/AcfFields/php/event-manager-settings.php:48
@@ -550,13 +593,6 @@ msgstr ""
 msgid "Additional ticket retailers"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:844
-#: source/php/AcfFields/php/location.php:255
-#: source/php/AcfFields/php/organizer.php:78
-#: source/php/AcfFields/php/transticket.php:68
-msgid "Add"
-msgstr ""
-
 #: source/php/AcfFields/php/event.php:848
 msgid "Retailer"
 msgstr ""
@@ -597,7 +633,7 @@ msgstr ""
 #: source/php/AcfFields/php/event.php:975
 #: source/php/AcfFields/php/event.php:994
 #: source/php/AcfFields/php/event.php:1063
-#: source/php/AcfFields/php/event.php:1267
+#: source/php/AcfFields/php/event.php:1368
 #: source/php/AcfFields/php/location.php:634
 #: source/php/AcfFields/php/location.php:653
 #: source/php/AcfFields/php/location.php:672
@@ -1057,72 +1093,72 @@ msgid "Seated"
 msgstr ""
 
 #: source/php/AcfFields/php/event.php:1234
+msgid "Price range"
+msgstr ""
+
+#: source/php/AcfFields/php/event.php:1237
+msgid "Information about the price range for tickets."
+msgstr ""
+
+#: source/php/AcfFields/php/event.php:1249
+msgid "Seated minimum price"
+msgstr ""
+
+#: source/php/AcfFields/php/event.php:1270
+msgid "Seated maximum price"
+msgstr ""
+
+#: source/php/AcfFields/php/event.php:1291
+msgid "Standing minimum price"
+msgstr ""
+
+#: source/php/AcfFields/php/event.php:1312
+msgid "Standing maximum price"
+msgstr ""
+
+#: source/php/AcfFields/php/event.php:1335
 #: source/php/AcfFields/php/package.php:314
 #: source/php/AcfFields/php/package.php:333
 msgid "Price group"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:1237
+#: source/php/AcfFields/php/event.php:1338
 #: source/php/AcfFields/php/package.php:317
 msgid "Add prices for group bookings."
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:1249
+#: source/php/AcfFields/php/event.php:1350
 #: source/php/AcfFields/php/package.php:329
 msgid "Add group"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:1253
+#: source/php/AcfFields/php/event.php:1354
 msgid "Price"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:1256
+#: source/php/AcfFields/php/event.php:1357
 #: source/php/AcfFields/php/package.php:336
 msgid "Price for this group."
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:1272
+#: source/php/AcfFields/php/event.php:1373
 #: source/php/AcfFields/php/package.php:352
 msgid "Min persons"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:1275
+#: source/php/AcfFields/php/event.php:1376
 #: source/php/AcfFields/php/package.php:355
 msgid "Minimum number of people."
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:1293
+#: source/php/AcfFields/php/event.php:1394
 #: source/php/AcfFields/php/package.php:373
 msgid "Max persons"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:1296
+#: source/php/AcfFields/php/event.php:1397
 #: source/php/AcfFields/php/package.php:376
 msgid "Maximum number of people."
-msgstr ""
-
-#: source/php/AcfFields/php/event.php:1316
-msgid "Price range"
-msgstr ""
-
-#: source/php/AcfFields/php/event.php:1319
-msgid "Information about the price range for tickets."
-msgstr ""
-
-#: source/php/AcfFields/php/event.php:1331
-msgid "Seated minimum price"
-msgstr ""
-
-#: source/php/AcfFields/php/event.php:1352
-msgid "Seated maximum price"
-msgstr ""
-
-#: source/php/AcfFields/php/event.php:1373
-msgid "Standing minimum price"
-msgstr ""
-
-#: source/php/AcfFields/php/event.php:1394
-msgid "Standing maximum price"
 msgstr ""
 
 #: source/php/AcfFields/php/event.php:1417
@@ -1935,18 +1971,8 @@ msgstr ""
 msgid "Enable daily automatic import from Transticket"
 msgstr ""
 
-#: source/php/AcfFields/php/transticket.php:53
-#: source/php/AcfFields/php/xcap.php:50
-msgid "API links"
-msgstr ""
-
 #: source/php/AcfFields/php/transticket.php:56
 msgid "Add one or many API links to Transticket"
-msgstr ""
-
-#: source/php/AcfFields/php/transticket.php:72
-#: source/php/AcfFields/php/xcap.php:69
-msgid "API link"
 msgstr ""
 
 #: source/php/AcfFields/php/transticket.php:75
@@ -1981,11 +2007,11 @@ msgid ""
 "Separate with commas."
 msgstr ""
 
-#: source/php/AcfFields/php/transticket.php:186
+#: source/php/AcfFields/php/transticket.php:205
 msgid "Weeks to import"
 msgstr ""
 
-#: source/php/AcfFields/php/transticket.php:189
+#: source/php/AcfFields/php/transticket.php:208
 msgid "Select how many weeks ahead you want to import"
 msgstr ""
 
@@ -2230,106 +2256,106 @@ msgid ""
 "appear in different channels to promote the event."
 msgstr ""
 
-#: source/php/Entity/CustomPostType.php:90
+#: source/php/Entity/CustomPostType.php:95
 msgid "API-url"
 msgstr ""
 
-#: source/php/Entity/CustomPostType.php:172
-#: source/php/Entity/CustomPostType.php:173
+#: source/php/Entity/CustomPostType.php:177
+#: source/php/Entity/CustomPostType.php:178
 #, php-format
 msgid "Add new %s"
 msgstr ""
 
-#: source/php/Entity/CustomPostType.php:174
+#: source/php/Entity/CustomPostType.php:179
 #, php-format
 msgid "Edit %s"
 msgstr ""
 
-#: source/php/Entity/CustomPostType.php:175
+#: source/php/Entity/CustomPostType.php:180
 #, php-format
 msgid "New %s"
 msgstr ""
 
-#: source/php/Entity/CustomPostType.php:176
+#: source/php/Entity/CustomPostType.php:181
 #, php-format
 msgid "View %s"
 msgstr ""
 
-#: source/php/Entity/CustomPostType.php:177
+#: source/php/Entity/CustomPostType.php:182
 #, php-format
 msgid "Search %s"
 msgstr ""
 
-#: source/php/Entity/CustomPostType.php:178
+#: source/php/Entity/CustomPostType.php:183
 #, php-format
 msgid "No %s found"
 msgstr ""
 
-#: source/php/Entity/CustomPostType.php:179
+#: source/php/Entity/CustomPostType.php:184
 #, php-format
 msgid "No %s found in trash"
 msgstr ""
 
-#: source/php/Entity/CustomPostType.php:180
+#: source/php/Entity/CustomPostType.php:185
 #, php-format
 msgid "Parent %s:"
 msgstr ""
 
-#: source/php/Entity/CustomPostType.php:285
+#: source/php/Entity/CustomPostType.php:290
 msgid "Post updated."
 msgstr ""
 
-#: source/php/Entity/CustomPostType.php:286
+#: source/php/Entity/CustomPostType.php:291
 msgid "Post published."
 msgstr ""
 
-#: source/php/Entity/CustomPostType.php:287
+#: source/php/Entity/CustomPostType.php:292
 msgid "Post submitted."
 msgstr ""
 
-#: source/php/Entity/CustomPostType.php:288
+#: source/php/Entity/CustomPostType.php:293
 msgid "Post draft updated."
 msgstr ""
 
-#: source/php/Entity/CustomPostType.php:364
+#: source/php/Entity/CustomPostType.php:369
 msgid ""
 "You don't have access to edit this event. Contact an administrator for "
 "further information."
 msgstr ""
 
-#: source/php/Entity/CustomPostType.php:419
+#: source/php/Entity/CustomPostType.php:424
 msgid "Public"
 msgstr ""
 
-#: source/php/Entity/CustomPostType.php:452
+#: source/php/Entity/CustomPostType.php:457
 msgid "This post must be updated before it can be published."
 msgstr ""
 
-#: source/php/Entity/CustomPostType.php:452
+#: source/php/Entity/CustomPostType.php:457
 msgid "Edit draft"
 msgstr ""
 
-#: source/php/Entity/CustomPostType.php:455
+#: source/php/Entity/CustomPostType.php:460
 msgid "Accept"
 msgstr ""
 
-#: source/php/Entity/CustomPostType.php:456
+#: source/php/Entity/CustomPostType.php:461
 msgid "Deny"
 msgstr ""
 
-#: source/php/Entity/CustomPostType.php:467
+#: source/php/Entity/CustomPostType.php:472
 msgid "Something went wrong!"
 msgstr ""
 
-#: source/php/Entity/CustomPostType.php:484
+#: source/php/Entity/CustomPostType.php:489
 msgid "Error"
 msgstr ""
 
-#: source/php/Entity/PostManager.php:223
+#: source/php/Entity/PostManager.php:224
 msgid "Could not create folder"
 msgstr ""
 
-#: source/php/Entity/PostManager.php:224
+#: source/php/Entity/PostManager.php:225
 msgid "please go ahead and create it manually and rerun the import."
 msgstr ""
 
@@ -2458,6 +2484,10 @@ msgstr ""
 
 #: source/php/PostTypes/Locations.php:166
 msgid "Import CBIS locations"
+msgstr ""
+
+#: source/php/PostTypes/Locations.php:170
+msgid "Import ArcGIS locations"
 msgstr ""
 
 #: source/php/PostTypes/MembershipCards.php:10
