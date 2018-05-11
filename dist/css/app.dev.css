@@ -38,9 +38,6 @@
   height: auto;
   position: relative; }
 
-#cbislocation {
-  display: block; }
-
 #blackOverlay {
   display: none;
   width: 100%;
