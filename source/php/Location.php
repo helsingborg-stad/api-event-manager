@@ -34,6 +34,7 @@ class Location extends \HbgEventImporter\Entity\PostManager
         $this->saveGroups();
         $this->getMissingData();
         $this->saveLinks();
+        $this->saveCategories();
 
         return true;
     }
@@ -106,6 +107,17 @@ class Location extends \HbgEventImporter\Entity\PostManager
     public function saveGroups()
     {
         wp_set_object_terms($this->ID, $this->user_groups, 'user_groups', true);
+    }
+
+    /**
+     * Saves category taxonomy terms
+     * @return void
+     */
+    public function saveCategories()
+    {
+        if (isset($this->categories) && !empty($this->categories)) {
+            wp_set_object_terms($this->ID, $this->categories, 'location_categories', false);
+        }
     }
 
     /**

@@ -79,7 +79,7 @@ class Arcgis extends \HbgEventImporter\Parser
         $postTitle = !empty($locationData['attributes']['name']) ? $locationData['attributes']['name'] : $address;
         $userGroups = (is_array($this->apiKeys['arcgis_groups']) && !empty($this->apiKeys['arcgis_groups'])) ? array_map('intval', $this->apiKeys['arcgis_groups']) : null;
         $links = !empty($locationData['attributes']['url']) ? array(array('service' => 'webpage', 'url' => $locationData['attributes']['url'])) : null;
-        $locationType = $locationData['attributes']['type'] ?? 'location';
+        $locationType = $locationData['attributes']['type'] ?? '';
         $uid = 'arcgis-' . $shortKey . '-' . sanitize_title($locationType) . '-' . sanitize_title($postTitle);
         $postStatus = get_field('arcgis_post_status', 'option') ? get_field('arcgis_post_status', 'option') : 'publish';
         // Checking if there is a location already with this title or similar enough
@@ -122,7 +122,8 @@ class Arcgis extends \HbgEventImporter\Parser
                     'user_groups' => $userGroups,
                     'sync' => 1,
                     'imported_post' => 1,
-                    'links' => $links
+                    'links' => $links,
+                    'categories' => !empty($locationType) ? array(ucfirst($locationType)) : null,
                 )
             );
         } catch (\Exception $e) {
