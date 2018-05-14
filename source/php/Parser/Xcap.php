@@ -135,7 +135,6 @@ class Xcap extends \HbgEventImporter\Parser
                 'sync'                    => 1,
                 'status'                  => 'Active',
                 'image'                   => !empty($image) ? $image : null,
-                'alternate_name'          => $alternateName,
                 'event_link'              => null,
                 'categories'              => $categories,
                 'occasions'               => $occasions,

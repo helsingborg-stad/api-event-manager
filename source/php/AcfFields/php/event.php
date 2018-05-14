@@ -1,8 +1,7 @@
 <?php 
 
-if (function_exists('acf_add_local_field_group')) {
-
-    acf_add_local_field_group(array(
+if (function_exists('acf_add_local_field_group')) {
+    acf_add_local_field_group(array(
     'key' => 'group_57610ebadcee8',
     'title' => __('Event', 'event-manager'),
     'fields' => array(
@@ -696,7 +695,7 @@ if (function_exists('acf_add_local_field_group')) {
         ),
         14 => array(
             'key' => 'field_57611b73acf19',
-            'label' => __('Booking', 'event-manager'),
+            'label' => __('Booking & tickets', 'event-manager'),
             'name' => '',
             'type' => 'tab',
             'instructions' => '',
@@ -719,7 +718,7 @@ if (function_exists('acf_add_local_field_group')) {
             'required' => 0,
             'conditional_logic' => 0,
             'wrapper' => array(
-                'width' => '',
+                'width' => '50',
                 'class' => '',
                 'id' => '',
             ),
@@ -746,6 +745,23 @@ if (function_exists('acf_add_local_field_group')) {
             'maxlength' => '',
         ),
         17 => array(
+            'key' => 'field_5ae2d2fe2f26e',
+            'label' => __('Ticket release date', 'event-manager'),
+            'name' => 'ticket_release_date',
+            'type' => 'date_time_picker',
+            'instructions' => __('Date when the tickets is released.', 'event-manager'),
+            'required' => 0,
+            'conditional_logic' => 0,
+            'wrapper' => array(
+                'width' => '50',
+                'class' => '',
+                'id' => '',
+            ),
+            'display_format' => 'Y-m-d H:i',
+            'return_format' => 'Y-m-d H:i',
+            'first_day' => 1,
+        ),
+        18 => array(
             'key' => 'field_57611befacf1c',
             'label' => __('Minimum age to attend the event', 'event-manager'),
             'name' => 'age_restriction',
@@ -766,7 +782,139 @@ if (function_exists('acf_add_local_field_group')) {
             'max' => '',
             'step' => '',
         ),
-        18 => array(
+        19 => array(
+            'key' => 'field_5ae2d0ba2f26c',
+            'label' => __('Ticket stock', 'event-manager'),
+            'name' => 'ticket_stock',
+            'type' => 'number',
+            'instructions' => __('Total amount of tickets.', 'event-manager'),
+            'required' => 0,
+            'conditional_logic' => 0,
+            'wrapper' => array(
+                'width' => '50',
+                'class' => '',
+                'id' => '',
+            ),
+            'default_value' => '',
+            'placeholder' => '',
+            'prepend' => '',
+            'append' => '',
+            'min' => '',
+            'max' => '',
+            'step' => '',
+        ),
+        20 => array(
+            'key' => 'field_5ae2d7f3916d3',
+            'label' => __('Tickets remaining', 'event-manager'),
+            'name' => 'tickets_remaining',
+            'type' => 'number',
+            'instructions' => __('Remaining amount of tickets for sale.', 'event-manager'),
+            'required' => 0,
+            'conditional_logic' => 0,
+            'wrapper' => array(
+                'width' => '50',
+                'class' => '',
+                'id' => '',
+            ),
+            'default_value' => '',
+            'placeholder' => '',
+            'prepend' => '',
+            'append' => '',
+            'min' => '',
+            'max' => '',
+            'step' => '',
+        ),
+        21 => array(
+            'key' => 'field_5ae320279d7e0',
+            'label' => __('Additional ticket retailers', 'event-manager'),
+            'name' => 'additional_ticket_retailers',
+            'type' => 'repeater',
+            'instructions' => '',
+            'required' => 0,
+            'conditional_logic' => 0,
+            'wrapper' => array(
+                'width' => '',
+                'class' => '',
+                'id' => '',
+            ),
+            'collapsed' => '',
+            'min' => 0,
+            'max' => 0,
+            'layout' => 'block',
+            'button_label' => __('Add', 'event-manager'),
+            'sub_fields' => array(
+                0 => array(
+                    'key' => 'field_5ae322b4caede',
+                    'label' => __('Retailer', 'event-manager'),
+                    'name' => 'retailer_name',
+                    'type' => 'text',
+                    'instructions' => __('Name of the retailer.', 'event-manager'),
+                    'required' => 1,
+                    'conditional_logic' => 0,
+                    'wrapper' => array(
+                        'width' => '50',
+                        'class' => '',
+                        'id' => '',
+                    ),
+                    'default_value' => '',
+                    'placeholder' => '',
+                    'prepend' => '',
+                    'append' => '',
+                    'maxlength' => '',
+                ),
+                1 => array(
+                    'key' => 'field_5ae3251dcb3b0',
+                    'label' => __('Ticket purchase URL', 'event-manager'),
+                    'name' => 'booking_url',
+                    'type' => 'url',
+                    'instructions' => '',
+                    'required' => 0,
+                    'conditional_logic' => 0,
+                    'wrapper' => array(
+                        'width' => '50',
+                        'class' => '',
+                        'id' => '',
+                    ),
+                    'default_value' => '',
+                    'placeholder' => '',
+                ),
+                2 => array(
+                    'key' => 'field_5ae3213f9d7e3',
+                    'label' => __('Ticket release date', 'event-manager'),
+                    'name' => 'ticket_release_date',
+                    'type' => 'date_time_picker',
+                    'instructions' => __('Date when the tickets is released.', 'event-manager'),
+                    'required' => 0,
+                    'conditional_logic' => 0,
+                    'wrapper' => array(
+                        'width' => '50',
+                        'class' => '',
+                        'id' => '',
+                    ),
+                    'display_format' => 'Y-m-d H:i',
+                    'return_format' => 'Y-m-d H:i',
+                    'first_day' => 1,
+                ),
+                3 => array(
+                    'key' => 'field_5ae321bd9d7e4',
+                    'label' => __('Ticket stop date', 'event-manager'),
+                    'name' => 'ticket_stop_date',
+                    'type' => 'date_time_picker',
+                    'instructions' => __('Date when the retailer stops selling tickets.', 'event-manager'),
+                    'required' => 0,
+                    'conditional_logic' => 0,
+                    'wrapper' => array(
+                        'width' => '50',
+                        'class' => '',
+                        'id' => '',
+                    ),
+                    'display_format' => 'Y-m-d H:i',
+                    'return_format' => 'Y-m-d H:i',
+                    'first_day' => 1,
+                ),
+            ),
+        ),
+        22 => array(
             'key' => 'field_57c7ed92054e6',
             'label' => __('Included in membership cards', 'event-manager'),
             'name' => 'membership_cards',
@@ -789,7 +937,7 @@ if (function_exists('acf_add_local_field_group')) {
             'return_format' => 'object',
             'ui' => 1,
         ),
-        19 => array(
+        23 => array(
             'key' => 'field_57611c0cacf1e',
             'label' => __('Default price / Adult', 'event-manager'),
             'name' => 'price_adult',
@@ -808,7 +956,7 @@ if (function_exists('acf_add_local_field_group')) {
             'append' => __('SEK', 'event-manager'),
             'maxlength' => '',
         ),
-        20 => array(
+        24 => array(
             'key' => 'field_57b6fe18e65c4',
             'label' => __('Price student', 'event-manager'),
             'name' => 'price_student',
@@ -827,7 +975,7 @@ if (function_exists('acf_add_local_field_group')) {
             'append' => __('SEK', 'event-manager'),
             'maxlength' => '',
         ),
-        21 => array(
+        25 => array(
             'key' => 'field_57611c23acf1f',
             'label' => __('Price children', 'event-manager'),
             'name' => 'price_children',
@@ -846,7 +994,7 @@ if (function_exists('acf_add_local_field_group')) {
             'append' => __('SEK', 'event-manager'),
             'maxlength' => '',
         ),
-        22 => array(
+        26 => array(
             'key' => 'field_57f4fe8866a2d',
             'label' => __('Age restriction for children price', 'event-manager'),
             'name' => 'children_age',
@@ -896,7 +1044,7 @@ if (function_exists('acf_add_local_field_group')) {
             'return_format' => 'value',
             'placeholder' => '',
         ),
-        23 => array(
+        27 => array(
             'key' => 'field_57b6fe5ee65c5',
             'label' => __('Price senior', 'event-manager'),
             'name' => 'price_senior',
@@ -915,7 +1063,7 @@ if (function_exists('acf_add_local_field_group')) {
             'append' => __('SEK', 'event-manager'),
             'maxlength' => '',
         ),
-        24 => array(
+        28 => array(
             'key' => 'field_57f4fbaa4365e',
             'label' => __('Age restriction for senior price', 'event-manager'),
             'name' => 'senior_age',
@@ -975,7 +1123,214 @@ if (function_exists('acf_add_local_field_group')) {
             'return_format' => 'value',
             'placeholder' => '',
         ),
-        25 => array(
+        29 => array(
+            'key' => 'field_5ae2e55f94974',
+            'label' => __('Additional ticket types', 'event-manager'),
+            'name' => 'additional_ticket_types',
+            'type' => 'repeater',
+            'instructions' => __('Additional types of tickets.', 'event-manager'),
+            'required' => 0,
+            'conditional_logic' => 0,
+            'wrapper' => array(
+                'width' => '',
+                'class' => '',
+                'id' => '',
+            ),
+            'collapsed' => '',
+            'min' => 0,
+            'max' => 0,
+            'layout' => 'block',
+            'button_label' => '',
+            'sub_fields' => array(
+                0 => array(
+                    'key' => 'field_5ae2e5bc94975',
+                    'label' => __('Ticket name', 'event-manager'),
+                    'name' => 'ticket_name',
+                    'type' => 'text',
+                    'instructions' => '',
+                    'required' => 1,
+                    'conditional_logic' => 0,
+                    'wrapper' => array(
+                        'width' => '33',
+                        'class' => '',
+                        'id' => '',
+                    ),
+                    'default_value' => '',
+                    'placeholder' => '',
+                    'prepend' => '',
+                    'append' => '',
+                    'maxlength' => '',
+                ),
+                1 => array(
+                    'key' => 'field_5ae2e64294977',
+                    'label' => __('Maximum price', 'event-manager'),
+                    'name' => 'maximum_price',
+                    'type' => 'number',
+                    'instructions' => '',
+                    'required' => 0,
+                    'conditional_logic' => 0,
+                    'wrapper' => array(
+                        'width' => '33',
+                        'class' => '',
+                        'id' => '',
+                    ),
+                    'default_value' => '',
+                    'placeholder' => '',
+                    'prepend' => '',
+                    'append' => '',
+                    'min' => 0,
+                    'max' => '',
+                    'step' => '',
+                ),
+                2 => array(
+                    'key' => 'field_5ae2e5d094976',
+                    'label' => __('Minimum price', 'event-manager'),
+                    'name' => 'minimum_price',
+                    'type' => 'number',
+                    'instructions' => '',
+                    'required' => 0,
+                    'conditional_logic' => 0,
+                    'wrapper' => array(
+                        'width' => '33',
+                        'class' => '',
+                        'id' => '',
+                    ),
+                    'default_value' => '',
+                    'placeholder' => '',
+                    'prepend' => '',
+                    'append' => '',
+                    'min' => 0,
+                    'max' => '',
+                    'step' => '',
+                ),
+                3 => array(
+                    'key' => 'field_5ae2e65394978',
+                    'label' => __('Ticket type', 'event-manager'),
+                    'name' => 'ticket_type',
+                    'type' => 'radio',
+                    'instructions' => '',
+                    'required' => 1,
+                    'conditional_logic' => 0,
+                    'wrapper' => array(
+                        'width' => '',
+                        'class' => '',
+                        'id' => '',
+                    ),
+                    'choices' => array(
+                        'Standing' => __('Standing', 'event-manager'),
+                        'Seated' => __('Seated', 'event-manager'),
+                    ),
+                    'allow_null' => 0,
+                    'other_choice' => 0,
+                    'save_other_choice' => 0,
+                    'default_value' => '',
+                    'layout' => 'horizontal',
+                    'return_format' => 'value',
+                ),
+            ),
+        ),
+        30 => array(
+            'key' => 'field_5ae2e0ececa4c',
+            'label' => __('Price range', 'event-manager'),
+            'name' => 'price_range',
+            'type' => 'group',
+            'instructions' => __('Information about the price range for tickets.', 'event-manager'),
+            'required' => 0,
+            'conditional_logic' => 0,
+            'wrapper' => array(
+                'width' => '',
+                'class' => '',
+                'id' => '',
+            ),
+            'layout' => 'block',
+            'sub_fields' => array(
+                0 => array(
+                    'key' => 'field_5ae2e0fceca4d',
+                    'label' => __('Seated minimum price', 'event-manager'),
+                    'name' => 'seated_minimum_price',
+                    'type' => 'number',
+                    'instructions' => '',
+                    'required' => 0,
+                    'conditional_logic' => 0,
+                    'wrapper' => array(
+                        'width' => '25',
+                        'class' => '',
+                        'id' => '',
+                    ),
+                    'default_value' => '',
+                    'placeholder' => '',
+                    'prepend' => '',
+                    'append' => '',
+                    'min' => '',
+                    'max' => '',
+                    'step' => '',
+                ),
+                1 => array(
+                    'key' => 'field_5ae2e168eca4e',
+                    'label' => __('Seated maximum price', 'event-manager'),
+                    'name' => 'seated_maximum_price',
+                    'type' => 'number',
+                    'instructions' => '',
+                    'required' => 0,
+                    'conditional_logic' => 0,
+                    'wrapper' => array(
+                        'width' => '25',
+                        'class' => '',
+                        'id' => '',
+                    ),
+                    'default_value' => '',
+                    'placeholder' => '',
+                    'prepend' => '',
+                    'append' => '',
+                    'min' => '',
+                    'max' => '',
+                    'step' => '',
+                ),
+                2 => array(
+                    'key' => 'field_5ae2e16aeca4f',
+                    'label' => __('Standing minimum price', 'event-manager'),
+                    'name' => 'standing_minimum_price',
+                    'type' => 'number',
+                    'instructions' => '',
+                    'required' => 0,
+                    'conditional_logic' => 0,
+                    'wrapper' => array(
+                        'width' => '25',
+                        'class' => '',
+                        'id' => '',
+                    ),
+                    'default_value' => '',
+                    'placeholder' => '',
+                    'prepend' => '',
+                    'append' => '',
+                    'min' => '',
+                    'max' => '',
+                    'step' => '',
+                ),
+                3 => array(
+                    'key' => 'field_5ae2e16ceca50',
+                    'label' => __('Standing maximum price', 'event-manager'),
+                    'name' => 'standing_maximum_price',
+                    'type' => 'number',
+                    'instructions' => '',
+                    'required' => 0,
+                    'conditional_logic' => 0,
+                    'wrapper' => array(
+                        'width' => '25',
+                        'class' => '',
+                        'id' => '',
+                    ),
+                    'default_value' => '',
+                    'placeholder' => '',
+                    'prepend' => '',
+                    'append' => '',
+                    'min' => '',
+                    'max' => '',
+                    'step' => '',
+                ),
+            ),
+        ),
+        31 => array(
             'key' => 'field_57f4f4ac7479f',
             'label' => __('Price group', 'event-manager'),
             'name' => 'booking_group',
@@ -1057,7 +1412,7 @@ if (function_exists('acf_add_local_field_group')) {
                 ),
             ),
         ),
-        26 => array(
+        32 => array(
             'key' => 'field_57611bd8acf1b',
             'label' => __('Price information', 'event-manager'),
             'name' => 'price_information',
@@ -1076,7 +1431,7 @@ if (function_exists('acf_add_local_field_group')) {
             'rows' => 3,
             'new_lines' => 'wpautop',
         ),
-        27 => array(
+        33 => array(
             'key' => 'field_57b70267e1f32',
             'label' => __('Ticket includes', 'event-manager'),
             'name' => 'ticket_includes',
@@ -1095,7 +1450,7 @@ if (function_exists('acf_add_local_field_group')) {
             'rows' => 3,
             'new_lines' => 'wpautop',
         ),
-        28 => array(
+        34 => array(
             'key' => 'field_577a326b71ba8',
             'label' => __('Gallery', 'event-manager'),
             'name' => '',
@@ -1111,7 +1466,7 @@ if (function_exists('acf_add_local_field_group')) {
             'placement' => 'top',
             'endpoint' => 0,
         ),
-        29 => array(
+        35 => array(
             'key' => 'field_577a312acd95d',
             'label' => __('Gallery', 'event-manager'),
             'name' => 'gallery',
@@ -1136,7 +1491,7 @@ if (function_exists('acf_add_local_field_group')) {
             'max_size' => '',
             'mime_types' => '',
         ),
-        30 => array(
+        36 => array(
             'key' => 'field_57a9d7f655152',
             'label' => __('Links', 'event-manager'),
             'name' => '',
@@ -1152,7 +1507,7 @@ if (function_exists('acf_add_local_field_group')) {
             'placement' => 'left',
             'endpoint' => 0,
         ),
-        31 => array(
+        37 => array(
             'key' => 'field_58188dfcfc3b9',
             'label' => __('Links', 'event-manager'),
             'name' => '',
@@ -1169,7 +1524,7 @@ if (function_exists('acf_add_local_field_group')) {
             'new_lines' => 'wpautop',
             'esc_html' => 0,
         ),
-        32 => array(
+        38 => array(
             'key' => 'field_57a9d81f55153',
             'label' => __('Facebook', 'event-manager'),
             'name' => 'facebook',
@@ -1185,7 +1540,7 @@ if (function_exists('acf_add_local_field_group')) {
             'default_value' => '',
             'placeholder' => '',
         ),
-        33 => array(
+        39 => array(
             'key' => 'field_57a9d82b55154',
             'label' => __('Twitter', 'event-manager'),
             'name' => 'twitter',
@@ -1201,7 +1556,7 @@ if (function_exists('acf_add_local_field_group')) {
             'default_value' => '',
             'placeholder' => '',
         ),
-        34 => array(
+        40 => array(
             'key' => 'field_57a9d83355155',
             'label' => __('Instagram', 'event-manager'),
             'name' => 'instagram',
@@ -1217,7 +1572,7 @@ if (function_exists('acf_add_local_field_group')) {
             'default_value' => '',
             'placeholder' => '',
         ),
-        35 => array(
+        41 => array(
             'key' => 'field_57c82373297f1',
             'label' => __('Google Music', 'event-manager'),
             'name' => 'google_music',
@@ -1233,7 +1588,7 @@ if (function_exists('acf_add_local_field_group')) {
             'default_value' => '',
             'placeholder' => '',
         ),
-        36 => array(
+        42 => array(
             'key' => 'field_57c82396297f2',
             'label' => __('Apple Music', 'event-manager'),
             'name' => 'apple_music',
@@ -1249,7 +1604,7 @@ if (function_exists('acf_add_local_field_group')) {
             'default_value' => '',
             'placeholder' => '',
         ),
-        37 => array(
+        43 => array(
             'key' => 'field_57c823a8297f3',
             'label' => __('Spotify', 'event-manager'),
             'name' => 'spotify',
@@ -1265,7 +1620,7 @@ if (function_exists('acf_add_local_field_group')) {
             'default_value' => '',
             'placeholder' => '',
         ),
-        38 => array(
+        44 => array(
             'key' => 'field_57c826af782b0',
             'label' => __('Soundcloud', 'event-manager'),
             'name' => 'soundcloud',
@@ -1281,7 +1636,7 @@ if (function_exists('acf_add_local_field_group')) {
             'default_value' => '',
             'placeholder' => '',
         ),
-        39 => array(
+        45 => array(
             'key' => 'field_57c823d7297f4',
             'label' => __('Deezer', 'event-manager'),
             'name' => 'deezer',
@@ -1297,7 +1652,7 @@ if (function_exists('acf_add_local_field_group')) {
             'default_value' => '',
             'placeholder' => '',
         ),
-        40 => array(
+        46 => array(
             'key' => 'field_57a9d84055156',
             'label' => __('YouTube', 'event-manager'),
             'name' => 'youtube',
@@ -1334,7 +1689,7 @@ if (function_exists('acf_add_local_field_group')) {
                 ),
             ),
         ),
-        41 => array(
+        47 => array(
             'key' => 'field_57a9d84955157',
             'label' => __('Vimeo', 'event-manager'),
             'name' => 'vimeo',
@@ -1371,38 +1726,6 @@ if (function_exists('acf_add_local_field_group')) {
                 ),
             ),
         ),
-        42 => array(
-            'key' => 'field_4556677889997',
-            'label' => __('Calendar', 'event-manager'),
-            'name' => '',
-            'type' => 'tab',
-            'instructions' => '',
-            'required' => 0,
-            'conditional_logic' => 0,
-            'wrapper' => array(
-                'width' => '',
-                'class' => '',
-                'id' => '',
-            ),
-            'placement' => 'left',
-            'endpoint' => 0,
-        ),
-        43 => array(
-            'key' => 'field_3837c37d37f32',
-            'label' => __('Internal event', 'event-manager'),
-            'name' => 'internal_event',
-            'type' => 'true_false',
-            'instructions' => __('Is the event internal?', 'event-manager'),
-            'conditional_logic' => 0,
-            'wrapper' => array(
-                'width' => '',
-                'class' => '',
-                'id' => '',
-            ),
-            'default_value' => 0,
-            'ui'          => 1,
-        ),
- 
     ),
     'location' => array(
         0 => array(
@@ -1422,4 +1745,4 @@ if (function_exists('acf_add_local_field_group')) {
     'active' => 1,
     'description' => '',
 ));
-}
+}

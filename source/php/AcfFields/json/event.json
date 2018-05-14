@@ -686,7 +686,7 @@
         },
         {
             "key": "field_57611b73acf19",
-            "label": "Booking",
+            "label": "Booking & tickets",
             "name": "",
             "type": "tab",
             "instructions": "",
@@ -709,7 +709,7 @@
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
-                "width": "",
+                "width": "50",
                 "class": "",
                 "id": ""
             },
@@ -736,6 +736,23 @@
             "maxlength": ""
         },
         {
+            "key": "field_5ae2d2fe2f26e",
+            "label": "Ticket release date",
+            "name": "ticket_release_date",
+            "type": "date_time_picker",
+            "instructions": "Date when the tickets is released.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "display_format": "Y-m-d H:i",
+            "return_format": "Y-m-d H:i",
+            "first_day": 1
+        },
+        {
             "key": "field_57611befacf1c",
             "label": "Minimum age to attend the event",
             "name": "age_restriction",
@@ -755,6 +772,138 @@
             "min": 0,
             "max": "",
             "step": ""
+        },
+        {
+            "key": "field_5ae2d0ba2f26c",
+            "label": "Ticket stock",
+            "name": "ticket_stock",
+            "type": "number",
+            "instructions": "Total amount of tickets.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "min": "",
+            "max": "",
+            "step": ""
+        },
+        {
+            "key": "field_5ae2d7f3916d3",
+            "label": "Tickets remaining",
+            "name": "tickets_remaining",
+            "type": "number",
+            "instructions": "Remaining amount of tickets for sale.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "min": "",
+            "max": "",
+            "step": ""
+        },
+        {
+            "key": "field_5ae320279d7e0",
+            "label": "Additional ticket retailers",
+            "name": "additional_ticket_retailers",
+            "type": "repeater",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "collapsed": "",
+            "min": 0,
+            "max": 0,
+            "layout": "block",
+            "button_label": "Add",
+            "sub_fields": [
+                {
+                    "key": "field_5ae322b4caede",
+                    "label": "Retailer",
+                    "name": "retailer_name",
+                    "type": "text",
+                    "instructions": "Name of the retailer.",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "50",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "maxlength": ""
+                },
+                {
+                    "key": "field_5ae3251dcb3b0",
+                    "label": "Ticket purchase URL",
+                    "name": "booking_url",
+                    "type": "url",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "50",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "placeholder": ""
+                },
+                {
+                    "key": "field_5ae3213f9d7e3",
+                    "label": "Ticket release date",
+                    "name": "ticket_release_date",
+                    "type": "date_time_picker",
+                    "instructions": "Date when the tickets is released.",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "50",
+                        "class": "",
+                        "id": ""
+                    },
+                    "display_format": "Y-m-d H:i",
+                    "return_format": "Y-m-d H:i",
+                    "first_day": 1
+                },
+                {
+                    "key": "field_5ae321bd9d7e4",
+                    "label": "Ticket stop date",
+                    "name": "ticket_stop_date",
+                    "type": "date_time_picker",
+                    "instructions": "Date when the retailer stops selling tickets.",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "50",
+                        "class": "",
+                        "id": ""
+                    },
+                    "display_format": "Y-m-d H:i",
+                    "return_format": "Y-m-d H:i",
+                    "first_day": 1
+                }
+            ]
         },
         {
             "key": "field_57c7ed92054e6",
@@ -961,6 +1110,213 @@
             "ajax": 0,
             "return_format": "value",
             "placeholder": ""
+        },
+        {
+            "key": "field_5ae2e55f94974",
+            "label": "Additional ticket types",
+            "name": "additional_ticket_types",
+            "type": "repeater",
+            "instructions": "Additional types of tickets.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "collapsed": "",
+            "min": 0,
+            "max": 0,
+            "layout": "block",
+            "button_label": "",
+            "sub_fields": [
+                {
+                    "key": "field_5ae2e5bc94975",
+                    "label": "Ticket name",
+                    "name": "ticket_name",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "33",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "maxlength": ""
+                },
+                {
+                    "key": "field_5ae2e64294977",
+                    "label": "Maximum price",
+                    "name": "maximum_price",
+                    "type": "number",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "33",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "min": 0,
+                    "max": "",
+                    "step": ""
+                },
+                {
+                    "key": "field_5ae2e5d094976",
+                    "label": "Minimum price",
+                    "name": "minimum_price",
+                    "type": "number",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "33",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "min": 0,
+                    "max": "",
+                    "step": ""
+                },
+                {
+                    "key": "field_5ae2e65394978",
+                    "label": "Ticket type",
+                    "name": "ticket_type",
+                    "type": "radio",
+                    "instructions": "",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "choices": {
+                        "Standing": "Standing",
+                        "Seated": "Seated"
+                    },
+                    "allow_null": 0,
+                    "other_choice": 0,
+                    "save_other_choice": 0,
+                    "default_value": "",
+                    "layout": "horizontal",
+                    "return_format": "value"
+                }
+            ]
+        },
+        {
+            "key": "field_5ae2e0ececa4c",
+            "label": "Price range",
+            "name": "price_range",
+            "type": "group",
+            "instructions": "Information about the price range for tickets.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "layout": "block",
+            "sub_fields": [
+                {
+                    "key": "field_5ae2e0fceca4d",
+                    "label": "Seated minimum price",
+                    "name": "seated_minimum_price",
+                    "type": "number",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "25",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "min": "",
+                    "max": "",
+                    "step": ""
+                },
+                {
+                    "key": "field_5ae2e168eca4e",
+                    "label": "Seated maximum price",
+                    "name": "seated_maximum_price",
+                    "type": "number",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "25",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "min": "",
+                    "max": "",
+                    "step": ""
+                },
+                {
+                    "key": "field_5ae2e16aeca4f",
+                    "label": "Standing minimum price",
+                    "name": "standing_minimum_price",
+                    "type": "number",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "25",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "min": "",
+                    "max": "",
+                    "step": ""
+                },
+                {
+                    "key": "field_5ae2e16ceca50",
+                    "label": "Standing maximum price",
+                    "name": "standing_maximum_price",
+                    "type": "number",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "25",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "min": "",
+                    "max": "",
+                    "step": ""
+                }
+            ]
         },
         {
             "key": "field_57f4f4ac7479f",

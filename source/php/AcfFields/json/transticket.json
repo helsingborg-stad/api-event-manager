@@ -1,0 +1,241 @@
+[{
+    "key": "group_5ae188afeb965",
+    "title": "Transticket",
+    "fields": [
+        {
+            "key": "field_5ae188b002bf0",
+            "label": "Daily import",
+            "name": "transticket_daily_cron",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "Enable daily automatic import from Transticket",
+            "default_value": 1,
+            "ui": 0,
+            "ui_on_text": "",
+            "ui_off_text": ""
+        },
+        {
+            "key": "field_5ae188b002edd",
+            "label": "Post status",
+            "name": "transticket_post_status",
+            "type": "radio",
+            "instructions": "Select status of imported events.",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "draft": "Draft",
+                "publish": "Published"
+            },
+            "allow_null": 0,
+            "other_choice": 0,
+            "save_other_choice": 0,
+            "default_value": "publish",
+            "layout": "vertical",
+            "return_format": "value"
+        },
+        {
+            "key": "field_5ae188b003b06",
+            "label": "API links",
+            "name": "transticket_api_urls",
+            "type": "repeater",
+            "instructions": "Add one or many API links to Transticket",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "collapsed": "",
+            "min": 0,
+            "max": 0,
+            "layout": "block",
+            "button_label": "Add",
+            "sub_fields": [
+                {
+                    "key": "field_5ae188b03e49d",
+                    "label": "API link",
+                    "name": "transticket_api_url",
+                    "type": "url",
+                    "instructions": "Add the Transticket API-URL without 'FromDate' and 'ToDate' parameters, they will be added automatically.",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "placeholder": ""
+                },
+                {
+                    "key": "field_5ae18bcb22416",
+                    "label": "Username",
+                    "name": "transticket_username",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "50",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "maxlength": ""
+                },
+                {
+                    "key": "field_5ae18bd922417",
+                    "label": "Password",
+                    "name": "transticket_password",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "50",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "maxlength": ""
+                },
+                {
+                    "key": "field_5ae1e653aa68d",
+                    "label": "Ticket URL",
+                    "name": "transticket_ticket_url",
+                    "type": "text",
+                    "instructions": "URL to single ticket purchase, exclude ID.",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "maxlength": ""
+                },
+                {
+                    "key": "field_5ae188b03e4f7",
+                    "label": "Exclude tags",
+                    "name": "transticket_filter_tags",
+                    "type": "text",
+                    "instructions": "Enter the name of the tags that you want to exclude from the import. Separate with commas.",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "maxlength": ""
+                },
+                {
+                    "key": "field_5af2f83a8ff16",
+                    "label": "Default city",
+                    "name": "transticket_default_city",
+                    "type": "text",
+                    "instructions": "If essential address components are missing during import, this city will be used as default.",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "maxlength": ""
+                },
+                {
+                    "key": "field_5ae188b03e51a",
+                    "label": "Default user groups",
+                    "name": "transticket_publishing_groups",
+                    "type": "taxonomy",
+                    "instructions": "Select the user groups that you want to set as default to imported posts.",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "taxonomy": "user_groups",
+                    "field_type": "checkbox",
+                    "allow_null": 0,
+                    "add_term": 0,
+                    "save_terms": 1,
+                    "load_terms": 0,
+                    "return_format": "id",
+                    "multiple": 0
+                },
+                {
+                    "key": "field_5ae9d19c0881e",
+                    "label": "Weeks to import",
+                    "name": "transticket_weeks",
+                    "type": "range",
+                    "instructions": "Select how many weeks ahead you want to import",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": 2,
+                    "min": "",
+                    "max": 52,
+                    "step": "",
+                    "prepend": "",
+                    "append": ""
+                }
+            ]
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "options_page",
+                "operator": "==",
+                "value": "acf-options-options"
+            }
+        ]
+    ],
+    "menu_order": 2,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": 1,
+    "description": ""
+}]
+

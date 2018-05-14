@@ -396,7 +396,6 @@ class CbisEvent extends \HbgEventImporter\Parser\Cbis
                 'sync'                    => 1,
                 'status'                  => isset($eventData->Status) && !empty($eventData->Status) ? $eventData->Status : null,
                 'image'                   => $newImage,
-                'alternate_name'          => isset($eventData->SystemName) && !empty($eventData->SystemName) ? $eventData->SystemName : null,
                 'event_link'              => $this->getAttributeValue(self::ATTRIBUTE_EVENT_LINK, $attributes),
                 'categories'              => $categories,
                 'occasions'               => $occasions,
