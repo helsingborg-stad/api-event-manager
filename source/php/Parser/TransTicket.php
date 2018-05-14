@@ -60,8 +60,9 @@ class TransTicket extends \HbgEventImporter\Parser
     public function saveEvent($eventData, $shortKey)
     {
         $data['postTitle'] = strip_tags(isset($eventData->Name) && !empty($eventData->Name) ? $eventData->Name : null);
-        $data['postContent'] = strip_tags(isset($eventData->Description) && !empty($eventData->Description) ? $eventData->Description : '',
-            '<p><br>');
+        $excerpt = isset($eventData->Description) && !empty($eventData->Description) ? strip_tags($eventData->Description) : '';
+        $description = isset($eventData->ExtendedDescription) && !empty($eventData->ExtendedDescription) ? strip_tags($eventData->ExtendedDescription, '<a><p><br>') : '';
+        $data['postContent'] = !empty($excerpt) && !empty($description) ? '<p>' . $excerpt . '<!--more--></p>' . $description : $excerpt . $description;
         $data['uId'] = $eventData->Id;
         $data['booking_link'] = trim($this->apiKeys['transticket_ticket_url'], '/') . "/" . $data['uId'] . "/false";
 
@@ -116,28 +117,28 @@ class TransTicket extends \HbgEventImporter\Parser
         // Get price range, if data is missing get data from custom ticket types
         $data['price_range_seated_minimum_price'] = $eventData->Prices->SeatedMinPrice ?? null;
         if ($data['price_range_seated_minimum_price'] === null && !empty($data['additional_ticket_types'])) {
-            $seated = array_filter($data['additional_ticket_types'], function($a) {
+            $seated = array_filter($data['additional_ticket_types'], function ($a) {
                 return in_array('Seated', $a) && isset($a['minimum_price']) && $a['minimum_price'] !== '';
             });
             $data['price_range_seated_minimum_price'] = (!empty($seated)) ? min(array_column($seated, 'minimum_price')) : null;
         }
         $data['price_range_seated_maximum_price'] = $eventData->Prices->SeatedMaxPrice ?? null;
         if ($data['price_range_seated_maximum_price'] === null && !empty($data['additional_ticket_types'])) {
-            $seated = array_filter($data['additional_ticket_types'], function($a) {
+            $seated = array_filter($data['additional_ticket_types'], function ($a) {
                 return in_array('Seated', $a) && isset($a['maximum_price']) && $a['maximum_price'] !== '';
             });
             $data['price_range_seated_maximum_price'] = (!empty($seated)) ? max(array_column($seated, 'maximum_price')) : null;
         }
         $data['price_range_standing_minimum_price'] = $eventData->Prices->StandingMinPrice ?? null;
         if ($data['price_range_standing_minimum_price'] === null && !empty($data['additional_ticket_types'])) {
-            $seated = array_filter($data['additional_ticket_types'], function($a) {
+            $seated = array_filter($data['additional_ticket_types'], function ($a) {
                 return in_array('Standing', $a) && isset($a['minimum_price']) && $a['minimum_price'] !== '';
             });
             $data['price_range_standing_minimum_price'] = (!empty($seated)) ? min(array_column($seated, 'minimum_price')) : null;
         }
         $data['price_range_standing_maximum_price'] = $eventData->Prices->StandingMaxPrice ?? null;
         if ($data['price_range_standing_maximum_price'] === null && !empty($data['additional_ticket_types'])) {
-            $seated = array_filter($data['additional_ticket_types'], function($a) {
+            $seated = array_filter($data['additional_ticket_types'], function ($a) {
                 return in_array('Standing', $a) && isset($a['maximum_price']) && $a['maximum_price'] !== '';
             });
             $data['price_range_standing_maximum_price'] = (!empty($seated)) ? max(array_column($seated, 'maximum_price')) : null;
