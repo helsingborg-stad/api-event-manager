@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Event Manager\n"
 "POT-Creation-Date: 2018-05-11 15:27+0200\n"
-"PO-Revision-Date: 2018-05-11 15:33+0200\n"
+"PO-Revision-Date: 2018-05-14 11:00+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: sv\n"
@@ -2203,7 +2203,7 @@ msgstr "Lägg till bilder"
 
 #: source/php/App.php:216
 msgid "Imported data"
-msgstr "Imorterad data"
+msgstr "Importerad data"
 
 #: source/php/App.php:217
 msgid "Events"
