@@ -551,13 +551,16 @@ class App
      */
     public function acfLocationRulesMatch($match, $rule, $options)
     {
+        global $post;
+
+        $postType = $options['post_type'] ?? $post->post_type ?? get_post_type($options['post_id']);
         $groups = get_field('event_group_select', 'option');
 
         if ($groups) {
             if ($rule['operator'] == "==") {
-                $match = (isset($options['post_type']) && in_array($options['post_type'], $groups) && $options['post_id'] > 0);
+                $match = (!empty($postType) && in_array($postType, $groups) && $options['post_id'] > 0);
             } elseif ($rule['operator'] == "!=") {
-                $match = (isset($options['post_type']) && !in_array($options['post_type'], $groups) && $options['post_id'] > 0);
+                $match = (!empty($postType) && !in_array($postType, $groups) && $options['post_id'] > 0);
             }
         }
 
