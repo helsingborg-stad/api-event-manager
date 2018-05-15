@@ -551,9 +551,11 @@ class App
      */
     public function acfLocationRulesMatch($match, $rule, $options)
     {
-        global $post;
+        if (!isset($options['post_id'])) {
+            return $match;
+        }
 
-        $postType = $options['post_type'] ?? $post->post_type ?? get_post_type($options['post_id']);
+        $postType = $options['post_type'] ?? get_post_type($options['post_id']);
         $groups = get_field('event_group_select', 'option');
 
         if ($groups) {
