@@ -100,10 +100,11 @@ class DataCleaner
             return null;
         }
 
-        setlocale(LC_MONETARY, 'sv_SE');
-        $money_format = money_format('%!n', $price2);
+        // Format: 1 234,56
+        $price = number_format($price2, 2, ',', ' ');
+        $price = str_replace(',00', '', $price);
 
-        return $money_format;
+        return $price;
     }
 
     /**
