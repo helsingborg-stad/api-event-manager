@@ -469,7 +469,7 @@ class EventFields extends Fields
                 'update_callback' => array($this, 'stringUpdateCallBack'),
                 'schema' => array(
                     'description' => 'Field containing object with location data.',
-                    'type' => 'object',
+                    'type' => 'string',
                     'context' => array('view', 'edit', 'embed')
                 )
             )
@@ -548,7 +548,7 @@ class EventFields extends Fields
             )
         );
 
-        // Realsed date of tickets
+        // Release date of tickets
         register_rest_field($this->postType,
             'ticket_release_date',
             array(
@@ -617,7 +617,6 @@ class EventFields extends Fields
                 )
             )
         );
-
 
         // Included in member cards
         register_rest_field($this->postType,
@@ -942,7 +941,7 @@ class EventFields extends Fields
                 'get_callback' => array($this, 'featuredImageData'),
                 'schema' => array(
                     'description' => 'Field containing object with featured image data.',
-                    'type' => 'object',
+                    'type' => 'string',
                     'context' => array('view', 'edit')
                 )
             )
