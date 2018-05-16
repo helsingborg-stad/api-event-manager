@@ -928,6 +928,23 @@
             "ui": 1
         },
         {
+            "key": "field_5afc2082b3eed",
+            "label": "Entrance and ticket prices",
+            "name": "",
+            "type": "message",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "Enter entrance and ticket prices for the event. Enter \"0\" if the event is free.",
+            "new_lines": "wpautop",
+            "esc_html": 0
+        },
+        {
             "key": "field_57611c0cacf1e",
             "label": "Default price \/ Adult",
             "name": "price_adult",
