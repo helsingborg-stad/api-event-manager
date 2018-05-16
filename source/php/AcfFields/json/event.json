@@ -1170,7 +1170,7 @@
                     "key": "field_5ae2e64294977",
                     "label": "Maximum price",
                     "name": "maximum_price",
-                    "type": "number",
+                    "type": "text",
                     "instructions": "",
                     "required": 0,
                     "conditional_logic": 0,
@@ -1182,16 +1182,14 @@
                     "default_value": "",
                     "placeholder": "",
                     "prepend": "",
-                    "append": "",
-                    "min": 0,
-                    "max": "",
-                    "step": ""
+                    "append": "SEK",
+                    "maxlength": ""
                 },
                 {
                     "key": "field_5ae2e5d094976",
                     "label": "Minimum price",
                     "name": "minimum_price",
-                    "type": "number",
+                    "type": "text",
                     "instructions": "",
                     "required": 0,
                     "conditional_logic": 0,
@@ -1203,10 +1201,8 @@
                     "default_value": "",
                     "placeholder": "",
                     "prepend": "",
-                    "append": "",
-                    "min": 0,
-                    "max": "",
-                    "step": ""
+                    "append": "SEK",
+                    "maxlength": ""
                 },
                 {
                     "key": "field_5ae2e65394978",
@@ -1253,7 +1249,7 @@
                     "key": "field_5ae2e0fceca4d",
                     "label": "Seated minimum price",
                     "name": "seated_minimum_price",
-                    "type": "number",
+                    "type": "text",
                     "instructions": "",
                     "required": 0,
                     "conditional_logic": 0,
@@ -1265,16 +1261,14 @@
                     "default_value": "",
                     "placeholder": "",
                     "prepend": "",
-                    "append": "",
-                    "min": "",
-                    "max": "",
-                    "step": ""
+                    "append": "SEK",
+                    "maxlength": ""
                 },
                 {
                     "key": "field_5ae2e168eca4e",
                     "label": "Seated maximum price",
                     "name": "seated_maximum_price",
-                    "type": "number",
+                    "type": "text",
                     "instructions": "",
                     "required": 0,
                     "conditional_logic": 0,
@@ -1286,16 +1280,14 @@
                     "default_value": "",
                     "placeholder": "",
                     "prepend": "",
-                    "append": "",
-                    "min": "",
-                    "max": "",
-                    "step": ""
+                    "append": "SEK",
+                    "maxlength": ""
                 },
                 {
                     "key": "field_5ae2e16aeca4f",
                     "label": "Standing minimum price",
                     "name": "standing_minimum_price",
-                    "type": "number",
+                    "type": "text",
                     "instructions": "",
                     "required": 0,
                     "conditional_logic": 0,
@@ -1307,16 +1299,14 @@
                     "default_value": "",
                     "placeholder": "",
                     "prepend": "",
-                    "append": "",
-                    "min": "",
-                    "max": "",
-                    "step": ""
+                    "append": "SEK",
+                    "maxlength": ""
                 },
                 {
                     "key": "field_5ae2e16ceca50",
                     "label": "Standing maximum price",
                     "name": "standing_maximum_price",
-                    "type": "number",
+                    "type": "text",
                     "instructions": "",
                     "required": 0,
                     "conditional_logic": 0,
@@ -1328,10 +1318,8 @@
                     "default_value": "",
                     "placeholder": "",
                     "prepend": "",
-                    "append": "",
-                    "min": "",
-                    "max": "",
-                    "step": ""
+                    "append": "SEK",
+                    "maxlength": ""
                 }
             ]
         },
