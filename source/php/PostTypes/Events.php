@@ -114,7 +114,19 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
         add_filter('acf/validate_value/name=price_student', array($this, 'validatePrice'), 10, 4);
         add_filter('acf/validate_value/name=price_senior', array($this, 'validatePrice'), 10, 4);
         add_filter('acf/validate_value/name=price_group', array($this, 'validatePrice'), 10, 4);
+        add_filter('acf/validate_value/name=seated_minimum_price', array($this, 'validatePrice'), 10, 4);
+        add_filter('acf/validate_value/name=seated_maximum_price', array($this, 'validatePrice'), 10, 4);
+        add_filter('acf/validate_value/name=standing_minimum_price', array($this, 'validatePrice'), 10, 4);
+        add_filter('acf/validate_value/name=standing_maximum_price', array($this, 'validatePrice'), 10, 4);
+        add_filter('acf/validate_value/name=maximum_price', array($this, 'validatePrice'), 10, 4);
+        add_filter('acf/validate_value/name=minimum_price', array($this, 'validatePrice'), 10, 4);
 
+        add_filter('acf/update_value/name=maximum_price', array($this, 'acfUpdatePrices'), 10, 4);
+        add_filter('acf/update_value/name=minimum_price', array($this, 'acfUpdatePrices'), 10, 4);
+        add_filter('acf/update_value/name=seated_minimum_price', array($this, 'acfUpdatePrices'), 10, 4);
+        add_filter('acf/update_value/name=seated_maximum_price', array($this, 'acfUpdatePrices'), 10, 4);
+        add_filter('acf/update_value/name=standing_minimum_price', array($this, 'acfUpdatePrices'), 10, 4);
+        add_filter('acf/update_value/name=standing_maximum_price', array($this, 'acfUpdatePrices'), 10, 4);
         add_filter('acf/update_value/name=price_adult', array($this, 'acfUpdatePrices'), 10, 3);
         add_filter('acf/update_value/name=price_children', array($this, 'acfUpdatePrices'), 10, 3);
         add_filter('acf/update_value/name=price_student', array($this, 'acfUpdatePrices'), 10, 3);
