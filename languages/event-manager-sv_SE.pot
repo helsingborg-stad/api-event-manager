@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "Project-Id-Version: Event Manager\n"
-"POT-Creation-Date: 2018-05-16 14:23+0200\n"
+"POT-Creation-Date: 2018-05-17 09:53+0200\n"
 "PO-Revision-Date: 2016-10-26 08:27+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -295,8 +295,8 @@ msgid "Additional links to websites."
 msgstr ""
 
 #: source/php/AcfFields/php/event.php:57
-#: source/php/AcfFields/php/event.php:1689
-#: source/php/AcfFields/php/event.php:1726
+#: source/php/AcfFields/php/event.php:1677
+#: source/php/AcfFields/php/event.php:1714
 #: source/php/AcfFields/php/location.php:447
 msgid "Add link"
 msgstr ""
@@ -698,7 +698,13 @@ msgstr ""
 #: source/php/AcfFields/php/event.php:992
 #: source/php/AcfFields/php/event.php:1011
 #: source/php/AcfFields/php/event.php:1080
-#: source/php/AcfFields/php/event.php:1385
+#: source/php/AcfFields/php/event.php:1197
+#: source/php/AcfFields/php/event.php:1216
+#: source/php/AcfFields/php/event.php:1276
+#: source/php/AcfFields/php/event.php:1295
+#: source/php/AcfFields/php/event.php:1314
+#: source/php/AcfFields/php/event.php:1333
+#: source/php/AcfFields/php/event.php:1373
 #: source/php/AcfFields/php/location.php:634
 #: source/php/AcfFields/php/location.php:653
 #: source/php/AcfFields/php/location.php:672
@@ -1141,204 +1147,204 @@ msgstr ""
 msgid "Maximum price"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:1204
+#: source/php/AcfFields/php/event.php:1202
 msgid "Minimum price"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:1225
+#: source/php/AcfFields/php/event.php:1221
 msgid "Ticket type"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:1237
+#: source/php/AcfFields/php/event.php:1233
 msgid "Standing"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:1238
+#: source/php/AcfFields/php/event.php:1234
 msgid "Seated"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:1251
+#: source/php/AcfFields/php/event.php:1247
 msgid "Price range"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:1254
+#: source/php/AcfFields/php/event.php:1250
 msgid "Information about the price range for tickets."
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:1266
+#: source/php/AcfFields/php/event.php:1262
 msgid "Seated minimum price"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:1287
+#: source/php/AcfFields/php/event.php:1281
 msgid "Seated maximum price"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:1308
+#: source/php/AcfFields/php/event.php:1300
 msgid "Standing minimum price"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:1329
+#: source/php/AcfFields/php/event.php:1319
 msgid "Standing maximum price"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:1352
+#: source/php/AcfFields/php/event.php:1340
 #: source/php/AcfFields/php/package.php:314
 #: source/php/AcfFields/php/package.php:333
 msgid "Price group"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:1355
+#: source/php/AcfFields/php/event.php:1343
 #: source/php/AcfFields/php/package.php:317
 msgid "Add prices for group bookings."
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:1367
+#: source/php/AcfFields/php/event.php:1355
 #: source/php/AcfFields/php/package.php:329
 msgid "Add group"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:1371
+#: source/php/AcfFields/php/event.php:1359
 msgid "Price"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:1374
+#: source/php/AcfFields/php/event.php:1362
 #: source/php/AcfFields/php/package.php:336
 msgid "Price for this group."
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:1390
+#: source/php/AcfFields/php/event.php:1378
 #: source/php/AcfFields/php/package.php:352
 msgid "Min persons"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:1393
+#: source/php/AcfFields/php/event.php:1381
 #: source/php/AcfFields/php/package.php:355
 msgid "Minimum number of people."
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:1411
+#: source/php/AcfFields/php/event.php:1399
 #: source/php/AcfFields/php/package.php:373
 msgid "Max persons"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:1414
+#: source/php/AcfFields/php/event.php:1402
 #: source/php/AcfFields/php/package.php:376
 msgid "Maximum number of people."
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:1434
+#: source/php/AcfFields/php/event.php:1422
 #: source/php/AcfFields/php/location.php:827
 #: source/php/AcfFields/php/package.php:396
 msgid "Price information"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:1437
+#: source/php/AcfFields/php/event.php:1425
 #: source/php/AcfFields/php/location.php:830
 #: source/php/AcfFields/php/package.php:399
 msgid "Write additional information about prices."
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:1453
+#: source/php/AcfFields/php/event.php:1441
 #: source/php/AcfFields/php/package.php:415
 msgid "Ticket includes"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:1456
+#: source/php/AcfFields/php/event.php:1444
 #: source/php/AcfFields/php/package.php:418
 msgid ""
 "Does the ticket include more than entry? Then write what's included in one "
 "ticket."
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:1465
+#: source/php/AcfFields/php/event.php:1453
 #: source/php/AcfFields/php/package.php:427
 msgid "e.g. entry, checkroom, meal"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:1472
-#: source/php/AcfFields/php/event.php:1488
+#: source/php/AcfFields/php/event.php:1460
+#: source/php/AcfFields/php/event.php:1476
 #: source/php/AcfFields/php/location.php:501
 #: source/php/AcfFields/php/location.php:517
 msgid "Gallery"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:1491
+#: source/php/AcfFields/php/event.php:1479
 msgid ""
 "Add images to this event.<br> Please upload images that are as large as "
 "possible and that are not sensitive to cropping (eg. images with text "
 "overlay)."
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:1513
-#: source/php/AcfFields/php/event.php:1529
+#: source/php/AcfFields/php/event.php:1501
+#: source/php/AcfFields/php/event.php:1517
 #: source/php/AcfFields/php/location.php:416
 #: source/php/AcfFields/php/location.php:432
 msgid "Links"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:1540
+#: source/php/AcfFields/php/event.php:1528
 #: source/php/AcfFields/php/location.php:435
 msgid "Add external links to different social media and streaming services."
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:1546
+#: source/php/AcfFields/php/event.php:1534
 #: source/php/AcfFields/php/location.php:465
 msgid "Facebook"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:1562
+#: source/php/AcfFields/php/event.php:1550
 #: source/php/AcfFields/php/location.php:468
 msgid "Twitter"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:1578
+#: source/php/AcfFields/php/event.php:1566
 #: source/php/AcfFields/php/location.php:466
 msgid "Instagram"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:1594
+#: source/php/AcfFields/php/event.php:1582
 msgid "Google Music"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:1610
+#: source/php/AcfFields/php/event.php:1598
 msgid "Apple Music"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:1626
+#: source/php/AcfFields/php/event.php:1614
 #: source/php/AcfFields/php/location.php:467
 msgid "Spotify"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:1642
+#: source/php/AcfFields/php/event.php:1630
 msgid "Soundcloud"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:1658
+#: source/php/AcfFields/php/event.php:1646
 msgid "Deezer"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:1674
+#: source/php/AcfFields/php/event.php:1662
 msgid "YouTube"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:1677
+#: source/php/AcfFields/php/event.php:1665
 msgid "Add one or multiple YouTube links."
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:1693
+#: source/php/AcfFields/php/event.php:1681
 msgid "YouTube link"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:1711
+#: source/php/AcfFields/php/event.php:1699
 #: source/php/AcfFields/php/location.php:469
 msgid "Vimeo"
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:1714
+#: source/php/AcfFields/php/event.php:1702
 msgid "Add one or multiple Vimeo links."
 msgstr ""
 
-#: source/php/AcfFields/php/event.php:1730
+#: source/php/AcfFields/php/event.php:1718
 msgid "Vimeo link"
 msgstr ""
 
@@ -2424,97 +2430,97 @@ msgstr ""
 msgid "Client"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:278 source/php/PostTypes/Events.php:434
+#: source/php/PostTypes/Events.php:290 source/php/PostTypes/Events.php:446
 msgid "End date must be after start date"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:306
+#: source/php/PostTypes/Events.php:318
 msgid "Door time cannot be after start date"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:330
+#: source/php/PostTypes/Events.php:342
 msgid "Please add occasion or recurrence rule"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:354
+#: source/php/PostTypes/Events.php:366
 msgid "Not a valid number"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:381
+#: source/php/PostTypes/Events.php:393
 msgid "End time must be after start time"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:408
+#: source/php/PostTypes/Events.php:420
 msgid "Door time cannot be after start time"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:463
+#: source/php/PostTypes/Events.php:475
 msgid "Import XCAP"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:467
+#: source/php/PostTypes/Events.php:479
 msgid "Import CBIS"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:471
+#: source/php/PostTypes/Events.php:483
 msgid "Import Transticket"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:474
+#: source/php/PostTypes/Events.php:486
 msgid "Collect event timestamps"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:491
+#: source/php/PostTypes/Events.php:503
 msgid "No post to duplicate has been supplied!"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:501
+#: source/php/PostTypes/Events.php:513
 msgid "Event creation failed, could not find original event"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:577
+#: source/php/PostTypes/Events.php:589
 msgid "Create similar item"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:577
+#: source/php/PostTypes/Events.php:589
 msgid "Are you sure you want to clone this event?"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:577
+#: source/php/PostTypes/Events.php:589
 msgid "Clone"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:595
+#: source/php/PostTypes/Events.php:607
 #, php-format
 msgid ""
 "This is a duplicate of the event: %s. If this is a new occasion for the "
 "same event, please %s and republish the original event"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:595
+#: source/php/PostTypes/Events.php:607
 msgid "edit"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:616
+#: source/php/PostTypes/Events.php:628
 msgid ""
 "Please do not enter information that refers to information in another text "
 "field. It is not certain that all fields will be presented to the consumer "
 "and would thefore be missguiding."
 msgstr ""
 
-#: source/php/PostTypes/Events.php:640
+#: source/php/PostTypes/Events.php:652
 msgid ""
 "CBIS have not imported any events for atleast 7 days. Please control the "
 "importer."
 msgstr ""
 
-#: source/php/PostTypes/Events.php:664
+#: source/php/PostTypes/Events.php:676
 msgid ""
 "XCAP have not imported any events for atleast 7 days. Please control the "
 "importer."
 msgstr ""
 
-#: source/php/PostTypes/Events.php:688
+#: source/php/PostTypes/Events.php:700
 msgid ""
 "Transticket have not imported any events for atleast 7 days. Please "
 "control the importer."
