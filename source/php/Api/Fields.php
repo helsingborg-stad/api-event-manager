@@ -59,7 +59,7 @@ class Fields
     {
         $return_value = self::getFieldGetMetaData($object, $field_name, $request, $formatted);
 
-        if (is_string($return_value) && !empty($return_value)) {
+        if (is_string($return_value) && $return_value !== '') {
             return $return_value;
         } else {
             return null;
