@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Event Manager\n"
-"POT-Creation-Date: 2018-05-17 09:44+0200\n"
-"PO-Revision-Date: 2018-05-17 09:52+0200\n"
+"POT-Creation-Date: 2018-05-18 15:32+0200\n"
+"PO-Revision-Date: 2018-05-18 15:32+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: sv\n"
@@ -1813,6 +1813,22 @@ msgstr "Inkludera följande innehåll"
 msgid "Beskrivning"
 msgstr "Beskrivning"
 
+#: source/php/AcfFields/php/internal_event.php:6
+msgid "Internal event"
+msgstr "Internt evenemang"
+
+#: source/php/AcfFields/php/internal_event.php:13
+msgid "Select if this is an internal event."
+msgstr "Välj om evenemanget är internt."
+
+#: source/php/AcfFields/php/internal_event.php:24 source/php/App.php:233
+msgid "Yes"
+msgstr "Ja"
+
+#: source/php/AcfFields/php/internal_event.php:25 source/php/App.php:234
+msgid "No"
+msgstr "Nej"
+
 #: source/php/AcfFields/php/location.php:10
 #: source/php/PostTypes/Locations.php:39
 msgid "Address"
@@ -2307,14 +2323,6 @@ msgstr "Nu"
 #: source/php/App.php:228
 msgid "with similar name"
 msgstr "med liknande namn"
-
-#: source/php/App.php:233
-msgid "Yes"
-msgstr "Ja"
-
-#: source/php/App.php:234
-msgid "No"
-msgstr "Nej"
 
 #: source/php/App.php:235
 msgid "To upload an image, you need to confirm the statements below"
@@ -3068,9 +3076,6 @@ msgstr ""
 
 #~ msgid "Booking"
 #~ msgstr "Bokning"
-
-#~ msgid "Internal event"
-#~ msgstr "Intern evenemang"
 
 #~ msgid "Is the event internal?"
 #~ msgstr ""

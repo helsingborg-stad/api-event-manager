@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "Project-Id-Version: Event Manager\n"
-"POT-Creation-Date: 2018-05-17 09:53+0200\n"
+"POT-Creation-Date: 2018-05-18 15:32+0200\n"
 "PO-Revision-Date: 2016-10-26 08:27+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -1791,6 +1791,22 @@ msgstr ""
 msgid "Beskrivning"
 msgstr ""
 
+#: source/php/AcfFields/php/internal_event.php:6
+msgid "Internal event"
+msgstr ""
+
+#: source/php/AcfFields/php/internal_event.php:13
+msgid "Select if this is an internal event."
+msgstr ""
+
+#: source/php/AcfFields/php/internal_event.php:24 source/php/App.php:233
+msgid "Yes"
+msgstr ""
+
+#: source/php/AcfFields/php/internal_event.php:25 source/php/App.php:234
+msgid "No"
+msgstr ""
+
 #: source/php/AcfFields/php/location.php:10
 #: source/php/PostTypes/Locations.php:39
 msgid "Address"
@@ -2275,14 +2291,6 @@ msgstr ""
 
 #: source/php/App.php:228
 msgid "with similar name"
-msgstr ""
-
-#: source/php/App.php:233
-msgid "Yes"
-msgstr ""
-
-#: source/php/App.php:234
-msgid "No"
 msgstr ""
 
 #: source/php/App.php:235

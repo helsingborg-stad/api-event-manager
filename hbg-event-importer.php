@@ -69,7 +69,8 @@ $acfExportManager->autoExport(array(
     'membership-card' => 'group_593938d452989',
     'point-property' => 'group_5a2958bfd292c',
     'transticket' => 'group_5ae188afeb965',
-    'arcgis' => 'group_5af54f9481184'
+    'arcgis' => 'group_5af54f9481184',
+    'internal_event' => 'group_5afecb1bf1b8d'
 ));
 $acfExportManager->import();
 
