@@ -249,8 +249,39 @@ class App
             return;
         }
 
+        wp_localize_script('hbg-event-importer', 'transticket_ajax_vars', array('transticket_keys' => $this->getTransTicketKeys()));
         wp_localize_script('hbg-event-importer', 'cbis_ajax_vars', array('cbis_keys' => $this->getCbisKeys()));
         wp_localize_script('hbg-event-importer', 'xcap_ajax_vars', array('xcap_keys' => $this->getXcapKeys()));
+        wp_localize_script('hbg-event-importer', 'arcgis_ajax_vars', array('arcgis_keys' => $this->getArcgisKeys()));
+    }
+
+    /**
+     * Get Transticket keys
+     * @return array
+     */
+    public function getTransTicketKeys(): array
+    {
+        $transticketKeys = array();
+
+        if (!have_rows('transticket_api_urls', 'option')) {
+            return array();
+        }
+
+        while (have_rows('transticket_api_urls', 'option')) {
+            the_row();
+
+            $transticketKeys[] = array(
+                'transticket_api_url'       => get_sub_field('transticket_api_url'),
+                'transticket_api_key'       => get_sub_field('transticket_username').":".get_sub_field('transticket_password'),
+                'transticket_filter_tags'   => get_sub_field('transticket_filter_tags'),
+                'transticket_groups'        => get_sub_field('transticket_publishing_groups'),
+                'transticket_ticket_url'    => get_sub_field('transticket_ticket_url'),
+                'transticket_weeks'         => get_sub_field('transticket_weeks'),
+                'default_city'              => get_sub_field('transticket_default_city')
+            );
+        }
+
+        return $transticketKeys;
     }
 
     /**
@@ -269,9 +300,10 @@ class App
             the_row();
 
             $xcapKeys[] = array(
-                'xcap_api_url'       => get_sub_field('xcap_api_url'),
-                'xcap_exclude'       => get_sub_field('xcap_filter_categories'),
-                'xcap_groups'        => get_sub_field('xcap_publishing_groups')
+                'xcap_api_url'  => get_sub_field('xcap_api_url'),
+                'xcap_exclude'  => get_sub_field('xcap_filter_categories'),
+                'xcap_groups'   => get_sub_field('xcap_publishing_groups'),
+                'default_city'  => get_sub_field('xcap_default_city')
             );
         }
 
@@ -318,11 +350,37 @@ class App
                 'cbis_event_id'  => get_sub_field('cbis_event_id'),
                 'cbis_exclude'   => get_sub_field('cbis_filter_categories'),
                 'cbis_groups'    => get_sub_field('cbis_publishing_groups'),
-                'cbis_locations' => $locationCategories
+                'cbis_locations' => $locationCategories,
+                'default_city'   => get_sub_field('cbis_default_city')
             );
         }
 
         return $cbisKeys;
+    }
+
+    /**
+     * Get ArcGIS keys
+     * @return array
+     */
+    public function getArcgisKeys(): array
+    {
+        $arcgisKeys = array();
+
+        if (!have_rows('arcgis_api_urls', 'option')) {
+            return array();
+        }
+
+        while (have_rows('arcgis_api_urls', 'option')) {
+            the_row();
+
+            $arcgisKeys[] = array(
+                'arcgis_api_url' => get_sub_field('arcgis_api_url'),
+                'arcgis_groups'  => get_sub_field('arcgis_publishing_groups'),
+                'default_city'   => get_sub_field('arcgis_default_city')
+            );
+        }
+
+        return $arcgisKeys;
     }
 
     /**
@@ -335,13 +393,13 @@ class App
             $api_keys = $this->getCbisKeys();
 
             foreach ((array) $api_keys as $key => $api_key) {
-                $importer = new \HbgEventImporter\Parser\CbisEvent('http://api.cbis.citybreak.com/Products.asmx?wsdl', $api_key);
+                new \HbgEventImporter\Parser\CbisEvent('http://api.cbis.citybreak.com/Products.asmx?wsdl', $api_key);
             }
 
             // Cbis locations
             foreach ((array) $api_keys as $key => $api_key) {
                 foreach ($api_key['cbis_locations'] as $key => $location) {
-                    $importer = new \HbgEventImporter\Parser\CbisLocation('http://api.cbis.citybreak.com/Products.asmx?wsdl', $api_key, $location);
+                    new \HbgEventImporter\Parser\CbisLocation('http://api.cbis.citybreak.com/Products.asmx?wsdl', $api_key, $location);
                 }
             }
         }
@@ -350,7 +408,22 @@ class App
             $api_keys = $this->getXcapKeys();
 
             foreach ((array) $api_keys as $key => $api_key) {
-                $importer = new \HbgEventImporter\Parser\Xcap($api_key['xcap_api_url'], $api_key);
+                new \HbgEventImporter\Parser\Xcap($api_key['xcap_api_url'], $api_key);
+            }
+        }
+        if (get_field('transticket_daily_cron', 'option') == true) {
+            $api_keys = $this->getTransTicketKeys();
+
+            foreach ((array) $api_keys as $key => $api_key) {
+                new Parser\TransTicket($api_key['transticket_api_url'], $api_key);
+            }
+        }
+
+        if (get_field('arcgis_daily_cron', 'option') == true) {
+            $api_keys = $this->getArcgisKeys();
+
+            foreach ((array) $api_keys as $key => $api_key) {
+                new Parser\Arcgis($api_key['arcgis_api_url'], $api_key);
             }
         }
 
@@ -478,13 +551,18 @@ class App
      */
     public function acfLocationRulesMatch($match, $rule, $options)
     {
+        if (!isset($options['post_id'])) {
+            return $match;
+        }
+
+        $postType = $options['post_type'] ?? get_post_type($options['post_id']);
         $groups = get_field('event_group_select', 'option');
 
         if ($groups) {
             if ($rule['operator'] == "==") {
-                $match = (isset($options['post_type']) && in_array($options['post_type'], $groups) && $options['post_id'] > 0);
+                $match = (!empty($postType) && in_array($postType, $groups) && $options['post_id'] > 0);
             } elseif ($rule['operator'] == "!=") {
-                $match = (isset($options['post_type']) && !in_array($options['post_type'], $groups) && $options['post_id'] > 0);
+                $match = (!empty($postType) && !in_array($postType, $groups) && $options['post_id'] > 0);
             }
         }
 

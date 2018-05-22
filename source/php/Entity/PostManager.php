@@ -65,7 +65,7 @@ abstract class PostManager
     /**
      * Save hooks
      * @param  string $postType Saved post type
-     * @param  object $object   Saved object
+     * @param  object $object Saved object
      * @return void
      */
     public function beforeSave()
@@ -80,19 +80,19 @@ abstract class PostManager
 
     /**
      * Get  posts
-     * @param  integer        $count       Number of posts to get
-     * @param  array          $metaQuery   Meta query
-     * @param  string         $postType    Post type
-     * @param  array|string   $postStatus  Post status
+     * @param  integer $count Number of posts to get
+     * @param  array $metaQuery Meta query
+     * @param  string $postType Post type
+     * @param  array|string $postStatus Post status
      * @return array                       Found posts
      */
     public static function get($count, $metaQuery, $postType, $postStatus = array('publish', 'draft'))
     {
         $args = array(
             'posts_per_page' => $count,
-            'post_type'      => $postType,
-            'orderby'        => 'date',
-            'order'          => 'DESC'
+            'post_type' => $postType,
+            'orderby' => 'date',
+            'order' => 'DESC'
         );
 
         $args['post_status'] = (array)$postStatus;
@@ -161,6 +161,12 @@ abstract class PostManager
         $post['post_type'] = $this->post_type;
         $post['meta_input'] = $meta;
 
+        // Skip these meta values, it will be saved later with ACF
+        unset($post['meta_input']['occasions']);
+        unset($post['meta_input']['additional_ticket_types']);
+        unset($post['meta_input']['additional_ticket_retailers']);
+        unset($post['meta_input']['links']);
+
         // Check if duplicate by matching "_event_manager_uid" meta value
         if (isset($meta['_event_manager_uid'])) {
             $duplicate = self::get(
@@ -196,6 +202,7 @@ abstract class PostManager
     /**
      * Uploads an image from a specified url and sets it as the current post's featured image
      * @param string $url Image url
+     * @return bool|void
      */
     public function setFeaturedImageFromUrl($url)
     {
@@ -209,17 +216,18 @@ abstract class PostManager
 
         // Upload paths
         $uploadDir = wp_upload_dir();
-        $uploadDirUrl = $uploadDir['baseurl'];
         $uploadDir = $uploadDir['basedir'];
         $uploadDir = $uploadDir . '/events';
 
         if (!is_dir($uploadDir)) {
             if (!mkdir($uploadDir, 0776)) {
-                return new WP_Error('event', __('Could not create folder', 'event-manager').' "' . $uploadDir . '", '. __('please go ahead and create it manually and rerun the import.', 'event-manager'));
+                return new WP_Error('event', __('Could not create folder',
+                        'event-manager') . ' "' . $uploadDir . '", ' . __('please go ahead and create it manually and rerun the import.',
+                        'event-manager'));
             }
         }
 
-        $filename = basename($url);
+        $filename = sanitize_file_name(basename($url));
         if (stripos(basename($url), '.aspx')) {
             $filename = md5($filename) . '.jpg';
         }
@@ -231,12 +239,12 @@ abstract class PostManager
         }
 
         // Save file to server
-        $contents = file_get_contents($url);
+        $contents = file_get_contents(str_replace(' ', '%20', $url));
         $save = fopen($uploadDir . '/' . $filename, 'w');
         fwrite($save, $contents);
         fclose($save);
 
-        // Detect filetype
+        // Detect file type
         $filetype = wp_check_filetype($filename, null);
 
         // Insert the file to media library
@@ -259,12 +267,13 @@ abstract class PostManager
 
     /**
      * Validates url
-     * @param  string  $url Url to validate
+     * @param  string $url Url to validate
      * @return boolean
      */
     private function isUrl($url)
     {
-        if (is_string($url) && preg_match('/^(?:[;\/?:@&=+$,]|(?:[^\W_]|[-_.!~*\()\[\] ])|(?:%[\da-fA-F]{2}))*$/', $url)) {
+        if (is_string($url) && preg_match('/^(?:[;\/?:@&=+$,]|(?:[^\W_]|[-_.!~*\()\[\] ])|(?:%[\da-fA-F]{2}))*$/',
+                $url)) {
             return true;
         }
 

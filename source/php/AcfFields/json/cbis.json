@@ -16,7 +16,10 @@
                 "id": ""
             },
             "message": "Enable daily automatic import from CBIS",
-            "default_value": 1
+            "default_value": 1,
+            "ui": 0,
+            "ui_on_text": "",
+            "ui_off_text": ""
         },
         {
             "key": "field_5812eee2085a8",
@@ -56,8 +59,8 @@
                 "id": ""
             },
             "collapsed": "",
-            "min": "",
-            "max": "",
+            "min": 0,
+            "max": 0,
             "layout": "block",
             "button_label": "Add key",
             "sub_fields": [
@@ -132,8 +135,8 @@
                         "id": ""
                     },
                     "collapsed": "",
-                    "min": "",
-                    "max": "",
+                    "min": 0,
+                    "max": 0,
                     "layout": "table",
                     "button_label": "Add",
                     "sub_fields": [
@@ -199,6 +202,25 @@
                     "maxlength": ""
                 },
                 {
+                    "key": "field_5af2cdfa23801",
+                    "label": "Default city",
+                    "name": "cbis_default_city",
+                    "type": "text",
+                    "instructions": "If essential address components are missing during import, this city will be used as default.",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "maxlength": ""
+                },
+                {
                     "key": "field_5878a7338bbab",
                     "label": "Default user groups",
                     "name": "cbis_publishing_groups",
@@ -239,7 +261,6 @@
     "instruction_placement": "label",
     "hide_on_screen": "",
     "active": 1,
-    "description": "",
-    "local": "json"
+    "description": ""
 }]
 

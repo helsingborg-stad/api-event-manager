@@ -2,13 +2,13 @@
 
 if (function_exists('acf_add_local_field_group')) {
     acf_add_local_field_group(array(
-    'key' => 'group_56af507bbd485',
-    'title' => __('Xcap', 'event-manager'),
+    'key' => 'group_5af54f9481184',
+    'title' => __('ArcGIS', 'event-manager'),
     'fields' => array(
         0 => array(
-            'key' => 'field_56b055179e151',
+            'key' => 'field_5af54f94967b6',
             'label' => __('Daily import', 'event-manager'),
-            'name' => 'xcap_daily_cron',
+            'name' => 'arcgis_daily_cron',
             'type' => 'true_false',
             'instructions' => '',
             'required' => 0,
@@ -18,16 +18,16 @@
                 'class' => '',
                 'id' => '',
             ),
-            'message' => __('Enable daily automatic import from XCAP', 'event-manager'),
+            'message' => __('Enable daily automatic import from ArcGIS', 'event-manager'),
             'default_value' => 1,
             'ui' => 0,
             'ui_on_text' => '',
             'ui_off_text' => '',
         ),
         1 => array(
-            'key' => 'field_56b06bfae69e2',
+            'key' => 'field_5af54f9496b39',
             'label' => __('Post status', 'event-manager'),
-            'name' => 'xcap_post_status',
+            'name' => 'arcgis_post_status',
             'type' => 'radio',
             'instructions' => __('Select status of imported events.', 'event-manager'),
             'required' => 1,
@@ -49,11 +49,11 @@
             'return_format' => 'value',
         ),
         2 => array(
-            'key' => 'field_587cc39d5ebc9',
+            'key' => 'field_5af54f9496d23',
             'label' => __('API links', 'event-manager'),
-            'name' => 'xcap_api_urls',
+            'name' => 'arcgis_api_urls',
             'type' => 'repeater',
-            'instructions' => __('Add one or many API links to Xcap', 'event-manager'),
+            'instructions' => __('Add one or many API links to ArcGIS', 'event-manager'),
             'required' => 0,
             'conditional_logic' => 0,
             'wrapper' => array(
@@ -68,9 +68,9 @@
             'button_label' => __('Add', 'event-manager'),
             'sub_fields' => array(
                 0 => array(
-                    'key' => 'field_587cc3c55ebca',
+                    'key' => 'field_5af54f94c7b11',
                     'label' => __('API link', 'event-manager'),
-                    'name' => 'xcap_api_url',
+                    'name' => 'arcgis_api_url',
                     'type' => 'url',
                     'instructions' => '',
                     'required' => 1,
@@ -84,28 +84,9 @@
                     'placeholder' => '',
                 ),
                 1 => array(
-                    'key' => 'field_587cc3dc5ebcb',
-                    'label' => __('Exclude categories', 'event-manager'),
-                    'name' => 'xcap_filter_categories',
-                    'type' => 'text',
-                    'instructions' => __('Enter the name of the categories that you want to exclude from the import. Separate with commas.', 'event-manager'),
-                    'required' => 0,
-                    'conditional_logic' => 0,
-                    'wrapper' => array(
-                        'width' => '',
-                        'class' => '',
-                        'id' => '',
-                    ),
-                    'default_value' => '',
-                    'placeholder' => '',
-                    'prepend' => '',
-                    'append' => '',
-                    'maxlength' => '',
-                ),
-                2 => array(
-                    'key' => 'field_5af2c33456cdd',
+                    'key' => 'field_5af54f94c7c9d',
                     'label' => __('Default city', 'event-manager'),
-                    'name' => 'xcap_default_city',
+                    'name' => 'arcgis_default_city',
                     'type' => 'text',
                     'instructions' => __('If essential address components are missing during import, this city will be used as default.', 'event-manager'),
                     'required' => 0,
@@ -121,10 +102,10 @@
                     'append' => '',
                     'maxlength' => '',
                 ),
-                3 => array(
-                    'key' => 'field_587cc3fe5ebcc',
+                2 => array(
+                    'key' => 'field_5af54f94c7cfd',
                     'label' => __('Default user groups', 'event-manager'),
-                    'name' => 'xcap_publishing_groups',
+                    'name' => 'arcgis_publishing_groups',
                     'type' => 'taxonomy',
                     'instructions' => __('Select the user groups that you want to set as default to imported posts.', 'event-manager'),
                     'required' => 0,

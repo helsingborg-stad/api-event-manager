@@ -25,8 +25,6 @@ class CbisLocation extends \HbgEventImporter\Parser\Cbis
      */
     public function start()
     {
-        global $wpdb;
-
         $this->collectDataForLevenshtein();
 
         $requestParams = array();
@@ -44,7 +42,7 @@ class CbisLocation extends \HbgEventImporter\Parser\Cbis
         $cbisCategory    = $this->cbisLocation['cbis_location_cat_id'];
         $cbisLocName     = $this->cbisLocation['cbis_location_name'];
 
-        $defaultLocation = get_field('default_city', 'option') ? get_field('default_city', 'option') : null;
+        $defaultLocation = $this->apiKeys['default_city'];
         $postStatus      = get_field('cbis_post_status', 'option') ? get_field('cbis_post_status', 'option') : 'publish';
 
         // Number of arenas/products to get, 500 to get all
@@ -132,36 +130,38 @@ class CbisLocation extends \HbgEventImporter\Parser\Cbis
             // Create the location
             $latitude = $this->getAttributeValue(self::ATTRIBUTE_LATITUDE, $attributes) != '0' ? $this->getAttributeValue(self::ATTRIBUTE_LATITUDE, $attributes) : null;
             $longitude = $this->getAttributeValue(self::ATTRIBUTE_LONGITUDE, $attributes) != '0' ? $this->getAttributeValue(self::ATTRIBUTE_LONGITUDE, $attributes) : null;
-            $location = new Location(
-                array(
-                    'post_title'         => $newPostTitle,
-                    'post_status'        => $postStatus,
-                ),
-                array(
-                    'street_address'     => $this->getAttributeValue(self::ATTRIBUTE_ADDRESS, $attributes),
-                    'postal_code'        => $this->getAttributeValue(self::ATTRIBUTE_POSTCODE, $attributes),
-                    'city'               => $city,
-                    'municipality'       => $this->getAttributeValue(self::ATTRIBUTE_MUNICIPALITY, $attributes),
-                    'country'            => $country,
-                    'latitude'           => $latitude,
-                    'longitude'          => $longitude,
-                    'import_client'      => $import_client,
-                    '_event_manager_uid' => $uid,
-                    'user_groups'        => $userGroups,
-                    'sync'               => 1,
-                    'imported_post'      => 1,
-                )
-            );
+            try {
+                $location = new Location(
+                    array(
+                        'post_title' => $newPostTitle,
+                        'post_status' => $postStatus,
+                    ),
+                    array(
+                        'street_address' => $this->getAttributeValue(self::ATTRIBUTE_ADDRESS, $attributes),
+                        'postal_code' => $this->getAttributeValue(self::ATTRIBUTE_POSTCODE, $attributes),
+                        'city' => $city,
+                        'municipality' => $this->getAttributeValue(self::ATTRIBUTE_MUNICIPALITY, $attributes),
+                        'country' => $country,
+                        'latitude' => $latitude,
+                        'longitude' => $longitude,
+                        'import_client' => $import_client,
+                        '_event_manager_uid' => $uid,
+                        'user_groups' => $userGroups,
+                        'sync' => 1,
+                        'imported_post' => 1,
+                    )
+                );
+            } catch (\Exception $e) {
+                error_log(print_r($e, true));
+                return;
+            }
 
-            $createSuccess = $location->save();
-            $locationId = $location->ID;
-
-            if ($createSuccess) {
+            if ($location->save()) {
                 if ($isUpdate == false) {
                     ++$this->nrOfNewLocations;
                 }
 
-                $this->levenshteinTitles['location'][] = array('ID' => $locationId, 'post_title' => $newPostTitle);
+                $this->levenshteinTitles['location'][] = array('ID' => $location->ID, 'post_title' => $newPostTitle);
             }
         }
     }
