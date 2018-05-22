@@ -625,9 +625,16 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
             return;
         }
 
-        echo '<div class="notice notice-success dismissable is-dismissible"><p>';
-        _e('Please do not enter information that refers to information in another text field. It is not certain that all fields will be presented to the consumer and would thefore be missguiding.', 'event-manager');
-        echo '</p></div>';
+        printf('<div class="%s"><h3>%s</h3><p><strong>%s</strong></p><p>%s</p><h4>%s:</h4><ul><li>– %s</li><li>– %s</li><li>– %s</li></ul></div>',
+            esc_attr('notice notice-info dismissable is-dismissible event-guidelines'),
+            esc_html(__('Guidelines', 'event-manager')),
+            esc_html(__('Please read the guidelines below before publishing your event.', 'event-manager')),
+            esc_html(__('Do not enter information that refers to information in another text field. It is not certain that all fields will be presented to the consumer and would thefore be missguiding.', 'event-manager')),
+            esc_html(__('Plain language tips', 'event-manager')),
+            esc_html(__('Write the most important first.', 'event-manager')),
+            esc_html(__('Use words that you think the readers understand.', 'event-manager')),
+            esc_html(__('Write short and concise.', 'event-manager'))
+        );
     }
 
     /**
