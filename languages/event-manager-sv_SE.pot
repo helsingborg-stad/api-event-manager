@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "Project-Id-Version: Event Manager\n"
-"POT-Creation-Date: 2018-05-22 10:07+0200\n"
+"POT-Creation-Date: 2018-05-22 16:21+0200\n"
 "PO-Revision-Date: 2016-10-26 08:27+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -2461,97 +2461,121 @@ msgstr ""
 msgid "Client"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:290 source/php/PostTypes/Events.php:446
+#: source/php/PostTypes/Events.php:292 source/php/PostTypes/Events.php:454
 msgid "End date must be after start date"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:318
+#: source/php/PostTypes/Events.php:321
 msgid "Door time cannot be after start date"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:342
+#: source/php/PostTypes/Events.php:346
 msgid "Please add occasion or recurrence rule"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:366
+#: source/php/PostTypes/Events.php:371
 msgid "Not a valid number"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:393
+#: source/php/PostTypes/Events.php:399
 msgid "End time must be after start time"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:420
+#: source/php/PostTypes/Events.php:427
 msgid "Door time cannot be after start time"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:475
+#: source/php/PostTypes/Events.php:483
 msgid "Import XCAP"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:479
+#: source/php/PostTypes/Events.php:487
 msgid "Import CBIS"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:483
+#: source/php/PostTypes/Events.php:491
 msgid "Import Transticket"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:486
+#: source/php/PostTypes/Events.php:494
 msgid "Collect event timestamps"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:503
+#: source/php/PostTypes/Events.php:511
 msgid "No post to duplicate has been supplied!"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:513
+#: source/php/PostTypes/Events.php:521
 msgid "Event creation failed, could not find original event"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:589
+#: source/php/PostTypes/Events.php:597
 msgid "Create similar item"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:589
+#: source/php/PostTypes/Events.php:597
 msgid "Are you sure you want to clone this event?"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:589
+#: source/php/PostTypes/Events.php:597
 msgid "Clone"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:607
+#: source/php/PostTypes/Events.php:615
 #, php-format
 msgid ""
 "This is a duplicate of the event: %s. If this is a new occasion for the "
 "same event, please %s and republish the original event"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:607
+#: source/php/PostTypes/Events.php:615
 msgid "edit"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:628
-msgid ""
-"Please do not enter information that refers to information in another text "
-"field. It is not certain that all fields will be presented to the consumer "
-"and would thefore be missguiding."
+#: source/php/PostTypes/Events.php:639
+msgid "Guidelines"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:652
+#: source/php/PostTypes/Events.php:640
+msgid "Please read the guidelines below before publishing your event."
+msgstr ""
+
+#: source/php/PostTypes/Events.php:641
+msgid ""
+"Do not enter information that refers to information in another text field. "
+"It is not certain that all fields will be presented to the consumer and "
+"would thefore be missguiding."
+msgstr ""
+
+#: source/php/PostTypes/Events.php:642
+msgid "Plain language tips"
+msgstr ""
+
+#: source/php/PostTypes/Events.php:643
+msgid "Write the most important first."
+msgstr ""
+
+#: source/php/PostTypes/Events.php:644
+msgid "Use words that you think the readers understand."
+msgstr ""
+
+#: source/php/PostTypes/Events.php:645
+msgid "Write short and concise."
+msgstr ""
+
+#: source/php/PostTypes/Events.php:669
 msgid ""
 "CBIS have not imported any events for atleast 7 days. Please control the "
 "importer."
 msgstr ""
 
-#: source/php/PostTypes/Events.php:676
+#: source/php/PostTypes/Events.php:693
 msgid ""
 "XCAP have not imported any events for atleast 7 days. Please control the "
 "importer."
 msgstr ""
 
-#: source/php/PostTypes/Events.php:700
+#: source/php/PostTypes/Events.php:717
 msgid ""
 "Transticket have not imported any events for atleast 7 days. Please "
 "control the importer."

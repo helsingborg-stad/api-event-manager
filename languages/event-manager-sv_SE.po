@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Event Manager\n"
-"POT-Creation-Date: 2018-05-22 10:07+0200\n"
-"PO-Revision-Date: 2018-05-22 10:09+0200\n"
+"POT-Creation-Date: 2018-05-22 16:21+0200\n"
+"PO-Revision-Date: 2018-05-22 16:23+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: sv\n"
@@ -2498,67 +2498,67 @@ msgstr "Arrangör"
 msgid "Client"
 msgstr "Klient"
 
-#: source/php/PostTypes/Events.php:290 source/php/PostTypes/Events.php:446
+#: source/php/PostTypes/Events.php:292 source/php/PostTypes/Events.php:454
 msgid "End date must be after start date"
 msgstr "Slutdatum får inte vara före eller lika med startdatum"
 
-#: source/php/PostTypes/Events.php:318
+#: source/php/PostTypes/Events.php:321
 msgid "Door time cannot be after start date"
 msgstr "Dörrtid får inte vara efter starttid"
 
-#: source/php/PostTypes/Events.php:342
+#: source/php/PostTypes/Events.php:346
 msgid "Please add occasion or recurrence rule"
 msgstr "Vänligen lägg till tidpunkt för evenemanget"
 
-#: source/php/PostTypes/Events.php:366
+#: source/php/PostTypes/Events.php:371
 msgid "Not a valid number"
 msgstr "Inte ett giltigt tal"
 
-#: source/php/PostTypes/Events.php:393
+#: source/php/PostTypes/Events.php:399
 msgid "End time must be after start time"
 msgstr "Sluttid får inte vara före starttid"
 
-#: source/php/PostTypes/Events.php:420
+#: source/php/PostTypes/Events.php:427
 msgid "Door time cannot be after start time"
 msgstr "Dörrtid får inte vara efter starttid"
 
-#: source/php/PostTypes/Events.php:475
+#: source/php/PostTypes/Events.php:483
 msgid "Import XCAP"
 msgstr "Importera XCAP"
 
-#: source/php/PostTypes/Events.php:479
+#: source/php/PostTypes/Events.php:487
 msgid "Import CBIS"
 msgstr "Importera CBIS"
 
-#: source/php/PostTypes/Events.php:483
+#: source/php/PostTypes/Events.php:491
 msgid "Import Transticket"
 msgstr "Importera Transticket"
 
-#: source/php/PostTypes/Events.php:486
+#: source/php/PostTypes/Events.php:494
 msgid "Collect event timestamps"
 msgstr "Spara tidsstämplar"
 
-#: source/php/PostTypes/Events.php:503
+#: source/php/PostTypes/Events.php:511
 msgid "No post to duplicate has been supplied!"
 msgstr "Post att duplicera saknas!"
 
-#: source/php/PostTypes/Events.php:513
+#: source/php/PostTypes/Events.php:521
 msgid "Event creation failed, could not find original event"
 msgstr "Dupliceringen misslyckades, kunde inte hitta originalevenemanget"
 
-#: source/php/PostTypes/Events.php:589
+#: source/php/PostTypes/Events.php:597
 msgid "Create similar item"
 msgstr "Skapa ett liknande evenemang"
 
-#: source/php/PostTypes/Events.php:589
+#: source/php/PostTypes/Events.php:597
 msgid "Are you sure you want to clone this event?"
 msgstr "Är du säker på att du vill skapa en dubblett av evenemanget?"
 
-#: source/php/PostTypes/Events.php:589
+#: source/php/PostTypes/Events.php:597
 msgid "Clone"
 msgstr "Duplicera"
 
-#: source/php/PostTypes/Events.php:607
+#: source/php/PostTypes/Events.php:615
 #, php-format
 msgid ""
 "This is a duplicate of the event: %s. If this is a new occasion for the same "
@@ -2568,21 +2568,46 @@ msgstr ""
 "tidpunkt för ett redan existerande evenemang, vänligen %s och publicera "
 "originalversionen"
 
-#: source/php/PostTypes/Events.php:607
+#: source/php/PostTypes/Events.php:615
 msgid "edit"
 msgstr "uppdatera"
 
-#: source/php/PostTypes/Events.php:628
-msgid ""
-"Please do not enter information that refers to information in another text "
-"field. It is not certain that all fields will be presented to the consumer "
-"and would thefore be missguiding."
-msgstr ""
-"Vänligen skriv inte in information i ett textfält som hänvisar till andra "
-"textfält. Det är inte säkert att alla fält kommer att presenteras för "
-"konsumenten och kan därför bli missledande."
+#: source/php/PostTypes/Events.php:639
+msgid "Guidelines"
+msgstr "Riktlinjer"
 
-#: source/php/PostTypes/Events.php:652
+#: source/php/PostTypes/Events.php:640
+msgid "Please read the guidelines below before publishing your event."
+msgstr ""
+"Vänligen läs igenom riktlinjerna nedan innan du publicerar evenemanget."
+
+#: source/php/PostTypes/Events.php:641
+msgid ""
+"Do not enter information that refers to information in another text field. "
+"It is not certain that all fields will be presented to the consumer and "
+"would thefore be missguiding."
+msgstr ""
+"Skriv inte in information i ett textfält som hänvisar till andra textfält. "
+"Det är inte säkert att alla fält kommer att presenteras för konsumenten och "
+"kan därför bli missledande."
+
+#: source/php/PostTypes/Events.php:642
+msgid "Plain language tips"
+msgstr "Klarspråkstips"
+
+#: source/php/PostTypes/Events.php:643
+msgid "Write the most important first."
+msgstr "Skriv det viktigaste först."
+
+#: source/php/PostTypes/Events.php:644
+msgid "Use words that you think the readers understand."
+msgstr "Använd ord som du tror att läsarna förstår."
+
+#: source/php/PostTypes/Events.php:645
+msgid "Write short and concise."
+msgstr "Skriv kort och koncist."
+
+#: source/php/PostTypes/Events.php:669
 msgid ""
 "CBIS have not imported any events for atleast 7 days. Please control the "
 "importer."
@@ -2590,7 +2615,7 @@ msgstr ""
 "Inga evenemang från CBIS har importerats de senaste 7 dagarna. Vänligen "
 "kontrollera inställningarna och importen."
 
-#: source/php/PostTypes/Events.php:676
+#: source/php/PostTypes/Events.php:693
 msgid ""
 "XCAP have not imported any events for atleast 7 days. Please control the "
 "importer."
@@ -2598,7 +2623,7 @@ msgstr ""
 "Inga evenemang från XCAP har importerats de senaste 7 dagarna. Vänligen "
 "kontrollera inställningarna och importen."
 
-#: source/php/PostTypes/Events.php:700
+#: source/php/PostTypes/Events.php:717
 msgid ""
 "Transticket have not imported any events for atleast 7 days. Please control "
 "the importer."
