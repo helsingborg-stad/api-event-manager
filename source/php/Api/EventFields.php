@@ -81,9 +81,9 @@ class EventFields extends Fields
 
         //Check if only internal (organization) event should be fetched
         if (isset($_GET['internal'])) {
-            $internalevent = empty($_GET['internal']) ? false : true;
+            $internalEvent = empty($_GET['internal']) ? false : true;
         } else {
-            $internalevent = false;
+            $internalEvent = false;
         }
 
         if (!is_numeric($time1)) {
@@ -122,7 +122,7 @@ class EventFields extends Fields
 
         $db_occasions = $wpdb->prefix . "occasions";
 
-        if ($internalevent === true) {
+        if ($internalEvent === true) {
             $query =
             "
             SELECT      *
