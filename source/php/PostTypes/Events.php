@@ -134,6 +134,7 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
         add_filter('acf/update_value/key=field_57f4f6dc747a1', array($this, 'acfUpdatePrices'), 10, 3);
         add_filter('acf/update_value/name=booking_phone', array($this, 'acfUpdatePhone'), 10, 3);
         add_filter('acf/update_value/key=field_57ebb45142846', array($this, 'acfUpdatePhone'), 10, 3);
+        add_filter('acf/update_value/key=field_5b03c6f3cd820', array($this, 'acfUpdatePhone'), 10, 3);
 
         add_filter('acf/fields/post_object/result/name=location', array($this, 'acfLocationSelect'), 10, 4);
         add_filter('acf/fields/post_object/result/name=additional_locations', array($this, 'acfLocationSelect'), 10, 4);

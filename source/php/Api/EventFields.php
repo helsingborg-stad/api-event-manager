@@ -549,6 +549,20 @@ class EventFields extends Fields
             )
         );
 
+        // Phone email to booking service
+        register_rest_field($this->postType,
+            'booking_email',
+            array(
+                'get_callback' => array($this, 'stringGetCallBack'),
+                'update_callback' => array($this, 'stringUpdateCallBack'),
+                'schema' => array(
+                    'description' => 'Field containing string with email address to external booking service.',
+                    'type' => 'string',
+                    'context' => array('view', 'edit')
+                )
+            )
+        );
+
         // Release date of tickets
         register_rest_field($this->postType,
             'ticket_release_date',
@@ -788,6 +802,49 @@ class EventFields extends Fields
             )
         );
 
+        /* Contact info */
+
+        // Contact phone
+        register_rest_field($this->postType,
+            'contact_phone',
+            array(
+                'get_callback' => array($this, 'stringGetCallBack'),
+                'update_callback' => array($this, 'stringUpdateCallBack'),
+                'schema' => array(
+                    'description' => 'Field containing string with contact phone number.',
+                    'type' => 'string',
+                    'context' => array('view', 'edit')
+                )
+            )
+        );
+
+        // Contact email
+        register_rest_field($this->postType,
+            'contact_email',
+            array(
+                'get_callback' => array($this, 'stringGetCallBack'),
+                'update_callback' => array($this, 'stringUpdateCallBack'),
+                'schema' => array(
+                    'description' => 'Field containing string with contact email.',
+                    'type' => 'string',
+                    'context' => array('view', 'edit')
+                )
+            )
+        );
+
+        // Contact information
+        register_rest_field($this->postType,
+            'contact_information',
+            array(
+                'get_callback' => array($this, 'stringGetCallBack'),
+                'update_callback' => array($this, 'stringUpdateCallBack'),
+                'schema' => array(
+                    'description' => 'Field containing string with contact information.',
+                    'type' => 'string',
+                    'context' => array('view', 'edit')
+                )
+            )
+        );
 
         /* Organizer tab */
         register_rest_field($this->postType,
