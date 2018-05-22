@@ -4,7 +4,7 @@ ImportEvents.Prompt = ImportEvents.Prompt || {};
 ImportEvents.Prompt.Notice = (function ($) {
 
     function Notice() {
-        $('.notice.is-dismissible').on('click', '.notice-dismiss', function(event){
+        $(document).on('click', '.event-guidelines .notice-dismiss', function (e) {
             this.dismissInstructions();
         }.bind(this));
     }
