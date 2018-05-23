@@ -103,7 +103,7 @@ class UI
         global $post;
 
         // Sync meta box
-        if (is_object($post) && get_post_meta($post->ID, 'imported_post', true)) {
+        if (!empty($post->ID) && get_post_meta($post->ID, 'imported_post', true)) {
             add_meta_box('sync-meta-box', esc_html__('API synchronization', 'event-manager'), array($this, 'syncMetaBoxCallback'), array('event', 'location', 'organizer'), 'side', 'default');
         }
 
@@ -111,12 +111,33 @@ class UI
         if (current_user_can('administrator')) {
             add_meta_box('linked-events-box', esc_html__('Linked events', 'event-manager'), array($this, 'linkedEventsCallback'), array('location', 'organizer', 'membership-card', 'sponsor'), 'side', 'low');
         }
+
+        // Submitter info
+        if (!empty($post->ID) && get_post_meta($post->ID, 'submitter_email', true)) {
+            add_meta_box('submitter-info', esc_html__('Submitter', 'event-manager'), array($this, 'submitterCallback'), array('event'), 'normal', 'low');
+        }
+    }
+
+    /**
+     * Displays contact information about the event submitter
+     * @param object $post Post object
+     */
+    public function submitterCallback($post)
+    {
+        _e('Contact details for the person who submitted the event.', 'event-integration');
+
+        if ($email = get_post_meta($post->ID, 'submitter_email', true)) {
+            printf('<p><strong>%1$s:</strong> <a href="mailto:%2$s">%2$s</a></p>', __('Email', 'event-integration'), $email);
+        }
+
+        if ($phone = get_post_meta($post->ID, 'submitter_phone', true)) {
+            printf('<p><strong>%s:</strong> %s</p>', __('Phone', 'event-integration'), $phone);
+        }
     }
 
     /**
      * Return linked events
      * @param  obj $post current post object
-     * @return string
      */
     public function linkedEventsCallback($post)
     {
