@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Event Manager\n"
-"POT-Creation-Date: 2018-05-23 10:40+0200\n"
-"PO-Revision-Date: 2018-05-23 10:40+0200\n"
+"POT-Creation-Date: 2018-05-23 16:30+0200\n"
+"PO-Revision-Date: 2018-05-23 16:30+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: sv\n"
@@ -601,7 +601,7 @@ msgstr "Telefonnummer för bokning."
 #: source/php/AcfFields/php/event.php:1513
 #: source/php/AcfFields/php/organizer.php:29
 #: source/php/AcfFields/php/organizer.php:120
-#: source/php/AcfFields/php/sponsor.php:45
+#: source/php/AcfFields/php/sponsor.php:45 source/php/Admin/UI.php:130
 #: source/php/PostTypes/Organizers.php:35
 msgid "Email"
 msgstr "E-postadress"
@@ -1284,7 +1284,7 @@ msgstr "Kontakt"
 #: source/php/AcfFields/php/event.php:1494
 #: source/php/AcfFields/php/organizer.php:10
 #: source/php/AcfFields/php/organizer.php:139
-#: source/php/AcfFields/php/sponsor.php:26
+#: source/php/AcfFields/php/sponsor.php:26 source/php/Admin/UI.php:134
 #: source/php/PostTypes/Organizers.php:38
 msgid "Phone"
 msgstr "Telefon"
@@ -2235,11 +2235,19 @@ msgstr "API synkronisering"
 msgid "Linked events"
 msgstr "Länkade evenemang"
 
-#: source/php/Admin/UI.php:164
+#: source/php/Admin/UI.php:117
+msgid "Submitted by"
+msgstr "Inskickat av"
+
+#: source/php/Admin/UI.php:127
+msgid "Contact details to the person who submitted the event."
+msgstr "Kontaktuppgifter till personen som skickat in evenemanget."
+
+#: source/php/Admin/UI.php:185
 msgid "This post is not linked to any events."
 msgstr "Det finns inga länkade evenemang."
 
-#: source/php/Admin/UI.php:192
+#: source/php/Admin/UI.php:213
 msgid ""
 "Unchecking this box will disable API updates sync for this particular event. "
 "Only fields with sync icon is affected by this option."
@@ -2247,7 +2255,7 @@ msgstr ""
 "Avmarkering av denna rutan stänger av automatiska API-uppdateringar. Detta "
 "gäller endast fält med sync-symbol."
 
-#: source/php/Admin/UI.php:193
+#: source/php/Admin/UI.php:214
 msgid "Sync event information with API"
 msgstr "Synkronisera med API"
 
@@ -3119,6 +3127,12 @@ msgstr ""
 #. Author URI of the plugin/theme
 msgid "http://www.helsingborg.se"
 msgstr ""
+
+#~ msgid "Lol here"
+#~ msgstr "Lol här"
+
+#~ msgid "Contact details to the person who."
+#~ msgstr "Kontaktuppgifter till personen som."
 
 #~ msgid "Booking email"
 #~ msgstr "E-post till bokning"

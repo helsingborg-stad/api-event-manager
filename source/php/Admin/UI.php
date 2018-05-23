@@ -114,7 +114,7 @@ class UI
 
         // Submitter info
         if (!empty($post->ID) && get_post_meta($post->ID, 'submitter_email', true)) {
-            add_meta_box('submitter-info', esc_html__('Submitter', 'event-manager'), array($this, 'submitterCallback'), array('event'), 'normal', 'low');
+            add_meta_box('submitter-info', esc_html__('Submitted by', 'event-manager'), array($this, 'submitterCallback'), array('event'), 'normal', 'low');
         }
     }
 
@@ -124,14 +124,14 @@ class UI
      */
     public function submitterCallback($post)
     {
-        _e('Contact details for the person who submitted the event.', 'event-integration');
+        printf('<p>%s</p>', __('Contact details to the person who submitted the event.', 'event-manager'));
 
         if ($email = get_post_meta($post->ID, 'submitter_email', true)) {
-            printf('<p><strong>%1$s:</strong> <a href="mailto:%2$s">%2$s</a></p>', __('Email', 'event-integration'), $email);
+            printf('<p><strong>%1$s:</strong> <a href="mailto:%2$s">%2$s</a></p>', __('Email', 'event-manager'), $email);
         }
 
         if ($phone = get_post_meta($post->ID, 'submitter_phone', true)) {
-            printf('<p><strong>%s:</strong> %s</p>', __('Phone', 'event-integration'), $phone);
+            printf('<p><strong>%s:</strong> %s</p>', __('Phone', 'event-manager'), $phone);
         }
     }
 
