@@ -98,6 +98,7 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
         add_action('admin_notices', array($this, 'eventInstructions'));
 
         add_action('admin_action_duplicate_post', array($this, 'duplicatePost'));
+        add_action('admin_head-edit.php', array($this, 'adminHeadAction'));
 
         add_filter('the_content', array($this, 'replaceWhitespace'), 9);
         add_filter('post_row_actions', array($this, 'duplicatePostLink'), 10, 2);
@@ -763,5 +764,27 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
         $content = html_entity_decode($content);
 
         return $content;
+    }
+
+    /**
+     * Init post state filter
+     */
+    public function adminHeadAction() {
+        add_filter('display_post_states', array($this, 'setPostState'), 10, 2);
+    }
+
+    /**
+     * Change post state to 'Under processing' for incoming event
+     * @param array $postStates Default states
+     * @param object $post Post object
+     * @return array $postStates Modified states
+     */
+    public function setPostState($postStates, $post) {
+        $consumerClient = get_post_meta($post->ID, 'consumer_client');
+        if ($post->post_type == $this->slug && !empty($consumerClient) && $post->post_status === 'draft' && empty(wp_get_post_revisions($post->ID))) {
+            $postStates['draft'] = __('Under processing', 'event-manager');
+        }
+
+        return $postStates;
     }
 }
