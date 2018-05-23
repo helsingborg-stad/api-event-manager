@@ -1065,5 +1065,33 @@ class EventFields extends Fields
                 )
             )
         );
+
+        /**
+         * Submitter contact details, can be posted from external submit form
+         * Hidden from end point
+         */
+        register_rest_field($this->postType,
+            'submitter_email',
+            array(
+                'update_callback' => array($this, 'stringUpdateCallBack'),
+                'schema' => array(
+                    'description' => 'Field containing string with submitter email.',
+                    'type' => 'string',
+                    'context' => array('edit')
+                )
+            )
+        );
+
+        register_rest_field($this->postType,
+            'submitter_phone',
+            array(
+                'update_callback' => array($this, 'stringUpdateCallBack'),
+                'schema' => array(
+                    'description' => 'Field containing string with submitter phone.',
+                    'type' => 'string',
+                    'context' => array('edit')
+                )
+            )
+        );
     }
 }
