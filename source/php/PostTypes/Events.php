@@ -585,11 +585,8 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
      */
     public function duplicatePostLink($actions, $post)
     {
-        if (current_user_can('editor') || current_user_can('administrator')) {
-
-            if ($post->post_type == 'event' && current_user_can('edit_posts')) {
-                $actions['duplicate'] = '<a href="admin.php?action=duplicate_post&amp;post=' . $post->ID . '" title="'.__('Create similar item', 'event-manager').'" rel="permalink" onclick="return confirm(\''.__('Are you sure you want to clone this event?', 'event-manager').'\');">'.__('Clone', 'event-manager').'</a>';
-            }
+        if ($post->post_type == 'event' && current_user_can('edit_events')) {
+            $actions['duplicate'] = '<a href="admin.php?action=duplicate_post&amp;post=' . $post->ID . '" title="'.__('Create similar item', 'event-manager').'" rel="permalink" onclick="return confirm(\''.__('Are you sure you want to clone this event?', 'event-manager').'\');">'.__('Clone', 'event-manager').'</a>';
         }
 
         return $actions;
