@@ -154,7 +154,14 @@ class App
             return;
         }
 
-        wp_redirect(admin_url('edit.php?post_type=event'), 301);
+        if (current_user_can('edit_events')) {
+            wp_redirect(admin_url('edit.php?post_type=event'), 301);
+        } elseif(current_user_can('edit_guides')) {
+            wp_redirect(admin_url('edit.php?post_type=guide'), 301);
+        } else {
+            return;
+        }
+
         exit;
     }
 
