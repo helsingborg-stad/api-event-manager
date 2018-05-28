@@ -182,6 +182,10 @@ class App
         if ((isset($_GET['lightbox']) && $_GET['lightbox'] == 'true') || strpos($referer, 'lightbox=true') > -1) {
             wp_enqueue_style('lightbox', plugins_url() . '/api-event-manager/dist/css/modal.min.css', false, '1.0.0');
         }
+
+        if (isset($current_screen->post_type) && $current_screen->post_type === 'event') {
+            wp_enqueue_style('jquery-ui', '//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.min.css');
+        }
     }
 
     /**
@@ -191,6 +195,10 @@ class App
     public function enqueueScripts()
     {
         global $current_screen;
+
+        if (isset($current_screen->post_type) && $current_screen->post_type === 'event') {
+            wp_enqueue_script('jquery-ui-datepicker');
+        }
 
         $acceptedPostTypes = array(
             'event',
