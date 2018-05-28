@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "Project-Id-Version: Event Manager\n"
-"POT-Creation-Date: 2018-05-23 16:30+0200\n"
+"POT-Creation-Date: 2018-05-28 11:42+0200\n"
 "PO-Revision-Date: 2016-10-26 08:27+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -56,7 +56,7 @@ msgstr ""
 #: source/php/AcfFields/php/cbis.php:41
 #: source/php/AcfFields/php/transticket.php:41
 #: source/php/AcfFields/php/xcap.php:41
-#: source/php/Admin/FilterRestrictions.php:130
+#: source/php/Admin/FilterRestrictions.php:150
 msgid "Draft"
 msgstr ""
 
@@ -64,7 +64,7 @@ msgstr ""
 #: source/php/AcfFields/php/cbis.php:42
 #: source/php/AcfFields/php/transticket.php:42
 #: source/php/AcfFields/php/xcap.php:42
-#: source/php/Admin/FilterRestrictions.php:126
+#: source/php/Admin/FilterRestrictions.php:146
 msgid "Published"
 msgstr ""
 
@@ -235,39 +235,39 @@ msgid "Activate user groups on selected post types."
 msgstr ""
 
 #: source/php/AcfFields/php/event-manager-settings.php:60
-#: source/php/App.php:217
+#: source/php/App.php:232
 msgid "Events"
 msgstr ""
 
 #: source/php/AcfFields/php/event-manager-settings.php:61
-#: source/php/App.php:218 source/php/PostTypes/Locations.php:12
+#: source/php/App.php:233 source/php/PostTypes/Locations.php:12
 msgid "Locations"
 msgstr ""
 
 #: source/php/AcfFields/php/event-manager-settings.php:62
-#: source/php/AcfFields/php/event.php:675 source/php/App.php:229
+#: source/php/AcfFields/php/event.php:675 source/php/App.php:244
 #: source/php/PostTypes/Sponsors.php:10
 msgid "Sponsors"
 msgstr ""
 
 #: source/php/AcfFields/php/event-manager-settings.php:63
-#: source/php/App.php:230 source/php/PostTypes/Packages.php:10
+#: source/php/App.php:245 source/php/PostTypes/Packages.php:10
 msgid "Packages"
 msgstr ""
 
 #: source/php/AcfFields/php/event-manager-settings.php:64
-#: source/php/App.php:231
+#: source/php/App.php:246
 msgid "Membership cards"
 msgstr ""
 
 #: source/php/AcfFields/php/event-manager-settings.php:65
-#: source/php/AcfFields/php/event.php:612 source/php/App.php:219
+#: source/php/AcfFields/php/event.php:612 source/php/App.php:234
 #: source/php/PostTypes/Organizers.php:10
 msgid "Organizers"
 msgstr ""
 
 #: source/php/AcfFields/php/event-manager-settings.php:66
-#: source/php/App.php:232 source/php/PostTypes/Guides.php:12
+#: source/php/App.php:247 source/php/PostTypes/Guides.php:12
 msgid "Guides"
 msgstr ""
 
@@ -354,7 +354,7 @@ msgid "Select if event is on schedule or not."
 msgstr ""
 
 #: source/php/AcfFields/php/event.php:166
-#: source/php/Admin/FilterRestrictions.php:129
+#: source/php/Admin/FilterRestrictions.php:149
 msgid "Scheduled"
 msgstr ""
 
@@ -1836,11 +1836,11 @@ msgstr ""
 msgid "Select if this is an internal event."
 msgstr ""
 
-#: source/php/AcfFields/php/internal_event.php:24 source/php/App.php:233
+#: source/php/AcfFields/php/internal_event.php:24 source/php/App.php:248
 msgid "Yes"
 msgstr ""
 
-#: source/php/AcfFields/php/internal_event.php:25 source/php/App.php:234
+#: source/php/AcfFields/php/internal_event.php:25 source/php/App.php:249
 msgid "No"
 msgstr ""
 
@@ -2130,55 +2130,63 @@ msgstr ""
 msgid "Add one or many API links to Xcap"
 msgstr ""
 
-#: source/php/Admin/FilterRestrictions.php:125
+#: source/php/Admin/FilterRestrictions.php:36
+msgid "Date from"
+msgstr ""
+
+#: source/php/Admin/FilterRestrictions.php:37
+msgid "Date to"
+msgstr ""
+
+#: source/php/Admin/FilterRestrictions.php:145
 msgid "All"
 msgstr ""
 
-#: source/php/Admin/FilterRestrictions.php:127
+#: source/php/Admin/FilterRestrictions.php:147
 msgid "Private"
 msgstr ""
 
-#: source/php/Admin/FilterRestrictions.php:128
+#: source/php/Admin/FilterRestrictions.php:148
 msgid "Pending Review"
 msgstr ""
 
-#: source/php/Admin/FilterRestrictions.php:131
+#: source/php/Admin/FilterRestrictions.php:151
 msgid "Trash"
 msgstr ""
 
-#: source/php/Admin/FilterRestrictions.php:183
+#: source/php/Admin/FilterRestrictions.php:203
 #: source/php/Taxonomy/EventCategories.php:19
 #: source/php/Taxonomy/EventCategories.php:58
 #: source/php/Taxonomy/LocationCategories.php:19
 msgid "All categories"
 msgstr ""
 
-#: source/php/Admin/FilterRestrictions.php:224
+#: source/php/Admin/FilterRestrictions.php:244
 #: source/php/Taxonomy/UserGroups.php:82
 msgid "All groups"
 msgstr ""
 
-#: source/php/Admin/FilterRestrictions.php:270
+#: source/php/Admin/FilterRestrictions.php:291
 msgid "Time interval"
 msgstr ""
 
-#: source/php/Admin/FilterRestrictions.php:271
+#: source/php/Admin/FilterRestrictions.php:292
 msgid "Today"
 msgstr ""
 
-#: source/php/Admin/FilterRestrictions.php:272
+#: source/php/Admin/FilterRestrictions.php:293
 msgid "Tomorrow"
 msgstr ""
 
-#: source/php/Admin/FilterRestrictions.php:273
+#: source/php/Admin/FilterRestrictions.php:294
 msgid "This week"
 msgstr ""
 
-#: source/php/Admin/FilterRestrictions.php:274
+#: source/php/Admin/FilterRestrictions.php:295
 msgid "This month"
 msgstr ""
 
-#: source/php/Admin/FilterRestrictions.php:275
+#: source/php/Admin/FilterRestrictions.php:296
 msgid "Passed events"
 msgstr ""
 
@@ -2252,91 +2260,91 @@ msgstr ""
 msgid "Guide editor"
 msgstr ""
 
-#: source/php/App.php:207
+#: source/php/App.php:222
 msgid "\"Title\" is missing"
 msgstr ""
 
-#: source/php/App.php:208
+#: source/php/App.php:223
 msgid "\"Featured\" image is missing"
 msgstr ""
 
-#: source/php/App.php:209
+#: source/php/App.php:224
 msgid "Create new organizer"
 msgstr ""
 
-#: source/php/App.php:210
+#: source/php/App.php:225
 msgid "Create new sponsor"
 msgstr ""
 
-#: source/php/App.php:211
+#: source/php/App.php:226
 msgid "Create new location"
 msgstr ""
 
-#: source/php/App.php:212 source/php/App.php:213
+#: source/php/App.php:227 source/php/App.php:228
 msgid "Create new membership card"
 msgstr ""
 
-#: source/php/App.php:214
+#: source/php/App.php:229
 msgid "Close"
 msgstr ""
 
-#: source/php/App.php:215
+#: source/php/App.php:230
 msgid "Add images"
 msgstr ""
 
-#: source/php/App.php:216
+#: source/php/App.php:231
 msgid "Imported data"
 msgstr ""
 
-#: source/php/App.php:220
+#: source/php/App.php:235
 msgid "Time until reload"
 msgstr ""
 
-#: source/php/App.php:221
+#: source/php/App.php:236
 msgid "Loading"
 msgstr ""
 
-#: source/php/App.php:222
+#: source/php/App.php:237
 msgid "Choose time"
 msgstr ""
 
-#: source/php/App.php:223
+#: source/php/App.php:238
 msgid "Time"
 msgstr ""
 
-#: source/php/App.php:224
+#: source/php/App.php:239
 msgid "Hour"
 msgstr ""
 
-#: source/php/App.php:225
+#: source/php/App.php:240
 msgid "Minute"
 msgstr ""
 
-#: source/php/App.php:226
+#: source/php/App.php:241
 msgid "Done"
 msgstr ""
 
-#: source/php/App.php:227
+#: source/php/App.php:242
 msgid "Now"
 msgstr ""
 
-#: source/php/App.php:228
+#: source/php/App.php:243
 msgid "with similar name"
 msgstr ""
 
-#: source/php/App.php:235
+#: source/php/App.php:250
 msgid "To upload an image, you need to confirm the statements below"
 msgstr ""
 
-#: source/php/App.php:236
+#: source/php/App.php:251
 msgid "I have the right to use this image to promote this event."
 msgstr ""
 
-#: source/php/App.php:237
+#: source/php/App.php:252
 msgid "Are there identifiable persons on the image/images?"
 msgstr ""
 
-#: source/php/App.php:238
+#: source/php/App.php:253
 msgid ""
 "They have accepted that the image is used to promote this event and have "
 "been informed that after the image has been added to the database, it may "
@@ -2517,79 +2525,79 @@ msgstr ""
 msgid "Event creation failed, could not find original event"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:591
+#: source/php/PostTypes/Events.php:589
 msgid "Create similar item"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:591
+#: source/php/PostTypes/Events.php:589
 msgid "Are you sure you want to clone this event?"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:591
+#: source/php/PostTypes/Events.php:589
 msgid "Clone"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:609
+#: source/php/PostTypes/Events.php:606
 #, php-format
 msgid ""
 "This is a duplicate of the event: %s. If this is a new occasion for the "
 "same event, please %s and republish the original event"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:609
+#: source/php/PostTypes/Events.php:606
 msgid "edit"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:631
+#: source/php/PostTypes/Events.php:628
 msgid "Guidelines"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:632
+#: source/php/PostTypes/Events.php:629
 msgid "Please read the guidelines below before publishing your event."
 msgstr ""
 
-#: source/php/PostTypes/Events.php:633
+#: source/php/PostTypes/Events.php:630
 msgid ""
 "Do not enter information that refers to information in another text field. "
 "It is not certain that all fields will be presented to the consumer and "
 "would thefore be missguiding."
 msgstr ""
 
-#: source/php/PostTypes/Events.php:634
+#: source/php/PostTypes/Events.php:631
 msgid "Plain language tips"
 msgstr ""
 
-#: source/php/PostTypes/Events.php:635
+#: source/php/PostTypes/Events.php:632
 msgid "Write the most important first."
 msgstr ""
 
-#: source/php/PostTypes/Events.php:636
+#: source/php/PostTypes/Events.php:633
 msgid "Use words that you think the readers understand."
 msgstr ""
 
-#: source/php/PostTypes/Events.php:637
+#: source/php/PostTypes/Events.php:634
 msgid "Write short and concise."
 msgstr ""
 
-#: source/php/PostTypes/Events.php:661
+#: source/php/PostTypes/Events.php:658
 msgid ""
 "CBIS have not imported any events for atleast 7 days. Please control the "
 "importer."
 msgstr ""
 
-#: source/php/PostTypes/Events.php:685
+#: source/php/PostTypes/Events.php:682
 msgid ""
 "XCAP have not imported any events for atleast 7 days. Please control the "
 "importer."
 msgstr ""
 
-#: source/php/PostTypes/Events.php:709
+#: source/php/PostTypes/Events.php:706
 msgid ""
 "Transticket have not imported any events for atleast 7 days. Please "
 "control the importer."
 msgstr ""
 
-#: source/php/PostTypes/Events.php:785
+#: source/php/PostTypes/Events.php:782
 msgid "Under processing"
 msgstr ""
 
