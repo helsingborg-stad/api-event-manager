@@ -75,6 +75,12 @@
   border: 1px solid #ccc;
   border-right: 0px; }
 
+input[name="restrictDateFrom"], input[name="restrictDateTo"] {
+  line-height: 28px;
+  height: 28px;
+  margin: 0;
+  width: 145px; }
+
 .acceptAndDeny .hidden {
   display: none; }
 
