@@ -86,7 +86,7 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
         add_filter('views_edit-event', array($this, 'addImportButtons'));
 
         add_action('save_post', array($this, 'saveEventOccasions'), 10, 3);
-        add_action('save_post', array($this, 'saveRecurringEvents'), 10, 3);
+        add_action('save_post', array($this, 'saveRecurringEvents'), 11, 3);
         add_action('save_post', array($this, 'extractEventTags'), 10, 3);
 
         add_action('delete_post', array($this, 'deleteEventOccasions'), 10);
@@ -157,16 +157,15 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
             return;
         }
 
+        global $wpdb;
+        $dbTable = $wpdb->prefix . "occasions";
+        $wpdb->delete($dbTable, array('event' => $post_id ), array('%d'));
+
         // Get occasions
         $occasions = get_field('occasions', $post_id);
-        if (!is_array($occasions)) {
+        if (!is_array($occasions) || empty($occasions)) {
             return;
         }
-
-        global $wpdb;
-
-        $dbTable = $wpdb->prefix . "occasions";
-        $wpdb->delete($dbTable, array( 'event' => $post_id ), array('%d'));
 
         foreach ($occasions as $occasion) {
             $timestampStart = strtotime($occasion['start_date']);
@@ -213,10 +212,11 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
             $startTime = $rule['rcr_start_time'];
             $endTime = $rule['rcr_end_time'];
             $doorTime = $rule['rcr_door_time'];
+            $weekInterval = $rule['rcr_weekly_interval'];
 
             // Get recurring dates
             $recurringDates = array();
-            for ($j = strtotime($weekday, strtotime($startDate)); $j <= strtotime($endDate); $j = strtotime('+1 week', $j)) {
+            for ($j = strtotime($weekday, strtotime($startDate)); $j <= strtotime($endDate); $j = strtotime('+' . $weekInterval . ' week', $j)) {
                 $recurringDates[] = $j;
             }
 
@@ -236,7 +236,7 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
                 $door = null;
 
                 if (!empty($doorTime)) {
-                    $door =strtotime(date('Y-m-d', $date) . ' ' . $doorTime);
+                    $door = strtotime(date('Y-m-d', $date) . ' ' . $doorTime);
                 }
 
                 $wpdb->insert(
