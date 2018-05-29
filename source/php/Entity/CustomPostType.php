@@ -46,6 +46,7 @@ abstract class CustomPostType
         add_filter('post_updated_messages', array($this, 'postPublishedMsg'));
         add_action('admin_menu', array($this, 'removePublishBox'));
         add_filter('acf/update_value/name=user_groups', array($this, 'updateuserGroups'), 10, 3);
+        add_filter('wp_default_editor', function() { return 'tinymce'; });
     }
 
     /**
