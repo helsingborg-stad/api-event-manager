@@ -34,12 +34,31 @@ ImportEvents.Admin.Fields = (function ($) {
                 startDate = $('div[data-name="start_date"] .input-alt', $target).val(),
                 endDate = $('div[data-name="end_date"] .input-alt', $target).val(),
                 doorTime = $('div[data-name="door_time"] .input-alt', $target).val(),
-                $clonedRow = $('[data-name="occasions"] table tbody').children('tr.acf-row:not(.acf-clone)').last();
+                status = $('div[data-name="status"] input:checked', $target).val(),
+                exceptionInfo = $('div[data-name="occ_exeption_information"] input', $target).val(),
+                contentMode = $('div[data-name="content_mode"] input:checked', $target).val(),
+                tinyMceId = $('textarea[class="wp-editor-area"]', $target).attr('id'),
+                tinyeMceContent = '';
 
+            if (typeof tinyMCE !== 'undefined') {
+                tinyeMceContent = tinymce.get(tinyMceId).getContent();
+            }
+
+            // Update the new occasion with cloned values
             setTimeout(function () {
+                var $clonedRow = $('[data-name="occasions"] table tbody').children('tr.acf-row:not(.acf-clone)').last(),
+                    newTinyMceId = $('textarea[class="wp-editor-area"]', $clonedRow).attr('id');
+
                 $('div[data-name="start_date"] .hasDatepicker', $clonedRow).datetimepicker('setDate', startDate);
                 $('div[data-name="end_date"] .hasDatepicker', $clonedRow).datetimepicker('setDate', endDate);
                 $('div[data-name="door_time"] .hasDatepicker', $clonedRow).datetimepicker('setDate', doorTime);
+                $('input[value="' + status + '"]', $clonedRow).attr('checked', 'checked').trigger('change');
+                $('div[data-name="occ_exeption_information"] input', $clonedRow).val(exceptionInfo);
+                $('input[value="' + contentMode + '"]', $clonedRow).attr('checked', 'checked').trigger('change');
+
+                if (typeof tinyMCE !== 'undefined') {
+                    tinymce.get(newTinyMceId).setContent(tinyeMceContent);
+                }
             }, 0);
         });
     };
