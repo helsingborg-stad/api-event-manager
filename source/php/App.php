@@ -251,6 +251,7 @@ class App
             'promote_event'         => __("I have the right to use this image to promote this event.", 'event-manager'),
             'identifiable_persons'  => __("Are there identifiable persons on the image/images?", 'event-manager'),
             'persons_approve'       => __("They have accepted that the image is used to promote this event and have been informed that after the image has been added to the database, it may appear in different channels to promote the event.", 'event-manager'),
+            'duplicate_occasion'       => __("Duplicate occasion", 'event-manager'),
         ));
     }
 

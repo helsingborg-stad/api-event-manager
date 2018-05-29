@@ -10,6 +10,7 @@ ImportEvents.Admin.Fields = (function ($) {
             this.locationGmaps();
             this.eventDatepickerRange();
             this.eventDateExceptions();
+            this.duplicateOccasion();
 
             // Remove .button-primary from acf-buttons
             $('.acf-button').removeClass('button-primary');
@@ -18,11 +19,37 @@ ImportEvents.Admin.Fields = (function ($) {
     }
 
     /**
+     * Adds a button to duplicate occasions
+     */
+    Fields.prototype.duplicateOccasion = function () {
+        $('.acf-field-57611277ef032').each(function () {
+            $(this).after('<div class="acf-field"><a href="#" class="duplicateOccasion button">' + eventmanager.duplicate_occasion + '</a></div>');
+        });
+
+        $(document).on('click', '.duplicateOccasion', function (e) {
+            e.preventDefault();
+            $('a[data-event="add-row"]', '.acf-field-5761106783967').last().trigger('click');
+
+            var $target = $(e.target).closest('.acf-row'),
+                startDate = $('div[data-name="start_date"] .input-alt', $target).val(),
+                endDate = $('div[data-name="end_date"] .input-alt', $target).val(),
+                doorTime = $('div[data-name="door_time"] .input-alt', $target).val(),
+                $clonedRow = $('[data-name="occasions"] table tbody').children('tr.acf-row:not(.acf-clone)').last();
+
+            setTimeout(function () {
+                $('div[data-name="start_date"] .hasDatepicker', $clonedRow).datetimepicker('setDate', startDate);
+                $('div[data-name="end_date"] .hasDatepicker', $clonedRow).datetimepicker('setDate', endDate);
+                $('div[data-name="door_time"] .hasDatepicker', $clonedRow).datetimepicker('setDate', doorTime);
+            }, 0);
+        });
+    };
+
+    /**
      * Toggle sync event, adds "blocking" elements to fields to prevent them beeing edited
      * if sync is activated
      * @return {void}
      */
-    Fields.prototype.syncCheckBox = function() {
+    Fields.prototype.syncCheckBox = function () {
         $('#sync-meta-box input[type="checkbox"]').on('change', function () {
             if ($('#sync-meta-box input[type="checkbox"]').is(':checked')) {
                 $('body').addClass('no-sync');
@@ -39,8 +66,8 @@ ImportEvents.Admin.Fields = (function ($) {
      * Hides "main organizer" checkbox for other orngaizer rows than the one that's checked
      * @return {void}
      */
-    Fields.prototype.mainOrganizerCheckBox = function() {
-        $('.acf-field[data-name="main_organizer"] input[type="checkbox"]').each(function(i, obj) {
+    Fields.prototype.mainOrganizerCheckBox = function () {
+        $('.acf-field[data-name="main_organizer"] input[type="checkbox"]').each(function (i, obj) {
             if ($(this).prop('checked')) {
                 $('.acf-field[data-name="main_organizer"]').not($(this).closest('.acf-field[data-name="main_organizer"]')).addClass('main_organizer_hidden');
             }
@@ -59,13 +86,13 @@ ImportEvents.Admin.Fields = (function ($) {
      * Hide Google map on post type location if address data is missing
      * @return {void}
      */
-    Fields.prototype.locationGmaps = function() {
-        $('.acf-field[data-name="geo_map"] .acf-hidden').each(function(i, obj) {
+    Fields.prototype.locationGmaps = function () {
+        $('.acf-field[data-name="geo_map"] .acf-hidden').each(function (i, obj) {
             var address = $(this).find('.input-address').attr('value');
             var lat = $(this).find('.input-lat').attr('value');
             var lng = $(this).find('.input-lng').attr('value');
 
-            if (!address || !lat || !lng) {
+            if (!address || !lat || !lng) {
                 $('.acf-field[data-name="geo_map"]').hide();
             }
         });
@@ -75,7 +102,7 @@ ImportEvents.Admin.Fields = (function ($) {
      * Limits datepickers for endtime and door time according to the starttime
      * @return {void}
      */
-    Fields.prototype.eventDatepickerRange = function() {
+    Fields.prototype.eventDatepickerRange = function () {
         $(document).on('click', '.acf-field-576110e583969 .hasDatepicker, .acf-field-5761169e07309 .hasDatepicker', function () {
 
             var date = $(this).parentsUntil('.acf-fields').siblings('.start_date').find('.hasDatepicker').val();
@@ -90,7 +117,7 @@ ImportEvents.Admin.Fields = (function ($) {
 
             date = new Date(r[0], m, r[2], 0, 0, 0);
 
-            if (Object.prototype.toString.call(date) === "[object Date]" ) {
+            if (Object.prototype.toString.call(date) === "[object Date]") {
                 if (!isNaN(date.getTime())) {
                     var year = date.getFullYear();
                     var month = date.getMonth();
@@ -111,7 +138,7 @@ ImportEvents.Admin.Fields = (function ($) {
                     }
 
                     $(this).datepicker("option", "defaultDate", date);
-                    $(this).datepicker({showOn:'focus'}).focus();
+                    $(this).datepicker({showOn: 'focus'}).focus();
                 }
             }
         });
@@ -121,7 +148,7 @@ ImportEvents.Admin.Fields = (function ($) {
      * Show recurring rules exeptions in date picker
      * @return {void}
      */
-    Fields.prototype.eventDateExceptions = function() {
+    Fields.prototype.eventDateExceptions = function () {
         $(document).on('click', '.acf-field-57d279f8db0cc .hasDatepicker', function (e) {
             $this = $(e.target).closest('.hasDatepicker');
 
@@ -161,7 +188,7 @@ ImportEvents.Admin.Fields = (function ($) {
      * @param  {[type]} dayOfWeek [description]
      * @return {[type]}           [description]
      */
-    Fields.prototype.getClosestDay = function(date, dayOfWeek) {
+    Fields.prototype.getClosestDay = function (date, dayOfWeek) {
         var resultDate = new Date(date.getTime());
         resultDate.setDate(date.getDate() + (7 + dayOfWeek - date.getDay()) % 7);
 
@@ -173,7 +200,7 @@ ImportEvents.Admin.Fields = (function ($) {
      * @param  {Date} date
      * @return {string}
      */
-    Fields.prototype.formattedDate = function(date) {
+    Fields.prototype.formattedDate = function (date) {
         var curr_date = ('0' + date.getDate()).slice(-2);
         var curr_month = ('0' + (date.getMonth() + 1)).slice(-2);
         var curr_year = date.getFullYear();
@@ -186,7 +213,7 @@ ImportEvents.Admin.Fields = (function ($) {
      * @param  {string} weekdayString Weekday as string
      * @return {int}                  Weekday as int
      */
-    Fields.prototype.weekdayNumber = function(weekdayString) {
+    Fields.prototype.weekdayNumber = function (weekdayString) {
         var weekday = [];
 
         weekday.monday = 1;
