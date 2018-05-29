@@ -356,6 +356,27 @@
                     'placeholder' => '',
                 ),
                 1 => array(
+                    'key' => 'field_5b0d3c9bef44f',
+                    'label' => __('Weekly interval', 'event-manager'),
+                    'name' => 'rcr_weekly_interval',
+                    'type' => 'number',
+                    'instructions' => __('Enter the weekly interval when the event occurs. 1 equals every week.', 'event-manager'),
+                    'required' => 1,
+                    'conditional_logic' => 0,
+                    'wrapper' => array(
+                        'width' => '',
+                        'class' => '',
+                        'id' => '',
+                    ),
+                    'default_value' => 1,
+                    'placeholder' => '',
+                    'prepend' => '',
+                    'append' => '',
+                    'min' => 1,
+                    'max' => 52,
+                    'step' => 1,
+                ),
+                2 => array(
                     'key' => 'field_57d277153bf4f',
                     'label' => __('Start time', 'event-manager'),
                     'name' => 'rcr_start_time',
@@ -371,7 +392,7 @@
                     'display_format' => 'H:i',
                     'return_format' => 'H:i',
                 ),
-                2 => array(
+                3 => array(
                     'key' => 'field_57d2777b3bf50',
                     'label' => __('End time', 'event-manager'),
                     'name' => 'rcr_end_time',
@@ -387,7 +408,7 @@
                     'display_format' => 'H:i',
                     'return_format' => 'H:i',
                 ),
-                3 => array(
+                4 => array(
                     'key' => 'field_57d6720f72407',
                     'label' => __('Door time', 'event-manager'),
                     'name' => 'rcr_door_time',
@@ -403,7 +424,7 @@
                     'display_format' => 'H:i',
                     'return_format' => 'H:i',
                 ),
-                4 => array(
+                5 => array(
                     'key' => 'field_57d660a687234',
                     'label' => __('Start date', 'event-manager'),
                     'name' => 'rcr_start_date',
@@ -420,7 +441,7 @@
                     'return_format' => 'Y-m-d',
                     'first_day' => 1,
                 ),
-                5 => array(
+                6 => array(
                     'key' => 'field_57d2787b3bf51',
                     'label' => __('End date', 'event-manager'),
                     'name' => 'rcr_end_date',
@@ -437,7 +458,7 @@
                     'return_format' => 'Y-m-d',
                     'first_day' => 1,
                 ),
-                6 => array(
+                7 => array(
                     'key' => 'field_57d279addb0cb',
                     'label' => __('Exceptions', 'event-manager'),
                     'name' => 'rcr_exceptions',

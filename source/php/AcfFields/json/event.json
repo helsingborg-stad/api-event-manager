@@ -351,6 +351,27 @@
                     "placeholder": ""
                 },
                 {
+                    "key": "field_5b0d3c9bef44f",
+                    "label": "Weekly interval",
+                    "name": "rcr_weekly_interval",
+                    "type": "number",
+                    "instructions": "Enter the weekly interval when the event occurs. 1 equals every week.",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": 1,
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "min": 1,
+                    "max": 52,
+                    "step": 1
+                },
+                {
                     "key": "field_57d277153bf4f",
                     "label": "Start time",
                     "name": "rcr_start_time",
