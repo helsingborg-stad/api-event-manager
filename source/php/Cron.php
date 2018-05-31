@@ -4,12 +4,12 @@ namespace HbgEventImporter;
 
 class Cron
 {
+    public static $postTypeSlug = 'event';
+
     public function __construct()
     {
-        // Register import events cron action
         add_action('import_events_daily', array($this, 'startImport'));
-
-        // Set api keys
+        add_action('remove_expired_events', array($this, 'expiredEvents'));
         add_action('admin_enqueue_scripts', array($this, 'setApiKeys'));
     }
 
@@ -20,6 +20,7 @@ class Cron
     public static function addCronJob()
     {
         wp_schedule_event(time(), 'hourly', 'import_events_daily');
+        wp_schedule_event(strtotime('tomorrow +3 hours'), 'daily', 'remove_expired_events');
     }
 
     /**
@@ -29,6 +30,86 @@ class Cron
     public static function removeCronJob()
     {
         wp_clear_scheduled_hook('import_events_daily');
+        wp_clear_scheduled_hook('remove_expired_events');
+    }
+
+    /**
+     * Cron method for removing expired events
+     * @return void
+     */
+    public function expiredEvents()
+    {
+        $this->removeExpiredOccasions();
+        $this->trashExpiredEvents();
+    }
+
+    /**
+     * Remove expired occasions from database
+     * @return void
+     */
+    public function removeExpiredOccasions()
+    {
+        global $wpdb;
+        $dateLimit = strtotime('midnight now') - 1;
+
+        // Get all passed occasions from database
+        $dbTable = $wpdb->prefix . 'occasions';
+        $query = "
+            SELECT * FROM $dbTable
+            WHERE timestamp_end < {$dateLimit}
+            ORDER BY timestamp_start DESC
+        ";
+        $occasions = $wpdb->get_results($query, ARRAY_A);
+
+        if (!is_array($occasions) || empty($occasions)) {
+            return;
+        }
+
+        // Delete all passed occasions
+        foreach ($occasions as $occasion) {
+            $id = $occasion['ID'];
+            $wpdb->delete($dbTable, array('ID' => $id));
+        }
+
+        return;
+    }
+
+    /**
+     * Trash expired events
+     * @return void
+     */
+    public function trashExpiredEvents()
+    {
+        global $wpdb;
+        // Get all events from database
+        $query = "
+            SELECT ID FROM $wpdb->posts 
+            WHERE post_type = %s 
+            AND post_status = %s
+        ";
+        $completeQuery = $wpdb->prepare($query, self::$postTypeSlug, 'publish');
+        $events = $wpdb->get_results($completeQuery);
+
+        if (count($events) == 0) {
+            return;
+        }
+
+        $dbTable = $wpdb->prefix . 'occasions';
+        $query = "
+            SELECT ID, event FROM $dbTable 
+            WHERE event = %s 
+        ";
+        // Loop through events and check if any occasions exist
+        foreach ($events as $event) {
+            $preparedQuery = $wpdb->prepare($query, $event->ID);
+            $results = $wpdb->get_results($preparedQuery);
+            // Move event to trash if occasions is empty
+            if (count($results) == 0) {
+                wp_trash_post((int)$event->ID);
+            }
+        }
+
+        return;
     }
 
     /**
