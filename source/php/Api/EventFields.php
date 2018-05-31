@@ -6,6 +6,9 @@ namespace HbgEventImporter\Api;
  * Adding meta fields to event post type
  */
 
+ini_set('memory_limit', '256M');
+ini_set('default_socket_timeout', 60*10);
+
 class EventFields extends Fields
 {
     private $postType = 'event';
