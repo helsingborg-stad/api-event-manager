@@ -75,8 +75,8 @@ $acfExportManager->autoExport(array(
 $acfExportManager->import();
 
 // Activation / deactivation hooks
-register_activation_hook(plugin_basename(__FILE__), '\HbgEventImporter\App::addCronJob');
-register_deactivation_hook(plugin_basename(__FILE__), '\HbgEventImporter\App::removeCronJob');
+register_activation_hook(plugin_basename(__FILE__), '\HbgEventImporter\Cron::addCronJob');
+register_deactivation_hook(plugin_basename(__FILE__), '\HbgEventImporter\Cron::removeCronJob');
 register_activation_hook(plugin_basename(__FILE__), '\HbgEventImporter\Admin\UserRoles::createUserRoles');
 register_deactivation_hook(plugin_basename(__FILE__), '\HbgEventImporter\Admin\UserRoles::removeCustomUserRoles');
 
@@ -85,10 +85,3 @@ register_activation_hook(plugin_basename(__FILE__), '\HbgEventImporter\App::init
 
 // Start application
 $apiEventManager = new HbgEventImporter\App();
-
-/*
-add_action('init', function () use ($apiEventManager) {
-    //new \HbgEventImporter\Parser\CbisEvent('http://api.cbis.citybreak.com/Products.asmx?wsdl', $apiEventManager->getCbisKeys()[0]);
-    new \HbgEventImporter\Parser\Xcap($apiEventManager->getXcapKeys()[0]['xcap_api_url'], $apiEventManager->getXcapKeys()[0]);
-});
-*/
