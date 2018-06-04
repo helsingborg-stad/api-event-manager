@@ -60,7 +60,8 @@
                 "package": "Packages",
                 "membership-card": "Membership cards",
                 "organizer": "Organizers",
-                "guide": "Guides"
+                "guide": "Guides",
+                "recommendation": "Recommendations"
             },
             "allow_custom": 0,
             "save_custom": 0,

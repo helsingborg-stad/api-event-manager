@@ -245,7 +245,7 @@ class UserRoles
     public function addCapabilities()
     {
         // Administrator
-        $postTypes = array('event', 'location', 'sponsor', 'package', 'membership-card', 'guide', 'organizer');
+        $postTypes = array('event', 'location', 'sponsor', 'package', 'membership-card', 'guide', 'organizer', 'recommendation');
         $role = get_role('administrator');
         foreach ($postTypes as $key => $type) {
             $role->add_cap('edit_' . $type);
@@ -288,7 +288,7 @@ class UserRoles
 	    }
 
         // Editor
-        $postTypes = array('event', 'location', 'sponsor', 'package', 'membership-card', 'guide', 'organizer');
+        $postTypes = array('event', 'location', 'sponsor', 'package', 'membership-card', 'guide', 'organizer', 'recommendation');
         $role = get_role('editor');
         foreach ($postTypes as $key => $type) {
             $role->add_cap('edit_' . $type);
@@ -325,7 +325,7 @@ class UserRoles
         }
 
         // Guide Administrator
-        $postTypes = array('guide', 'location');
+        $postTypes = array('guide', 'location', 'recommendation');
         $role = get_role('guide_administrator');
         if ($role) {
             foreach ($postTypes as $key => $type) {
@@ -346,7 +346,7 @@ class UserRoles
         }
 
         // Guide Editor
-        $postTypes = array('guide', 'location');
+        $postTypes = array('guide', 'location', 'recommendation');
         $role = get_role('guide_editor');
         if ($role) {
             foreach ($postTypes as $key => $type) {

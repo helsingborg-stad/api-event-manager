@@ -70,7 +70,8 @@ $acfExportManager->autoExport(array(
     'point-property' => 'group_5a2958bfd292c',
     'transticket' => 'group_5ae188afeb965',
     'arcgis' => 'group_5af54f9481184',
-    'internal_event' => 'group_5afecb1bf1b8d'
+    'internal_event' => 'group_5afecb1bf1b8d',
+    'recommendation' => 'group_5b15284158289'
 ));
 $acfExportManager->import();
 
