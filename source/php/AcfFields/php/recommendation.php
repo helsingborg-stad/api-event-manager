@@ -76,7 +76,7 @@
                 'class' => '',
                 'id' => '',
             ),
-            'message' => __('This recommendation har target group "kids".', 'event-manager'),
+            'message' => __('This recommendation has target group "kids".', 'event-manager'),
             'default_value' => 0,
             'ui' => 0,
             'ui_on_text' => '',
@@ -104,7 +104,7 @@
                 0 => array(
                     'key' => 'field_5b154d7019050',
                     'label' => __('Linkname', 'event-manager'),
-                    'name' => 'guide_object_link_title',
+                    'name' => 'link_title',
                     'type' => 'text',
                     'instructions' => '',
                     'required' => 0,
@@ -123,7 +123,7 @@
                 1 => array(
                     'key' => 'field_5b154d7019051',
                     'label' => __('Web adress', 'event-manager'),
-                    'name' => 'guide_object_link_url',
+                    'name' => 'link_url',
                     'type' => 'url',
                     'instructions' => '',
                     'required' => 0,
@@ -234,8 +234,8 @@
         ),
         10 => array(
             'key' => 'field_5b154723649a4',
-            'label' => __('Images', 'event-manager'),
-            'name' => 'images',
+            'label' => __('Gallery', 'event-manager'),
+            'name' => 'gallery',
             'type' => 'gallery',
             'instructions' => __('Multiple images in jpg or png format.', 'event-manager'),
             'required' => 0,
@@ -339,7 +339,7 @@
             'required' => 0,
             'conditional_logic' => 0,
             'wrapper' => array(
-                'width' => '20',
+                'width' => '33',
                 'class' => '',
                 'id' => '',
             ),
@@ -358,7 +358,7 @@
             'required' => 0,
             'conditional_logic' => 0,
             'wrapper' => array(
-                'width' => '20',
+                'width' => '33',
                 'class' => '',
                 'id' => '',
             ),
@@ -379,7 +379,7 @@
             'required' => 0,
             'conditional_logic' => 0,
             'wrapper' => array(
-                'width' => '37',
+                'width' => '33',
                 'class' => '',
                 'id' => '',
             ),
