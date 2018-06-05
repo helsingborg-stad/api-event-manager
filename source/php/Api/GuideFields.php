@@ -22,8 +22,6 @@ class GuideFields extends Fields
         //Api filter querys
         add_filter('rest_guide_query', array($this, 'addBeaconFilter'), 10, 2);
         add_filter('rest_prepare_guide', array($this, 'addObjectFilter'), 6000, 3);
-
-        add_filter('rest_guide_collection_params', array($this, 'guideCollectionParams'), 10, 1 );
     }
 
      /**
@@ -90,19 +88,6 @@ class GuideFields extends Fields
         }
 
         return $response;
-    }
-
-    /**
-     * Edit the Guide API collection parameters
-     * @param array $params Default params
-     * @return array
-     */
-    public function guideCollectionParams($params) {
-        if (isset($params['per_page']['default'])) {
-            $params['per_page']['default'] = 100;
-        }
-
-        return $params;
     }
 
     /**
