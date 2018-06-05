@@ -99,6 +99,55 @@
             "load_terms": 0,
             "return_format": "object",
             "multiple": 0
+        },
+        {
+            "key": "field_5b165c92514b8",
+            "label": "Select specific recommendations",
+            "name": "include_specific_recommendations",
+            "type": "true_false",
+            "instructions": "To select none, please switch to \"select specific items\" and leave specific items field blank.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 1,
+            "ui": 1,
+            "ui_on_text": "Select specific items",
+            "ui_off_text": "Include all items"
+        },
+        {
+            "key": "field_5b165c91514b7",
+            "label": "Include these recommendations",
+            "name": "included_recommendations",
+            "type": "post_object",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5b165c92514b8",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "post_type": [
+                "recommendation"
+            ],
+            "taxonomy": [],
+            "allow_null": 0,
+            "multiple": 1,
+            "return_format": "object",
+            "ui": 1
         }
     ],
     "location": [
