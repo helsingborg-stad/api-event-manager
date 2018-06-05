@@ -72,7 +72,7 @@
                 "class": "",
                 "id": ""
             },
-            "message": "This recommendation har target group \"kids\".",
+            "message": "This recommendation has target group \"kids\".",
             "default_value": 0,
             "ui": 0,
             "ui_on_text": "",
@@ -100,7 +100,7 @@
                 {
                     "key": "field_5b154d7019050",
                     "label": "Linkname",
-                    "name": "guide_object_link_title",
+                    "name": "link_title",
                     "type": "text",
                     "instructions": "",
                     "required": 0,
@@ -119,7 +119,7 @@
                 {
                     "key": "field_5b154d7019051",
                     "label": "Web adress",
-                    "name": "guide_object_link_url",
+                    "name": "link_url",
                     "type": "url",
                     "instructions": "",
                     "required": 0,
@@ -230,8 +230,8 @@
         },
         {
             "key": "field_5b154723649a4",
-            "label": "Images",
-            "name": "images",
+            "label": "Gallery",
+            "name": "gallery",
             "type": "gallery",
             "instructions": "Multiple images in jpg or png format.",
             "required": 0,
@@ -335,7 +335,7 @@
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
-                "width": "20",
+                "width": "33",
                 "class": "",
                 "id": ""
             },
@@ -354,7 +354,7 @@
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
-                "width": "20",
+                "width": "33",
                 "class": "",
                 "id": ""
             },
@@ -375,7 +375,7 @@
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
-                "width": "37",
+                "width": "33",
                 "class": "",
                 "id": ""
             },
