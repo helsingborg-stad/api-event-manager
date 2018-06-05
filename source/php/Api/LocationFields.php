@@ -135,7 +135,7 @@ class LocationFields extends Fields
      * Get value of latitude (auto or manual)
      * @return string Decimal value of latitude location
      */
-    public function getLatitude($object) : string
+    public function getLatitude($object)
     {
         if (get_field('manual_coordinates', $object['id'])) {
             return str_replace(",", ".", get_field('manual_latitude', $object['id']));
@@ -147,7 +147,7 @@ class LocationFields extends Fields
      * Get value of longitude (auto or manual)
      * @return string Decimal value of longitude location
      */
-    public function getLongitude($object) : string
+    public function getLongitude($object)
     {
         if (get_field('manual_coordinates', $object['id'])) {
             return str_replace(",", ".", get_field('manual_longitude', $object['id']));
