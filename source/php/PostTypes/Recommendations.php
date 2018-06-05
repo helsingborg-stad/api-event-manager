@@ -38,5 +38,20 @@ class Recommendations extends \HbgEventImporter\Entity\CustomPostType
             echo get_post_meta($postId, 'profile_name', true) ? get_post_meta($postId, 'profile_name', true) :  '';
         });
         $this->addTableColumn('date', __('Date', 'event-manager'));
+
+        add_action('save_post_' . self::$postTypeSlug, array($this, 'updateTaxonomies'), 11, 3);
+    }
+
+    /**
+     * Set default post meta
+     * @param int $postId The post ID.
+     * @param post $post The post object.
+     * @param bool $update Whether this is an existing post being updated or not.
+     */
+    public function updateTaxonomies($postId, $post, $update)
+    {
+        if (!$update) {
+            wp_set_post_terms($postId, array('Recommendation'), 'guidetype', false);
+        }
     }
 }
