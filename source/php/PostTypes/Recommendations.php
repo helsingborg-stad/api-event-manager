@@ -31,5 +31,12 @@ class Recommendations extends \HbgEventImporter\Entity\CustomPostType
                 'capability_type'      => self::$postTypeSlug,
             )
         );
+
+        $this->addTableColumn('cb', '<input type="checkbox">');
+        $this->addTableColumn('title', __('Title', 'event-manager'));
+        $this->addTableColumn('profile', __('Profile', 'event-manager'), true, function ($column, $postId) {
+            echo get_post_meta($postId, 'profile_name', true) ? get_post_meta($postId, 'profile_name', true) :  '';
+        });
+        $this->addTableColumn('date', __('Date', 'event-manager'));
     }
 }
