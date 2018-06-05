@@ -28,7 +28,7 @@ abstract class CustomPostType
         $this->nameSingular = $nameSingular;
         $this->slug = $slug;
         $this->args = $args;
-
+        
         // Register post type on init
         add_action('init', array($this, 'registerPostType'));
 
@@ -187,8 +187,13 @@ abstract class CustomPostType
             'menu_name'           => $this->namePlural,
         );
 
-        $this->args['labels'] = $labels;
-
+        // Merge if any custom labels is set
+        if (isset($this->args['labels']) && is_array($this->args['labels'])) {
+            $this->args['labels'] = array_merge($labels, $this->args['labels']);
+        } else {
+            $this->args['labels'] = $labels;
+        }
+        
         register_post_type($this->slug, $this->args);
 
         return $this->slug;
