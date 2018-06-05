@@ -39,6 +39,7 @@ class NavigationFields extends Fields
 
     public function combineGuideOrganisation($object, $field_name, $request)
     {
+        $result = array();
 
         $postRelations = $this->getGuideNavigationPostRelations((object) $object);
 
@@ -53,6 +54,14 @@ class NavigationFields extends Fields
         if (!empty($taxonomyRelations) && is_array($taxonomyRelations)) {
             foreach ($taxonomyRelations as $taxonomyRelation) {
                 $result[] = array('id' => $taxonomyRelation, 'type' => 'guidegroup');
+            }
+        }
+
+        $recommendationRelations = $this->getRecommendationNavigationPostRelations((object) $object);
+
+        if (!empty($recommendationRelations) && is_array($recommendationRelations)) {
+            foreach ($recommendationRelations as $recommendationRelation) {
+                $result[] = array('id' => $recommendationRelation, 'type' => 'recommendation');
             }
         }
 
@@ -84,6 +93,47 @@ class NavigationFields extends Fields
             }
         } else {
             $related = get_field('included_posts', $taxonomy->taxonomy. '_' . $taxonomy->id);
+
+            if (!is_null($related) && is_array($related) && !empty($related)) {
+                foreach ($related as $relation) {
+                    if (!isset($relation->ID)) {
+                        continue;
+                    }
+
+                    $result[] = $relation->ID;
+                }
+            }
+        }
+
+        return $result;
+    }
+
+
+    /**
+     * Get connected recommendations
+     * @return array
+     */
+    public function getRecommendationNavigationPostRelations($taxonomy)
+    {
+        $result = array();
+
+        if (!get_field('include_specific_recommendations', $taxonomy->taxonomy. '_' . $taxonomy->id)) {
+            $posts = get_posts(array(
+                'post_type' => 'recommendation',
+                'posts_per_page' => -1,
+            ));
+
+            if (!empty($posts) && is_array($posts)) {
+                foreach ($posts as $relation) {
+                    if (!isset($relation->ID)) {
+                        continue;
+                    }
+
+                    $result[] = $relation->ID;
+                }
+            }
+        } else {
+            $related = get_field('included_recommendations', $taxonomy->taxonomy. '_' . $taxonomy->id);
 
             if (!is_null($related) && is_array($related) && !empty($related)) {
                 foreach ($related as $relation) {
