@@ -26,9 +26,9 @@ class RecommendationFields extends Fields
         register_rest_field($this->postType,
             'title',
             array(
-                'get_callback'    => array($this, 'addPlaintextField'),
+                'get_callback' => array($this, 'addPlaintextField'),
                 'update_callback' => null,
-                'schema'          => null,
+                'schema' => null,
             )
         );
 
@@ -36,18 +36,192 @@ class RecommendationFields extends Fields
         register_rest_field($this->postType,
             'content',
             array(
-                'get_callback'    => array($this, 'addPlaintextField'),
+                'get_callback' => array($this, 'addPlaintextField'),
                 'update_callback' => null,
-                'schema'          => null,
+                'schema' => null,
             )
         );
 
-        // Replace group id with taxonomy name
+        // Navigation taxonomy
+        register_rest_field($this->postType,
+            'navigation',
+            array(
+                'get_callback' => array($this, 'getTaxonomyCallback'),
+                'update_callback' => null,
+                'schema' => null
+            )
+        );
+
+        // Guide type taxonomy
+        register_rest_field($this->postType,
+            'guidetype',
+            array(
+                'get_callback' => array($this, 'getTaxonomyCallback'),
+                'update_callback' => null,
+                'schema' => null
+            )
+        );
+
+        // Point Property taxonomy
+        register_rest_field($this->postType,
+            'property',
+            array(
+                'get_callback' => array($this, 'getTaxonomyCallback'),
+                'update_callback' => null,
+                'schema' => null
+            )
+        );
+
+        // User groups
         register_rest_field($this->postType,
             'user_groups',
             array(
                 'get_callback' => array($this, 'getTaxonomyCallback'),
-                'update_callback' => array($this, 'objectUpdateCallBack'),
+                'update_callback' => null,
+                'schema' => null
+            )
+        );
+
+        /* General tab */
+
+        // Tagline
+        register_rest_field($this->postType,
+            'tagline',
+            array(
+                'get_callback' => array($this, 'stringGetCallBack'),
+                'update_callback' => null,
+                'schema' => null
+            )
+        );
+
+        // Location for the recommendation
+        register_rest_field($this->postType,
+            'location',
+            array(
+                'get_callback' => array($this, 'locationData'),
+                'update_callback' => null,
+                'schema' => null
+            )
+        );
+
+        // Child friendly
+        register_rest_field($this->postType,
+            'child_friendly',
+            array(
+                'get_callback' => array($this, 'boolGetCallBack'),
+                'update_callback' => null,
+                'schema' => null
+            )
+        );
+
+        // Child friendly
+        register_rest_field($this->postType,
+            'links',
+            array(
+                'get_callback' => array($this, 'objectGetCallBack'),
+                'update_callback' => null,
+                'schema' => null
+            )
+        );
+
+        /* Profile tab */
+
+        // Profile name
+        register_rest_field($this->postType,
+            'profile_name',
+            array(
+                'get_callback' => array($this, 'stringGetCallBack'),
+                'update_callback' => null,
+                'schema' => null
+            )
+        );
+
+        // Profile quote
+        register_rest_field($this->postType,
+            'profile_quote',
+            array(
+                'get_callback' => array($this, 'stringGetCallBack'),
+                'update_callback' => null,
+                'schema' => null
+            )
+        );
+
+        // Profile image
+        register_rest_field($this->postType,
+            'profile_image',
+            array(
+                'get_callback' => array($this, 'objectGetCallBack'),
+                'update_callback' => null,
+                'schema' => null
+            )
+        );
+
+        /* Media tab */
+
+        // Gallery
+        register_rest_field($this->postType,
+            'gallery',
+            array(
+                'get_callback' => array($this, 'objectGetCallBack'),
+                'update_callback' => null,
+                'schema' => null
+            )
+        );
+
+        // Audio
+        register_rest_field($this->postType,
+            'audio',
+            array(
+                'get_callback' => array($this, 'objectGetCallBack'),
+                'update_callback' => null,
+                'schema' => null
+            )
+        );
+
+        // Video
+        register_rest_field($this->postType,
+            'video',
+            array(
+                'get_callback' => array($this, 'objectGetCallBack'),
+                'update_callback' => null,
+                'schema' => null
+            )
+        );
+
+        /* Beacon tab */
+
+        register_rest_field($this->postType,
+            'beacon_namespace',
+            array(
+                'get_callback' => array($this, 'stringGetCallBack'),
+                'update_callback' => null,
+                'schema' => null
+            )
+        );
+
+        register_rest_field($this->postType,
+            'beacon_id',
+            array(
+                'get_callback' => array($this, 'stringGetCallBack'),
+                'update_callback' => null,
+                'schema' => null
+            )
+        );
+
+        register_rest_field($this->postType,
+            'beacon_distance',
+            array(
+                'get_callback' => array($this, 'stringGetCallBack'),
+                'update_callback' => null,
+                'schema' => null
+            )
+        );
+
+        register_rest_field($this->postType,
+            'beacon_location',
+            array(
+                'get_callback' => array($this, 'locationData'),
+                'update_callback' => null,
                 'schema' => null
             )
         );
