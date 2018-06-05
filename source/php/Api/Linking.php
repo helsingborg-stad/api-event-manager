@@ -14,7 +14,7 @@ class Linking extends Fields
     {
         add_filter('rest_prepare_event', array($this, 'addOrganizers'), 10, 3);
         add_filter('rest_prepare_event', array($this, 'addEventGallery'), 15, 3);
-        add_filter('rest_prepare_event', array($this, 'addEventLocation'), 20, 3);
+        add_filter('rest_prepare_event', array($this, 'addLocation'), 20, 3);
         add_filter('rest_prepare_event', array($this, 'addEventAddLocations'), 20, 3);
         add_filter('rest_prepare_event', array($this, 'addEventSponsors'), 20, 3);
         add_filter('rest_prepare_event', array($this, 'addEventRelatedEvents'), 20, 3);
@@ -41,6 +41,10 @@ class Linking extends Fields
         add_filter('rest_prepare_guide', array($this, 'addEmbedLink'), 20, 3);
 
         add_filter('rest_prepare_organizer', array($this, 'addEmbedLink'), 20, 3);
+
+        add_filter('rest_prepare_recommendation', array($this, 'addEmbedLink'), 20, 3);
+        add_filter('rest_prepare_recommendation', array($this, 'addLocation'), 20, 3);
+        add_filter('rest_prepare_recommendation', array($this, 'addEventGallery'), 20, 3);
     }
 
     /**
@@ -101,7 +105,7 @@ class Linking extends Fields
      * @return  object
      * @version 0.3.2
      */
-    public function addEventLocation($response, $post, $request)
+    public function addLocation($response, $post, $request)
     {
         $location = get_post_meta($post->ID, 'location', true);
 
