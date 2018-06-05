@@ -29,6 +29,7 @@ class Recommendations extends \HbgEventImporter\Entity\CustomPostType
                 'supports'             => array('title', 'revisions', 'editor'),
                 'map_meta_cap'         => true,
                 'capability_type'      => self::$postTypeSlug,
+                'labels'               => array('menu_name' => __('Recommendation', 'event-manager'))
             )
         );
 
