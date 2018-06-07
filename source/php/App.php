@@ -17,12 +17,7 @@ class App
 
         // Add theme support.
         add_action('after_setup_theme', array($this, 'themeSupport'));
-
-        // Remove auto empty of trash
-        add_action('init', function () {
-            remove_action('wp_scheduled_delete', 'wp_scheduled_delete');
-        });
-
+        
         // Admin scripts
         add_action('admin_enqueue_scripts', array($this, 'enqueueStyles'));
         add_action('admin_enqueue_scripts', array($this, 'enqueueScripts'));
