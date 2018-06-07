@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "Project-Id-Version: Event Manager\n"
-"POT-Creation-Date: 2018-06-05 15:05+0200\n"
+"POT-Creation-Date: 2018-06-07 14:10+0200\n"
 "PO-Revision-Date: 2016-10-26 08:27+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -235,39 +235,39 @@ msgid "Activate user groups on selected post types."
 msgstr ""
 
 #: source/php/AcfFields/php/event-manager-settings.php:60
-#: source/php/App.php:231
+#: source/php/App.php:293
 msgid "Events"
 msgstr ""
 
 #: source/php/AcfFields/php/event-manager-settings.php:61
-#: source/php/App.php:232 source/php/PostTypes/Locations.php:12
+#: source/php/App.php:294 source/php/PostTypes/Locations.php:12
 msgid "Locations"
 msgstr ""
 
 #: source/php/AcfFields/php/event-manager-settings.php:62
-#: source/php/AcfFields/php/event.php:696 source/php/App.php:243
+#: source/php/AcfFields/php/event.php:696 source/php/App.php:305
 #: source/php/PostTypes/Sponsors.php:10
 msgid "Sponsors"
 msgstr ""
 
 #: source/php/AcfFields/php/event-manager-settings.php:63
-#: source/php/App.php:244 source/php/PostTypes/Packages.php:10
+#: source/php/App.php:306 source/php/PostTypes/Packages.php:10
 msgid "Packages"
 msgstr ""
 
 #: source/php/AcfFields/php/event-manager-settings.php:64
-#: source/php/App.php:245
+#: source/php/App.php:307
 msgid "Membership cards"
 msgstr ""
 
 #: source/php/AcfFields/php/event-manager-settings.php:65
-#: source/php/AcfFields/php/event.php:633 source/php/App.php:233
+#: source/php/AcfFields/php/event.php:633 source/php/App.php:295
 #: source/php/PostTypes/Organizers.php:10
 msgid "Organizers"
 msgstr ""
 
 #: source/php/AcfFields/php/event-manager-settings.php:66
-#: source/php/App.php:246 source/php/PostTypes/Guides.php:12
+#: source/php/App.php:308 source/php/PostTypes/Guides.php:12
 msgid "Guides"
 msgstr ""
 
@@ -338,7 +338,7 @@ msgstr ""
 #: source/php/PostTypes/MembershipCards.php:35
 #: source/php/PostTypes/Organizers.php:41
 #: source/php/PostTypes/Packages.php:49
-#: source/php/PostTypes/Recommendations.php:40
+#: source/php/PostTypes/Recommendations.php:41
 #: source/php/PostTypes/Sponsors.php:35
 msgid "Date"
 msgstr ""
@@ -1820,46 +1820,62 @@ msgid "Include in category"
 msgstr ""
 
 #: source/php/AcfFields/php/guide-navigation.php:10
-msgid "Select specific items (posts)"
+msgid "Layout"
 msgstr ""
 
 #: source/php/AcfFields/php/guide-navigation.php:13
-#: source/php/AcfFields/php/guide-navigation.php:63
-#: source/php/AcfFields/php/guide-navigation.php:112
+msgid "Select layout for this navigation."
+msgstr ""
+
+#: source/php/AcfFields/php/guide-navigation.php:22
+msgid "Cards"
+msgstr ""
+
+#: source/php/AcfFields/php/guide-navigation.php:23
+msgid "Horizontal"
+msgstr ""
+
+#: source/php/AcfFields/php/guide-navigation.php:37
+msgid "Select specific items (posts)"
+msgstr ""
+
+#: source/php/AcfFields/php/guide-navigation.php:40
+#: source/php/AcfFields/php/guide-navigation.php:90
+#: source/php/AcfFields/php/guide-navigation.php:139
 msgid ""
 "To select none, please switch to \"select specific items\" and leave "
 "specific items field blank."
 msgstr ""
 
-#: source/php/AcfFields/php/guide-navigation.php:24
-#: source/php/AcfFields/php/guide-navigation.php:74
-#: source/php/AcfFields/php/guide-navigation.php:123
+#: source/php/AcfFields/php/guide-navigation.php:51
+#: source/php/AcfFields/php/guide-navigation.php:101
+#: source/php/AcfFields/php/guide-navigation.php:150
 msgid "Select specific items"
 msgstr ""
 
-#: source/php/AcfFields/php/guide-navigation.php:25
-#: source/php/AcfFields/php/guide-navigation.php:75
-#: source/php/AcfFields/php/guide-navigation.php:124
+#: source/php/AcfFields/php/guide-navigation.php:52
+#: source/php/AcfFields/php/guide-navigation.php:102
+#: source/php/AcfFields/php/guide-navigation.php:151
 msgid "Include all items"
 msgstr ""
 
-#: source/php/AcfFields/php/guide-navigation.php:29
+#: source/php/AcfFields/php/guide-navigation.php:56
 msgid "Include these items (posts)"
 msgstr ""
 
-#: source/php/AcfFields/php/guide-navigation.php:60
+#: source/php/AcfFields/php/guide-navigation.php:87
 msgid "Select specific items (taxonomy)"
 msgstr ""
 
-#: source/php/AcfFields/php/guide-navigation.php:79
+#: source/php/AcfFields/php/guide-navigation.php:106
 msgid "Include these items (taxonomy)"
 msgstr ""
 
-#: source/php/AcfFields/php/guide-navigation.php:109
+#: source/php/AcfFields/php/guide-navigation.php:136
 msgid "Select specific recommendations"
 msgstr ""
 
-#: source/php/AcfFields/php/guide-navigation.php:128
+#: source/php/AcfFields/php/guide-navigation.php:155
 msgid "Include these recommendations"
 msgstr ""
 
@@ -1875,11 +1891,11 @@ msgstr ""
 msgid "Select if this is an internal event."
 msgstr ""
 
-#: source/php/AcfFields/php/internal_event.php:24 source/php/App.php:247
+#: source/php/AcfFields/php/internal_event.php:24 source/php/App.php:309
 msgid "Yes"
 msgstr ""
 
-#: source/php/AcfFields/php/internal_event.php:25 source/php/App.php:248
+#: source/php/AcfFields/php/internal_event.php:25 source/php/App.php:310
 msgid "No"
 msgstr ""
 
@@ -2039,7 +2055,7 @@ msgstr ""
 #: source/php/PostTypes/MembershipCards.php:34
 #: source/php/PostTypes/Organizers.php:34
 #: source/php/PostTypes/Packages.php:34
-#: source/php/PostTypes/Recommendations.php:36
+#: source/php/PostTypes/Recommendations.php:37
 #: source/php/PostTypes/Sponsors.php:34
 msgid "Title"
 msgstr ""
@@ -2084,6 +2100,7 @@ msgstr ""
 
 #: source/php/AcfFields/php/recommendation.php:6
 #: source/php/PostTypes/Recommendations.php:13
+#: source/php/PostTypes/Recommendations.php:32
 msgid "Recommendation"
 msgstr ""
 
@@ -2107,7 +2124,7 @@ msgid ""
 msgstr ""
 
 #: source/php/AcfFields/php/recommendation.php:143
-#: source/php/PostTypes/Recommendations.php:37
+#: source/php/PostTypes/Recommendations.php:38
 msgid "Profile"
 msgstr ""
 
@@ -2382,98 +2399,98 @@ msgstr ""
 msgid "Guide editor"
 msgstr ""
 
-#: source/php/App.php:221
+#: source/php/App.php:283
 msgid "\"Title\" is missing"
 msgstr ""
 
-#: source/php/App.php:222
+#: source/php/App.php:284
 msgid "\"Featured\" image is missing"
 msgstr ""
 
-#: source/php/App.php:223
+#: source/php/App.php:285
 msgid "Create new organizer"
 msgstr ""
 
-#: source/php/App.php:224
+#: source/php/App.php:286
 msgid "Create new sponsor"
 msgstr ""
 
-#: source/php/App.php:225
+#: source/php/App.php:287
 msgid "Create new location"
 msgstr ""
 
-#: source/php/App.php:226 source/php/App.php:227
+#: source/php/App.php:288 source/php/App.php:289
 msgid "Create new membership card"
 msgstr ""
 
-#: source/php/App.php:228
+#: source/php/App.php:290
 msgid "Close"
 msgstr ""
 
-#: source/php/App.php:229
+#: source/php/App.php:291
 msgid "Add images"
 msgstr ""
 
-#: source/php/App.php:230
+#: source/php/App.php:292
 msgid "Imported data"
 msgstr ""
 
-#: source/php/App.php:234
+#: source/php/App.php:296
 msgid "Time until reload"
 msgstr ""
 
-#: source/php/App.php:235
+#: source/php/App.php:297
 msgid "Loading"
 msgstr ""
 
-#: source/php/App.php:236
+#: source/php/App.php:298
 msgid "Choose time"
 msgstr ""
 
-#: source/php/App.php:237
+#: source/php/App.php:299
 msgid "Time"
 msgstr ""
 
-#: source/php/App.php:238
+#: source/php/App.php:300
 msgid "Hour"
 msgstr ""
 
-#: source/php/App.php:239
+#: source/php/App.php:301
 msgid "Minute"
 msgstr ""
 
-#: source/php/App.php:240
+#: source/php/App.php:302
 msgid "Done"
 msgstr ""
 
-#: source/php/App.php:241
+#: source/php/App.php:303
 msgid "Now"
 msgstr ""
 
-#: source/php/App.php:242
+#: source/php/App.php:304
 msgid "with similar name"
 msgstr ""
 
-#: source/php/App.php:249
+#: source/php/App.php:311
 msgid "To upload an image, you need to confirm the statements below"
 msgstr ""
 
-#: source/php/App.php:250
+#: source/php/App.php:312
 msgid "I have the right to use this image to promote this event."
 msgstr ""
 
-#: source/php/App.php:251
+#: source/php/App.php:313
 msgid "Are there identifiable persons on the image/images?"
 msgstr ""
 
-#: source/php/App.php:252
+#: source/php/App.php:314
 msgid ""
 "They have accepted that the image is used to promote this event and have "
 "been informed that after the image has been added to the database, it may "
 "appear in different channels to promote the event."
 msgstr ""
 
-#: source/php/App.php:253
+#: source/php/App.php:315
 msgid "Duplicate occasion"
 msgstr ""
 
@@ -2522,53 +2539,53 @@ msgstr ""
 msgid "Parent %s:"
 msgstr ""
 
-#: source/php/Entity/CustomPostType.php:291
+#: source/php/Entity/CustomPostType.php:296
 msgid "Post updated."
 msgstr ""
 
-#: source/php/Entity/CustomPostType.php:292
+#: source/php/Entity/CustomPostType.php:297
 msgid "Post published."
 msgstr ""
 
-#: source/php/Entity/CustomPostType.php:293
+#: source/php/Entity/CustomPostType.php:298
 msgid "Post submitted."
 msgstr ""
 
-#: source/php/Entity/CustomPostType.php:294
+#: source/php/Entity/CustomPostType.php:299
 msgid "Post draft updated."
 msgstr ""
 
-#: source/php/Entity/CustomPostType.php:370
+#: source/php/Entity/CustomPostType.php:375
 msgid ""
 "You don't have access to edit this event. Contact an administrator for "
 "further information."
 msgstr ""
 
-#: source/php/Entity/CustomPostType.php:425
+#: source/php/Entity/CustomPostType.php:430
 msgid "Public"
 msgstr ""
 
-#: source/php/Entity/CustomPostType.php:458
+#: source/php/Entity/CustomPostType.php:463
 msgid "This post must be updated before it can be published."
 msgstr ""
 
-#: source/php/Entity/CustomPostType.php:458
+#: source/php/Entity/CustomPostType.php:463
 msgid "Edit draft"
 msgstr ""
 
-#: source/php/Entity/CustomPostType.php:461
+#: source/php/Entity/CustomPostType.php:466
 msgid "Accept"
 msgstr ""
 
-#: source/php/Entity/CustomPostType.php:462
+#: source/php/Entity/CustomPostType.php:467
 msgid "Deny"
 msgstr ""
 
-#: source/php/Entity/CustomPostType.php:473
+#: source/php/Entity/CustomPostType.php:478
 msgid "Something went wrong!"
 msgstr ""
 
-#: source/php/Entity/CustomPostType.php:490
+#: source/php/Entity/CustomPostType.php:495
 msgid "Error"
 msgstr ""
 
