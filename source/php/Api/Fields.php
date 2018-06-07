@@ -322,4 +322,16 @@ class Fields
 
         return apply_filters('featured_image_data', $featured_image, $image_id);
     }
+
+    /**
+     * Returning a single taxonomy meta field
+     * @param   object  $object      The response object.
+     * @param   string  $field_name  The name of the field to add.
+     * @param   object  $request     The WP_REST_Request object.
+     * @return mixed
+     */
+    public function getSingleTaxMetaCallback($object, $field_name, $request)
+    {
+        return isset($object['id']) ? get_term_meta($object['id'], $field_name, true) : null;
+    }
 }

@@ -23,7 +23,7 @@ class EventFields extends Fields
 
     public function registerRestRoute()
     {
-        $response = register_rest_route('wp/v2', '/'.$this->postType.'/'.'time', array(
+        register_rest_route('wp/v2', '/'.$this->postType.'/'.'time', array(
             'methods'  => \WP_REST_Server::READABLE,
             'callback' => array($this, 'getEventsByTimestamp'),
         ));

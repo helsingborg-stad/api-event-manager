@@ -3,6 +3,33 @@
     "title": "Include in category",
     "fields": [
         {
+            "key": "field_5b18fa8271363",
+            "label": "Layout",
+            "name": "layout",
+            "type": "select",
+            "instructions": "Select layout for this navigation.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "cards": "Cards",
+                "horizontal": "Horizontal"
+            },
+            "default_value": [
+                "cards"
+            ],
+            "allow_null": 0,
+            "multiple": 0,
+            "ui": 1,
+            "ajax": 0,
+            "return_format": "value",
+            "placeholder": ""
+        },
+        {
             "key": "field_5a292d1f8d9ec",
             "label": "Select specific items (posts)",
             "name": "include_specific_posts",

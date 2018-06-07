@@ -21,7 +21,15 @@ class NavigationFields extends Fields
      */
     public static function registerRestFields()
     {
-        // Title as plain text
+        register_rest_field($this->taxonomy,
+            'layout',
+            array(
+                'get_callback'    => array($this, 'getSingleTaxMetaCallback'),
+                'update_callback' => null,
+                'schema'          => null,
+            )
+        );
+
         register_rest_field($this->taxonomy,
             'object_list',
             array(
