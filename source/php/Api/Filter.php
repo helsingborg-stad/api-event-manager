@@ -31,8 +31,9 @@ class Filter
         add_filter('rest_prepare_guidegroup', array($this, 'removeResponseKeys'), 5000, 3);
         add_filter('rest_prepare_recommendation', array($this, 'removeResponseKeys'), 5000, 3);
 
-        add_filter('rest_guide_collection_params', array($this, 'apiCollectionParams'), 10, 1 );
-        add_filter('rest_recommendation_collection_params', array($this, 'apiCollectionParams'), 10, 1 );
+        add_filter('rest_guide_collection_params', array($this, 'apiCollectionParams'), 10, 1);
+        add_filter('rest_recommendation_collection_params', array($this, 'apiCollectionParams'), 10, 1);
+        add_filter('rest_guidegroup_collection_params', array($this, 'apiCollectionParams'), 10, 1);
     }
 
     /**
@@ -40,7 +41,8 @@ class Filter
      * @param array $params Default params
      * @return array
      */
-    public function apiCollectionParams($params) {
+    public function apiCollectionParams($params)
+    {
         if (isset($params['per_page']['default'])) {
             $params['per_page']['default'] = 100;
         }
@@ -76,7 +78,7 @@ class Filter
     public function removeResponseKeys($response, $post, $request)
     {
         //Common keys
-        $keys = array('author','acf','guid','type','link', 'template', 'meta', 'taxonomy', 'menu_order');
+        $keys = array('author', 'acf', 'guid', 'type', 'link', 'template', 'meta', 'taxonomy', 'menu_order');
 
         //Only for location and organizer
         if (in_array($post->post_type, array("location", "organizer"))) {
@@ -98,7 +100,7 @@ class Filter
         $currentURL .= $_SERVER["SERVER_NAME"];
 
         if ($_SERVER["SERVER_PORT"] != "80" && $_SERVER["SERVER_PORT"] != "443") {
-            $currentURL .= ":".$_SERVER["SERVER_PORT"];
+            $currentURL .= ":" . $_SERVER["SERVER_PORT"];
         }
 
         $currentURL .= $_SERVER["REQUEST_URI"];
