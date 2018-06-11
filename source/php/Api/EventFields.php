@@ -7,7 +7,7 @@ namespace HbgEventImporter\Api;
  */
 
 ini_set('memory_limit', '256M');
-ini_set('default_socket_timeout', 60*10);
+ini_set('default_socket_timeout', 60 * 10);
 
 class EventFields extends Fields
 {
@@ -23,8 +23,8 @@ class EventFields extends Fields
 
     public function registerRestRoute()
     {
-        register_rest_route('wp/v2', '/'.$this->postType.'/'.'time', array(
-            'methods'  => \WP_REST_Server::READABLE,
+        register_rest_route('wp/v2', '/' . $this->postType . '/' . 'time', array(
+            'methods' => \WP_REST_Server::READABLE,
             'callback' => array($this, 'getEventsByTimestamp'),
         ));
     }
@@ -32,7 +32,7 @@ class EventFields extends Fields
     public function registerRestRouteSearch()
     {
         register_rest_route('wp/v2', '/event/search', array(
-            'methods'  => \WP_REST_Server::READABLE,
+            'methods' => \WP_REST_Server::READABLE,
             'callback' => array($this, 'getEventsSearch'),
         ));
     }
@@ -45,7 +45,7 @@ class EventFields extends Fields
         }
         $search = $_GET['term'];
         $query = "SELECT ID as id, post_title as title, post_type FROM $wpdb->posts WHERE post_title LIKE %s AND post_type = %s AND post_status = %s ORDER BY post_title ASC";
-        $completeQuery = $wpdb->prepare($query, $search.'%', $this->postType, 'publish');
+        $completeQuery = $wpdb->prepare($query, $search . '%', $this->postType, 'publish');
         $allEvents = $wpdb->get_results($completeQuery);
         return $allEvents;
     }
@@ -53,7 +53,7 @@ class EventFields extends Fields
     public function errorMessage($message)
     {
         $returnArray = array(
-            'error'     => $message,
+            'error' => $message,
             'Example 1' => rest_url('/wp/v2/event/time?start=' . date('Y-m-d')),
             'Example 2' => rest_url('/wp/v2/event/time?start=' . strtotime("now")),
             'Example 3' => rest_url('/wp/v2/event/time?start=' . date('Y-m-d') . '&end=' . date('Y-m-d', strtotime("now +7 days"))),
@@ -73,19 +73,14 @@ class EventFields extends Fields
     {
         global $wpdb;
         $week = 604800;
+        $post_status = 'publish';
+
         if (!isset($_GET['start'])) {
             return $this->errorMessage('No variable supplied');
         }
 
-        $time1 = $_GET['start'];
-        $timestamp = $time1;
-
-        $post_status = 'publish';
-
-        // Check if only internal (organization) event should be fetched
-        $internalEvent = isset($_GET['internal']) && !empty($_GET['internal']) ? 1 : 0;
-
-        if (!is_numeric($time1)) {
+        $timestamp = $_GET['start'];
+        if (!is_numeric($timestamp)) {
             $timestamp = strtotime($timestamp);
         }
 
@@ -93,34 +88,51 @@ class EventFields extends Fields
             return $this->errorMessage('Format not valid');
         }
 
-        // Get nearby locations from coordinates
-        $idString = '';
-        if (isset($_GET['latlng'])) {
-            $distance   = (isset($_GET['distance'])) ? str_replace(',', '.', $_GET['distance']) : 0;
-            $latlng     = explode(',', preg_replace('/\s+/', '', urldecode($_GET['latlng'])));
+        // Filter by internal events. Check if only internal (organization) event should be fetched
+        $internalEvent = isset($_GET['internal']) && !empty($_GET['internal']) ? 1 : 0;
+
+        // Filter by locations at a specified location and inside a circular radius
+        $locationIds = '';
+        if (!empty($_GET['latlng'])) {
+            $distance = (isset($_GET['distance'])) ? str_replace(',', '.', $_GET['distance']) : 0;
+            $latlng = explode(',', preg_replace('/\s+/', '', urldecode($_GET['latlng'])));
             if (count($latlng) != 2) {
-                return new \WP_Error('error_message', 'Parameter \'latlng\' is in wrong format', array( 'status' => 404 ));
+                return new \WP_Error('error_message', 'Parameter \'latlng\' is in wrong format', array('status' => 400));
             }
-            $locations  = \HbgEventImporter\Helper\Address::getNearbyLocations($latlng[0], $latlng[1], floatval($distance));
+            $locations = \HbgEventImporter\Helper\Address::getNearbyLocations($latlng[0], $latlng[1], floatval($distance));
             // Return if locations is empty
-            if (! $locations) {
-                return new \WP_Error('error_message', 'There are no events', array( 'status' => 404 ));
+            if (!$locations) {
+                return new \WP_Error('error_message', 'There are no events', array('status' => 204));
             }
-            $idString   = implode(',', array_column($locations, 'post_id'));
+            $locationIds = implode(',', array_column($locations, 'post_id'));
         }
 
-        $limit       = (isset($_GET['post-limit']) && is_numeric($_GET['post-limit'])) ? $_GET['post-limit'] : null;
-        $groupId     = (isset($_GET['group-id']) && !empty($_GET['group-id'])) ? explode(',', trim($_GET['group-id'], ',')) : null;
-        if (! empty($groupId)) {
+        // Filter by locations inside a polygon shaped area
+        if (isset($_GET['arealatlng']) && is_array($_GET['arealatlng']) && count($_GET['arealatlng']) > 2) {
+            $areaLocations = $this->getAreaLocations($_GET['arealatlng']);
+            // Return if locations is empty
+            if (!$areaLocations) {
+                return new \WP_Error('error_message', 'There are no events', array('status' => 204));
+            }
+            $locationIds = implode(',', array_column($areaLocations, 'ID'));
+        }
+
+        // Filter by groups taxonomy
+        $groupId = (isset($_GET['group-id']) && !empty($_GET['group-id'])) ? explode(',', trim($_GET['group-id'], ',')) : null;
+        if (!empty($groupId)) {
             $groupId = $this->getTaxonomyChildren($groupId, 'user_groups');
             $groupId = implode(',', $groupId);
         }
-        $categoryId  = (isset($_GET['category-id'])) ? trim($_GET['category-id'], ',') : '';
-        $taxonomies  = ($groupId) ? $groupId . ',' . $categoryId : $categoryId;
-        $taxonomies  = trim($taxonomies, ',');
+
+        // Filter by categories taxonomy
+        $categoryId = (isset($_GET['category-id'])) ? trim($_GET['category-id'], ',') : '';
+        $taxonomies = ($groupId) ? $groupId . ',' . $categoryId : $categoryId;
+        $taxonomies = trim($taxonomies, ',');
+
+        // Add limit to query
+        $limit = (isset($_GET['post-limit']) && is_numeric($_GET['post-limit'])) ? $_GET['post-limit'] : null;
 
         $db_occasions = $wpdb->prefix . "occasions";
-
         $query =
             "
             SELECT      *
@@ -134,14 +146,13 @@ class EventFields extends Fields
                         AND ($db_occasions.timestamp_start BETWEEN %d AND %d OR $db_occasions.timestamp_end BETWEEN %d AND %d)
                         AND postmeta1.meta_key = 'internal_event' AND postmeta1.meta_value = $internalEvent
             ";
-        $query .= (! empty($taxonomies)) ? "AND ($wpdb->term_relationships.term_taxonomy_id IN ($taxonomies)) " : "";
-        $query .= (! empty($idString)) ? "AND (postmeta2.meta_key = 'location' AND postmeta2.meta_value IN ($idString)) " : "";
+        $query .= (!empty($taxonomies)) ? "AND ($wpdb->term_relationships.term_taxonomy_id IN ($taxonomies)) " : "";
+        $query .= (!empty($locationIds)) ? "AND (postmeta2.meta_key = 'location' AND postmeta2.meta_value IN ($locationIds)) " : "";
         $query .= "GROUP BY $wpdb->posts.ID, $db_occasions.timestamp_start, $db_occasions.timestamp_end ";
         $query .= "ORDER BY $db_occasions.timestamp_start ASC";
         $query .= ($limit != null) ? " LIMIT " . $limit : "";
 
         $timePlusWeek = 0;
-
         if (isset($_GET['end'])) {
             $time2 = $_GET['end'];
             $timestamp2 = $time2;
@@ -162,34 +173,65 @@ class EventFields extends Fields
         $controller = new \WP_REST_Posts_Controller($this->postType);
 
         $data = array();
-        if (! empty($allEvents)) {
+        if (!empty($allEvents)) {
             foreach ($allEvents as $post) {
                 // Get event as WP_Post
                 $post_object = get_post($post->event);
                 // Add current occasion data to post
                 $post_object->timestamp_start = $post->timestamp_start;
-                $post_object->timestamp_end   = $post->timestamp_end;
-                $post_object->timestamp_door  = $post->timestamp_door;
+                $post_object->timestamp_end = $post->timestamp_end;
+                $post_object->timestamp_door = $post->timestamp_door;
                 // Save WP_Post with WP API formatting
                 $posts = $controller->prepare_item_for_response($post_object, $request);
                 $data[] = $controller->prepare_response_for_collection($posts);
             }
         } else {
-            return new \WP_Error('error_message', 'There are no events', array( 'status' => 404 ));
+            return new \WP_Error('error_message', 'There are no events', array('status' => 204));
         }
         return new \WP_REST_Response($data, 200);
     }
 
     /**
+     * Get locations within a specified area
+     * @param array $areaPoints Coordinates for a polygon shaped area
+     * @return array|void
+     */
+    public function getAreaLocations($areaPoints = array())
+    {
+        // Sanitize area points
+        foreach ($areaPoints as $key => &$point) {
+            $point = preg_replace('/\s+/', '', urldecode($point));
+            // Remove if there's not 2 values
+            if (count(explode(',', $point)) != 2) {
+                unset($areaPoints[$key]);
+            }
+        }
+        // Get array of all locations
+        $locations = \HbgEventImporter\Helper\Address::getLocationCoordinates();
+        if (is_array($locations) && !empty($locations) && count($areaPoints) > 2) {
+            // Filter to return only locations within the polygon area
+            $locations = array_filter($locations, function ($location) use ($areaPoints) {
+                // The first and last polygon coordinates must be identical, to “close the loop”.
+                $areaPoints[] = $areaPoints[0];
+                $pointInPolygon = \HbgEventImporter\Helper\PointInPolygon::pointInPolygon($location['lat'] . ',' . $location['lng'], $areaPoints, true);
+                return $pointInPolygon != 'outside' ? true : false;
+            });
+            return $locations;
+        }
+
+        return;
+    }
+
+    /**
      * Return term id and its children
-     * @param  array  $ids       taxnomy ids
-     * @param  string $taxonoym  taxonomy name
+     * @param  array  $ids      taxnomy ids
+     * @param  string $taxonoym taxonomy name
      * @return array
      */
     public function getTaxonomyChildren($ids, $taxonomy)
     {
         foreach ($ids as $id) {
-            if (! empty(get_term_children($id, $taxonomy))) {
+            if (!empty(get_term_children($id, $taxonomy))) {
                 $ids = array_merge($ids, get_term_children($id, $taxonomy));
             }
         }
@@ -203,11 +245,11 @@ class EventFields extends Fields
      */
     public function setCurrentOccasion($data, $post, $context)
     {
-        $start_date = (! empty($post->timestamp_start)) ? date('Y-m-d H:i', $post->timestamp_start) : null;
-        $end_date = (! empty($post->timestamp_end)) ? date('Y-m-d H:i', $post->timestamp_end) : null;
-        $door_time = (! empty($post->timestamp_door)) ? date('Y-m-d H:i', $post->timestamp_door) : null;
+        $start_date = (!empty($post->timestamp_start)) ? date('Y-m-d H:i', $post->timestamp_start) : null;
+        $end_date = (!empty($post->timestamp_end)) ? date('Y-m-d H:i', $post->timestamp_end) : null;
+        $door_time = (!empty($post->timestamp_door)) ? date('Y-m-d H:i', $post->timestamp_door) : null;
 
-        if (! empty($data->data['occasions'])) {
+        if (!empty($data->data['occasions'])) {
             foreach ($data->data['occasions'] as $key => $val) {
                 if ($val['start_date'] == $start_date && $val['end_date'] == $end_date && $val['door_time'] == $door_time) {
                     $data->data['occasions'][$key]['current_occasion'] = true;
@@ -220,9 +262,9 @@ class EventFields extends Fields
     /**
      * Get complete list of event occasions
      *
-     * @param array $object Details of current post.
-     * @param string $field_name Name of field.
-     * @param WP_REST_Request $request Current request
+     * @param array           $object     Details of current post.
+     * @param string          $field_name Name of field.
+     * @param WP_REST_Request $request    Current request
      *
      * @return array
      */
@@ -245,33 +287,33 @@ class EventFields extends Fields
 
         // Get and save occasions from post meta, to get complete data
         $return_value = self::getFieldGetMetaData($object, 'occasions', $request);
-        if (is_array($return_value)||is_object($return_value) && !empty($return_value)) {
+        if (is_array($return_value) || is_object($return_value) && !empty($return_value)) {
             foreach ($return_value as $key => $value) {
                 // Skip passed occasions
                 if (strtotime($value['end_date']) < $timestamp) {
                     continue;
                 }
                 $data[] = array(
-                    'start_date'               => ($value['start_date']) ? $value['start_date'] : null,
-                    'end_date'                 => ($value['end_date']) ? $value['end_date'] : null,
-                    'door_time'                => ($value['door_time']) ? $value['door_time'] : null,
-                    'status'                   => ($value['status']) ? $value['status'] : null,
+                    'start_date' => ($value['start_date']) ? $value['start_date'] : null,
+                    'end_date' => ($value['end_date']) ? $value['end_date'] : null,
+                    'door_time' => ($value['door_time']) ? $value['door_time'] : null,
+                    'status' => ($value['status']) ? $value['status'] : null,
                     'occ_exeption_information' => ($value['occ_exeption_information']) ? $value['occ_exeption_information'] : null,
-                    'content_mode'             => ($value['content_mode']) ? $value['content_mode'] : null,
-                    'content'                  => ($value['content']) ? $value['content'] : null,
+                    'content_mode' => ($value['content_mode']) ? $value['content_mode'] : null,
+                    'content' => ($value['content']) ? $value['content'] : null,
                 );
             }
         }
         // Save remaining occasions from occasions table to array
         foreach ($query_results as $key => $value) {
             $data[] = array(
-                'start_date'               => ($value->timestamp_start) ? date('Y-m-d H:i', $value->timestamp_start) : null,
-                'end_date'                 => ($value->timestamp_end) ? date('Y-m-d H:i', $value->timestamp_end) : null,
-                'door_time'                => ($value->timestamp_door) ? date('Y-m-d H:i', $value->timestamp_door) : null,
-                'status'                   => null,
+                'start_date' => ($value->timestamp_start) ? date('Y-m-d H:i', $value->timestamp_start) : null,
+                'end_date' => ($value->timestamp_end) ? date('Y-m-d H:i', $value->timestamp_end) : null,
+                'door_time' => ($value->timestamp_door) ? date('Y-m-d H:i', $value->timestamp_door) : null,
+                'status' => null,
                 'occ_exeption_information' => null,
-                'content_mode'             => null,
-                'content'                  => null,
+                'content_mode' => null,
+                'content' => null,
             );
         }
         $temp = array();
@@ -299,9 +341,9 @@ class EventFields extends Fields
     /**
      * Add data / meta data to organizers field.
      *
-     * @param   object  $object      The response object.
-     * @param   string  $field_name  The name of the field to add.
-     * @param   object  $request     The WP_REST_Request object.
+     * @param   object $object     The response object.
+     * @param   string $field_name The name of the field to add.
+     * @param   object $request    The WP_REST_Request object.
      *
      * @return  object|null
      */
@@ -318,13 +360,13 @@ class EventFields extends Fields
         // 'contacts' field is deprecated, remove in the future
         foreach ($organizers as &$organizer) {
             $organizer = array(
-                'main_organizer'    => $organizer['main_organizer'],
-                'organizer'         => get_the_title($organizer['organizer']),
-                'organizer_link'    => get_field('website', $organizer['organizer']),
-                'organizer_phone'   => get_field('phone', $organizer['organizer']),
-                'organizer_email'   => get_field('email', $organizer['organizer']),
-                'contact_persons'   => get_field('contact_persons', $organizer['organizer']),
-                'contacts'          => null,
+                'main_organizer' => $organizer['main_organizer'],
+                'organizer' => get_the_title($organizer['organizer']),
+                'organizer_link' => get_field('website', $organizer['organizer']),
+                'organizer_phone' => get_field('phone', $organizer['organizer']),
+                'organizer_email' => get_field('email', $organizer['organizer']),
+                'contact_persons' => get_field('contact_persons', $organizer['organizer']),
+                'contacts' => null,
             );
         }
 
@@ -334,9 +376,9 @@ class EventFields extends Fields
     /**
      * Add data / meta data to additional locations field.
      *
-     * @param   object  $object      The response object.
-     * @param   string  $field_name  The name of the field to add.
-     * @param   object  $request     The WP_REST_Request object.
+     * @param   object $object     The response object.
+     * @param   string $field_name The name of the field to add.
+     * @param   object $request    The WP_REST_Request object.
      *
      * @return  object|null
      */
@@ -354,22 +396,22 @@ class EventFields extends Fields
         foreach ($locations as $location) {
             $location = get_post($location);
 
-            if (! $location) {
+            if (!$location) {
                 continue;
             }
-            $parent = ! empty($location->post_parent) ? array('id' => $location->post_parent, 'title' => get_the_title($location->post_parent)) : null;
+            $parent = !empty($location->post_parent) ? array('id' => $location->post_parent, 'title' => get_the_title($location->post_parent)) : null;
             $location_arr[] = array(
-                'id'                => $location->ID,
-                'title'             => $location->post_title,
-                'parent'            => $parent,
-                'content'           => $location->post_content,
-                'street_address'    => get_post_meta($location->ID, 'street_address', true),
-                'postal_code'       => get_post_meta($location->ID, 'postal_code', true),
-                'city'              => get_post_meta($location->ID, 'city', true),
-                'country'           => get_post_meta($location->ID, 'country', true),
+                'id' => $location->ID,
+                'title' => $location->post_title,
+                'parent' => $parent,
+                'content' => $location->post_content,
+                'street_address' => get_post_meta($location->ID, 'street_address', true),
+                'postal_code' => get_post_meta($location->ID, 'postal_code', true),
+                'city' => get_post_meta($location->ID, 'city', true),
+                'country' => get_post_meta($location->ID, 'country', true),
                 'formatted_address' => get_post_meta($location->ID, 'formatted_address', true),
-                'latitude'          => get_post_meta($location->ID, 'latitude', true),
-                'longitude'         => get_post_meta($location->ID, 'longitude', true),
+                'latitude' => get_post_meta($location->ID, 'latitude', true),
+                'longitude' => get_post_meta($location->ID, 'longitude', true),
             );
         }
 
@@ -389,9 +431,9 @@ class EventFields extends Fields
         register_rest_field($this->postType,
             'title',
             array(
-                'get_callback'    => array($this, 'addPlaintextField'),
+                'get_callback' => array($this, 'addPlaintextField'),
                 'update_callback' => null,
-                'schema'          => null,
+                'schema' => null,
             )
         );
 
@@ -399,9 +441,9 @@ class EventFields extends Fields
         register_rest_field($this->postType,
             'content',
             array(
-                'get_callback'    => array($this, 'addPlaintextField'),
+                'get_callback' => array($this, 'addPlaintextField'),
                 'update_callback' => null,
-                'schema'          => null,
+                'schema' => null,
             )
         );
 
@@ -453,7 +495,7 @@ class EventFields extends Fields
         register_rest_field($this->postType,
             'occasions',
             array(
-                'get_callback'    => array($this, 'getCompleteOccasions'),
+                'get_callback' => array($this, 'getCompleteOccasions'),
                 'update_callback' => array($this, 'acfUpdateCallBack'),
                 'schema' => array(
                     'description' => 'Field containing array with all event occasions.',
