@@ -185,4 +185,37 @@ class Address
             return $nearby_locations;
         }
     }
+
+    /**
+     * Get locations coordinates
+     * @return array
+     */
+    public static function getLocationCoordinates()
+    {
+        if (!$locations = wp_cache_get('location_coordinates')) {
+            global $wpdb;
+
+            $sql = $wpdb->prepare(
+                "SELECT DISTINCT
+                post.ID,
+                latitude.meta_value as lat,
+                longitude.meta_value as lng
+            FROM $wpdb->posts post
+            INNER JOIN $wpdb->postmeta latitude ON post.ID = latitude.post_id
+            INNER JOIN $wpdb->postmeta longitude ON post.ID = longitude.post_id
+            AND post.post_type = %s
+            AND post.post_status = %s
+            AND latitude.meta_key = %s
+            AND longitude.meta_key = %s
+            ORDER BY post.ID ASC",
+                'location', 'publish', 'latitude', 'longitude'
+            );
+
+            $locations = $wpdb->get_results($sql, ARRAY_A);
+            // Save locations to cache
+            wp_cache_add('location_coordinates', $locations, '', 86400);
+        }
+
+        return $locations;
+    }
 }
