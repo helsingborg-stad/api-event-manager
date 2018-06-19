@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Event Manager\n"
 "POT-Creation-Date: 2018-06-07 14:10+0200\n"
-"PO-Revision-Date: 2018-06-07 14:11+0200\n"
+"PO-Revision-Date: 2018-06-19 10:48+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: sv\n"
@@ -1777,7 +1777,7 @@ msgstr ""
 
 #: source/php/AcfFields/php/guide-group-settings.php:22
 msgid "Ja, den här gruppen är aktiv."
-msgstr "Ja, den här platsen har full täckning."
+msgstr ""
 
 #: source/php/AcfFields/php/guide-group-settings.php:29
 msgid "Logotyp"
