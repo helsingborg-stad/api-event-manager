@@ -206,15 +206,15 @@ class EventFields extends Fields
                 unset($areaPoints[$key]);
             }
         }
+        // The first and last polygon coordinates must be identical, to "close" the loop
+        if ($areaPoints[0] !== end($areaPoints)) {
+            $areaPoints[] = $areaPoints[0];
+        }
         // Get array of all locations
         $locations = \HbgEventImporter\Helper\Address::getLocationCoordinates();
         if (is_array($locations) && !empty($locations) && count($areaPoints) > 2) {
             // Filter to return only locations within the polygon area
             $locations = array_filter($locations, function ($location) use ($areaPoints) {
-                // The first and last polygon coordinates must be identical, to "close" the loop
-                if ($areaPoints[0] !== end($areaPoints)) {
-                    $areaPoints[] = $areaPoints[0];
-                }
                 $pointInPolygon = \HbgEventImporter\Helper\PointInPolygon::pointInPolygon($location['lat'] . ',' . $location['lng'], $areaPoints, true);
                 return $pointInPolygon != 'outside' ? true : false;
             });
