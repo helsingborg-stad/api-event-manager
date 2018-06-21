@@ -771,17 +771,16 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
     }
 
     /**
-     * Change post state to 'Under processing' for incoming event
+     * Add post state to 'Under processing'
      * @param array $postStates Default states
      * @param object $post Post object
      * @return array $postStates Modified states
      */
     public function setPostState($postStates, $post) {
-        $consumerClient = get_post_meta($post->ID, 'consumer_client');
-        if ($post->post_type == $this->slug && !empty($consumerClient) && $post->post_status === 'draft' && empty(wp_get_post_revisions($post->ID))) {
-            $postStates['draft'] = __('Under processing', 'event-manager');
+        $underProcessing = get_field('event_under_processing', $post->ID);
+        if ($post->post_type == $this->slug && $underProcessing && $post->post_status != 'publish') {
+            $postStates[$post->post_status] = __('Under processing', 'event-manager');
         }
-
         return $postStates;
     }
 }

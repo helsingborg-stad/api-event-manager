@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Event Manager\n"
-"POT-Creation-Date: 2018-06-07 14:10+0200\n"
-"PO-Revision-Date: 2018-06-19 10:48+0200\n"
+"POT-Creation-Date: 2018-06-21 10:41+0200\n"
+"PO-Revision-Date: 2018-06-21 10:43+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: sv\n"
@@ -230,39 +230,39 @@ msgid "Activate user groups on selected post types."
 msgstr "Aktivera användargrupper för valda posttyper."
 
 #: source/php/AcfFields/php/event-manager-settings.php:60
-#: source/php/App.php:293
+#: source/php/App.php:226
 msgid "Events"
 msgstr "Evenemang"
 
 #: source/php/AcfFields/php/event-manager-settings.php:61
-#: source/php/App.php:294 source/php/PostTypes/Locations.php:12
+#: source/php/App.php:227 source/php/PostTypes/Locations.php:12
 msgid "Locations"
 msgstr "Platser"
 
 #: source/php/AcfFields/php/event-manager-settings.php:62
-#: source/php/AcfFields/php/event.php:696 source/php/App.php:305
+#: source/php/AcfFields/php/event.php:696 source/php/App.php:238
 #: source/php/PostTypes/Sponsors.php:10
 msgid "Sponsors"
 msgstr "Sponsorer"
 
 #: source/php/AcfFields/php/event-manager-settings.php:63
-#: source/php/App.php:306 source/php/PostTypes/Packages.php:10
+#: source/php/App.php:239 source/php/PostTypes/Packages.php:10
 msgid "Packages"
 msgstr "Paket"
 
 #: source/php/AcfFields/php/event-manager-settings.php:64
-#: source/php/App.php:307
+#: source/php/App.php:240
 msgid "Membership cards"
 msgstr "Medlemskort"
 
 #: source/php/AcfFields/php/event-manager-settings.php:65
-#: source/php/AcfFields/php/event.php:633 source/php/App.php:295
+#: source/php/AcfFields/php/event.php:633 source/php/App.php:228
 #: source/php/PostTypes/Organizers.php:10
 msgid "Organizers"
 msgstr "Arrangörer"
 
 #: source/php/AcfFields/php/event-manager-settings.php:66
-#: source/php/App.php:308 source/php/PostTypes/Guides.php:12
+#: source/php/App.php:241 source/php/PostTypes/Guides.php:12
 msgid "Guides"
 msgstr "Guider"
 
@@ -1911,11 +1911,11 @@ msgstr "Internt evenemang"
 msgid "Select if this is an internal event."
 msgstr "Välj om evenemanget är internt."
 
-#: source/php/AcfFields/php/internal_event.php:24 source/php/App.php:309
+#: source/php/AcfFields/php/internal_event.php:24 source/php/App.php:242
 msgid "Yes"
 msgstr "Ja"
 
-#: source/php/AcfFields/php/internal_event.php:25 source/php/App.php:310
+#: source/php/AcfFields/php/internal_event.php:25 source/php/App.php:243
 msgid "No"
 msgstr "Nej"
 
@@ -2286,6 +2286,18 @@ msgstr "Antal veckor att importera"
 msgid "Select how many weeks ahead you want to import"
 msgstr "Ange hur många veckor framåt du vill importera"
 
+#: source/php/AcfFields/php/under-processing.php:13
+msgid "Select if this event is under processing."
+msgstr "Välj om evenemanget är under bearbetning."
+
+#: source/php/AcfFields/php/under-processing.php:29
+msgid "Comment"
+msgstr "Kommentar"
+
+#: source/php/AcfFields/php/under-processing.php:32
+msgid "Write a comment."
+msgstr "Skriv en kommentar."
+
 #: source/php/AcfFields/php/xcap.php:6
 msgid "Xcap"
 msgstr ""
@@ -2432,92 +2444,92 @@ msgstr "Evenemangshanterare"
 msgid "Guide editor"
 msgstr "Guideredakör"
 
-#: source/php/App.php:283
+#: source/php/App.php:216
 msgid "\"Title\" is missing"
 msgstr "“Titel” saknas"
 
-#: source/php/App.php:284
+#: source/php/App.php:217
 msgid "\"Featured\" image is missing"
 msgstr "“Utvald bild” saknas"
 
-#: source/php/App.php:285
+#: source/php/App.php:218
 msgid "Create new organizer"
 msgstr "Skapa ny arrangör"
 
-#: source/php/App.php:286
+#: source/php/App.php:219
 msgid "Create new sponsor"
 msgstr "Skapa ny sponsor"
 
-#: source/php/App.php:287
+#: source/php/App.php:220
 msgid "Create new location"
 msgstr "Skapa ny plats"
 
-#: source/php/App.php:288 source/php/App.php:289
+#: source/php/App.php:221 source/php/App.php:222
 msgid "Create new membership card"
 msgstr "Skapa nytt medlemskort"
 
-#: source/php/App.php:290
+#: source/php/App.php:223
 msgid "Close"
 msgstr "Stäng"
 
-#: source/php/App.php:291
+#: source/php/App.php:224
 msgid "Add images"
 msgstr "Lägg till bilder"
 
-#: source/php/App.php:292
+#: source/php/App.php:225
 msgid "Imported data"
 msgstr "Importerad data"
 
-#: source/php/App.php:296
+#: source/php/App.php:229
 msgid "Time until reload"
 msgstr "Laddar om sidan"
 
-#: source/php/App.php:297
+#: source/php/App.php:230
 msgid "Loading"
 msgstr "Hämtar"
 
-#: source/php/App.php:298
+#: source/php/App.php:231
 msgid "Choose time"
 msgstr "Välj tidpunkt"
 
-#: source/php/App.php:299
+#: source/php/App.php:232
 msgid "Time"
 msgstr "Tid"
 
-#: source/php/App.php:300
+#: source/php/App.php:233
 msgid "Hour"
 msgstr "Timme"
 
-#: source/php/App.php:301
+#: source/php/App.php:234
 msgid "Minute"
 msgstr "Minut"
 
-#: source/php/App.php:302
+#: source/php/App.php:235
 msgid "Done"
 msgstr "Klar"
 
-#: source/php/App.php:303
+#: source/php/App.php:236
 msgid "Now"
 msgstr "Nu"
 
-#: source/php/App.php:304
+#: source/php/App.php:237
 msgid "with similar name"
 msgstr "med liknande namn"
 
-#: source/php/App.php:311
+#: source/php/App.php:244
 msgid "To upload an image, you need to confirm the statements below"
 msgstr "För att ladda upp en bild behöver du bekräfta nedanstående punkter"
 
-#: source/php/App.php:312
+#: source/php/App.php:245
 msgid "I have the right to use this image to promote this event."
 msgstr ""
 "Jag har rätt att använda denna bild för att marknadsföra detta evenemang."
 
-#: source/php/App.php:313
+#: source/php/App.php:246
 msgid "Are there identifiable persons on the image/images?"
 msgstr "Finns det identifierbara personer på bilden/bilderna?"
 
-#: source/php/App.php:314
+#: source/php/App.php:247
 msgid ""
 "They have accepted that the image is used to promote this event and have "
 "been informed that after the image has been added to the database, it may "
@@ -2527,7 +2539,7 @@ msgstr ""
 "har informerats om att efter att bilden lagts in i databasen kan komma att "
 "synas i olika kanaler för att marknadsföra evenemanget."
 
-#: source/php/App.php:315
+#: source/php/App.php:248
 msgid "Duplicate occasion"
 msgstr "Duplicera tidpunkt"
 
