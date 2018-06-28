@@ -223,8 +223,13 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
             // Remove exceptions from recurring dates
             $exceptionDates = $rule['rcr_exceptions'];
             if ($exceptionDates) {
-                foreach ($exceptionDates as &$date) {
-                    $date = strtotime($date['rcr_exc_date']);
+                foreach ($exceptionDates as $key => &$date) {
+                    // Keep occasions with status cancelled or rescheduled
+                    if ($date['status_rcr_exc'] == 'default') {
+                        $date = strtotime($date['rcr_exc_date']);
+                    } else {
+                        unset($exceptionDates[$key]);
+                    }
                 }
                 // Filter exceptions from the recurring dates
                 $recurringDates = array_diff($recurringDates, $exceptionDates);

@@ -306,6 +306,33 @@ class EventFields extends Fields
                 );
             }
         }
+
+        // Save occasions from recurrence rule exceptions that are cancelled or rescheduled
+        $recurringRules = self::getFieldGetMetaData($object, 'rcr_rules', $request);
+        if (is_array($recurringRules) && !empty($recurringRules)) {
+            foreach($recurringRules as $key => $rule) {
+                if (isset($rule['rcr_exceptions']) && is_array($rule['rcr_exceptions']) && !empty($rule['rcr_exceptions'])) {
+                    foreach ($rule['rcr_exceptions'] as $key => $exception) {
+                        $endTimestamp = strtotime($exception['rcr_exc_date'] . ' ' . $rule['rcr_end_time']);
+                        if ($exception['status_rcr_exc'] != 'default' && $endTimestamp > $timestamp) {
+                            $startTime = !empty($rule['rcr_start_time']) ? new \DateTime($exception['rcr_exc_date'] . ' ' . $rule['rcr_start_time']) : null;
+                            $endTime = !empty($rule['rcr_end_time']) ? new \DateTime($exception['rcr_exc_date'] . ' ' . $rule['rcr_end_time']) : null;
+                            $doorTime = !empty($rule['rcr_door_time']) ? new \DateTime($exception['rcr_exc_date'] . ' ' . $rule['rcr_door_time']) : null;
+                            $data[] = array(
+                                'start_date' => $startTime ? date_format($startTime, 'Y-m-d H:i') : null,
+                                'end_date' => $endTime ? date_format($endTime, 'Y-m-d H:i') : null,
+                                'door_time' => $doorTime ? date_format($doorTime, 'Y-m-d H:i') : null,
+                                'status' => $exception['status_rcr_exc'],
+                                'occ_exeption_information' => !empty($exception['rcr_exception_info']) ? $exception['rcr_exception_info'] : null,
+                                'content_mode' => null,
+                                'content' => null,
+                            );
+                        }
+                    }
+                }
+            }
+        }
+
         // Save remaining occasions from occasions table to array
         foreach ($query_results as $key => $value) {
             $data[] = array(
