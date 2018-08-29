@@ -17,7 +17,7 @@ class DataCleaner
             return $number;
         }
 
-        if(strlen($number) < 5)
+        if (strlen($number) < 5)
             return null;
 
         $phoneUtil = \libphonenumber\PhoneNumberUtil::getInstance();
@@ -43,7 +43,7 @@ class DataCleaner
      */
     public static function email($email)
     {
-        if(is_null($email) || preg_match("/\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b/i", $email) != 1)
+        if (is_null($email) || preg_match("/\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b/i", $email) != 1)
             return null;
         return $email;
     }
@@ -59,26 +59,38 @@ class DataCleaner
             return $string;
         }
 
-        $count = 0;
+        $string = self::replaceBreaks($string);
 
+        $count = 0;
         $removedCopy = str_replace(" (copy)", "", trim($string), $count);
         $count = 0;
 
         // Replace all comment tags so we save them from the strip_tags function
-        $changedComments = preg_replace("/<![^>]*>/", '[HTMLCOMMENT]', $removedCopy, -1 , $count);
-        if($count > 0) {
+        $changedComments = preg_replace("/<![^>]*>/", '[HTMLCOMMENT]', $removedCopy, -1, $count);
+        if ($count > 0) {
             // Remove all tags except those passed as argument 2 in strip_tags
-            $commentBefore = $changedComments;
             $changedComments = strip_tags($changedComments, '<h1><h2><h3><h4><h5><h6><strong><ul><li><b>');
-
             // Put back the <!--more--> that we earlier replaced
             $changedComments = str_replace('[HTMLCOMMENT]', "<!--more-->", $changedComments);
         }
 
         $count = 0;
 
-        $removedShortcodes = preg_replace("/\[.*\]/i", '', $changedComments, -1 , $count);
+        $removedShortcodes = preg_replace("/\[.*\]/i", '', $changedComments, -1, $count);
         $string = html_entity_decode($removedShortcodes);
+
+        return $string;
+    }
+
+    /**
+     * Replace breaks with new line
+     * @param string $string String to be sanitized
+     * @return string        Sanitized string
+     */
+    public static function replaceBreaks($string)
+    {
+        $breaks = array('<br />', '<br>', '<br/>');
+        $string = str_ireplace($breaks, "\r\n", $string);
 
         return $string;
     }
@@ -110,8 +122,8 @@ class DataCleaner
     /**
      *  Get #hashtags from post content and save as taxonomy.
      * @param  int  $post_id event post id
-     * @param  post $post The post object.
-     * @param  bool $update Whether this is an existing post being updated or not.
+     * @param  post $post    The post object.
+     * @param  bool $update  Whether this is an existing post being updated or not.
      */
     public static function hashtags($post_id, $taxonomy)
     {
