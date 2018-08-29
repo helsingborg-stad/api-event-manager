@@ -210,6 +210,7 @@ abstract class PostManager
             return false;
         }
 
+        $url = str_replace(' ', '%20', $url);
         $headers = get_headers($url, 1);
         if (!isset($url) || strlen($url) === 0 || !$this->isUrl($url) || $headers[0] != 'HTTP/1.1 200 OK') {
             return false;
