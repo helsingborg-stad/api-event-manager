@@ -5,31 +5,53 @@ namespace HbgEventImporter;
 class Cron
 {
     public static $postTypeSlug = 'event';
+    public static $clients = array('cbis', 'xcap', 'transticket', 'arcgis');
 
     public function __construct()
     {
-        add_action('import_events_daily', array($this, 'startImport'));
         add_action('remove_expired_events', array($this, 'expiredEvents'));
         add_action('admin_enqueue_scripts', array($this, 'setApiKeys'));
+        add_action('acf/save_post', array($this, 'scheduleImportCron'), 20);
+        add_action('import_events', array($this, 'startImport'));
     }
 
     /**
-     * Adds daily import con job
+     * Schedule import
+     * @param  int $postId
+     * @return void
+     */
+    public function scheduleImportCron($postId)
+    {
+        if ($postId !== 'options' || get_current_screen()->id !== 'event_page_acf-options-options') {
+            return;
+        }
+
+        foreach (self::$clients as $client) {
+            wp_clear_scheduled_hook('import_events', array('client' => $client));
+            if (get_field($client . '_daily_cron', 'option') == true) {
+                wp_schedule_event(time(), 'hourly', 'import_events', array('client' => $client));
+            }
+        }
+    }
+
+    /**
+     * Register remove expired events cron job
      * @return void
      */
     public static function addCronJob()
     {
-        wp_schedule_event(time(), 'hourly', 'import_events_daily');
         wp_schedule_event(strtotime('tomorrow +3 hours'), 'daily', 'remove_expired_events');
     }
 
     /**
-     * Removes daily import cron job
+     * Clears cron jobs
      * @return void
      */
     public static function removeCronJob()
     {
-        wp_clear_scheduled_hook('import_events_daily');
+        foreach (self::$clients as $client) {
+            wp_clear_scheduled_hook('import_events', array('client' => $client));
+        }
         wp_clear_scheduled_hook('remove_expired_events');
     }
 
@@ -258,48 +280,42 @@ class Cron
 
     /**
      * Starts the data import
+     * @param $client
      * @return void
      */
-    public function startImport()
+    public function startImport($client)
     {
-        if (get_field('cbis_daily_cron', 'option') == true) {
-            $api_keys = $this->getCbisKeys();
-
-            foreach ((array)$api_keys as $key => $api_key) {
-                new \HbgEventImporter\Parser\CbisEvent('http://api.cbis.citybreak.com/Products.asmx?wsdl', $api_key);
-            }
-
-            // Cbis locations
-            foreach ((array)$api_keys as $key => $api_key) {
-                foreach ($api_key['cbis_locations'] as $key => $location) {
-                    new \HbgEventImporter\Parser\CbisLocation('http://api.cbis.citybreak.com/Products.asmx?wsdl', $api_key, $location);
+        switch ($client) {
+            case 'cbis':
+                $api_keys = $this->getCbisKeys();
+                foreach ((array)$api_keys as $key => $api_key) {
+                    new \HbgEventImporter\Parser\CbisEvent('http://api.cbis.citybreak.com/Products.asmx?wsdl', $api_key);
                 }
-            }
+                // Cbis locations
+                foreach ((array)$api_keys as $key => $api_key) {
+                    foreach ($api_key['cbis_locations'] as $key => $location) {
+                        new \HbgEventImporter\Parser\CbisLocation('http://api.cbis.citybreak.com/Products.asmx?wsdl', $api_key, $location);
+                    }
+                }
+                break;
+            case 'xcap':
+                $api_keys = $this->getXcapKeys();
+                foreach ((array)$api_keys as $key => $api_key) {
+                    new \HbgEventImporter\Parser\Xcap($api_key['xcap_api_url'], $api_key);
+                }
+                break;
+            case 'transticket':
+                $api_keys = $this->getTransTicketKeys();
+                foreach ((array)$api_keys as $key => $api_key) {
+                    new Parser\TransTicket($api_key['transticket_api_url'], $api_key);
+                }
+                break;
+            case 'arcgis':
+                $api_keys = $this->getArcgisKeys();
+                foreach ((array)$api_keys as $key => $api_key) {
+                    new Parser\Arcgis($api_key['arcgis_api_url'], $api_key);
+                }
+                break;
         }
-
-        if (get_field('xcap_daily_cron', 'option') == true) {
-            $api_keys = $this->getXcapKeys();
-
-            foreach ((array)$api_keys as $key => $api_key) {
-                new \HbgEventImporter\Parser\Xcap($api_key['xcap_api_url'], $api_key);
-            }
-        }
-        if (get_field('transticket_daily_cron', 'option') == true) {
-            $api_keys = $this->getTransTicketKeys();
-
-            foreach ((array)$api_keys as $key => $api_key) {
-                new Parser\TransTicket($api_key['transticket_api_url'], $api_key);
-            }
-        }
-
-        if (get_field('arcgis_daily_cron', 'option') == true) {
-            $api_keys = $this->getArcgisKeys();
-
-            foreach ((array)$api_keys as $key => $api_key) {
-                new Parser\Arcgis($api_key['arcgis_api_url'], $api_key);
-            }
-        }
-
-        file_put_contents(dirname(__FILE__) . "/Log/cron_import.log", "Cron last run: " . date("Y-m-d H:i:s"));
     }
 }
