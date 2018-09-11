@@ -490,7 +490,6 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
                 $button .= '<div class="button-primary extraspace" id="transticket">' . __('Import Transticket', 'event-manager') . '</div>';
             }
 
-            $button .= '<div class="button-primary extraspace" id="occasions">'.__('Collect event timestamps', 'event-manager').'</div>';
             $button .= '</div>';
             $views['import-buttons'] = $button;
         }

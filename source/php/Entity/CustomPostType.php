@@ -37,7 +37,6 @@ abstract class CustomPostType
         add_action('manage_' . $this->slug . '_posts_custom_column', array($this, 'tableColumnsContent'), 10, 2);
 
         add_action('wp_ajax_accept_or_deny', array($this, 'acceptAndDeny'));
-        add_action('wp_ajax_collect_occasions', array($this, 'collectOccasions'));
         add_action('wp_ajax_import_events', array($this, 'importEvents'));
         add_action('wp_ajax_dismiss', array($this, 'dismissInstructions'));
         add_action('admin_head', array($this, 'removeMedia'));
@@ -107,51 +106,6 @@ abstract class CustomPostType
         if ($current_screen->post_type != 'page') {
             remove_action('media_buttons', 'media_buttons');
         }
-    }
-
-    /**
-     * Saves event occasions to database if missing
-     * @return void
-     */
-    public function collectOccasions()
-    {
-        global $wpdb;
-
-        $sql = $wpdb->prepare("SELECT ID FROM " . $wpdb->posts . " WHERE post_status = %s AND post_type = %s", 'publish', 'event');
-        $result = $wpdb->get_results($sql);
-
-        $resultString = "";
-
-        foreach ($result as $key => $event) {
-            $occasions = get_field('occasions', $event->ID);
-            $db_occasions = $wpdb->prefix . "occasions";
-
-            foreach ($occasions as $newKey => $value) {
-                $timestampStart = strtotime($value['start_date']);
-                $timestampEnd = strtotime($value['end_date']);
-                $timestampDoor = (empty($value['door_time'])) ? null : strtotime($value['door_time']);
-
-                if ($timestampStart <= 0 || $timestampEnd <= 0 || $timestampStart == false || $timestampEnd == false) {
-                    continue;
-                }
-
-                $testQuery = $wpdb->prepare("SELECT * FROM $db_occasions WHERE event = %d AND timestamp_start = %d AND timestamp_end = %d", $event->ID, $timestampStart, $timestampEnd);
-                $existing = $wpdb->get_results($testQuery);
-
-                if (empty($existing)) {
-                    $newId = $wpdb->insert($db_occasions, array('event' => $event->ID, 'timestamp_start' => $timestampStart, 'timestamp_end' => $timestampEnd, 'timestamp_door' => $timestampDoor));
-                    $resultString .= "New event occasions inserted with event id: " . $event->ID . ', and timestamp_start: ' . $timestampStart . ", timestamp_end: " . $timestampEnd . ", timestamp_door: " . $timestampDoor . "\n";
-                } else {
-                    $resultString .= "Already exists! Event: " . $existing[0]->event . ', timestamp_start: ' . $existing[0]->timestamp_start . ", timestamp_end: " . $existing[0]->timestamp_end . "\n";
-                }
-            }
-        }
-
-        if (ob_get_contents()) {
-            ob_end_clean();
-        }
-
-        wp_die();
     }
 
     /**
