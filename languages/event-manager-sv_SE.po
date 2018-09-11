@@ -1,15 +1,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Event Manager\n"
-"POT-Creation-Date: 2018-06-21 10:41+0200\n"
-"PO-Revision-Date: 2018-06-21 10:43+0200\n"
+"POT-Creation-Date: 2018-09-11 16:14+0200\n"
+"PO-Revision-Date: 2018-09-11 16:14+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0.8\n"
+"X-Generator: Poedit 2.1.1\n"
 "X-Poedit-Basepath: .\n"
 "X-Poedit-WPHeader: hbg-event-importer.php\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -2286,6 +2286,11 @@ msgstr "Antal veckor att importera"
 msgid "Select how many weeks ahead you want to import"
 msgstr "Ange hur många veckor framåt du vill importera"
 
+#: source/php/AcfFields/php/under-processing.php:6
+#: source/php/PostTypes/Events.php:786
+msgid "Under processing"
+msgstr "Under bearbetning"
+
 #: source/php/AcfFields/php/under-processing.php:13
 msgid "Select if this event is under processing."
 msgstr "Välj om evenemanget är under bearbetning."
@@ -2543,68 +2548,72 @@ msgstr ""
 msgid "Duplicate occasion"
 msgstr "Duplicera tidpunkt"
 
-#: source/php/Entity/CustomPostType.php:96
+#: source/php/App.php:249
+msgid "Import scheduled"
+msgstr "Import schemalagd"
+
+#: source/php/Entity/CustomPostType.php:97
 msgid "API-url"
 msgstr "API-url"
 
-#: source/php/Entity/CustomPostType.php:178
-#: source/php/Entity/CustomPostType.php:179
+#: source/php/Entity/CustomPostType.php:134
+#: source/php/Entity/CustomPostType.php:135
 #, php-format
 msgid "Add new %s"
 msgstr "Lägg till %s"
 
-#: source/php/Entity/CustomPostType.php:180
+#: source/php/Entity/CustomPostType.php:136
 #, php-format
 msgid "Edit %s"
 msgstr "Redigera %s"
 
-#: source/php/Entity/CustomPostType.php:181
+#: source/php/Entity/CustomPostType.php:137
 #, php-format
 msgid "New %s"
 msgstr "Nytt %s"
 
-#: source/php/Entity/CustomPostType.php:182
+#: source/php/Entity/CustomPostType.php:138
 #, php-format
 msgid "View %s"
 msgstr "Visa %s"
 
-#: source/php/Entity/CustomPostType.php:183
+#: source/php/Entity/CustomPostType.php:139
 #, php-format
 msgid "Search %s"
 msgstr "Sök %s"
 
-#: source/php/Entity/CustomPostType.php:184
+#: source/php/Entity/CustomPostType.php:140
 #, php-format
 msgid "No %s found"
 msgstr "Inga %s hittades"
 
-#: source/php/Entity/CustomPostType.php:185
+#: source/php/Entity/CustomPostType.php:141
 #, php-format
 msgid "No %s found in trash"
 msgstr "Inga %s hittades i papperskorgen"
 
-#: source/php/Entity/CustomPostType.php:186
+#: source/php/Entity/CustomPostType.php:142
 #, php-format
 msgid "Parent %s:"
 msgstr "Förälder %s:"
 
-#: source/php/Entity/CustomPostType.php:296
+#: source/php/Entity/CustomPostType.php:252
 msgid "Post updated."
 msgstr "Inlägget uppdaterades."
 
-#: source/php/Entity/CustomPostType.php:297
+#: source/php/Entity/CustomPostType.php:253
 msgid "Post published."
 msgstr "Inlägget publicerades."
 
-#: source/php/Entity/CustomPostType.php:298
+#: source/php/Entity/CustomPostType.php:254
 msgid "Post submitted."
 msgstr "Inlägget uppdaterades."
 
-#: source/php/Entity/CustomPostType.php:299
+#: source/php/Entity/CustomPostType.php:255
 msgid "Post draft updated."
 msgstr "Utkast uppdaterades."
 
-#: source/php/Entity/CustomPostType.php:375
+#: source/php/Entity/CustomPostType.php:331
 msgid ""
 "You don't have access to edit this event. Contact an administrator for "
 "further information."
@@ -2612,39 +2621,39 @@ msgstr ""
 "Ni saknar rättigheter att uppdatera evenemanget. Vid frågor kontakta en "
 "administratör."
 
-#: source/php/Entity/CustomPostType.php:430
+#: source/php/Entity/CustomPostType.php:386
 msgid "Public"
 msgstr "Offentlig"
 
-#: source/php/Entity/CustomPostType.php:463
+#: source/php/Entity/CustomPostType.php:419
 msgid "This post must be updated before it can be published."
 msgstr "Evenemanget behöver uppdateras innan det kan publiceras."
 
-#: source/php/Entity/CustomPostType.php:463
+#: source/php/Entity/CustomPostType.php:419
 msgid "Edit draft"
 msgstr "Redigera utkast"
 
-#: source/php/Entity/CustomPostType.php:466
+#: source/php/Entity/CustomPostType.php:422
 msgid "Accept"
 msgstr "Godkänn"
 
-#: source/php/Entity/CustomPostType.php:467
+#: source/php/Entity/CustomPostType.php:423
 msgid "Deny"
 msgstr "Neka"
 
-#: source/php/Entity/CustomPostType.php:478
+#: source/php/Entity/CustomPostType.php:434
 msgid "Something went wrong!"
 msgstr "Något gick fel!"
 
-#: source/php/Entity/CustomPostType.php:495
+#: source/php/Entity/CustomPostType.php:451
 msgid "Error"
 msgstr "Fel"
 
-#: source/php/Entity/PostManager.php:224
+#: source/php/Entity/PostManager.php:226
 msgid "Could not create folder"
 msgstr "Kunde inte skapa mappen"
 
-#: source/php/Entity/PostManager.php:225
+#: source/php/Entity/PostManager.php:227
 msgid "please go ahead and create it manually and rerun the import."
 msgstr "vänligen skapa den manuellt och gör om importen."
 
@@ -2671,67 +2680,63 @@ msgstr "Arrangör"
 msgid "Client"
 msgstr "Klient"
 
-#: source/php/PostTypes/Events.php:292 source/php/PostTypes/Events.php:448
+#: source/php/PostTypes/Events.php:297 source/php/PostTypes/Events.php:453
 msgid "End date must be after start date"
 msgstr "Slutdatum får inte vara före eller lika med startdatum"
 
-#: source/php/PostTypes/Events.php:320
+#: source/php/PostTypes/Events.php:325
 msgid "Door time cannot be after start date"
 msgstr "Dörrtid får inte vara efter starttid"
 
-#: source/php/PostTypes/Events.php:344
+#: source/php/PostTypes/Events.php:349
 msgid "Please add occasion or recurrence rule"
 msgstr "Vänligen lägg till tidpunkt för evenemanget"
 
-#: source/php/PostTypes/Events.php:368
+#: source/php/PostTypes/Events.php:373
 msgid "Not a valid number"
 msgstr "Inte ett giltigt tal"
 
-#: source/php/PostTypes/Events.php:395
+#: source/php/PostTypes/Events.php:400
 msgid "End time must be after start time"
 msgstr "Sluttid får inte vara före starttid"
 
-#: source/php/PostTypes/Events.php:422
+#: source/php/PostTypes/Events.php:427
 msgid "Door time cannot be after start time"
 msgstr "Dörrtid får inte vara efter starttid"
 
-#: source/php/PostTypes/Events.php:477
+#: source/php/PostTypes/Events.php:482
 msgid "Import XCAP"
 msgstr "Importera XCAP"
 
-#: source/php/PostTypes/Events.php:481
+#: source/php/PostTypes/Events.php:486
 msgid "Import CBIS"
 msgstr "Importera CBIS"
 
-#: source/php/PostTypes/Events.php:485
+#: source/php/PostTypes/Events.php:490
 msgid "Import Transticket"
 msgstr "Importera Transticket"
 
-#: source/php/PostTypes/Events.php:488
-msgid "Collect event timestamps"
-msgstr "Spara tidsstämplar"
-
-#: source/php/PostTypes/Events.php:505
+#: source/php/PostTypes/Events.php:509
 msgid "No post to duplicate has been supplied!"
 msgstr "Post att duplicera saknas!"
 
-#: source/php/PostTypes/Events.php:515
+#: source/php/PostTypes/Events.php:519
 msgid "Event creation failed, could not find original event"
 msgstr "Dupliceringen misslyckades, kunde inte hitta originalevenemanget"
 
-#: source/php/PostTypes/Events.php:589
+#: source/php/PostTypes/Events.php:593
 msgid "Create similar item"
 msgstr "Skapa ett liknande evenemang"
 
-#: source/php/PostTypes/Events.php:589
+#: source/php/PostTypes/Events.php:593
 msgid "Are you sure you want to clone this event?"
 msgstr "Är du säker på att du vill skapa en dubblett av evenemanget?"
 
-#: source/php/PostTypes/Events.php:589
+#: source/php/PostTypes/Events.php:593
 msgid "Clone"
 msgstr "Duplicera"
 
-#: source/php/PostTypes/Events.php:606
+#: source/php/PostTypes/Events.php:610
 #, php-format
 msgid ""
 "This is a duplicate of the event: %s. If this is a new occasion for the same "
@@ -2741,20 +2746,20 @@ msgstr ""
 "tidpunkt för ett redan existerande evenemang, vänligen %s och publicera "
 "originalversionen"
 
-#: source/php/PostTypes/Events.php:606
+#: source/php/PostTypes/Events.php:610
 msgid "edit"
 msgstr "uppdatera"
 
-#: source/php/PostTypes/Events.php:628
+#: source/php/PostTypes/Events.php:632
 msgid "Guidelines"
 msgstr "Riktlinjer"
 
-#: source/php/PostTypes/Events.php:629
+#: source/php/PostTypes/Events.php:633
 msgid "Please read the guidelines below before publishing your event."
 msgstr ""
 "Vänligen läs igenom riktlinjerna nedan innan du publicerar evenemanget."
 
-#: source/php/PostTypes/Events.php:630
+#: source/php/PostTypes/Events.php:634
 msgid ""
 "Do not enter information that refers to information in another text field. "
 "It is not certain that all fields will be presented to the consumer and "
@@ -2764,23 +2769,23 @@ msgstr ""
 "Det är inte säkert att alla fält kommer att presenteras för konsumenten och "
 "kan därför bli missledande."
 
-#: source/php/PostTypes/Events.php:631
+#: source/php/PostTypes/Events.php:635
 msgid "Plain language tips"
 msgstr "Klarspråkstips"
 
-#: source/php/PostTypes/Events.php:632
+#: source/php/PostTypes/Events.php:636
 msgid "Write the most important first."
 msgstr "Skriv det viktigaste först."
 
-#: source/php/PostTypes/Events.php:633
+#: source/php/PostTypes/Events.php:637
 msgid "Use words that you think the readers understand."
 msgstr "Använd ord som du tror att läsarna förstår."
 
-#: source/php/PostTypes/Events.php:634
+#: source/php/PostTypes/Events.php:638
 msgid "Write short and concise."
 msgstr "Skriv kort och koncist."
 
-#: source/php/PostTypes/Events.php:658
+#: source/php/PostTypes/Events.php:662
 msgid ""
 "CBIS have not imported any events for atleast 7 days. Please control the "
 "importer."
@@ -2788,7 +2793,7 @@ msgstr ""
 "Inga evenemang från CBIS har importerats de senaste 7 dagarna. Vänligen "
 "kontrollera inställningarna och importen."
 
-#: source/php/PostTypes/Events.php:682
+#: source/php/PostTypes/Events.php:686
 msgid ""
 "XCAP have not imported any events for atleast 7 days. Please control the "
 "importer."
@@ -2796,7 +2801,7 @@ msgstr ""
 "Inga evenemang från XCAP har importerats de senaste 7 dagarna. Vänligen "
 "kontrollera inställningarna och importen."
 
-#: source/php/PostTypes/Events.php:706
+#: source/php/PostTypes/Events.php:710
 msgid ""
 "Transticket have not imported any events for atleast 7 days. Please control "
 "the importer."
@@ -2804,19 +2809,11 @@ msgstr ""
 "Inga evenemang från Transticket har importerats de senaste 7 dagarna. "
 "Vänligen kontrollera inställningarna och importen."
 
-#: source/php/PostTypes/Events.php:782
-msgid "Under processing"
-msgstr "Under bearbetning"
-
 #: source/php/PostTypes/Locations.php:54
 msgid "Import client"
 msgstr "Klient"
 
-#: source/php/PostTypes/Locations.php:166
-msgid "Import CBIS locations"
-msgstr "Importera CBIS platser"
-
-#: source/php/PostTypes/Locations.php:170
+#: source/php/PostTypes/Locations.php:165
 msgid "Import ArcGIS locations"
 msgstr "Importera ArcGIS platser"
 
@@ -3292,6 +3289,12 @@ msgstr ""
 #. Author URI of the plugin/theme
 msgid "http://www.helsingborg.se"
 msgstr ""
+
+#~ msgid "Collect event timestamps"
+#~ msgstr "Spara tidsstämplar"
+
+#~ msgid "Import CBIS locations"
+#~ msgstr "Importera CBIS platser"
 
 #~ msgid "Lol here"
 #~ msgstr "Lol här"
