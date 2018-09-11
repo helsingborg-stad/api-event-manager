@@ -35,9 +35,7 @@ abstract class CustomPostType
         add_filter('manage_edit-' . $this->slug . '_columns', array($this, 'tableColumns'));
         add_filter('manage_edit-' . $this->slug . '_sortable_columns', array($this, 'tableSortableColumns'));
         add_action('manage_' . $this->slug . '_posts_custom_column', array($this, 'tableColumnsContent'), 10, 2);
-
         add_action('wp_ajax_accept_or_deny', array($this, 'acceptAndDeny'));
-        add_action('wp_ajax_import_events', array($this, 'importEvents'));
         add_action('wp_ajax_dismiss', array($this, 'dismissInstructions'));
         add_action('admin_head', array($this, 'removeMedia'));
         add_filter('get_sample_permalink_html', array($this, 'replacePermalink'), 10, 5);
@@ -46,40 +44,6 @@ abstract class CustomPostType
         add_action('admin_menu', array($this, 'removePublishBox'));
         add_filter('acf/update_value/name=user_groups', array($this, 'updateuserGroups'), 10, 3);
         add_filter('wp_default_editor', function() { return 'tinymce'; });
-    }
-
-    /**
-     * Start parsing event importer
-     */
-    public function importEvents()
-    {
-        if ($_POST['value'] == 'cbis') {
-            $api_keys = $_POST['api_keys'];
-            $importer = new \HbgEventImporter\Parser\CbisEvent('http://api.cbis.citybreak.com/Products.asmx?wsdl', $api_keys);
-            $data = $importer->getCreatedData();
-            wp_send_json($data);
-        } elseif ($_POST['value'] == 'cbislocation') {
-            $api_keys = $_POST['api_keys'];
-            $location = $_POST['cbis_location'];
-            $importer = new \HbgEventImporter\Parser\CbisLocation('http://api.cbis.citybreak.com/Products.asmx?wsdl', $api_keys, $location);
-            $data = $importer->getCreatedData();
-            wp_send_json($data);
-        } elseif ($_POST['value'] == 'xcap') {
-            $api_keys = $_POST['api_keys'];
-            $importer = new \HbgEventImporter\Parser\Xcap($api_keys['xcap_api_url'], $api_keys);
-            $data = $importer->getCreatedData();
-            wp_send_json($data);
-        } elseif ($_POST['value'] == 'transticket') {
-            $api_keys = $_POST['api_keys'];
-            $importer = new \HbgEventImporter\Parser\TransTicket($api_keys['transticket_api_url'], $api_keys);
-            $data = $importer->getCreatedData();
-            wp_send_json($data);
-        } elseif ($_POST['value'] == 'arcgislocation') {
-            $api_keys = $_POST['api_keys'];
-            $importer = new \HbgEventImporter\Parser\Arcgis($api_keys['arcgis_api_url'], $api_keys);
-            $data = $importer->getCreatedData();
-            wp_send_json($data);
-        }
     }
 
     /**

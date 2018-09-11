@@ -479,15 +479,15 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
             $button = '<div class="import-buttons actions">';
 
             if (have_rows('xcap_api_urls', 'option')) {
-                $button .= '<div class="button-primary extraspace" id="xcap">' . __('Import XCAP', 'event-manager') . '</div>';
+                $button .= '<button class="button-primary extraspace single-import" data-client="xcap">' . __('Import XCAP', 'event-manager') . '</button>';
             }
 
             if (have_rows('cbis_api_keys', 'option')) {
-                $button .= '<div class="button-primary extraspace" id="cbis">' . __('Import CBIS', 'event-manager') . '</div>';
+                $button .= '<button class="button-primary extraspace single-import" data-client="cbis">' . __('Import CBIS', 'event-manager') . '</button>';
             }
 
             if (have_rows('transticket_api_urls', 'option')) {
-                $button .= '<div class="button-primary extraspace" id="transticket">' . __('Import Transticket', 'event-manager') . '</div>';
+                $button .= '<button class="button-primary extraspace single-import" data-client="transticket">' . __('Import Transticket', 'event-manager') . '</button>';
             }
 
             $button .= '</div>';

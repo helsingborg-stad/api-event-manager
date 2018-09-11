@@ -10,9 +10,21 @@ class Cron
     public function __construct()
     {
         add_action('remove_expired_events', array($this, 'expiredEvents'));
-        add_action('admin_enqueue_scripts', array($this, 'setApiKeys'));
         add_action('acf/save_post', array($this, 'scheduleImportCron'), 20);
         add_action('import_events', array($this, 'startImport'));
+        add_action('wp_ajax_schedule_single_import', array($this, 'scheduleSingleImport'));
+    }
+
+    /**
+     * Schedule single import
+     */
+    public function scheduleSingleImport()
+    {
+        if (!in_array($client = $_POST['client'] ?? null, self::$clients)) {
+            wp_die();
+        }
+        wp_schedule_single_event(time(), 'import_events', array('client' => $client));
+        wp_die();
     }
 
     /**
@@ -132,22 +144,6 @@ class Cron
         }
 
         return;
-    }
-
-    /**
-     * Set API keys from options as js variables
-     * @return void
-     */
-    public function setApiKeys()
-    {
-        if (!current_user_can('administrator')) {
-            return;
-        }
-
-        wp_localize_script('hbg-event-importer', 'transticket_ajax_vars', array('transticket_keys' => $this->getTransTicketKeys()));
-        wp_localize_script('hbg-event-importer', 'cbis_ajax_vars', array('cbis_keys' => $this->getCbisKeys()));
-        wp_localize_script('hbg-event-importer', 'xcap_ajax_vars', array('xcap_keys' => $this->getXcapKeys()));
-        wp_localize_script('hbg-event-importer', 'arcgis_ajax_vars', array('arcgis_keys' => $this->getArcgisKeys()));
     }
 
     /**
@@ -285,6 +281,14 @@ class Cron
      */
     public function startImport($client)
     {
+        $transient = 'api-event-manager-importing-' . $client;
+        // Check if import is already running
+        if (!get_site_transient($transient)) {
+            set_site_transient($transient, true, 20 * MINUTE_IN_SECONDS);
+        } else {
+            return;
+        }
+
         switch ($client) {
             case 'cbis':
                 $api_keys = $this->getCbisKeys();
@@ -317,5 +321,7 @@ class Cron
                 }
                 break;
         }
+
+        delete_site_transient($transient);
     }
 }
