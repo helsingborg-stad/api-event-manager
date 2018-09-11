@@ -260,7 +260,6 @@ class TransTicket extends \HbgEventImporter\Parser
         }
 
         if (!$eventId) {
-            $this->nrOfNewEvents++;
             $this->levenshteinTitles['event'][] = array(
                 'ID' => $event->ID,
                 'post_title' => $data['postTitle'],
@@ -341,10 +340,6 @@ class TransTicket extends \HbgEventImporter\Parser
 
         if (!$location->save()) {
             return false;
-        }
-
-        if (!isset($location->duplicate)) {
-            $this->nrOfNewLocations++;
         }
 
         $this->levenshteinTitles['location'][] = array('ID' => $location->ID, 'post_title' => $postTitle);

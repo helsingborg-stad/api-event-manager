@@ -157,10 +157,6 @@ class CbisLocation extends \HbgEventImporter\Parser\Cbis
             }
 
             if ($location->save()) {
-                if ($isUpdate == false) {
-                    ++$this->nrOfNewLocations;
-                }
-
                 $this->levenshteinTitles['location'][] = array('ID' => $location->ID, 'post_title' => $newPostTitle);
             }
         }

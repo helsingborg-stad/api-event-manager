@@ -159,7 +159,6 @@ class Xcap extends \HbgEventImporter\Parser
         }
 
         if (!$eventId) {
-            $this->nrOfNewEvents++;
             $this->levenshteinTitles['event'][] = array(
                 'ID'         => $event->ID,
                 'post_title' => $postTitle,
@@ -234,10 +233,6 @@ class Xcap extends \HbgEventImporter\Parser
 
         if (!$location->save()) {
             return false;
-        }
-
-        if (! isset($location->duplicate)) {
-            $this->nrOfNewLocations++;
         }
 
         $this->levenshteinTitles['location'][] = array('ID' => $location->ID, 'post_title' => $address);

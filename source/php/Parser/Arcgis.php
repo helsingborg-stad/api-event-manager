@@ -132,10 +132,6 @@ class Arcgis extends \HbgEventImporter\Parser
         }
 
         if ($location->save()) {
-            if ($isUpdate == false) {
-                ++$this->nrOfNewLocations;
-            }
-
             $this->levenshteinTitles['location'][] = array('ID' => $location->ID, 'post_title' => $postTitle);
         }
     }

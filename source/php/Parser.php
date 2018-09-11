@@ -9,9 +9,6 @@ abstract class Parser
     protected $url;
     protected $apiKeys;
     protected $cbisLocation;
-    protected $nrOfNewEvents;
-    protected $nrOfNewLocations;
-    protected $nrOfNewOrganizers;
 
     /**
      * Holds all titles of existing locations, organizers and events in wordpress
@@ -37,9 +34,6 @@ abstract class Parser
         $this->url               = $url;
         $this->apiKeys           = $apiKeys;
         $this->cbisLocation      = $cbisLocation;
-        $this->nrOfNewEvents     = 0;
-        $this->nrOfNewLocations  = 0;
-        $this->nrOfNewOrganizers = 0;
 
         // Run import
         $this->start();
@@ -107,29 +101,6 @@ abstract class Parser
         }
 
         return false;
-    }
-
-    /**
-     * Get statistics for imported dataset
-     * @return array
-     */
-    public function getCreatedData()
-    {
-        return array(
-            'events'      => $this->nrOfNewEvents,
-            'locations'   => $this->nrOfNewLocations,
-            'organizers'  => $this->nrOfNewOrganizers,
-        );
-    }
-
-    /**
-     * When parser is done
-     * @return void
-     */
-    public function done()
-    {
-        echo __('Parser done.', 'event-manager');
-        echo '<script>location.href = "' . admin_url('edit.php?post_type=event&msg=import-complete') . '";</script>';
     }
 
     /**

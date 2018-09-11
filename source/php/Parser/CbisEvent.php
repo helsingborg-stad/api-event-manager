@@ -246,10 +246,6 @@ class CbisEvent extends \HbgEventImporter\Parser\Cbis
             return false;
         }
 
-        if (! isset($location->duplicate)) {
-            $this->nrOfNewLocations++;
-        }
-
         $this->levenshteinTitles['location'][] = array(
             'ID' => $location->ID,
             'post_title' => $title
@@ -328,10 +324,6 @@ class CbisEvent extends \HbgEventImporter\Parser\Cbis
 
         if (! $organizer->save()) {
             return false;
-        }
-
-        if (! isset($organizer->duplicate)) {
-            $this->nrOfNewOrganizers++;
         }
 
         $this->levenshteinTitles['organizer'][] = array(
@@ -420,7 +412,6 @@ class CbisEvent extends \HbgEventImporter\Parser\Cbis
         }
 
         if (!$eventId) {
-            $this->nrOfNewEvents++;
             $this->levenshteinTitles['event'][] = array(
                 'ID'         => $event->ID,
                 'post_title' => $title,
