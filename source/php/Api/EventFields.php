@@ -26,6 +26,7 @@ class EventFields extends Fields
         register_rest_route('wp/v2', '/' . $this->postType . '/' . 'time', array(
             'methods' => \WP_REST_Server::READABLE,
             'callback' => array($this, 'getEventsByTimestamp'),
+            'args' => $this->getCollectionParams(),
         ));
     }
 
@@ -35,6 +36,112 @@ class EventFields extends Fields
             'methods' => \WP_REST_Server::READABLE,
             'callback' => array($this, 'getEventsSearch'),
         ));
+    }
+
+    /**
+     * Get the query params for collections
+     * @return array
+     */
+    public function getCollectionParams() {
+        return array(
+            'page'                   => array(
+                'description'        => 'Current page of the collection.',
+                'type'               => 'integer',
+                'default'            => 1,
+                'sanitize_callback'  => 'absint',
+            ),
+            'start'                  => array(
+                'description'        => 'Start date for the collection.',
+                'type'               => 'integer',
+                'default'            => strtotime('midnight now'),
+                'sanitize_callback'  => array($this, 'sanitizeDate'),
+            ),
+            'end'                    => array(
+                'description'        => 'End date for the collection.',
+                'type'               => 'integer',
+                'default'            => strtotime('midnight now'),
+                'sanitize_callback'  => array($this, 'sanitizeEndDate'),
+            ),
+            'internal'               => array(
+                'description'        => 'Filter by internal events. Check if only internal (organization) event should be fetched.',
+                'type'               => 'integer',
+                'default'            => 0,
+                'sanitize_callback'  => array($this, 'sanitizeBool'),
+            ),
+            'latlng'                 => array(
+                'description'        => 'Filter by locations at a specified location and inside a circular radius.',
+                'type'               => 'string',
+                'default'            => '',
+                'sanitize_callback'  => 'sanitize_text_field',
+            ),
+            'distance'               => array(
+                'description'        => 'Area distance in km from coordinates. Used with "latlng" parameter.',
+                'type'               => 'float',
+                'default'            => 0,
+                'sanitize_callback'  => array($this, 'sanitizeFloat'),
+            ),
+            'arealatlng'             => array(
+                'description'        => 'Filter by locations inside a polygon shaped area.',
+                'type'               => 'array',
+                'default'            => array(),
+                'sanitize_callback'  => array($this, 'sanitizeArray'),
+            ),
+            'group-id'               => array(
+                'description'        => 'Filter by groups taxonomy.',
+                'type'               => 'string',
+                'default'            => '',
+                'sanitize_callback'  => 'sanitize_text_field',
+            ),
+            'category-id'            => array(
+                'description'        => 'Filter by categories taxonomy.',
+                'type'               => 'string',
+                'default'            => '',
+                'sanitize_callback'  => 'sanitize_text_field',
+            ),
+        );
+    }
+
+    public function sanitizeArray($data)
+    {
+        return is_array($data) ? $data : array();
+    }
+
+    public function sanitizeFloat($data)
+    {
+        return floatval(str_replace(',', '.', $data));
+    }
+
+    public function sanitizeBool($data)
+    {
+        return $data ? 1 : 0;
+    }
+
+    /**
+     * Convert date to timestamp
+     * @param $date
+     * @return int
+     */
+    public function sanitizeDate($data)
+    {
+        if (!is_numeric($data)) {
+            $data = strtotime($data);
+        }
+
+        if ($data == false) {
+            $data = strtotime('midnight now');
+        }
+
+        return $data;
+    }
+
+    /**
+     * Convert end date to timestamp. Add 1 day to include events occurring on end date
+     * @param $date
+     * @return int
+     */
+    public function sanitizeEndDate($data)
+    {
+        return strtotime('+1 day', $this->sanitizeDate($data));
     }
 
     public function getEventsSearch($data)
@@ -50,21 +157,6 @@ class EventFields extends Fields
         return $allEvents;
     }
 
-    public function errorMessage($message)
-    {
-        $returnArray = array(
-            'error' => $message,
-            'Example 1' => rest_url('/wp/v2/event/time?start=' . date('Y-m-d')),
-            'Example 2' => rest_url('/wp/v2/event/time?start=' . strtotime("now")),
-            'Example 3' => rest_url('/wp/v2/event/time?start=' . date('Y-m-d') . '&end=' . date('Y-m-d', strtotime("now +7 days"))),
-            'Example 4' => rest_url('/wp/v2/event/time?start=' . strtotime("now") . '&end=' . strtotime("now +7 days"))
-        );
-
-        $returnArray['Format examples'] = 'http://php.net/manual/en/datetime.formats.php';
-
-        return $returnArray;
-    }
-
     /**
      * http://v2.wp-api.org/
      * @return [type] [description]
@@ -72,34 +164,16 @@ class EventFields extends Fields
     public function getEventsByTimestamp($request)
     {
         global $wpdb;
-        $week = 604800;
-        $post_status = 'publish';
-
-        if (!isset($_GET['start'])) {
-            return $this->errorMessage('No variable supplied');
-        }
-
-        $timestamp = $_GET['start'];
-        if (!is_numeric($timestamp)) {
-            $timestamp = strtotime($timestamp);
-        }
-
-        if ($timestamp == false) {
-            return $this->errorMessage('Format not valid');
-        }
-
-        // Filter by internal events. Check if only internal (organization) event should be fetched
-        $internalEvent = isset($_GET['internal']) && !empty($_GET['internal']) ? 1 : 0;
+        $parameters = $request->get_params();
 
         // Filter by locations at a specified location and inside a circular radius
         $locationIds = '';
-        if (!empty($_GET['latlng'])) {
-            $distance = (isset($_GET['distance'])) ? str_replace(',', '.', $_GET['distance']) : 0;
-            $latlng = explode(',', preg_replace('/\s+/', '', urldecode($_GET['latlng'])));
+        if ($parameters['latlng']) {
+            $latlng = explode(',', preg_replace('/\s+/', '', urldecode($parameters['latlng'])));
             if (count($latlng) != 2) {
                 return new \WP_Error('error_message', 'Parameter \'latlng\' is in wrong format', array('status' => 400));
             }
-            $locations = \HbgEventImporter\Helper\Address::getNearbyLocations($latlng[0], $latlng[1], floatval($distance));
+            $locations = \HbgEventImporter\Helper\Address::getNearbyLocations($latlng[0], $latlng[1], $parameters['distance']);
             // Return if locations is empty
             if (!$locations) {
                 return new \WP_Error('error_message', 'There are no events', array('status' => 204));
@@ -108,8 +182,8 @@ class EventFields extends Fields
         }
 
         // Filter by locations inside a polygon shaped area
-        if (isset($_GET['arealatlng']) && is_array($_GET['arealatlng']) && count($_GET['arealatlng']) > 2) {
-            $areaLocations = $this->getAreaLocations($_GET['arealatlng']);
+        if (count($parameters['arealatlng']) > 2) {
+            $areaLocations = $this->getAreaLocations($parameters['arealatlng']);
             // Return if locations is empty
             if (!$areaLocations) {
                 return new \WP_Error('error_message', 'There are no events', array('status' => 204));
@@ -118,19 +192,15 @@ class EventFields extends Fields
         }
 
         // Filter by groups taxonomy
-        $groupId = (isset($_GET['group-id']) && !empty($_GET['group-id'])) ? explode(',', trim($_GET['group-id'], ',')) : null;
-        if (!empty($groupId)) {
+        if (!empty($groupId = explode(',', trim($parameters['group-id'], ',')))) {
             $groupId = $this->getTaxonomyChildren($groupId, 'user_groups');
             $groupId = implode(',', $groupId);
         }
 
         // Filter by categories taxonomy
-        $categoryId = (isset($_GET['category-id'])) ? trim($_GET['category-id'], ',') : '';
+        $categoryId = trim($parameters['category-id'], ',');
         $taxonomies = ($groupId) ? $groupId . ',' . $categoryId : $categoryId;
         $taxonomies = trim($taxonomies, ',');
-
-        // Add limit to query
-        $limit = (isset($_GET['post-limit']) && is_numeric($_GET['post-limit'])) ? $_GET['post-limit'] : null;
 
         $db_occasions = $wpdb->prefix . "occasions";
         $query =
@@ -144,31 +214,14 @@ class EventFields extends Fields
             WHERE       $wpdb->posts.post_type = %s
                         AND $wpdb->posts.post_status = %s
                         AND ($db_occasions.timestamp_start BETWEEN %d AND %d OR $db_occasions.timestamp_end BETWEEN %d AND %d)
-                        AND postmeta1.meta_key = 'internal_event' AND postmeta1.meta_value = $internalEvent
+                        AND postmeta1.meta_key = 'internal_event' AND postmeta1.meta_value = {$parameters['internal']}
             ";
         $query .= (!empty($taxonomies)) ? "AND ($wpdb->term_relationships.term_taxonomy_id IN ($taxonomies)) " : "";
         $query .= (!empty($locationIds)) ? "AND (postmeta2.meta_key = 'location' AND postmeta2.meta_value IN ($locationIds)) " : "";
         $query .= "GROUP BY $wpdb->posts.ID, $db_occasions.timestamp_start, $db_occasions.timestamp_end ";
         $query .= "ORDER BY $db_occasions.timestamp_start ASC";
-        $query .= ($limit != null) ? " LIMIT " . $limit : "";
 
-        $timePlusWeek = 0;
-        if (isset($_GET['end'])) {
-            $time2 = $_GET['end'];
-            $timestamp2 = $time2;
-            if (!is_numeric($time2)) {
-                // Add 1 day to include events occuring on end date
-                $timestamp2 = strtotime($timestamp2 . " +1 days");
-            }
-            if ($timestamp2 == false) {
-                return $this->errorMessage('Format not ok', array(2, 3));
-            }
-            $timePlusWeek = $timestamp2;
-        } else {
-            $timePlusWeek = $timestamp + $week;
-        }
-
-        $completeQuery = $wpdb->prepare($query, $this->postType, $post_status, $timestamp, $timePlusWeek, $timestamp, $timePlusWeek);
+        $completeQuery = $wpdb->prepare($query, $this->postType, 'publish', $parameters['start'], $parameters['end'], $parameters['start'], $parameters['end']);
         $allEvents = $wpdb->get_results($completeQuery);
         $controller = new \WP_REST_Posts_Controller($this->postType);
 
