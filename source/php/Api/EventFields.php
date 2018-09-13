@@ -48,7 +48,13 @@ class EventFields extends Fields
                 'description'        => 'Current page of the collection.',
                 'type'               => 'integer',
                 'default'            => 1,
-                'sanitize_callback'  => 'absint',
+                'sanitize_callback'  => array($this, 'sanitizePage'),
+            ),
+            'per_page'               => array(
+                'description'        => 'Maximum number of items to be returned in result set.',
+                'type'               => 'integer',
+                'default'            => 10,
+                'sanitize_callback'  => array($this, 'sanitizePerPage'),
             ),
             'start'                  => array(
                 'description'        => 'Start date for the collection.',
@@ -99,6 +105,18 @@ class EventFields extends Fields
                 'sanitize_callback'  => 'sanitize_text_field',
             ),
         );
+    }
+
+    public function sanitizePage($data)
+    {
+        $data = intval($data);
+        return ($data > 0) ? $data : 1;
+    }
+
+    public function sanitizePerPage($data)
+    {
+        $data = intval($data);
+        return ($data >= 1 && $data <= 100) ? $data : 10;
     }
 
     public function sanitizeArray($data)
@@ -201,6 +219,8 @@ class EventFields extends Fields
         $categoryId = trim($parameters['category-id'], ',');
         $taxonomies = ($groupId) ? $groupId . ',' . $categoryId : $categoryId;
         $taxonomies = trim($taxonomies, ',');
+        // Calculate offset
+        $offset = ($parameters['page'] * $parameters['per_page']) - $parameters['per_page'];
 
         $db_occasions = $wpdb->prefix . "occasions";
         $query =
@@ -220,6 +240,7 @@ class EventFields extends Fields
         $query .= (!empty($locationIds)) ? "AND (postmeta2.meta_key = 'location' AND postmeta2.meta_value IN ($locationIds)) " : "";
         $query .= "GROUP BY $wpdb->posts.ID, $db_occasions.timestamp_start, $db_occasions.timestamp_end ";
         $query .= "ORDER BY $db_occasions.timestamp_start ASC";
+        $query .= " LIMIT {$offset}, {$parameters['per_page']}";
 
         $completeQuery = $wpdb->prepare($query, $this->postType, 'publish', $parameters['start'], $parameters['end'], $parameters['start'], $parameters['end']);
         $allEvents = $wpdb->get_results($completeQuery);
@@ -279,7 +300,7 @@ class EventFields extends Fields
 
     /**
      * Return term id and its children
-     * @param  array  $ids      taxnomy ids
+     * @param  array  $ids      taxonomy ids
      * @param  string $taxonoym taxonomy name
      * @return array
      */
