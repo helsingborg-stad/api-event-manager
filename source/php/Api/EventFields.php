@@ -107,28 +107,53 @@ class EventFields extends Fields
         );
     }
 
+    /**
+     * Returns positive int
+     * @param $data
+     * @return float|int
+     */
     public function sanitizePage($data)
     {
-        $data = abs(intval($data));
+        $data = absint($data);
         return ($data >= 1) ? $data : 1;
     }
 
+    /**
+     * Return int between 1-100
+     * @param $data
+     * @return int
+     */
     public function sanitizePerPage($data)
     {
-        $data = intval($data);
+        $data = absint($data);
         return ($data >= 1 && $data <= 100) ? $data : 10;
     }
 
+    /**
+     * Returns array
+     * @param $data
+     * @return array
+     */
     public function sanitizeArray($data)
     {
         return is_array($data) ? $data : array();
     }
 
+    /**
+     * Return float
+     * @param $data
+     * @return float
+     */
     public function sanitizeFloat($data)
     {
         return floatval(str_replace(',', '.', $data));
     }
 
+    /**
+     * Return int instead of bool
+     * @param $data
+     * @return int
+     */
     public function sanitizeBool($data)
     {
         return $data ? 1 : 0;
@@ -136,7 +161,7 @@ class EventFields extends Fields
 
     /**
      * Convert date to timestamp
-     * @param $date
+     * @param $data
      * @return int
      */
     public function sanitizeDate($data)
@@ -154,7 +179,7 @@ class EventFields extends Fields
 
     /**
      * Convert end date to timestamp. Add 1 day to include events occurring on end date
-     * @param $date
+     * @param $data
      * @return int
      */
     public function sanitizeEndDate($data)
@@ -162,6 +187,11 @@ class EventFields extends Fields
         return strtotime('+1 day', $this->sanitizeDate($data));
     }
 
+    /**
+     * Endpoint to search events by title
+     * @param $data
+     * @return array|null|object
+     */
     public function getEventsSearch($data)
     {
         global $wpdb;
@@ -176,8 +206,9 @@ class EventFields extends Fields
     }
 
     /**
-     * http://v2.wp-api.org/
-     * @return [type] [description]
+     * Endpoint to collect events between start/end dates and ordered by chronological order
+     * @param $request
+     * @return \WP_Error|\WP_REST_Response
      */
     public function getEventsByTimestamp($request)
     {
