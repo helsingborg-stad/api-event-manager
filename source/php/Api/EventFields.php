@@ -3,11 +3,8 @@
 namespace HbgEventImporter\Api;
 
 /**
- * Adding meta fields to event post type
+ * Register custom endpoints and meta fields to event post type
  */
-
-ini_set('memory_limit', '256M');
-ini_set('default_socket_timeout', 60 * 10);
 
 class EventFields extends Fields
 {
@@ -44,18 +41,6 @@ class EventFields extends Fields
      */
     public function getCollectionParams() {
         return array(
-            'page'                   => array(
-                'description'        => 'Current page of the collection.',
-                'type'               => 'integer',
-                'default'            => 1,
-                'sanitize_callback'  => array($this, 'sanitizePage'),
-            ),
-            'per_page'               => array(
-                'description'        => 'Maximum number of items to be returned in result set.',
-                'type'               => 'integer',
-                'default'            => 10,
-                'sanitize_callback'  => array($this, 'sanitizePerPage'),
-            ),
             'start'                  => array(
                 'description'        => 'Start date for the collection.',
                 'type'               => 'integer',
@@ -250,8 +235,6 @@ class EventFields extends Fields
         $categoryId = trim($parameters['category-id'], ',');
         $taxonomies = ($groupId) ? $groupId . ',' . $categoryId : $categoryId;
         $taxonomies = trim($taxonomies, ',');
-        // Calculate offset
-        $offset = ($parameters['page'] * $parameters['per_page']) - $parameters['per_page'];
 
         $db_occasions = $wpdb->prefix . "occasions";
         $query =
@@ -271,7 +254,13 @@ class EventFields extends Fields
         $query .= (!empty($locationIds)) ? "AND (postmeta2.meta_key = 'location' AND postmeta2.meta_value IN ($locationIds)) " : "";
         $query .= "GROUP BY $wpdb->posts.ID, $db_occasions.timestamp_start, $db_occasions.timestamp_end ";
         $query .= "ORDER BY $db_occasions.timestamp_start ASC";
-        $query .= " LIMIT {$offset}, {$parameters['per_page']}";
+        // Limit response if 'page' parameter is set
+        if (!empty($parameters['page'])) {
+            $page = $this->sanitizePage($parameters['page']);
+            $perPage = !empty($parameters['per_page']) ? $this->sanitizePerPage($parameters['per_page']) : 10;
+            $offset = ($page * $perPage) - $perPage;
+            $query .= " LIMIT {$offset}, {$perPage}";
+        }
 
         $completeQuery = $wpdb->prepare($query, $this->postType, 'publish', $parameters['start'], $parameters['end'], $parameters['start'], $parameters['end']);
         $allEvents = $wpdb->get_results($completeQuery);
