@@ -109,8 +109,8 @@ class EventFields extends Fields
 
     public function sanitizePage($data)
     {
-        $data = intval($data);
-        return ($data > 0) ? $data : 1;
+        $data = abs(intval($data));
+        return ($data >= 1) ? $data : 1;
     }
 
     public function sanitizePerPage($data)
