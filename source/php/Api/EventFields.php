@@ -369,24 +369,26 @@ class EventFields extends Fields
         global $wpdb;
         $db_occasions = $wpdb->prefix . "occasions";
         $id = $object['id'];
+        $parameters = $request->get_params();
+        $endParam = $parameters['end'] ?? null;
         $data = array();
 
         // Get upcoming occasions
         $timestamp = strtotime("midnight now") - 1;
-        $query =
-            "
-        SELECT * FROM $db_occasions
-        WHERE event = $id
-        AND timestamp_end > $timestamp
+        $query = "
+        SELECT * FROM {$db_occasions}
+        WHERE event = {$id}
+        AND timestamp_end > {$timestamp}
         ";
+        $query .= ($endParam) ? " AND timestamp_end < {$endParam}" : "";
         $query_results = $wpdb->get_results($query, OBJECT);
 
         // Get and save occasions from post meta, to get complete data
         $return_value = self::getFieldGetMetaData($object, 'occasions', $request);
         if (is_array($return_value) || is_object($return_value) && !empty($return_value)) {
             foreach ($return_value as $key => $value) {
-                // Skip passed occasions
-                if (strtotime($value['end_date']) < $timestamp) {
+                // Skip passed occasions and occasions after 'end' parameter
+                if (strtotime($value['end_date']) < $timestamp || ($endParam && strtotime($value['start_date']) > $endParam)) {
                     continue;
                 }
                 $data[] = array(
