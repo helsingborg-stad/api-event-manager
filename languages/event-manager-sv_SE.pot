@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "Project-Id-Version: Event Manager\n"
-"POT-Creation-Date: 2018-09-11 16:14+0200\n"
+"POT-Creation-Date: 2018-09-17 14:25+0200\n"
 "PO-Revision-Date: 2016-10-26 08:27+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -2236,7 +2236,7 @@ msgid "Ticket URL"
 msgstr ""
 
 #: source/php/AcfFields/php/transticket.php:129
-msgid "URL to single ticket purchase, exclude ID."
+msgid "Base URL to ticket purchase website."
 msgstr ""
 
 #: source/php/AcfFields/php/transticket.php:145
@@ -2515,98 +2515,98 @@ msgstr ""
 msgid "Import scheduled"
 msgstr ""
 
-#: source/php/Entity/CustomPostType.php:97
+#: source/php/Entity/CustomPostType.php:59
 msgid "API-url"
 msgstr ""
 
-#: source/php/Entity/CustomPostType.php:134
-#: source/php/Entity/CustomPostType.php:135
+#: source/php/Entity/CustomPostType.php:96
+#: source/php/Entity/CustomPostType.php:97
 #, php-format
 msgid "Add new %s"
 msgstr ""
 
-#: source/php/Entity/CustomPostType.php:136
+#: source/php/Entity/CustomPostType.php:98
 #, php-format
 msgid "Edit %s"
 msgstr ""
 
-#: source/php/Entity/CustomPostType.php:137
+#: source/php/Entity/CustomPostType.php:99
 #, php-format
 msgid "New %s"
 msgstr ""
 
-#: source/php/Entity/CustomPostType.php:138
+#: source/php/Entity/CustomPostType.php:100
 #, php-format
 msgid "View %s"
 msgstr ""
 
-#: source/php/Entity/CustomPostType.php:139
+#: source/php/Entity/CustomPostType.php:101
 #, php-format
 msgid "Search %s"
 msgstr ""
 
-#: source/php/Entity/CustomPostType.php:140
+#: source/php/Entity/CustomPostType.php:102
 #, php-format
 msgid "No %s found"
 msgstr ""
 
-#: source/php/Entity/CustomPostType.php:141
+#: source/php/Entity/CustomPostType.php:103
 #, php-format
 msgid "No %s found in trash"
 msgstr ""
 
-#: source/php/Entity/CustomPostType.php:142
+#: source/php/Entity/CustomPostType.php:104
 #, php-format
 msgid "Parent %s:"
 msgstr ""
 
-#: source/php/Entity/CustomPostType.php:252
+#: source/php/Entity/CustomPostType.php:214
 msgid "Post updated."
 msgstr ""
 
-#: source/php/Entity/CustomPostType.php:253
+#: source/php/Entity/CustomPostType.php:215
 msgid "Post published."
 msgstr ""
 
-#: source/php/Entity/CustomPostType.php:254
+#: source/php/Entity/CustomPostType.php:216
 msgid "Post submitted."
 msgstr ""
 
-#: source/php/Entity/CustomPostType.php:255
+#: source/php/Entity/CustomPostType.php:217
 msgid "Post draft updated."
 msgstr ""
 
-#: source/php/Entity/CustomPostType.php:331
+#: source/php/Entity/CustomPostType.php:293
 msgid ""
 "You don't have access to edit this event. Contact an administrator for "
 "further information."
 msgstr ""
 
-#: source/php/Entity/CustomPostType.php:386
+#: source/php/Entity/CustomPostType.php:348
 msgid "Public"
 msgstr ""
 
-#: source/php/Entity/CustomPostType.php:419
+#: source/php/Entity/CustomPostType.php:381
 msgid "This post must be updated before it can be published."
 msgstr ""
 
-#: source/php/Entity/CustomPostType.php:419
+#: source/php/Entity/CustomPostType.php:381
 msgid "Edit draft"
 msgstr ""
 
-#: source/php/Entity/CustomPostType.php:422
+#: source/php/Entity/CustomPostType.php:384
 msgid "Accept"
 msgstr ""
 
-#: source/php/Entity/CustomPostType.php:423
+#: source/php/Entity/CustomPostType.php:385
 msgid "Deny"
 msgstr ""
 
-#: source/php/Entity/CustomPostType.php:434
+#: source/php/Entity/CustomPostType.php:396
 msgid "Something went wrong!"
 msgstr ""
 
-#: source/php/Entity/CustomPostType.php:451
+#: source/php/Entity/CustomPostType.php:413
 msgid "Error"
 msgstr ""
 
@@ -2616,10 +2616,6 @@ msgstr ""
 
 #: source/php/Entity/PostManager.php:227
 msgid "please go ahead and create it manually and rerun the import."
-msgstr ""
-
-#: source/php/Parser.php:131
-msgid "Parser done."
 msgstr ""
 
 #: source/php/PostTypes/Events.php:12

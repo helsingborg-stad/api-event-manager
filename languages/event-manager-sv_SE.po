@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Event Manager\n"
-"POT-Creation-Date: 2018-09-11 16:14+0200\n"
-"PO-Revision-Date: 2018-09-11 16:14+0200\n"
+"POT-Creation-Date: 2018-09-17 14:25+0200\n"
+"PO-Revision-Date: 2018-09-17 14:26+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: sv\n"
@@ -2263,8 +2263,8 @@ msgid "Ticket URL"
 msgstr "Biljett URL"
 
 #: source/php/AcfFields/php/transticket.php:129
-msgid "URL to single ticket purchase, exclude ID."
-msgstr "URL till enskild biljett, exkludera ID."
+msgid "Base URL to ticket purchase website."
+msgstr "URL till biljettförsäljning."
 
 #: source/php/AcfFields/php/transticket.php:145
 msgid "Exclude tags"
@@ -2552,68 +2552,68 @@ msgstr "Duplicera tidpunkt"
 msgid "Import scheduled"
 msgstr "Import schemalagd"
 
-#: source/php/Entity/CustomPostType.php:97
+#: source/php/Entity/CustomPostType.php:59
 msgid "API-url"
 msgstr "API-url"
 
-#: source/php/Entity/CustomPostType.php:134
-#: source/php/Entity/CustomPostType.php:135
+#: source/php/Entity/CustomPostType.php:96
+#: source/php/Entity/CustomPostType.php:97
 #, php-format
 msgid "Add new %s"
 msgstr "Lägg till %s"
 
-#: source/php/Entity/CustomPostType.php:136
+#: source/php/Entity/CustomPostType.php:98
 #, php-format
 msgid "Edit %s"
 msgstr "Redigera %s"
 
-#: source/php/Entity/CustomPostType.php:137
+#: source/php/Entity/CustomPostType.php:99
 #, php-format
 msgid "New %s"
 msgstr "Nytt %s"
 
-#: source/php/Entity/CustomPostType.php:138
+#: source/php/Entity/CustomPostType.php:100
 #, php-format
 msgid "View %s"
 msgstr "Visa %s"
 
-#: source/php/Entity/CustomPostType.php:139
+#: source/php/Entity/CustomPostType.php:101
 #, php-format
 msgid "Search %s"
 msgstr "Sök %s"
 
-#: source/php/Entity/CustomPostType.php:140
+#: source/php/Entity/CustomPostType.php:102
 #, php-format
 msgid "No %s found"
 msgstr "Inga %s hittades"
 
-#: source/php/Entity/CustomPostType.php:141
+#: source/php/Entity/CustomPostType.php:103
 #, php-format
 msgid "No %s found in trash"
 msgstr "Inga %s hittades i papperskorgen"
 
-#: source/php/Entity/CustomPostType.php:142
+#: source/php/Entity/CustomPostType.php:104
 #, php-format
 msgid "Parent %s:"
 msgstr "Förälder %s:"
 
-#: source/php/Entity/CustomPostType.php:252
+#: source/php/Entity/CustomPostType.php:214
 msgid "Post updated."
 msgstr "Inlägget uppdaterades."
 
-#: source/php/Entity/CustomPostType.php:253
+#: source/php/Entity/CustomPostType.php:215
 msgid "Post published."
 msgstr "Inlägget publicerades."
 
-#: source/php/Entity/CustomPostType.php:254
+#: source/php/Entity/CustomPostType.php:216
 msgid "Post submitted."
 msgstr "Inlägget uppdaterades."
 
-#: source/php/Entity/CustomPostType.php:255
+#: source/php/Entity/CustomPostType.php:217
 msgid "Post draft updated."
 msgstr "Utkast uppdaterades."
 
-#: source/php/Entity/CustomPostType.php:331
+#: source/php/Entity/CustomPostType.php:293
 msgid ""
 "You don't have access to edit this event. Contact an administrator for "
 "further information."
@@ -2621,31 +2621,31 @@ msgstr ""
 "Ni saknar rättigheter att uppdatera evenemanget. Vid frågor kontakta en "
 "administratör."
 
-#: source/php/Entity/CustomPostType.php:386
+#: source/php/Entity/CustomPostType.php:348
 msgid "Public"
 msgstr "Offentlig"
 
-#: source/php/Entity/CustomPostType.php:419
+#: source/php/Entity/CustomPostType.php:381
 msgid "This post must be updated before it can be published."
 msgstr "Evenemanget behöver uppdateras innan det kan publiceras."
 
-#: source/php/Entity/CustomPostType.php:419
+#: source/php/Entity/CustomPostType.php:381
 msgid "Edit draft"
 msgstr "Redigera utkast"
 
-#: source/php/Entity/CustomPostType.php:422
+#: source/php/Entity/CustomPostType.php:384
 msgid "Accept"
 msgstr "Godkänn"
 
-#: source/php/Entity/CustomPostType.php:423
+#: source/php/Entity/CustomPostType.php:385
 msgid "Deny"
 msgstr "Neka"
 
-#: source/php/Entity/CustomPostType.php:434
+#: source/php/Entity/CustomPostType.php:396
 msgid "Something went wrong!"
 msgstr "Något gick fel!"
 
-#: source/php/Entity/CustomPostType.php:451
+#: source/php/Entity/CustomPostType.php:413
 msgid "Error"
 msgstr "Fel"
 
@@ -2656,10 +2656,6 @@ msgstr "Kunde inte skapa mappen"
 #: source/php/Entity/PostManager.php:227
 msgid "please go ahead and create it manually and rerun the import."
 msgstr "vänligen skapa den manuellt och gör om importen."
-
-#: source/php/Parser.php:131
-msgid "Parser done."
-msgstr "Inläsningen slutförd."
 
 #: source/php/PostTypes/Events.php:12
 msgctxt "Post type plural"
@@ -3289,6 +3285,9 @@ msgstr ""
 #. Author URI of the plugin/theme
 msgid "http://www.helsingborg.se"
 msgstr ""
+
+#~ msgid "Parser done."
+#~ msgstr "Inläsningen slutförd."
 
 #~ msgid "Collect event timestamps"
 #~ msgstr "Spara tidsstämplar"

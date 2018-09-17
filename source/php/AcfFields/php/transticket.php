@@ -126,7 +126,7 @@
                     'label' => __('Ticket URL', 'event-manager'),
                     'name' => 'transticket_ticket_url',
                     'type' => 'text',
-                    'instructions' => __('URL to single ticket purchase, exclude ID.', 'event-manager'),
+                    'instructions' => __('Base URL to ticket purchase website.', 'event-manager'),
                     'required' => 1,
                     'conditional_logic' => 0,
                     'wrapper' => array(

@@ -123,7 +123,7 @@
                     "label": "Ticket URL",
                     "name": "transticket_ticket_url",
                     "type": "text",
-                    "instructions": "URL to single ticket purchase, exclude ID.",
+                    "instructions": "Base URL to ticket purchase website.",
                     "required": 1,
                     "conditional_logic": 0,
                     "wrapper": {
