@@ -243,17 +243,19 @@ ImportEvents.Admin.Fields = (function ($) {
      * @return {void}
      */
     Fields.prototype.eventDatepickerRange = function () {
-        acf.add_action('ready', function ($el) {
-            this.setDateOptions();
-        }.bind(this));
+        if (typeof acf !== 'undefined') {
+            acf.add_action('ready', function ($el) {
+                this.setDateOptions();
+            }.bind(this));
 
-        acf.add_action('date_picker_init', function ($input, args, $field) {
-            this.setDateOptions();
-        }.bind(this));
+            acf.add_action('date_picker_init', function ($input, args, $field) {
+                this.setDateOptions();
+            }.bind(this));
 
-        acf.add_action('date_time_picker_init', function ($input, args, $field) {
-            this.setDateOptions();
-        }.bind(this));
+            acf.add_action('date_time_picker_init', function ($input, args, $field) {
+                this.setDateOptions();
+            }.bind(this));
+        }
 
         $(document).on('click', '.acf-field-576110e583969 .hasDatepicker, .acf-field-5761169e07309 .hasDatepicker', function () {
 
