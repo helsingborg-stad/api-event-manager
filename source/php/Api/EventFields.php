@@ -198,7 +198,7 @@ class EventFields extends Fields
     public function getEventsByTimestamp($request)
     {
         //Increase timeout
-        set_time_limit(60 * 10);
+        set_time_limit(60 * 5);
 
         global $wpdb;
         $parameters = $request->get_params();
