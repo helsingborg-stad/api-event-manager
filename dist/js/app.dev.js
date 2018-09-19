@@ -231,34 +231,17 @@ ImportEvents.Admin.Fields = (function ($) {
         });
     };
 
-    Fields.prototype.setDateOptions = function () {
-        $('.start_date .hasDatepicker, [data-name="rcr_rules"] .hasDatepicker').datetimepicker('option', {
-            minDate: 'now',
-            maxDate: new Date().getDate() + 365
-        });
-    };
-
     /**
      * Limits datepickers for endtime and door time according to the starttime
      * @return {void}
      */
     Fields.prototype.eventDatepickerRange = function () {
-        if (typeof acf !== 'undefined') {
-            acf.add_action('ready', function ($el) {
-                this.setDateOptions();
-            }.bind(this));
-
-            acf.add_action('date_picker_init', function ($input, args, $field) {
-                this.setDateOptions();
-            }.bind(this));
-
-            acf.add_action('date_time_picker_init', function ($input, args, $field) {
-                this.setDateOptions();
-            }.bind(this));
-        }
+        $.datepicker.setDefaults({
+            minDate: 'now',
+            maxDate: new Date().getDate() + 365
+        });
 
         $(document).on('click', '.acf-field-576110e583969 .hasDatepicker, .acf-field-5761169e07309 .hasDatepicker', function () {
-
             var date = $(this).parentsUntil('.acf-fields').siblings('.start_date').find('.hasDatepicker').val();
 
             if (!date) {
