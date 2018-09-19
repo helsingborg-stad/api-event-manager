@@ -148,20 +148,22 @@ ImportEvents.Admin.Fields = (function ($) {
 
                     if ($(this).parents('[data-name="end_date"]').length) {
                         var end_date = new Date(year + 1, month, day);
-
-                        $(this).datetimepicker("option", "minDate", date);
-                        $(this).datetimepicker("option", "maxDate", end_date);
+                        $(this).datetimepicker("option", {
+                            minDate: date,
+                            maxDate: end_date,
+                            defaultDate: date
+                        });
                     }
 
                     if ($(this).parents('[data-name="door_time"]').length) {
                         var start_date = new Date(year - 1, month, day);
-
-                        $(this).datetimepicker("option", "minDate", start_date);
-                        $(this).datetimepicker("option", "maxDate", date);
+                        $(this).datetimepicker("option", {
+                            minDate: start_date,
+                            maxDate: date,
+                            defaultDate: date
+                        });
                     }
-
-                    $(this).datepicker("option", "defaultDate", date);
-                    $(this).datepicker({showOn: 'focus'}).focus();
+                    $(this).datetimepicker("show");
                 }
             }
         });
