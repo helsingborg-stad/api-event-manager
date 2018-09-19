@@ -153,24 +153,24 @@
             "name": "guide_images",
             "type": "gallery",
             "instructions": "",
-            "required": 0,
+            "required": 1,
             "conditional_logic": 0,
             "wrapper": {
                 "width": "",
                 "class": "secondary-panel",
                 "id": ""
             },
-            "library": "all",
             "min": "",
             "max": 10,
+            "insert": "append",
+            "library": "all",
             "min_width": "",
             "min_height": "",
             "min_size": "",
             "max_width": "",
             "max_height": "",
             "max_size": "",
-            "mime_types": "jpg,jpeg,png",
-            "insert": "append"
+            "mime_types": "jpg,jpeg,png"
         },
         {
             "key": "field_5899a94bff0ec",
@@ -641,26 +641,23 @@
                     "ui": 1
                 },
                 {
-                    "key": "field_58ab0cf054b0b",
-                    "label": "Objects",
-                    "name": "objects",
-                    "type": "select",
+                    "key": "44182",
+                    "label": "",
+                    "name": "",
+                    "type": "text",
                     "instructions": "",
                     "required": 0,
                     "conditional_logic": 0,
                     "wrapper": {
-                        "width": "20",
+                        "width": "",
                         "class": "",
                         "id": ""
                     },
-                    "multiple": 1,
-                    "allow_null": 0,
-                    "choices": [],
-                    "default_value": [],
-                    "ui": 1,
-                    "ajax": 1,
+                    "default_value": "",
+                    "maxlength": "",
                     "placeholder": "",
-                    "return_format": "value"
+                    "prepend": "",
+                    "append": ""
                 },
                 {
                     "key": "field_58ac54a64bb06",
