@@ -31,9 +31,9 @@ ImportEvents.Admin.Fields = (function ($) {
             $('a[data-event="add-row"]', '.acf-field-5761106783967').last().trigger('click');
 
             var $target = $(e.target).closest('.acf-row'),
-                startDate = $('div[data-name="start_date"] .input-alt', $target).val(),
-                endDate = $('div[data-name="end_date"] .input-alt', $target).val(),
-                doorTime = $('div[data-name="door_time"] .input-alt', $target).val(),
+                startDate = $('div[data-name="start_date"] .hasDatepicker', $target).val(),
+                endDate = $('div[data-name="end_date"] .hasDatepicker', $target).val(),
+                doorTime = $('div[data-name="door_time"] .hasDatepicker', $target).val(),
                 status = $('div[data-name="status"] input:checked', $target).val(),
                 exceptionInfo = $('div[data-name="occ_exeption_information"] input', $target).val(),
                 contentMode = $('div[data-name="content_mode"] input:checked', $target).val(),
@@ -49,9 +49,9 @@ ImportEvents.Admin.Fields = (function ($) {
                 var $clonedRow = $('[data-name="occasions"] table tbody').children('tr.acf-row:not(.acf-clone)').last(),
                     newTinyMceId = $('textarea[class="wp-editor-area"]', $clonedRow).attr('id');
 
-                $('div[data-name="start_date"] .hasDatepicker', $clonedRow).datetimepicker('setDate', startDate);
-                $('div[data-name="end_date"] .hasDatepicker', $clonedRow).datetimepicker('setDate', endDate);
-                $('div[data-name="door_time"] .hasDatepicker', $clonedRow).datetimepicker('setDate', doorTime);
+                $('div[data-name="start_date"]', $clonedRow).find('.hasDatepicker, .input-alt').val(startDate);
+                $('div[data-name="end_date"]', $clonedRow).find('.hasDatepicker, .input-alt').val(endDate);
+                $('div[data-name="door_time"]', $clonedRow).find('.hasDatepicker, .input-alt').val(doorTime);
                 $('input[value="' + status + '"]', $clonedRow).attr('checked', 'checked').trigger('change');
                 $('div[data-name="occ_exeption_information"] input', $clonedRow).val(exceptionInfo);
                 $('input[value="' + contentMode + '"]', $clonedRow).attr('checked', 'checked').trigger('change');
