@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Event Manager\n"
-"POT-Creation-Date: 2018-09-17 14:25+0200\n"
-"PO-Revision-Date: 2018-09-17 14:26+0200\n"
+"POT-Creation-Date: 2018-09-20 16:45+0200\n"
+"PO-Revision-Date: 2018-09-20 16:45+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: sv\n"
@@ -48,14 +48,14 @@ msgstr "Välj status för importerade evenemang."
 #: source/php/AcfFields/php/arcgis.php:41 source/php/AcfFields/php/cbis.php:41
 #: source/php/AcfFields/php/transticket.php:41
 #: source/php/AcfFields/php/xcap.php:41
-#: source/php/Admin/FilterRestrictions.php:150
+#: source/php/Admin/FilterRestrictions.php:212
 msgid "Draft"
 msgstr "Utkast"
 
 #: source/php/AcfFields/php/arcgis.php:42 source/php/AcfFields/php/cbis.php:42
 #: source/php/AcfFields/php/transticket.php:42
 #: source/php/AcfFields/php/xcap.php:42
-#: source/php/Admin/FilterRestrictions.php:146
+#: source/php/Admin/FilterRestrictions.php:208
 msgid "Published"
 msgstr "Publicerad"
 
@@ -357,7 +357,7 @@ msgid "Select if event is on schedule or not."
 msgstr "Välj om evenemanget inträffar som planerat."
 
 #: source/php/AcfFields/php/event.php:166
-#: source/php/Admin/FilterRestrictions.php:149
+#: source/php/Admin/FilterRestrictions.php:211
 msgid "Scheduled"
 msgstr "Enligt planering"
 
@@ -1625,7 +1625,7 @@ msgid "Distance that the beacon should be triggered at."
 msgstr "Avstånd som ska trigga beacon-sändare."
 
 #: source/php/AcfFields/php/guide-basic.php:518
-#: source/php/AcfFields/php/guide-basic.php:710
+#: source/php/AcfFields/php/guide-basic.php:705
 #: source/php/AcfFields/php/guide-settings.php:386
 #: source/php/AcfFields/php/recommendation.php:368
 msgid "meters"
@@ -1683,18 +1683,13 @@ msgstr "Lägg till grupp"
 msgid "Plats"
 msgstr "Plats"
 
-#: source/php/AcfFields/php/guide-basic.php:650
-#: source/php/AcfFields/php/guide-settings.php:548
-msgid "Objects"
-msgstr "Innehållsobjekt"
-
-#: source/php/AcfFields/php/guide-basic.php:674
+#: source/php/AcfFields/php/guide-basic.php:669
 #: source/php/AcfFields/php/guide-settings.php:567
 #: source/php/AcfFields/php/recommendation.php:335
 msgid "Beacon ID"
 msgstr "Beacon ID"
 
-#: source/php/AcfFields/php/guide-basic.php:693
+#: source/php/AcfFields/php/guide-basic.php:688
 #: source/php/AcfFields/php/recommendation.php:354
 msgid "Beacon distance"
 msgstr "Avstånd till beaconsändare"
@@ -1902,6 +1897,10 @@ msgstr "Inkludera följande rekommendationer"
 #: source/php/AcfFields/php/guide-settings.php:31
 msgid "Beskrivning"
 msgstr "Beskrivning"
+
+#: source/php/AcfFields/php/guide-settings.php:548
+msgid "Objects"
+msgstr "Innehållsobjekt"
 
 #: source/php/AcfFields/php/internal_event.php:6
 msgid "Internal event"
@@ -2315,65 +2314,45 @@ msgstr "Daglig automatisk import från XCAP"
 msgid "Add one or many API links to Xcap"
 msgstr "Lägg till en eller flera API-länkar till Xcap"
 
-#: source/php/Admin/FilterRestrictions.php:36
+#: source/php/Admin/FilterRestrictions.php:51
+msgid "All clients"
+msgstr "Alla klienter"
+
+#: source/php/Admin/FilterRestrictions.php:98
 msgid "Date from"
 msgstr "Från datum"
 
-#: source/php/Admin/FilterRestrictions.php:37
+#: source/php/Admin/FilterRestrictions.php:99
 msgid "Date to"
 msgstr "Till datum"
 
-#: source/php/Admin/FilterRestrictions.php:145
+#: source/php/Admin/FilterRestrictions.php:207
 msgid "All"
 msgstr "Alla"
 
-#: source/php/Admin/FilterRestrictions.php:147
+#: source/php/Admin/FilterRestrictions.php:209
 msgid "Private"
 msgstr "Privat"
 
-#: source/php/Admin/FilterRestrictions.php:148
+#: source/php/Admin/FilterRestrictions.php:210
 msgid "Pending Review"
 msgstr "Inväntar granskning"
 
-#: source/php/Admin/FilterRestrictions.php:151
+#: source/php/Admin/FilterRestrictions.php:213
 msgid "Trash"
 msgstr "Papperskorg"
 
-#: source/php/Admin/FilterRestrictions.php:203
+#: source/php/Admin/FilterRestrictions.php:265
 #: source/php/Taxonomy/EventCategories.php:19
 #: source/php/Taxonomy/EventCategories.php:58
 #: source/php/Taxonomy/LocationCategories.php:19
 msgid "All categories"
 msgstr "Alla kategorier"
 
-#: source/php/Admin/FilterRestrictions.php:244
+#: source/php/Admin/FilterRestrictions.php:306
 #: source/php/Taxonomy/UserGroups.php:82
 msgid "All groups"
 msgstr "Alla grupper"
-
-#: source/php/Admin/FilterRestrictions.php:291
-msgid "Time interval"
-msgstr "Tidsperiod"
-
-#: source/php/Admin/FilterRestrictions.php:292
-msgid "Today"
-msgstr "Idag"
-
-#: source/php/Admin/FilterRestrictions.php:293
-msgid "Tomorrow"
-msgstr "I morgon"
-
-#: source/php/Admin/FilterRestrictions.php:294
-msgid "This week"
-msgstr "Denna veckan"
-
-#: source/php/Admin/FilterRestrictions.php:295
-msgid "This month"
-msgstr "Denna månaden"
-
-#: source/php/Admin/FilterRestrictions.php:296
-msgid "Passed events"
-msgstr "Passerade evenemang"
 
 #: source/php/Admin/Options.php:11
 msgctxt "ACF"
@@ -2809,7 +2788,7 @@ msgstr ""
 msgid "Import client"
 msgstr "Klient"
 
-#: source/php/PostTypes/Locations.php:165
+#: source/php/PostTypes/Locations.php:170
 msgid "Import ArcGIS locations"
 msgstr "Importera ArcGIS platser"
 
@@ -3285,6 +3264,24 @@ msgstr ""
 #. Author URI of the plugin/theme
 msgid "http://www.helsingborg.se"
 msgstr ""
+
+#~ msgid "Time interval"
+#~ msgstr "Tidsperiod"
+
+#~ msgid "Today"
+#~ msgstr "Idag"
+
+#~ msgid "Tomorrow"
+#~ msgstr "I morgon"
+
+#~ msgid "This week"
+#~ msgstr "Denna veckan"
+
+#~ msgid "This month"
+#~ msgstr "Denna månaden"
+
+#~ msgid "Passed events"
+#~ msgstr "Passerade evenemang"
 
 #~ msgid "Parser done."
 #~ msgstr "Inläsningen slutförd."
