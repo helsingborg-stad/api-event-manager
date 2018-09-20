@@ -152,7 +152,7 @@ class CbisEvent extends \HbgEventImporter\Parser\Cbis
     {
         $locationId = $this->maybeCreateLocation($eventData, $postStatus, $userGroups, $shortKey);
         $organizer  = $this->maybeCreateOrganizer($eventData, $postStatus, $userGroups, $shortKey);
-        $eventId    = $this->maybeCreateEvent($eventData, $postStatus, $userGroups, $shortKey, $locationId, $organizer);
+        $this->maybeCreateEvent($eventData, $postStatus, $userGroups, $shortKey, $locationId, $organizer);
     }
 
     /**
@@ -167,11 +167,10 @@ class CbisEvent extends \HbgEventImporter\Parser\Cbis
     {
         $importClient = 'CBIS: Event';
         $attributes = $this->getAttributes($eventData);
-
-        // Get the title of the location
-        $title = $this->getAttributeValue(self::ATTRIBUTE_ADDRESS, $attributes);
-        if (!$title) {
-            $title = $eventData->GeoNode->Name;
+        $arenaName = $eventData->Occasions->OccasionObject->ArenaName ?? $eventData->Occasions->OccasionObject[0]->ArenaName ?? null;
+        $address = $this->getAttributeValue(self::ATTRIBUTE_ADDRESS, $attributes);
+        if (empty($title = $arenaName ? $arenaName : $address)) {
+            return false;
         }
 
         // Check if the location already exist
@@ -223,7 +222,7 @@ class CbisEvent extends \HbgEventImporter\Parser\Cbis
                     'post_status' => $locPostStatus,
                 ),
                 array(
-                    'street_address' => $this->getAttributeValue(self::ATTRIBUTE_ADDRESS, $attributes),
+                    'street_address' => $address,
                     'postal_code' => $this->getAttributeValue(self::ATTRIBUTE_POSTCODE, $attributes),
                     'city' => $city,
                     'municipality' => $this->getAttributeValue(self::ATTRIBUTE_MUNICIPALITY, $attributes),
