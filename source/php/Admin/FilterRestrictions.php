@@ -288,8 +288,8 @@ class FilterRestrictions
             && $_GET['post_type'] === 'event'
             && ((!empty($_GET['restrictDateFrom']) || !empty($_GET['restrictDateTo'])))) {
 
-            $date_begin = (!empty($_GET['restrictDateFrom'])) ? strtotime($_GET['restrictDateFrom']) : strtotime('- 3 years', strtotime($_GET['restrictDateTo']));
-            $date_end = (!empty($_GET['restrictDateTo'])) ? strtotime('tomorrow', strtotime($_GET['restrictDateTo'])) - 1 : strtotime('+ 3 years', strtotime($_GET['restrictDateFrom']));
+            $date_begin = (!empty($_GET['restrictDateFrom'])) ? strtotime($_GET['restrictDateFrom']) : strtotime('midnight');
+            $date_end = (!empty($_GET['restrictDateTo'])) ? strtotime('tomorrow', strtotime($_GET['restrictDateTo'])) - 1 : strtotime('tomorrow midnight') - 1;
 
             $db_occasions = $wpdb->prefix . "occasions";
             // Query to get events occurring between certain dates
