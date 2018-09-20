@@ -5,7 +5,6 @@ namespace HbgEventImporter\Admin;
 /**
  * Filter restrictions for events on edit.php
  */
-
 class FilterRestrictions
 {
     public function __construct()
@@ -15,7 +14,6 @@ class FilterRestrictions
         add_action('restrict_manage_posts', array($this, 'restrictEventsByCategory'), 100);
         add_action('restrict_manage_posts', array($this, 'restrictEventsByGroups'), 100);
         add_filter('parse_query', array($this, 'applyFilterRestrictions'), 100);
-        add_action('restrict_manage_posts', array($this, 'restrictEventsByInterval'), 100);
         add_action('pre_get_posts', array($this, 'applyIntervalRestriction'), 100);
         add_action('restrict_manage_posts', array($this, 'restrictEventsByDates'));
     }
@@ -276,30 +274,6 @@ class FilterRestrictions
     }
 
     /**
-     * Add custom dropdown list with time interval filters
-     * @param  string $post_type current post type
-     */
-    public function restrictEventsByInterval($post_type)
-    {
-        if ($post_type !== 'event') {
-            return;
-        }
-
-        $timeInterval = (isset($_GET['time_interval'])) ? $_GET['time_interval'] : '';
-
-        $str = '<select name="time_interval">';
-        $str .= '<option value>' . __('Time interval', 'event-manager') . '</option>';
-        $str .= '<option value="1"' . (($timeInterval == 1) ? ' selected' : '') . '>' . __('Today', 'event-manager') . '</option>';
-        $str .= '<option value="2"' . (($timeInterval == 2) ? ' selected' : '') . '>' . __('Tomorrow', 'event-manager') . '</option>';
-        $str .= '<option value="3"' . (($timeInterval == 3) ? ' selected' : '') . '>' . __('This week', 'event-manager') . '</option>';
-        $str .= '<option value="4"' . (($timeInterval == 4) ? ' selected' : '') . '>' . __('This month', 'event-manager') . '</option>';
-        $str .= '<option value="5"' . (($timeInterval == 5) ? ' selected' : '') . '>' . __('Passed events', 'event-manager') . '</option>';
-        $str .= '</select>';
-
-        echo $str;
-    }
-
-    /**
      * Apply time interval and date filter
      * @param  object $query WP_Query object
      */
@@ -308,65 +282,18 @@ class FilterRestrictions
         global $pagenow;
         global $wpdb;
 
-        if (is_admin() && $query->is_main_query() && $pagenow === 'edit.php' && $_GET['post_type'] === 'event'
-            && ((!empty($_GET['time_interval'])) || (!empty($_GET['restrictDateFrom']) || !empty($_GET['restrictDateTo']) ))) {
-            $time_now = strtotime("midnight now");
-            $passed_event = false;
+        if (is_admin()
+            && $query->is_main_query()
+            && $pagenow === 'edit.php'
+            && $_GET['post_type'] === 'event'
+            && ((!empty($_GET['restrictDateFrom']) || !empty($_GET['restrictDateTo'])))) {
 
-            // Filter by selected interval
-            switch (esc_attr($_GET['time_interval'])) {
-                case '1':
-                    $date_begin = strtotime("midnight now");
-                    $date_end = strtotime("tomorrow", $time_now) - 1;
-                    break;
-
-                case '2':
-                    $date_begin = strtotime('tomorrow', $time_now);
-                    $date_end = strtotime("midnight tomorrow", $date_begin) - 1;
-                    break;
-
-                case '3':
-                    $date_begin = strtotime('midnight monday this week', $time_now);
-                    $date_end = strtotime("+ 1 week", $date_begin) - 1;
-                    break;
-
-                case '4':
-                    $date_begin = strtotime('midnight first day of this month', $time_now);
-                    $date_end = strtotime('midnight first day of next month', $date_begin) - 1;
-                    break;
-
-                case '5':
-                    $passed_event = true;
-                    break;
-            }
-
-            // Filter between selected dates
-            if (!empty($_GET['restrictDateFrom']) || !empty($_GET['restrictDateTo'])) {
-                $date_begin = (!empty($_GET['restrictDateFrom'])) ? strtotime($_GET['restrictDateFrom']) : strtotime('- 3 years', strtotime($_GET['restrictDateTo']));
-                $date_end = (!empty($_GET['restrictDateTo'])) ? strtotime('tomorrow', strtotime($_GET['restrictDateTo'])) -1 : strtotime('+ 3 years', strtotime($_GET['restrictDateFrom']));
-            }
+            $date_begin = (!empty($_GET['restrictDateFrom'])) ? strtotime($_GET['restrictDateFrom']) : strtotime('- 3 years', strtotime($_GET['restrictDateTo']));
+            $date_end = (!empty($_GET['restrictDateTo'])) ? strtotime('tomorrow', strtotime($_GET['restrictDateTo'])) - 1 : strtotime('+ 3 years', strtotime($_GET['restrictDateFrom']));
 
             $db_occasions = $wpdb->prefix . "occasions";
-            // Custom query to get passed events
-            if ($passed_event) {
-                $today = strtotime("today", $time_now) - 1;
-                // Gets the latest ending occasion of multiple event occasions
-                $new_query = "
-                    SELECT MAX($db_occasions.timestamp_end) as end_date, $db_occasions.event as id
-                    FROM $db_occasions
-                    GROUP BY $db_occasions.event";
-                $results = $wpdb->get_results($new_query, ARRAY_A);
-                // Filter result array to only consist of passed events
-                foreach ($results as $key => &$result) {
-                    if ($result['end_date'] < $today) {
-                        $result = $result['id'];
-                    } else {
-                        unset($results[$key]);
-                    }
-                }
-            } else {
-                // Query to get events occurring between certain dates
-                $new_query = "
+            // Query to get events occurring between certain dates
+            $new_query = "
                     SELECT      $db_occasions.event as id
                     FROM        $db_occasions
                     WHERE       ($db_occasions.timestamp_start
@@ -375,17 +302,17 @@ class FilterRestrictions
                                 BETWEEN {$date_begin} AND {$date_end})
                     GROUP BY $db_occasions.event";
 
-                $results = $wpdb->get_results($new_query, ARRAY_A);
-                foreach ($results as &$result) {
-                    $result = $result['id'];
-                }
+            $results = $wpdb->get_results($new_query, ARRAY_A);
+            foreach ($results as &$result) {
+                $result = $result['id'];
             }
-            
+
             if (!empty($results)) {
                 $query->set('post__in', $results);
             } else {
                 $query->set('post__in', array(0));
             }
         }
+
     }
 }
