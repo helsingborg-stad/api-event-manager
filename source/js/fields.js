@@ -107,10 +107,9 @@ ImportEvents.Admin.Fields = (function ($) {
      */
     Fields.prototype.locationGmaps = function () {
         $('.acf-field[data-name="geo_map"] .acf-hidden').each(function (i, obj) {
-            var address = $(this).find('.input-address').attr('value');
-            var lat = $(this).find('.input-lat').attr('value');
-            var lng = $(this).find('.input-lng').attr('value');
-
+            var address = $(this).find('[data-name="address"]').val();
+            var lat = $(this).find('[data-name="lat"]').val();
+            var lng = $(this).find('[data-name="lng"]').val();
             if (!address || !lat || !lng) {
                 $('.acf-field[data-name="geo_map"]').hide();
             }
