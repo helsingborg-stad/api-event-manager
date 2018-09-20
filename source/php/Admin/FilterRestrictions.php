@@ -10,12 +10,76 @@ class FilterRestrictions
     public function __construct()
     {
         add_filter('months_dropdown_results', '__return_empty_array');
-        add_action('pre_get_posts', array($this, 'filterEventsByGroups'), 100);
-        add_action('restrict_manage_posts', array($this, 'restrictEventsByCategory'), 100);
-        add_action('restrict_manage_posts', array($this, 'restrictEventsByGroups'), 100);
-        add_filter('parse_query', array($this, 'applyFilterRestrictions'), 100);
-        add_action('pre_get_posts', array($this, 'applyIntervalRestriction'), 100);
-        add_action('restrict_manage_posts', array($this, 'restrictEventsByDates'));
+        add_filter('parse_query', array($this, 'applyFilterRestrictions'), 10);
+        add_action('pre_get_posts', array($this, 'filterEventsByGroups'), 10);
+        add_action('pre_get_posts', array($this, 'filterEventsByClient'), 10);
+        add_action('pre_get_posts', array($this, 'applyIntervalRestriction'), 10);
+        add_action('restrict_manage_posts', array($this, 'restrictEventsByCategory'), 10);
+        add_action('restrict_manage_posts', array($this, 'restrictEventsByGroups'), 10);
+        add_action('restrict_manage_posts', array($this, 'restrictEventsByDates'), 10);
+        add_action('restrict_manage_posts', array($this, 'restrictEventsByClient'), 10);
+    }
+
+    /**
+     * Adds filter dropdown with import clients
+     * @param $postType
+     */
+    public function restrictEventsByClient($postType)
+    {
+        if ($postType !== 'event' && $postType !== 'location') {
+            return;
+        }
+
+        global $wpdb;
+        $key = 'import_client';
+        $selected = !empty($_GET['import_client']) ? $_GET['import_client'] : null;
+
+        $clients = $wpdb->get_col($wpdb->prepare("
+            SELECT pm.meta_value FROM {$wpdb->postmeta} pm
+            LEFT JOIN {$wpdb->posts} p ON p.ID = pm.post_id
+            WHERE pm.meta_key = '%s' 
+            AND p.post_type = '%s'
+            GROUP BY pm.meta_value
+            ORDER BY pm.meta_value
+        ", $key, $postType));
+
+        if (empty($clients)) {
+            return;
+        }
+
+        $str = '<select name="' . $key . '">';
+        $str .= '<option value>' . __('All clients', 'event-manager') . '</option>';
+        foreach ($clients as $client) {
+            $str .= '<option value="' . $client . '" ' . (($selected == $client) ? ' selected' : '') . '>' . ucfirst($client) . '</option>';
+        }
+        $str .= '</select>';
+
+        echo $str;
+    }
+
+    /**
+     * Filter posts by import client
+     * @param object $query WP Query
+     */
+    public function filterEventsByClient($query)
+    {
+        global $pagenow, $post_type;
+
+        if (!(is_admin()
+            && $query->is_main_query()
+            && $pagenow === 'edit.php'
+            && ($post_type === 'event' || $post_type === 'location')
+            && !empty($_GET['import_client']))) {
+
+            return;
+        }
+
+        $metaQuery[] = array(
+            'key' => 'import_client',
+            'value' => $_GET['import_client'],
+            'compare' => '=',
+        );
+        $query->set('meta_query', $metaQuery);
     }
 
     /**
@@ -282,18 +346,21 @@ class FilterRestrictions
         global $pagenow;
         global $wpdb;
 
-        if (is_admin()
+        if (!(is_admin()
             && $query->is_main_query()
             && $pagenow === 'edit.php'
             && $_GET['post_type'] === 'event'
-            && ((!empty($_GET['restrictDateFrom']) || !empty($_GET['restrictDateTo'])))) {
+            && ((!empty($_GET['restrictDateFrom']) || !empty($_GET['restrictDateTo']))))) {
 
-            $date_begin = (!empty($_GET['restrictDateFrom'])) ? strtotime($_GET['restrictDateFrom']) : strtotime('midnight');
-            $date_end = (!empty($_GET['restrictDateTo'])) ? strtotime('tomorrow', strtotime($_GET['restrictDateTo'])) - 1 : strtotime('tomorrow midnight') - 1;
+            return;
+        }
 
-            $db_occasions = $wpdb->prefix . "occasions";
-            // Query to get events occurring between certain dates
-            $new_query = "
+        $date_begin = (!empty($_GET['restrictDateFrom'])) ? strtotime($_GET['restrictDateFrom']) : strtotime('midnight');
+        $date_end = (!empty($_GET['restrictDateTo'])) ? strtotime('tomorrow', strtotime($_GET['restrictDateTo'])) - 1 : strtotime('tomorrow midnight') - 1;
+
+        $db_occasions = $wpdb->prefix . "occasions";
+        // Query to get events occurring between certain dates
+        $new_query = "
                     SELECT      $db_occasions.event as id
                     FROM        $db_occasions
                     WHERE       ($db_occasions.timestamp_start
@@ -302,17 +369,15 @@ class FilterRestrictions
                                 BETWEEN {$date_begin} AND {$date_end})
                     GROUP BY $db_occasions.event";
 
-            $results = $wpdb->get_results($new_query, ARRAY_A);
-            foreach ($results as &$result) {
-                $result = $result['id'];
-            }
-
-            if (!empty($results)) {
-                $query->set('post__in', $results);
-            } else {
-                $query->set('post__in', array(0));
-            }
+        $results = $wpdb->get_results($new_query, ARRAY_A);
+        foreach ($results as &$result) {
+            $result = $result['id'];
         }
 
+        if (!empty($results)) {
+            $query->set('post__in', $results);
+        } else {
+            $query->set('post__in', array(0));
+        }
     }
 }
