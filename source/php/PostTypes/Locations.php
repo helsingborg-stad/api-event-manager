@@ -125,6 +125,11 @@ class Locations extends \HbgEventImporter\Entity\CustomPostType
         $address = get_post_meta($post_id, 'formatted_address', true);
         $lat = get_post_meta($post_id, 'latitude', true);
         $lng = get_post_meta($post_id, 'longitude', true);
+        // Override coordinates with manually given values
+        if (get_field('manual_coordinates', $post_id)) {
+            $lat =  str_replace(",", ".", get_field('manual_latitude', $post_id));
+            $lng =  str_replace(",", ".", get_field('manual_longitude', $post_id));
+        }
 
         if (!is_array($value)) {
             $value = array();
