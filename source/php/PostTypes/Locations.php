@@ -52,13 +52,8 @@ class Locations extends \HbgEventImporter\Entity\CustomPostType
         });
 
         $this->addTableColumn('import_client', __('Import client', 'event-manager'), true, function ($column, $postId) {
-            $eventId = get_post_meta($postId, 'import_client', true);
-
-            if (!isset($eventId[0])) {
-                return;
-            }
-
-            echo get_post_meta($postId, 'import_client', true);
+            $import = get_post_meta($postId, 'import_client', true);
+            echo !empty($import) ? ucwords($import) : '';
         });
         $this->addTableColumn('date', __('Date', 'event-manager'));
 
