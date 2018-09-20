@@ -41,14 +41,14 @@ class Locations extends \HbgEventImporter\Entity\CustomPostType
         });
 
         $this->addTableColumn('coordinates', __('Coordinates', 'event-manager'), true, function ($column, $postId) {
-            $lat = get_post_meta($postId, 'latitude', true);
-            $lng = get_post_meta($postId, 'longitude', true);
-
-            if (!isset($lat[0]) || !isset($lng[0])) {
-                return;
+            if (get_field('manual_coordinates', $postId)) {
+                $lat =  str_replace(",", ".", get_field('manual_latitude', $postId));
+                $lng =  str_replace(",", ".", get_field('manual_longitude', $postId));
+            } else {
+                $lat = get_post_meta($postId, 'latitude', true);
+                $lng = get_post_meta($postId, 'longitude', true);
             }
-
-            echo get_post_meta($postId, 'latitude', true).', '.get_post_meta($postId, 'longitude', true);
+            echo (!empty($lat) && !empty($lng)) ? $lat . ', ' . $lng : '';
         });
 
         $this->addTableColumn('import_client', __('Import client', 'event-manager'), true, function ($column, $postId) {
@@ -123,12 +123,12 @@ class Locations extends \HbgEventImporter\Entity\CustomPostType
     public function setMapValues($value, $post_id, $field)
     {
         $address = get_post_meta($post_id, 'formatted_address', true);
-        $lat = get_post_meta($post_id, 'latitude', true);
-        $lng = get_post_meta($post_id, 'longitude', true);
-        // Override coordinates with manually given values
         if (get_field('manual_coordinates', $post_id)) {
             $lat =  str_replace(",", ".", get_field('manual_latitude', $post_id));
             $lng =  str_replace(",", ".", get_field('manual_longitude', $post_id));
+        } else {
+            $lat = get_post_meta($post_id, 'latitude', true);
+            $lng = get_post_meta($post_id, 'longitude', true);
         }
 
         if (!is_array($value)) {
