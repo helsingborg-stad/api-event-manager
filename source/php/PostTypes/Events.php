@@ -524,7 +524,7 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
             'comment_status' => $post->comment_status,
             'ping_status'    => $post->ping_status,
             'post_author'    => $new_post_author,
-            'post_content'   => '',
+            'post_content'   => $post->post_content,
             'post_excerpt'   => $post->post_excerpt,
             'post_name'      => '',
             'post_parent'    => $post->post_parent,
