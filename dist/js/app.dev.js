@@ -237,7 +237,8 @@ ImportEvents.Admin.Fields = (function ($) {
     Fields.prototype.eventDatepickerRange = function () {
         $.datepicker.setDefaults({
             minDate: 'now',
-            maxDate: new Date().getDate() + 365
+            maxDate: new Date().getDate() + 365,
+            dateFormat: 'yy-mm-dd'
         });
 
         $(document).on('click', '.acf-field-576110e583969 .hasDatepicker, .acf-field-5761169e07309 .hasDatepicker', function () {
@@ -290,8 +291,6 @@ ImportEvents.Admin.Fields = (function ($) {
         $(document).on('click', '.acf-field-57d279f8db0cc .hasDatepicker', function (e) {
             $this = $(e.target).closest('.hasDatepicker');
 
-            $this.datepicker('option', 'dateFormat', 'yy-mm-dd');
-
             var weekDay = $this.parents('.acf-field-repeater').siblings('[data-name="rcr_week_day"]').find('select').val(),
                 startDate = $this.parents('.acf-field-repeater').siblings('[data-name="rcr_start_date"]').find('.hasDatepicker').val(),
                 endDate = $this.parents('.acf-field-repeater').siblings('[data-name="rcr_end_date"]').find('.hasDatepicker').val(),
@@ -310,12 +309,11 @@ ImportEvents.Admin.Fields = (function ($) {
                     occurances.push(this.formattedDate(new Date(dat)));
                 }
 
-                var disableSepcificDate = function (date) {
+                var disableSpecificDate = function (date) {
                     var string = jQuery.datepicker.formatDate('yy-mm-dd', date);
                     return [occurances.indexOf(string) != -1];
                 };
-
-                $this.datepicker('option', 'beforeShowDay', disableSepcificDate);
+                $this.datepicker('option', 'beforeShowDay', disableSpecificDate);
             }
 
             $this.datepicker({showOn: 'focus'}).focus();
