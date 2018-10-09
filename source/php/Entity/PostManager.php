@@ -65,7 +65,7 @@ abstract class PostManager
     /**
      * Save hooks
      * @param  string $postType Saved post type
-     * @param  object $object Saved object
+     * @param  object $object   Saved object
      * @return void
      */
     public function beforeSave()
@@ -80,9 +80,9 @@ abstract class PostManager
 
     /**
      * Get  posts
-     * @param  integer $count Number of posts to get
-     * @param  array $metaQuery Meta query
-     * @param  string $postType Post type
+     * @param  integer      $count      Number of posts to get
+     * @param  array        $metaQuery  Meta query
+     * @param  string       $postType   Post type
      * @param  array|string $postStatus Post status
      * @return array                       Found posts
      */
@@ -183,20 +183,62 @@ abstract class PostManager
             );
         }
 
-        // Update if duplicate and sync is set to true
-        if (isset($duplicate->ID) && get_post_meta($duplicate->ID, 'sync', true) == true) {
-            $post['ID'] = $duplicate->ID;
-            $this->ID = wp_update_post($post);
-            $this->duplicate = true;
-        } elseif (isset($duplicate->ID) && get_post_meta($duplicate->ID, 'sync', true) == false) {
-            $this->ID = $duplicate->ID;
-            $this->duplicate = true;
+        if (isset($duplicate->ID)) {
+            $diff = $this->postDiff($duplicate->ID, $post);
+
+            // Update if duplicate and sync is set to true
+            if (get_post_meta($duplicate->ID, 'sync', true) == true && $diff == true) {
+                $post['ID'] = $duplicate->ID;
+                $this->ID = wp_update_post($post);
+                $this->duplicate = true;
+            } else {
+                $this->ID = $duplicate->ID;
+                $this->duplicate = true;
+                return false;
+            }
         } else {
             // Create if not duplicate
             $this->ID = wp_insert_post($post, true);
         }
 
+        $this->saveDataHash($this->ID, $post);
         return $this->afterSave();
+    }
+
+    public function cleanBeforeHash($data)
+    {
+        unset($data['ID']);
+        $metaFields = array(
+            'occasions',
+            'tickets_remaining',
+            'ticket_release_date',
+            'ticket_stock',
+            'occurred',
+            'categories'
+            );
+        foreach ($metaFields as $field) {
+            unset($data['meta_input'][$field]);
+        }
+
+        return $data;
+    }
+
+    public function saveDataHash($postId, $data)
+    {
+        $data = md5(serialize($this->cleanBeforeHash($data)));
+        update_post_meta($postId, 'data_hash', $data);
+    }
+
+    /**
+     * @param $postId
+     * @param $data
+     * @return bool
+     */
+    public function postDiff($postId, $data): bool
+    {
+        $oldDataHash = get_post_meta($postId, 'data_hash', true);
+        $newDataHash = md5(serialize($this->cleanBeforeHash($data)));
+        return $oldDataHash != $newDataHash;
     }
 
     /**
