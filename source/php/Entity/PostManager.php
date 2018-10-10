@@ -184,16 +184,15 @@ abstract class PostManager
         }
 
         if (isset($duplicate->ID)) {
-            $diff = $this->postDiff($duplicate->ID, $post);
-
+            // Check if any updates has been made
+            $ifDiff = $this->postDiff($duplicate->ID, $post);
             // Update if duplicate and sync is set to true
-            if (get_post_meta($duplicate->ID, 'sync', true) == true && $diff == true) {
+            if (get_post_meta($duplicate->ID, 'sync', true) == true && $ifDiff == true) {
+                $this->ID = $duplicate->ID;
                 $post['ID'] = $duplicate->ID;
-                $this->ID = wp_update_post($post);
-                $this->duplicate = true;
+                wp_update_post($post);
             } else {
                 $this->ID = $duplicate->ID;
-                $this->duplicate = true;
                 return false;
             }
         } else {
@@ -205,11 +204,62 @@ abstract class PostManager
         return $this->afterSave();
     }
 
+    /**
+     * Check if the post has been updated
+     * @param $postId
+     * @param $data
+     * @return bool
+     */
+    public function postDiff($postId, $data): bool
+    {
+        // Check if new occasions has been added to post type Event
+        if (isset($data['post_type']) && $data['post_type'] == 'event' && !empty($this->occasions) ) {
+            // Return true if new occasions has been added
+            if ($this->hasNewOccasions((int)$postId, $this->occasions)) {
+                return true;
+            }
+        }
+
+        // Compare old hashed post data with the new
+        $oldDataHash = get_post_meta($postId, 'data_hash', true);
+        $newDataHash = md5(serialize($this->cleanBeforeHash($data)));
+
+        return $oldDataHash != $newDataHash;
+    }
+
+    /**
+     * Check if new occasions has been added
+     * @param $postId
+     * @param $occasions
+     * @return bool
+     */
+    public function hasNewOccasions($postId, $occasions): bool
+    {
+        global $wpdb;
+        $table = $wpdb->prefix . "occasions";
+        foreach ($occasions as $occasion) {
+            $timestampStart = strtotime($occasion['start_date']);
+            $timestampEnd = strtotime($occasion['end_date']);
+            $exist = $wpdb->get_var("SELECT COUNT(*) FROM {$table} WHERE event = {$postId} AND timestamp_start = {$timestampStart} AND timestamp_end = {$timestampEnd}");
+            error_log("OCCASION EXISTS IN DB: " . $exist);
+
+            if ($exist == 0) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Remove some meta fields before being hashed
+     * @param $data
+     * @return mixed
+     */
     public function cleanBeforeHash($data)
     {
         unset($data['ID']);
         $metaFields = array(
-            'occasions',
             'tickets_remaining',
             'ticket_release_date',
             'ticket_stock',
@@ -223,22 +273,15 @@ abstract class PostManager
         return $data;
     }
 
+    /**
+     * Saves hashed post data to meta
+     * @param $postId
+     * @param $data
+     */
     public function saveDataHash($postId, $data)
     {
         $data = md5(serialize($this->cleanBeforeHash($data)));
         update_post_meta($postId, 'data_hash', $data);
-    }
-
-    /**
-     * @param $postId
-     * @param $data
-     * @return bool
-     */
-    public function postDiff($postId, $data): bool
-    {
-        $oldDataHash = get_post_meta($postId, 'data_hash', true);
-        $newDataHash = md5(serialize($this->cleanBeforeHash($data)));
-        return $oldDataHash != $newDataHash;
     }
 
     /**
