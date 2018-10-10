@@ -16,6 +16,7 @@ class EventFields extends Fields
         add_action('rest_api_init', array($this, 'registerRestRouteSearch'));
         add_action('rest_api_init', array($this, 'registerRestFields'));
         add_filter('rest_prepare_event', array($this, 'setCurrentOccasion'), 10, 3);
+        add_filter('rest_prepare_event', array($this, 'removeLinksObject'), 200, 3);
     }
 
     public function registerRestRoute()
@@ -26,6 +27,35 @@ class EventFields extends Fields
             'args' => $this->getCollectionParams(),
         ));
     }
+
+    /**
+     * Remove all linking on time endpoint
+     * @return array
+     */
+    public function removeLinksObject($data, $post, $context)
+    {
+
+        //Limit to /time endpoint
+        if (!isset($_GET['start'])) {
+            return $data;
+        }
+
+        //Remove all links
+        $data->remove_link('collection');
+        $data->remove_link('about');
+        $data->remove_link('version-history');
+        $data->remove_link('predecessor-version');
+        $data->remove_link('organizers');
+        $data->remove_link('location');
+        $data->remove_link('complete');
+        $data->remove_link('https://api.w.org/featuredmedia');
+        $data->remove_link('https://api.w.org/attachment');
+        $data->remove_link('https://api.w.org/term');
+        $data->remove_link('curies');
+
+        return $data;
+    }
+
 
     public function registerRestRouteSearch()
     {
