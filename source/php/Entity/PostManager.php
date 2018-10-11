@@ -241,7 +241,6 @@ abstract class PostManager
             $timestampStart = strtotime($occasion['start_date']);
             $timestampEnd = strtotime($occasion['end_date']);
             $exist = $wpdb->get_var("SELECT COUNT(*) FROM {$table} WHERE event = {$postId} AND timestamp_start = {$timestampStart} AND timestamp_end = {$timestampEnd}");
-            error_log("OCCASION EXISTS IN DB: " . $exist);
 
             if ($exist == 0) {
                 return true;
