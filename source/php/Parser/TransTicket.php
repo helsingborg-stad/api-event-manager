@@ -338,7 +338,11 @@ class TransTicket extends \HbgEventImporter\Parser
         }
 
         if (!$location->save()) {
-            return false;
+            if ($locationId) {
+                return $locationId;
+            } else {
+                return false;
+            }
         }
 
         $this->levenshteinTitles['location'][] = array('ID' => $location->ID, 'post_title' => $postTitle);
