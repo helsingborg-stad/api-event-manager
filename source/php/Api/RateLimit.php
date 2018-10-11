@@ -43,7 +43,6 @@ class RateLimit
     public function getRegisteredRequests() : array
     {
         if (is_array($response = wp_cache_get($this->cacheKey, $this->ip))) {
-                var_dump($response);
             return $this->filterRequestItems($response);
         }
         return array();
