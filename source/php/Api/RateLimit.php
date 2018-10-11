@@ -28,7 +28,7 @@ class RateLimit
     /**
      * Register the request
      * @return  boolean
-     * @version 0.6.3
+     * @version 0.16.3
      */
     public function registerRequest()
     {
@@ -38,7 +38,7 @@ class RateLimit
     /**
      * Get registered requests by ip-adress
      * @return  array
-     * @version 0.6.3
+     * @version 0.16.3
      */
     public function getRegisteredRequests() : array
     {
@@ -52,7 +52,7 @@ class RateLimit
     /**
      * Remove old entrys (not valid anymore)
      * @return  boolean
-     * @version 0.6.3
+     * @version 0.16.3
      */
     private function filterRequestItems($itemArray) : array
     {
@@ -67,7 +67,7 @@ class RateLimit
     /**
      * Send ban notices (block furhter access)
      * @return  void
-     * @version 0.6.3
+     * @version 0.16.3
      */
     public function bannedRequest()
     {
@@ -108,7 +108,7 @@ class RateLimit
     /**
      * Log block error
      * @return  void
-     * @version 0.6.3
+     * @version 0.16.3
      */
     public function logBlockedAttempt($reason)
     {
