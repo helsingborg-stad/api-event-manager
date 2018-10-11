@@ -60,9 +60,7 @@ class TransTicket extends \HbgEventImporter\Parser
     public function saveEvent($eventData, $shortKey)
     {
         $data['postTitle'] = strip_tags(isset($eventData->Name) && !empty($eventData->Name) ? $eventData->Name : null);
-        $excerpt = isset($eventData->Description) && !empty($eventData->Description) ? strip_tags(\HbgEventImporter\Helper\DataCleaner::replaceBreaks($eventData->Description)) : '';
-        $description = isset($eventData->ExtendedDescription) && !empty($eventData->ExtendedDescription) ? strip_tags($eventData->ExtendedDescription, '<a><p><br>') : '';
-        $data['postContent'] = !empty($excerpt) && !empty($description) ? '<p>' . $excerpt . '<!--more--></p>' . $description : $excerpt . $description;
+        $data['postContent'] = isset($eventData->ExtendedDescription) && !empty($eventData->ExtendedDescription) ? strip_tags($eventData->ExtendedDescription, '<a><p><br>') : '';
         $data['uId'] = $eventData->Id;
         $data['booking_link'] = add_query_arg( array(
             'qry' => urlencode($data['postTitle']),
@@ -340,7 +338,11 @@ class TransTicket extends \HbgEventImporter\Parser
         }
 
         if (!$location->save()) {
-            return false;
+            if ($locationId) {
+                return $locationId;
+            } else {
+                return false;
+            }
         }
 
         $this->levenshteinTitles['location'][] = array('ID' => $location->ID, 'post_title' => $postTitle);
