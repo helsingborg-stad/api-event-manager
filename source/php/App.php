@@ -17,7 +17,7 @@ class App
 
         // Add theme support.
         add_action('after_setup_theme', array($this, 'themeSupport'));
-        
+
         // Admin scripts
         add_action('admin_enqueue_scripts', array($this, 'enqueueStyles'));
         add_action('admin_enqueue_scripts', array($this, 'enqueueScripts'));
@@ -70,6 +70,7 @@ class App
         new Admin\UserRoles();
         new Admin\FileUploads();
 
+        new Api\RateLimit();
         new Api\Filter();
         new Api\PostTypes();
         new Api\Taxonomies();
