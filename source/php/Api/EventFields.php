@@ -123,7 +123,7 @@ class EventFields extends Fields
             'post-limit'            => array(
                 'description'        => 'Filter by categories taxonomy.',
                 'type'               => 'integer',
-                'default'            => '999',
+                'default'            => '99',
                 'sanitize_callback'  => array($this, 'sanitizeInt'),
             ),
         );
