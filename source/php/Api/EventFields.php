@@ -48,6 +48,7 @@ class EventFields extends Fields
         $data->remove_link('organizers');
         $data->remove_link('location');
         $data->remove_link('complete');
+        $data->remove_link('gallery');
         $data->remove_link('https://api.w.org/featuredmedia');
         $data->remove_link('https://api.w.org/attachment');
         $data->remove_link('https://api.w.org/term');
