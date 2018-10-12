@@ -119,7 +119,23 @@ class EventFields extends Fields
                 'default'            => '',
                 'sanitize_callback'  => 'sanitize_text_field',
             ),
+            'post-limit'            => array(
+                'description'        => 'Filter by categories taxonomy.',
+                'type'               => 'integer',
+                'default'            => '999',
+                'sanitize_callback'  => array($this, 'sanitizeInt'),
+            ),
         );
+    }
+
+    /**
+     * Returns positive int
+     * @param $data
+     * @return int
+     */
+    public function sanitizeInt($data)
+    {
+        return absint($data);
     }
 
     /**
@@ -293,6 +309,8 @@ class EventFields extends Fields
             $perPage = !empty($parameters['per_page']) ? $this->sanitizePerPage($parameters['per_page']) : 10;
             $offset = ($page * $perPage) - $perPage;
             $query .= " LIMIT {$offset}, {$perPage}";
+        } elseif (!empty($parameters['post-limit'])) { //Backwards compability fix
+            $query .= " LIMIT {$parameters['post-limit']}";
         }
 
         $completeQuery = $wpdb->prepare($query, $this->postType, 'publish', $parameters['start'], $parameters['end'], $parameters['start'], $parameters['end']);
