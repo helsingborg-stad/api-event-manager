@@ -237,6 +237,10 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
             foreach ($recurringDates as $date) {
                 $start = strtotime(date('Y-m-d', $date) . ' ' . $startTime);
                 $end = strtotime(date('Y-m-d', $date) . ' ' . $endTime);
+                // If end time is before start time, add 1 day
+                if ($start >= $end) {
+                    $end = strtotime('+1 day', $end);
+                }
                 $door = null;
 
                 if (!empty($doorTime)) {
