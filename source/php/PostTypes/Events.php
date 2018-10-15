@@ -107,7 +107,6 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
         add_filter('acf/validate_value/name=door_time', array($this, 'validateDoorTime'), 10, 4);
         add_filter('acf/validate_value/name=occasions', array($this, 'validateOccasion'), 10, 4);
         add_filter('acf/validate_value/name=rcr_rules', array($this, 'validateOccasion'), 10, 4);
-        add_filter('acf/validate_value/name=rcr_end_time', array($this, 'validateRcrEndTime'), 10, 4);
         add_filter('acf/validate_value/name=rcr_door_time', array($this, 'validateRcrDoorTime'), 10, 4);
         add_filter('acf/validate_value/name=rcr_end_date', array($this, 'validateRcrEndDate'), 10, 4);
         add_filter('acf/validate_value/name=price_adult', array($this, 'validatePrice'), 10, 4);
