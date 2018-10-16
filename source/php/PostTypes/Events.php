@@ -83,7 +83,8 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
 
         $this->addTableColumn('date', __('Date', 'event-manager'));
 
-        add_filter('views_edit-event', array($this, 'addImportButtons'));
+        // Disable auto embedded urls
+        remove_filter('the_content', array($GLOBALS['wp_embed'], 'autoembed'), 8);
 
         add_action('save_post', array($this, 'saveEventOccasions'), 10, 3);
         add_action('save_post', array($this, 'saveRecurringEvents'), 11, 3);
@@ -100,6 +101,7 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
         add_action('admin_action_duplicate_post', array($this, 'duplicatePost'));
         add_action('admin_head-edit.php', array($this, 'adminHeadAction'));
 
+        add_filter('views_edit-event', array($this, 'addImportButtons'));
         add_filter('the_content', array($this, 'replaceWhitespace'), 9);
         add_filter('post_row_actions', array($this, 'duplicatePostLink'), 10, 2);
 
