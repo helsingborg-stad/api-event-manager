@@ -542,7 +542,7 @@
                         "class": "",
                         "id": ""
                     },
-                    "default_value": 0,
+                    "default_value": 1,
                     "message": "Yes, show this object",
                     "ui": 0,
                     "ui_on_text": "Show",

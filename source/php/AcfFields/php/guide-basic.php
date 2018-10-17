@@ -548,7 +548,7 @@ if (function_exists('acf_add_local_field_group')) {
                         'class' => '',
                         'id' => '',
                     ),
-                    'default_value' => 0,
+                    'default_value' => 1,
                     'message' => __('Yes, show this object', 'event-manager'),
                     'ui' => 0,
                     'ui_on_text' => __('Show', 'event-manager'),
