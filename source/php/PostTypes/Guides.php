@@ -49,7 +49,7 @@ class Guides extends \HbgEventImporter\Entity\CustomPostType
         add_filter('acf/fields/post_object/query/key=field_58ab0c9554b0a', array($this, 'getSublocationsOnly'), 10, 3);
 
         //Objects
-        add_filter('acf/load_field/key=field_58ab0cf054b0b', array($this, 'getPostObjects'), 10, 1);
+        add_filter('acf/load_field/key=field_5bc730e910146', array($this, 'getPostObjects'), 10, 1);
 
         //Pad exhibition id on save
         add_filter('acf/update_value/key=field_589dcc1a7deb3', array($this, 'padExhibitionID'), 10, 3);

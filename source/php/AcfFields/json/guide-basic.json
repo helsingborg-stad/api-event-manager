@@ -561,7 +561,7 @@
                     "ui": 1
                 },
                 {
-                    "key": "field_58ab0cf054b0b",
+                    "key": "field_5bc730e910146",
                     "label": "Objects",
                     "name": "objects",
                     "type": "select",
@@ -573,14 +573,14 @@
                         "class": "",
                         "id": ""
                     },
-                    "multiple": 1,
-                    "allow_null": 0,
                     "choices": [],
                     "default_value": [],
+                    "allow_null": 0,
+                    "multiple": 1,
                     "ui": 1,
                     "ajax": 1,
-                    "placeholder": "",
-                    "return_format": "value"
+                    "return_format": "value",
+                    "placeholder": ""
                 },
                 {
                     "key": "field_58ac54a64bb06",
@@ -643,4 +643,4 @@
     "active": 1,
     "description": "Manage main guide object details."
 }]
-
+

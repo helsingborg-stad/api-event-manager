@@ -1,11 +1,9 @@
 <?php 
 
-
-if (function_exists('acf_add_local_field_group')) {
-
-    acf_add_local_field_group(array(
+if (function_exists('acf_add_local_field_group')) {
+    acf_add_local_field_group(array(
     'key' => 'group_589497ca3741e',
-    'title' => 'Basic Guide Settings',
+    'title' => __('Basic Guide Settings', 'event-manager'),
     'fields' => array(
         0 => array(
             'key' => 'field_58949857fc7b0',
@@ -568,7 +566,7 @@ if (function_exists('acf_add_local_field_group')) {
                     'ui' => 1,
                 ),
                 1 => array(
-                    'key' => 'field_58ab0cf054b0b',
+                    'key' => 'field_5bc730e910146',
                     'label' => __('Objects', 'event-manager'),
                     'name' => 'objects',
                     'type' => 'select',
@@ -580,16 +578,16 @@ if (function_exists('acf_add_local_field_group')) {
                         'class' => '',
                         'id' => '',
                     ),
-                    'multiple' => 1,
-                    'allow_null' => 0,
                     'choices' => array(
                     ),
                     'default_value' => array(
                     ),
+                    'allow_null' => 0,
+                    'multiple' => 1,
                     'ui' => 1,
                     'ajax' => 1,
-                    'placeholder' => '',
                     'return_format' => 'value',
+                    'placeholder' => '',
                 ),
                 2 => array(
                     'key' => 'field_58ac54a64bb06',
@@ -652,5 +650,4 @@ if (function_exists('acf_add_local_field_group')) {
     'active' => 1,
     'description' => 'Manage main guide object details.',
 ));
-
-}
+}
