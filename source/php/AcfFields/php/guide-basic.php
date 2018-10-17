@@ -566,7 +566,7 @@
                     'ui' => 1,
                 ),
                 1 => array(
-                    'key' => 'field_5bc730e910146',
+                    'key' => 'field_58ab0cf054b0b',
                     'label' => __('Objects', 'event-manager'),
                     'name' => 'objects',
                     'type' => 'select',
