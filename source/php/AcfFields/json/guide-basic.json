@@ -434,86 +434,6 @@
                     ]
                 },
                 {
-                    "key": "field_589db114078de",
-                    "label": "Beacons",
-                    "name": "",
-                    "type": "tab",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": [
-                        [
-                            {
-                                "field": "field_58949a8f0c4cd",
-                                "operator": "==",
-                                "value": "1"
-                            }
-                        ]
-                    ],
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "placement": "top",
-                    "endpoint": 0
-                },
-                {
-                    "key": "field_589db29081803",
-                    "label": "Object beacon ID",
-                    "name": "guide_object_beacon_id",
-                    "type": "text",
-                    "instructions": "A unique id for a specific  bluetooth beacon.",
-                    "required": 1,
-                    "conditional_logic": [
-                        [
-                            {
-                                "field": "field_58949a8f0c4cd",
-                                "operator": "==",
-                                "value": "1"
-                            }
-                        ]
-                    ],
-                    "wrapper": {
-                        "width": "60",
-                        "class": "",
-                        "id": ""
-                    },
-                    "default_value": "",
-                    "maxlength": "",
-                    "placeholder": "",
-                    "prepend": "",
-                    "append": ""
-                },
-                {
-                    "key": "field_589dc6da3611c",
-                    "label": "Beacon trigger distance",
-                    "name": "guide_object_beacon_distance",
-                    "type": "number",
-                    "instructions": "Distance that the beacon should be triggered at.",
-                    "required": 1,
-                    "conditional_logic": [
-                        [
-                            {
-                                "field": "field_58949a8f0c4cd",
-                                "operator": "==",
-                                "value": "1"
-                            }
-                        ]
-                    ],
-                    "wrapper": {
-                        "width": "40",
-                        "class": "",
-                        "id": ""
-                    },
-                    "default_value": 5,
-                    "min": 1,
-                    "max": 70,
-                    "step": 1,
-                    "placeholder": "",
-                    "prepend": "",
-                    "append": "meters"
-                },
-                {
                     "key": "field_58a5c081f4193",
                     "label": "Visibility",
                     "name": "",
@@ -542,7 +462,7 @@
                         "class": "",
                         "id": ""
                     },
-                    "default_value": 0,
+                    "default_value": 1,
                     "message": "Yes, show this object",
                     "ui": 0,
                     "ui_on_text": "Show",
@@ -653,14 +573,14 @@
                         "class": "",
                         "id": ""
                     },
-                    "multiple": 1,
-                    "allow_null": 0,
                     "choices": [],
                     "default_value": [],
+                    "allow_null": 0,
+                    "multiple": 1,
                     "ui": 1,
                     "ajax": 1,
-                    "placeholder": "",
-                    "return_format": "value"
+                    "return_format": "value",
+                    "placeholder": ""
                 },
                 {
                     "key": "field_58ac54a64bb06",
@@ -723,4 +643,4 @@
     "active": 1,
     "description": "Manage main guide object details."
 }]
-
+

@@ -115,7 +115,12 @@ class Guides extends \HbgEventImporter\Entity\CustomPostType
      */
     public function getPostObjects($field)
     {
-        global $post;
+        global $post, $typenow;
+
+        // Bail if acf group edit
+        if ((isset($post->post_type) && $post->post_type == 'acf-field-group') || $typenow == 'acf-field-group') {
+            return $field;
+        }
 
         if (is_object($post) && isset($post->ID)) {
             $postId = $post->ID;

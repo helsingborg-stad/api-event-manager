@@ -83,7 +83,8 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
 
         $this->addTableColumn('date', __('Date', 'event-manager'));
 
-        add_filter('views_edit-event', array($this, 'addImportButtons'));
+        // Disable auto embedded urls
+        remove_filter('the_content', array($GLOBALS['wp_embed'], 'autoembed'), 8);
 
         add_action('save_post', array($this, 'saveEventOccasions'), 10, 3);
         add_action('save_post', array($this, 'saveRecurringEvents'), 11, 3);
@@ -100,6 +101,7 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
         add_action('admin_action_duplicate_post', array($this, 'duplicatePost'));
         add_action('admin_head-edit.php', array($this, 'adminHeadAction'));
 
+        add_filter('views_edit-event', array($this, 'addImportButtons'));
         add_filter('the_content', array($this, 'replaceWhitespace'), 9);
         add_filter('post_row_actions', array($this, 'duplicatePostLink'), 10, 2);
 
@@ -107,7 +109,6 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
         add_filter('acf/validate_value/name=door_time', array($this, 'validateDoorTime'), 10, 4);
         add_filter('acf/validate_value/name=occasions', array($this, 'validateOccasion'), 10, 4);
         add_filter('acf/validate_value/name=rcr_rules', array($this, 'validateOccasion'), 10, 4);
-        add_filter('acf/validate_value/name=rcr_end_time', array($this, 'validateRcrEndTime'), 10, 4);
         add_filter('acf/validate_value/name=rcr_door_time', array($this, 'validateRcrDoorTime'), 10, 4);
         add_filter('acf/validate_value/name=rcr_end_date', array($this, 'validateRcrEndDate'), 10, 4);
         add_filter('acf/validate_value/name=price_adult', array($this, 'validatePrice'), 10, 4);
@@ -238,6 +239,10 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
             foreach ($recurringDates as $date) {
                 $start = strtotime(date('Y-m-d', $date) . ' ' . $startTime);
                 $end = strtotime(date('Y-m-d', $date) . ' ' . $endTime);
+                // If end time is before start time, add 1 day
+                if ($start >= $end) {
+                    $end = strtotime('+1 day', $end);
+                }
                 $door = null;
 
                 if (!empty($doorTime)) {

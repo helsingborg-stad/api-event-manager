@@ -1,11 +1,9 @@
 <?php 
 
-
-if (function_exists('acf_add_local_field_group')) {
-
-    acf_add_local_field_group(array(
+if (function_exists('acf_add_local_field_group')) {
+    acf_add_local_field_group(array(
     'key' => 'group_589497ca3741e',
-    'title' => 'Basic Guide Settings',
+    'title' => __('Basic Guide Settings', 'event-manager'),
     'fields' => array(
         0 => array(
             'key' => 'field_58949857fc7b0',
@@ -440,86 +438,6 @@ if (function_exists('acf_add_local_field_group')) {
                     ),
                 ),
                 10 => array(
-                    'key' => 'field_589db114078de',
-                    'label' => __('Beacons', 'event-manager'),
-                    'name' => '',
-                    'type' => 'tab',
-                    'instructions' => '',
-                    'required' => 0,
-                    'conditional_logic' => array(
-                        0 => array(
-                            0 => array(
-                                'field' => 'field_58949a8f0c4cd',
-                                'operator' => '==',
-                                'value' => '1',
-                            ),
-                        ),
-                    ),
-                    'wrapper' => array(
-                        'width' => '',
-                        'class' => '',
-                        'id' => '',
-                    ),
-                    'placement' => 'top',
-                    'endpoint' => 0,
-                ),
-                11 => array(
-                    'key' => 'field_589db29081803',
-                    'label' => __('Object beacon ID', 'event-manager'),
-                    'name' => 'guide_object_beacon_id',
-                    'type' => 'text',
-                    'instructions' => __('A unique id for a specific    bluetooth beacon.', 'event-manager'),
-                    'required' => 1,
-                    'conditional_logic' => array(
-                        0 => array(
-                            0 => array(
-                                'field' => 'field_58949a8f0c4cd',
-                                'operator' => '==',
-                                'value' => '1',
-                            ),
-                        ),
-                    ),
-                    'wrapper' => array(
-                        'width' => '60',
-                        'class' => '',
-                        'id' => '',
-                    ),
-                    'default_value' => '',
-                    'maxlength' => '',
-                    'placeholder' => '',
-                    'prepend' => '',
-                    'append' => '',
-                ),
-                12 => array(
-                    'key' => 'field_589dc6da3611c',
-                    'label' => __('Beacon trigger distance', 'event-manager'),
-                    'name' => 'guide_object_beacon_distance',
-                    'type' => 'number',
-                    'instructions' => __('Distance that the beacon should be triggered at.', 'event-manager'),
-                    'required' => 1,
-                    'conditional_logic' => array(
-                        0 => array(
-                            0 => array(
-                                'field' => 'field_58949a8f0c4cd',
-                                'operator' => '==',
-                                'value' => '1',
-                            ),
-                        ),
-                    ),
-                    'wrapper' => array(
-                        'width' => '40',
-                        'class' => '',
-                        'id' => '',
-                    ),
-                    'default_value' => 5,
-                    'min' => 1,
-                    'max' => 70,
-                    'step' => 1,
-                    'placeholder' => '',
-                    'prepend' => '',
-                    'append' => __('meters', 'event-manager'),
-                ),
-                13 => array(
                     'key' => 'field_58a5c081f4193',
                     'label' => __('Visibility', 'event-manager'),
                     'name' => '',
@@ -535,7 +453,7 @@ if (function_exists('acf_add_local_field_group')) {
                     'placement' => 'top',
                     'endpoint' => 0,
                 ),
-                14 => array(
+                11 => array(
                     'key' => 'field_58a5c098f4194',
                     'label' => __('Object visibility', 'event-manager'),
                     'name' => 'guide_object_active',
@@ -548,13 +466,13 @@ if (function_exists('acf_add_local_field_group')) {
                         'class' => '',
                         'id' => '',
                     ),
-                    'default_value' => 0,
+                    'default_value' => 1,
                     'message' => __('Yes, show this object', 'event-manager'),
                     'ui' => 0,
                     'ui_on_text' => __('Show', 'event-manager'),
                     'ui_off_text' => __('Hide', 'event-manager'),
                 ),
-                15 => array(
+                12 => array(
                     'key' => 'field_58ad84a12d5ac',
                     'label' => __('Unique ID', 'event-manager'),
                     'name' => 'guide_object_uid',
@@ -660,16 +578,16 @@ if (function_exists('acf_add_local_field_group')) {
                         'class' => '',
                         'id' => '',
                     ),
-                    'multiple' => 1,
-                    'allow_null' => 0,
                     'choices' => array(
                     ),
                     'default_value' => array(
                     ),
+                    'allow_null' => 0,
+                    'multiple' => 1,
                     'ui' => 1,
                     'ajax' => 1,
-                    'placeholder' => '',
                     'return_format' => 'value',
+                    'placeholder' => '',
                 ),
                 2 => array(
                     'key' => 'field_58ac54a64bb06',
@@ -732,5 +650,4 @@ if (function_exists('acf_add_local_field_group')) {
     'active' => 1,
     'description' => 'Manage main guide object details.',
 ));
-
-}
+}

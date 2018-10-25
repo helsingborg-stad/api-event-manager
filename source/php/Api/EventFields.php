@@ -276,15 +276,14 @@ class EventFields extends Fields
         }
 
         // Filter by groups taxonomy
-        if (!empty($groupId = explode(',', trim($parameters['group-id'], ',')))) {
-            $groupId = $this->getTaxonomyChildren($groupId, 'user_groups');
-            $groupId = implode(',', $groupId);
+        if (!empty($groups = explode(',', trim($parameters['group-id'], ',')))) {
+            $groups = $this->getTaxonomyChildren($groups, 'user_groups');
+            $groups = implode(',', $groups);
+            $groups = trim($groups, ',');
         }
 
         // Filter by categories taxonomy
-        $categoryId = trim($parameters['category-id'], ',');
-        $taxonomies = ($groupId) ? $groupId . ',' . $categoryId : $categoryId;
-        $taxonomies = trim($taxonomies, ',');
+        $taxonomies = trim($parameters['category-id'], ',');
 
         $db_occasions = $wpdb->prefix . "occasions";
         $query =
@@ -292,26 +291,28 @@ class EventFields extends Fields
             SELECT      *
             FROM        $wpdb->posts
             LEFT JOIN   $db_occasions ON ($wpdb->posts.ID = $db_occasions.event)
-            LEFT JOIN   $wpdb->postmeta postmeta1 ON $wpdb->posts.ID = postmeta1.post_id
-            LEFT JOIN   $wpdb->postmeta postmeta2 ON $wpdb->posts.ID = postmeta2.post_id
-            LEFT JOIN   $wpdb->term_relationships ON ($wpdb->posts.ID = $wpdb->term_relationships.object_id)
-            WHERE       $wpdb->posts.post_type = %s
-                        AND $wpdb->posts.post_status = %s
-                        AND ($db_occasions.timestamp_start BETWEEN %d AND %d OR $db_occasions.timestamp_end BETWEEN %d AND %d)
-                        AND postmeta1.meta_key = 'internal_event' AND postmeta1.meta_value = {$parameters['internal']}
-            ";
-        $query .= (!empty($taxonomies)) ? "AND ($wpdb->term_relationships.term_taxonomy_id IN ($taxonomies)) " : "";
+            LEFT JOIN   $wpdb->postmeta postmeta1 ON $wpdb->posts.ID = postmeta1.post_id ";
+        $query .= (!empty($locationIds)) ? "LEFT JOIN $wpdb->postmeta postmeta2 ON $wpdb->posts.ID = postmeta2.post_id " : "";
+        $query .= (!empty($groups)) ? "LEFT JOIN $wpdb->term_relationships term1 ON ($wpdb->posts.ID = term1.object_id) " : "";
+        $query .= (!empty($taxonomies)) ? "LEFT JOIN $wpdb->term_relationships term2 ON ($wpdb->posts.ID = term2.object_id) " : "";
+        $query .= "
+                    WHERE $wpdb->posts.post_type = %s
+                    AND $wpdb->posts.post_status = %s
+                    AND ($db_occasions.timestamp_start BETWEEN %d AND %d OR $db_occasions.timestamp_end BETWEEN %d AND %d)
+                    AND postmeta1.meta_key = 'internal_event' AND postmeta1.meta_value = {$parameters['internal']} ";
         $query .= (!empty($locationIds)) ? "AND (postmeta2.meta_key = 'location' AND postmeta2.meta_value IN ($locationIds)) " : "";
+        $query .= (!empty($groups)) ? "AND (term1.term_taxonomy_id IN ($groups)) " : "";
+        $query .= (!empty($taxonomies)) ? "AND (term2.term_taxonomy_id IN ($taxonomies)) " : "";
         $query .= "GROUP BY $wpdb->posts.ID, $db_occasions.timestamp_start, $db_occasions.timestamp_end ";
-        $query .= "ORDER BY $db_occasions.timestamp_start ASC";
+        $query .= "ORDER BY $db_occasions.timestamp_start ASC ";
         // Limit response if 'page' parameter is set
         if (!empty($parameters['page'])) {
             $page = $this->sanitizePage($parameters['page']);
             $perPage = !empty($parameters['per_page']) ? $this->sanitizePerPage($parameters['per_page']) : 10;
             $offset = ($page * $perPage) - $perPage;
-            $query .= " LIMIT {$offset}, {$perPage}";
+            $query .= "LIMIT {$offset}, {$perPage} ";
         } elseif (!empty($parameters['post-limit'])) { //Backwards compability fix
-            $query .= " LIMIT {$parameters['post-limit']}";
+            $query .= "LIMIT {$parameters['post-limit']} ";
         }
 
         $completeQuery = $wpdb->prepare($query, $this->postType, 'publish', $parameters['start'], $parameters['end'], $parameters['start'], $parameters['end']);
