@@ -13,7 +13,7 @@ class RateLimit
     private $_timeFrame      = 60; //In minutes
     private $_cacheKey       = "event-importer-rate-limit";
     private $_cacheTtl       = 60*60*12; //Auto clear cache after 12 hours
-    private $_persistentBan  = array("91.106.193.250");
+    private $_persistentBan  = array();
 
     /**
      * Hook to WordPress. Gather remote ip.
