@@ -333,7 +333,7 @@ class EventFields extends Fields
                 $data[] = $controller->prepare_response_for_collection($posts);
             }
         } else {
-            return new \WP_Error('error_message', 'There are no events', array('status' => 204));
+            return new \WP_Error('error_message', 'No event found at this criteria', array('status' => 404));
         }
         return new \WP_REST_Response($data, 200);
     }
