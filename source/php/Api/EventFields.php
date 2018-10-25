@@ -288,7 +288,7 @@ class EventFields extends Fields
         $db_occasions = $wpdb->prefix . "occasions";
         $query =
             "
-            SELECT      ID
+            SELECT      *
             FROM        $wpdb->posts
             LEFT JOIN   $db_occasions ON ($wpdb->posts.ID = $db_occasions.event)
             LEFT JOIN   $wpdb->postmeta postmeta1 ON $wpdb->posts.ID = postmeta1.post_id ";
