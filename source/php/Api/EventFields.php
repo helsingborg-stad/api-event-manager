@@ -288,7 +288,7 @@ class EventFields extends Fields
         $db_occasions = $wpdb->prefix . "occasions";
         $query =
             "
-            SELECT      $wpdb->posts.ID, $wpdb->posts.post_type, $wpdb->posts.post_status, $db_occasions.timestamp_start, $db_occasions.timestamp_end, $db_occasions             
+            SELECT      $wpdb->posts.ID, $wpdb->posts.post_type, $wpdb->posts.post_status, $db_occasions.timestamp_start, $db_occasions.timestamp_end, $db_occasions
             FROM        $wpdb->posts
             LEFT JOIN   $db_occasions ON ($wpdb->posts.ID = $db_occasions.event)
             LEFT JOIN   $wpdb->postmeta postmeta1 ON $wpdb->posts.ID = postmeta1.post_id ";
@@ -333,7 +333,7 @@ class EventFields extends Fields
                 $data[] = $controller->prepare_response_for_collection($posts);
             }
         } else {
-            return new \WP_Error('error_message', 'There are no events', array('status' => 204));
+            return new \WP_Error('error_message', 'No event found at this criteria', array('status' => 404));
         }
         return new \WP_REST_Response($data, 200);
     }
