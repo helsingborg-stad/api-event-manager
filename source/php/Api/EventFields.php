@@ -288,7 +288,7 @@ class EventFields extends Fields
         $db_occasions = $wpdb->prefix . "occasions";
         $query =
             "
-            SELECT      ID
+            SELECT      $wpdb->posts.ID, $wpdb->posts.post_type, $wpdb->posts.post_status, $db_occasions.timestamp_start, $db_occasions.timestamp_end, $db_occasions.timestamp_door
             FROM        $wpdb->posts
             LEFT JOIN   $db_occasions ON ($wpdb->posts.ID = $db_occasions.event)
             LEFT JOIN   $wpdb->postmeta postmeta1 ON $wpdb->posts.ID = postmeta1.post_id ";
@@ -323,7 +323,7 @@ class EventFields extends Fields
         if (!empty($allEvents)) {
             foreach ($allEvents as $post) {
                 // Get event as WP_Post
-                $post_object = get_post($post->event);
+                $post_object = get_post($post->ID);
                 // Add current occasion data to post
                 $post_object->timestamp_start = $post->timestamp_start;
                 $post_object->timestamp_end = $post->timestamp_end;
