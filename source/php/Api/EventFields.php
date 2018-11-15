@@ -120,23 +120,19 @@ class EventFields extends Fields
                 'default'            => '',
                 'sanitize_callback'  => 'sanitize_text_field',
             ),
-            'post-limit'            => array(
-                'description'        => 'Filter by categories taxonomy.',
+            'page'                   => array(
+                'description'        => 'Current page of the collection.',
                 'type'               => 'integer',
-                'default'            => '99',
-                'sanitize_callback'  => array($this, 'sanitizeInt'),
+                'default'            => 1,
+                'sanitize_callback'  => array($this, 'sanitizePage'),
+            ),
+            'per_page'               => array(
+                'description'        => 'Maximum number of items to be returned in result set.',
+                'type'               => 'integer',
+                'default'            => 10,
+                'sanitize_callback'  => array($this, 'sanitizePerPage'),
             ),
         );
-    }
-
-    /**
-     * Returns positive int
-     * @param $data
-     * @return int
-     */
-    public function sanitizeInt($data)
-    {
-        return absint($data);
     }
 
     /**
@@ -285,6 +281,10 @@ class EventFields extends Fields
         // Filter by categories taxonomy
         $taxonomies = trim($parameters['category-id'], ',');
 
+        // Calculate offset, check 'post-limit' parameter for backward compatibility
+        $perPage = isset($parameters['post-limit']) && !empty($parameters['post-limit']) ? $this->sanitizePerPage($parameters['post-limit']) : $parameters['per_page'];
+        $offset = ($parameters['page'] * $perPage) - $perPage;
+
         $db_occasions = $wpdb->prefix . "occasions";
         $query =
             "
@@ -305,15 +305,7 @@ class EventFields extends Fields
         $query .= (!empty($taxonomies)) ? "AND (term2.term_taxonomy_id IN ($taxonomies)) " : "";
         $query .= "GROUP BY $wpdb->posts.ID, $db_occasions.timestamp_start, $db_occasions.timestamp_end ";
         $query .= "ORDER BY $db_occasions.timestamp_start ASC ";
-        // Limit response if 'page' parameter is set
-        if (!empty($parameters['page'])) {
-            $page = $this->sanitizePage($parameters['page']);
-            $perPage = !empty($parameters['per_page']) ? $this->sanitizePerPage($parameters['per_page']) : 10;
-            $offset = ($page * $perPage) - $perPage;
-            $query .= "LIMIT {$offset}, {$perPage} ";
-        } elseif (!empty($parameters['post-limit'])) { //Backwards compability fix
-            $query .= "LIMIT {$parameters['post-limit']} ";
-        }
+        $query .= " LIMIT {$offset}, {$perPage}";
 
         $completeQuery = $wpdb->prepare($query, $this->postType, 'publish', $parameters['start'], $parameters['end'], $parameters['start'], $parameters['end']);
         $allEvents = $wpdb->get_results($completeQuery);
