@@ -46,7 +46,13 @@ class TransTicket extends \HbgEventImporter\Parser
                 continue;
             }
 
-            if (strtotime($event->ReleaseDate) < time()) {
+            //Remove everything that hasen't been published to web
+            if (strtotime($event->ReleaseDate) > time()) {
+                continue;
+            }
+
+            //Check bitmask value for Point of sale
+            if (($event->POS & 2) != 2) {
                 continue;
             }
 
