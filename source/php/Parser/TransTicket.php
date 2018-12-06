@@ -46,6 +46,10 @@ class TransTicket extends \HbgEventImporter\Parser
                 continue;
             }
 
+            if (strtotime($event->ReleaseDate) < time()) {
+                continue;
+            }
+
             $this->saveEvent($event, $shortKey);
         }
     }
