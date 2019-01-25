@@ -282,13 +282,24 @@ class TransTicket extends \HbgEventImporter\Parser
             $event->setFeaturedImageFromUrl($event->image);
         }
 
+        //Add & remove tags
+        wp_set_post_terms(
+            $event->ID,
+            $data['categories'],
+            'event_tags',
+            false
+        );
+
         return $event->ID;
     }
 
     /**
      * Creates or updates a location if possible
-     * @param  array $data Event data
+     *
+     * @param array $data Event data
+     *
      * @return boolean|int  Location id or false
+     *
      * @throws \Exception
      */
     public function maybeCreateLocation($data, $shortKey)
