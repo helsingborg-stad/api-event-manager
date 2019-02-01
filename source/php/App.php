@@ -21,6 +21,7 @@ class App
         // Admin scripts
         add_action('admin_enqueue_scripts', array($this, 'enqueueStyles'));
         add_action('admin_enqueue_scripts', array($this, 'enqueueScripts'));
+        add_action('acf/input/admin_enqueue_scripts', array($this, 'enqueueAcfScripts'));
 
         // Redirects
         add_filter('login_redirect', array($this, 'loginRedirect'), 10, 3);
@@ -207,7 +208,7 @@ class App
         );
 
         if (is_object($current_screen) && in_array($current_screen->post_type, $acceptedPostTypes)) {
-            wp_enqueue_script('hbg-event-importer', HBGEVENTIMPORTER_URL . '/dist/js/app.min.js');
+            wp_enqueue_script('hbg-event-importer', HBGEVENTIMPORTER_URL . '/dist/js/api-event-manager.min.js');
         }
 
         wp_localize_script('hbg-event-importer', 'eventmanager', array(
@@ -249,6 +250,11 @@ class App
             'duplicate_occasion'    => __("Duplicate occasion", 'event-manager'),
             'import_scheduled'      => __("Import scheduled", 'event-manager'),
         ));
+    }
+
+    public function enqueueAcfScripts()
+    {
+        wp_enqueue_script('hbg-event-importer-acf', HBGEVENTIMPORTER_URL . '/dist/js/api-event-manager-acf.min.js',  array('acf-input'), false, true);
     }
 
     /**
