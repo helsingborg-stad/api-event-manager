@@ -841,6 +841,47 @@
             'rows' => 3,
             'new_lines' => 'wpautop',
         ),
+        29 => array(
+            'key' => 'field_5c5859e596d36',
+            'label' => __('Facilities', 'event-manager'),
+            'name' => '',
+            'type' => 'tab',
+            'instructions' => '',
+            'required' => 0,
+            'conditional_logic' => 0,
+            'wrapper' => array(
+                'width' => '',
+                'class' => '',
+                'id' => '',
+            ),
+            'placement' => 'top',
+            'endpoint' => 0,
+        ),
+        30 => array(
+            'key' => 'field_5c58562a86ddf',
+            'label' => __('Accessibility', 'event-manager'),
+            'name' => 'accessibility',
+            'type' => 'checkbox',
+            'instructions' => '',
+            'required' => 0,
+            'conditional_logic' => 0,
+            'wrapper' => array(
+                'width' => '',
+                'class' => '',
+                'id' => '',
+            ),
+            'choices' => array(
+                'accessible_toilet' => __('Accessible toilet', 'event-manager'),
+                'elevator_ ramp' => __('Elevator/ramp', 'event-manager'),
+            ),
+            'allow_custom' => 0,
+            'default_value' => array(
+            ),
+            'layout' => 'vertical',
+            'toggle' => 0,
+            'return_format' => 'label',
+            'save_custom' => 0,
+        ),
     ),
     'location' => array(
         0 => array(
