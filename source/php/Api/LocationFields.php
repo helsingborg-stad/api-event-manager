@@ -513,5 +513,20 @@ class LocationFields extends Fields
                 )
             )
         );
+
+        // Accessibilities
+        register_rest_field($this->postType,
+            'accessibility',
+            array(
+                'get_callback' => array($this, 'objectGetCallBack'),
+                'update_callback' => array($this, 'objectGetCallBack'),
+                'schema' => array(
+                    'description' => 'Field containing array with accessible facilities.',
+                    'type' => 'object',
+                    'context' => array('view', 'edit', 'embed')
+                )
+            )
+        );
+
     }
 }
