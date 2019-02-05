@@ -16,7 +16,7 @@ class OrganizerFields extends Fields
         add_action('rest_api_init', array($this, 'registerRestRoute'));
     }
 
-    public static function registerRestRoute()
+    public function registerRestRoute()
     {
         $response = register_rest_route('wp/v2', '/'.$this->postType.'/'.'complete', array(
             'methods'  => \WP_REST_Server::READABLE,

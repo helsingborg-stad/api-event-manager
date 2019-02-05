@@ -20,7 +20,7 @@ class MembershipCardFields extends Fields
      * @return  void
      * @version 0.3.2 creating consumer accessable meta values.
      */
-    public static function registerRestFields()
+    public function registerRestFields()
     {
 
         // Title as plain text

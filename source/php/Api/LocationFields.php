@@ -17,7 +17,7 @@ class LocationFields extends Fields
         add_filter('rest_location_query', array($this, 'addCoordinateFilter'), 10, 2);
     }
 
-    public static function registerRestRoute()
+    public function registerRestRoute()
     {
         $response = register_rest_route('wp/v2', '/'.$this->postType.'/'.'complete', array(
             'methods'  => \WP_REST_Server::READABLE,
@@ -160,9 +160,8 @@ class LocationFields extends Fields
      * @return  void
      * @version 0.3.2 creating consumer accessable meta values.
      */
-    public static function registerRestFields()
+    public function registerRestFields()
     {
-
         // Title as plain text
         register_rest_field($this->postType,
             'title',
