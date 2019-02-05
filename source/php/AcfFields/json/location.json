@@ -831,46 +831,6 @@
             "maxlength": "",
             "rows": 3,
             "new_lines": "wpautop"
-        },
-        {
-            "key": "field_5c5859e596d36",
-            "label": "Facilities",
-            "name": "",
-            "type": "tab",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "placement": "top",
-            "endpoint": 0
-        },
-        {
-            "key": "field_5c58562a86ddf",
-            "label": "Accessibility",
-            "name": "accessibility",
-            "type": "checkbox",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "choices": {
-                "accessible_toilet": "Accessible toilet",
-                "elevator_ ramp": "Elevator\/ramp"
-            },
-            "allow_custom": 0,
-            "default_value": [],
-            "layout": "vertical",
-            "toggle": 0,
-            "return_format": "label",
-            "save_custom": 0
         }
     ],
     "location": [
