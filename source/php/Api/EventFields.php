@@ -288,7 +288,7 @@ class EventFields extends Fields
         $db_occasions = $wpdb->prefix . "occasions";
         $query =
             "
-            SELECT      $wpdb->posts.ID, $wpdb->posts.post_type, $wpdb->posts.post_status, $db_occasions.event, $db_occasions.timestamp_start, $db_occasions.timestamp_end, $db_occasions.timestamp_door             
+            SELECT      $wpdb->posts.ID, $wpdb->posts.post_type, $wpdb->posts.post_status, $db_occasions.event, $db_occasions.timestamp_start, $db_occasions.timestamp_end, $db_occasions.timestamp_door
             FROM        $wpdb->posts
             LEFT JOIN   $db_occasions ON ($wpdb->posts.ID = $db_occasions.event)
             LEFT JOIN   $wpdb->postmeta postmeta1 ON $wpdb->posts.ID = postmeta1.post_id ";
@@ -1305,6 +1305,20 @@ class EventFields extends Fields
                     'description' => 'Field containing string with submitter phone.',
                     'type' => 'string',
                     'context' => array('edit')
+                )
+            )
+        );
+
+        // Age group
+        register_rest_field($this->postType,
+            'age_group',
+            array(
+                'get_callback' => array($this, 'objectGetCallBack'),
+                'update_callback' => array($this, 'objectUpdateCallBack'),
+                'schema' => array(
+                    'description' => 'Field containing array with from and to age.',
+                    'type' => 'object',
+                    'context' => array('view', 'edit')
                 )
             )
         );
