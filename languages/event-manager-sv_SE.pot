@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "Project-Id-Version: Event Manager\n"
-"POT-Creation-Date: 2019-02-04 16:42+0100\n"
+"POT-Creation-Date: 2019-02-05 08:58+0100\n"
 "PO-Revision-Date: 2016-10-26 08:27+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -1256,6 +1256,31 @@ msgstr ""
 
 #: source/php/AcfFields/php/event.php:1431
 msgid "Vimeo link"
+msgstr ""
+
+#: source/php/AcfFields/php/event.php:1449
+msgid "Age"
+msgstr ""
+
+#: source/php/AcfFields/php/event.php:1465
+msgid "Age group"
+msgstr ""
+
+#: source/php/AcfFields/php/event.php:1468
+msgid "Age group that the activity is addressed to."
+msgstr ""
+
+#: source/php/AcfFields/php/event.php:1480
+msgid "From"
+msgstr ""
+
+#: source/php/AcfFields/php/event.php:1494
+#: source/php/AcfFields/php/event.php:1515
+msgid "years"
+msgstr ""
+
+#: source/php/AcfFields/php/event.php:1501
+msgid "To"
 msgstr ""
 
 #: source/php/AcfFields/php/groups.php:13

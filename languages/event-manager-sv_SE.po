@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Event Manager\n"
-"POT-Creation-Date: 2019-02-04 16:42+0100\n"
-"PO-Revision-Date: 2019-02-04 16:43+0100\n"
+"POT-Creation-Date: 2019-02-05 08:58+0100\n"
+"PO-Revision-Date: 2019-02-05 08:58+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: sv\n"
@@ -1262,6 +1262,31 @@ msgstr "Lägg till en eller flera Vimero-länkar."
 #: source/php/AcfFields/php/event.php:1431
 msgid "Vimeo link"
 msgstr "Vimeo-länk"
+
+#: source/php/AcfFields/php/event.php:1449
+msgid "Age"
+msgstr "Ålder"
+
+#: source/php/AcfFields/php/event.php:1465
+msgid "Age group"
+msgstr "Åldersgrupp"
+
+#: source/php/AcfFields/php/event.php:1468
+msgid "Age group that the activity is addressed to."
+msgstr "Åldersgrupp som aktiviteten är riktad till."
+
+#: source/php/AcfFields/php/event.php:1480
+msgid "From"
+msgstr "Från"
+
+#: source/php/AcfFields/php/event.php:1494
+#: source/php/AcfFields/php/event.php:1515
+msgid "years"
+msgstr "år"
+
+#: source/php/AcfFields/php/event.php:1501
+msgid "To"
+msgstr "Till"
 
 #: source/php/AcfFields/php/groups.php:13
 msgid "Select one or many user groups."
