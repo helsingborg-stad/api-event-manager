@@ -599,7 +599,7 @@
             },
             "choices": {
                 "accessible_toilet": "Accessible toilet",
-                "elevator_ ramp": "Elevator\/ramp"
+                "elevator": "Elevator\/ramp"
             },
             "allow_custom": 0,
             "default_value": [],
@@ -1477,9 +1477,9 @@
         {
             "key": "field_5c593bd1fbba1",
             "label": "Age group",
-            "name": "age_group",
-            "type": "group",
-            "instructions": "Age group that the activity is addressed to.",
+            "name": "",
+            "type": "message",
+            "instructions": "",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -1487,51 +1487,51 @@
                 "class": "",
                 "id": ""
             },
-            "layout": "block",
-            "sub_fields": [
-                {
-                    "key": "field_5c593d58fbba2",
-                    "label": "From",
-                    "name": "from",
-                    "type": "number",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "50",
-                        "class": "",
-                        "id": ""
-                    },
-                    "default_value": "",
-                    "placeholder": "",
-                    "prepend": "",
-                    "append": "years",
-                    "min": "",
-                    "max": "",
-                    "step": ""
-                },
-                {
-                    "key": "field_5c593d92fbba3",
-                    "label": "To",
-                    "name": "to",
-                    "type": "number",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "50",
-                        "class": "",
-                        "id": ""
-                    },
-                    "default_value": "",
-                    "placeholder": "",
-                    "prepend": "",
-                    "append": "years",
-                    "min": "",
-                    "max": "",
-                    "step": ""
-                }
-            ]
+            "message": "Age group that the activity is addressed to.",
+            "new_lines": "wpautop",
+            "esc_html": 0
+        },
+        {
+            "key": "field_5c593d58fbba2",
+            "label": "From",
+            "name": "age_group_from",
+            "type": "number",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "years",
+            "min": "",
+            "max": "",
+            "step": ""
+        },
+        {
+            "key": "field_5c593d92fbba3",
+            "label": "To",
+            "name": "age_group_to",
+            "type": "number",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "years",
+            "min": "",
+            "max": "",
+            "step": ""
         }
     ],
     "location": [

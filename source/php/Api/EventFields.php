@@ -1309,15 +1309,29 @@ class EventFields extends Fields
             )
         );
 
-        // Age group
+        // Age group from
         register_rest_field($this->postType,
-            'age_group',
+            'age_group_from',
             array(
-                'get_callback' => array($this, 'objectGetCallBack'),
-                'update_callback' => array($this, 'objectUpdateCallBack'),
+                'get_callback' => array($this, 'stringGetCallBack'),
+                'update_callback' => array($this, 'stringUpdateCallBack'),
                 'schema' => array(
-                    'description' => 'Field containing array with from and to age.',
-                    'type' => 'object',
+                    'description' => 'Field containing string with age group from.',
+                    'type' => 'string',
+                    'context' => array('view', 'edit')
+                )
+            )
+        );
+
+        // Age group to
+        register_rest_field($this->postType,
+            'age_group_to',
+            array(
+                'get_callback' => array($this, 'stringGetCallBack'),
+                'update_callback' => array($this, 'stringUpdateCallBack'),
+                'schema' => array(
+                    'description' => 'Field containing string with age group to.',
+                    'type' => 'string',
                     'context' => array('view', 'edit')
                 )
             )
@@ -1328,7 +1342,7 @@ class EventFields extends Fields
             'accessibility',
             array(
                 'get_callback' => array($this, 'objectGetCallBack'),
-                'update_callback' => array($this, 'objectGetCallBack'),
+                'update_callback' => array($this, 'objectUpdateCallBack'),
                 'schema' => array(
                     'description' => 'Field containing array with accessible facilities.',
                     'type' => 'object',
