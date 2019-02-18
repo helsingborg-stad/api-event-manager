@@ -587,13 +587,20 @@ class GuideFields extends Fields
                 }
             }
 
+            // Strip tags and and add correct amount of new lines
+            $descriptionPlain = null;
+            if (!empty($item['guide_object_description'])) {
+                $descriptionPlain = str_replace(array("</p>"), "\n", $item['guide_object_description']);
+                $descriptionPlain = strip_tags(html_entity_decode($descriptionPlain));
+            }
+
             $objects[$key] = array(
                 'order' => $i,
                 'active' => ($item['guide_object_active'] == 1) ? true : false,
                 'id' => empty($item['guide_object_id']) ? null : $item['guide_object_id'],
                 'title' => empty($item['guide_object_title']) ? null : $item['guide_object_title'],
                 'description' => empty($item['guide_object_description']) ? null : $item['guide_object_description'],
-                'description_plain' => empty($item['guide_object_description']) ? null : strip_tags(html_entity_decode($item['guide_object_description'])),
+                'description_plain' => $descriptionPlain,
                 'image' => !is_array($item['guide_object_image']) ? null : $this->sanitizeMediaObject($item['guide_object_image']),
                 'audio' => !is_array($item['guide_object_audio']) ? null : $this->sanitizeMediaObject($item['guide_object_audio']),
                 'video' => !is_array($item['guide_object_video']) ? null : $this->sanitizeMediaObject($item['guide_object_video']),
