@@ -112,7 +112,7 @@ class RateLimit
         if (($numberOfRequests = count($this->getRegisteredRequests())) > $this->_rateLimit) {
 
             //Log this
-            $this->logBlockedAttempt("rate limit exceeded");
+            $this->logBlockedAttempt("rate limit exceeded. Current count: " . $numberOfRequests);
 
             //Send json
             wp_send_json(
