@@ -38,12 +38,40 @@ class Cron
             return;
         }
 
+        //Get active clients
+        $activeClients = array();
         foreach (self::$clients as $client) {
-            wp_clear_scheduled_hook('import_events', array('client' => $client));
             if (get_field($client . '_daily_cron', 'option') == true) {
-                wp_schedule_event(time(), 'hourly', 'import_events', array('client' => $client));
+                $activeClients[] = $client;
             }
         }
+        
+        //Create schedules
+        foreach ($activeClients as $clientKey => $client) {
+            wp_clear_scheduled_hook('import_events', array('client' => $client));
+            wp_schedule_event(
+                time() + $this->calculateCronOffsetTime($activeClients, 3600, $clientKey), 
+                'hourly', 
+                'import_events', 
+                array('client' => $client)
+            );
+        }
+    }
+
+    /**
+     * Calculate a time offset for each integration
+     * 
+     * @param  array   $clients   The client to be scheduled
+     * @param  integer $timeFrame Total schedule space
+     * @param  integer $iteration Current iteration in loop
+     * 
+     * @return integer
+     */
+    public function calculateCronOffsetTime($clients, $timeFrame = 3600, $iteration = 0) : int {
+        if($numberOfClients = count($clients)) {
+            return ($timeFrame/$numberOfClients) * $iteration;
+        }
+        return 0;
     }
 
     /**
