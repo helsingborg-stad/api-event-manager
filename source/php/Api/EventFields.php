@@ -131,6 +131,11 @@ class EventFields extends Fields
                 'type'               => 'integer',
                 'default'            => 10,
                 'sanitize_callback'  => array($this, 'sanitizePerPage'),
+            'lang' => array(
+                'description' => 'Get events in one language.',
+                'type' => 'string',
+                'default' => '',
+                'sanitize_callback' => 'sanitize_text_field',
             ),
         );
     }
@@ -285,29 +290,50 @@ class EventFields extends Fields
         $perPage = isset($parameters['post-limit']) && !empty($parameters['post-limit']) ? $this->sanitizePerPage($parameters['post-limit']) : $parameters['per_page'];
         $offset = ($parameters['page'] * $perPage) - $perPage;
 
-        $db_occasions = $wpdb->prefix . "occasions";
+
+        // Change language if set
+        $languageId = null;
+        if (is_plugin_active('polylang-pro/polylang.php')) {
+            $defaultLang = pll_default_language();
+            $languages = pll_the_languages(array('raw' => 1, 'hide_if_empty' => 0));
+            $languageId = $languages[$parameters['lang']]['id'] ?? $languages[$defaultLang]['id'] ?? null;
+            $languageId = (int)$languageId;
+        }
+
+        $postTable = $wpdb->posts;
+        $db_occasions = $wpdb->prefix."occasions";
         $query =
             "
-            SELECT      $wpdb->posts.ID, $wpdb->posts.post_type, $wpdb->posts.post_status, $db_occasions.event, $db_occasions.timestamp_start, $db_occasions.timestamp_end, $db_occasions.timestamp_door
-            FROM        $wpdb->posts
-            LEFT JOIN   $db_occasions ON ($wpdb->posts.ID = $db_occasions.event)
-            LEFT JOIN   $wpdb->postmeta postmeta1 ON $wpdb->posts.ID = postmeta1.post_id ";
-        $query .= (!empty($locationIds)) ? "LEFT JOIN $wpdb->postmeta postmeta2 ON $wpdb->posts.ID = postmeta2.post_id " : "";
-        $query .= (!empty($groups)) ? "LEFT JOIN $wpdb->term_relationships term1 ON ($wpdb->posts.ID = term1.object_id) " : "";
-        $query .= (!empty($taxonomies)) ? "LEFT JOIN $wpdb->term_relationships term2 ON ($wpdb->posts.ID = term2.object_id) " : "";
+            SELECT      $postTable.ID, $postTable.post_type, $postTable.post_status, $db_occasions.event, $db_occasions.timestamp_start, $db_occasions.timestamp_end, $db_occasions.timestamp_door
+            FROM        $postTable
+            LEFT JOIN   $db_occasions ON ($postTable.ID = $db_occasions.event)
+            LEFT JOIN   $wpdb->postmeta postmeta1 ON $postTable.ID = postmeta1.post_id ";
+        $query .= (!empty($locationIds)) ? "LEFT JOIN $wpdb->postmeta postmeta2 ON $postTable.ID = postmeta2.post_id " : "";
+        $query .= (!empty($groups)) ? "LEFT JOIN $wpdb->term_relationships term1 ON ($postTable.ID = term1.object_id) " : "";
+        $query .= (!empty($taxonomies)) ? "LEFT JOIN $wpdb->term_relationships term2 ON ($postTable.ID = term2.object_id) " : "";
+        $query .= ($languageId) ? "LEFT JOIN $wpdb->term_relationships term3 ON ($postTable.ID = term3.object_id) " : "";
         $query .= "
-                    WHERE $wpdb->posts.post_type = %s
-                    AND $wpdb->posts.post_status = %s
+                    WHERE $postTable.post_type = %s
+                    AND $postTable.post_status = %s
                     AND ($db_occasions.timestamp_start BETWEEN %d AND %d OR $db_occasions.timestamp_end BETWEEN %d AND %d)
                     AND postmeta1.meta_key = 'internal_event' AND postmeta1.meta_value = {$parameters['internal']} ";
         $query .= (!empty($locationIds)) ? "AND (postmeta2.meta_key = 'location' AND postmeta2.meta_value IN ($locationIds)) " : "";
         $query .= (!empty($groups)) ? "AND (term1.term_taxonomy_id IN ($groups)) " : "";
         $query .= (!empty($taxonomies)) ? "AND (term2.term_taxonomy_id IN ($taxonomies)) " : "";
-        $query .= "GROUP BY $wpdb->posts.ID, $db_occasions.timestamp_start, $db_occasions.timestamp_end ";
+        $query .= ($languageId) ? "AND (term3.term_taxonomy_id IN ($languageId)) " : "";
+        $query .= "GROUP BY $postTable.ID, $db_occasions.timestamp_start, $db_occasions.timestamp_end ";
         $query .= "ORDER BY $db_occasions.timestamp_start ASC ";
         $query .= " LIMIT {$offset}, {$perPage}";
 
-        $completeQuery = $wpdb->prepare($query, $this->postType, 'publish', $parameters['start'], $parameters['end'], $parameters['start'], $parameters['end']);
+        $completeQuery = $wpdb->prepare(
+            $query,
+            $this->postType,
+            'publish',
+            $parameters['start'],
+            $parameters['end'],
+            $parameters['start'],
+            $parameters['end']
+        );
         $allEvents = $wpdb->get_results($completeQuery);
         $controller = new \WP_REST_Posts_Controller($this->postType);
 
