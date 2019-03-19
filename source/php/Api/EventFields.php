@@ -5,7 +5,6 @@ namespace HbgEventImporter\Api;
 /**
  * Register custom endpoints and meta fields to event post type
  */
-
 class EventFields extends Fields
 {
     private $postType = 'event';
@@ -21,11 +20,15 @@ class EventFields extends Fields
 
     public function registerRestRoute()
     {
-        register_rest_route('wp/v2', '/' . $this->postType . '/' . 'time', array(
-            'methods' => \WP_REST_Server::READABLE,
-            'callback' => array($this, 'getEventsByTimestamp'),
-            'args' => $this->getCollectionParams(),
-        ));
+        register_rest_route(
+            'wp/v2',
+            '/'.$this->postType.'/'.'time',
+            array(
+                'methods' => \WP_REST_Server::READABLE,
+                'callback' => array($this, 'getEventsByTimestamp'),
+                'args' => $this->getCollectionParams(),
+            )
+        );
     }
 
     /**
@@ -60,77 +63,83 @@ class EventFields extends Fields
 
     public function registerRestRouteSearch()
     {
-        register_rest_route('wp/v2', '/event/search', array(
-            'methods' => \WP_REST_Server::READABLE,
-            'callback' => array($this, 'getEventsSearch'),
-        ));
+        register_rest_route(
+            'wp/v2',
+            '/event/search',
+            array(
+                'methods' => \WP_REST_Server::READABLE,
+                'callback' => array($this, 'getEventsSearch'),
+            )
+        );
     }
 
     /**
      * Get the query params for collections
      * @return array
      */
-    public function getCollectionParams() {
+    public function getCollectionParams()
+    {
         return array(
-            'start'                  => array(
-                'description'        => 'Start date for the collection.',
-                'type'               => 'integer',
-                'default'            => strtotime('midnight now'),
-                'sanitize_callback'  => array($this, 'sanitizeDate'),
+            'start' => array(
+                'description' => 'Start date for the collection.',
+                'type' => 'integer',
+                'default' => strtotime('midnight now'),
+                'sanitize_callback' => array($this, 'sanitizeDate'),
             ),
-            'end'                    => array(
-                'description'        => 'End date for the collection.',
-                'type'               => 'integer',
-                'default'            => strtotime('midnight now'),
-                'sanitize_callback'  => array($this, 'sanitizeEndDate'),
+            'end' => array(
+                'description' => 'End date for the collection.',
+                'type' => 'integer',
+                'default' => strtotime('midnight now'),
+                'sanitize_callback' => array($this, 'sanitizeEndDate'),
             ),
-            'internal'               => array(
-                'description'        => 'Filter by internal events. Check if only internal (organization) event should be fetched.',
-                'type'               => 'integer',
-                'default'            => 0,
-                'sanitize_callback'  => array($this, 'sanitizeBool'),
+            'internal' => array(
+                'description' => 'Filter by internal events. Check if only internal (organization) event should be fetched.',
+                'type' => 'integer',
+                'default' => 0,
+                'sanitize_callback' => array($this, 'sanitizeBool'),
             ),
-            'latlng'                 => array(
-                'description'        => 'Filter by locations at a specified location and inside a circular radius.',
-                'type'               => 'string',
-                'default'            => '',
-                'sanitize_callback'  => 'sanitize_text_field',
+            'latlng' => array(
+                'description' => 'Filter by locations at a specified location and inside a circular radius.',
+                'type' => 'string',
+                'default' => '',
+                'sanitize_callback' => 'sanitize_text_field',
             ),
-            'distance'               => array(
-                'description'        => 'Area distance in km from coordinates. Used with "latlng" parameter.',
-                'type'               => 'float',
-                'default'            => 0,
-                'sanitize_callback'  => array($this, 'sanitizeFloat'),
+            'distance' => array(
+                'description' => 'Area distance in km from coordinates. Used with "latlng" parameter.',
+                'type' => 'float',
+                'default' => 0,
+                'sanitize_callback' => array($this, 'sanitizeFloat'),
             ),
-            'arealatlng'             => array(
-                'description'        => 'Filter by locations inside a polygon shaped area.',
-                'type'               => 'array',
-                'default'            => array(),
-                'sanitize_callback'  => array($this, 'sanitizeArray'),
+            'arealatlng' => array(
+                'description' => 'Filter by locations inside a polygon shaped area.',
+                'type' => 'array',
+                'default' => array(),
+                'sanitize_callback' => array($this, 'sanitizeArray'),
             ),
-            'group-id'               => array(
-                'description'        => 'Filter by groups taxonomy.',
-                'type'               => 'string',
-                'default'            => '',
-                'sanitize_callback'  => 'sanitize_text_field',
+            'group-id' => array(
+                'description' => 'Filter by groups taxonomy.',
+                'type' => 'string',
+                'default' => '',
+                'sanitize_callback' => 'sanitize_text_field',
             ),
-            'category-id'            => array(
-                'description'        => 'Filter by categories taxonomy.',
-                'type'               => 'string',
-                'default'            => '',
-                'sanitize_callback'  => 'sanitize_text_field',
+            'category-id' => array(
+                'description' => 'Filter by categories taxonomy.',
+                'type' => 'string',
+                'default' => '',
+                'sanitize_callback' => 'sanitize_text_field',
             ),
-            'page'                   => array(
-                'description'        => 'Current page of the collection.',
-                'type'               => 'integer',
-                'default'            => 1,
-                'sanitize_callback'  => array($this, 'sanitizePage'),
+            'page' => array(
+                'description' => 'Current page of the collection.',
+                'type' => 'integer',
+                'default' => 1,
+                'sanitize_callback' => array($this, 'sanitizePage'),
             ),
-            'per_page'               => array(
-                'description'        => 'Maximum number of items to be returned in result set.',
-                'type'               => 'integer',
-                'default'            => 10,
-                'sanitize_callback'  => array($this, 'sanitizePerPage'),
+            'per_page' => array(
+                'description' => 'Maximum number of items to be returned in result set.',
+                'type' => 'integer',
+                'default' => 10,
+                'sanitize_callback' => array($this, 'sanitizePerPage'),
+            ),
             'lang' => array(
                 'description' => 'Get events in one language.',
                 'type' => 'string',
@@ -148,6 +157,7 @@ class EventFields extends Fields
     public function sanitizePage($data)
     {
         $data = absint($data);
+
         return ($data >= 1) ? $data : 1;
     }
 
@@ -159,6 +169,7 @@ class EventFields extends Fields
     public function sanitizePerPage($data)
     {
         $data = absint($data);
+
         return ($data >= 1 && $data <= 100) ? $data : 10;
     }
 
@@ -233,8 +244,9 @@ class EventFields extends Fields
         }
         $search = $_GET['term'];
         $query = "SELECT ID as id, post_title as title, post_type FROM $wpdb->posts WHERE post_title LIKE %s AND post_type = %s AND post_status = %s ORDER BY post_title ASC";
-        $completeQuery = $wpdb->prepare($query, $search . '%', $this->postType, 'publish');
+        $completeQuery = $wpdb->prepare($query, $search.'%', $this->postType, 'publish');
         $allEvents = $wpdb->get_results($completeQuery);
+
         return $allEvents;
     }
 
@@ -256,9 +268,15 @@ class EventFields extends Fields
         if ($parameters['latlng']) {
             $latlng = explode(',', preg_replace('/\s+/', '', urldecode($parameters['latlng'])));
             if (count($latlng) != 2) {
-                return new \WP_Error('error_message', 'Parameter \'latlng\' is in wrong format', array('status' => 400));
+                return new \WP_Error(
+                    'error_message', 'Parameter \'latlng\' is in wrong format', array('status' => 400)
+                );
             }
-            $locations = \HbgEventImporter\Helper\Address::getNearbyLocations($latlng[0], $latlng[1], $parameters['distance']);
+            $locations = \HbgEventImporter\Helper\Address::getNearbyLocations(
+                $latlng[0],
+                $latlng[1],
+                $parameters['distance']
+            );
             // Return if locations is empty
             if (!$locations) {
                 return new \WP_Error('error_message', 'There are no events', array('status' => 204));
@@ -287,7 +305,9 @@ class EventFields extends Fields
         $taxonomies = trim($parameters['category-id'], ',');
 
         // Calculate offset, check 'post-limit' parameter for backward compatibility
-        $perPage = isset($parameters['post-limit']) && !empty($parameters['post-limit']) ? $this->sanitizePerPage($parameters['post-limit']) : $parameters['per_page'];
+        $perPage = isset($parameters['post-limit']) && !empty($parameters['post-limit']) ? $this->sanitizePerPage(
+            $parameters['post-limit']
+        ) : $parameters['per_page'];
         $offset = ($parameters['page'] * $perPage) - $perPage;
 
 
@@ -359,6 +379,7 @@ class EventFields extends Fields
                 )
             );
         }
+
         return new \WP_REST_Response($data, 200);
     }
 
@@ -385,10 +406,19 @@ class EventFields extends Fields
         $locations = \HbgEventImporter\Helper\Address::getLocationCoordinates();
         if (is_array($locations) && !empty($locations) && count($areaPoints) > 2) {
             // Filter to return only locations within the polygon area
-            $locations = array_filter($locations, function ($location) use ($areaPoints) {
-                $pointInPolygon = \HbgEventImporter\Helper\PointInPolygon::pointInPolygon($location['lat'] . ',' . $location['lng'], $areaPoints, true);
-                return $pointInPolygon != 'outside' ? true : false;
-            });
+            $locations = array_filter(
+                $locations,
+                function ($location) use ($areaPoints) {
+                    $pointInPolygon = \HbgEventImporter\Helper\PointInPolygon::pointInPolygon(
+                        $location['lat'].','.$location['lng'],
+                        $areaPoints,
+                        true
+                    );
+
+                    return $pointInPolygon != 'outside' ? true : false;
+                }
+            );
+
             return $locations;
         }
 
@@ -429,6 +459,7 @@ class EventFields extends Fields
                 }
             }
         }
+
         return $data;
     }
 
@@ -444,7 +475,7 @@ class EventFields extends Fields
     public function getCompleteOccasions($object, $field_name, $request)
     {
         global $wpdb;
-        $db_occasions = $wpdb->prefix . "occasions";
+        $db_occasions = $wpdb->prefix."occasions";
         $id = $object['id'];
         $parameters = $request->get_params();
         $endParam = $parameters['end'] ?? null;
@@ -465,7 +496,9 @@ class EventFields extends Fields
         if (is_array($return_value) || is_object($return_value) && !empty($return_value)) {
             foreach ($return_value as $key => $value) {
                 // Skip passed occasions and occasions after 'end' parameter
-                if (strtotime($value['end_date']) < $timestamp || ($endParam && strtotime($value['start_date']) > $endParam)) {
+                if (strtotime($value['end_date']) < $timestamp || ($endParam && strtotime(
+                            $value['start_date']
+                        ) > $endParam)) {
                     continue;
                 }
                 $data[] = array(
@@ -483,14 +516,22 @@ class EventFields extends Fields
         // Save occasions from recurrence rule exceptions that are cancelled or rescheduled
         $recurringRules = self::getFieldGetMetaData($object, 'rcr_rules', $request);
         if (is_array($recurringRules) && !empty($recurringRules)) {
-            foreach($recurringRules as $key => $rule) {
-                if (isset($rule['rcr_exceptions']) && is_array($rule['rcr_exceptions']) && !empty($rule['rcr_exceptions'])) {
+            foreach ($recurringRules as $key => $rule) {
+                if (isset($rule['rcr_exceptions']) && is_array(
+                        $rule['rcr_exceptions']
+                    ) && !empty($rule['rcr_exceptions'])) {
                     foreach ($rule['rcr_exceptions'] as $key => $exception) {
-                        $endTimestamp = strtotime($exception['rcr_exc_date'] . ' ' . $rule['rcr_end_time']);
+                        $endTimestamp = strtotime($exception['rcr_exc_date'].' '.$rule['rcr_end_time']);
                         if ($exception['status_rcr_exc'] != 'default' && $endTimestamp > $timestamp) {
-                            $startTime = !empty($rule['rcr_start_time']) ? new \DateTime($exception['rcr_exc_date'] . ' ' . $rule['rcr_start_time']) : null;
-                            $endTime = !empty($rule['rcr_end_time']) ? new \DateTime($exception['rcr_exc_date'] . ' ' . $rule['rcr_end_time']) : null;
-                            $doorTime = !empty($rule['rcr_door_time']) ? new \DateTime($exception['rcr_exc_date'] . ' ' . $rule['rcr_door_time']) : null;
+                            $startTime = !empty($rule['rcr_start_time']) ? new \DateTime(
+                                $exception['rcr_exc_date'].' '.$rule['rcr_start_time']
+                            ) : null;
+                            $endTime = !empty($rule['rcr_end_time']) ? new \DateTime(
+                                $exception['rcr_exc_date'].' '.$rule['rcr_end_time']
+                            ) : null;
+                            $doorTime = !empty($rule['rcr_door_time']) ? new \DateTime(
+                                $exception['rcr_exc_date'].' '.$rule['rcr_door_time']
+                            ) : null;
                             $data[] = array(
                                 'start_date' => $startTime ? date_format($startTime, 'Y-m-d H:i') : null,
                                 'end_date' => $endTime ? date_format($endTime, 'Y-m-d H:i') : null,
@@ -530,13 +571,17 @@ class EventFields extends Fields
         }
         $return_data = array_intersect_key($data, $keys);
         // Sort array by start date
-        usort($return_data, function ($x, $y) {
-            return strcasecmp($x['start_date'], $y['start_date']);
-        });
+        usort(
+            $return_data,
+            function ($x, $y) {
+                return strcasecmp($x['start_date'], $y['start_date']);
+            }
+        );
 
         if (empty($return_data)) {
             return null;
         }
+
         return $return_data;
     }
 
@@ -601,7 +646,10 @@ class EventFields extends Fields
             if (!$location) {
                 continue;
             }
-            $parent = !empty($location->post_parent) ? array('id' => $location->post_parent, 'title' => get_the_title($location->post_parent)) : null;
+            $parent = !empty($location->post_parent) ? array(
+                'id' => $location->post_parent,
+                'title' => get_the_title($location->post_parent),
+            ) : null;
             $location_arr[] = array(
                 'id' => $location->ID,
                 'title' => $location->post_title,
@@ -630,7 +678,8 @@ class EventFields extends Fields
         /* Event tab */
 
         // Title as plain text
-        register_rest_field($this->postType,
+        register_rest_field(
+            $this->postType,
             'title',
             array(
                 'get_callback' => array($this, 'addPlaintextField'),
@@ -640,7 +689,8 @@ class EventFields extends Fields
         );
 
         // Content as plain text
-        register_rest_field($this->postType,
+        register_rest_field(
+            $this->postType,
             'content',
             array(
                 'get_callback' => array($this, 'addPlaintextField'),
@@ -650,7 +700,8 @@ class EventFields extends Fields
         );
 
         //External event link
-        register_rest_field($this->postType,
+        register_rest_field(
+            $this->postType,
             'event_link',
             array(
                 'get_callback' => array($this, 'stringGetCallBack'),
@@ -658,13 +709,14 @@ class EventFields extends Fields
                 'schema' => array(
                     'description' => 'Field containing string value with external link.',
                     'type' => 'string',
-                    'context' => array('view', 'edit')
-                )
+                    'context' => array('view', 'edit'),
+                ),
             )
         );
 
         //Additional event links
-        register_rest_field($this->postType,
+        register_rest_field(
+            $this->postType,
             'additional_links',
             array(
                 'get_callback' => array($this, 'objectGetCallBack'),
@@ -672,13 +724,14 @@ class EventFields extends Fields
                 'schema' => array(
                     'description' => 'Field containing array with additional links.',
                     'type' => 'object',
-                    'context' => array('view', 'edit')
-                )
+                    'context' => array('view', 'edit'),
+                ),
             )
         );
 
         //Related events
-        register_rest_field($this->postType,
+        register_rest_field(
+            $this->postType,
             'related_events',
             array(
                 'get_callback' => array($this, 'objectGetCallBack'),
@@ -686,15 +739,16 @@ class EventFields extends Fields
                 'schema' => array(
                     'description' => 'Field containing array with related events.',
                     'type' => 'object',
-                    'context' => array('view', 'edit')
-                )
+                    'context' => array('view', 'edit'),
+                ),
             )
         );
 
         /* Occasions tab */
 
         // Complete list with occasions
-        register_rest_field($this->postType,
+        register_rest_field(
+            $this->postType,
             'occasions',
             array(
                 'get_callback' => array($this, 'getCompleteOccasions'),
@@ -702,15 +756,16 @@ class EventFields extends Fields
                 'schema' => array(
                     'description' => 'Field containing array with all event occasions.',
                     'type' => 'object',
-                    'context' => array('view', 'edit')
-                )
+                    'context' => array('view', 'edit'),
+                ),
             )
         );
 
         /* Location tab */
 
         // Location for the event
-        register_rest_field($this->postType,
+        register_rest_field(
+            $this->postType,
             'location',
             array(
                 'get_callback' => array($this, 'locationData'),
@@ -718,28 +773,30 @@ class EventFields extends Fields
                 'schema' => array(
                     'description' => 'Field containing object with location data.',
                     'type' => 'string',
-                    'context' => array('view', 'edit', 'embed')
-                )
+                    'context' => array('view', 'edit', 'embed'),
+                ),
             )
         );
 
         // Additional locations for the event
-        register_rest_field($this->postType,
+        register_rest_field(
+            $this->postType,
             'additional_locations',
             array(
                 'get_callback' => array($this, 'additionalLocationData'),
                 'schema' => array(
                     'description' => 'Field containing object with additional locations data.',
                     'type' => 'object',
-                    'context' => array('view')
-                )
+                    'context' => array('view'),
+                ),
             )
         );
 
         /* Organizer tab */
 
         // Organizers
-        register_rest_field($this->postType,
+        register_rest_field(
+            $this->postType,
             'organizers',
             array(
                 'get_callback' => array($this, 'organizerData'),
@@ -747,13 +804,14 @@ class EventFields extends Fields
                 'schema' => array(
                     'description' => 'Field containing object with organizer data.',
                     'type' => 'object',
-                    'context' => array('view', 'edit')
-                )
+                    'context' => array('view', 'edit'),
+                ),
             )
         );
 
         // Sponsors name
-        register_rest_field($this->postType,
+        register_rest_field(
+            $this->postType,
             'supporters',
             array(
                 'get_callback' => array($this, 'objectGetCallBack'),
@@ -761,15 +819,16 @@ class EventFields extends Fields
                 'schema' => array(
                     'description' => 'Field containing array with sponsors.',
                     'type' => 'object',
-                    'context' => array('view', 'edit')
-                )
+                    'context' => array('view', 'edit'),
+                ),
             )
         );
 
         /* Booking tab */
 
         // Link to booking services
-        register_rest_field($this->postType,
+        register_rest_field(
+            $this->postType,
             'booking_link',
             array(
                 'get_callback' => array($this, 'stringGetCallBack'),
@@ -777,13 +836,14 @@ class EventFields extends Fields
                 'schema' => array(
                     'description' => 'Field containing string with link to external booking service.',
                     'type' => 'string',
-                    'context' => array('view', 'edit')
-                )
+                    'context' => array('view', 'edit'),
+                ),
             )
         );
 
         // Phone number to booking service
-        register_rest_field($this->postType,
+        register_rest_field(
+            $this->postType,
             'booking_phone',
             array(
                 'get_callback' => array($this, 'stringGetCallBack'),
@@ -791,13 +851,14 @@ class EventFields extends Fields
                 'schema' => array(
                     'description' => 'Field containing string with phone number to external booking service.',
                     'type' => 'string',
-                    'context' => array('view', 'edit')
-                )
+                    'context' => array('view', 'edit'),
+                ),
             )
         );
 
         // Phone email to booking service
-        register_rest_field($this->postType,
+        register_rest_field(
+            $this->postType,
             'booking_email',
             array(
                 'get_callback' => array($this, 'stringGetCallBack'),
@@ -805,13 +866,14 @@ class EventFields extends Fields
                 'schema' => array(
                     'description' => 'Field containing string with email address to external booking service.',
                     'type' => 'string',
-                    'context' => array('view', 'edit')
-                )
+                    'context' => array('view', 'edit'),
+                ),
             )
         );
 
         // Release date of tickets
-        register_rest_field($this->postType,
+        register_rest_field(
+            $this->postType,
             'ticket_release_date',
             array(
                 'get_callback' => array($this, 'stringGetCallBack'),
@@ -819,13 +881,14 @@ class EventFields extends Fields
                 'schema' => array(
                     'description' => 'Field containing date and time when tickets are released',
                     'type' => 'string',
-                    'context' => array('view', 'edit')
-                )
+                    'context' => array('view', 'edit'),
+                ),
             )
         );
 
         // Age restriction details
-        register_rest_field($this->postType,
+        register_rest_field(
+            $this->postType,
             'age_restriction',
             array(
                 'get_callback' => array($this, 'stringGetCallBack'),
@@ -833,13 +896,14 @@ class EventFields extends Fields
                 'schema' => array(
                     'description' => 'Field containing string with age restriction details.',
                     'type' => 'string',
-                    'context' => array('view', 'edit')
-                )
+                    'context' => array('view', 'edit'),
+                ),
             )
         );
 
         // Total amount of tickets
-        register_rest_field($this->postType,
+        register_rest_field(
+            $this->postType,
             'ticket_stock',
             array(
                 'get_callback' => array($this, 'stringGetCallBack'),
@@ -847,13 +911,14 @@ class EventFields extends Fields
                 'schema' => array(
                     'description' => 'Field containing total amount of tickers',
                     'type' => 'numeric',
-                    'context' => array('view', 'edit')
-                )
+                    'context' => array('view', 'edit'),
+                ),
             )
         );
 
         // Remaining tickets of tickets for sale
-        register_rest_field($this->postType,
+        register_rest_field(
+            $this->postType,
             'tickets_remaining',
             array(
                 'get_callback' => array($this, 'stringGetCallBack'),
@@ -861,13 +926,14 @@ class EventFields extends Fields
                 'schema' => array(
                     'description' => 'Field containing remaining amount of tickets for sale.',
                     'type' => 'numeric',
-                    'context' => array('view', 'edit')
-                )
+                    'context' => array('view', 'edit'),
+                ),
             )
         );
 
         //Additional ticket retailers
-        register_rest_field($this->postType,
+        register_rest_field(
+            $this->postType,
             'additional_ticket_retailers',
             array(
                 'get_callback' => array($this, 'objectGetCallBack'),
@@ -875,13 +941,14 @@ class EventFields extends Fields
                 'schema' => array(
                     'description' => 'Field containing additional ticket retailers.',
                     'type' => 'object',
-                    'context' => array('view', 'edit')
-                )
+                    'context' => array('view', 'edit'),
+                ),
             )
         );
 
         // Included in member cards
-        register_rest_field($this->postType,
+        register_rest_field(
+            $this->postType,
             'membership_cards',
             array(
                 'get_callback' => array($this, 'objectGetCallBack'),
@@ -889,13 +956,14 @@ class EventFields extends Fields
                 'schema' => array(
                     'description' => 'Field containing array with membership cards.',
                     'type' => 'object',
-                    'context' => array('view', 'edit')
-                )
+                    'context' => array('view', 'edit'),
+                ),
             )
         );
 
         //Price details
-        register_rest_field($this->postType,
+        register_rest_field(
+            $this->postType,
             'price_information',
             array(
                 'get_callback' => array($this, 'unformattedStringGetCallBack'),
@@ -903,13 +971,14 @@ class EventFields extends Fields
                 'schema' => array(
                     'description' => 'Field containing string with price details.',
                     'type' => 'string',
-                    'context' => array('view', 'edit')
-                )
+                    'context' => array('view', 'edit'),
+                ),
             )
         );
 
         // Ticket includes
-        register_rest_field($this->postType,
+        register_rest_field(
+            $this->postType,
             'ticket_includes',
             array(
                 'get_callback' => array($this, 'unformattedStringGetCallBack'),
@@ -917,13 +986,14 @@ class EventFields extends Fields
                 'schema' => array(
                     'description' => 'Field containing string with ticket includes information.',
                     'type' => 'string',
-                    'context' => array('view', 'edit')
-                )
+                    'context' => array('view', 'edit'),
+                ),
             )
         );
 
         //Price details
-        register_rest_field($this->postType,
+        register_rest_field(
+            $this->postType,
             'price_adult',
             array(
                 'get_callback' => array($this, 'stringGetCallBack'),
@@ -931,13 +1001,14 @@ class EventFields extends Fields
                 'schema' => array(
                     'description' => 'Field containing string with price details.',
                     'type' => 'string',
-                    'context' => array('view', 'edit')
-                )
+                    'context' => array('view', 'edit'),
+                ),
             )
         );
 
         //Price details
-        register_rest_field($this->postType,
+        register_rest_field(
+            $this->postType,
             'price_children',
             array(
                 'get_callback' => array($this, 'stringGetCallBack'),
@@ -945,13 +1016,14 @@ class EventFields extends Fields
                 'schema' => array(
                     'description' => 'Field containing string with price details.',
                     'type' => 'string',
-                    'context' => array('view', 'edit')
-                )
+                    'context' => array('view', 'edit'),
+                ),
             )
         );
 
         //Price details
-        register_rest_field($this->postType,
+        register_rest_field(
+            $this->postType,
             'children_age',
             array(
                 'get_callback' => array($this, 'stringGetCallBack'),
@@ -959,13 +1031,14 @@ class EventFields extends Fields
                 'schema' => array(
                     'description' => 'Field containing string with age restrictions.',
                     'type' => 'string',
-                    'context' => array('view', 'edit')
-                )
+                    'context' => array('view', 'edit'),
+                ),
             )
         );
 
         //Price details
-        register_rest_field($this->postType,
+        register_rest_field(
+            $this->postType,
             'price_student',
             array(
                 'get_callback' => array($this, 'stringGetCallBack'),
@@ -973,13 +1046,14 @@ class EventFields extends Fields
                 'schema' => array(
                     'description' => 'Field containing string with price details.',
                     'type' => 'string',
-                    'context' => array('view', 'edit')
-                )
+                    'context' => array('view', 'edit'),
+                ),
             )
         );
 
         //Price details
-        register_rest_field($this->postType,
+        register_rest_field(
+            $this->postType,
             'price_senior',
             array(
                 'get_callback' => array($this, 'stringGetCallBack'),
@@ -987,13 +1061,14 @@ class EventFields extends Fields
                 'schema' => array(
                     'description' => 'Field containing string with price details.',
                     'type' => 'string',
-                    'context' => array('view', 'edit')
-                )
+                    'context' => array('view', 'edit'),
+                ),
             )
         );
 
         //Additional types of tickets
-        register_rest_field($this->postType,
+        register_rest_field(
+            $this->postType,
             'additional_ticket_types',
             array(
                 'get_callback' => array($this, 'objectGetCallBack'),
@@ -1001,14 +1076,15 @@ class EventFields extends Fields
                 'schema' => array(
                     'description' => 'Field containing object additional types of tickets.',
                     'type' => 'object',
-                    'context' => array('view', 'edit')
-                )
+                    'context' => array('view', 'edit'),
+                ),
             )
         );
 
 
         //Price details
-        register_rest_field($this->postType,
+        register_rest_field(
+            $this->postType,
             'senior_age',
             array(
                 'get_callback' => array($this, 'numericGetCallBack'),
@@ -1016,13 +1092,14 @@ class EventFields extends Fields
                 'schema' => array(
                     'description' => 'Field containing numeric with age restrictions.',
                     'type' => 'numeric',
-                    'context' => array('view', 'edit')
-                )
+                    'context' => array('view', 'edit'),
+                ),
             )
         );
 
         //Price details
-        register_rest_field($this->postType,
+        register_rest_field(
+            $this->postType,
             'booking_group',
             array(
                 'get_callback' => array($this, 'objectGetCallBack'),
@@ -1030,13 +1107,14 @@ class EventFields extends Fields
                 'schema' => array(
                     'description' => 'Field containing object with group prices.',
                     'type' => 'object',
-                    'context' => array('view', 'edit')
-                )
+                    'context' => array('view', 'edit'),
+                ),
             )
         );
 
         //Price range
-        register_rest_field($this->postType,
+        register_rest_field(
+            $this->postType,
             'price_range',
             array(
                 'get_callback' => array($this, 'objectGetCallBack'),
@@ -1044,15 +1122,16 @@ class EventFields extends Fields
                 'schema' => array(
                     'description' => 'Field containing object with information about the price range for tickets.',
                     'type' => 'object',
-                    'context' => array('view', 'edit')
-                )
+                    'context' => array('view', 'edit'),
+                ),
             )
         );
 
         /* Contact info */
 
         // Contact phone
-        register_rest_field($this->postType,
+        register_rest_field(
+            $this->postType,
             'contact_phone',
             array(
                 'get_callback' => array($this, 'stringGetCallBack'),
@@ -1060,13 +1139,14 @@ class EventFields extends Fields
                 'schema' => array(
                     'description' => 'Field containing string with contact phone number.',
                     'type' => 'string',
-                    'context' => array('view', 'edit')
-                )
+                    'context' => array('view', 'edit'),
+                ),
             )
         );
 
         // Contact email
-        register_rest_field($this->postType,
+        register_rest_field(
+            $this->postType,
             'contact_email',
             array(
                 'get_callback' => array($this, 'stringGetCallBack'),
@@ -1074,13 +1154,14 @@ class EventFields extends Fields
                 'schema' => array(
                     'description' => 'Field containing string with contact email.',
                     'type' => 'string',
-                    'context' => array('view', 'edit')
-                )
+                    'context' => array('view', 'edit'),
+                ),
             )
         );
 
         // Contact information
-        register_rest_field($this->postType,
+        register_rest_field(
+            $this->postType,
             'contact_information',
             array(
                 'get_callback' => array($this, 'stringGetCallBack'),
@@ -1088,13 +1169,14 @@ class EventFields extends Fields
                 'schema' => array(
                     'description' => 'Field containing string with contact information.',
                     'type' => 'string',
-                    'context' => array('view', 'edit')
-                )
+                    'context' => array('view', 'edit'),
+                ),
             )
         );
 
         /* Organizer tab */
-        register_rest_field($this->postType,
+        register_rest_field(
+            $this->postType,
             'gallery',
             array(
                 'get_callback' => array($this, 'objectGetCallBack'),
@@ -1102,13 +1184,14 @@ class EventFields extends Fields
                 'schema' => array(
                     'description' => 'Field containing object with image gallery.',
                     'type' => 'object',
-                    'context' => array('view', 'edit')
-                )
+                    'context' => array('view', 'edit'),
+                ),
             )
         );
 
         /* Social media links */
-        register_rest_field($this->postType,
+        register_rest_field(
+            $this->postType,
             'facebook',
             array(
                 'get_callback' => array($this, 'stringGetCallBack'),
@@ -1116,12 +1199,13 @@ class EventFields extends Fields
                 'schema' => array(
                     'description' => 'Field containing string value with url to social media or streaming services.',
                     'type' => 'string',
-                    'context' => array('view', 'edit')
-                )
+                    'context' => array('view', 'edit'),
+                ),
             )
         );
 
-        register_rest_field($this->postType,
+        register_rest_field(
+            $this->postType,
             'twitter',
             array(
                 'get_callback' => array($this, 'stringGetCallBack'),
@@ -1129,12 +1213,13 @@ class EventFields extends Fields
                 'schema' => array(
                     'description' => 'Field containing string value with url to social media or streaming services.',
                     'type' => 'string',
-                    'context' => array('view', 'edit')
-                )
+                    'context' => array('view', 'edit'),
+                ),
             )
         );
 
-        register_rest_field($this->postType,
+        register_rest_field(
+            $this->postType,
             'instagram',
             array(
                 'get_callback' => array($this, 'stringGetCallBack'),
@@ -1142,12 +1227,13 @@ class EventFields extends Fields
                 'schema' => array(
                     'description' => 'Field containing string value with url to social media or streaming services.',
                     'type' => 'string',
-                    'context' => array('view', 'edit')
-                )
+                    'context' => array('view', 'edit'),
+                ),
             )
         );
 
-        register_rest_field($this->postType,
+        register_rest_field(
+            $this->postType,
             'google_music',
             array(
                 'get_callback' => array($this, 'stringGetCallBack'),
@@ -1155,12 +1241,13 @@ class EventFields extends Fields
                 'schema' => array(
                     'description' => 'Field containing string value with url to social media or streaming services.',
                     'type' => 'string',
-                    'context' => array('view', 'edit')
-                )
+                    'context' => array('view', 'edit'),
+                ),
             )
         );
 
-        register_rest_field($this->postType,
+        register_rest_field(
+            $this->postType,
             'apple_music',
             array(
                 'get_callback' => array($this, 'stringGetCallBack'),
@@ -1168,12 +1255,13 @@ class EventFields extends Fields
                 'schema' => array(
                     'description' => 'Field containing string value with url to social media or streaming services.',
                     'type' => 'string',
-                    'context' => array('view', 'edit')
-                )
+                    'context' => array('view', 'edit'),
+                ),
             )
         );
 
-        register_rest_field($this->postType,
+        register_rest_field(
+            $this->postType,
             'spotify',
             array(
                 'get_callback' => array($this, 'stringGetCallBack'),
@@ -1181,12 +1269,13 @@ class EventFields extends Fields
                 'schema' => array(
                     'description' => 'Field containing string value with url to social media or streaming services.',
                     'type' => 'string',
-                    'context' => array('view', 'edit')
-                )
+                    'context' => array('view', 'edit'),
+                ),
             )
         );
 
-        register_rest_field($this->postType,
+        register_rest_field(
+            $this->postType,
             'soundcloud',
             array(
                 'get_callback' => array($this, 'stringGetCallBack'),
@@ -1194,12 +1283,13 @@ class EventFields extends Fields
                 'schema' => array(
                     'description' => 'Field containing string value with url to social media or streaming services.',
                     'type' => 'string',
-                    'context' => array('view', 'edit')
-                )
+                    'context' => array('view', 'edit'),
+                ),
             )
         );
 
-        register_rest_field($this->postType,
+        register_rest_field(
+            $this->postType,
             'deezer',
             array(
                 'get_callback' => array($this, 'stringGetCallBack'),
@@ -1207,12 +1297,13 @@ class EventFields extends Fields
                 'schema' => array(
                     'description' => 'Field containing string value with url to social media or streaming services.',
                     'type' => 'string',
-                    'context' => array('view', 'edit')
-                )
+                    'context' => array('view', 'edit'),
+                ),
             )
         );
 
-        register_rest_field($this->postType,
+        register_rest_field(
+            $this->postType,
             'youtube',
             array(
                 'get_callback' => array($this, 'objectGetCallBack'),
@@ -1220,12 +1311,13 @@ class EventFields extends Fields
                 'schema' => array(
                     'description' => 'Field containing object with urls to Youtube.',
                     'type' => 'object',
-                    'context' => array('view', 'edit')
-                )
+                    'context' => array('view', 'edit'),
+                ),
             )
         );
 
-        register_rest_field($this->postType,
+        register_rest_field(
+            $this->postType,
             'vimeo',
             array(
                 'get_callback' => array($this, 'objectGetCallBack'),
@@ -1233,83 +1325,89 @@ class EventFields extends Fields
                 'schema' => array(
                     'description' => 'Field containing object with urls to vimeo.',
                     'type' => 'object',
-                    'context' => array('view', 'edit')
-                )
+                    'context' => array('view', 'edit'),
+                ),
             )
         );
 
         /* Add more data to Featured Media field */
 
-        register_rest_field($this->postType,
+        register_rest_field(
+            $this->postType,
             'featured_media',
             array(
                 'get_callback' => array($this, 'featuredImageData'),
                 'schema' => array(
                     'description' => 'Field containing object with featured image data.',
                     'type' => 'string',
-                    'context' => array('view', 'edit')
-                )
+                    'context' => array('view', 'edit'),
+                ),
             )
         );
 
         /* Replace category id with taxonomy name */
 
-        register_rest_field($this->postType,
+        register_rest_field(
+            $this->postType,
             'event_categories',
             array(
                 'get_callback' => array($this, 'renameTaxonomies'),
                 'update_callback' => null,
-                'schema' => null
+                'schema' => null,
             )
         );
 
         /* Replace tag id with taxonomy name */
 
-        register_rest_field($this->postType,
+        register_rest_field(
+            $this->postType,
             'event_tags',
             array(
                 'get_callback' => array($this, 'renameTaxonomies'),
                 'update_callback' => null,
-                'schema' => null
+                'schema' => null,
             )
         );
 
         /* Replace group id with taxonomy name */
 
-        register_rest_field($this->postType,
+        register_rest_field(
+            $this->postType,
             'user_groups',
             array(
                 'get_callback' => array($this, 'getTaxonomyCallback'),
                 'update_callback' => array($this, 'objectUpdateCallBack'),
-                'schema' => null
+                'schema' => null,
             )
         );
 
         /* Import client update callback */
 
-        register_rest_field($this->postType,
+        register_rest_field(
+            $this->postType,
             'consumer_client',
             array(
                 'update_callback' => array($this, 'stringUpdateCallBack'),
                 'schema' => array(
                     'description' => 'Field containing string with consumer name.',
                     'type' => 'string',
-                    'context' => array('edit')
-                )
+                    'context' => array('edit'),
+                ),
             )
         );
 
         /* Recurring occasions client update callback */
 
-        register_rest_field($this->postType,
+        register_rest_field(
+            $this->postType,
             'rcr_rules',
             array(
                 'update_callback' => array($this, 'acfUpdateCallBack'),
                 'schema' => array(
                     'description' => 'Field containing object with recurring occasion.',
                     'type' => 'object',
-                    'context' => array('edit')
-                )
+                    'context' => array('edit'),
+                ),
             )
         );
 
@@ -1317,32 +1415,35 @@ class EventFields extends Fields
          * Submitter contact details, can be posted from external submit form
          * Hidden from end point
          */
-        register_rest_field($this->postType,
+        register_rest_field(
+            $this->postType,
             'submitter_email',
             array(
                 'update_callback' => array($this, 'stringUpdateCallBack'),
                 'schema' => array(
                     'description' => 'Field containing string with submitter email.',
                     'type' => 'string',
-                    'context' => array('edit')
-                )
+                    'context' => array('edit'),
+                ),
             )
         );
 
-        register_rest_field($this->postType,
+        register_rest_field(
+            $this->postType,
             'submitter_phone',
             array(
                 'update_callback' => array($this, 'stringUpdateCallBack'),
                 'schema' => array(
                     'description' => 'Field containing string with submitter phone.',
                     'type' => 'string',
-                    'context' => array('edit')
-                )
+                    'context' => array('edit'),
+                ),
             )
         );
 
         // Age group from
-        register_rest_field($this->postType,
+        register_rest_field(
+            $this->postType,
             'age_group_from',
             array(
                 'get_callback' => array($this, 'stringGetCallBack'),
@@ -1350,13 +1451,14 @@ class EventFields extends Fields
                 'schema' => array(
                     'description' => 'Field containing string with age group from.',
                     'type' => 'string',
-                    'context' => array('view', 'edit')
-                )
+                    'context' => array('view', 'edit'),
+                ),
             )
         );
 
         // Age group to
-        register_rest_field($this->postType,
+        register_rest_field(
+            $this->postType,
             'age_group_to',
             array(
                 'get_callback' => array($this, 'stringGetCallBack'),
@@ -1364,13 +1466,14 @@ class EventFields extends Fields
                 'schema' => array(
                     'description' => 'Field containing string with age group to.',
                     'type' => 'string',
-                    'context' => array('view', 'edit')
-                )
+                    'context' => array('view', 'edit'),
+                ),
             )
         );
 
         // Accessibilities
-        register_rest_field($this->postType,
+        register_rest_field(
+            $this->postType,
             'accessibility',
             array(
                 'get_callback' => array($this, 'objectGetCallBack'),
@@ -1378,8 +1481,8 @@ class EventFields extends Fields
                 'schema' => array(
                     'description' => 'Field containing array with accessible facilities.',
                     'type' => 'object',
-                    'context' => array('view', 'edit', 'embed')
-                )
+                    'context' => array('view', 'edit', 'embed'),
+                ),
             )
         );
     }
