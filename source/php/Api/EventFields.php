@@ -311,7 +311,7 @@ class EventFields extends Fields
         $offset = ($parameters['page'] * $perPage) - $perPage;
 
 
-        // Change language if set
+        // Set language if plugin Polylang is active
         $languageId = null;
         if (is_plugin_active('polylang-pro/polylang.php')) {
             $defaultLang = pll_default_language();
