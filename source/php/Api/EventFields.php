@@ -316,8 +316,25 @@ class EventFields extends Fields
         if (is_plugin_active('polylang-pro/polylang.php')) {
             $defaultLang = pll_default_language();
             $languages = pll_the_languages(array('raw' => 1, 'hide_if_empty' => 0));
-            $languageId = $languages[$parameters['lang']]['id'] ?? $languages[$defaultLang]['id'] ?? null;
+
+            // Get selected lang ID, set to default if missing
+            if ($parameters['lang']) {
+                $languageId = $languages[$parameters['lang']]['id'] ?? null;
+            } else {
+                $languageId = $languages[$defaultLang]['id'] ?? null;
+            }
+
             $languageId = (int)$languageId;
+            // Return error if lang does not exist
+            if (!$languageId) {
+                return new \WP_Error(
+                    'empty_result',
+                    'No event found at this criteria',
+                    array(
+                        'status' => 404,
+                    )
+                );
+            }
         }
 
         $postTable = $wpdb->posts;
