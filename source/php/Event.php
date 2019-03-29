@@ -30,7 +30,6 @@ class Event extends \HbgEventImporter\Entity\PostManager
         $this->booking_link = DataCleaner::string($this->booking_link);
         $this->age_restriction = DataCleaner::string($this->age_restriction);
         $this->price_information = DataCleaner::string($this->price_information);
-        $this->image = DataCleaner::string($this->image);
     }
 
     /**
