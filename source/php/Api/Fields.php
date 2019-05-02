@@ -156,7 +156,7 @@ class Fields
 
         // Get acf field key
         $field_name = esc_sql("_".$field_name);
-        $field_key = $wpdb->get_results("SELECT meta_value FROM $wpdb->postmeta WHERE $wpdb->postmeta.meta_key = '$field_name' LIMIT 1", ARRAY_A);
+        $field_key = $wpdb->get_results("SELECT meta_value FROM $wpdb->postmeta WHERE $wpdb->postmeta.meta_key = '$field_name' ORDER BY meta_id DESC LIMIT 1", ARRAY_A);
         $key = $field_key[0]['meta_value'];
 
         if (preg_match('/field_[0-9]+/', $key)) {
