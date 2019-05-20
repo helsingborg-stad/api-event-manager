@@ -69,7 +69,7 @@
                     "label": "API link",
                     "name": "ols_api_url",
                     "type": "url",
-                    "instructions": "Add Open LIbrary Solutions base API-URL without query string.",
+                    "instructions": "API-URL including event endpoint, without query string.",
                     "required": 1,
                     "conditional_logic": 0,
                     "wrapper": {
