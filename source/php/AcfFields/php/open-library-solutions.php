@@ -3,7 +3,7 @@
 if (function_exists('acf_add_local_field_group')) {
     acf_add_local_field_group(array(
     'key' => 'group_5ce25720a2508',
-    'title' => 'Open Library Solutions',
+    'title' => __('Open Library Solutions', 'event-manager'),
     'fields' => array(
         0 => array(
             'key' => 'field_5ce2583bff1e0',
@@ -72,7 +72,7 @@
                     'label' => __('API link', 'event-manager'),
                     'name' => 'ols_api_url',
                     'type' => 'url',
-                    'instructions' => __('Add Open LIbrary Solutions base API-URL without query string.', 'event-manager'),
+                    'instructions' => __('API-URL including event endpoint, without query string.', 'event-manager'),
                     'required' => 1,
                     'conditional_logic' => 0,
                     'wrapper' => array(
