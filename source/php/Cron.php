@@ -41,18 +41,18 @@ class Cron
         //Get active clients
         $activeClients = array();
         foreach (self::$clients as $client) {
+            wp_clear_scheduled_hook('import_events', array('client' => $client));
             if (get_field($client . '_daily_cron', 'option') == true) {
                 $activeClients[] = $client;
             }
         }
-        
+
         //Create schedules
         foreach ($activeClients as $clientKey => $client) {
-            wp_clear_scheduled_hook('import_events', array('client' => $client));
             wp_schedule_event(
-                time() + $this->calculateCronOffsetTime($activeClients, 3600, $clientKey), 
-                'hourly', 
-                'import_events', 
+                time() + $this->calculateCronOffsetTime($activeClients, 3600, $clientKey),
+                'hourly',
+                'import_events',
                 array('client' => $client)
             );
         }
