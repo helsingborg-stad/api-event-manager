@@ -321,7 +321,8 @@ class Cron
             $keys[] = array(
                 'api_url' => get_sub_field('ols_api_url'),
                 'api_key' => get_sub_field('ols_api_key'),
-                'group_id' => !empty(get_sub_field('ols_group_id')) ? get_sub_field('ols_group_id') : null
+                'group_id' => !empty(get_sub_field('ols_group_id')) ? get_sub_field('ols_group_id') : null,
+                'default_groups' => get_sub_field('ols_publishing_groups'),
             );
         }
 
