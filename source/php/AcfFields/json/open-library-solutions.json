@@ -117,6 +117,28 @@
                     "prepend": "",
                     "append": "",
                     "maxlength": ""
+                },
+                {
+                    "key": "field_5ce3e802e439d",
+                    "label": "Default user groups",
+                    "name": "ols_publishing_groups",
+                    "type": "taxonomy",
+                    "instructions": "Select the user groups that you want to set as default to imported posts.",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "taxonomy": "user_groups",
+                    "field_type": "checkbox",
+                    "add_term": 0,
+                    "save_terms": 1,
+                    "load_terms": 0,
+                    "return_format": "id",
+                    "multiple": 0,
+                    "allow_null": 0
                 }
             ]
         }
