@@ -27,8 +27,10 @@ class OpenLib extends \HbgEventImporter\Parser
 
         $url = $this->url;
         $url .= '?apikey=' . $this->apiKeys['api_key'];
-// Todo add this line
-// $url .= '&since=' . date('Y-m-d', strtotime("-1 year"));
+        /* TODO:
+        replace with this line
+        $url .= '&since=' . date('Y-m-d', strtotime("-1 year"));
+        */
         $url .= '&since=2018-12-21';
         $url .= '&pageSize=10';
         $url .= '&libraryGroupId=' . $this->apiKeys['group_id'];
@@ -54,6 +56,10 @@ class OpenLib extends \HbgEventImporter\Parser
     public function start()
     {
         $eventData = $this->getEventData();
+        /*
+        TODO:
+        Loop over requests with page param
+        */
         $this->collectDataForLevenshtein();
 
         // Set unique key on events
@@ -79,7 +85,11 @@ class OpenLib extends \HbgEventImporter\Parser
     {
         $data['uId'] = $eventData->id;
         $data['postTitle'] = !empty($eventData->title) ? strip_tags($eventData->title) : null;
-        $data['image'] = !empty($eventData->imageUrl) ? strip_tags($eventData->imageUrl) : null;
+        $data['postContent'] = !empty($eventData->contentZones) ? implode("\n", (array)$eventData->contentZones) : '';
+        $data['postContent'] .= !empty($eventData->otherInformation) ? $eventData->otherInformation : '';
+        $data['postContent'] = strip_tags($data['postContent']);
+        $data['image'] = !empty($eventData->imageUrl) ? $eventData->imageUrl : null;
+        $data['event_link'] = !empty($eventData->url) ? $eventData->url : null;
 
         $data['postStatus'] = get_field('ols_post_status', 'option') ? get_field('ols_post_status', 'option') : 'publish';
         $data['userGroups'] = (is_array($this->apiKeys['default_groups']) && !empty($this->apiKeys['default_groups'])) ?
@@ -93,6 +103,7 @@ class OpenLib extends \HbgEventImporter\Parser
         error_log($eventData->id);
         error_log($data['postTitle']);
         error_log($data['postStatus']);
+        error_log($data['postContent']);
         error_log(print_r($data['userGroups'], true));
         error_log(print_r($data['categories'], true));
 
@@ -137,7 +148,7 @@ class OpenLib extends \HbgEventImporter\Parser
             $event = new Event(
                 array(
                     'post_title' => $data['postTitle'],
-                    'post_content' => null,
+                    'post_content' => $data['postContent'],
                     'post_status' => $postStatus,
                 ),
                 array(
@@ -145,9 +156,9 @@ class OpenLib extends \HbgEventImporter\Parser
                     'sync' => 1,
                     'status' => 'Active',
                     'image' => $data['image'],
-                    'event_link' => null,
+                    'event_link' => $data['event_link'],
                     'categories' => $data['categories'],
-                    'occasions' => null,
+                    'occasions' => array(),
                     'location' => $locationId !== null ? $locationId : null,
                     'organizer' => null,
                     'booking_link' => null,
@@ -194,14 +205,6 @@ class OpenLib extends \HbgEventImporter\Parser
         if (!is_null($event->image)) {
             $event->setFeaturedImageFromUrl($event->image);
         }
-
-        //Add & remove tags
-        wp_set_post_terms(
-            $event->ID,
-            $data['categories'],
-            'event_tags',
-            false
-        );
 
         return $event->ID;
     }
