@@ -11,9 +11,13 @@ ini_set('default_socket_timeout', 60 * 10);
 
 class OpenLib extends \HbgEventImporter\Parser
 {
+    private $shortKey;
+
     public function __construct($url, $apiKeys)
     {
         parent::__construct($url, $apiKeys);
+        // Set unique key on events
+        $this->shortKey = substr(md5($url), 0, 8);
     }
 
     /**
