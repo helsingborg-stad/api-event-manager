@@ -321,14 +321,14 @@ class OpenLib extends \HbgEventImporter\Parser
     }
 
      /**
-     * Returns UID
+     * Returns event manager UID
      *
-     * @param [int] $id
+     * @param [mixed] $identifier
      * @return void
      */
-    public function getEventUid($id)
+    public function getEventUid($identifier)
     {
-        return 'open-library-' . $this->shortKey . '-' . $id;
+        return 'open-library-' . $this->shortKey . '-' . $identifier;
     }
 
     /**
