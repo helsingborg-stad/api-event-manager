@@ -319,8 +319,8 @@ abstract class PostManager
         }
 
         // Bail if image already exists in library
-        if ($attachmentId = $this->attatchmentExists($uploadDir . '/' . basename($filename))) {
-            set_post_thumbnail($this->ID, $attachmentId);
+        if ($attachmentId = $this->attachmentExists($uploadDir . '/' . basename($filename))) {
+            set_post_thumbnail((int)$this->ID, (int)$attachmentId);
             return;
         }
 
@@ -356,7 +356,7 @@ abstract class PostManager
      * @param  string $src Media url
      * @return mixed
      */
-    private function attatchmentExists($src)
+    private function attachmentExists($src)
     {
         global $wpdb;
         $query = "SELECT ID FROM {$wpdb->posts} WHERE guid = '$src'";
