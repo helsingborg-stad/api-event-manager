@@ -352,21 +352,6 @@ abstract class PostManager
     }
 
     /**
-     * Validates url
-     * @param  string $url Url to validate
-     * @return boolean
-     */
-    private function isUrl($url)
-    {
-        if (is_string($url) && preg_match('/^(?:[;\/?:@&=+$,]|(?:[^\W_]|[-_.!~*\()\[\] ])|(?:%[\da-fA-F]{2}))*$/',
-                $url)) {
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
      * Checks if a attachment src already exists in media library
      * @param  string $src Media url
      * @return mixed
