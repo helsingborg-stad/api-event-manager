@@ -17,60 +17,66 @@ class OpenLib extends \HbgEventImporter\Parser
     }
 
     /**
-     * Get Event data from TransTicket
-     * @return array data
-     */
-    private function getEventData()
-    {
-        error_log($this->apiKeys['api_key']);
-        error_log($this->apiKeys['group_id']);
-
-        $url = $this->url;
-        $url .= '?apikey=' . $this->apiKeys['api_key'];
-        /* TODO:
-        replace with this line
-        $url .= '&since=' . date('Y-m-d', strtotime("-1 year"));
-        */
-        $url .= '&since=2018-12-21';
-        $url .= '&pageSize=10';
-        $url .= '&libraryGroupId=' . $this->apiKeys['group_id'];
-
-        error_log($url);
-
-        $eventData = \HbgEventImporter\Helper\Curl::request(
-            'GET',
-            $url,
-            false,
-            false,
-            'json',
-            array('Content-Type: application/json')
-        );
-
-        return json_decode($eventData);
-    }
-
-    /**
-     * Start the parsing!
+     * Start parser
      * @return void
      */
     public function start()
     {
-        $eventData = $this->getEventData();
-        /*
-        TODO:
-        Loop over requests with page param
-        */
-        $this->collectDataForLevenshtein();
+        $page = 0;
+        $loop = true;
 
+        $this->collectDataForLevenshtein();
         // Set unique key on events
         $shortKey = substr(md5($this->url), 0, 8);
 
-        foreach ($eventData as $key => $event) {
-            if (!isset($event->id) || empty($event->id)) {
-                continue;
+        // Loop over API requests until result is empty
+        while ($loop === true) {
+            error_log("NEW LOOP");
+            error_log($page);
+            // Build url with params
+            $url = add_query_arg(
+                    array(
+                        'apikey' => $this->apiKeys['api_key'],
+                        'since' => date('Y-m-d', strtotime("-1 month")),
+                        'pageSize' => 20,
+                        'pageIndex' => $page,
+                        'libraryGroupId' => $this->apiKeys['group_id'],
+                    ),
+                $this->url
+            );
+
+            error_log($url);
+            // Use Curl to fetch events
+            $eventData = \HbgEventImporter\Helper\Curl::request(
+                'GET',
+                $url,
+                false,
+                false,
+                'json',
+                array('Content-Type: application/json')
+            );
+            // Convert to JSON
+            $eventData = json_decode($eventData);
+
+            // Return if result is empty
+            if (empty($eventData)) {
+                \error_log("event data empty, BREAK");
+                \error_log(print_r($eventData, true));
+
+                $loop = false;
+                break;
             }
 
-            $this->saveEvent($event, $shortKey);
+            // Save each event
+            foreach ($eventData as $event) {
+                if (!isset($event->id) || empty($event->id)) {
+                    continue;
+                }
+
+                $this->saveEvent($event, $shortKey);
+            }
+
+            $page++;
         }
     }
 
