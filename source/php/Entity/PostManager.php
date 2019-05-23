@@ -313,7 +313,10 @@ abstract class PostManager
             }
         }
 
-        $filename = sanitize_file_name(basename($url));
+        // Remove query string from filename
+        $filename = preg_replace('/\?.*/', '', $url);
+        // Sanitize the file name
+        $filename = sanitize_file_name(basename($filename));
         if (stripos(basename($url), '.aspx')) {
             $filename = md5($filename) . '.jpg';
         }
