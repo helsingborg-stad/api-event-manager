@@ -107,6 +107,18 @@ class OpenLib extends \HbgEventImporter\Parser
         error_log(print_r($data['userGroups'], true));
         error_log(print_r($data['categories'], true));
 
+        $data['occasions'] = array();
+        if (!empty($eventData->occurrences)) {
+            foreach ($eventData->occurrences as $occasion) {
+                error_log(print_r($occasion, true));
+                $data['occasions'][] = array(
+                'start_date' => $occasion->start,
+                'end_date' => $occasion->stop,
+                'door_time' => $occasion->start,
+                'status' => $occasion->canceled ? 'cancelled' : 'scheduled'
+                );
+            }
+        }
         //$locationId = $this->maybeCreateLocation($data, $shortKey);
         $locationId = null;
         $this->maybeCreateEvent($data, $shortKey, $locationId);
@@ -140,6 +152,7 @@ class OpenLib extends \HbgEventImporter\Parser
             $occurred = $this->levenshteinTitles['event'][$levenshteinKey]['occurred'];
         }
 
+        // Bail if api sync id disabled
         if ($eventId && !$sync) {
             return $eventId;
         }
@@ -158,7 +171,7 @@ class OpenLib extends \HbgEventImporter\Parser
                     'image' => $data['image'],
                     'event_link' => $data['event_link'],
                     'categories' => $data['categories'],
-                    'occasions' => array(),
+                    'occasions' => $data['occasions'],
                     'location' => $locationId !== null ? $locationId : null,
                     'organizer' => null,
                     'booking_link' => null,
