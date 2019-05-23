@@ -122,19 +122,17 @@ class OpenLib extends \HbgEventImporter\Parser
 
         error_log($eventData->id);
         error_log($data['postTitle']);
-        error_log($data['postStatus']);
-        error_log($data['postContent']);
-        error_log(print_r($data['userGroups'], true));
-        error_log(print_r($data['categories'], true));
+
+        // Set default time zone to sweden
+        date_default_timezone_set("Europe/Stockholm");
 
         $data['occasions'] = array();
         if (!empty($eventData->occurrences)) {
             foreach ($eventData->occurrences as $occasion) {
-                error_log(print_r($occasion, true));
                 $data['occasions'][] = array(
-                'start_date' => $occasion->start,
-                'end_date' => $occasion->stop,
-                'door_time' => $occasion->start,
+                'start_date' => date('Y-m-d H:i', strtotime($occasion->start)),
+                'end_date' => date('Y-m-d H:i', strtotime($occasion->stop)),
+                'door_time' => date('Y-m-d H:i', strtotime($occasion->start)),
                 'status' => $occasion->canceled ? 'cancelled' : 'scheduled'
                 );
             }
