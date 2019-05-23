@@ -90,6 +90,21 @@ class OpenLib extends \HbgEventImporter\Parser
      */
     public function saveEvent($eventData)
     {
+        // Deletes event from db
+        if ($eventData->changeType === 'Deleted') {
+            \error_log("Deleted, Do not import");
+            global $wpdb;
+            $eventManagerUid = $this->getEventUid($eventData->id);
+            // Check if the post exist in db
+            $result = $wpdb->get_row("select post_id from $wpdb->postmeta where meta_value = '{$eventManagerUid}'", ARRAY_N);
+            // Delete the event if it exists
+            if (isset($result[0]) && is_numeric($result[0])) {
+                wp_trash_post((int)$result[0]);
+            }
+
+            return;
+        }
+
         $data['uId'] = $eventData->id;
         $data['postTitle'] = !empty($eventData->title) ? strip_tags($eventData->title) : null;
         $data['postContent'] = !empty($eventData->contentZones) ? implode("\n", (array)$eventData->contentZones) : '';
