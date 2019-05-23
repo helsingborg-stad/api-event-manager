@@ -30,8 +30,6 @@ class OpenLib extends \HbgEventImporter\Parser
         $loop = true;
 
         $this->collectDataForLevenshtein();
-        // Set unique key on events
-        $shortKey = substr(md5($this->url), 0, 8);
 
         // Loop over API requests until result is empty
         while ($loop === true) {
@@ -77,7 +75,7 @@ class OpenLib extends \HbgEventImporter\Parser
                     continue;
                 }
 
-                $this->saveEvent($event, $shortKey);
+                $this->saveEvent($event);
             }
 
             $page++;
@@ -87,11 +85,10 @@ class OpenLib extends \HbgEventImporter\Parser
     /**
      * Cleans a single events data into correct format and saves it to db
      * @param  object $eventData Event data
-     * @param  int    $shortKey  unique key, created from the api url
      * @throws \Exception
      * @return void
      */
-    public function saveEvent($eventData, $shortKey)
+    public function saveEvent($eventData)
     {
         $data['uId'] = $eventData->id;
         $data['postTitle'] = !empty($eventData->title) ? strip_tags($eventData->title) : null;
@@ -100,14 +97,12 @@ class OpenLib extends \HbgEventImporter\Parser
         $data['postContent'] = strip_tags($data['postContent']);
         $data['image'] = !empty($eventData->imageUrl) ? $eventData->imageUrl : null;
         $data['event_link'] = !empty($eventData->url) ? $eventData->url : null;
-
         $data['postStatus'] = get_field('ols_post_status', 'option') ? get_field('ols_post_status', 'option') : 'publish';
         $data['userGroups'] = (is_array($this->apiKeys['default_groups']) && !empty($this->apiKeys['default_groups'])) ?
             array_map(
                 'intval',
                 $this->apiKeys['default_groups']
             ) : null;
-
         $data['categories'] = isset($eventData->tags) && is_array($eventData->tags) ? $this->sanitizeCategories($eventData->tags) : array();
 
         error_log($eventData->id);
@@ -131,18 +126,17 @@ class OpenLib extends \HbgEventImporter\Parser
         }
         //$locationId = $this->maybeCreateLocation($data, $shortKey);
         $locationId = null;
-        $this->maybeCreateEvent($data, $shortKey, $locationId);
+        $this->maybeCreateEvent($data, $locationId);
     }
 
     /**
      * Creates or updates an event if possible
      * @param  array  $data       Event data
-     * @param  string $shortKey   Event unique short key
      * @param  int    $locationId Location id
      * @return boolean|int          Event id or false
      * @throws \Exception
      */
-    public function maybeCreateEvent($data, $shortKey, $locationId)
+    public function maybeCreateEvent($data, $locationId)
     {
         $eventId = $this->checkIfPostExists('event', $data['postTitle']);
         $occurred = false;
@@ -151,7 +145,7 @@ class OpenLib extends \HbgEventImporter\Parser
             $eventId,
             '_event_manager_uid',
             true
-        ) : 'open-library-' . $shortKey . '-' . $data['uId'];
+        ) : $this->getEventUid($data['uId']);
         $postStatus = $data['postStatus'];
         // Get existing event meta data
         $sync = true;
@@ -241,7 +235,7 @@ class OpenLib extends \HbgEventImporter\Parser
      *
      * @throws \Exception
      */
-    public function maybeCreateLocation($data, $shortKey)
+    public function maybeCreateLocation($data)
     {
         if (empty($data['address']) && empty($data['name'])) {
             return false;
@@ -253,7 +247,8 @@ class OpenLib extends \HbgEventImporter\Parser
         $locPostStatus = $data['postStatus'];
         $isUpdate = false;
         $postTitle = $data['name'] ?? $data['address'] ?? '';
-        $uid = 'open-library-' . $shortKey . '-' . $this->cleanString($postTitle);
+
+        $uid = $this->getEventUid($this->cleanString($postTitle));
 
         // Check if this is a duplicate or update and if "sync" option is set.
         if ($locationId && get_post_meta($locationId, '_event_manager_uid', true)) {
@@ -308,6 +303,17 @@ class OpenLib extends \HbgEventImporter\Parser
         $this->levenshteinTitles['location'][] = array('ID' => $location->ID, 'post_title' => $postTitle);
 
         return $location->ID;
+    }
+
+     /**
+     * Returns UID
+     *
+     * @param [int] $id
+     * @return void
+     */
+    public function getEventUid($id)
+    {
+        return 'open-library-' . $this->shortKey . '-' . $id;
     }
 
     /**
