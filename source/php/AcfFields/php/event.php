@@ -3,7 +3,7 @@
 if (function_exists('acf_add_local_field_group')) {
     acf_add_local_field_group(array(
     'key' => 'group_57610ebadcee8',
-    'title' => 'Event',
+    'title' => __('Event', 'event-manager'),
     'fields' => array(
         0 => array(
             'key' => 'field_5761103c83966',
@@ -302,6 +302,60 @@
                     'toolbar' => 'full',
                     'media_upload' => 1,
                     'delay' => 0,
+                ),
+                7 => array(
+                    'key' => 'field_5ce6a8043b8e9',
+                    'label' => __('Override location', 'event-manager'),
+                    'name' => 'location_mode',
+                    'type' => 'radio',
+                    'instructions' => __('Use master or custom location for this occasion.', 'event-manager'),
+                    'required' => 1,
+                    'conditional_logic' => 0,
+                    'wrapper' => array(
+                        'width' => '',
+                        'class' => '',
+                        'id' => '',
+                    ),
+                    'choices' => array(
+                        'master' => __('Use master location', 'event-manager'),
+                        'custom' => __('Use custom location', 'event-manager'),
+                    ),
+                    'allow_null' => 0,
+                    'other_choice' => 0,
+                    'default_value' => '',
+                    'layout' => 'horizontal',
+                    'return_format' => 'value',
+                    'save_other_choice' => 0,
+                ),
+                8 => array(
+                    'key' => 'field_5ce6a39f92cb8',
+                    'label' => __('Location', 'event-manager'),
+                    'name' => 'location',
+                    'type' => 'post_object',
+                    'instructions' => '',
+                    'required' => 1,
+                    'conditional_logic' => array(
+                        0 => array(
+                            0 => array(
+                                'field' => 'field_5ce6a8043b8e9',
+                                'operator' => '==',
+                                'value' => 'custom',
+                            ),
+                        ),
+                    ),
+                    'wrapper' => array(
+                        'width' => '',
+                        'class' => '',
+                        'id' => '',
+                    ),
+                    'post_type' => array(
+                        0 => 'location',
+                    ),
+                    'taxonomy' => '',
+                    'allow_null' => 1,
+                    'multiple' => 0,
+                    'return_format' => 'id',
+                    'ui' => 1,
                 ),
             ),
         ),
@@ -1958,7 +2012,7 @@
     'label_placement' => 'top',
     'instruction_placement' => 'label',
     'hide_on_screen' => '',
-    'active' => 1,
+    'active' => true,
     'description' => '',
 ));
 }
