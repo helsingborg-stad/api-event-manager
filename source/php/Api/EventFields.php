@@ -526,6 +526,8 @@ class EventFields extends Fields
                     'occ_exeption_information' => ($value['occ_exeption_information']) ? $value['occ_exeption_information'] : null,
                     'content_mode' => ($value['content_mode']) ? $value['content_mode'] : null,
                     'content' => ($value['content']) ? $value['content'] : null,
+                    'location_mode' => ($value['location_mode']) ? $value['location_mode'] : null,
+                    'location' => !empty($value['location']) ? $this->getLocationData($value['location']) : null,
                 );
             }
         }
@@ -557,6 +559,8 @@ class EventFields extends Fields
                                 'occ_exeption_information' => !empty($exception['rcr_exception_info']) ? $exception['rcr_exception_info'] : null,
                                 'content_mode' => null,
                                 'content' => null,
+                                'location_mode' => null,
+                                'location' => null,
                             );
                         }
                     }
@@ -574,13 +578,15 @@ class EventFields extends Fields
                 'occ_exeption_information' => null,
                 'content_mode' => null,
                 'content' => null,
+                'location_mode' => null,
+                'location' => null,
             );
         }
         $temp = array();
         $keys = array();
         // Remove duplicates from $data array
         foreach ($data as $key => $val) {
-            unset($val['status'], $val['occ_exeption_information'], $val['content_mode'], $val['content']);
+            unset($val['status'], $val['occ_exeption_information'], $val['content_mode'], $val['content'], $val['location_mode'], $val['location']);
             if (!in_array($val, $temp)) {
                 $temp[] = $val;
                 $keys[$key] = true;
