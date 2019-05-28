@@ -6,9 +6,6 @@ class App
 {
     public function __construct()
     {
-        global $event_db_version;
-        $event_db_version = '1.0';
-
         add_action('init', function () {
             if (!file_exists(WP_CONTENT_DIR . '/mu-plugins/AcfImportCleaner.php') && !class_exists('\\AcfImportCleaner\\AcfImportCleaner')) {
                 require_once HBGEVENTIMPORTER_PATH . 'source/php/Helper/AcfImportCleaner.php';
@@ -39,6 +36,9 @@ class App
         add_filter('acf/location/rule_types', array($this, 'acfLocationRulesTypes'));
         add_filter('acf/location/rule_values/settings', array($this, 'acfLocationRuleValues'));
         add_filter('acf/location/rule_match/settings', array($this, 'acfLocationRulesMatch'), 10, 3);
+
+        // Create db tables
+        new Install();
 
         //Init cron tasks
         new Cron();
@@ -255,35 +255,6 @@ class App
     public function enqueueAcfScripts()
     {
         wp_enqueue_script('hbg-event-importer-acf', HBGEVENTIMPORTER_URL . '/dist/js/api-event-manager-acf.min.js',  array('acf-input'), false, true);
-    }
-
-    /**
-     * Creates occasions database table on plugin activation
-     * @return void
-     */
-    public static function initDatabaseTable()
-    {
-        global $wpdb;
-        global $event_db_version;
-
-        $table_name = $wpdb->prefix . 'occasions';
-        $charset_collate = $wpdb->get_charset_collate();
-
-        $sql = "
-            CREATE TABLE $table_name (
-                ID BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
-                event BIGINT(20) UNSIGNED NOT NULL,
-                timestamp_start BIGINT(20) UNSIGNED NOT NULL,
-                timestamp_end BIGINT(20) UNSIGNED NOT NULL,
-                timestamp_door BIGINT(20) UNSIGNED DEFAULT NULL,
-                PRIMARY KEY  (ID)
-            ) $charset_collate;
-        ";
-
-        require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
-        dbDelta($sql);
-
-        add_option('event_db_version', $event_db_version);
     }
 
     /**
