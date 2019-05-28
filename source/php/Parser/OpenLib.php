@@ -123,27 +123,36 @@ class OpenLib extends \HbgEventImporter\Parser
         $data['occasions'] = array();
         if (!empty($eventData->occurrences)) {
             foreach ($eventData->occurrences as $occasion) {
+
+                $locationId = !empty($occasion->library) ? $this->maybeCreateLocation($occasion->library, $data['userGroups'], $data['postStatus']) : null;
+
+                $start = new \DateTime($occasion->start);
+                $start = $start->format('Y-m-d H:i:s');
+
+                $end = new \DateTime($occasion->stop);
+                $end = $end->format('Y-m-d H:i:s');
+
                 $data['occasions'][] = array(
-                'start_date' => date('Y-m-d H:i', strtotime($occasion->start)),
-                'end_date' => date('Y-m-d H:i', strtotime($occasion->stop)),
-                'door_time' => date('Y-m-d H:i', strtotime($occasion->start)),
-                'status' => $occasion->canceled ? 'cancelled' : 'scheduled'
+                'start_date' => $start,
+                'end_date' => $end,
+                'door_time' => $start,
+                'status' => $occasion->canceled ? 'cancelled' : 'scheduled',
+                'location_mode' => !empty($locationId) ? 'custom' : 'master',
+                'location' => !empty($locationId) ? $locationId : null,
                 );
             }
         }
-        //$locationId = $this->maybeCreateLocation($data, $shortKey);
-        $locationId = null;
-        $this->maybeCreateEvent($data, $locationId);
+
+        $this->maybeCreateEvent($data);
     }
 
     /**
      * Creates or updates an event if possible
      * @param  array  $data       Event data
-     * @param  int    $locationId Location id
      * @return boolean|int          Event id or false
      * @throws \Exception
      */
-    public function maybeCreateEvent($data, $locationId)
+    public function maybeCreateEvent($data)
     {
         $eventId = $this->checkIfPostExists('event', $data['postTitle']);
         $occurred = false;
@@ -183,7 +192,7 @@ class OpenLib extends \HbgEventImporter\Parser
                     'event_link' => $data['event_link'],
                     'categories' => $data['categories'],
                     'occasions' => $data['occasions'],
-                    'location' => $locationId !== null ? $locationId : null,
+                    'location' => null,
                     'organizer' => null,
                     'booking_link' => null,
                     'booking_phone' => null,
@@ -236,32 +245,30 @@ class OpenLib extends \HbgEventImporter\Parser
     /**
      * Creates or updates a location if possible
      *
-     * @param array $data Event data
-     *
+     * @param [object] $data Data object
+     * @param [array] $userGroups User groups
+     * @param [string] $locationPostStatus Post status
      * @return boolean|int  Location id or false
-     *
      * @throws \Exception
      */
-    public function maybeCreateLocation($data)
+    public function maybeCreateLocation($data, $userGroups, $locationPostStatus)
     {
-        if (empty($data['address']) && empty($data['name'])) {
+        // Bail if essential data is missing
+        if (empty($data->name) && empty($data->streetAddress)) {
             return false;
         }
 
+        $postTitle = empty($data->name) ? $data->name : $data->streetAddress;
         // Checking if there is a location already with this title or similar enough
-        $locationId = $this->checkIfPostExists('location', $data['name']);
-
-        $locPostStatus = $data['postStatus'];
+        $locationId = $this->checkIfPostExists('location', $postTitle);
         $isUpdate = false;
-        $postTitle = $data['name'] ?? $data['address'] ?? '';
-
-        $uid = $this->getEventUid($this->cleanString($postTitle));
+        $uid = $this->getEventUid($data->id);
 
         // Check if this is a duplicate or update and if "sync" option is set.
         if ($locationId && get_post_meta($locationId, '_event_manager_uid', true)) {
             $existingUid = get_post_meta($locationId, '_event_manager_uid', true);
             $sync = get_post_meta($locationId, 'sync', true);
-            $locPostStatus = get_post_status($locationId);
+            $locationPostStatus = get_post_status($locationId);
 
             if ($existingUid == $uid && $sync == 1) {
                 $isUpdate = true;
@@ -277,19 +284,19 @@ class OpenLib extends \HbgEventImporter\Parser
             $location = new Location(
                 array(
                     'post_title' => $postTitle,
-                    'post_status' => $locPostStatus,
+                    'post_status' => $locationPostStatus,
                 ),
                 array(
-                    'street_address' => $data['address'] ?? null,
-                    'postal_code' => null,
-                    'city' => $data['city'],
+                    'street_address' => $data->streetAddress ?? null,
+                    'postal_code' => $data->zipCode ?? null,
+                    'city' => $data->city ?? null,
                     'municipality' => null,
                     'country' => null,
-                    'latitude' => $data['latitude'] ?? null,
-                    'longitude' => $data['longitude'] ?? null,
+                    'latitude' => $data->latitude ?? null,
+                    'longitude' =>  $data->longitude ?? null,
                     'import_client' => 'open-library',
                     '_event_manager_uid' => $uid,
-                    'user_groups' => $data['userGroups'],
+                    'user_groups' => $userGroups,
                     'sync' => 1,
                     'imported_post' => 1,
                 )
