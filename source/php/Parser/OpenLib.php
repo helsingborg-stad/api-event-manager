@@ -120,12 +120,6 @@ class OpenLib extends \HbgEventImporter\Parser
             ) : null;
         $data['categories'] = isset($eventData->tags) && is_array($eventData->tags) ? $this->sanitizeCategories($eventData->tags) : array();
 
-        error_log($eventData->id);
-        error_log($data['postTitle']);
-
-        // Set default time zone to sweden
-        date_default_timezone_set("Europe/Stockholm");
-
         $data['occasions'] = array();
         if (!empty($eventData->occurrences)) {
             foreach ($eventData->occurrences as $occasion) {
