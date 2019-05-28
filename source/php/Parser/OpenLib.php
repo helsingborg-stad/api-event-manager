@@ -33,8 +33,6 @@ class OpenLib extends \HbgEventImporter\Parser
 
         // Loop over API requests until result is empty
         while ($loop === true) {
-            error_log("NEW LOOP");
-            error_log($page);
             // Build url with params
             $url = add_query_arg(
                     array(
@@ -47,7 +45,6 @@ class OpenLib extends \HbgEventImporter\Parser
                 $this->url
             );
 
-            error_log($url);
             // Use Curl to fetch events
             $eventData = \HbgEventImporter\Helper\Curl::request(
                 'GET',
@@ -62,9 +59,6 @@ class OpenLib extends \HbgEventImporter\Parser
 
             // Return if result is empty
             if (empty($eventData)) {
-                \error_log("event data empty, BREAK");
-                \error_log(print_r($eventData, true));
-
                 $loop = false;
                 break;
             }
@@ -92,7 +86,6 @@ class OpenLib extends \HbgEventImporter\Parser
     {
         // Deletes event from db
         if ($eventData->changeType === 'Deleted') {
-            \error_log("Deleted, Do not import");
             global $wpdb;
             $eventManagerUid = $this->getEventUid($eventData->id);
             // Check if the post exist in db
