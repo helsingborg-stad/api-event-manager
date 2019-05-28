@@ -23,7 +23,7 @@ ImportEvents.Admin.Fields = (function($) {
      * Adds a button to duplicate occasions
      */
     Fields.prototype.duplicateOccasion = function() {
-        $('.acf-field-57611277ef032').each(function() {
+        $('.acf-field-5ce6a39f92cb8').each(function() {
             $(this).after(
                 '<div class="acf-field"><a href="#" class="duplicateOccasion button">' +
                     eventmanager.duplicate_occasion +
@@ -45,7 +45,9 @@ ImportEvents.Admin.Fields = (function($) {
                 exceptionInfo = $('div[data-name="occ_exeption_information"] input', $target).val(),
                 contentMode = $('div[data-name="content_mode"] input:checked', $target).val(),
                 tinyMceId = $('textarea[class="wp-editor-area"]', $target).attr('id'),
-                tinyeMceContent = '';
+                tinyeMceContent = '',
+                locationMode = $('div[data-name="location_mode"] input:checked', $target).val(),
+                location = $('div[data-name="location"] select option', $target).last();
 
             if (typeof tinyMCE !== 'undefined') {
                 tinyeMceContent = tinymce.get(tinyMceId).getContent();
@@ -74,6 +76,12 @@ ImportEvents.Admin.Fields = (function($) {
                 $('input[value="' + contentMode + '"]', $clonedRow)
                     .attr('checked', 'checked')
                     .trigger('change');
+                $('input[value="' + locationMode + '"]', $clonedRow)
+                    .attr('checked', 'checked')
+                    .trigger('change');
+                $('div[data-name="location"] select', $clonedRow).select2("trigger", "select", {
+                    data: { id: parseInt(location.attr('value')), text: location.text() }
+                });
 
                 if (typeof tinyMCE !== 'undefined') {
                     tinymce.get(newTinyMceId).setContent(tinyeMceContent);
