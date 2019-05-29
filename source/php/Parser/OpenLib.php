@@ -251,7 +251,7 @@ class OpenLib extends \HbgEventImporter\Parser
             return false;
         }
 
-        $postTitle = empty($data->name) ? $data->name : $data->streetAddress;
+        $postTitle = !empty($data->name) ? $data->name : $data->streetAddress;
         // Checking if there is a location already with this title or similar enough
         $locationId = $this->checkIfPostExists('location', $postTitle);
         $isUpdate = false;
