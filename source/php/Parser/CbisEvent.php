@@ -167,7 +167,13 @@ class CbisEvent extends \HbgEventImporter\Parser\Cbis
     {
         $importClient = 'CBIS: Event';
         $attributes = $this->getAttributes($eventData);
-        $arenaName = $eventData->Occasions->OccasionObject->ArenaName ?? $eventData->Occasions->OccasionObject[0]->ArenaName ?? null;
+
+        if (isset($eventData->Occasions->OccasionObject) && is_array($eventData->Occasions->OccasionObject) && isset($eventData->Occasions->OccasionObject[0]->ArenaName)) {
+            $arenaName = $eventData->Occasions->OccasionObject[0]->ArenaName;
+        } else {
+            $arenaName = null;
+        }
+
         $address = $this->getAttributeValue(self::ATTRIBUTE_ADDRESS, $attributes);
         if (empty($title = $arenaName ? $arenaName : $address)) {
             return false;
