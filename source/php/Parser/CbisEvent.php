@@ -52,8 +52,10 @@ class CbisEvent extends \HbgEventImporter\Parser\Cbis
         $response = $this->soapRequest($cbisKey, $cbisId, $cbisCategory, $requestParams);
         $this->events = $response->ListAllResult->Items->Product;
 
-        foreach ($this->events as $key => $eventData) {
-            $this->saveEvent($eventData, $postStatus, $userGroups, $shortKey);
+        if (is_array($this->events) && !empty($this->events)) {
+            foreach ($this->events as $key => $eventData) {
+                $this->saveEvent($eventData, $postStatus, $userGroups, $shortKey);
+            }
         }
     }
 
