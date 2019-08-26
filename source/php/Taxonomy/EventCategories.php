@@ -29,9 +29,9 @@ class EventCategories
         );
 
         $capabilities = array(
-            'manage_terms' => 'edit_posts',
-            'edit_terms'   => 'edit_posts',
-            'delete_terms' => 'edit_posts',
+            'manage_terms' => 'export',
+            'edit_terms'   => 'export',
+            'delete_terms' => 'export',
             'assign_terms' => 'read',
         );
 
@@ -68,9 +68,9 @@ class EventCategories
         );
 
         $capabilities = array(
-            'manage_terms' => 'edit_users',
-            'edit_terms'   => 'edit_users',
-            'delete_terms' => 'edit_users',
+            'manage_terms' => 'export',
+            'edit_terms'   => 'export',
+            'delete_terms' => 'export',
             'assign_terms' => 'read',
         );
 
