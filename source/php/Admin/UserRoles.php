@@ -264,7 +264,7 @@ class UserRoles
         }
 
         // Event administrator
-        $postTypes = array('event', 'location', 'sponsor', 'package', 'membership-card', 'organizer', 'guide');
+        $postTypes = array('event', 'location', 'sponsor', 'package', 'membership-card', 'organizer', 'guide', 'recommendation');
         $role = get_role('event_administrator');
         if ($role) {
 	        foreach ($postTypes as $key => $type) {
