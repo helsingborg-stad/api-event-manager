@@ -146,6 +146,12 @@ class EventFields extends Fields
                 'default' => '',
                 'sanitize_callback' => 'sanitize_text_field',
             ),
+            'search' => array(
+                'description' => 'Filter by search string',
+                'type' => 'string',
+                'default' => '',
+                'sanitize_callback' => 'sanitize_text_field',
+            ),
         );
     }
 
@@ -337,6 +343,9 @@ class EventFields extends Fields
             }
         }
 
+        // Search by text string
+        $searchString = !empty($parameters['search']) ? $parameters['search'] : null;
+
         $postTable = $wpdb->posts;
         $db_occasions = $wpdb->prefix."occasions";
         $query =
@@ -354,6 +363,7 @@ class EventFields extends Fields
                     AND $postTable.post_status = %s
                     AND ($db_occasions.timestamp_start BETWEEN %d AND %d OR $db_occasions.timestamp_end BETWEEN %d AND %d)
                     AND postmeta1.meta_key = 'internal_event' AND postmeta1.meta_value = {$parameters['internal']} ";
+        $query .= ($searchString) ? "AND (($wpdb->posts.post_title LIKE %s) OR ($wpdb->posts.post_content LIKE %s)) " : '';
         $query .= (!empty($locationIds)) ? "AND (postmeta2.meta_key = 'location' AND postmeta2.meta_value IN ($locationIds)) " : "";
         $query .= (!empty($groups)) ? "AND (term1.term_taxonomy_id IN ($groups)) " : "";
         $query .= (!empty($taxonomies)) ? "AND (term2.term_taxonomy_id IN ($taxonomies)) " : "";
@@ -362,14 +372,22 @@ class EventFields extends Fields
         $query .= "ORDER BY $db_occasions.timestamp_start ASC ";
         $query .= " LIMIT {$offset}, {$perPage}";
 
-        $completeQuery = $wpdb->prepare(
-            $query,
+        $placeholders = [
             $this->postType,
             'publish',
             $parameters['start'],
             $parameters['end'],
             $parameters['start'],
             $parameters['end']
+        ];
+        if ($searchString) {
+            $placeholders[] = '%'.$wpdb->esc_like($searchString).'%';
+            $placeholders[] = '%'.$wpdb->esc_like($searchString).'%';
+        }
+
+        $completeQuery = $wpdb->prepare(
+            $query,
+            $placeholders
         );
         $allEvents = $wpdb->get_results($completeQuery);
         $controller = new \WP_REST_Posts_Controller($this->postType);
