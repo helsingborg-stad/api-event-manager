@@ -76,7 +76,9 @@ class TransTicket extends \HbgEventImporter\Parser
             'qry' => urlencode($data['postTitle']),
         ), trim($this->apiKeys['transticket_ticket_url'], '/') . "/Find/" );
         $data['startDate'] = !empty($eventData->EventDate) ? $eventData->EventDate : null;
-        $data['endDate'] = !empty($eventData->EndDate) ? $eventData->EndDate : null;
+        
+        
+        $data['endDate'] = !empty($eventData->CloseDate) ? $eventData->CloseDate : null;
         if ($data['endDate'] === null) {
             $data['endDate'] = date("Y-m-d H:i:s", strtotime($data['startDate'] . "+1 hour"));
             $data['endDate'] = str_replace(' ', 'T', $data['endDate']);
