@@ -6,6 +6,7 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'Mimey\\' => array($vendorDir . '/ralouphie/mimey/src'),
     'Giggsey\\Locale\\' => array($vendorDir . '/giggsey/locale/src'),
     'Composer\\Installers\\' => array($vendorDir . '/composer/installers/src/Composer/Installers'),
 );

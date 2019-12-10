@@ -23,6 +23,7 @@
     ],
     "require": {
         "composer/installers": "~1.0",
-        "giggsey/libphonenumber-for-php": "^7.4"
+        "giggsey/libphonenumber-for-php": "^7.4",
+        "ralouphie/mimey": "^2.1"
     }
 }

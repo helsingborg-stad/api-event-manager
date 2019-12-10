@@ -285,73 +285,110 @@ abstract class PostManager
 
     /**
      * Uploads an image from a specified url and sets it as the current post's featured image
-     * @param string $url Image url
-     * @return bool|void
+     * @param $url
+     * @param $featured
+     * @return bool|object
      */
-    public function setFeaturedImageFromUrl($url)
+    public function setFeaturedImageFromUrl($url, $featured)
     {
+
         if (!isset($this->ID)) {
             return false;
         }
 
-        $url = str_replace(' ', '%20', $url);
-        $headers = get_headers($url, 1);
-        if (!isset($url) || strlen($url) === 0 || !wp_http_validate_url($url) || $headers[0] !== 'HTTP/1.1 200 OK') {
+        if (!isset($url) || strlen($url) === 0 || !$this->isUrl($url)) {
             return false;
         }
 
-        // Upload paths
-        $uploadDir = wp_upload_dir();
-        $uploadDir = $uploadDir['basedir'];
-        $uploadDir = $uploadDir . '/events';
+        // Upload path
+        $uploadDir = wp_upload_dir()['basedir'].'/events/' . date("Y"). "/" . date("m");
 
+        //Create dir
         if (!is_dir($uploadDir)) {
-            if (!mkdir($uploadDir, 0776)) {
-                return new WP_Error('event', __('Could not create folder',
-                        'event-manager') . ' "' . $uploadDir . '", ' . __('please go ahead and create it manually and rerun the import.',
-                        'event-manager'));
+            if (!mkdir($uploadDir, 0776, true)) {
+                return new WP_Error('event', __('Could not create folder', 'event-integration') . ' "' . $uploadDir . '", ' . __('please go ahead and create it manually and rerun the import.', 'event-integration'));
             }
         }
 
-        // Remove query string from filename
-        $filename = preg_replace('/\?.*/', '', $url);
-        // Sanitize the file name
-        $filename = sanitize_file_name(basename($filename));
-        if (stripos(basename($url), '.aspx')) {
-            $filename = md5($filename) . '.jpg';
+        //Get slug & validate that post exists
+        if(is_string(get_post_status($this->ID)) && $filename = get_post($this->ID)->post_name) {
+
+            $mimes = new \Mimey\MimeTypes;
+
+            //Temp name
+            $filenameTemp = $filename . ".tmp"; 
+            
+            // Get the file content
+            $options = array(
+                'ssl' => array(
+                    'verify_peer' => defined('DEV_MODE') && DEV_MODE === true ? false : true,
+                    'verify_peer_name' => defined('DEV_MODE') && DEV_MODE === true ? false : true
+                )
+            );
+            $imgContent = file_get_contents($url, false, stream_context_create($options));
+
+            //File is empty abort
+            if(!$imgContent) {
+                return; 
+            }
+
+            // Save file to temp
+            $tempStoreFile = fopen($uploadDir . '/' . $filenameTemp, 'w');
+            fwrite($tempStoreFile, $imgContent);
+            fclose($tempStoreFile);
+
+            // Detect file type
+            $filetype = $mimes->getExtension(
+                $mimeFileType = mime_content_type($uploadDir . '/' . $filenameTemp)
+            );
+
+            // Move to real extension
+            rename($uploadDir . '/' . $filenameTemp, $uploadDir . '/' . $filename . '.' . $filetype);
+
+            // Insert the file to media library
+            $attachmentId = wp_insert_attachment(
+                array(
+                    'guid' => $uploadDir . '/' . $filename . '.' . $filetype,
+                    'post_mime_type' => $mimeFileType,
+                    'post_title' => $filename,
+                    'post_content' => '',
+                    'post_status' => 'inherit',
+                    'post_parent' => $this->ID
+                ), 
+                $uploadDir . '/' . $filename . "." . $filetype, 
+                $this->ID
+            );
+
+            if($attachmentId) {
+                update_post_meta($attachmentId, 'event-manager-media', 1); //Filter in [/Admin/MediaLibrary.php]
+            }
+
+            //Bind the image to the event
+            $this->bindImageToEvent($attachmentId, $featured); 
+        } 
+
+        return true;
+    }
+
+    /**
+     * Adds the image to the database as a galleryitem or featured image
+     * @param $attachmentId
+     * @param $featured
+     * @return bool|object
+     */
+    public function bindImageToEvent($attachmentId, $featured = true) {
+        // Set image as featured image or add to gallery
+        if ($featured) {
+            set_post_thumbnail($this->ID, $attachmentId);
+        } else {
+            $gallery_meta = get_post_meta($this->ID, 'event_gallery', true);
+            if (empty($gallery_meta)) {
+                add_post_meta($this->ID, 'event_gallery', array($attachmentId));
+            } else {
+                $gallery_meta[] .= $attachmentId;
+                update_post_meta($this->ID, 'event_gallery', array_unique($gallery_meta));
+            }
         }
-
-        // Bail if image already exists in library
-        if ($attachmentId = $this->attachmentExists($uploadDir . '/' . basename($filename))) {
-            set_post_thumbnail((int)$this->ID, (int)$attachmentId);
-            return;
-        }
-
-        // Save file to server
-        $contents = file_get_contents(str_replace(' ', '%20', $url));
-        $save = fopen($uploadDir . '/' . $filename, 'w');
-        fwrite($save, $contents);
-        fclose($save);
-
-        // Detect file type
-        $filetype = wp_check_filetype($filename, null);
-
-        // Insert the file to media library
-        $attachmentId = wp_insert_attachment(array(
-            'guid' => $uploadDir . '/' . basename($filename),
-            'post_mime_type' => $filetype['type'],
-            'post_title' => $filename,
-            'post_content' => '',
-            'post_status' => 'inherit',
-            'post_parent' => $this->ID
-        ), $uploadDir . '/' . $filename, $this->ID);
-
-        // Generate attachment meta
-        require_once(ABSPATH . 'wp-admin/includes/image.php');
-        $attachData = wp_generate_attachment_metadata($attachmentId, $uploadDir . '/' . $filename);
-        wp_update_attachment_metadata($attachmentId, $attachData);
-
-        set_post_thumbnail($this->ID, $attachmentId);
     }
 
     /**

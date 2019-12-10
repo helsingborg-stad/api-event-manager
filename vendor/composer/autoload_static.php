@@ -7,6 +7,10 @@ namespace Composer\Autoload;
 class ComposerStaticInit81b8606b48a96018032308f6211cbeda
 {
     public static $prefixLengthsPsr4 = array (
+        'M' => 
+        array (
+            'Mimey\\' => 6,
+        ),
         'G' => 
         array (
             'Giggsey\\Locale\\' => 15,
@@ -18,6 +22,10 @@ class ComposerStaticInit81b8606b48a96018032308f6211cbeda
     );
 
     public static $prefixDirsPsr4 = array (
+        'Mimey\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/ralouphie/mimey/src',
+        ),
         'Giggsey\\Locale\\' => 
         array (
             0 => __DIR__ . '/..' . '/giggsey/locale/src',
