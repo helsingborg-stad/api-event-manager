@@ -21,6 +21,7 @@ class GuideFields extends Fields
 
         //Api filter querys
         add_filter('rest_guide_query', array($this, 'addBeaconFilter'), 10, 2);
+        add_filter('rest_guide_query', array($this, 'addUserGroupFilter'), 10, 2);
         add_filter('rest_prepare_guide', array($this, 'addObjectFilter'), 6000, 3);
     }
 
@@ -91,11 +92,28 @@ class GuideFields extends Fields
     }
 
     /**
+     * Filter by group id
+     *
+     * @param  array           $args    The query arguments.
+     * @param  WP_REST_Request $request Full details about the request.
+     * @return array $args.
+     */
+    public function addUserGroupFilter($args, $request)
+    {
+        if ($groupId = $request->get_param('group-id')) {
+            $args['meta_key'] = 'user_groups';
+            $args['meta_value'] = sprintf(':"%s";', $groupId);
+            $args['meta_compare'] = 'LIKE';
+        }
+
+        return $args;
+    }
+
+    /**
      * Register rest fields to consumer api
      * @return  void
      * @version 0.3.28 creating consumer accessable meta values.
      */
-
     public static function registerTaxonomyRestFields()
     {
         register_rest_field($this->taxonomyName,
