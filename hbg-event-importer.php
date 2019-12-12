@@ -72,7 +72,8 @@ $acfExportManager->autoExport(array(
     'arcgis' => 'group_5af54f9481184',
     'internal_event' => 'group_5afecb1bf1b8d',
     'recommendation' => 'group_5b15284158289',
-    'under-processing' => 'group_5b2b60ac1bb08'
+    'under-processing' => 'group_5b2b60ac1bb08',
+    'open-library-solutions' => 'group_5ce25720a2508',
 ));
 $acfExportManager->import();
 
@@ -83,7 +84,7 @@ register_activation_hook(plugin_basename(__FILE__), '\HbgEventImporter\Admin\Use
 register_deactivation_hook(plugin_basename(__FILE__), '\HbgEventImporter\Admin\UserRoles::removeCustomUserRoles');
 
 // Create necessary database tables when plugin is activated
-register_activation_hook(plugin_basename(__FILE__), '\HbgEventImporter\App::initDatabaseTable');
+register_activation_hook(plugin_basename(__FILE__), '\HbgEventImporter\Install::createTables');
 
 // Start application
 $apiEventManager = new HbgEventImporter\App();

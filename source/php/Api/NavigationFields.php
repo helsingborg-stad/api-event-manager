@@ -19,7 +19,7 @@ class NavigationFields extends Fields
      * Register rest fields to consumer api
      * @return  void
      */
-    public static function registerRestFields()
+    public function registerRestFields()
     {
         register_rest_field($this->taxonomy,
             'layout',

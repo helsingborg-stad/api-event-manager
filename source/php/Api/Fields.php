@@ -156,7 +156,7 @@ class Fields
 
         // Get acf field key
         $field_name = esc_sql("_".$field_name);
-        $field_key = $wpdb->get_results("SELECT meta_value FROM $wpdb->postmeta WHERE $wpdb->postmeta.meta_key = '$field_name' LIMIT 1", ARRAY_A);
+        $field_key = $wpdb->get_results("SELECT meta_value FROM $wpdb->postmeta WHERE $wpdb->postmeta.meta_key = '$field_name' ORDER BY meta_id DESC LIMIT 1", ARRAY_A);
         $key = $field_key[0]['meta_value'];
 
         if (preg_match('/field_[0-9]+/', $key)) {
@@ -253,23 +253,35 @@ class Fields
             return null;
         }
 
-        $location = get_post($location_id);
+        return $this->getLocationData($location_id);
+    }
+
+    /**
+     * Gather locaton data
+     *
+     * @param [int] $id Location ID
+     * @return void
+     */
+    public function getLocationData($id)
+    {
+        $location = get_post($id);
 
         if (! $location) {
             return null;
         }
+
         $parent = ! empty($location->post_parent) ? array('id' => $location->post_parent, 'title' => get_the_title($location->post_parent)) : null;
-        $location_data['id']                = $location_id;
+        $location_data['id']                = $id;
         $location_data['title']             = $location->post_title;
         $location_data['parent']            = $parent;
         $location_data['content']           = $location->post_content;
-        $location_data['street_address']    = get_post_meta($location_id, 'street_address', true);
-        $location_data['postal_code']       = get_post_meta($location_id, 'postal_code', true);
-        $location_data['city']              = get_post_meta($location_id, 'city', true);
-        $location_data['country']           = get_post_meta($location_id, 'country', true);
-        $location_data['formatted_address'] = get_post_meta($location_id, 'formatted_address', true);
-        $location_data['latitude']          = get_post_meta($location_id, 'latitude', true);
-        $location_data['longitude']         = get_post_meta($location_id, 'longitude', true);
+        $location_data['street_address']    = get_post_meta($id, 'street_address', true);
+        $location_data['postal_code']       = get_post_meta($id, 'postal_code', true);
+        $location_data['city']              = get_post_meta($id, 'city', true);
+        $location_data['country']           = get_post_meta($id, 'country', true);
+        $location_data['formatted_address'] = get_post_meta($id, 'formatted_address', true);
+        $location_data['latitude']          = get_post_meta($id, 'latitude', true);
+        $location_data['longitude']         = get_post_meta($id, 'longitude', true);
 
         return $location_data;
     }

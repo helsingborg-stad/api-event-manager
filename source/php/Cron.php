@@ -5,7 +5,7 @@ namespace HbgEventImporter;
 class Cron
 {
     public static $postTypeSlug = 'event';
-    public static $clients = array('cbis', 'xcap', 'transticket', 'arcgis');
+    public static $clients = array('cbis', 'xcap', 'transticket', 'arcgis', 'ols');
 
     public function __construct()
     {
@@ -38,12 +38,41 @@ class Cron
             return;
         }
 
+        //Get active clients
+        $activeClients = array();
         foreach (self::$clients as $client) {
             wp_clear_scheduled_hook('import_events', array('client' => $client));
             if (get_field($client . '_daily_cron', 'option') == true) {
-                wp_schedule_event(time(), 'hourly', 'import_events', array('client' => $client));
+                $activeClients[] = $client;
             }
         }
+
+        //Create schedules
+        foreach ($activeClients as $clientKey => $client) {
+            wp_schedule_event(
+                time() + $this->calculateCronOffsetTime($activeClients, 3600, $clientKey),
+                'hourly',
+                'import_events',
+                array('client' => $client)
+            );
+        }
+    }
+
+    /**
+     * Calculate a time offset for each integration
+     *
+     * @param  array   $clients   The client to be scheduled
+     * @param  integer $timeFrame Total schedule space
+     * @param  integer $iteration Current iteration in loop
+     *
+     * @return integer
+     */
+    public function calculateCronOffsetTime($clients, $timeFrame = 3600, $iteration = 0) : int
+    {
+        if ($numberOfClients = count($clients)) {
+            return ($timeFrame/$numberOfClients) * $iteration;
+        }
+        return 0;
     }
 
     /**
@@ -117,8 +146,8 @@ class Cron
         global $wpdb;
         // Get all events from database
         $query = "
-            SELECT ID FROM $wpdb->posts 
-            WHERE post_type = %s 
+            SELECT ID FROM $wpdb->posts
+            WHERE post_type = %s
             AND post_status = %s
         ";
         $completeQuery = $wpdb->prepare($query, self::$postTypeSlug, 'publish');
@@ -130,8 +159,8 @@ class Cron
 
         $dbTable = $wpdb->prefix . 'occasions';
         $query = "
-            SELECT ID, event FROM $dbTable 
-            WHERE event = %s 
+            SELECT ID, event FROM $dbTable
+            WHERE event = %s
         ";
         // Loop through events and check if any occasions exist
         foreach ($events as $event) {
@@ -275,6 +304,32 @@ class Cron
     }
 
     /**
+     * Get OpenLib keys
+     * @return array
+     */
+    public function getOpenLibKeys(): array
+    {
+        $keys = array();
+
+        if (!have_rows('ols_api_urls', 'option')) {
+            return array();
+        }
+
+        while (have_rows('ols_api_urls', 'option')) {
+            the_row();
+
+            $keys[] = array(
+                'api_url' => get_sub_field('ols_api_url'),
+                'api_key' => get_sub_field('ols_api_key'),
+                'group_id' => !empty(get_sub_field('ols_group_id')) ? get_sub_field('ols_group_id') : null,
+                'default_groups' => get_sub_field('ols_publishing_groups'),
+            );
+        }
+
+        return $keys;
+    }
+
+    /**
      * Starts the data import
      * @param $client
      * @return void
@@ -282,12 +337,13 @@ class Cron
     public function startImport($client)
     {
         $transient = 'api-event-manager-importing-' . $client;
-        // Check if import is already running
-        if (!get_site_transient($transient)) {
-            set_site_transient($transient, true, 20 * MINUTE_IN_SECONDS);
-        } else {
+        // Bail if import is already running
+        if (get_site_transient($transient)) {
             return;
         }
+
+        // Set transient
+        set_site_transient($transient, true, 20 * MINUTE_IN_SECONDS);
 
         switch ($client) {
             case 'cbis':
@@ -320,8 +376,15 @@ class Cron
                     new Parser\Arcgis($api_key['arcgis_api_url'], $api_key);
                 }
                 break;
+            case 'ols':
+                $api_keys = $this->getOpenLibKeys();
+                foreach ((array)$api_keys as $args) {
+                    new Parser\OpenLib($args['api_url'], $args);
+                }
+                break;
         }
 
+        // Delete transient
         delete_site_transient($transient);
     }
 }

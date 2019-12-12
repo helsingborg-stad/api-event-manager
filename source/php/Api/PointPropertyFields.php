@@ -19,7 +19,7 @@ class PointPropertyFields extends Fields
      * Register rest fields to consumer api
      * @return  void
      */
-    public static function registerRestFields()
+    public function registerRestFields()
     {
         // Title as plain text
         register_rest_field($this->taxonomy,

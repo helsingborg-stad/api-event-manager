@@ -29,9 +29,9 @@ class LocationCategories
         );
 
         $capabilities = array(
-            'manage_terms' => 'manage_options',
-            'edit_terms'   => 'manage_options',
-            'delete_terms' => 'manage_options',
+            'manage_terms' => 'export',
+            'edit_terms'   => 'export',
+            'delete_terms' => 'export',
             'assign_terms' => 'read',
         );
 

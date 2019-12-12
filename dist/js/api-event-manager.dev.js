@@ -1,13 +1,12 @@
 ImportEvents = ImportEvents || {};
 ImportEvents.Admin = ImportEvents.Admin || {};
 
-ImportEvents.Admin.AcceptDeny = (function($) {
+ImportEvents.Admin.AcceptDeny = (function ($) {
+
     function AcceptDeny() {
-        $(
-            function() {
-                this.handleEvents();
-            }.bind(this)
-        );
+        $(function(){
+            this.handleEvents();
+        }.bind(this));
     }
 
     /**
@@ -21,9 +20,9 @@ ImportEvents.Admin.AcceptDeny = (function($) {
             url: eventmanager.ajaxurl,
             type: 'post',
             data: {
-                action: 'accept_or_deny',
-                value: postStatus,
-                postId: postId,
+                action    : 'accept_or_deny',
+                value     : postStatus,
+                postId    : postId
             },
             beforeSend: function(response) {
                 var postElement = $('#post-' + postId);
@@ -31,11 +30,11 @@ ImportEvents.Admin.AcceptDeny = (function($) {
                 if (postStatus === 1) {
                     postElement.find('.deny').removeClass('hidden');
                     postElement.find('.accept').addClass('hidden');
-                } else if (postStatus === 0) {
+                } else if(postStatus === 0) {
                     postElement.find('.deny').addClass('hidden');
                     postElement.find('.accept').removeClass('hidden');
                 }
-            },
+            }
         });
     };
 
@@ -43,70 +42,57 @@ ImportEvents.Admin.AcceptDeny = (function($) {
      * Handle events
      * @return void
      */
-    AcceptDeny.prototype.handleEvents = function() {
-        $(document).on(
-            'click',
-            '.accept',
-            function(e) {
-                e.preventDefault();
-                var postId = $(e.target)
-                    .closest('.accept')
-                    .attr('post-id');
-                this.changeAccepted(1, postId);
-            }.bind(this)
-        );
+    AcceptDeny.prototype.handleEvents = function () {
+        $(document).on('click', '.accept', function (e) {
+            e.preventDefault();
+            var postId = $(e.target).closest('.accept').attr('post-id');
+            this.changeAccepted(1, postId);
+        }.bind(this));
 
-        $(document).on(
-            'click',
-            '.deny',
-            function(e) {
-                e.preventDefault();
-                var postId = $(e.target)
-                    .closest('.deny')
-                    .attr('post-id');
-                this.changeAccepted(0, postId);
-            }.bind(this)
-        );
+        $(document).on('click', '.deny', function (e) {
+            e.preventDefault();
+            var postId = $(e.target).closest('.deny').attr('post-id');
+            this.changeAccepted(0, postId);
+        }.bind(this));
     };
 
     return new AcceptDeny();
+
 })(jQuery);
 
 var ImportEvents = ImportEvents || {};
 ImportEvents = ImportEvents || {};
 ImportEvents.Admin = ImportEvents.Admin || {};
 
-ImportEvents.Admin.Import = (function($) {
+ImportEvents.Admin.Import = (function ($) {
+
     function Import() {
-        $(
-            function() {
-                this.handleEvents();
-            }.bind(this)
-        );
+        $(function(){
+            this.handleEvents();
+        }.bind(this));
     }
 
     /**
      * Handle events
      * @return void
      */
-    Import.prototype.handleEvents = function() {
-        $(document).on('click', '.single-import', function(e) {
+    Import.prototype.handleEvents = function () {
+        $(document).on('click', '.single-import', function (e) {
             e.preventDefault();
-            $(this)
-                .prop('disabled', true)
-                .text(eventmanager.import_scheduled);
+            $(this).prop('disabled', true).text(eventmanager.import_scheduled);
             $.ajax({
                 url: eventmanager.ajaxurl,
                 type: 'post',
                 data: {
                     action: 'schedule_single_import',
-                    client: this.dataset.client,
-                },
+                    client: this.dataset.client
+                }
             });
         });
     };
 
     return new Import();
+
 })(jQuery);
 
 ImportEvents = ImportEvents || {};
@@ -222,7 +208,8 @@ ImportEvents.Admin.RestrictDatePicker = (function($) {
 ImportEvents = ImportEvents || {};
 ImportEvents.Admin = ImportEvents.Admin || {};
 
-ImportEvents.Admin.Suggestions = (function($) {
+ImportEvents.Admin.Suggestions = (function ($) {
+
     var typingTimer;
     var lastTerm;
     var suggestionString;
@@ -234,7 +221,7 @@ ImportEvents.Admin.Suggestions = (function($) {
         'sponsor',
         'package',
         'membership-card',
-        'guide',
+        'guide'
     ];
 
     function Suggestions() {
@@ -244,31 +231,20 @@ ImportEvents.Admin.Suggestions = (function($) {
 
         this.switchName();
 
-        $(document).on(
-            'keyup',
-            'input[name="post_title"]',
-            function(e) {
-                var $this = $(e.target);
+        $(document).on('keyup', 'input[name="post_title"]', function (e) {
+            var $this = $(e.target);
 
-                clearTimeout(typingTimer);
+            clearTimeout(typingTimer);
 
-                typingTimer = setTimeout(
-                    function() {
-                        this.search($this.val());
-                    }.bind(this),
-                    300
-                );
-            }.bind(this)
-        );
+            typingTimer = setTimeout(function() {
+                this.search($this.val());
+            }.bind(this), 300);
+        }.bind(this));
 
-        $(document).on(
-            'click',
-            '[data-action="suggestions-close"]',
-            function(e) {
-                e.preventDefault();
-                this.dismiss();
-            }.bind(this)
-        );
+        $(document).on('click', '[data-action="suggestions-close"]', function (e) {
+            e.preventDefault();
+            this.dismiss();
+        }.bind(this));
     }
 
     /**
@@ -277,7 +253,7 @@ ImportEvents.Admin.Suggestions = (function($) {
      * @return {void}
      */
     Suggestions.prototype.search = function(term) {
-        if (term.length <= 3 || term === lastTerm) {
+        if (term.length <= 3 || term === lastTerm) {
             return false;
         }
 
@@ -292,18 +268,14 @@ ImportEvents.Admin.Suggestions = (function($) {
         }
 
         // Do the search request
-        $.get(
-            geturl,
-            function(response) {
-                if (!response.length) {
-                    this.dismiss();
-                    return;
-                }
+        $.get(geturl, function(response) {
+            if (!response.length) {
+                this.dismiss();
+                return;
+            }
 
-                this.output(response, term);
-            }.bind(this),
-            'JSON'
-        );
+            this.output(response, term);
+        }.bind(this), 'JSON');
     };
 
     /**
@@ -322,31 +294,15 @@ ImportEvents.Admin.Suggestions = (function($) {
 
         $suggestions.find('ul').empty();
 
-        $suggestions
-            .find('ul')
-            .append(
-                '<li><strong>' +
-                    suggestionString +
-                    ':</strong> <button type="button" class="notice-dismiss suggestion-hide" data-action="suggestions-close"></button></li>'
-            );
+        $suggestions.find('ul').append('<li><strong>' + suggestionString + ':</strong> <button type="button" class="notice-dismiss suggestion-hide" data-action="suggestions-close"></button></li>');
 
-        $.each(suggestions, function(index, suggestion) {
+        $.each(suggestions, function (index, suggestion) {
             var title = pagenow === 'event' ? suggestion.title : suggestion.title.rendered;
-            var pageText = title.replace('<span>', '').replace('</span>'),
-                regex = new RegExp('(' + term + ')', 'igm'),
-                highlighted = pageText.replace(regex, '<span>$1</span>');
+            var pageText = title.replace("<span>","").replace("</span>"),
+            regex = new RegExp("(" + term + ")", "igm"),
+            highlighted = pageText.replace(regex ,"<span>$1</span>");
 
-            $suggestions
-                .find('ul')
-                .append(
-                    '<li><a href="' +
-                        eventmanager.adminurl +
-                        'post.php?post=' +
-                        suggestion.id +
-                        '&action=edit" class="suggestion">' +
-                        highlighted +
-                        '</a></li>'
-                );
+            $suggestions.find('ul').append('<li><a href="' + eventmanager.adminurl + 'post.php?post=' + suggestion.id + '&action=edit" class="suggestion">' + highlighted + '</a></li>');
         });
 
         $('#titlewrap').append($suggestions);
@@ -358,13 +314,13 @@ ImportEvents.Admin.Suggestions = (function($) {
      * @return {void}
      */
     Suggestions.prototype.dismiss = function() {
-        $('#title-suggestions').slideUp(200, function() {
+        $('#title-suggestions').slideUp(200, function () {
             $('#title-suggestions').remove();
         });
     };
 
     Suggestions.prototype.switchName = function() {
-        switch (pagenow) {
+        switch(pagenow) {
             case 'organizer':
                 suggestionString = eventmanager.organizers + ' ' + eventmanager.with_similar_name;
                 break;
@@ -378,8 +334,7 @@ ImportEvents.Admin.Suggestions = (function($) {
                 suggestionString = eventmanager.packages + ' ' + eventmanager.with_similar_name;
                 break;
             case 'membership-card':
-                suggestionString =
-                    eventmanager.membership_cards + ' ' + eventmanager.with_similar_name;
+                suggestionString = eventmanager.membership_cards + ' ' + eventmanager.with_similar_name;
                 break;
             case 'guide':
                 suggestionString = eventmanager.guides + ' ' + eventmanager.with_similar_name;
@@ -390,42 +345,35 @@ ImportEvents.Admin.Suggestions = (function($) {
     };
 
     return new Suggestions();
+
 })(jQuery);
 
 ImportEvents = ImportEvents || {};
 ImportEvents.Admin = ImportEvents.Admin || {};
 
-ImportEvents.Admin.Validate = (function($) {
+ImportEvents.Admin.Validate = (function ($) {
     function Validate() {
-        $(document).on(
-            'click',
-            '#publish',
-            function(e) {
-                return this.post_title();
-            }.bind(this)
-        );
+        $(document).on('click', '#publish', function (e) {
+            return this.post_title();
+        }.bind(this));
 
-        $(document).on(
-            'keypress',
-            'input[name="post_title"]',
-            function(e) {
-                if (e.which != 13) {
-                    return true;
-                }
+        $(document).on('keypress', 'input[name="post_title"]', function (e) {
+            if (e.which != 13) {
+                return true;
+            }
 
-                return this.post_title();
-            }.bind(this)
-        );
+            return this.post_title();
+        }.bind(this));
     }
 
     Validate.prototype.image = function() {
         var $imported = $('body').hasClass('imported');
-        if (!$imported) {
+        if (! $imported) {
             var $img = $('#postimagediv').find('img');
             if ($img.length > 0) {
                 $('.require-image').remove();
             } else {
-                var message = eventmanager.require_image;
+                var message = eventmanager.require_image
                 this.showError('image', message);
                 return false;
             }
@@ -439,7 +387,7 @@ ImportEvents.Admin.Validate = (function($) {
         if ($title.val().length > 0) {
             $('.require-title').remove();
         } else {
-            var message = eventmanager.require_title;
+            var message = eventmanager.require_title
             this.showError('title', message);
             return false;
         }
@@ -447,37 +395,35 @@ ImportEvents.Admin.Validate = (function($) {
         return true;
     };
 
-    Validate.prototype.showError = function(field, message) {
-        setTimeout(function() {
+    Validate.prototype.showError = function(field, message){
+        setTimeout(function () {
             $('#ajax-loading').css('visibility', 'hidden');
         }, 100);
 
-        setTimeout(function() {
+        setTimeout(function () {
             $('#publish').removeClass('button-primary-disabled');
         }, 100);
 
-        if (!$('.require-' + field).length) {
-            $('#post').before(
-                '<div class="error require-' + field + '"><p>' + message + '</p></div>'
-            );
+        if (!$(".require-" + field).length) {
+            $('#post').before('<div class="error require-' + field + '"><p>' + message + '</p></div>');
         }
     };
 
     return new Validate();
+
 })(jQuery);
 
 ImportEvents = ImportEvents || {};
 ImportEvents.Prompt = ImportEvents.Prompt || {};
 
-ImportEvents.Prompt.Modal = (function($) {
+ImportEvents.Prompt.Modal = (function ($) {
+
     var isOpen = false;
 
     function Modal() {
-        $(
-            function() {
-                this.handleEvents();
-            }.bind(this)
-        );
+        $(function() {
+            this.handleEvents();
+        }.bind(this));
     }
 
     /**
@@ -486,32 +432,20 @@ ImportEvents.Prompt.Modal = (function($) {
      * @param  {} parentId
      * @return {void}
      */
-    Modal.prototype.open = function(url, parentId) {
-        $('body')
-            .addClass('lightbox-open')
-            .append(
-                '\
+    Modal.prototype.open = function (url, parentId) {
+        $('body').addClass('lightbox-open').append('\
             <div id="lightbox">\
                 <div class="lightbox-wrapper">\
-                    <button class="lightbox-close" data-lightbox-action="close">&times; ' +
-                    eventmanager.close +
-                    '</button>\
-                    <iframe class="lightbox-iframe" src="' +
-                    url +
-                    '" frameborder="0" allowtransparency></iframe>\
+                    <button class="lightbox-close" data-lightbox-action="close">&times; ' + eventmanager.close + '</button>\
+                    <iframe class="lightbox-iframe" src="' + url + '" frameborder="0" allowtransparency></iframe>\
                 </div>\
             </div>\
-        '
-            );
+        ');
 
-        if (typeof parentId != 'undefined') {
-            $('.lightbox-iframe').bind('load', function() {
-                var newContactForm = $(this)
-                    .contents()
-                    .find('#post');
-                newContactForm.append(
-                    '<input type="hidden" id="parentId" name="parentId" value="' + parentId + '" />'
-                );
+        if (typeof(parentId) != 'undefined') {
+            $(".lightbox-iframe").bind("load", function() {
+                var newContactForm = $(this).contents().find('#post');
+                newContactForm.append('<input type="hidden" id="parentId" name="parentId" value="' + parentId + '" />');
             });
         }
 
@@ -522,7 +456,7 @@ ImportEvents.Prompt.Modal = (function($) {
      * Close modal
      * @return {void}
      */
-    Modal.prototype.close = function() {
+    Modal.prototype.close = function () {
         var modalElement = $('.lightbox-iframe');
 
         $('body').removeClass('lightbox-open');
@@ -535,36 +469,34 @@ ImportEvents.Prompt.Modal = (function($) {
      * Handle events
      * @return {void}
      */
-    Modal.prototype.handleEvents = function() {
-        $(document).on(
-            'click',
-            '[data-lightbox-action="close"]',
-            function(e) {
-                e.preventDefault();
-                this.close();
-            }.bind(this)
-        );
+    Modal.prototype.handleEvents = function () {
+        $(document).on('click', '[data-lightbox-action="close"]', function (e) {
+            e.preventDefault();
+            this.close();
+        }.bind(this));
     };
 
     return new Modal();
+
 })(jQuery);
 
 ImportEvents = ImportEvents || {};
 ImportEvents.Admin = ImportEvents.Admin || {};
 
-ImportEvents.Admin.NewPostModal = (function($) {
-    function NewPostModal() {
-        $(
-            function() {
-                this.createTrigger('location', '.acf-field-576117c423a52');
-                this.createTrigger('organizer', '.acf-field-5922a161ab32f');
-                this.createTrigger('sponsor', '.acf-field-57a9d5f3804e1');
-                this.createTrigger('membership-card', '.acf-field-57c7ed92054e6');
-                this.createTrigger('membership-card', '.acf-field-581847f9642dc');
+ImportEvents.Admin.NewPostModal = (function ($) {
 
-                this.bindLaunchModal();
-            }.bind(this)
-        );
+    function NewPostModal() {
+        $(function(){
+
+            this.createTrigger('location', '.acf-field-576117c423a52');
+            this.createTrigger('organizer', '.acf-field-5922a161ab32f');
+            this.createTrigger('sponsor', '.acf-field-57a9d5f3804e1');
+            this.createTrigger('membership-card', '.acf-field-57c7ed92054e6');
+            this.createTrigger('membership-card', '.acf-field-581847f9642dc');
+
+            this.bindLaunchModal();
+
+        }.bind(this));
     }
 
     /**
@@ -576,15 +508,7 @@ ImportEvents.Admin.NewPostModal = (function($) {
     NewPostModal.prototype.createTrigger = function(postType, triggerClass) {
         if ($(triggerClass).length) {
             if (typeof eventmanager['new_' + postType] !== 'undefined') {
-                $(triggerClass).append(
-                    '<a class="createNewPost button" href="' +
-                        eventmanager.adminurl +
-                        'post-new.php?post_type=' +
-                        postType +
-                        '&lightbox=true">' +
-                        eventmanager['new_' + postType] +
-                        '</a>'
-                );
+               $(triggerClass).append('<a class="createNewPost button" href="' + eventmanager.adminurl + 'post-new.php?post_type=' + postType+ '&lightbox=true">' + eventmanager['new_' + postType] + '</a>');
             }
         }
     };
@@ -594,36 +518,35 @@ ImportEvents.Admin.NewPostModal = (function($) {
      * @return void
      */
     NewPostModal.prototype.bindLaunchModal = function() {
-        $(document).on('click', '.createNewPost', function(e) {
+        $(document).on('click','.createNewPost', function(e) {
             e.preventDefault();
             ImportEvents.Prompt.Modal.open($(this).attr('href'), $('#post_ID').val());
         });
     };
 
     return new NewPostModal();
+
 })(jQuery);
 
 ImportEvents = ImportEvents || {};
 ImportEvents.Prompt = ImportEvents.Prompt || {};
 
-ImportEvents.Prompt.Notice = (function($) {
+ImportEvents.Prompt.Notice = (function ($) {
+
     function Notice() {
-        $(document).on(
-            'click',
-            '.event-guidelines .notice-dismiss',
-            function(e) {
-                this.dismissInstructions();
-            }.bind(this)
-        );
+        $(document).on('click', '.event-guidelines .notice-dismiss', function (e) {
+            this.dismissInstructions();
+        }.bind(this));
     }
 
     Notice.prototype.dismissInstructions = function() {
         var data = {
-            action: 'dismiss',
+            action: 'dismiss'
         };
 
         $.post(ajaxurl, data);
     };
 
     return new Notice();
+
 })(jQuery);

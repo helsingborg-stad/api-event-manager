@@ -78,7 +78,7 @@ ImportEvents.Admin.Fields = (function($) {
      * Adds a button to duplicate occasions
      */
     Fields.prototype.duplicateOccasion = function() {
-        $('.acf-field-57611277ef032').each(function() {
+        $('.acf-field-5ce6a39f92cb8').each(function() {
             $(this).after(
                 '<div class="acf-field"><a href="#" class="duplicateOccasion button">' +
                     eventmanager.duplicate_occasion +
@@ -100,7 +100,9 @@ ImportEvents.Admin.Fields = (function($) {
                 exceptionInfo = $('div[data-name="occ_exeption_information"] input', $target).val(),
                 contentMode = $('div[data-name="content_mode"] input:checked', $target).val(),
                 tinyMceId = $('textarea[class="wp-editor-area"]', $target).attr('id'),
-                tinyeMceContent = '';
+                tinyeMceContent = '',
+                locationMode = $('div[data-name="location_mode"] input:checked', $target).val(),
+                location = $('div[data-name="location"] select option', $target).last();
 
             if (typeof tinyMCE !== 'undefined') {
                 tinyeMceContent = tinymce.get(tinyMceId).getContent();
@@ -129,6 +131,12 @@ ImportEvents.Admin.Fields = (function($) {
                 $('input[value="' + contentMode + '"]', $clonedRow)
                     .attr('checked', 'checked')
                     .trigger('change');
+                $('input[value="' + locationMode + '"]', $clonedRow)
+                    .attr('checked', 'checked')
+                    .trigger('change');
+                $('div[data-name="location"] select', $clonedRow).select2("trigger", "select", {
+                    data: { id: parseInt(location.attr('value')), text: location.text() }
+                });
 
                 if (typeof tinyMCE !== 'undefined') {
                     tinymce.get(newTinyMceId).setContent(tinyeMceContent);
@@ -392,51 +400,37 @@ ImportEvents.Admin.Fields = (function($) {
 ImportEvents = ImportEvents || {};
 ImportEvents.Admin = ImportEvents.Admin || {};
 
-ImportEvents.Admin.Guide = (function($) {
+ImportEvents.Admin.Guide = (function ($) {
+
     var select2_args_internal = {};
 
     function Guide() {
-        $(document).ready(
-            function() {
-                if (pagenow === 'guide') {
-                    this.onlySublocations();
+        $(document).ready(function () {
 
-                    // Populate objects when clicking the beacon tab
-                    $(document).on(
-                        'click',
-                        '.acf-tab-button[data-key="field_58ab0c6354b09"]',
-                        function() {
-                            this.populateBeaconObjects();
-                        }.bind(this)
-                    );
+            if (pagenow === 'guide') {
+                this.onlySublocations();
 
-                    // Populate objects when clicking the "add new row" button in beacon tab
-                    $(document).on(
-                        'click',
-                        '[data-name="guide_beacon"] [data-event="add-row"]',
-                        function() {
-                            setTimeout(
-                                function() {
-                                    var $row = $(
-                                        '[data-name="guide_beacon"] .acf-row:not(.acf-clone)'
-                                    ).last();
-                                    var $input = $row.find(
-                                        '[data-name="objects"] .acf-input input'
-                                    );
+                // Populate objects when clicking the beacon tab
+                $(document).on('click', '.acf-tab-button[data-key="field_58ab0c6354b09"]', function () {
+                    this.populateBeaconObjects();
+                }.bind(this));
 
-                                    $input.select2('destroy');
-                                    $input.select2({
-                                        data: this.getObjects(),
-                                        multiple: true,
-                                    });
-                                }.bind(this),
-                                1
-                            );
-                        }.bind(this)
-                    );
-                }
-            }.bind(this)
-        );
+                // Populate objects when clicking the "add new row" button in beacon tab
+                $(document).on('click', '[data-name="guide_beacon"] [data-event="add-row"]', function () {
+                    setTimeout(function () {
+                        var $row = $('[data-name="guide_beacon"] .acf-row:not(.acf-clone)').last();
+                        var $input = $row.find('[data-name="objects"] .acf-input input');
+
+                        $input.select2('destroy');
+                        $input.select2({
+                            data: this.getObjects(),
+                            multiple: true
+                        });
+                    }.bind(this), 1);
+                }.bind(this));
+            }
+
+        }.bind(this));
     }
 
     /**
@@ -444,7 +438,7 @@ ImportEvents.Admin.Guide = (function($) {
      * @return {void}
      */
     Guide.prototype.onlySublocations = function() {
-        acf.add_filter('select2_ajax_data', function(data, args, $input, $field) {
+        acf.add_filter('select2_ajax_data', function( data, args, $input, $field ){
             if (data.field_key !== 'field_58ab0c9554b0a') {
                 return data;
             }
@@ -466,15 +460,13 @@ ImportEvents.Admin.Guide = (function($) {
      * @return {void}
      */
     Guide.prototype.populateBeaconObjects = function() {
-        $('[data-name="objects"] select ~ input[type="hidden"]').each(
-            function(index, element) {
-                $(element).select2('destroy');
-                $(element).select2({
-                    data: this.getObjects(),
-                    multiple: true,
-                });
-            }.bind(this)
-        );
+        $('[data-name="objects"] select ~ input[type="hidden"]').each(function (index, element) {
+            $(element).select2('destroy');
+            $(element).select2({
+                data: this.getObjects(),
+                multiple: true
+            });
+        }.bind(this));
     };
 
     /**
@@ -484,28 +476,26 @@ ImportEvents.Admin.Guide = (function($) {
     Guide.prototype.getObjects = function() {
         var objects = [];
 
-        $('[data-name="guide_content_objects"] table tbody')
-            .first()
-            .children('tr.acf-row:not(.acf-clone)')
-            .each(function(index, item) {
-                var $item = $(item);
+        $('[data-name="guide_content_objects"] table tbody').first().children('tr.acf-row:not(.acf-clone)').each(function (index, item) {
+            var $item = $(item);
 
-                var uid = $item.find('[data-name="guide_object_uid"] input').val();
-                var title = $item.find('[data-name="guide_object_title"] input').val();
+            var uid = $item.find('[data-name="guide_object_uid"] input').val();
+            var title = $item.find('[data-name="guide_object_title"] input').val();
 
-                if (!uid) {
-                    uid = new Date().valueOf();
-                    $item.find('[data-name="guide_object_uid"] input').val(uid);
-                }
+            if (!uid) {
+                uid = new Date().valueOf();
+                $item.find('[data-name="guide_object_uid"] input').val(uid);
+            }
 
-                objects.push({
-                    id: uid,
-                    text: title,
-                });
+            objects.push({
+                id: uid,
+                text: title
             });
+        });
 
         return objects;
     };
 
     return new Guide();
+
 })(jQuery);

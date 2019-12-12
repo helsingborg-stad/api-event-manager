@@ -30,7 +30,6 @@ class Event extends \HbgEventImporter\Entity\PostManager
         $this->booking_link = DataCleaner::string($this->booking_link);
         $this->age_restriction = DataCleaner::string($this->age_restriction);
         $this->price_information = DataCleaner::string($this->price_information);
-        $this->image = DataCleaner::string($this->image);
     }
 
     /**
@@ -130,11 +129,14 @@ class Event extends \HbgEventImporter\Entity\PostManager
 
         // Save new occasions to occasion table
         foreach ($this->occasions as $o) {
-            $occasionError = $this->extractEventOccasion($o['start_date'], $o['end_date'], $o['door_time']);
+            $locationMode = isset($o['location_mode']) && !empty($o['location_mode']) ? $o['location_mode'] : null;
+            $location = isset($o['location']) && !empty($o['location']) ? $o['location'] : null;
+
+            $occasionError = $this->extractEventOccasion($o['start_date'], $o['end_date'], $o['door_time'], $locationMode, $location);
         }
 
         // Save new list of occasion to meta
-        $query = $wpdb->prepare("SELECT timestamp_start, timestamp_end, timestamp_door FROM $dbOccasions WHERE event = %d", $this->ID);
+        $query = $wpdb->prepare("SELECT timestamp_start, timestamp_end, timestamp_door, location_mode, location FROM $dbOccasions WHERE event = %d", $this->ID);
         $getOccasions = $wpdb->get_results($query, ARRAY_A);
         $newOccasions = array();
         foreach ($getOccasions as $occasion) {
@@ -142,6 +144,8 @@ class Event extends \HbgEventImporter\Entity\PostManager
                 'start_date' => date('Y-m-d H:i:s', $occasion['timestamp_start']),
                 'end_date' => date('Y-m-d H:i:s', $occasion['timestamp_end']),
                 'door_time' => date('Y-m-d H:i:s', $occasion['timestamp_door']),
+                'location_mode' => isset($occasion['location_mode']) && !empty($occasion['location_mode']) ? $occasion['location_mode'] : null,
+                'location' => isset($occasion['location']) && !empty($occasion['location']) ? $occasion['location'] : null,
             );
         }
 
@@ -152,7 +156,7 @@ class Event extends \HbgEventImporter\Entity\PostManager
         return $occasionError;
     }
 
-    public function extractEventOccasion($startDate, $endDate, $doorTime)
+    public function extractEventOccasion($startDate, $endDate, $doorTime, $locationMode, $location)
     {
         global $wpdb;
 
@@ -179,7 +183,9 @@ class Event extends \HbgEventImporter\Entity\PostManager
                     'event' => $eventId,
                     'timestamp_start' => $timestampStart,
                     'timestamp_end' => $timestampEnd,
-                    'timestamp_door' => $timestampDoor
+                    'timestamp_door' => $timestampDoor,
+                    'location_mode' => $locationMode,
+                    'location' => $location,
                 )
             );
 

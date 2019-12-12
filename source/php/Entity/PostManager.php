@@ -296,7 +296,7 @@ abstract class PostManager
 
         $url = str_replace(' ', '%20', $url);
         $headers = get_headers($url, 1);
-        if (!isset($url) || strlen($url) === 0 || !$this->isUrl($url) || $headers[0] != 'HTTP/1.1 200 OK') {
+        if (!isset($url) || strlen($url) === 0 || !wp_http_validate_url($url) || $headers[0] !== 'HTTP/1.1 200 OK') {
             return false;
         }
 
@@ -313,14 +313,17 @@ abstract class PostManager
             }
         }
 
-        $filename = sanitize_file_name(basename($url));
+        // Remove query string from filename
+        $filename = preg_replace('/\?.*/', '', $url);
+        // Sanitize the file name
+        $filename = sanitize_file_name(basename($filename));
         if (stripos(basename($url), '.aspx')) {
             $filename = md5($filename) . '.jpg';
         }
 
         // Bail if image already exists in library
-        if ($attachmentId = $this->attatchmentExists($uploadDir . '/' . basename($filename))) {
-            set_post_thumbnail($this->ID, $attachmentId);
+        if ($attachmentId = $this->attachmentExists($uploadDir . '/' . basename($filename))) {
+            set_post_thumbnail((int)$this->ID, (int)$attachmentId);
             return;
         }
 
@@ -352,26 +355,11 @@ abstract class PostManager
     }
 
     /**
-     * Validates url
-     * @param  string $url Url to validate
-     * @return boolean
-     */
-    private function isUrl($url)
-    {
-        if (is_string($url) && preg_match('/^(?:[;\/?:@&=+$,]|(?:[^\W_]|[-_.!~*\()\[\] ])|(?:%[\da-fA-F]{2}))*$/',
-                $url)) {
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
      * Checks if a attachment src already exists in media library
      * @param  string $src Media url
      * @return mixed
      */
-    private function attatchmentExists($src)
+    private function attachmentExists($src)
     {
         global $wpdb;
         $query = "SELECT ID FROM {$wpdb->posts} WHERE guid = '$src'";
