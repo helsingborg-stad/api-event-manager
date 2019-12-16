@@ -15,6 +15,7 @@ class LocationFields extends Fields
         add_action('rest_api_init', array($this, 'registerRestFields'));
         add_action('rest_api_init', array($this, 'registerRestRoute'));
         add_filter('rest_location_query', array($this, 'addCoordinateFilter'), 10, 2);
+        add_filter('rest_location_query', array($this, 'addUserGroupFilter'), 10, 2);
     }
 
     public function registerRestRoute()
@@ -153,6 +154,24 @@ class LocationFields extends Fields
             return str_replace(",", ".", get_field('manual_longitude', $object['id']));
         }
         return get_field('longitude', $object['id']);
+    }
+
+    /**
+     * Filter by group id
+     *
+     * @param  array           $args    The query arguments.
+     * @param  WP_REST_Request $request Full details about the request.
+     * @return array $args.
+     */
+    public function addUserGroupFilter($args, $request)
+    {
+        if ($groupId = $request->get_param('group-id')) {
+            $args['meta_key'] = 'user_groups';
+            $args['meta_value'] = sprintf(':"%s";', $groupId);
+            $args['meta_compare'] = 'LIKE';
+        }
+
+        return $args;
     }
 
     /**
