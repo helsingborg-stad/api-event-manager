@@ -181,6 +181,28 @@
             'return_format' => 'object',
             'ui' => 1,
         ),
+        7 => array(
+            'key' => 'field_5df88da56f5a9',
+            'label' => __('Group', 'event-manager'),
+            'name' => 'user_groups',
+            'type' => 'taxonomy',
+            'instructions' => '',
+            'required' => 1,
+            'conditional_logic' => 0,
+            'wrapper' => array(
+                'width' => '',
+                'class' => '',
+                'id' => '',
+            ),
+            'taxonomy' => 'user_groups',
+            'field_type' => 'select',
+            'allow_null' => 0,
+            'add_term' => 0,
+            'save_terms' => 1,
+            'load_terms' => 0,
+            'return_format' => 'id',
+            'multiple' => 0,
+        ),
     ),
     'location' => array(
         0 => array(
@@ -197,7 +219,7 @@
     'label_placement' => 'top',
     'instruction_placement' => 'label',
     'hide_on_screen' => '',
-    'active' => 1,
+    'active' => true,
     'description' => '',
 ));
 }
