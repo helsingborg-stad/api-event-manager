@@ -13,6 +13,7 @@ class NavigationFields extends Fields
     public function __construct()
     {
         add_action('rest_api_init', array($this, 'registerRestFields'));
+        add_filter('rest_navigation_query', array($this, 'addUserGroupFilter'), 10, 2);
     }
 
     /**
@@ -21,7 +22,8 @@ class NavigationFields extends Fields
      */
     public function registerRestFields()
     {
-        register_rest_field($this->taxonomy,
+        register_rest_field(
+            $this->taxonomy,
             'layout',
             array(
                 'get_callback'    => array($this, 'getSingleTaxMetaCallback'),
@@ -30,7 +32,8 @@ class NavigationFields extends Fields
             )
         );
 
-        register_rest_field($this->taxonomy,
+        register_rest_field(
+            $this->taxonomy,
             'object_list',
             array(
                 'get_callback'    => array($this, 'combineGuideOrganisation'),
@@ -38,6 +41,55 @@ class NavigationFields extends Fields
                 'schema'          => null,
             )
         );
+
+        register_rest_field(
+            $this->taxonomy,
+            'user_groups',
+            array(
+            'get_callback' => array($this, 'getTaxonomyTerm'),
+            'update_callback' => null,
+            'schema' => null,
+          )
+        );
+    }
+
+    /**
+      * Filter by group id
+      *
+      * @param  array           $args    The query arguments.
+      * @param  WP_REST_Request $request Full details about the request.
+      * @return array $args.
+      */
+    public function addUserGroupFilter($args, $request)
+    {
+        if ($groupId = $request->get_param('group-id')) {
+            $args['meta_key'] = 'user_groups';
+            $args['meta_value'] = intval($groupId);
+        }
+
+        return $args;
+    }
+
+    /**
+     * Get taxonomy term
+     * @return array
+     */
+    public function getTaxonomyTerm($object, $field_name, $request)
+    {
+        $taxonomy = get_field($field_name, $this->taxonomy . '_' . $object['id']);
+        if (empty($taxonomy)) {
+            return null;
+        }
+        // Collect term data
+        $term = get_term($taxonomy, $field_name);
+        // Create value array
+        $termData = array(
+          'id'    => $term->term_id ?? null,
+          'name'  => $term->name ?? null,
+          'slug'  => $term->slug ?? null
+        );
+
+        return $termData;
     }
 
     /**
