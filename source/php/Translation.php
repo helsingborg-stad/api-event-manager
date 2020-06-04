@@ -15,7 +15,6 @@ class Translation
             "guidegroup",
             "guide_kids",
             "guide_location",
-            "guide_beacon_namespace"
         );
 
         //Repeating fields
