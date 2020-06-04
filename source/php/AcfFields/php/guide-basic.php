@@ -492,7 +492,7 @@ if (function_exists('acf_add_local_field_group')) {
         ),
         11 => array(
             'key' => 'field_58ab0c6354b09',
-            'label' => __('Beacons', 'event-manager'),
+            'label' => __('Connect object to location', 'event-manager'),
             'name' => '',
             'type' => 'tab',
             'instructions' => '',
@@ -508,7 +508,7 @@ if (function_exists('acf_add_local_field_group')) {
         ),
         14 => array(
             'key' => 'field_58ab0b4454b08',
-            'label' => __('Beacon groups', 'event-manager'),
+            'label' => __('Connect object to location', 'event-manager'),
             'name' => 'guide_beacon',
             'type' => 'repeater',
             'instructions' => '',
