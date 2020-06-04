@@ -147,7 +147,7 @@ class DataCleaner
                 $termIds[] = (int)$term['term_id'];
             }
         }
-        wp_set_object_terms($post_id, $termIds, $taxonomy, false);
+        wp_set_object_terms($post_id, $termIds, $taxonomy, true);
         return;
     }
 
