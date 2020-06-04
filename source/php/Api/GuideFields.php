@@ -20,46 +20,9 @@ class GuideFields extends Fields
         add_action('rest_api_init', array($this, 'registerTaxonomyRestFields'));
 
         //Api filter querys
-        add_filter('rest_guide_query', array($this, 'addBeaconFilter'), 10, 2);
+        // add_filter('rest_guide_query', array($this, 'addBeaconFilter'), 10, 2);
         add_filter('rest_guide_query', array($this, 'addUserGroupFilter'), 10, 2);
         add_filter('rest_prepare_guide', array($this, 'addObjectFilter'), 6000, 3);
-    }
-
-     /**
-     * Filter by beacons
-     * @param  array           $args    The query arguments.
-     * @param  WP_REST_Request $request Full details about the request.
-     * @return array $args.
-     **/
-    public function addBeaconFilter($args, $request)
-    {
-        if (isset($_GET['beacon'])) {
-            $nid = isset($_GET['beacon']['nid']) ? $_GET['beacon']['nid'] : null;
-            $bid = isset($_GET['beacon']['bid']) ? $_GET['beacon']['bid'] : null; //Not used.
-
-            if (!is_null($nid)) {
-                $result = get_posts(array(
-                    'post_type'     => 'guide',
-                    'post_status'   => 'publish',
-                    'meta_key'      => 'guide_beacon_namespace',
-                    'meta_value'    => sanitize_text_field($nid)
-                ));
-
-                if (!empty($result)) {
-                    if (!is_array($args['post__in'])) {
-                        $args['post__in'] = [];
-                    }
-
-                    foreach ($result as $item) {
-                        $args['post__in'][] = $item->ID;
-                    }
-                } else {
-                    $args['post__in'][] = 0;
-                }
-            }
-        }
-
-        return $args;
     }
 
     /**
@@ -476,7 +439,6 @@ class GuideFields extends Fields
         $result             = array();
         $beacons            = $this->objectGetCallBack($object, 'guide_beacon', $request, true);
         $objects            = $this->getObjects($object, 'guide_content_objects', $request, true);
-        $beacon_namespace   = $this->stringGetCallBack($object, 'guide_beacon_namespace', $request, $formatted);
 
         if (!$beacons) {
             return null;
@@ -495,7 +457,6 @@ class GuideFields extends Fields
                 if (!empty($item['objects'])) {
                     $result[] = array(
                         'order' => $key,
-                        'nid' => $beacon_namespace,
                         'bid' => $item['beacon'],
                         'beacon_distance' => $item['distance'],
                         'content' => $item['objects'],
@@ -553,25 +514,6 @@ class GuideFields extends Fields
 
         //Return resutl
         return $result;
-    }
-
-    /**
-     * Create array with guide response data
-     * @return  array
-     * @version 0.3.28 Guides
-     */
-
-    public function postBeacon($object, $field_name, $request, $formatted = true)
-    {
-        $beacon = array(
-            'nid' => $this->stringGetCallBack($object, 'guide_beacon_namespace', $request, $formatted)
-        );
-
-        if (empty(array_filter($beacon))) {
-            return null;
-        } else {
-            return $beacon;
-        }
     }
 
     /**

@@ -1,7 +1,9 @@
 <?php 
 
-if (function_exists('acf_add_local_field_group')) {
-    acf_add_local_field_group(array(
+
+if (function_exists('acf_add_local_field_group')) {
+
+    acf_add_local_field_group(array(
     'key' => 'group_589497ca3741e',
     'title' => __('Basic Guide Settings', 'event-manager'),
     'fields' => array(
@@ -490,25 +492,6 @@
             ),
         ),
         7 => array(
-            'default_value' => '',
-            'maxlength' => '',
-            'placeholder' => '',
-            'prepend' => '',
-            'append' => '',
-            'key' => 'field_58ac5c65cdffe',
-            'label' => __('Beacon namespace', 'event-manager'),
-            'name' => 'guide_beacon_namespace',
-            'type' => 'text',
-            'instructions' => '',
-            'required' => 0,
-            'conditional_logic' => 0,
-            'wrapper' => array(
-                'width' => '',
-                'class' => '',
-                'id' => '',
-            ),
-        ),
-        8 => array(
             'sub_fields' => array(
                 0 => array(
                     'post_type' => array(
@@ -614,4 +597,5 @@
     'active' => 1,
     'description' => 'Manage main guide object details.',
 ));
-}
+
+}
