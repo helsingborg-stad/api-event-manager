@@ -1,22 +1,23 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Event Manager\n"
-"POT-Creation-Date: 2019-05-28 21:18+0200\n"
-"PO-Revision-Date: 2019-05-28 21:37+0200\n"
+"POT-Creation-Date: 2020-06-04 15:55+0200\n"
+"PO-Revision-Date: 2020-06-04 15:56+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
-"Language: sv\n"
+"Language: sv_SE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.2.3\n"
-"X-Poedit-Basepath: .\n"
+"X-Generator: Poedit 1.8.12\n"
+"X-Poedit-Basepath: ..\n"
 "X-Poedit-WPHeader: hbg-event-importer.php\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
 "esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
 "_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: *.js\n"
 
 #: source/php/AcfFields/php/arcgis.php:6
@@ -453,7 +454,7 @@ msgstr "Egen plats"
 #: source/php/AcfFields/php/event.php:332
 #: source/php/AcfFields/php/event.php:609
 #: source/php/AcfFields/php/event.php:625
-#: source/php/AcfFields/php/guide-basic.php:98
+#: source/php/AcfFields/php/guide-basic.php:100
 #: source/php/AcfFields/php/location.php:6
 #: source/php/AcfFields/php/recommendation.php:45
 #: source/php/PostTypes/Events.php:40 source/php/PostTypes/Locations.php:13
@@ -1478,132 +1479,132 @@ msgstr "Till"
 msgid "Select one or many user groups."
 msgstr "Välj en eller flera användargrupper."
 
-#: source/php/AcfFields/php/guide-basic.php:6
-#: source/php/AcfFields/php/guide-settings.php:6
+#: source/php/AcfFields/php/guide-basic.php:8
+#: source/php/AcfFields/php/guide-settings.php:8
 msgid "Basic Guide Settings"
 msgstr "Grundläggande guideinställningar"
 
-#: source/php/AcfFields/php/guide-basic.php:10
-#: source/php/AcfFields/php/guide-basic.php:216
-#: source/php/AcfFields/php/guide-settings.php:12
-#: source/php/AcfFields/php/guide-settings.php:106
+#: source/php/AcfFields/php/guide-basic.php:12
+#: source/php/AcfFields/php/guide-basic.php:218
+#: source/php/AcfFields/php/guide-settings.php:14
+#: source/php/AcfFields/php/guide-settings.php:108
 #: source/php/AcfFields/php/recommendation.php:10
 msgid "General"
 msgstr "Generellt"
 
-#: source/php/AcfFields/php/guide-basic.php:26
+#: source/php/AcfFields/php/guide-basic.php:28
 msgid "Guide tagline"
 msgstr "Guidens sammanfattning"
 
-#: source/php/AcfFields/php/guide-basic.php:29
+#: source/php/AcfFields/php/guide-basic.php:31
 msgid "Short tagline that descibes what this is about"
 msgstr "En kort text som beskriver vad guiden handlar om eller innehåller"
 
-#: source/php/AcfFields/php/guide-basic.php:38
+#: source/php/AcfFields/php/guide-basic.php:40
 msgid "E.g: Swedish contemporary glassware"
 msgstr "T.ex. Svenskt samtida glas"
 
-#: source/php/AcfFields/php/guide-basic.php:45
+#: source/php/AcfFields/php/guide-basic.php:47
 msgid "Date start"
 msgstr "Datum start"
 
-#: source/php/AcfFields/php/guide-basic.php:48
-#: source/php/AcfFields/php/guide-basic.php:65
+#: source/php/AcfFields/php/guide-basic.php:50
+#: source/php/AcfFields/php/guide-basic.php:67
 msgid "This field is strictly informative"
 msgstr ""
 "Det här fältet är endast informativt. Guiden avpubliceras inte automatiskt "
 "efter periodens slut."
 
-#: source/php/AcfFields/php/guide-basic.php:62
+#: source/php/AcfFields/php/guide-basic.php:64
 msgid "Date end"
 msgstr "Datum slut"
 
-#: source/php/AcfFields/php/guide-basic.php:79
+#: source/php/AcfFields/php/guide-basic.php:81
 msgid "Description"
 msgstr "Beskrivning"
 
-#: source/php/AcfFields/php/guide-basic.php:121
+#: source/php/AcfFields/php/guide-basic.php:123
 #: source/php/AcfFields/php/recommendation.php:68
 msgid "For kids"
 msgstr "För barn"
 
-#: source/php/AcfFields/php/guide-basic.php:133
+#: source/php/AcfFields/php/guide-basic.php:135
 msgid "This guide is har target group \"kids\"."
 msgstr "Den här guiden är anpassad för barn."
 
-#: source/php/AcfFields/php/guide-basic.php:140
+#: source/php/AcfFields/php/guide-basic.php:142
 msgid "Images (guide)"
 msgstr "Bilder (guide)"
 
-#: source/php/AcfFields/php/guide-basic.php:156
-#: source/php/AcfFields/php/guide-settings.php:72
+#: source/php/AcfFields/php/guide-basic.php:158
+#: source/php/AcfFields/php/guide-settings.php:74
 msgid "Guide images"
 msgstr "Guidebilder"
 
-#: source/php/AcfFields/php/guide-basic.php:181
-#: source/php/AcfFields/php/guide-settings.php:88
+#: source/php/AcfFields/php/guide-basic.php:183
+#: source/php/AcfFields/php/guide-settings.php:90
 msgid "Content objects"
 msgstr "Innehållsobjekt"
 
-#: source/php/AcfFields/php/guide-basic.php:197
-#: source/php/AcfFields/php/guide-settings.php:464
+#: source/php/AcfFields/php/guide-basic.php:199
+#: source/php/AcfFields/php/guide-settings.php:466
 msgid "Content (paintings, art, flowers etc.)"
 msgstr "Innehåll (tavlor, konstverk, träd etc.)"
 
-#: source/php/AcfFields/php/guide-basic.php:211
-#: source/php/AcfFields/php/guide-settings.php:461
+#: source/php/AcfFields/php/guide-basic.php:213
+#: source/php/AcfFields/php/guide-settings.php:463
 msgid "Add new object"
 msgstr "Lägg till nytt objekt"
 
-#: source/php/AcfFields/php/guide-basic.php:232
-#: source/php/AcfFields/php/guide-settings.php:125
+#: source/php/AcfFields/php/guide-basic.php:234
+#: source/php/AcfFields/php/guide-settings.php:127
 msgid "Object title"
 msgstr "Objektets titel"
 
-#: source/php/AcfFields/php/guide-basic.php:245
-#: source/php/AcfFields/php/guide-settings.php:121
+#: source/php/AcfFields/php/guide-basic.php:247
+#: source/php/AcfFields/php/guide-settings.php:123
 msgid "The title of the object"
 msgstr "Titeln på innehållsobjektet"
 
-#: source/php/AcfFields/php/guide-basic.php:251
-#: source/php/AcfFields/php/guide-settings.php:146
+#: source/php/AcfFields/php/guide-basic.php:253
+#: source/php/AcfFields/php/guide-settings.php:148
 msgid "Exhibition ID"
 msgstr "Utställnings ID"
 
-#: source/php/AcfFields/php/guide-basic.php:267
-#: source/php/AcfFields/php/guide-settings.php:143
+#: source/php/AcfFields/php/guide-basic.php:269
+#: source/php/AcfFields/php/guide-settings.php:145
 msgid "#"
 msgstr ""
 
-#: source/php/AcfFields/php/guide-basic.php:272
-#: source/php/AcfFields/php/guide-settings.php:165
+#: source/php/AcfFields/php/guide-basic.php:274
+#: source/php/AcfFields/php/guide-settings.php:167
 msgid "Object description"
 msgstr "Objektbeskrivning"
 
-#: source/php/AcfFields/php/guide-basic.php:291
-#: source/php/AcfFields/php/guide-settings.php:47
-#: source/php/AcfFields/php/guide-settings.php:181
+#: source/php/AcfFields/php/guide-basic.php:293
+#: source/php/AcfFields/php/guide-settings.php:49
+#: source/php/AcfFields/php/guide-settings.php:183
 #: source/php/AcfFields/php/recommendation.php:221
 msgid "Media"
 msgstr "Media"
 
-#: source/php/AcfFields/php/guide-basic.php:307
-#: source/php/AcfFields/php/guide-settings.php:206
+#: source/php/AcfFields/php/guide-basic.php:309
+#: source/php/AcfFields/php/guide-settings.php:208
 msgid "Object image"
 msgstr "Objektets bild"
 
-#: source/php/AcfFields/php/guide-basic.php:310
-#: source/php/AcfFields/php/guide-settings.php:209
+#: source/php/AcfFields/php/guide-basic.php:312
+#: source/php/AcfFields/php/guide-settings.php:211
 msgid "Multiple images in jpg or png format of the object."
 msgstr "En eller flera bilder i jpg eller png format."
 
-#: source/php/AcfFields/php/guide-basic.php:332
-#: source/php/AcfFields/php/guide-settings.php:225
+#: source/php/AcfFields/php/guide-basic.php:334
+#: source/php/AcfFields/php/guide-settings.php:227
 msgid "Object audio"
 msgstr "Ljud"
 
-#: source/php/AcfFields/php/guide-basic.php:335
-#: source/php/AcfFields/php/guide-settings.php:228
+#: source/php/AcfFields/php/guide-basic.php:337
+#: source/php/AcfFields/php/guide-settings.php:230
 msgid ""
 "An audiofile describing the object. This should be fairly compressed. "
 "Preferred format of the audio is AAC+ V2."
@@ -1611,13 +1612,13 @@ msgstr ""
 "En ljudfil som beskriver objektet. Filen bör vara rimligt komprimerad och "
 "vara av AAC+ V2 (m4a) format eller Mp3."
 
-#: source/php/AcfFields/php/guide-basic.php:351
-#: source/php/AcfFields/php/guide-settings.php:244
+#: source/php/AcfFields/php/guide-basic.php:353
+#: source/php/AcfFields/php/guide-settings.php:246
 msgid "Object video"
 msgstr "Film"
 
-#: source/php/AcfFields/php/guide-basic.php:354
-#: source/php/AcfFields/php/guide-settings.php:247
+#: source/php/AcfFields/php/guide-basic.php:356
+#: source/php/AcfFields/php/guide-settings.php:249
 msgid ""
 "An videofile describing the object. This should be fairly compressed. "
 "Preferred container of the video is MP4."
@@ -1625,19 +1626,19 @@ msgstr ""
 "En kortare video som beskrivet objektet. Tänk på att ett mindre filformat "
 "oftast resulterar i fler visningar. Föredraget format: Mp4."
 
-#: source/php/AcfFields/php/guide-basic.php:370
-#: source/php/AcfFields/php/guide-settings.php:260
+#: source/php/AcfFields/php/guide-basic.php:372
+#: source/php/AcfFields/php/guide-settings.php:262
 msgid "Länkar"
 msgstr "Länkar\t"
 
-#: source/php/AcfFields/php/guide-basic.php:386
-#: source/php/AcfFields/php/guide-settings.php:316
+#: source/php/AcfFields/php/guide-basic.php:388
+#: source/php/AcfFields/php/guide-settings.php:318
 #: source/php/AcfFields/php/recommendation.php:87
 msgid "Links & Resources"
 msgstr "Länkar och ytterligare resurser"
 
-#: source/php/AcfFields/php/guide-basic.php:389
-#: source/php/AcfFields/php/guide-settings.php:319
+#: source/php/AcfFields/php/guide-basic.php:391
+#: source/php/AcfFields/php/guide-settings.php:321
 msgid ""
 "Add links related to the object. This can be a website or a published file "
 "(on the web) containing further information about the object."
@@ -1645,126 +1646,98 @@ msgstr ""
 "Lägg till länkar som har mer information om rekommendationen. Det kan till "
 "exempel vara en hemsida eller fil (på webben)."
 
-#: source/php/AcfFields/php/guide-basic.php:400
-#: source/php/AcfFields/php/guide-settings.php:313
+#: source/php/AcfFields/php/guide-basic.php:402
+#: source/php/AcfFields/php/guide-settings.php:315
 #: source/php/AcfFields/php/recommendation.php:102
 msgid "Add new link"
 msgstr "Lägg till länk"
 
-#: source/php/AcfFields/php/guide-basic.php:405
-#: source/php/AcfFields/php/guide-settings.php:281
+#: source/php/AcfFields/php/guide-basic.php:407
+#: source/php/AcfFields/php/guide-settings.php:283
 #: source/php/AcfFields/php/recommendation.php:106
 msgid "Linkname"
 msgstr "Länknamn"
 
-#: source/php/AcfFields/php/guide-basic.php:424
-#: source/php/AcfFields/php/guide-settings.php:297
+#: source/php/AcfFields/php/guide-basic.php:426
+#: source/php/AcfFields/php/guide-settings.php:299
 #: source/php/AcfFields/php/recommendation.php:125
 msgid "Web adress"
 msgstr "Webbadress"
 
-#: source/php/AcfFields/php/guide-basic.php:442
-#: source/php/AcfFields/php/guide-settings.php:412
+#: source/php/AcfFields/php/guide-basic.php:444
+#: source/php/AcfFields/php/guide-settings.php:414
 msgid "Visibility"
 msgstr "Synbarhet"
 
-#: source/php/AcfFields/php/guide-basic.php:458
-#: source/php/AcfFields/php/guide-settings.php:431
+#: source/php/AcfFields/php/guide-basic.php:460
+#: source/php/AcfFields/php/guide-settings.php:433
 msgid "Object visibility"
 msgstr "Objektets synbarhet"
 
-#: source/php/AcfFields/php/guide-basic.php:470
-#: source/php/AcfFields/php/guide-settings.php:426
+#: source/php/AcfFields/php/guide-basic.php:472
+#: source/php/AcfFields/php/guide-settings.php:428
 msgid "Yes, show this object"
 msgstr "Ja, visa detta objekt"
 
-#: source/php/AcfFields/php/guide-basic.php:472
-#: source/php/AcfFields/php/guide-settings.php:428
+#: source/php/AcfFields/php/guide-basic.php:474
+#: source/php/AcfFields/php/guide-settings.php:430
 msgid "Show"
 msgstr "Visa"
 
-#: source/php/AcfFields/php/guide-basic.php:473
-#: source/php/AcfFields/php/guide-settings.php:429
+#: source/php/AcfFields/php/guide-basic.php:475
+#: source/php/AcfFields/php/guide-settings.php:431
 msgid "Hide"
 msgstr "Dölj"
 
-#: source/php/AcfFields/php/guide-basic.php:477
-#: source/php/AcfFields/php/guide-settings.php:445
+#: source/php/AcfFields/php/guide-basic.php:479
+#: source/php/AcfFields/php/guide-settings.php:447
+#: source/php/Vendor/acf-unique-id/acf-unique_id-v5.php:31
 msgid "Unique ID"
 msgstr "Unikt ID"
 
-#: source/php/AcfFields/php/guide-basic.php:493
-#: source/php/AcfFields/php/guide-settings.php:332
-#: source/php/AcfFields/php/guide-settings.php:480
-msgid "Beacons"
-msgstr "Beacons"
+#: source/php/AcfFields/php/guide-basic.php:495
+#: source/php/AcfFields/php/guide-basic.php:511
+msgid "Connect object to location"
+msgstr "Koppla objekt till plats"
 
-#: source/php/AcfFields/php/guide-basic.php:509
-#: source/php/AcfFields/php/guide-settings.php:499
-#: source/php/AcfFields/php/recommendation.php:316
-msgid "Beacon namespace"
-msgstr "Beacon namnrymd"
-
-#: source/php/AcfFields/php/guide-basic.php:528
-#: source/php/AcfFields/php/guide-settings.php:586
-msgid "Beacon groups"
-msgstr "Grupper av beacons"
-
-#: source/php/AcfFields/php/guide-basic.php:542
-#: source/php/AcfFields/php/guide-settings.php:583
+#: source/php/AcfFields/php/guide-basic.php:525
+#: source/php/AcfFields/php/guide-settings.php:566
 msgid "Lägg till grupp"
 msgstr "Lägg till grupp"
 
-#: source/php/AcfFields/php/guide-basic.php:547
+#: source/php/AcfFields/php/guide-basic.php:530
 #: source/php/AcfFields/php/guide-group-settings.php:92
-#: source/php/AcfFields/php/guide-settings.php:524
+#: source/php/AcfFields/php/guide-settings.php:507
 msgid "Plats"
 msgstr "Plats"
 
-#: source/php/AcfFields/php/guide-basic.php:570
-#: source/php/AcfFields/php/guide-settings.php:548
+#: source/php/AcfFields/php/guide-basic.php:553
+#: source/php/AcfFields/php/guide-settings.php:531
 msgid "Objects"
 msgstr "Innehållsobjekt"
 
-#: source/php/AcfFields/php/guide-basic.php:594
-#: source/php/AcfFields/php/guide-settings.php:567
-#: source/php/AcfFields/php/recommendation.php:335
-msgid "Beacon ID"
-msgstr "Beacon ID"
-
-#: source/php/AcfFields/php/guide-basic.php:613
-#: source/php/AcfFields/php/recommendation.php:354
-msgid "Beacon distance"
-msgstr "Avstånd till beaconsändare"
-
-#: source/php/AcfFields/php/guide-basic.php:630
-#: source/php/AcfFields/php/guide-settings.php:386
-#: source/php/AcfFields/php/recommendation.php:368
-msgid "meters"
-msgstr "meter"
-
-#: source/php/AcfFields/php/guide-content-type.php:6
+#: source/php/AcfFields/php/guide-content-type.php:8
 msgid "Type of guide"
 msgstr "Typ av guide"
 
-#: source/php/AcfFields/php/guide-content-type.php:10
+#: source/php/AcfFields/php/guide-content-type.php:12
 msgid "Select content type"
 msgstr "Välj innehållstyp"
 
-#: source/php/AcfFields/php/guide-content-type.php:13
-msgid "Select trail for wider areas or guide for more narrow areas."
+#: source/php/AcfFields/php/guide-content-type.php:15
+msgid "Select tour for wider areas or guide for more narrow areas."
 msgstr ""
-"Välj slinga för större områden (t.ex stadsvandring) och guide för mindre "
+"Välj rundtur för större områden (t.ex stadsvandring) och guide för mindre "
 "områden (t.ex en inomhusguide)"
 
-#: source/php/AcfFields/php/guide-content-type.php:22
+#: source/php/AcfFields/php/guide-content-type.php:24
 #: source/php/PostTypes/Guides.php:13
 msgid "Guide"
 msgstr "Guide"
 
-#: source/php/AcfFields/php/guide-content-type.php:23
-msgid "Trail"
-msgstr "Slinga"
+#: source/php/AcfFields/php/guide-content-type.php:25
+msgid "Tour"
+msgstr "Rundtur"
 
 #: source/php/AcfFields/php/guide-group-notices.php:14
 msgid "Vad vill du säga? "
@@ -1943,25 +1916,48 @@ msgstr "Välj ut innehåll manuellt (rekommendationer)"
 msgid "Include these recommendations"
 msgstr "Inkludera följande rekommendationer"
 
-#: source/php/AcfFields/php/guide-settings.php:31
+#: source/php/AcfFields/php/guide-navigation.php:186
+msgid "Group"
+msgstr ""
+
+#: source/php/AcfFields/php/guide-settings.php:33
 msgid "Beskrivning"
 msgstr "Beskrivning"
 
-#: source/php/AcfFields/php/guide-settings.php:359
+#: source/php/AcfFields/php/guide-settings.php:334
+#: source/php/AcfFields/php/guide-settings.php:482
+msgid "Beacons"
+msgstr "Beacons"
+
+#: source/php/AcfFields/php/guide-settings.php:361
 msgid "Object beacon ID"
 msgstr "Objektets beacon ID"
 
-#: source/php/AcfFields/php/guide-settings.php:362
+#: source/php/AcfFields/php/guide-settings.php:364
 msgid "A unique id for a specific    bluetooth beacon."
 msgstr "Ett unikt id för att identifiera en specifik beacon."
 
 #: source/php/AcfFields/php/guide-settings.php:388
+#: source/php/AcfFields/php/recommendation.php:368
+msgid "meters"
+msgstr "meter"
+
+#: source/php/AcfFields/php/guide-settings.php:390
 msgid "Beacon trigger distance"
 msgstr "Maximalt avstånd till beacon"
 
-#: source/php/AcfFields/php/guide-settings.php:391
+#: source/php/AcfFields/php/guide-settings.php:393
 msgid "Distance that the beacon should be triggered at."
 msgstr "Avstånd som ska trigga beacon-sändare."
+
+#: source/php/AcfFields/php/guide-settings.php:550
+#: source/php/AcfFields/php/recommendation.php:335
+msgid "Beacon ID"
+msgstr "Beacon ID"
+
+#: source/php/AcfFields/php/guide-settings.php:569
+msgid "Beacon groups"
+msgstr "Grupper av beacons"
 
 #: source/php/AcfFields/php/internal_event.php:6
 msgid "Internal event"
@@ -1972,10 +1968,28 @@ msgid "Select if this is an internal event."
 msgstr "Välj om evenemanget är internt."
 
 #: source/php/AcfFields/php/internal_event.php:24 source/php/App.php:244
+#: source/php/Vendor/acf-field-date-time-picker/date_time_picker-v3.php:187
+#: source/php/Vendor/acf-field-date-time-picker/date_time_picker-v3.php:226
+#: source/php/Vendor/acf-field-date-time-picker/date_time_picker-v3.php:246
+#: source/php/Vendor/acf-field-date-time-picker/date_time_picker-v4.php:162
+#: source/php/Vendor/acf-field-date-time-picker/date_time_picker-v4.php:201
+#: source/php/Vendor/acf-field-date-time-picker/date_time_picker-v4.php:221
+#: source/php/Vendor/acf-field-date-time-picker/date_time_picker-v5.php:95
+#: source/php/Vendor/acf-field-date-time-picker/date_time_picker-v5.php:120
+#: source/php/Vendor/acf-field-date-time-picker/date_time_picker-v5.php:133
 msgid "Yes"
 msgstr "Ja"
 
 #: source/php/AcfFields/php/internal_event.php:25 source/php/App.php:245
+#: source/php/Vendor/acf-field-date-time-picker/date_time_picker-v3.php:188
+#: source/php/Vendor/acf-field-date-time-picker/date_time_picker-v3.php:227
+#: source/php/Vendor/acf-field-date-time-picker/date_time_picker-v3.php:247
+#: source/php/Vendor/acf-field-date-time-picker/date_time_picker-v4.php:163
+#: source/php/Vendor/acf-field-date-time-picker/date_time_picker-v4.php:202
+#: source/php/Vendor/acf-field-date-time-picker/date_time_picker-v4.php:222
+#: source/php/Vendor/acf-field-date-time-picker/date_time_picker-v5.php:96
+#: source/php/Vendor/acf-field-date-time-picker/date_time_picker-v5.php:121
+#: source/php/Vendor/acf-field-date-time-picker/date_time_picker-v5.php:134
 msgid "No"
 msgstr "Nej"
 
@@ -2284,6 +2298,14 @@ msgstr ""
 msgid "Beacon"
 msgstr "Beacon"
 
+#: source/php/AcfFields/php/recommendation.php:316
+msgid "Beacon namespace"
+msgstr "Beacon namnrymd"
+
+#: source/php/AcfFields/php/recommendation.php:354
+msgid "Beacon distance"
+msgstr "Avstånd till beaconsändare"
+
 #: source/php/AcfFields/php/recommendation.php:375
 msgid "Beacon location"
 msgstr "Plats för beacon"
@@ -2560,18 +2582,30 @@ msgid "Choose time"
 msgstr "Välj tidpunkt"
 
 #: source/php/App.php:234
+#: source/php/Vendor/acf-field-date-time-picker/date_time_picker-v3.php:432
+#: source/php/Vendor/acf-field-date-time-picker/date_time_picker-v4.php:400
+#: source/php/Vendor/acf-field-date-time-picker/date_time_picker-v5.php:334
 msgid "Time"
 msgstr "Tid"
 
 #: source/php/App.php:235
+#: source/php/Vendor/acf-field-date-time-picker/date_time_picker-v3.php:433
+#: source/php/Vendor/acf-field-date-time-picker/date_time_picker-v4.php:401
+#: source/php/Vendor/acf-field-date-time-picker/date_time_picker-v5.php:335
 msgid "Hour"
 msgstr "Timme"
 
 #: source/php/App.php:236
+#: source/php/Vendor/acf-field-date-time-picker/date_time_picker-v3.php:434
+#: source/php/Vendor/acf-field-date-time-picker/date_time_picker-v4.php:402
+#: source/php/Vendor/acf-field-date-time-picker/date_time_picker-v5.php:336
 msgid "Minute"
 msgstr "Minut"
 
 #: source/php/App.php:237
+#: source/php/Vendor/acf-field-date-time-picker/date_time_picker-v3.php:426
+#: source/php/Vendor/acf-field-date-time-picker/date_time_picker-v4.php:394
+#: source/php/Vendor/acf-field-date-time-picker/date_time_picker-v5.php:328
 msgid "Done"
 msgstr "Klar"
 
@@ -3330,6 +3364,191 @@ msgstr "Dina organisationer"
 msgid "There are no groups assigned to your account."
 msgstr "Du ingår inte i någon organisation."
 
+#: source/php/Vendor/AcfExportManager.php:368
+msgid "Export with AcfExportManager"
+msgstr ""
+
+#: source/php/Vendor/AcfExportManager.php:405
+#, php-format
+msgid "Exported %d fieldgroup(s)."
+msgstr ""
+
+#: source/php/Vendor/acf-field-date-time-picker/date_time_picker-v3.php:28
+#: source/php/Vendor/acf-field-date-time-picker/date_time_picker-v3.php:138
+#: source/php/Vendor/acf-field-date-time-picker/date_time_picker-v4.php:24
+#: source/php/Vendor/acf-field-date-time-picker/date_time_picker-v4.php:84
+#: source/php/Vendor/acf-field-date-time-picker/date_time_picker-v5.php:19
+#: source/php/Vendor/acf-field-date-time-picker/date_time_picker-v5.php:67
+msgid "Date and Time Picker"
+msgstr ""
+
+#: source/php/Vendor/acf-field-date-time-picker/date_time_picker-v3.php:31
+#: source/php/Vendor/acf-field-date-time-picker/date_time_picker-v4.php:28
+#: source/php/Vendor/acf-field-date-time-picker/date_time_picker-v5.php:23
+msgid "Choose Time"
+msgstr ""
+
+#: source/php/Vendor/acf-field-date-time-picker/date_time_picker-v3.php:128
+#: source/php/Vendor/acf-field-date-time-picker/date_time_picker-v4.php:74
+#: source/php/Vendor/acf-field-date-time-picker/date_time_picker-v5.php:62
+msgid "Date and Time Picker?"
+msgstr ""
+
+#: source/php/Vendor/acf-field-date-time-picker/date_time_picker-v3.php:139
+#: source/php/Vendor/acf-field-date-time-picker/date_time_picker-v4.php:85
+#: source/php/Vendor/acf-field-date-time-picker/date_time_picker-v5.php:68
+msgid "Time Picker"
+msgstr ""
+
+#: source/php/Vendor/acf-field-date-time-picker/date_time_picker-v3.php:147
+#: source/php/Vendor/acf-field-date-time-picker/date_time_picker-v4.php:93
+#: source/php/Vendor/acf-field-date-time-picker/date_time_picker-v5.php:74
+msgid "Date Format"
+msgstr ""
+
+#: source/php/Vendor/acf-field-date-time-picker/date_time_picker-v3.php:148
+msgid "eg. mm/dd/yy. read more about"
+msgstr ""
+
+#: source/php/Vendor/acf-field-date-time-picker/date_time_picker-v3.php:162
+#: source/php/Vendor/acf-field-date-time-picker/date_time_picker-v4.php:124
+#: source/php/Vendor/acf-field-date-time-picker/date_time_picker-v5.php:82
+msgid "Time Format"
+msgstr ""
+
+#: source/php/Vendor/acf-field-date-time-picker/date_time_picker-v3.php:163
+#: source/php/Vendor/acf-field-date-time-picker/date_time_picker-v4.php:125
+#: source/php/Vendor/acf-field-date-time-picker/date_time_picker-v5.php:83
+#, php-format
+msgid ""
+"eg. hh:mm. read more about <a href=\"%s\" target=\"_blank\">formatting  "
+"time</a>"
+msgstr ""
+
+#: source/php/Vendor/acf-field-date-time-picker/date_time_picker-v3.php:177
+#: source/php/Vendor/acf-field-date-time-picker/date_time_picker-v4.php:152
+#: source/php/Vendor/acf-field-date-time-picker/date_time_picker-v5.php:90
+msgid "Display Week Number?"
+msgstr ""
+
+#: source/php/Vendor/acf-field-date-time-picker/date_time_picker-v3.php:196
+msgid "Time Picker Style?"
+msgstr ""
+
+#: source/php/Vendor/acf-field-date-time-picker/date_time_picker-v3.php:206
+#: source/php/Vendor/acf-field-date-time-picker/date_time_picker-v4.php:181
+#: source/php/Vendor/acf-field-date-time-picker/date_time_picker-v5.php:107
+msgid "Slider"
+msgstr ""
+
+#: source/php/Vendor/acf-field-date-time-picker/date_time_picker-v3.php:207
+#: source/php/Vendor/acf-field-date-time-picker/date_time_picker-v4.php:182
+#: source/php/Vendor/acf-field-date-time-picker/date_time_picker-v5.php:108
+msgid "Dropdown"
+msgstr ""
+
+#: source/php/Vendor/acf-field-date-time-picker/date_time_picker-v3.php:215
+#: source/php/Vendor/acf-field-date-time-picker/date_time_picker-v4.php:190
+#: source/php/Vendor/acf-field-date-time-picker/date_time_picker-v5.php:114
+msgid "Save as timestamp?"
+msgstr ""
+
+#: source/php/Vendor/acf-field-date-time-picker/date_time_picker-v3.php:216
+#: source/php/Vendor/acf-field-date-time-picker/date_time_picker-v4.php:191
+#: source/php/Vendor/acf-field-date-time-picker/date_time_picker-v5.php:115
+#, php-format
+msgid ""
+"Most users should leave this untouched, only set it to \"No\" if you need a "
+"date and time format not supported by <a href=\"%s\" target=\"_blank"
+"\">strtotime</a>"
+msgstr ""
+
+#: source/php/Vendor/acf-field-date-time-picker/date_time_picker-v3.php:235
+msgid "Get field as a timestamp?"
+msgstr ""
+
+#: source/php/Vendor/acf-field-date-time-picker/date_time_picker-v3.php:236
+#: source/php/Vendor/acf-field-date-time-picker/date_time_picker-v4.php:211
+#: source/php/Vendor/acf-field-date-time-picker/date_time_picker-v5.php:128
+#, php-format
+msgid ""
+"Most users should leave this untouched, only set it to \"Yes\" if you need "
+"get the  date and time field as a timestamp using  <a href=\"%s\" target="
+"\"_blank\">the_field()</a> or <a href=\"%s\" target=\"_blank\">get_field()</"
+"a> "
+msgstr ""
+
+#: source/php/Vendor/acf-field-date-time-picker/date_time_picker-v3.php:427
+#: source/php/Vendor/acf-field-date-time-picker/date_time_picker-v4.php:395
+#: source/php/Vendor/acf-field-date-time-picker/date_time_picker-v5.php:329
+msgid "Today"
+msgstr "Idag"
+
+#: source/php/Vendor/acf-field-date-time-picker/date_time_picker-v3.php:428
+#: source/php/Vendor/acf-field-date-time-picker/date_time_picker-v4.php:396
+#: source/php/Vendor/acf-field-date-time-picker/date_time_picker-v5.php:330
+msgid "Prev"
+msgstr "Föregående"
+
+#: source/php/Vendor/acf-field-date-time-picker/date_time_picker-v3.php:429
+#: source/php/Vendor/acf-field-date-time-picker/date_time_picker-v4.php:397
+#: source/php/Vendor/acf-field-date-time-picker/date_time_picker-v5.php:331
+msgid "Next"
+msgstr "Nästa"
+
+#: source/php/Vendor/acf-field-date-time-picker/date_time_picker-v3.php:430
+#: source/php/Vendor/acf-field-date-time-picker/date_time_picker-v4.php:398
+#: source/php/Vendor/acf-field-date-time-picker/date_time_picker-v5.php:332
+msgid "Show a different month"
+msgstr ""
+
+#: source/php/Vendor/acf-field-date-time-picker/date_time_picker-v3.php:431
+#: source/php/Vendor/acf-field-date-time-picker/date_time_picker-v4.php:399
+#: source/php/Vendor/acf-field-date-time-picker/date_time_picker-v5.php:333
+msgid "Wk"
+msgstr ""
+
+#: source/php/Vendor/acf-field-date-time-picker/date_time_picker-v3.php:435
+#: source/php/Vendor/acf-field-date-time-picker/date_time_picker-v4.php:403
+#: source/php/Vendor/acf-field-date-time-picker/date_time_picker-v5.php:337
+msgid "Second"
+msgstr ""
+
+#: source/php/Vendor/acf-field-date-time-picker/date_time_picker-v3.php:436
+#: source/php/Vendor/acf-field-date-time-picker/date_time_picker-v4.php:404
+#: source/php/Vendor/acf-field-date-time-picker/date_time_picker-v5.php:338
+msgid "Millisecond"
+msgstr ""
+
+#: source/php/Vendor/acf-field-date-time-picker/date_time_picker-v3.php:437
+#: source/php/Vendor/acf-field-date-time-picker/date_time_picker-v4.php:405
+#: source/php/Vendor/acf-field-date-time-picker/date_time_picker-v5.php:339
+msgid "Time Zone"
+msgstr ""
+
+#: source/php/Vendor/acf-field-date-time-picker/date_time_picker-v4.php:25
+#: source/php/Vendor/acf-field-date-time-picker/date_time_picker-v5.php:21
+msgid "jQuery"
+msgstr ""
+
+#: source/php/Vendor/acf-field-date-time-picker/date_time_picker-v4.php:94
+#: source/php/Vendor/acf-field-date-time-picker/date_time_picker-v5.php:75
+#, php-format
+msgid ""
+"eg. mm/dd/yy. read more about <a href=\"%s\" target=\"_blank\">formatting  "
+"date</a>"
+msgstr ""
+
+#: source/php/Vendor/acf-field-date-time-picker/date_time_picker-v4.php:171
+#: source/php/Vendor/acf-field-date-time-picker/date_time_picker-v5.php:102
+msgid "Time Picker style?"
+msgstr ""
+
+#: source/php/Vendor/acf-field-date-time-picker/date_time_picker-v4.php:210
+#: source/php/Vendor/acf-field-date-time-picker/date_time_picker-v5.php:127
+msgid "Get field as timestamp?"
+msgstr ""
+
 #. Plugin Name of the plugin/theme
 msgid "Event Manager"
 msgstr "Eventhanteraren (Event manager)"
@@ -3351,6 +3570,14 @@ msgstr ""
 #. Author URI of the plugin/theme
 msgid "http://www.helsingborg.se"
 msgstr ""
+
+#~ msgid "Select trail for wider areas or guide for more narrow areas."
+#~ msgstr ""
+#~ "Välj slinga för större områden (t.ex stadsvandring) och guide för mindre "
+#~ "områden (t.ex en inomhusguide)"
+
+#~ msgid "Trail"
+#~ msgstr "Slinga"
 
 #~ msgid "Organizer link"
 #~ msgstr "Webbplats"
@@ -3378,9 +3605,6 @@ msgstr ""
 
 #~ msgid "Time interval"
 #~ msgstr "Tidsperiod"
-
-#~ msgid "Today"
-#~ msgstr "Idag"
 
 #~ msgid "Tomorrow"
 #~ msgstr "I morgon"
@@ -4217,12 +4441,6 @@ msgstr ""
 
 #~ msgid "phone"
 #~ msgstr "telefon"
-
-#~ msgid "Prev"
-#~ msgstr "Föregående"
-
-#~ msgid "Next"
-#~ msgstr "Nästa"
 
 #~ msgctxt "post type name"
 #~ msgid "Contact"
