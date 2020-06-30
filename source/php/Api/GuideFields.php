@@ -20,7 +20,6 @@ class GuideFields extends Fields
         add_action('rest_api_init', array($this, 'registerTaxonomyRestFields'));
 
         //Api filter querys
-        // add_filter('rest_guide_query', array($this, 'addBeaconFilter'), 10, 2);
         add_filter('rest_guide_query', array($this, 'addUserGroupFilter'), 10, 2);
         add_filter('rest_prepare_guide', array($this, 'addObjectFilter'), 6000, 3);
     }
