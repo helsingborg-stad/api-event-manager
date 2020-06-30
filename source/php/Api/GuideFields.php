@@ -225,31 +225,6 @@ class GuideFields extends Fields
             )
         );
 
-        //TODO: REMOVE DEPRICATED
-        register_rest_field($this->postType,
-            'guideBeacon',
-            array(
-                'get_callback' => array($this, 'postBeacon'),
-                'schema' => array(
-                    'description' => 'Depricated: Objects of this guide.',
-                    'type' => 'object',
-                    'context' => array('view', 'embed')
-                )
-            )
-        );
-
-        register_rest_field($this->postType,
-            'guide_beacon',
-            array(
-                'get_callback' => array($this, 'postBeacon'),
-                'schema' => array(
-                    'description' => 'Objects of this guide.',
-                    'type' => 'object',
-                    'context' => array('view', 'embed')
-                )
-            )
-        );
-
         // Guide media objects
         register_rest_field($this->postType,
             'guide_location',
@@ -278,19 +253,6 @@ class GuideFields extends Fields
             )
         );
 
-        //TODO: REMOVE DEPRICATED
-        register_rest_field($this->postType,
-            'contentObjects',
-            array(
-                'get_callback' => array($this, 'postObjects'),
-                'schema' => array(
-                    'description' => 'Depricated: Objects of this guide.',
-                    'type' => 'object',
-                    'context' => array('view', 'embed')
-                )
-            )
-        );
-
         register_rest_field($this->postType,
             'content_objects',
             array(
@@ -303,38 +265,12 @@ class GuideFields extends Fields
             )
         );
 
-         //TODO: REMOVE DEPRICATED
-        register_rest_field($this->postType,
-            'subAttractions',
-            array(
-                'get_callback' => array($this, 'subAttractionBeacons'),
-                'schema' => array(
-                    'description' => 'Depricated: Describes the guides colors, logo, moodimage and main location.',
-                    'type' => 'object',
-                    'context' => array('view', 'embed')
-                )
-            )
-        );
-
         register_rest_field($this->postType,
             'sub_attractions',
             array(
                 'get_callback' => array($this, 'subAttractionBeacons'),
                 'schema' => array(
                     'description' => 'Describes the guides colors, logo, moodimage and main location.',
-                    'type' => 'object',
-                    'context' => array('view', 'embed')
-                )
-            )
-        );
-
-        //TODO: REMOVE DEPRICATED
-        register_rest_field($this->postType,
-            'orphanContentObjects',
-            array(
-                'get_callback' => array($this, 'orphanPostObjects'),
-                'schema' => array(
-                    'description' => 'Depricated: Objects of this guide.',
                     'type' => 'object',
                     'context' => array('view', 'embed')
                 )
