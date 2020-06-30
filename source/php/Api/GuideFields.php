@@ -114,7 +114,7 @@ class GuideFields extends Fields
      * @return  void
      * @version 0.3.28 creating consumer accessable meta values.
      */
-    public static function registerTaxonomyRestFields()
+    public function registerTaxonomyRestFields()
     {
         register_rest_field($this->taxonomyName,
             'apperance',
@@ -158,7 +158,7 @@ class GuideFields extends Fields
      * @return  void
      * @version 0.3.28 creating consumer accessable meta values.
      */
-    public static function registerRestFields()
+    public function registerRestFields()
     {
 
         // Embed type of guide as property
