@@ -20,46 +20,8 @@ class GuideFields extends Fields
         add_action('rest_api_init', array($this, 'registerTaxonomyRestFields'));
 
         //Api filter querys
-        add_filter('rest_guide_query', array($this, 'addBeaconFilter'), 10, 2);
         add_filter('rest_guide_query', array($this, 'addUserGroupFilter'), 10, 2);
         add_filter('rest_prepare_guide', array($this, 'addObjectFilter'), 6000, 3);
-    }
-
-     /**
-     * Filter by beacons
-     * @param  array           $args    The query arguments.
-     * @param  WP_REST_Request $request Full details about the request.
-     * @return array $args.
-     **/
-    public function addBeaconFilter($args, $request)
-    {
-        if (isset($_GET['beacon'])) {
-            $nid = isset($_GET['beacon']['nid']) ? $_GET['beacon']['nid'] : null;
-            $bid = isset($_GET['beacon']['bid']) ? $_GET['beacon']['bid'] : null; //Not used.
-
-            if (!is_null($nid)) {
-                $result = get_posts(array(
-                    'post_type'     => 'guide',
-                    'post_status'   => 'publish',
-                    'meta_key'      => 'guide_beacon_namespace',
-                    'meta_value'    => sanitize_text_field($nid)
-                ));
-
-                if (!empty($result)) {
-                    if (!is_array($args['post__in'])) {
-                        $args['post__in'] = [];
-                    }
-
-                    foreach ($result as $item) {
-                        $args['post__in'][] = $item->ID;
-                    }
-                } else {
-                    $args['post__in'][] = 0;
-                }
-            }
-        }
-
-        return $args;
     }
 
     /**
@@ -114,7 +76,7 @@ class GuideFields extends Fields
      * @return  void
      * @version 0.3.28 creating consumer accessable meta values.
      */
-    public static function registerTaxonomyRestFields()
+    public function registerTaxonomyRestFields()
     {
         register_rest_field($this->taxonomyName,
             'apperance',
@@ -158,7 +120,7 @@ class GuideFields extends Fields
      * @return  void
      * @version 0.3.28 creating consumer accessable meta values.
      */
-    public static function registerRestFields()
+    public function registerRestFields()
     {
 
         // Embed type of guide as property
@@ -262,31 +224,6 @@ class GuideFields extends Fields
             )
         );
 
-        //TODO: REMOVE DEPRICATED
-        register_rest_field($this->postType,
-            'guideBeacon',
-            array(
-                'get_callback' => array($this, 'postBeacon'),
-                'schema' => array(
-                    'description' => 'Depricated: Objects of this guide.',
-                    'type' => 'object',
-                    'context' => array('view', 'embed')
-                )
-            )
-        );
-
-        register_rest_field($this->postType,
-            'guide_beacon',
-            array(
-                'get_callback' => array($this, 'postBeacon'),
-                'schema' => array(
-                    'description' => 'Objects of this guide.',
-                    'type' => 'object',
-                    'context' => array('view', 'embed')
-                )
-            )
-        );
-
         // Guide media objects
         register_rest_field($this->postType,
             'guide_location',
@@ -315,19 +252,6 @@ class GuideFields extends Fields
             )
         );
 
-        //TODO: REMOVE DEPRICATED
-        register_rest_field($this->postType,
-            'contentObjects',
-            array(
-                'get_callback' => array($this, 'postObjects'),
-                'schema' => array(
-                    'description' => 'Depricated: Objects of this guide.',
-                    'type' => 'object',
-                    'context' => array('view', 'embed')
-                )
-            )
-        );
-
         register_rest_field($this->postType,
             'content_objects',
             array(
@@ -340,38 +264,12 @@ class GuideFields extends Fields
             )
         );
 
-         //TODO: REMOVE DEPRICATED
-        register_rest_field($this->postType,
-            'subAttractions',
-            array(
-                'get_callback' => array($this, 'subAttractionBeacons'),
-                'schema' => array(
-                    'description' => 'Depricated: Describes the guides colors, logo, moodimage and main location.',
-                    'type' => 'object',
-                    'context' => array('view', 'embed')
-                )
-            )
-        );
-
         register_rest_field($this->postType,
             'sub_attractions',
             array(
                 'get_callback' => array($this, 'subAttractionBeacons'),
                 'schema' => array(
                     'description' => 'Describes the guides colors, logo, moodimage and main location.',
-                    'type' => 'object',
-                    'context' => array('view', 'embed')
-                )
-            )
-        );
-
-        //TODO: REMOVE DEPRICATED
-        register_rest_field($this->postType,
-            'orphanContentObjects',
-            array(
-                'get_callback' => array($this, 'orphanPostObjects'),
-                'schema' => array(
-                    'description' => 'Depricated: Objects of this guide.',
                     'type' => 'object',
                     'context' => array('view', 'embed')
                 )
@@ -476,7 +374,6 @@ class GuideFields extends Fields
         $result             = array();
         $beacons            = $this->objectGetCallBack($object, 'guide_beacon', $request, true);
         $objects            = $this->getObjects($object, 'guide_content_objects', $request, true);
-        $beacon_namespace   = $this->stringGetCallBack($object, 'guide_beacon_namespace', $request, $formatted);
 
         if (!$beacons) {
             return null;
@@ -495,7 +392,6 @@ class GuideFields extends Fields
                 if (!empty($item['objects'])) {
                     $result[] = array(
                         'order' => $key,
-                        'nid' => $beacon_namespace,
                         'bid' => $item['beacon'],
                         'beacon_distance' => $item['distance'],
                         'content' => $item['objects'],
@@ -553,25 +449,6 @@ class GuideFields extends Fields
 
         //Return resutl
         return $result;
-    }
-
-    /**
-     * Create array with guide response data
-     * @return  array
-     * @version 0.3.28 Guides
-     */
-
-    public function postBeacon($object, $field_name, $request, $formatted = true)
-    {
-        $beacon = array(
-            'nid' => $this->stringGetCallBack($object, 'guide_beacon_namespace', $request, $formatted)
-        );
-
-        if (empty(array_filter($beacon))) {
-            return null;
-        } else {
-            return $beacon;
-        }
     }
 
     /**

@@ -1,7 +1,9 @@
 <?php 
 
-if (function_exists('acf_add_local_field_group')) {
-    acf_add_local_field_group(array(
+
+if (function_exists('acf_add_local_field_group')) {
+
+    acf_add_local_field_group(array(
     'key' => 'group_5a2940e03054a',
     'title' => __('Type of guide', 'event-manager'),
     'fields' => array(
@@ -10,7 +12,7 @@
             'label' => __('Select content type', 'event-manager'),
             'name' => 'content_type',
             'type' => 'select',
-            'instructions' => __('Select trail for wider areas or guide for more narrow areas.', 'event-manager'),
+            'instructions' => __('Select tour for wider areas or guide for more narrow areas.', 'event-manager'),
             'required' => 0,
             'conditional_logic' => 0,
             'wrapper' => array(
@@ -20,7 +22,7 @@
             ),
             'choices' => array(
                 'guide' => __('Guide', 'event-manager'),
-                'trail' => __('Trail', 'event-manager'),
+                'trail' => __('Tour', 'event-manager'),
             ),
             'default_value' => array(
                 0 => 'guide',
@@ -51,4 +53,5 @@
     'active' => 1,
     'description' => '',
 ));
-}
+
+}

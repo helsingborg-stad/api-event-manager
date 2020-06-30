@@ -1,7 +1,9 @@
 <?php 
 
-if (function_exists('acf_add_local_field_group')) {
-    acf_add_local_field_group(array(
+
+if (function_exists('acf_add_local_field_group')) {
+
+    acf_add_local_field_group(array(
     'key' => 'group_589497ca3741e',
     'title' => __('Basic Guide Settings', 'event-manager'),
     'fields' => array(
@@ -490,7 +492,7 @@
         ),
         11 => array(
             'key' => 'field_58ab0c6354b09',
-            'label' => __('Beacons', 'event-manager'),
+            'label' => __('Connect object to location', 'event-manager'),
             'name' => '',
             'type' => 'tab',
             'instructions' => '',
@@ -504,28 +506,9 @@
             'placement' => 'top',
             'endpoint' => 0,
         ),
-        12 => array(
-            'key' => 'field_58ac5c65cdffe',
-            'label' => __('Beacon namespace', 'event-manager'),
-            'name' => 'guide_beacon_namespace',
-            'type' => 'text',
-            'instructions' => '',
-            'required' => 0,
-            'conditional_logic' => 0,
-            'wrapper' => array(
-                'width' => '',
-                'class' => '',
-                'id' => '',
-            ),
-            'default_value' => '',
-            'maxlength' => '',
-            'placeholder' => '',
-            'prepend' => '',
-            'append' => '',
-        ),
-        13 => array(
+        14 => array(
             'key' => 'field_58ab0b4454b08',
-            'label' => __('Beacon groups', 'event-manager'),
+            'label' => __('Connect object to location', 'event-manager'),
             'name' => 'guide_beacon',
             'type' => 'repeater',
             'instructions' => '',
@@ -589,46 +572,6 @@
                     'return_format' => 'value',
                     'placeholder' => '',
                 ),
-                2 => array(
-                    'key' => 'field_58ac54a64bb06',
-                    'label' => __('Beacon ID', 'event-manager'),
-                    'name' => 'beacon',
-                    'type' => 'text',
-                    'instructions' => '',
-                    'required' => 0,
-                    'conditional_logic' => 0,
-                    'wrapper' => array(
-                        'width' => '20',
-                        'class' => '',
-                        'id' => '',
-                    ),
-                    'default_value' => '',
-                    'maxlength' => '',
-                    'placeholder' => '',
-                    'prepend' => '',
-                    'append' => '',
-                ),
-                3 => array(
-                    'key' => 'field_58d4e9dcfd6e8',
-                    'label' => __('Beacon distance', 'event-manager'),
-                    'name' => 'distance',
-                    'type' => 'number',
-                    'instructions' => '',
-                    'required' => 0,
-                    'conditional_logic' => 0,
-                    'wrapper' => array(
-                        'width' => '20',
-                        'class' => '',
-                        'id' => '',
-                    ),
-                    'default_value' => 5,
-                    'min' => 1,
-                    'max' => 50,
-                    'step' => 1,
-                    'placeholder' => '',
-                    'prepend' => '',
-                    'append' => __('meters', 'event-manager'),
-                ),
             ),
         ),
     ),
@@ -650,4 +593,5 @@
     'active' => 1,
     'description' => 'Manage main guide object details.',
 ));
-}
+
+}
