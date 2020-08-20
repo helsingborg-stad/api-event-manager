@@ -22,11 +22,19 @@ class TransTicket extends \HbgEventImporter\Parser
      */
     private function getEventData()
     {
-        $endImportDate = ($this->apiKeys['transticket_weeks'] !== '') ? date("Y-m-d",
-            strtotime("+" . $this->apiKeys['transticket_weeks'] . " weeks")) : date("Y-m-d", strtotime("+1 weeks"));
+        $endImportDate = ($this->apiKeys['transticket_weeks'] !== '') ? date(
+            "Y-m-d",
+            strtotime("+" . $this->apiKeys['transticket_weeks'] . " weeks")
+        ) : date("Y-m-d", strtotime("+1 weeks"));
         $url = $this->url . '&FromDate=' . date("Y-m-d") . '&ToDate=' . $endImportDate;
-        return json_decode(\HbgEventImporter\Helper\Curl::request('GET', $url, $this->apiKeys['transticket_api_key'],
-            false, 'json', array('Content-Type: application/json')));
+        return json_decode(\HbgEventImporter\Helper\Curl::request(
+            'GET',
+            $url,
+            $this->apiKeys['transticket_api_key'],
+            false,
+            'json',
+            array('Content-Type: application/json')
+        ));
     }
 
     /**
@@ -67,12 +75,12 @@ class TransTicket extends \HbgEventImporter\Parser
         $data['postTitle'] = strip_tags(isset($eventData->Name) && !empty($eventData->Name) ? $eventData->Name : null);
         $data['postContent'] = isset($eventData->ExtendedDescription) && !empty($eventData->ExtendedDescription) ? strip_tags($eventData->ExtendedDescription, '<a><p><br>') : '';
         $data['uId'] = $eventData->Id;
-        $data['booking_link'] = add_query_arg( array(
+        $data['booking_link'] = add_query_arg(array(
             'qry' => urlencode($data['postTitle']),
-        ), trim($this->apiKeys['transticket_ticket_url'], '/') . "/Find/" );
+        ), trim($this->apiKeys['transticket_ticket_url'], '/') . "/Find/");
         $data['startDate'] = !empty($eventData->EventDate) ? $eventData->EventDate : null;
-        
-        
+
+
         $data['endDate'] = !empty($eventData->CloseDate) ? $eventData->CloseDate : null;
         if ($data['endDate'] === null) {
             $data['endDate'] = date("Y-m-d H:i:s", strtotime($data['startDate'] . "+1 hour"));
@@ -89,10 +97,14 @@ class TransTicket extends \HbgEventImporter\Parser
         }
 
         $data['categories'] = isset($eventData->Tags) && is_array($eventData->Tags) ? $this->getCategories($eventData->Tags) : array();
-        $data['postStatus'] = get_field('transticket_post_status', 'option') ? get_field('transticket_post_status',
-            'option') : 'publish';
-        $data['userGroups'] = (is_array($this->apiKeys['transticket_groups']) && !empty($this->apiKeys['transticket_groups'])) ? array_map('intval',
-            $this->apiKeys['transticket_groups']) : null;
+        $data['postStatus'] = get_field('transticket_post_status', 'option') ? get_field(
+            'transticket_post_status',
+            'option'
+        ) : 'publish';
+        $data['userGroups'] = (is_array($this->apiKeys['transticket_groups']) && !empty($this->apiKeys['transticket_groups'])) ? array_map(
+            'intval',
+            $this->apiKeys['transticket_groups']
+        ) : null;
 
         $data['image'] = null;
         if (isset($eventData->{'ImageURL'}) && !empty($eventData->{'ImageURL'}) && $eventData->{'ImageURL'} != 'null') {
@@ -201,8 +213,11 @@ class TransTicket extends \HbgEventImporter\Parser
         $eventId = $this->checkIfPostExists('event', $data['postTitle']);
         $occurred = false;
 
-        $eventManagerUid = (get_post_meta($eventId, '_event_manager_uid', true)) ? get_post_meta($eventId,
-            '_event_manager_uid', true) : 'transticket-' . $shortKey . '-' . $data['uId'];
+        $eventManagerUid = (get_post_meta($eventId, '_event_manager_uid', true)) ? get_post_meta(
+            $eventId,
+            '_event_manager_uid',
+            true
+        ) : 'transticket-' . $shortKey . '-' . $data['uId'];
         $postStatus = $data['postStatus'];
         // Get existing event meta data
         $sync = true;
