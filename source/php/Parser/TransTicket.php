@@ -51,11 +51,6 @@ class TransTicket extends \HbgEventImporter\Parser
                 continue;
             }
 
-            //Check bitmask value for Point of sale
-            if (($event->POS & 2) != 2) {
-                continue;
-            }
-
             $this->saveEvent($event, $shortKey);
         }
     }
