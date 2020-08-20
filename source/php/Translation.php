@@ -11,19 +11,20 @@ class Translation
 
     public function translationConfigurationGuides($config)
     {
-        array_push($config->untranslatable,
+        array_push(
+            $config->untranslatable,
             "guidegroup",
             "guide_kids",
-            "guide_location",
-        );
+            "guide_location"
+          );
 
         //Repeating fields
         for ($x = 0; $x <= 100; $x++) {
-            array_push($config->translatable,
+            array_push(
+                $config->translatable,
                 "guide_beacon_".$x."_location",
                 "guide_beacon_".$x."_distance",
                 "guide_beacon_".$x."_objects",
-
                 "guide_content_objects_".$x."_guide_object_title",
                 "guide_content_objects_".$x."_guide_object_id",
                 "guide_content_objects_".$x."_guide_object_description",
