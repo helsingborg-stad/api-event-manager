@@ -14,6 +14,7 @@ class UserGroups
         add_filter('taxonomy_parent_dropdown_args', array($this, 'limitDropdownDepth'), 10, 2);
         add_filter('acf/fields/taxonomy/wp_list_categories/name=user_groups', array($this, 'filterGroupTaxonomy'), 10, 3);
         add_filter('acf/fields/taxonomy/wp_list_categories/name=event_user_groups', array($this, 'filterGroupTaxonomy'), 10, 3);
+        add_filter('acf/fields/taxonomy/query/name=guide_taxonomy_user_group', array($this, 'filterGroupTaxonomy'), 10, 3);
         add_filter('list_terms_exclusions', array($this, 'excludeEventGroups'), 10, 2);
     }
 
@@ -55,7 +56,7 @@ class UserGroups
         $current_user = wp_get_current_user();
 
         // Return if admin or editor
-        if (current_user_can('administrator') || current_user_can('editor') || current_user_can('guide_administrator')) {
+        if (current_user_can('administrator') || current_user_can('editor')) {
             return $args;
         }
 
