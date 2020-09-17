@@ -4,10 +4,13 @@ namespace HbgEventImporter\Taxonomy;
 
 class GuideCategories
 {
+    private $taxonomy = 'guidegroup';
+
     public function __construct()
     {
         add_action('init', array($this, 'registerTaxonomy'));
         add_action('admin_menu', array($this, 'unregisterMetaBox'));
+        add_action('pre_get_terms', array($this, 'filterCategoriesByUserGroup'));
     }
 
     public function registerTaxonomy()
@@ -50,11 +53,45 @@ class GuideCategories
             'show_in_rest'          => true,
         );
 
-        register_taxonomy('guidegroup', array('guide'), $args);
+        register_taxonomy($this->taxonomy, array('guide'), $args);
     }
 
     public function unregisterMetaBox()
     {
         remove_meta_box('tagsdiv-guidegroup', 'guide', 'side');
+    }
+
+    public function filterCategoriesByUserGroup($query)
+    {
+        // Bail if user is admin or editor
+        if (current_user_can('administrator') || current_user_can('editor')) {
+            error_log(print_r("IS ADMIN OR EDTOR; BAIL", true));
+            return;
+        }
+
+        // Bail if taxonomy is not 'guidegroup'
+        if ($query->query_vars['taxonomy'][0] !== $this->taxonomy) {
+            error_log(print_r("IS NOT GUIDEGROUP TAXONOMY; BAIL", true));
+            error_log(print_r($query->query_vars['taxonomy'][0], true));
+            return;
+        }
+
+        $currentUser = wp_get_current_user();
+        error_log(print_r($currentUser->ID, true));
+        $userGroups = \HbgEventImporter\Admin\FilterRestrictions::getTermChildren($currentUser->ID);
+        $userGroups = is_array($userGroups) ? $userGroups : array();
+        error_log(print_r("USER groups", true));
+        error_log(print_r($userGroups, true));
+
+        $metaQueryArgs = array(
+            'relation' => 'AND',
+            array(
+                'key'     => 'guide_taxonomy_user_group',
+                'value'   => implode(',', $userGroups),
+                'compare' => 'IN'
+            )
+        );
+        $metaQuery = new \WP_Meta_Query($metaQueryArgs);
+        $query->meta_query = $metaQuery;
     }
 }
