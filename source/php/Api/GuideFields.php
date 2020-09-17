@@ -496,8 +496,8 @@ class GuideFields extends Fields
                     $result[] = array(
                         'order' => $key,
                         'nid' => $beacon_namespace,
-                        'bid' => $item['beacon'],
-                        'beacon_distance' => $item['distance'],
+                        'bid' => null,
+                        'beacon_distance' => null, // <-– TODO: Remove Beacon data
                         'content' => $item['objects'],
                         'location' => is_numeric($item['location']) ? $item['location'] : null
                     );
@@ -591,19 +591,21 @@ class GuideFields extends Fields
             //Get beacon id
             $beacon_id = null;
             $beacon_distance = null;
-            if ($beacons) {
-                foreach ($beacons as $beacon) {
-                    if (is_string($beacon['objects'])) {
-                        $beacon['objects'] = explode("||", $beacon['objects']);
-                    }
 
-                    if (in_array($key, $beacon['objects'])) {
-                        $beacon_id = $beacon['beacon'];
-                        $beacon_distance = $beacon['distance'];
-                        break;
-                    }
-                }
-            }
+            // TODO: Remove Beacon related data
+            // if ($beacons) {
+            //     foreach ($beacons as $beacon) {
+            //         if (is_string($beacon['objects'])) {
+            //             $beacon['objects'] = explode("||", $beacon['objects']);
+            //         }
+
+            //         if (in_array($key, $beacon['objects'])) {
+            //             $beacon_id = $beacon['beacon'];
+            //             $beacon_distance = $beacon['distance'];
+            //             break;
+            //         }
+            //     }
+            // }
 
             // Strip tags and and add correct amount of new lines
             $descriptionPlain = null;
