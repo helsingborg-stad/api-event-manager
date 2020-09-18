@@ -61,22 +61,28 @@ class GuideCategories
         remove_meta_box('tagsdiv-guidegroup', 'guide', 'side');
     }
 
+    /**
+     * Display categories that belongs to the users "usergroup"
+     *
+     * @param Class $query WP_Term_Query
+     * @return void
+     */
     public function filterCategoriesByUserGroup($query)
     {
-        // Bail if user is admin or editor
-        if (current_user_can('administrator') || current_user_can('editor')) {
-            return;
-        }
-
-        // Bail if taxonomy is not 'guidegroup'
-        if ($query->query_vars['taxonomy'][0] !== $this->taxonomy) {
+        // Bail if user is admin or editor, or taxonomy is not "guidegroup", or is not admin page
+        if (current_user_can('administrator') ||
+          current_user_can('editor') ||
+          $query->query_vars['taxonomy'][0] !== $this->taxonomy ||
+          !is_admin()) {
             return;
         }
 
         $currentUser = wp_get_current_user();
+        // Collect user groups
         $userGroups = \HbgEventImporter\Admin\FilterRestrictions::getTermChildren($currentUser->ID);
+        // Cast value to array
         $userGroups = is_array($userGroups) ? $userGroups : array();
-
+        // Add user group meta condition to term query
         $metaQueryArgs = array(
             'relation' => 'AND',
             array(
