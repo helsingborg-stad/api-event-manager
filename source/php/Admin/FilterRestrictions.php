@@ -127,7 +127,7 @@ class FilterRestrictions
     {
         global $pagenow, $wp_post_types, $post_type;
 
-        if (current_user_can('administrator') || current_user_can('editor') || current_user_can('guide_administrator')) {
+        if (current_user_can('administrator') || current_user_can('editor')) {
             return $query;
         }
 
