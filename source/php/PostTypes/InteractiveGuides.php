@@ -34,7 +34,7 @@ class InteractiveGuides extends \HbgEventImporter\Entity\CustomPostType
     }
 
     /**
-     * Running filters connected to guide section of the api
+     * Running filters connected to interactive guide section of the api
      */
     public function runFilters()
     {

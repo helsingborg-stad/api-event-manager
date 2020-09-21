@@ -9,7 +9,7 @@ class UserRoles
 {
     public function __construct()
     {
-    	add_action('init', array($this, 'removeUserRoles'));
+        add_action('init', array($this, 'removeUserRoles'));
         add_action('admin_init', array($this, 'addCapabilities'));
         add_action('pre_get_users', array($this, 'filterUserList'));
         add_action('admin_menu', array($this, 'removeMenuItems'));
@@ -61,7 +61,7 @@ class UserRoles
     public function restrictDeleteUsers($user_id)
     {
         if (current_user_can('administrator')) {
-        	return;
+            return;
         }
 
         $this->checkPermission($user_id);
@@ -74,31 +74,31 @@ class UserRoles
     public function restrictUserPages()
     {
         if (current_user_can('administrator')) {
-        	return;
+            return;
         }
 
         $screen = get_current_screen();
         if ($screen->base == 'user-edit' && !empty($_GET['user_id'])) {
-        	$this->checkPermission($_GET['user_id']);
+            $this->checkPermission($_GET['user_id']);
         }
     }
 
     public function checkPermission($profile_id)
     {
-    	global $current_user;
+        global $current_user;
 
-    	$profile_user = get_userdata($profile_id);
+        $profile_user = get_userdata($profile_id);
         $profile_user_groups = \HbgEventImporter\Admin\FilterRestrictions::getTermChildren($profile_id);
         $current_user_groups = \HbgEventImporter\Admin\FilterRestrictions::getTermChildren($current_user->ID);
 
         if ((in_array('event_administrator', $profile_user->roles) || in_array('event_contributor', $profile_user->roles))
-        	&& !is_super_admin($profile_id)
-        	&& $profile_user_groups
-        	&& $current_user_groups) {
-	            $matches = array_intersect($profile_user_groups, $current_user_groups);
-	            if ($matches) {
-	                return;
-	            }
+            && !is_super_admin($profile_id)
+            && $profile_user_groups
+            && $current_user_groups) {
+            $matches = array_intersect($profile_user_groups, $current_user_groups);
+            if ($matches) {
+                return;
+            }
         }
 
         wp_die(
@@ -230,12 +230,12 @@ class UserRoles
      */
     public function removeUserRoles()
     {
-		if (get_role('author')) {
-			remove_role('author');
-		}
-		if (get_role('subscriber')) {
-			remove_role('subscriber');
-		}
+        if (get_role('author')) {
+            remove_role('author');
+        }
+        if (get_role('subscriber')) {
+            remove_role('subscriber');
+        }
     }
 
 
@@ -245,7 +245,7 @@ class UserRoles
     public function addCapabilities()
     {
         // Administrator
-        $postTypes = array('event', 'location', 'sponsor', 'package', 'membership-card', 'guide', 'organizer', 'recommendation');
+        $postTypes = array('event', 'location', 'sponsor', 'package', 'membership-card', 'guide', 'organizer', 'recommendation', 'interactive-guide');
         $role = get_role('administrator');
         foreach ($postTypes as $key => $type) {
             $role->add_cap('edit_' . $type);
@@ -264,10 +264,10 @@ class UserRoles
         }
 
         // Event administrator
-        $postTypes = array('event', 'location', 'sponsor', 'package', 'membership-card', 'organizer', 'guide', 'recommendation');
+        $postTypes = array('event', 'location', 'sponsor', 'package', 'membership-card', 'organizer', 'guide', 'recommendation', 'interactive-guide');
         $role = get_role('event_administrator');
         if ($role) {
-	        foreach ($postTypes as $key => $type) {
+            foreach ($postTypes as $key => $type) {
                 $role->add_cap('edit_' . $type);
                 $role->add_cap('read_' . $type);
                 $role->add_cap('delete_' . $type);
@@ -278,17 +278,17 @@ class UserRoles
                 $role->add_cap('delete_published_' . $type . 's');
                 $role->add_cap('delete_others_' . $type . 's');
                 $role->add_cap('edit_published_' . $type . 's');
-	        }
-	        $role->add_cap('edit_users');
-	        $role->add_cap('list_users');
-	        $role->add_cap('promote_users');
-	        $role->add_cap('create_users');
-	        $role->add_cap('add_users');
-	        $role->add_cap('delete_users');
-	    }
+            }
+            $role->add_cap('edit_users');
+            $role->add_cap('list_users');
+            $role->add_cap('promote_users');
+            $role->add_cap('create_users');
+            $role->add_cap('add_users');
+            $role->add_cap('delete_users');
+        }
 
         // Editor
-        $postTypes = array('event', 'location', 'sponsor', 'package', 'membership-card', 'guide', 'organizer', 'recommendation');
+        $postTypes = array('event', 'location', 'sponsor', 'package', 'membership-card', 'guide', 'organizer', 'recommendation', 'interactive-guide');
         $role = get_role('editor');
         foreach ($postTypes as $key => $type) {
             $role->add_cap('edit_' . $type);
@@ -325,7 +325,7 @@ class UserRoles
         }
 
         // Guide Administrator
-        $postTypes = array('guide', 'location', 'recommendation');
+        $postTypes = array('guide', 'location', 'recommendation', 'interactive-guide');
         $role = get_role('guide_administrator');
         if ($role) {
             foreach ($postTypes as $key => $type) {
@@ -346,7 +346,7 @@ class UserRoles
         }
 
         // Guide Editor
-        $postTypes = array('guide', 'location', 'recommendation');
+        $postTypes = array('guide', 'location', 'recommendation', 'interactive-guide');
         $role = get_role('guide_editor');
         if ($role) {
             foreach ($postTypes as $key => $type) {
