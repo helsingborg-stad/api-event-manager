@@ -54,6 +54,7 @@ class App
         new PostTypes\Packages();
         new PostTypes\MembershipCards();
         new PostTypes\Guides();
+        new PostTypes\InteractiveGuides();
         new PostTypes\Recommendations();
 
         new Taxonomy\EventCategories();
@@ -152,7 +153,7 @@ class App
 
         if (current_user_can('edit_events')) {
             wp_redirect(admin_url('edit.php?post_type=event'), 301);
-        } elseif(current_user_can('edit_guides')) {
+        } elseif (current_user_can('edit_guides')) {
             wp_redirect(admin_url('edit.php?post_type=guide'), 301);
         } else {
             return;
@@ -254,7 +255,7 @@ class App
 
     public function enqueueAcfScripts()
     {
-        wp_enqueue_script('hbg-event-importer-acf', HBGEVENTIMPORTER_URL . '/dist/js/api-event-manager-acf.min.js',  array('acf-input'), false, true);
+        wp_enqueue_script('hbg-event-importer-acf', HBGEVENTIMPORTER_URL . '/dist/js/api-event-manager-acf.min.js', array('acf-input'), false, true);
     }
 
     /**
