@@ -74,6 +74,7 @@ $acfExportManager->autoExport(array(
     'recommendation' => 'group_5b15284158289',
     'under-processing' => 'group_5b2b60ac1bb08',
     'open-library-solutions' => 'group_5ce25720a2508',
+    'interactive-guide' => 'group_5f68a3350351d',
 ));
 $acfExportManager->import();
 
