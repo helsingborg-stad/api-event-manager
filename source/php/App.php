@@ -89,6 +89,7 @@ class App
         new Api\PointPropertyFields();
         new Api\NavigationFields();
         new Api\RecommendationFields();
+        new Api\InteractiveGuideFields();
     }
 
     /**
