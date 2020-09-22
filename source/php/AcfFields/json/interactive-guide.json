@@ -611,8 +611,8 @@
                             "sub_fields": [
                                 {
                                     "key": "field_5f699a0322cbd",
-                                    "label": "Text",
-                                    "name": "text",
+                                    "label": "Answer",
+                                    "name": "answer",
                                     "type": "text",
                                     "instructions": "",
                                     "required": 1,
@@ -630,10 +630,10 @@
                                 },
                                 {
                                     "key": "field_5f699ac322cbe",
-                                    "label": "Follow up",
+                                    "label": "Follow up messages",
                                     "name": "follow_up",
                                     "type": "repeater",
-                                    "instructions": "",
+                                    "instructions": "List of follow up messages that responds to the answer.",
                                     "required": 0,
                                     "conditional_logic": 0,
                                     "wrapper": {
@@ -680,32 +680,6 @@
                     "label": "Dialog",
                     "display": "block",
                     "sub_fields": [
-                        {
-                            "key": "field_5f699e4a50161",
-                            "label": "Icon",
-                            "name": "icon",
-                            "type": "select",
-                            "instructions": "",
-                            "required": 0,
-                            "conditional_logic": 0,
-                            "wrapper": {
-                                "width": "",
-                                "class": "",
-                                "id": ""
-                            },
-                            "choices": {
-                                "talk": "Talk",
-                                "look": "Look",
-                                "question": "Question"
-                            },
-                            "default_value": [],
-                            "allow_null": 1,
-                            "multiple": 0,
-                            "ui": 0,
-                            "return_format": "value",
-                            "ajax": 0,
-                            "placeholder": ""
-                        },
                         {
                             "key": "field_5f699f3150162",
                             "label": "Title",
@@ -764,6 +738,32 @@
                             "maxlength": ""
                         },
                         {
+                            "key": "field_5f699e4a50161",
+                            "label": "Icon",
+                            "name": "icon",
+                            "type": "select",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "choices": {
+                                "talk": "Talk",
+                                "look": "Look",
+                                "question": "Question"
+                            },
+                            "default_value": [],
+                            "allow_null": 1,
+                            "multiple": 0,
+                            "ui": 0,
+                            "return_format": "value",
+                            "ajax": 0,
+                            "placeholder": ""
+                        },
+                        {
                             "key": "field_5f699e205015d",
                             "label": "Alternatives",
                             "name": "alternatives",
@@ -784,8 +784,8 @@
                             "sub_fields": [
                                 {
                                     "key": "field_5f699e205015e",
-                                    "label": "Text",
-                                    "name": "text",
+                                    "label": "Answer",
+                                    "name": "answer",
                                     "type": "text",
                                     "instructions": "",
                                     "required": 1,
@@ -808,7 +808,15 @@
                                     "type": "true_false",
                                     "instructions": "Set to no if the dialog shall repeat itself until a correct alternative is answered.",
                                     "required": 0,
-                                    "conditional_logic": 0,
+                                    "conditional_logic": [
+                                        [
+                                            {
+                                                "field": "field_5f699e205015d",
+                                                "operator": ">",
+                                                "value": "1"
+                                            }
+                                        ]
+                                    ],
                                     "wrapper": {
                                         "width": "",
                                         "class": "",
@@ -822,10 +830,10 @@
                                 },
                                 {
                                     "key": "field_5f699e205015f",
-                                    "label": "Follow up",
+                                    "label": "Follow up messages",
                                     "name": "follow_up",
                                     "type": "repeater",
-                                    "instructions": "",
+                                    "instructions": "List of follow up messages that responds to the answer.",
                                     "required": 0,
                                     "conditional_logic": 0,
                                     "wrapper": {
@@ -841,8 +849,8 @@
                                     "sub_fields": [
                                         {
                                             "key": "field_5f699e2050160",
-                                            "label": "Text",
-                                            "name": "text",
+                                            "label": "Message",
+                                            "name": "message",
                                             "type": "text",
                                             "instructions": "",
                                             "required": 1,
