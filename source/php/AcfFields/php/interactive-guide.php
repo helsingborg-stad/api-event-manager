@@ -57,8 +57,7 @@
                                 'class' => '',
                                 'id' => '',
                             ),
-                            'message' => __('This is the start step for an interactive guide. 
-It can display a text message, image and a button to start the guide.', 'event-manager'),
+                            'message' => __('This is the start step for an interactive guide. It can display a text message, image and a button to start the guide.', 'event-manager'),
                             'new_lines' => 'wpautop',
                             'esc_html' => 0,
                         ),
