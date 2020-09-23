@@ -15,7 +15,7 @@ class InteractiveGuideFields extends Fields
     {
         register_rest_field(
             $this->postType,
-            'start_guide_label',
+            'open_guide_title',
             array(
                 'get_callback' => array($this, 'stringGetCallBack'),
                 'schema' => array(
