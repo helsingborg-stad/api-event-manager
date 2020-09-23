@@ -7,10 +7,10 @@
     'fields' => array(
         0 => array(
             'key' => 'field_5f68a43a88018',
-            'label' => __('Start title', 'event-manager'),
-            'name' => 'start_guide_label',
+            'label' => __('Open guide title', 'event-manager'),
+            'name' => 'open_guide_title',
             'type' => 'text',
-            'instructions' => __('Label to display on start guide action.', 'event-manager'),
+            'instructions' => __('Title for the link or button that opens the interactive guide.', 'event-manager'),
             'required' => 0,
             'conditional_logic' => 0,
             'wrapper' => array(
@@ -46,10 +46,10 @@
                     'sub_fields' => array(
                         0 => array(
                             'key' => 'field_5f68bc7b1a428',
-                            'label' => 'Introduction text',
-                            'name' => 'text',
+                            'label' => 'Content',
+                            'name' => 'content',
                             'type' => 'text',
-                            'instructions' => '',
+                            'instructions' => 'Content to be displayed on start screen.',
                             'required' => 0,
                             'conditional_logic' => 0,
                             'wrapper' => array(
@@ -65,10 +65,10 @@
                         ),
                         1 => array(
                             'key' => 'field_5f68be8c4b154',
-                            'label' => 'Start guide label',
-                            'name' => 'start_guide_label',
+                            'label' => 'Start guide title',
+                            'name' => 'start_guide_title',
                             'type' => 'text',
-                            'instructions' => 'Text to display on action that triggers the guide to start.',
+                            'instructions' => 'Title for the link or button that start the interactive guide.',
                             'required' => 0,
                             'conditional_logic' => 0,
                             'wrapper' => array(
@@ -99,7 +99,7 @@
                             'min' => 0,
                             'max' => 1,
                             'layout' => 'block',
-                            'button_label' => '',
+                            'button_label' => 'Add image',
                             'sub_fields' => array(
                                 0 => array(
                                     'key' => 'field_5f68bf39a8255',
@@ -225,8 +225,8 @@
                     'sub_fields' => array(
                         0 => array(
                             'key' => 'field_5f68b68e6239e',
-                            'label' => 'Title',
-                            'name' => 'title',
+                            'label' => 'Chapter content',
+                            'name' => 'text',
                             'type' => 'text',
                             'instructions' => '',
                             'required' => 0,
@@ -254,7 +254,7 @@
                     'sub_fields' => array(
                         0 => array(
                             'key' => 'field_5f68b717623a3',
-                            'label' => 'Text',
+                            'label' => 'Bot message',
                             'name' => 'text',
                             'type' => 'text',
                             'instructions' => '',
@@ -307,8 +307,8 @@
                         ),
                         1 => array(
                             'key' => 'field_5f68b7f2e8052',
-                            'label' => 'Image',
-                            'name' => 'image',
+                            'label' => 'Upload image',
+                            'name' => 'uploaded_image',
                             'type' => 'image',
                             'instructions' => '',
                             'required' => 1,
@@ -339,8 +339,8 @@
                         ),
                         2 => array(
                             'key' => 'field_5f68ba65f4a38',
-                            'label' => 'URL',
-                            'name' => 'url',
+                            'label' => 'Image URL',
+                            'name' => 'image_url',
                             'type' => 'text',
                             'instructions' => '',
                             'required' => 1,
@@ -418,12 +418,12 @@
                             'min' => 1,
                             'max' => 0,
                             'layout' => 'block',
-                            'button_label' => '',
+                            'button_label' => 'Add alternative',
                             'sub_fields' => array(
                                 0 => array(
                                     'key' => 'field_5f699a0322cbd',
                                     'label' => 'Answer',
-                                    'name' => 'answer',
+                                    'name' => 'text',
                                     'type' => 'text',
                                     'instructions' => '',
                                     'required' => 1,
@@ -456,12 +456,12 @@
                                     'min' => 0,
                                     'max' => 0,
                                     'layout' => 'block',
-                                    'button_label' => '',
+                                    'button_label' => 'Add follow up',
                                     'sub_fields' => array(
                                         0 => array(
                                             'key' => 'field_5f699ae922cbf',
                                             'label' => 'Message',
-                                            'name' => 'message',
+                                            'name' => 'text',
                                             'type' => 'text',
                                             'instructions' => '',
                                             'required' => 1,
@@ -592,12 +592,12 @@
                             'min' => 1,
                             'max' => 0,
                             'layout' => 'block',
-                            'button_label' => '',
+                            'button_label' => 'Add alternative',
                             'sub_fields' => array(
                                 0 => array(
                                     'key' => 'field_5f699e205015e',
                                     'label' => 'Answer',
-                                    'name' => 'answer',
+                                    'name' => 'text',
                                     'type' => 'text',
                                     'instructions' => '',
                                     'required' => 1,
@@ -657,12 +657,12 @@
                                     'min' => 0,
                                     'max' => 0,
                                     'layout' => 'block',
-                                    'button_label' => '',
+                                    'button_label' => 'Add follow up',
                                     'sub_fields' => array(
                                         0 => array(
                                             'key' => 'field_5f699e2050160',
                                             'label' => 'Message',
-                                            'name' => 'message',
+                                            'name' => 'text',
                                             'type' => 'text',
                                             'instructions' => '',
                                             'required' => 1,
@@ -697,7 +697,7 @@
                             'label' => 'Header title',
                             'name' => 'header_title',
                             'type' => 'text',
-                            'instructions' => 'Title to display in finish screen header.',
+                            'instructions' => 'Title to be displayed on finish screen header.',
                             'required' => 0,
                             'conditional_logic' => 0,
                             'wrapper' => array(
@@ -713,10 +713,10 @@
                         ),
                         1 => array(
                             'key' => 'field_5f68aa923521c',
-                            'label' => 'Body title',
-                            'name' => 'body_title',
+                            'label' => 'Content area title',
+                            'name' => 'content_area_title',
                             'type' => 'text',
-                            'instructions' => 'Title to display in finish screen body.',
+                            'instructions' => 'Title to be displayed in the content area.',
                             'required' => 0,
                             'conditional_logic' => 0,
                             'wrapper' => array(
@@ -732,10 +732,10 @@
                         ),
                         2 => array(
                             'key' => 'field_5f68aaa83521d',
-                            'label' => 'Body content',
-                            'name' => 'body_content',
+                            'label' => 'Content area text',
+                            'name' => 'content_area_text',
                             'type' => 'text',
-                            'instructions' => 'Text to display on finish step body.',
+                            'instructions' => 'Text to be displayed in the content area.',
                             'required' => 0,
                             'conditional_logic' => 0,
                             'wrapper' => array(
@@ -754,7 +754,7 @@
                             'label' => 'Images',
                             'name' => 'images',
                             'type' => 'repeater',
-                            'instructions' => '',
+                            'instructions' => 'Images to be shown in content area.',
                             'required' => 0,
                             'conditional_logic' => 0,
                             'wrapper' => array(
@@ -766,7 +766,7 @@
                             'min' => 0,
                             'max' => 0,
                             'layout' => 'row',
-                            'button_label' => '',
+                            'button_label' => 'Add image',
                             'sub_fields' => array(
                                 0 => array(
                                     'key' => 'field_5f6a0c9234e4b',
@@ -870,10 +870,10 @@
                             'sub_fields' => array(
                                 0 => array(
                                     'key' => 'field_5f68a6bb0ee01',
-                                    'label' => 'Share text',
-                                    'name' => 'share_text',
+                                    'label' => 'Share title',
+                                    'name' => 'share_title',
                                     'type' => 'text',
-                                    'instructions' => '',
+                                    'instructions' => 'Title to be shown on share button.',
                                     'required' => 0,
                                     'conditional_logic' => 0,
                                     'wrapper' => array(
@@ -904,7 +904,7 @@
                                     'min' => 0,
                                     'max' => 1,
                                     'layout' => 'block',
-                                    'button_label' => '',
+                                    'button_label' => 'Add share image',
                                     'sub_fields' => array(
                                         0 => array(
                                             'key' => 'field_5f6a0e5e994cd',
@@ -932,8 +932,8 @@
                                         ),
                                         1 => array(
                                             'key' => 'field_5f68a6d00ee02',
-                                            'label' => 'Image',
-                                            'name' => 'share_image',
+                                            'label' => 'Upload share image',
+                                            'name' => 'uploaded_image',
                                             'type' => 'image',
                                             'instructions' => '',
                                             'required' => 0,
@@ -964,8 +964,8 @@
                                         ),
                                         2 => array(
                                             'key' => 'field_5f6a0ead994cf',
-                                            'label' => 'URL',
-                                            'name' => 'url',
+                                            'label' => 'Share image URL',
+                                            'name' => 'image_url',
                                             'type' => 'text',
                                             'instructions' => '',
                                             'required' => 0,
@@ -998,8 +998,8 @@
                     'max' => '1',
                 ),
             ),
-            'button_label' => __('Add Row', 'event-manager'),
-            'min' => '',
+            'button_label' => __('Add step', 'event-manager'),
+            'min' => 1,
             'max' => '',
         ),
     ),
