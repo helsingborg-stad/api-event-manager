@@ -36,6 +36,13 @@
                 'value' => 'guide',
             ),
         ),
+        1 => array(
+            0 => array(
+                'param' => 'post_type',
+                'operator' => '==',
+                'value' => 'interactive-guide',
+            ),
+        ),
     ),
     'menu_order' => 0,
     'position' => 'side',
@@ -43,7 +50,7 @@
     'label_placement' => 'top',
     'instruction_placement' => 'label',
     'hide_on_screen' => '',
-    'active' => 1,
+    'active' => true,
     'description' => '',
 ));
 }
