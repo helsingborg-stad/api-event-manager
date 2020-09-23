@@ -4,7 +4,7 @@
     "fields": [
         {
             "key": "field_5f68a43a88018",
-            "label": "Open guide title",
+            "label": "Open guide",
             "name": "open_guide_title",
             "type": "text",
             "instructions": "Title for the link or button that opens the interactive guide.",
