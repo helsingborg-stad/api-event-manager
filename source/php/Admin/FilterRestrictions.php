@@ -37,7 +37,7 @@ class FilterRestrictions
         $clients = $wpdb->get_col($wpdb->prepare("
             SELECT pm.meta_value FROM {$wpdb->postmeta} pm
             LEFT JOIN {$wpdb->posts} p ON p.ID = pm.post_id
-            WHERE pm.meta_key = '%s' 
+            WHERE pm.meta_key = '%s'
             AND p.post_type = '%s'
             GROUP BY pm.meta_value
             ORDER BY pm.meta_value
@@ -70,7 +70,6 @@ class FilterRestrictions
             && $pagenow === 'edit.php'
             && ($post_type === 'event' || $post_type === 'location')
             && !empty($_GET['import_client']))) {
-
             return;
         }
 
@@ -127,7 +126,7 @@ class FilterRestrictions
     {
         global $pagenow, $wp_post_types, $post_type;
 
-        if (current_user_can('administrator') || current_user_can('editor') || current_user_can('guide_administrator')) {
+        if (current_user_can('administrator') || current_user_can('editor')) {
             return $query;
         }
 
@@ -351,7 +350,6 @@ class FilterRestrictions
             && $pagenow === 'edit.php'
             && $_GET['post_type'] === 'event'
             && ((!empty($_GET['restrictDateFrom']) || !empty($_GET['restrictDateTo']))))) {
-
             return;
         }
 

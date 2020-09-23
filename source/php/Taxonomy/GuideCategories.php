@@ -4,10 +4,13 @@ namespace HbgEventImporter\Taxonomy;
 
 class GuideCategories
 {
+    private $taxonomy = 'guidegroup';
+
     public function __construct()
     {
         add_action('init', array($this, 'registerTaxonomy'));
         add_action('admin_menu', array($this, 'unregisterMetaBox'));
+        add_action('pre_get_terms', array($this, 'filterCategoriesByUserGroup'));
     }
 
     public function registerTaxonomy()
@@ -50,11 +53,45 @@ class GuideCategories
             'show_in_rest'          => true,
         );
 
-        register_taxonomy('guidegroup', array('guide'), $args);
+        register_taxonomy($this->taxonomy, array('guide'), $args);
     }
 
     public function unregisterMetaBox()
     {
         remove_meta_box('tagsdiv-guidegroup', 'guide', 'side');
+    }
+
+    /**
+     * Display categories that belongs to the users "usergroup"
+     *
+     * @param Class $query WP_Term_Query
+     * @return void
+     */
+    public function filterCategoriesByUserGroup($query)
+    {
+        // Bail if user is admin or editor, or taxonomy is not "guidegroup", or is not admin page
+        if (current_user_can('administrator') ||
+          current_user_can('editor') ||
+          $query->query_vars['taxonomy'][0] !== $this->taxonomy ||
+          !is_admin()) {
+            return;
+        }
+
+        $currentUser = wp_get_current_user();
+        // Collect user groups
+        $userGroups = \HbgEventImporter\Admin\FilterRestrictions::getTermChildren($currentUser->ID);
+        // Cast value to array
+        $userGroups = is_array($userGroups) ? $userGroups : array();
+        // Add user group meta condition to term query
+        $metaQueryArgs = array(
+            'relation' => 'AND',
+            array(
+                'key'     => 'guide_taxonomy_user_group',
+                'value'   => implode(',', $userGroups),
+                'compare' => 'IN'
+            )
+        );
+        $metaQuery = new \WP_Meta_Query($metaQueryArgs);
+        $query->meta_query = $metaQuery;
     }
 }

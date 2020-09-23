@@ -14,6 +14,7 @@ class UserGroups
         add_filter('taxonomy_parent_dropdown_args', array($this, 'limitDropdownDepth'), 10, 2);
         add_filter('acf/fields/taxonomy/wp_list_categories/name=user_groups', array($this, 'filterGroupTaxonomy'), 10, 3);
         add_filter('acf/fields/taxonomy/wp_list_categories/name=event_user_groups', array($this, 'filterGroupTaxonomy'), 10, 3);
+        add_filter('acf/fields/taxonomy/query/name=guide_taxonomy_user_group', array($this, 'filterGroupTaxonomy'), 10, 3);
         add_filter('list_terms_exclusions', array($this, 'excludeEventGroups'), 10, 2);
     }
 
@@ -30,9 +31,9 @@ class UserGroups
 
         require_once(ABSPATH . 'wp-admin/includes/screen.php');
         $current_screen = get_current_screen();
-        remove_filter( 'list_terms_exclusions', array($this, 'excludeEventGroups'), 10, 2 );
+        remove_filter('list_terms_exclusions', array($this, 'excludeEventGroups'), 10, 2);
 
-        if (is_object($current_screen) && $current_screen->id == 'edit-user_groups' && $current_screen->taxonomy == 'user_groups' ) {
+        if (is_object($current_screen) && $current_screen->id == 'edit-user_groups' && $current_screen->taxonomy == 'user_groups') {
             $user = wp_get_current_user();
             $user_groups = \HbgEventImporter\Admin\FilterRestrictions::getTermChildren($user->ID);
             $groups = ($user_groups) ? implode(',', $user_groups) : '0';
@@ -55,7 +56,7 @@ class UserGroups
         $current_user = wp_get_current_user();
 
         // Return if admin or editor
-        if (current_user_can('administrator') || current_user_can('editor') || current_user_can('guide_administrator')) {
+        if (current_user_can('administrator') || current_user_can('editor')) {
             return $args;
         }
 
@@ -122,10 +123,13 @@ class UserGroups
      * @param  string $taxonomy taxonomy
      * @return array
      */
-    public function limitDropdownDepth($args, $taxonomy) {
-        if ($taxonomy != 'user_groups') return $args;
+    public function limitDropdownDepth($args, $taxonomy)
+    {
+        if ($taxonomy != 'user_groups') {
+            return $args;
+        }
         if (!current_user_can('administrator')) {
-             $args['show_option_none'] = '';
+            $args['show_option_none'] = '';
         }
         $args['depth'] = '2';
         return $args;
@@ -175,25 +179,26 @@ class UserGroups
         }
 
         $id = 'user_' . $user->ID;
-        $groups = get_field('event_user_groups', $id);
-
-        ?>
-            <h2><?php _e('Event publishing groups', 'event-manager') ?></h2>
-            <table class="form-table">
-                <tr>
-                    <th><label for="groups"><?php _e('Assigned groups', 'event-manager'); ?></label></th>
-                    <td>
-                        <?php if (! empty($groups)) : ?>
-                            <ul>
-                                <?php foreach ($groups as $group) : ?>
-                                    <li><?php echo get_term($group)->name; ?></li>
-                                <?php endforeach; ?>
-                        <?php else: ?>
-                           <?php _e('There are no groups assigned to your account.', 'event-manager'); ?>
-                        <?php endif; ?>
-                    </td>
-                </tr>
-            </table>
-        <?php
+        $groups = get_field('event_user_groups', $id); ?>
+<h2><?php _e('Event publishing groups', 'event-manager') ?>
+</h2>
+<table class="form-table">
+  <tr>
+    <th><label for="groups"><?php _e('Assigned groups', 'event-manager'); ?></label>
+    </th>
+    <td>
+      <?php if (! empty($groups)) : ?>
+      <ul>
+        <?php foreach ($groups as $group) : ?>
+        <li><?php echo get_term($group)->name; ?>
+        </li>
+        <?php endforeach; ?>
+        <?php else: ?>
+        <?php _e('There are no groups assigned to your account.', 'event-manager'); ?>
+        <?php endif; ?>
+    </td>
+  </tr>
+</table>
+<?php
     }
 }

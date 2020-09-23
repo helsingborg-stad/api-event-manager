@@ -188,6 +188,28 @@
             'ui_on_text' => '',
             'ui_off_text' => '',
         ),
+        9 => array(
+            'key' => 'field_5f60b23272220',
+            'label' => __('Grupp', 'event-manager'),
+            'name' => 'guide_taxonomy_user_group',
+            'type' => 'taxonomy',
+            'instructions' => __('Välj vilken användargrupp som kategorin tillhör.', 'event-manager'),
+            'required' => 1,
+            'conditional_logic' => 0,
+            'wrapper' => array(
+                'width' => '',
+                'class' => '',
+                'id' => '',
+            ),
+            'taxonomy' => 'user_groups',
+            'field_type' => 'select',
+            'allow_null' => 0,
+            'add_term' => 1,
+            'save_terms' => 1,
+            'load_terms' => 0,
+            'return_format' => 'object',
+            'multiple' => 0,
+        ),
     ),
     'location' => array(
         0 => array(
@@ -204,7 +226,7 @@
     'label_placement' => 'top',
     'instruction_placement' => 'label',
     'hide_on_screen' => '',
-    'active' => 1,
+    'active' => true,
     'description' => '',
 ));
 }
