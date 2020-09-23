@@ -478,7 +478,7 @@ It can display a text message, image and a button to start the guide.',
                                     'sub_fields' => array(
                                         0 => array(
                                             'key' => 'field_5f699ae922cbf',
-                                            'label' => 'Message',
+                                            'label' => 'Follow up message',
                                             'name' => 'text',
                                             'type' => 'text',
                                             'instructions' => '',
@@ -679,7 +679,7 @@ It can display a text message, image and a button to start the guide.',
                                     'sub_fields' => array(
                                         0 => array(
                                             'key' => 'field_5f699e2050160',
-                                            'label' => 'Message',
+                                            'label' => 'Follow up message',
                                             'name' => 'text',
                                             'type' => 'text',
                                             'instructions' => '',
@@ -711,6 +711,23 @@ It can display a text message, image and a button to start the guide.',
                     'display' => 'block',
                     'sub_fields' => array(
                         0 => array(
+                            'key' => 'field_5f6b033898f9d',
+                            'label' => 'Finish step',
+                            'name' => '',
+                            'type' => 'message',
+                            'instructions' => '',
+                            'required' => 0,
+                            'conditional_logic' => 0,
+                            'wrapper' => array(
+                                'width' => '',
+                                'class' => '',
+                                'id' => '',
+                            ),
+                            'message' => 'This is the finish step for an interactive guide.',
+                            'new_lines' => 'wpautop',
+                            'esc_html' => 0,
+                        ),
+                        1 => array(
                             'key' => 'field_5f68a5c605ada',
                             'label' => 'Header title',
                             'name' => 'header_title',
@@ -729,7 +746,7 @@ It can display a text message, image and a button to start the guide.',
                             'append' => '',
                             'maxlength' => '',
                         ),
-                        1 => array(
+                        2 => array(
                             'key' => 'field_5f68aa923521c',
                             'label' => 'Content area title',
                             'name' => 'content_area_title',
@@ -748,7 +765,7 @@ It can display a text message, image and a button to start the guide.',
                             'append' => '',
                             'maxlength' => '',
                         ),
-                        2 => array(
+                        3 => array(
                             'key' => 'field_5f68aaa83521d',
                             'label' => 'Content area text',
                             'name' => 'content_area_text',
@@ -767,7 +784,7 @@ It can display a text message, image and a button to start the guide.',
                             'append' => '',
                             'maxlength' => '',
                         ),
-                        3 => array(
+                        4 => array(
                             'key' => 'field_5f68a63cd0fe4',
                             'label' => 'Images',
                             'name' => 'images',
@@ -871,7 +888,7 @@ It can display a text message, image and a button to start the guide.',
                                 ),
                             ),
                         ),
-                        4 => array(
+                        5 => array(
                             'key' => 'field_5f6a0dfd6f6be',
                             'label' => 'Share result',
                             'name' => 'share_result',
