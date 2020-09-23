@@ -61,16 +61,17 @@
                 "membership-card": "Membership cards",
                 "organizer": "Organizers",
                 "guide": "Guides",
-                "recommendation": "Recommendations"
+                "recommendation": "Recommendations",
+                "interactive-guide": "Interactive Guides"
             },
             "allow_custom": 0,
-            "save_custom": 0,
             "default_value": [
                 "event"
             ],
             "layout": "vertical",
             "toggle": 0,
-            "return_format": "value"
+            "return_format": "value",
+            "save_custom": 0
         }
     ],
     "location": [
@@ -88,7 +89,7 @@
     "label_placement": "top",
     "instruction_placement": "label",
     "hide_on_screen": "",
-    "active": 1,
+    "active": true,
     "description": ""
 }]
 
