@@ -54,7 +54,7 @@
                                 "class": "",
                                 "id": ""
                             },
-                            "message": "This is the start step for an interactive guide. \r\nIt can display a text message, image and a button to start the guide.",
+                            "message": "This is the start step for an interactive guide. It can display a text message, image and a button to start the guide.",
                             "new_lines": "wpautop",
                             "esc_html": 0
                         },
