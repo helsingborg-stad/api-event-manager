@@ -65,15 +65,16 @@
                 'organizer' => __('Organizers', 'event-manager'),
                 'guide' => __('Guides', 'event-manager'),
                 'recommendation' => __('Recommendations', 'event-manager'),
+                'interactive-guide' => __('Interactive Guides', 'event-manager'),
             ),
             'allow_custom' => 0,
-            'save_custom' => 0,
             'default_value' => array(
                 0 => 'event',
             ),
             'layout' => 'vertical',
             'toggle' => 0,
             'return_format' => 'value',
+            'save_custom' => 0,
         ),
     ),
     'location' => array(
@@ -91,7 +92,7 @@
     'label_placement' => 'top',
     'instruction_placement' => 'label',
     'hide_on_screen' => '',
-    'active' => 1,
+    'active' => true,
     'description' => '',
 ));
 }
