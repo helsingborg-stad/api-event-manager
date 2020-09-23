@@ -409,8 +409,8 @@
                 },
                 "layout_5f6999c722cbb": {
                     "key": "layout_5f6999c722cbb",
-                    "name": "prompt",
-                    "label": "Prompt",
+                    "name": "choice",
+                    "label": "Choice",
                     "display": "block",
                     "sub_fields": [
                         {
@@ -434,7 +434,7 @@
                             "sub_fields": [
                                 {
                                     "key": "field_5f699a0322cbd",
-                                    "label": "Answer",
+                                    "label": "Choice",
                                     "name": "text",
                                     "type": "text",
                                     "instructions": "",
