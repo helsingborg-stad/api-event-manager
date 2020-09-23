@@ -341,7 +341,7 @@
                             },
                             "return_format": "array",
                             "preview_size": "medium",
-                            "library": "uploadedTo",
+                            "library": "all",
                             "min_width": "",
                             "min_height": "",
                             "min_size": "",
@@ -607,7 +607,7 @@
                             "sub_fields": [
                                 {
                                     "key": "field_5f699e205015e",
-                                    "label": "Answer",
+                                    "label": "Alternative",
                                     "name": "text",
                                     "type": "text",
                                     "instructions": "",
@@ -793,7 +793,7 @@
                             "collapsed": "",
                             "min": 0,
                             "max": 0,
-                            "layout": "row",
+                            "layout": "block",
                             "button_label": "Add image",
                             "sub_fields": [
                                 {
@@ -843,7 +843,7 @@
                                     },
                                     "return_format": "array",
                                     "preview_size": "medium",
-                                    "library": "uploadedTo",
+                                    "library": "all",
                                     "min_width": "",
                                     "min_height": "",
                                     "min_size": "",
@@ -981,7 +981,7 @@
                                             },
                                             "return_format": "array",
                                             "preview_size": "medium",
-                                            "library": "uploadedTo",
+                                            "library": "all",
                                             "min_width": "",
                                             "min_height": "",
                                             "min_size": "",
