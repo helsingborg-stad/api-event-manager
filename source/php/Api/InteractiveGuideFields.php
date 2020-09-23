@@ -27,6 +27,19 @@ class InteractiveGuideFields extends Fields
 
         register_rest_field(
             $this->postType,
+            'guidegroup',
+            array(
+                'get_callback' => array($this, 'getTaxonomyCallback'),
+                'schema' => array(
+                    'description' => '',
+                    'type' => 'object',
+                    'context' => array('view', 'embed')
+                )
+            )
+        );
+
+        register_rest_field(
+            $this->postType,
             'steps',
             array(
                 'get_callback' => array($this, 'interactiveGuideStepsGetCallBack'),
