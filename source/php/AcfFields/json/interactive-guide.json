@@ -472,7 +472,7 @@
                                     "sub_fields": [
                                         {
                                             "key": "field_5f699ae922cbf",
-                                            "label": "Message",
+                                            "label": "Follow up message",
                                             "name": "text",
                                             "type": "text",
                                             "instructions": "",
@@ -672,7 +672,7 @@
                                     "sub_fields": [
                                         {
                                             "key": "field_5f699e2050160",
-                                            "label": "Message",
+                                            "label": "Follow up message",
                                             "name": "text",
                                             "type": "text",
                                             "instructions": "",
@@ -703,6 +703,23 @@
                     "label": "Finish",
                     "display": "block",
                     "sub_fields": [
+                        {
+                            "key": "field_5f6b033898f9d",
+                            "label": "Finish step",
+                            "name": "",
+                            "type": "message",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "message": "This is the finish step for an interactive guide.",
+                            "new_lines": "wpautop",
+                            "esc_html": 0
+                        },
                         {
                             "key": "field_5f68a5c605ada",
                             "label": "Header title",
