@@ -53,7 +53,7 @@ class GuideCategories
             'show_in_rest'          => true,
         );
 
-        register_taxonomy($this->taxonomy, array('guide'), $args);
+        register_taxonomy($this->taxonomy, array('guide', 'interactive-guide'), $args);
     }
 
     public function unregisterMetaBox()
