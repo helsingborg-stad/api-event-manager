@@ -42,6 +42,23 @@
                     "display": "block",
                     "sub_fields": [
                         {
+                            "key": "field_5f6aff0740bda",
+                            "label": "Start step",
+                            "name": "",
+                            "type": "message",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "message": "This is the start step for an interactive guide. \r\nIt can display a text message, image and a button to start the guide.",
+                            "new_lines": "wpautop",
+                            "esc_html": 0
+                        },
+                        {
                             "key": "field_5f68bc7b1a428",
                             "label": "Content",
                             "name": "content",

@@ -45,6 +45,24 @@
                     'display' => 'block',
                     'sub_fields' => array(
                         0 => array(
+                            'key' => 'field_5f6aff0740bda',
+                            'label' => 'Start step',
+                            'name' => '',
+                            'type' => 'message',
+                            'instructions' => '',
+                            'required' => 0,
+                            'conditional_logic' => 0,
+                            'wrapper' => array(
+                                'width' => '',
+                                'class' => '',
+                                'id' => '',
+                            ),
+                            'message' => 'This is the start step for an interactive guide. 
+It can display a text message, image and a button to start the guide.',
+                            'new_lines' => 'wpautop',
+                            'esc_html' => 0,
+                        ),
+                        1 => array(
                             'key' => 'field_5f68bc7b1a428',
                             'label' => 'Content',
                             'name' => 'content',
@@ -63,7 +81,7 @@
                             'append' => '',
                             'maxlength' => '',
                         ),
-                        1 => array(
+                        2 => array(
                             'key' => 'field_5f68be8c4b154',
                             'label' => 'Start guide title',
                             'name' => 'start_guide_title',
@@ -82,7 +100,7 @@
                             'append' => '',
                             'maxlength' => '',
                         ),
-                        2 => array(
+                        3 => array(
                             'key' => 'field_5f68bf09a8254',
                             'label' => 'Image',
                             'name' => 'image',
