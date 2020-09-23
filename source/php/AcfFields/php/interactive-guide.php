@@ -415,8 +415,8 @@ It can display a text message, image and a button to start the guide.',
                 ),
                 'layout_5f6999c722cbb' => array(
                     'key' => 'layout_5f6999c722cbb',
-                    'name' => 'prompt',
-                    'label' => __('Prompt', 'event-manager'),
+                    'name' => 'choice',
+                    'label' => __('Choice', 'event-manager'),
                     'display' => 'block',
                     'sub_fields' => array(
                         0 => array(
@@ -440,7 +440,7 @@ It can display a text message, image and a button to start the guide.',
                             'sub_fields' => array(
                                 0 => array(
                                     'key' => 'field_5f699a0322cbd',
-                                    'label' => 'Answer',
+                                    'label' => 'Choice',
                                     'name' => 'text',
                                     'type' => 'text',
                                     'instructions' => '',
