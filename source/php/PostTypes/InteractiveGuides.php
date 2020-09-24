@@ -6,12 +6,10 @@ class InteractiveGuides extends \HbgEventImporter\Entity\CustomPostType
 {
     public function __construct()
     {
-        $this->runFilters();
-
         parent::__construct(
             __('Interactive guides', 'event-manager'),
             __('Interactive guide', 'event-manager'),
-            'interactive-guide',
+            'interactive_guide',
             array(
                 'description'          => 'Guided tours with beacon information',
                 'menu_icon'            => 'dashicons-format-chat',
@@ -21,23 +19,16 @@ class InteractiveGuides extends \HbgEventImporter\Entity\CustomPostType
                 'show_in_nav_menus'    => true,
                 'has_archive'          => true,
                 'rewrite'              => array(
-                    'slug'       => 'interactive-guide',
+                    'slug'       => 'interactive_guide',
                     'with_front' => false
                 ),
                 'hierarchical'         => false,
                 'exclude_from_search'  => true,
                 'supports'             => array('title', 'revisions'),
                 'map_meta_cap'         => true,
-                'capability_type'      => 'interactive-guide',
+                'capability_type'      => 'interactive_guide',
                 'taxonomies'           =>  array('guidegroup'),
             )
         );
-    }
-
-    /**
-     * Running filters connected to interactive guide section of the api
-     */
-    public function runFilters()
-    {
     }
 }

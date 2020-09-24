@@ -9,7 +9,7 @@ class GuideCategories
     public function __construct()
     {
         add_action('init', array($this, 'registerTaxonomy'));
-        add_action('admin_menu', array($this, 'unregisterMetaBox'));
+        //add_action('admin_menu', array($this, 'unregisterMetaBox'));
         add_action('pre_get_terms', array($this, 'filterCategoriesByUserGroup'));
     }
 
@@ -53,12 +53,12 @@ class GuideCategories
             'show_in_rest'          => true,
         );
 
-        register_taxonomy($this->taxonomy, array('guide', 'interactive-guide'), $args);
+        register_taxonomy($this->taxonomy, array('guide', 'interactive_guide', 'recommendation'), $args);
     }
 
     public function unregisterMetaBox()
     {
-        remove_meta_box('tagsdiv-guidegroup', array('guide', 'interactive-guide'), 'side');
+        remove_meta_box('tagsdiv-guidegroup', array('guide', 'interactive_guide'), 'side');
     }
 
     /**
