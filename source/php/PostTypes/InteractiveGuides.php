@@ -21,7 +21,7 @@ class InteractiveGuides extends \HbgEventImporter\Entity\CustomPostType
                 'show_in_nav_menus'    => true,
                 'has_archive'          => true,
                 'rewrite'              => array(
-                    'slug'       => 'guide',
+                    'slug'       => 'interactive-guide',
                     'with_front' => false
                 ),
                 'hierarchical'         => false,
@@ -29,6 +29,7 @@ class InteractiveGuides extends \HbgEventImporter\Entity\CustomPostType
                 'supports'             => array('title', 'revisions'),
                 'map_meta_cap'         => true,
                 'capability_type'      => 'interactive-guide',
+                'taxonomies'           =>  array('guidegroup'),
             )
         );
     }
