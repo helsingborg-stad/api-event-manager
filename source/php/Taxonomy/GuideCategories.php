@@ -58,7 +58,7 @@ class GuideCategories
 
     public function unregisterMetaBox()
     {
-        remove_meta_box('tagsdiv-guidegroup', 'guide', 'side');
+        remove_meta_box('tagsdiv-guidegroup', array('guide', 'interactive-guide'), 'side');
     }
 
     /**
