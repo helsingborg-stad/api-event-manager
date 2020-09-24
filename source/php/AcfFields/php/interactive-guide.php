@@ -1059,7 +1059,7 @@
             0 => array(
                 'param' => 'post_type',
                 'operator' => '==',
-                'value' => 'interactive-guide',
+                'value' => 'interactive_guide',
             ),
         ),
     ),
