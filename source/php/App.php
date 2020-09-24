@@ -171,7 +171,7 @@ class App
     {
         global $current_screen;
 
-        if (in_array($current_screen->post_type, array('event', 'location', 'sponsor', 'package', 'membership-card', 'guide', 'organizer', 'interactive-guide'))) {
+        if (in_array($current_screen->post_type, array('event', 'location', 'sponsor', 'package', 'membership-card', 'guide', 'organizer', 'interactive_guide'))) {
             wp_enqueue_style('hbg-event-importer', HBGEVENTIMPORTER_URL . '/dist/css/app.min.css');
         }
 
@@ -207,7 +207,7 @@ class App
             'membership-card',
             'guide',
             'term',
-            'interactive-guide'
+            'interactive_guide'
         );
 
         if (is_object($current_screen) && in_array($current_screen->post_type, $acceptedPostTypes)) {

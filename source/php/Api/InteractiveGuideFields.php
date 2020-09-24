@@ -4,7 +4,7 @@ namespace HbgEventImporter\Api;
 
 class InteractiveGuideFields extends Fields
 {
-    private $postType = 'interactive-guide';
+    private $postType = 'interactive_guide';
 
     public function __construct()
     {
