@@ -38,8 +38,8 @@
                 'id' => '',
             ),
             'choices' => array(
-                'default' => __('Default delay', 'event-manager'),
-                'custom' => __('Custom delay', 'event-manager'),
+                'false' => __('Default delay', 'event-manager'),
+                'true' => __('Custom delay', 'event-manager'),
             ),
             'allow_null' => 0,
             'other_choice' => 0,

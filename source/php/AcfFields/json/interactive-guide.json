@@ -35,8 +35,8 @@
                 "id": ""
             },
             "choices": {
-                "default": "Default delay",
-                "custom": "Custom delay"
+                "false": "Default delay",
+                "true": "Custom delay"
             },
             "allow_null": 0,
             "other_choice": 0,
