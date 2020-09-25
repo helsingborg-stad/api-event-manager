@@ -65,7 +65,7 @@
                 'organizer' => __('Organizers', 'event-manager'),
                 'guide' => __('Guides', 'event-manager'),
                 'recommendation' => __('Recommendations', 'event-manager'),
-                'interactive-guide' => __('Interactive Guides', 'event-manager'),
+                'interactive_guide' => __('Interactive Guides', 'event-manager'),
             ),
             'allow_custom' => 0,
             'default_value' => array(

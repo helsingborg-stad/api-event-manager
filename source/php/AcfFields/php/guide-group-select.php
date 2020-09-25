@@ -22,7 +22,7 @@
             'field_type' => 'select',
             'allow_null' => 0,
             'add_term' => 1,
-            'save_terms' => 0,
+            'save_terms' => 1,
             'load_terms' => 0,
             'return_format' => 'id',
             'multiple' => 0,
@@ -40,7 +40,7 @@
             0 => array(
                 'param' => 'post_type',
                 'operator' => '==',
-                'value' => 'interactive-guide',
+                'value' => 'interactive_guide',
             ),
         ),
     ),
