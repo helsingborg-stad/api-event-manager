@@ -62,7 +62,7 @@
                 "organizer": "Organizers",
                 "guide": "Guides",
                 "recommendation": "Recommendations",
-                "interactive-guide": "Interactive Guides"
+                "interactive_guide": "Interactive Guides"
             },
             "allow_custom": 0,
             "default_value": [

@@ -9,7 +9,7 @@ class GuideCategories
     public function __construct()
     {
         add_action('init', array($this, 'registerTaxonomy'));
-        //add_action('admin_menu', array($this, 'unregisterMetaBox'));
+        add_action('admin_menu', array($this, 'unregisterMetaBox'));
         add_action('pre_get_terms', array($this, 'filterCategoriesByUserGroup'));
     }
 
