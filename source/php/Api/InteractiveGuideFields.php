@@ -35,8 +35,9 @@ class InteractiveGuideFields extends Fields
             'custom_message_delay',
             array(
                   'get_callback' => function ($object, $field_name, $request) {
+                      // Convert string value to bool
                       $value = $this->stringGetCallBack($object, $field_name, $request);
-                      return $value === 'custom' ? true : false;
+                      return $value === 'true' ? true : false;
                   },
                   'schema' => array(
                     'type' => 'bool',
@@ -50,6 +51,7 @@ class InteractiveGuideFields extends Fields
             'message_delay',
             array(
                 'get_callback' => function ($object, $field_name, $request) {
+                    // Cast to int
                     return (int) $this->numericGetCallBack($object, $field_name, $request);
                 },
                 'schema' => array(
