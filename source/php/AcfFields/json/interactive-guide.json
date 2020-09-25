@@ -22,6 +22,59 @@
             "maxlength": ""
         },
         {
+            "key": "field_5f6daf6ec85cc",
+            "label": "Message delay",
+            "name": "custom_message_delay",
+            "type": "radio",
+            "instructions": "Use default or custom message delay for this guide.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "default": "Default delay",
+                "custom": "Custom delay"
+            },
+            "allow_null": 0,
+            "other_choice": 0,
+            "default_value": "",
+            "layout": "horizontal",
+            "return_format": "value",
+            "save_other_choice": 0
+        },
+        {
+            "key": "field_5f6dafb4c85cd",
+            "label": "Delay",
+            "name": "message_delay",
+            "type": "number",
+            "instructions": "Enter value in milliseconds.",
+            "required": 1,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5f6daf6ec85cc",
+                        "operator": "==",
+                        "value": "custom"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "min": 0,
+            "max": "",
+            "step": ""
+        },
+        {
             "key": "field_5f68b2656239c",
             "label": "Steps",
             "name": "steps",
