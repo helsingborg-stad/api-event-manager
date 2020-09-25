@@ -60,7 +60,7 @@
                     0 => array(
                         'field' => 'field_5f6daf6ec85cc',
                         'operator' => '==',
-                        'value' => 'custom',
+                        'value' => 'true',
                     ),
                 ),
             ),
