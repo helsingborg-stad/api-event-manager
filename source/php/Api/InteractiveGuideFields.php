@@ -11,6 +11,11 @@ class InteractiveGuideFields extends Fields
         add_action('rest_api_init', array($this, 'registerRestFields'));
     }
 
+    /**
+     * Register meta data fields for Interactive Guide rest endpoint
+     *
+     * @return void
+     */
     public function registerRestFields()
     {
         register_rest_field(
@@ -19,8 +24,37 @@ class InteractiveGuideFields extends Fields
             array(
                 'get_callback' => array($this, 'stringGetCallBack'),
                 'schema' => array(
-                    'description' => 'Field containing string value with "start guide label".',
+                    'description' => 'Field containing string value with open guide title.',
                     'type' => 'string',
+                )
+            )
+        );
+
+        register_rest_field(
+            $this->postType,
+            'custom_message_delay',
+            array(
+                  'get_callback' => function ($object, $field_name, $request) {
+                      $value = $this->stringGetCallBack($object, $field_name, $request);
+                      return $value === 'custom' ? true : false;
+                  },
+                  'schema' => array(
+                    'type' => 'bool',
+                    'context' => array('view', 'embed')
+                )
+            )
+        );
+
+        register_rest_field(
+            $this->postType,
+            'message_delay',
+            array(
+                'get_callback' => function ($object, $field_name, $request) {
+                    return (int) $this->numericGetCallBack($object, $field_name, $request);
+                },
+                'schema' => array(
+                    'type' => 'int',
+                    'context' => array('view', 'embed')
                 )
             )
         );
@@ -31,7 +65,6 @@ class InteractiveGuideFields extends Fields
             array(
                 'get_callback' => array($this, 'getTaxonomyCallback'),
                 'schema' => array(
-                    'description' => '',
                     'type' => 'object',
                     'context' => array('view', 'embed')
                 )
@@ -44,12 +77,13 @@ class InteractiveGuideFields extends Fields
             array(
                 'get_callback' => array($this, 'interactiveGuideStepsGetCallBack'),
                 'schema' => array(
+                    'type' => 'object',
                     'description' => 'Field containing object value with interactive guide steps.',
-                    'type' => 'string',
                 )
             )
         );
     }
+
 
 
     /**
