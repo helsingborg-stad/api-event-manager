@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Event Manager\n"
-"POT-Creation-Date: 2020-09-23 14:52+0200\n"
-"PO-Revision-Date: 2020-09-23 14:52+0200\n"
+"POT-Creation-Date: 2020-09-25 11:15+0200\n"
+"PO-Revision-Date: 2020-09-25 11:16+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: sv_SE\n"
@@ -241,39 +241,39 @@ msgid "Activate user groups on selected post types."
 msgstr "Aktivera användargrupper för valda posttyper."
 
 #: source/php/AcfFields/php/event-manager-settings.php:60
-#: source/php/App.php:230
+#: source/php/App.php:231
 msgid "Events"
 msgstr "Evenemang"
 
 #: source/php/AcfFields/php/event-manager-settings.php:61
-#: source/php/App.php:231 source/php/PostTypes/Locations.php:12
+#: source/php/App.php:232 source/php/PostTypes/Locations.php:12
 msgid "Locations"
 msgstr "Platser"
 
 #: source/php/AcfFields/php/event-manager-settings.php:62
-#: source/php/AcfFields/php/event.php:775 source/php/App.php:242
+#: source/php/AcfFields/php/event.php:775 source/php/App.php:243
 #: source/php/PostTypes/Sponsors.php:10
 msgid "Sponsors"
 msgstr "Sponsorer"
 
 #: source/php/AcfFields/php/event-manager-settings.php:63
-#: source/php/App.php:243 source/php/PostTypes/Packages.php:10
+#: source/php/App.php:244 source/php/PostTypes/Packages.php:10
 msgid "Packages"
 msgstr "Paket"
 
 #: source/php/AcfFields/php/event-manager-settings.php:64
-#: source/php/App.php:244
+#: source/php/App.php:245
 msgid "Membership cards"
 msgstr "Medlemskort"
 
 #: source/php/AcfFields/php/event-manager-settings.php:65
-#: source/php/AcfFields/php/event.php:712 source/php/App.php:232
+#: source/php/AcfFields/php/event.php:712 source/php/App.php:233
 #: source/php/PostTypes/Organizers.php:10
 msgid "Organizers"
 msgstr "Arrangörer"
 
 #: source/php/AcfFields/php/event-manager-settings.php:66
-#: source/php/App.php:245 source/php/PostTypes/Guides.php:12
+#: source/php/App.php:246 source/php/PostTypes/Guides.php:12
 msgid "Guides"
 msgstr "Guider"
 
@@ -430,8 +430,8 @@ msgid "Use custom content"
 msgstr "Egen beskrivning"
 
 #: source/php/AcfFields/php/event.php:281
-#: source/php/AcfFields/php/interactive-guide.php:66
-#: source/php/AcfFields/php/interactive-guide.php:245
+#: source/php/AcfFields/php/interactive-guide.php:119
+#: source/php/AcfFields/php/interactive-guide.php:298
 msgid "Content"
 msgstr "Innehåll"
 
@@ -1755,6 +1755,7 @@ msgstr ""
 
 #: source/php/AcfFields/php/guide-group-notices.php:35
 #: source/php/AcfFields/php/guide-group-notices.php:96
+#: source/php/AcfFields/php/interactive-guide.php:53
 msgid "Delay"
 msgstr "Fördröjning"
 
@@ -1973,8 +1974,8 @@ msgid "Beacon groups"
 msgstr "Grupper av beacons"
 
 #: source/php/AcfFields/php/interactive-guide.php:10
-#: source/php/AcfFields/php/interactive-guide.php:85
-#: source/php/AcfFields/php/interactive-guide.php:530
+#: source/php/AcfFields/php/interactive-guide.php:138
+#: source/php/AcfFields/php/interactive-guide.php:583
 #: source/php/AcfFields/php/organizer.php:101
 #: source/php/PostTypes/Events.php:38 source/php/PostTypes/Locations.php:38
 #: source/php/PostTypes/MembershipCards.php:34
@@ -1990,14 +1991,35 @@ msgstr ""
 "Titel för länken eller knappen som omdirigerar till den interaktiva guiden."
 
 #: source/php/AcfFields/php/interactive-guide.php:29
+msgid "Message delay"
+msgstr "Meddelandefördröjning"
+
+#: source/php/AcfFields/php/interactive-guide.php:32
+msgid "Use default or custom message delay for this guide."
+msgstr ""
+"Använd standard- eller anpassad meddelandefördröjning för den här guiden."
+
+#: source/php/AcfFields/php/interactive-guide.php:41
+msgid "Default delay"
+msgstr "Standardfördröjning"
+
+#: source/php/AcfFields/php/interactive-guide.php:42
+msgid "Custom delay"
+msgstr "Anpassad fördröjning"
+
+#: source/php/AcfFields/php/interactive-guide.php:56
+msgid "Enter value in milliseconds."
+msgstr "Ange värde i millisekunder."
+
+#: source/php/AcfFields/php/interactive-guide.php:82
 msgid "Steps"
 msgstr "Steg"
 
-#: source/php/AcfFields/php/interactive-guide.php:44
+#: source/php/AcfFields/php/interactive-guide.php:97
 msgid "Start"
 msgstr "Start"
 
-#: source/php/AcfFields/php/interactive-guide.php:60
+#: source/php/AcfFields/php/interactive-guide.php:113
 msgid ""
 "This is the first step for an interactive guide. It displays a text message, "
 "image and a button to start the guide."
@@ -2005,234 +2027,228 @@ msgstr ""
 "Detta är första steget för en interaktiv guide. Det innehåller ett "
 "textmeddelande, bild och en knapp för att starta guiden."
 
-#: source/php/AcfFields/php/interactive-guide.php:69
+#: source/php/AcfFields/php/interactive-guide.php:122
 msgid "Content to be displayed on start screen."
 msgstr "Innehåll som visas på startskärmen."
 
-#: source/php/AcfFields/php/interactive-guide.php:88
+#: source/php/AcfFields/php/interactive-guide.php:141
 msgid "Title for the link or button that start the interactive guide."
 msgstr "Titel för länken eller knappen som startar den interaktiva guiden."
 
-#: source/php/AcfFields/php/interactive-guide.php:104
-#: source/php/AcfFields/php/interactive-guide.php:147
-#: source/php/AcfFields/php/interactive-guide.php:298
-#: source/php/AcfFields/php/interactive-guide.php:848
+#: source/php/AcfFields/php/interactive-guide.php:157
+#: source/php/AcfFields/php/interactive-guide.php:200
+#: source/php/AcfFields/php/interactive-guide.php:351
+#: source/php/AcfFields/php/interactive-guide.php:901
 #: source/php/PostTypes/MembershipCards.php:49
 msgid "Image"
 msgstr "Bild"
 
-#: source/php/AcfFields/php/interactive-guide.php:119
-#: source/php/AcfFields/php/interactive-guide.php:820
-#: source/php/AcfFields/php/interactive-guide.php:958
+#: source/php/AcfFields/php/interactive-guide.php:172
+#: source/php/AcfFields/php/interactive-guide.php:873
+#: source/php/AcfFields/php/interactive-guide.php:1011
 msgid "Add image"
 msgstr "Lägg till bild"
 
-#: source/php/AcfFields/php/interactive-guide.php:123
-#: source/php/AcfFields/php/interactive-guide.php:303
-#: source/php/AcfFields/php/interactive-guide.php:824
-#: source/php/AcfFields/php/interactive-guide.php:962
+#: source/php/AcfFields/php/interactive-guide.php:176
+#: source/php/AcfFields/php/interactive-guide.php:356
+#: source/php/AcfFields/php/interactive-guide.php:877
+#: source/php/AcfFields/php/interactive-guide.php:1015
 msgid "Source"
 msgstr "Källa"
 
-#: source/php/AcfFields/php/interactive-guide.php:135
-#: source/php/AcfFields/php/interactive-guide.php:315
-#: source/php/AcfFields/php/interactive-guide.php:836
-#: source/php/AcfFields/php/interactive-guide.php:974
+#: source/php/AcfFields/php/interactive-guide.php:188
+#: source/php/AcfFields/php/interactive-guide.php:368
+#: source/php/AcfFields/php/interactive-guide.php:889
+#: source/php/AcfFields/php/interactive-guide.php:1027
 msgid "Uploaded"
 msgstr "Uppladdad"
 
-#: source/php/AcfFields/php/interactive-guide.php:136
-#: source/php/AcfFields/php/interactive-guide.php:179
-#: source/php/AcfFields/php/interactive-guide.php:316
-#: source/php/AcfFields/php/interactive-guide.php:837
-#: source/php/AcfFields/php/interactive-guide.php:880
-#: source/php/AcfFields/php/interactive-guide.php:975
+#: source/php/AcfFields/php/interactive-guide.php:189
+#: source/php/AcfFields/php/interactive-guide.php:232
+#: source/php/AcfFields/php/interactive-guide.php:369
+#: source/php/AcfFields/php/interactive-guide.php:890
+#: source/php/AcfFields/php/interactive-guide.php:933
+#: source/php/AcfFields/php/interactive-guide.php:1028
 msgid "URL"
 msgstr ""
 
-#: source/php/AcfFields/php/interactive-guide.php:206
-#: source/php/AcfFields/php/interactive-guide.php:386
+#: source/php/AcfFields/php/interactive-guide.php:259
+#: source/php/AcfFields/php/interactive-guide.php:439
 msgid "Aspect ratio"
 msgstr "Bildformat"
 
-#: source/php/AcfFields/php/interactive-guide.php:218
-#: source/php/AcfFields/php/interactive-guide.php:398
+#: source/php/AcfFields/php/interactive-guide.php:271
+#: source/php/AcfFields/php/interactive-guide.php:451
 msgid "1:1"
 msgstr ""
 
-#: source/php/AcfFields/php/interactive-guide.php:219
-#: source/php/AcfFields/php/interactive-guide.php:399
+#: source/php/AcfFields/php/interactive-guide.php:272
+#: source/php/AcfFields/php/interactive-guide.php:452
 msgid "4:3"
 msgstr ""
 
-#: source/php/AcfFields/php/interactive-guide.php:220
-#: source/php/AcfFields/php/interactive-guide.php:400
+#: source/php/AcfFields/php/interactive-guide.php:273
+#: source/php/AcfFields/php/interactive-guide.php:453
 msgid "16:9"
 msgstr ""
 
-#: source/php/AcfFields/php/interactive-guide.php:240
+#: source/php/AcfFields/php/interactive-guide.php:293
 msgid "Chapter"
 msgstr "Kapitel"
 
-#: source/php/AcfFields/php/interactive-guide.php:269
+#: source/php/AcfFields/php/interactive-guide.php:322
 msgid "Bot"
 msgstr "Bot"
 
-#: source/php/AcfFields/php/interactive-guide.php:274
-#: source/php/AcfFields/php/interactive-guide.php:568
+#: source/php/AcfFields/php/interactive-guide.php:327
+#: source/php/AcfFields/php/interactive-guide.php:621
 msgid "Message"
 msgstr "Meddelande"
 
-#: source/php/AcfFields/php/interactive-guide.php:327
-#: source/php/AcfFields/php/interactive-guide.php:986
+#: source/php/AcfFields/php/interactive-guide.php:380
+#: source/php/AcfFields/php/interactive-guide.php:1039
 msgid "Upload image"
 msgstr "Ladda upp bild"
 
-#: source/php/AcfFields/php/interactive-guide.php:359
+#: source/php/AcfFields/php/interactive-guide.php:412
 msgid "Image URL"
 msgstr "Bildens URL"
 
-#: source/php/AcfFields/php/interactive-guide.php:418
+#: source/php/AcfFields/php/interactive-guide.php:471
 msgid "Choice"
 msgstr "Val"
 
-#: source/php/AcfFields/php/interactive-guide.php:434
+#: source/php/AcfFields/php/interactive-guide.php:487
+#: source/php/AcfFields/php/interactive-guide.php:670
 msgid "Add one or many choice alternatives."
 msgstr "Lägg till ett eller flera alternativ."
 
-#: source/php/AcfFields/php/interactive-guide.php:455
-#: source/php/AcfFields/php/interactive-guide.php:629
+#: source/php/AcfFields/php/interactive-guide.php:508
+#: source/php/AcfFields/php/interactive-guide.php:682
 msgid "Add alternative"
 msgstr "Lägg till alternativ"
 
-#: source/php/AcfFields/php/interactive-guide.php:459
-#: source/php/AcfFields/php/interactive-guide.php:633
+#: source/php/AcfFields/php/interactive-guide.php:512
+#: source/php/AcfFields/php/interactive-guide.php:686
 msgid "Alternative"
 msgstr "Alternativ"
 
-#: source/php/AcfFields/php/interactive-guide.php:478
-#: source/php/AcfFields/php/interactive-guide.php:679
+#: source/php/AcfFields/php/interactive-guide.php:531
+#: source/php/AcfFields/php/interactive-guide.php:732
 msgid "Responses"
 msgstr "Svar"
 
-#: source/php/AcfFields/php/interactive-guide.php:481
+#: source/php/AcfFields/php/interactive-guide.php:534
+#: source/php/AcfFields/php/interactive-guide.php:735
 msgid "Response messages that is shown after this choice is selected."
 msgstr "Svarsmeddelanden som visas efter detta valalternativ."
 
-#: source/php/AcfFields/php/interactive-guide.php:493
-#: source/php/AcfFields/php/interactive-guide.php:694
+#: source/php/AcfFields/php/interactive-guide.php:546
+#: source/php/AcfFields/php/interactive-guide.php:747
 msgid "Add response"
 msgstr "Lägg till svar"
 
-#: source/php/AcfFields/php/interactive-guide.php:497
-#: source/php/AcfFields/php/interactive-guide.php:698
+#: source/php/AcfFields/php/interactive-guide.php:550
+#: source/php/AcfFields/php/interactive-guide.php:751
 msgid "Response"
 msgstr "Svar"
 
-#: source/php/AcfFields/php/interactive-guide.php:525
+#: source/php/AcfFields/php/interactive-guide.php:578
 msgid "Dialog"
 msgstr "Dialog"
 
-#: source/php/AcfFields/php/interactive-guide.php:549
+#: source/php/AcfFields/php/interactive-guide.php:602
 msgid "Instructions"
 msgstr "Instruktioner"
 
-#: source/php/AcfFields/php/interactive-guide.php:587
+#: source/php/AcfFields/php/interactive-guide.php:640
 msgid "Icon"
 msgstr "Ikon"
 
-#: source/php/AcfFields/php/interactive-guide.php:599
+#: source/php/AcfFields/php/interactive-guide.php:652
 msgid "Talk"
 msgstr "Prata"
 
-#: source/php/AcfFields/php/interactive-guide.php:600
+#: source/php/AcfFields/php/interactive-guide.php:653
 msgid "Look"
 msgstr "Leta"
 
-#: source/php/AcfFields/php/interactive-guide.php:601
+#: source/php/AcfFields/php/interactive-guide.php:654
 msgid "Question"
 msgstr "Fråga"
 
-#: source/php/AcfFields/php/interactive-guide.php:614
-msgid "Alternatives"
-msgstr "Alternativ"
-
-#: source/php/AcfFields/php/interactive-guide.php:652
+#: source/php/AcfFields/php/interactive-guide.php:705
 msgid "Correct"
 msgstr "Rätt svar "
 
-#: source/php/AcfFields/php/interactive-guide.php:655
+#: source/php/AcfFields/php/interactive-guide.php:708
 msgid ""
 "Set to no if the dialog shall repeat itself until a correct alternative is "
 "answered."
 msgstr ""
 "Sätt nej om frågan ska upprepas tills det rätta alternativet har valts."
 
-#: source/php/AcfFields/php/interactive-guide.php:682
-msgid "List of response messages that is shown after alternative if selected."
-msgstr "Lista över svarsmeddelanden som visas efter alternativet har valts."
-
-#: source/php/AcfFields/php/interactive-guide.php:726
+#: source/php/AcfFields/php/interactive-guide.php:779
 msgid "Finish"
 msgstr "Avslut"
 
-#: source/php/AcfFields/php/interactive-guide.php:742
+#: source/php/AcfFields/php/interactive-guide.php:795
 msgid "This is the last step for an interactive guide."
 msgstr "Detta är det sista steget för en interaktiv guide."
 
-#: source/php/AcfFields/php/interactive-guide.php:748
+#: source/php/AcfFields/php/interactive-guide.php:801
 msgid "Header title"
 msgstr "Header-titel"
 
-#: source/php/AcfFields/php/interactive-guide.php:751
+#: source/php/AcfFields/php/interactive-guide.php:804
 msgid "Title to be displayed on finish screen header."
 msgstr "Titel som ska visas i headern på avslutningssteget."
 
-#: source/php/AcfFields/php/interactive-guide.php:767
+#: source/php/AcfFields/php/interactive-guide.php:820
 msgid "Content area title"
 msgstr "Titel i innehållsarea"
 
-#: source/php/AcfFields/php/interactive-guide.php:770
+#: source/php/AcfFields/php/interactive-guide.php:823
 msgid "Title to be displayed in the content area."
 msgstr "Titel som ska visas i innehållsarean."
 
-#: source/php/AcfFields/php/interactive-guide.php:786
+#: source/php/AcfFields/php/interactive-guide.php:839
 msgid "Content area text"
 msgstr "Text i innehållsarea"
 
-#: source/php/AcfFields/php/interactive-guide.php:789
+#: source/php/AcfFields/php/interactive-guide.php:842
 msgid "Text to be displayed in the content area."
 msgstr "Text som ska visas i innehållsarean."
 
-#: source/php/AcfFields/php/interactive-guide.php:805
+#: source/php/AcfFields/php/interactive-guide.php:858
 msgid "Images"
 msgstr "Bilder"
 
-#: source/php/AcfFields/php/interactive-guide.php:808
+#: source/php/AcfFields/php/interactive-guide.php:861
 msgid "Images to be shown in content area."
 msgstr "Bilder som visas i innehållsarean."
 
-#: source/php/AcfFields/php/interactive-guide.php:909
+#: source/php/AcfFields/php/interactive-guide.php:962
 msgid "Share result"
 msgstr "Dela resultat"
 
-#: source/php/AcfFields/php/interactive-guide.php:924
+#: source/php/AcfFields/php/interactive-guide.php:977
 msgid "Share title"
 msgstr "Delningstitel"
 
-#: source/php/AcfFields/php/interactive-guide.php:927
+#: source/php/AcfFields/php/interactive-guide.php:980
 msgid "Title to be shown on share button."
 msgstr "Titel som ska visas på delningsknapp."
 
-#: source/php/AcfFields/php/interactive-guide.php:943
+#: source/php/AcfFields/php/interactive-guide.php:996
 msgid "Share image"
 msgstr "Delningsbild"
 
-#: source/php/AcfFields/php/interactive-guide.php:1018
+#: source/php/AcfFields/php/interactive-guide.php:1071
 msgid "Share URL"
 msgstr "Delnings-URL"
 
-#: source/php/AcfFields/php/interactive-guide.php:1052
+#: source/php/AcfFields/php/interactive-guide.php:1105
 msgid "Add step"
 msgstr "Lägg till steg"
 
@@ -2244,11 +2260,11 @@ msgstr "Internt evenemang"
 msgid "Select if this is an internal event."
 msgstr "Välj om evenemanget är internt."
 
-#: source/php/AcfFields/php/internal_event.php:24 source/php/App.php:246
+#: source/php/AcfFields/php/internal_event.php:24 source/php/App.php:247
 msgid "Yes"
 msgstr "Ja"
 
-#: source/php/AcfFields/php/internal_event.php:25 source/php/App.php:247
+#: source/php/AcfFields/php/internal_event.php:25 source/php/App.php:248
 msgid "No"
 msgstr "Nej"
 
@@ -2783,92 +2799,92 @@ msgstr "Evenemangshanterare"
 msgid "Guide editor"
 msgstr "Guideredakör"
 
-#: source/php/App.php:220
+#: source/php/App.php:221
 msgid "\"Title\" is missing"
 msgstr "“Titel” saknas"
 
-#: source/php/App.php:221
+#: source/php/App.php:222
 msgid "\"Featured\" image is missing"
 msgstr "“Utvald bild” saknas"
 
-#: source/php/App.php:222
+#: source/php/App.php:223
 msgid "Create new organizer"
 msgstr "Skapa ny arrangör"
 
-#: source/php/App.php:223
+#: source/php/App.php:224
 msgid "Create new sponsor"
 msgstr "Skapa ny sponsor"
 
-#: source/php/App.php:224
+#: source/php/App.php:225
 msgid "Create new location"
 msgstr "Skapa ny plats"
 
-#: source/php/App.php:225 source/php/App.php:226
+#: source/php/App.php:226 source/php/App.php:227
 msgid "Create new membership card"
 msgstr "Skapa nytt medlemskort"
 
-#: source/php/App.php:227
+#: source/php/App.php:228
 msgid "Close"
 msgstr "Stäng"
 
-#: source/php/App.php:228
+#: source/php/App.php:229
 msgid "Add images"
 msgstr "Lägg till bilder"
 
-#: source/php/App.php:229
+#: source/php/App.php:230
 msgid "Imported data"
 msgstr "Importerad data"
 
-#: source/php/App.php:233
+#: source/php/App.php:234
 msgid "Time until reload"
 msgstr "Laddar om sidan"
 
-#: source/php/App.php:234
+#: source/php/App.php:235
 msgid "Loading"
 msgstr "Hämtar"
 
-#: source/php/App.php:235
+#: source/php/App.php:236
 msgid "Choose time"
 msgstr "Välj tidpunkt"
 
-#: source/php/App.php:236
+#: source/php/App.php:237
 msgid "Time"
 msgstr "Tid"
 
-#: source/php/App.php:237
+#: source/php/App.php:238
 msgid "Hour"
 msgstr "Timme"
 
-#: source/php/App.php:238
+#: source/php/App.php:239
 msgid "Minute"
 msgstr "Minut"
 
-#: source/php/App.php:239
+#: source/php/App.php:240
 msgid "Done"
 msgstr "Klar"
 
-#: source/php/App.php:240
+#: source/php/App.php:241
 msgid "Now"
 msgstr "Nu"
 
-#: source/php/App.php:241
+#: source/php/App.php:242
 msgid "with similar name"
 msgstr "med liknande namn"
 
-#: source/php/App.php:248
+#: source/php/App.php:249
 msgid "To upload an image, you need to confirm the statements below"
 msgstr "För att ladda upp en bild behöver du bekräfta nedanstående punkter"
 
-#: source/php/App.php:249
+#: source/php/App.php:250
 msgid "I have the right to use this image to promote this event."
 msgstr ""
 "Jag har rätt att använda denna bild för att marknadsföra detta evenemang."
 
-#: source/php/App.php:250
+#: source/php/App.php:251
 msgid "Are there identifiable persons on the image/images?"
 msgstr "Finns det identifierbara personer på bilden/bilderna?"
 
-#: source/php/App.php:251
+#: source/php/App.php:252
 msgid ""
 "They have accepted that the image is used to promote this event and have "
 "been informed that after the image has been added to the database, it may "
@@ -2878,11 +2894,11 @@ msgstr ""
 "har informerats om att efter att bilden lagts in i databasen kan komma att "
 "synas i olika kanaler för att marknadsföra evenemanget."
 
-#: source/php/App.php:252
+#: source/php/App.php:253
 msgid "Duplicate occasion"
 msgstr "Duplicera tidpunkt"
 
-#: source/php/App.php:253
+#: source/php/App.php:254
 msgid "Import scheduled"
 msgstr "Import schemalagd"
 
@@ -3143,11 +3159,11 @@ msgstr ""
 "Inga evenemang från Transticket har importerats de senaste 7 dagarna. "
 "Vänligen kontrollera inställningarna och importen."
 
-#: source/php/PostTypes/InteractiveGuides.php:12
+#: source/php/PostTypes/InteractiveGuides.php:10
 msgid "Interactive guides"
 msgstr "Interaktiva guider"
 
-#: source/php/PostTypes/InteractiveGuides.php:13
+#: source/php/PostTypes/InteractiveGuides.php:11
 msgid "Interactive guide"
 msgstr "Interaktiv guide"
 
@@ -3627,6 +3643,13 @@ msgstr ""
 #. Author URI of the plugin/theme
 msgid "http://www.helsingborg.se"
 msgstr ""
+
+#~ msgid "Alternatives"
+#~ msgstr "Alternativ"
+
+#~ msgid ""
+#~ "List of response messages that is shown after alternative if selected."
+#~ msgstr "Lista över svarsmeddelanden som visas efter alternativet har valts."
 
 #~ msgid "Interactive Guide"
 #~ msgstr "Interaktiv Guide"
