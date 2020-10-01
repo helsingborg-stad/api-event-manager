@@ -350,7 +350,7 @@
                         },
                         {
                             "key": "field_5f699f4650164",
-                            "label": "Message",
+                            "label": "Prompt",
                             "name": "message",
                             "type": "text",
                             "instructions": "",
