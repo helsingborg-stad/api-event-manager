@@ -136,8 +136,8 @@
                 },
                 "layout_5f68b70d623a2": {
                     "key": "layout_5f68b70d623a2",
-                    "name": "bot",
-                    "label": "Bot",
+                    "name": "text_message",
+                    "label": "Text message",
                     "display": "block",
                     "sub_fields": [
                         {
@@ -199,8 +199,8 @@
                 },
                 "layout_5f6999c722cbb": {
                     "key": "layout_5f6999c722cbb",
-                    "name": "choice",
-                    "label": "Choice",
+                    "name": "button",
+                    "label": "Button",
                     "display": "block",
                     "sub_fields": [
                         {
@@ -381,7 +381,7 @@
                                 "id": ""
                             },
                             "choices": {
-                                "talk": "Talk",
+                                "discuss": "Discuss",
                                 "look": "Look",
                                 "question": "Question"
                             },
