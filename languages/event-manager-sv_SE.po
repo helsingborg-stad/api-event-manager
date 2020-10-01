@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Event Manager\n"
-"POT-Creation-Date: 2020-10-01 16:10+0200\n"
-"PO-Revision-Date: 2020-10-01 16:10+0200\n"
+"POT-Creation-Date: 2020-10-01 16:38+0200\n"
+"PO-Revision-Date: 2020-10-01 16:38+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: sv_SE\n"
@@ -1993,7 +1993,7 @@ msgstr "Introduktionstext"
 
 #: source/php/AcfFields/php/interactive-guide.php:50
 msgid "E.g. Hi and welcome to xx that is shown on xx."
-msgstr "Hej och välkommen till xx som visas på xx."
+msgstr "T.ex. Hej och välkommen till xx som visas på xx."
 
 #: source/php/AcfFields/php/interactive-guide.php:66
 msgid "Button text"
@@ -2070,6 +2070,7 @@ msgid "Dialog"
 msgstr "Dialog"
 
 #: source/php/AcfFields/php/interactive-guide.php:318
+#: source/php/AcfFields/php/interactive-guide.php:536
 #: source/php/AcfFields/php/organizer.php:101
 #: source/php/PostTypes/Events.php:38 source/php/PostTypes/Locations.php:38
 #: source/php/PostTypes/MembershipCards.php:34
@@ -2122,25 +2123,21 @@ msgstr "Avslut"
 msgid "This is the last step for an interactive guide."
 msgstr "Detta är det sista steget för en interaktiv guide."
 
-#: source/php/AcfFields/php/interactive-guide.php:536
-msgid "Header title"
-msgstr "Header-titel"
-
 #: source/php/AcfFields/php/interactive-guide.php:539
 msgid "Title to be displayed on finish screen header."
 msgstr "Titel som ska visas i headern på avslutningssteget."
 
 #: source/php/AcfFields/php/interactive-guide.php:555
-msgid "Content area title"
-msgstr "Titel i innehållsarea"
+msgid "Heading"
+msgstr "Rubrik"
 
 #: source/php/AcfFields/php/interactive-guide.php:558
-msgid "Title to be displayed in the content area."
-msgstr "Titel som ska visas i innehållsarean."
+msgid "Heading to be displayed in the content area."
+msgstr "Rubrik som visas i innehållsarean."
 
 #: source/php/AcfFields/php/interactive-guide.php:574
-msgid "Content area text"
-msgstr "Text i innehållsarea"
+msgid "Text"
+msgstr "Text"
 
 #: source/php/AcfFields/php/interactive-guide.php:577
 msgid "Text to be displayed in the content area."
@@ -2162,19 +2159,19 @@ msgstr "Lägg till bild"
 msgid "Share result"
 msgstr "Dela resultat"
 
-#: source/php/AcfFields/php/interactive-guide.php:660
+#: source/php/AcfFields/php/interactive-guide.php:664
 msgid "Share title"
 msgstr "Delningstitel"
 
-#: source/php/AcfFields/php/interactive-guide.php:663
+#: source/php/AcfFields/php/interactive-guide.php:667
 msgid "Title to be shown on share button."
 msgstr "Titel som ska visas på delningsknapp."
 
-#: source/php/AcfFields/php/interactive-guide.php:679
+#: source/php/AcfFields/php/interactive-guide.php:691
 msgid "Share image"
 msgstr "Delningsbild"
 
-#: source/php/AcfFields/php/interactive-guide.php:708
+#: source/php/AcfFields/php/interactive-guide.php:726
 msgid "Add step"
 msgstr "Lägg till steg"
 
@@ -3569,6 +3566,18 @@ msgstr ""
 #. Author URI of the plugin/theme
 msgid "http://www.helsingborg.se"
 msgstr ""
+
+#~ msgid "Header title"
+#~ msgstr "Header-titel"
+
+#~ msgid "Content area title"
+#~ msgstr "Titel i innehållsarea"
+
+#~ msgid "Title to be displayed in the content area."
+#~ msgstr "Titel som ska visas i innehållsarean."
+
+#~ msgid "Content area text"
+#~ msgstr "Text i innehållsarea"
 
 #~ msgid "Interactive Guide"
 #~ msgstr "Interaktiv Guide"
