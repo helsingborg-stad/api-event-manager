@@ -139,8 +139,8 @@
                 ),
                 'layout_5f68b70d623a2' => array(
                     'key' => 'layout_5f68b70d623a2',
-                    'name' => 'bot',
-                    'label' => __('Bot', 'event-manager'),
+                    'name' => 'text_message',
+                    'label' => __('Text message', 'event-manager'),
                     'display' => 'block',
                     'sub_fields' => array(
                         0 => array(
@@ -202,8 +202,8 @@
                 ),
                 'layout_5f6999c722cbb' => array(
                     'key' => 'layout_5f6999c722cbb',
-                    'name' => 'choice',
-                    'label' => __('Choice', 'event-manager'),
+                    'name' => 'button',
+                    'label' => __('Button', 'event-manager'),
                     'display' => 'block',
                     'sub_fields' => array(
                         0 => array(
@@ -384,7 +384,7 @@
                                 'id' => '',
                             ),
                             'choices' => array(
-                                'talk' => 'Talk',
+                                'discuss' => 'Discuss',
                                 'look' => 'Look',
                                 'question' => 'Question',
                             ),
