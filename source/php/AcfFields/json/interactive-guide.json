@@ -223,7 +223,7 @@
                         {
                             "key": "field_5f6999f122cbc",
                             "label": "",
-                            "name": "choices",
+                            "name": "alternatives",
                             "type": "repeater",
                             "instructions": "",
                             "required": 0,
@@ -529,7 +529,7 @@
                         },
                         {
                             "key": "field_5f68a5c605ada",
-                            "label": "Header title",
+                            "label": "Title",
                             "name": "header_title",
                             "type": "text",
                             "instructions": "Title to be displayed on finish screen header.",
@@ -548,10 +548,10 @@
                         },
                         {
                             "key": "field_5f68aa923521c",
-                            "label": "Content area title",
+                            "label": "Heading",
                             "name": "content_area_title",
                             "type": "text",
-                            "instructions": "Title to be displayed in the content area.",
+                            "instructions": "Heading to be displayed in the content area.",
                             "required": 0,
                             "conditional_logic": 0,
                             "wrapper": {
@@ -567,7 +567,7 @@
                         },
                         {
                             "key": "field_5f68aaa83521d",
-                            "label": "Content area text",
+                            "label": "Text",
                             "name": "content_area_text",
                             "type": "text",
                             "instructions": "Text to be displayed in the content area.",
@@ -637,10 +637,10 @@
                             ]
                         },
                         {
-                            "key": "field_5f6a0dfd6f6be",
+                            "key": "field_5f75e4ce68a93",
                             "label": "Share result",
-                            "name": "share_result",
-                            "type": "group",
+                            "name": "display_share_result",
+                            "type": "true_false",
                             "instructions": "",
                             "required": 0,
                             "conditional_logic": 0,
@@ -649,52 +649,70 @@
                                 "class": "",
                                 "id": ""
                             },
-                            "layout": "block",
-                            "sub_fields": [
-                                {
-                                    "key": "field_5f68a6bb0ee01",
-                                    "label": "Share title",
-                                    "name": "share_title",
-                                    "type": "text",
-                                    "instructions": "Title to be shown on share button.",
-                                    "required": 0,
-                                    "conditional_logic": 0,
-                                    "wrapper": {
-                                        "width": "",
-                                        "class": "",
-                                        "id": ""
-                                    },
-                                    "default_value": "",
-                                    "placeholder": "",
-                                    "prepend": "",
-                                    "append": "",
-                                    "maxlength": ""
-                                },
-                                {
-                                    "key": "field_5f68a6d00ee02",
-                                    "label": "Share image",
-                                    "name": "image",
-                                    "type": "image",
-                                    "instructions": "",
-                                    "required": 0,
-                                    "conditional_logic": 0,
-                                    "wrapper": {
-                                        "width": "",
-                                        "class": "",
-                                        "id": ""
-                                    },
-                                    "return_format": "array",
-                                    "preview_size": "medium",
-                                    "library": "uploadedTo",
-                                    "min_width": "",
-                                    "min_height": "",
-                                    "min_size": "",
-                                    "max_width": "",
-                                    "max_height": "",
-                                    "max_size": "",
-                                    "mime_types": "png, jpeg, jpg, svg, gif"
-                                }
-                            ]
+                            "message": "",
+                            "default_value": 0,
+                            "ui": 1,
+                            "ui_on_text": "",
+                            "ui_off_text": ""
+                        },
+                        {
+                            "key": "field_5f68a6bb0ee01",
+                            "label": "Share title",
+                            "name": "share_title",
+                            "type": "text",
+                            "instructions": "Title to be shown on share button.",
+                            "required": 1,
+                            "conditional_logic": [
+                                [
+                                    {
+                                        "field": "field_5f75e4ce68a93",
+                                        "operator": "==",
+                                        "value": "1"
+                                    }
+                                ]
+                            ],
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": "",
+                            "placeholder": "",
+                            "prepend": "",
+                            "append": "",
+                            "maxlength": ""
+                        },
+                        {
+                            "key": "field_5f68a6d00ee02",
+                            "label": "Share image",
+                            "name": "share_image",
+                            "type": "image",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": [
+                                [
+                                    {
+                                        "field": "field_5f75e4ce68a93",
+                                        "operator": "==",
+                                        "value": "1"
+                                    }
+                                ]
+                            ],
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "return_format": "array",
+                            "preview_size": "medium",
+                            "library": "uploadedTo",
+                            "min_width": "",
+                            "min_height": "",
+                            "min_size": "",
+                            "max_width": "",
+                            "max_height": "",
+                            "max_size": "",
+                            "mime_types": "png, jpeg, jpg, svg, gif"
                         }
                     ],
                     "min": "",
