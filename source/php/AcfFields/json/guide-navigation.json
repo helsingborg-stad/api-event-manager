@@ -31,8 +31,8 @@
         },
         {
             "key": "field_5a292d1f8d9ec",
-            "label": "Select specific items (posts)",
-            "name": "include_specific_posts",
+            "label": "Select specific items (guides)",
+            "name": "include_specific_guides",
             "type": "true_false",
             "instructions": "To select none, please switch to \"select specific items\" and leave specific items field blank.",
             "required": 0,
@@ -50,8 +50,8 @@
         },
         {
             "key": "field_5a27f6ab57d2f",
-            "label": "Include these items (posts)",
-            "name": "included_posts",
+            "label": "Include these items (guides)",
+            "name": "included_guides",
             "type": "post_object",
             "instructions": "",
             "required": 0,
@@ -72,7 +72,7 @@
             "post_type": [
                 "guide"
             ],
-            "taxonomy": [],
+            "taxonomy": "",
             "allow_null": 0,
             "multiple": 1,
             "return_format": "object",
@@ -170,7 +170,56 @@
             "post_type": [
                 "recommendation"
             ],
-            "taxonomy": [],
+            "taxonomy": "",
+            "allow_null": 0,
+            "multiple": 1,
+            "return_format": "object",
+            "ui": 1
+        },
+        {
+            "key": "field_5f75eb19a761a",
+            "label": "Select specific interactive guides",
+            "name": "include_specific_interactive_guides",
+            "type": "true_false",
+            "instructions": "To select none, please switch to \"select specific items\" and leave specific items field blank.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 1,
+            "ui": 1,
+            "ui_on_text": "Select specific items",
+            "ui_off_text": "Include all items"
+        },
+        {
+            "key": "field_5f75eb3fa761b",
+            "label": "Include these interactive guides",
+            "name": "included_interactive_guides",
+            "type": "post_object",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5f75eb19a761a",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "post_type": [
+                "interactive_guide"
+            ],
+            "taxonomy": "",
             "allow_null": 0,
             "multiple": 1,
             "return_format": "object",

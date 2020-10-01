@@ -34,8 +34,8 @@
         ),
         1 => array(
             'key' => 'field_5a292d1f8d9ec',
-            'label' => __('Select specific items (posts)', 'event-manager'),
-            'name' => 'include_specific_posts',
+            'label' => __('Select specific items (guides)', 'event-manager'),
+            'name' => 'include_specific_guides',
             'type' => 'true_false',
             'instructions' => __('To select none, please switch to "select specific items" and leave specific items field blank.', 'event-manager'),
             'required' => 0,
@@ -53,8 +53,8 @@
         ),
         2 => array(
             'key' => 'field_5a27f6ab57d2f',
-            'label' => __('Include these items (posts)', 'event-manager'),
-            'name' => 'included_posts',
+            'label' => __('Include these items (guides)', 'event-manager'),
+            'name' => 'included_guides',
             'type' => 'post_object',
             'instructions' => '',
             'required' => 0,
@@ -75,8 +75,7 @@
             'post_type' => array(
                 0 => 'guide',
             ),
-            'taxonomy' => array(
-            ),
+            'taxonomy' => '',
             'allow_null' => 0,
             'multiple' => 1,
             'return_format' => 'object',
@@ -174,14 +173,62 @@
             'post_type' => array(
                 0 => 'recommendation',
             ),
-            'taxonomy' => array(
-            ),
+            'taxonomy' => '',
             'allow_null' => 0,
             'multiple' => 1,
             'return_format' => 'object',
             'ui' => 1,
         ),
         7 => array(
+            'key' => 'field_5f75eb19a761a',
+            'label' => __('Select specific interactive guides', 'event-manager'),
+            'name' => 'include_specific_interactive_guides',
+            'type' => 'true_false',
+            'instructions' => __('To select none, please switch to "select specific items" and leave specific items field blank.', 'event-manager'),
+            'required' => 0,
+            'conditional_logic' => 0,
+            'wrapper' => array(
+                'width' => '',
+                'class' => '',
+                'id' => '',
+            ),
+            'message' => '',
+            'default_value' => 1,
+            'ui' => 1,
+            'ui_on_text' => __('Select specific items', 'event-manager'),
+            'ui_off_text' => __('Include all items', 'event-manager'),
+        ),
+        8 => array(
+            'key' => 'field_5f75eb3fa761b',
+            'label' => __('Include these interactive guides', 'event-manager'),
+            'name' => 'included_interactive_guides',
+            'type' => 'post_object',
+            'instructions' => '',
+            'required' => 0,
+            'conditional_logic' => array(
+                0 => array(
+                    0 => array(
+                        'field' => 'field_5f75eb19a761a',
+                        'operator' => '==',
+                        'value' => '1',
+                    ),
+                ),
+            ),
+            'wrapper' => array(
+                'width' => '',
+                'class' => '',
+                'id' => '',
+            ),
+            'post_type' => array(
+                0 => 'interactive_guide',
+            ),
+            'taxonomy' => '',
+            'allow_null' => 0,
+            'multiple' => 1,
+            'return_format' => 'object',
+            'ui' => 1,
+        ),
+        9 => array(
             'key' => 'field_5df88da56f5a9',
             'label' => __('Group', 'event-manager'),
             'name' => 'user_groups',
