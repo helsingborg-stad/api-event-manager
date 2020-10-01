@@ -353,7 +353,7 @@
                         ),
                         2 => array(
                             'key' => 'field_5f699f4650164',
-                            'label' => __('Message', 'event-manager'),
+                            'label' => __('Prompt', 'event-manager'),
                             'name' => 'message',
                             'type' => 'text',
                             'instructions' => '',
