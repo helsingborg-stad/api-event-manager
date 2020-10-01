@@ -3,7 +3,7 @@
 if (function_exists('acf_add_local_field_group')) {
     acf_add_local_field_group(array(
     'key' => 'group_5f68a3350351d',
-    'title' => 'Interactive Guide',
+    'title' => __('Interactive Guide', 'event-manager'),
     'fields' => array(
         0 => array(
             'key' => 'field_5f68b2656239c',
@@ -38,16 +38,16 @@
                                 'class' => '',
                                 'id' => '',
                             ),
-                            'message' => __('This is the first step for an interactive guide. It displays a text message, image and a button to start the guide.', 'event-manager'),
+                            'message' => 'This is the first step for an interactive guide. It displays a text message, image and a button to start the guide.',
                             'new_lines' => 'wpautop',
                             'esc_html' => 0,
                         ),
                         1 => array(
                             'key' => 'field_5f68bc7b1a428',
-                            'label' => __('Introduction text', 'event-manager'),
+                            'label' => 'Introduction text',
                             'name' => 'introduction_text',
                             'type' => 'text',
-                            'instructions' => __('E.g. Hi and welcome to xx that is shown on xx.', 'event-manager'),
+                            'instructions' => 'E.g. Hi and welcome to xx that is shown on xx.',
                             'required' => 0,
                             'conditional_logic' => 0,
                             'wrapper' => array(
@@ -63,10 +63,10 @@
                         ),
                         2 => array(
                             'key' => 'field_5f68be8c4b154',
-                            'label' => __('Button text', 'event-manager'),
+                            'label' => 'Button text',
                             'name' => 'start_guide_title',
                             'type' => 'text',
-                            'instructions' => __('Text for button that starts the interactive guide.', 'event-manager'),
+                            'instructions' => 'Text for button that starts the interactive guide.',
                             'required' => 0,
                             'conditional_logic' => 0,
                             'wrapper' => array(
@@ -82,7 +82,7 @@
                         ),
                         3 => array(
                             'key' => 'field_5f68bf83a8256',
-                            'label' => __('Image', 'event-manager'),
+                            'label' => 'Image',
                             'name' => 'image',
                             'type' => 'image',
                             'instructions' => '',
@@ -116,7 +116,7 @@
                     'sub_fields' => array(
                         0 => array(
                             'key' => 'field_5f68b68e6239e',
-                            'label' => __('Content', 'event-manager'),
+                            'label' => 'Content',
                             'name' => 'text',
                             'type' => 'text',
                             'instructions' => '',
@@ -145,7 +145,7 @@
                     'sub_fields' => array(
                         0 => array(
                             'key' => 'field_5f68b717623a3',
-                            'label' => __('Message', 'event-manager'),
+                            'label' => 'Message',
                             'name' => 'text',
                             'type' => 'text',
                             'instructions' => '',
@@ -174,7 +174,7 @@
                     'sub_fields' => array(
                         0 => array(
                             'key' => 'field_5f68b7f2e8052',
-                            'label' => __('Upload image', 'event-manager'),
+                            'label' => 'Upload image',
                             'name' => 'image',
                             'type' => 'image',
                             'instructions' => '',
@@ -219,7 +219,7 @@
                                 'class' => '',
                                 'id' => '',
                             ),
-                            'message' => __('Add one or many choice alternatives.', 'event-manager'),
+                            'message' => 'Add one or many choice alternatives.',
                             'new_lines' => 'wpautop',
                             'esc_html' => 0,
                         ),
@@ -240,11 +240,11 @@
                             'min' => 1,
                             'max' => 0,
                             'layout' => 'block',
-                            'button_label' => __('Add alternative', 'event-manager'),
+                            'button_label' => 'Add alternative',
                             'sub_fields' => array(
                                 0 => array(
                                     'key' => 'field_5f699a0322cbd',
-                                    'label' => __('Alternative', 'event-manager'),
+                                    'label' => 'Alternative',
                                     'name' => 'text',
                                     'type' => 'text',
                                     'instructions' => '',
@@ -263,10 +263,10 @@
                                 ),
                                 1 => array(
                                     'key' => 'field_5f699ac322cbe',
-                                    'label' => __('Responses', 'event-manager'),
+                                    'label' => 'Responses',
                                     'name' => 'responses',
                                     'type' => 'repeater',
-                                    'instructions' => __('Response messages that is shown after this choice is selected.', 'event-manager'),
+                                    'instructions' => 'Response messages that is shown after this choice is selected.',
                                     'required' => 0,
                                     'conditional_logic' => 0,
                                     'wrapper' => array(
@@ -278,11 +278,11 @@
                                     'min' => 0,
                                     'max' => 0,
                                     'layout' => 'block',
-                                    'button_label' => __('Add response', 'event-manager'),
+                                    'button_label' => 'Add response',
                                     'sub_fields' => array(
                                         0 => array(
                                             'key' => 'field_5f699ae922cbf',
-                                            'label' => __('Response', 'event-manager'),
+                                            'label' => 'Response',
                                             'name' => 'text',
                                             'type' => 'text',
                                             'instructions' => '',
@@ -315,7 +315,7 @@
                     'sub_fields' => array(
                         0 => array(
                             'key' => 'field_5f699f3150162',
-                            'label' => __('Title', 'event-manager'),
+                            'label' => 'Title',
                             'name' => 'title',
                             'type' => 'text',
                             'instructions' => '',
@@ -334,7 +334,7 @@
                         ),
                         1 => array(
                             'key' => 'field_5f699f3a50163',
-                            'label' => __('Instructions', 'event-manager'),
+                            'label' => 'Instructions',
                             'name' => 'instructions',
                             'type' => 'text',
                             'instructions' => '',
@@ -353,7 +353,7 @@
                         ),
                         2 => array(
                             'key' => 'field_5f699f4650164',
-                            'label' => __('Message', 'event-manager'),
+                            'label' => 'Message',
                             'name' => 'message',
                             'type' => 'text',
                             'instructions' => '',
@@ -372,7 +372,7 @@
                         ),
                         3 => array(
                             'key' => 'field_5f699e4a50161',
-                            'label' => __('Icon', 'event-manager'),
+                            'label' => 'Icon',
                             'name' => 'icon',
                             'type' => 'select',
                             'instructions' => '',
@@ -384,9 +384,9 @@
                                 'id' => '',
                             ),
                             'choices' => array(
-                                'talk' => __('Talk', 'event-manager'),
-                                'look' => __('Look', 'event-manager'),
-                                'question' => __('Question', 'event-manager'),
+                                'talk' => 'Talk',
+                                'look' => 'Look',
+                                'question' => 'Question',
                             ),
                             'default_value' => array(
                             ),
@@ -402,7 +402,7 @@
                             'label' => '',
                             'name' => 'alternatives',
                             'type' => 'repeater',
-                            'instructions' => __('Add one or many choice alternatives.', 'event-manager'),
+                            'instructions' => 'Add one or many choice alternatives.',
                             'required' => 0,
                             'conditional_logic' => 0,
                             'wrapper' => array(
@@ -414,11 +414,11 @@
                             'min' => 1,
                             'max' => 0,
                             'layout' => 'block',
-                            'button_label' => __('Add alternative', 'event-manager'),
+                            'button_label' => 'Add alternative',
                             'sub_fields' => array(
                                 0 => array(
                                     'key' => 'field_5f699e205015e',
-                                    'label' => __('Alternative', 'event-manager'),
+                                    'label' => 'Alternative',
                                     'name' => 'text',
                                     'type' => 'text',
                                     'instructions' => '',
@@ -437,10 +437,10 @@
                                 ),
                                 1 => array(
                                     'key' => 'field_5f69be5b2d957',
-                                    'label' => __('Correct', 'event-manager'),
+                                    'label' => 'Correct',
                                     'name' => 'correct',
                                     'type' => 'true_false',
-                                    'instructions' => __('Set to no if the dialog shall repeat itself until a correct alternative is answered.', 'event-manager'),
+                                    'instructions' => 'Set to no if the dialog shall repeat itself until a correct alternative is answered.',
                                     'required' => 0,
                                     'conditional_logic' => array(
                                         0 => array(
@@ -464,10 +464,10 @@
                                 ),
                                 2 => array(
                                     'key' => 'field_5f699e205015f',
-                                    'label' => __('Responses', 'event-manager'),
+                                    'label' => 'Responses',
                                     'name' => 'responses',
                                     'type' => 'repeater',
-                                    'instructions' => __('Response messages that is shown after this choice is selected.', 'event-manager'),
+                                    'instructions' => 'Response messages that is shown after this choice is selected.',
                                     'required' => 0,
                                     'conditional_logic' => 0,
                                     'wrapper' => array(
@@ -479,11 +479,11 @@
                                     'min' => 0,
                                     'max' => 0,
                                     'layout' => 'block',
-                                    'button_label' => __('Add response', 'event-manager'),
+                                    'button_label' => 'Add response',
                                     'sub_fields' => array(
                                         0 => array(
                                             'key' => 'field_5f699e2050160',
-                                            'label' => __('Response', 'event-manager'),
+                                            'label' => 'Response',
                                             'name' => 'text',
                                             'type' => 'text',
                                             'instructions' => '',
@@ -527,16 +527,16 @@
                                 'class' => '',
                                 'id' => '',
                             ),
-                            'message' => __('This is the last step for an interactive guide.', 'event-manager'),
+                            'message' => 'This is the last step for an interactive guide.',
                             'new_lines' => 'wpautop',
                             'esc_html' => 0,
                         ),
                         1 => array(
                             'key' => 'field_5f68a5c605ada',
-                            'label' => __('Header title', 'event-manager'),
+                            'label' => 'Header title',
                             'name' => 'header_title',
                             'type' => 'text',
-                            'instructions' => __('Title to be displayed on finish screen header.', 'event-manager'),
+                            'instructions' => 'Title to be displayed on finish screen header.',
                             'required' => 0,
                             'conditional_logic' => 0,
                             'wrapper' => array(
@@ -552,10 +552,10 @@
                         ),
                         2 => array(
                             'key' => 'field_5f68aa923521c',
-                            'label' => __('Content area title', 'event-manager'),
+                            'label' => 'Content area title',
                             'name' => 'content_area_title',
                             'type' => 'text',
-                            'instructions' => __('Title to be displayed in the content area.', 'event-manager'),
+                            'instructions' => 'Title to be displayed in the content area.',
                             'required' => 0,
                             'conditional_logic' => 0,
                             'wrapper' => array(
@@ -571,10 +571,10 @@
                         ),
                         3 => array(
                             'key' => 'field_5f68aaa83521d',
-                            'label' => __('Content area text', 'event-manager'),
+                            'label' => 'Content area text',
                             'name' => 'content_area_text',
                             'type' => 'text',
-                            'instructions' => __('Text to be displayed in the content area.', 'event-manager'),
+                            'instructions' => 'Text to be displayed in the content area.',
                             'required' => 0,
                             'conditional_logic' => 0,
                             'wrapper' => array(
@@ -590,10 +590,10 @@
                         ),
                         4 => array(
                             'key' => 'field_5f68a63cd0fe4',
-                            'label' => __('Images', 'event-manager'),
+                            'label' => 'Images',
                             'name' => 'images',
                             'type' => 'repeater',
-                            'instructions' => __('Images to be shown in content area.', 'event-manager'),
+                            'instructions' => 'Images to be shown in content area.',
                             'required' => 0,
                             'conditional_logic' => 0,
                             'wrapper' => array(
@@ -605,11 +605,11 @@
                             'min' => 0,
                             'max' => 0,
                             'layout' => 'block',
-                            'button_label' => __('Add image', 'event-manager'),
+                            'button_label' => 'Add image',
                             'sub_fields' => array(
                                 0 => array(
                                     'key' => 'field_5f68a5d605adb',
-                                    'label' => __('Image', 'event-manager'),
+                                    'label' => 'Image',
                                     'name' => 'image',
                                     'type' => 'image',
                                     'instructions' => '',
@@ -642,7 +642,7 @@
                         ),
                         5 => array(
                             'key' => 'field_5f6a0dfd6f6be',
-                            'label' => __('Share result', 'event-manager'),
+                            'label' => 'Share result',
                             'name' => 'share_result',
                             'type' => 'group',
                             'instructions' => '',
@@ -657,10 +657,10 @@
                             'sub_fields' => array(
                                 0 => array(
                                     'key' => 'field_5f68a6bb0ee01',
-                                    'label' => __('Share title', 'event-manager'),
+                                    'label' => 'Share title',
                                     'name' => 'share_title',
                                     'type' => 'text',
-                                    'instructions' => __('Title to be shown on share button.', 'event-manager'),
+                                    'instructions' => 'Title to be shown on share button.',
                                     'required' => 0,
                                     'conditional_logic' => 0,
                                     'wrapper' => array(
@@ -675,10 +675,10 @@
                                     'maxlength' => '',
                                 ),
                                 1 => array(
-                                    'key' => 'field_5f6a0e7b994ce',
-                                    'label' => __('Share image', 'event-manager'),
-                                    'name' => 'share_image',
-                                    'type' => 'repeater',
+                                    'key' => 'field_5f68a6d00ee02',
+                                    'label' => 'Share image',
+                                    'name' => 'image',
+                                    'type' => 'image',
                                     'instructions' => '',
                                     'required' => 0,
                                     'conditional_logic' => 0,
@@ -687,96 +687,16 @@
                                         'class' => '',
                                         'id' => '',
                                     ),
-                                    'collapsed' => '',
-                                    'min' => 0,
-                                    'max' => 1,
-                                    'layout' => 'block',
-                                    'button_label' => __('Add image', 'event-manager'),
-                                    'sub_fields' => array(
-                                        0 => array(
-                                            'key' => 'field_5f6a0e5e994cd',
-                                            'label' => __('Source', 'event-manager'),
-                                            'name' => 'share_image_source',
-                                            'type' => 'radio',
-                                            'instructions' => '',
-                                            'required' => 0,
-                                            'conditional_logic' => 0,
-                                            'wrapper' => array(
-                                                'width' => '',
-                                                'class' => '',
-                                                'id' => '',
-                                            ),
-                                            'choices' => array(
-                                                'uploaded' => __('Uploaded', 'event-manager'),
-                                                'url' => __('URL', 'event-manager'),
-                                            ),
-                                            'allow_null' => 0,
-                                            'other_choice' => 0,
-                                            'default_value' => '',
-                                            'layout' => 'vertical',
-                                            'return_format' => 'value',
-                                            'save_other_choice' => 0,
-                                        ),
-                                        1 => array(
-                                            'key' => 'field_5f68a6d00ee02',
-                                            'label' => __('Upload image', 'event-manager'),
-                                            'name' => 'uploaded_image',
-                                            'type' => 'image',
-                                            'instructions' => '',
-                                            'required' => 0,
-                                            'conditional_logic' => array(
-                                                0 => array(
-                                                    0 => array(
-                                                        'field' => 'field_5f6a0e5e994cd',
-                                                        'operator' => '==',
-                                                        'value' => 'uploaded',
-                                                    ),
-                                                ),
-                                            ),
-                                            'wrapper' => array(
-                                                'width' => '',
-                                                'class' => '',
-                                                'id' => '',
-                                            ),
-                                            'return_format' => 'array',
-                                            'preview_size' => 'medium',
-                                            'library' => 'all',
-                                            'min_width' => '',
-                                            'min_height' => '',
-                                            'min_size' => '',
-                                            'max_width' => '',
-                                            'max_height' => '',
-                                            'max_size' => '',
-                                            'mime_types' => 'png, jpeg, jpg, svg, gif',
-                                        ),
-                                        2 => array(
-                                            'key' => 'field_5f6a0ead994cf',
-                                            'label' => __('Share URL', 'event-manager'),
-                                            'name' => 'image_url',
-                                            'type' => 'text',
-                                            'instructions' => '',
-                                            'required' => 0,
-                                            'conditional_logic' => array(
-                                                0 => array(
-                                                    0 => array(
-                                                        'field' => 'field_5f6a0e5e994cd',
-                                                        'operator' => '==',
-                                                        'value' => 'url',
-                                                    ),
-                                                ),
-                                            ),
-                                            'wrapper' => array(
-                                                'width' => '',
-                                                'class' => '',
-                                                'id' => '',
-                                            ),
-                                            'default_value' => '',
-                                            'placeholder' => '',
-                                            'prepend' => '',
-                                            'append' => '',
-                                            'maxlength' => '',
-                                        ),
-                                    ),
+                                    'return_format' => 'array',
+                                    'preview_size' => 'medium',
+                                    'library' => 'uploadedTo',
+                                    'min_width' => '',
+                                    'min_height' => '',
+                                    'min_size' => '',
+                                    'max_width' => '',
+                                    'max_height' => '',
+                                    'max_size' => '',
+                                    'mime_types' => 'png, jpeg, jpg, svg, gif',
                                 ),
                             ),
                         ),
