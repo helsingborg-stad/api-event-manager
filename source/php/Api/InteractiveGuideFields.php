@@ -20,44 +20,14 @@ class InteractiveGuideFields extends Fields
     {
         register_rest_field(
             $this->postType,
-            'open_guide_title',
+            'featured_media',
             array(
-                'get_callback' => array($this, 'stringGetCallBack'),
+                'get_callback' => array($this, 'featuredImageData'),
                 'schema' => array(
-                    'description' => 'Field containing string value with open guide title.',
+                    'description' => 'Field containing object with featured image data.',
                     'type' => 'string',
-                )
-            )
-        );
-
-        register_rest_field(
-            $this->postType,
-            'custom_message_delay',
-            array(
-                  'get_callback' => function ($object, $field_name, $request) {
-                      // Convert string value to bool
-                      $value = $this->stringGetCallBack($object, $field_name, $request);
-                      return $value === 'true' ? true : false;
-                  },
-                  'schema' => array(
-                    'type' => 'bool',
-                    'context' => array('view', 'embed')
-                )
-            )
-        );
-
-        register_rest_field(
-            $this->postType,
-            'message_delay',
-            array(
-                'get_callback' => function ($object, $field_name, $request) {
-                    // Cast to int
-                    return (int) $this->numericGetCallBack($object, $field_name, $request);
-                },
-                'schema' => array(
-                    'type' => 'int',
-                    'context' => array('view', 'embed')
-                )
+                    'context' => array('view', 'edit'),
+                ),
             )
         );
 
