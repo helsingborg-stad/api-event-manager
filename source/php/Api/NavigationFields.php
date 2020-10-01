@@ -101,7 +101,7 @@ class NavigationFields extends Fields
     {
         $result = array();
 
-        $postRelations = $this->getGuideNavigationPostRelations((object) $object);
+        $postRelations = $this->getPosttypeNavigationPostRelations((object) $object, 'guide');
 
         if (!empty($postRelations) && is_array($postRelations)) {
             foreach ($postRelations as $postRelation) {
@@ -117,7 +117,8 @@ class NavigationFields extends Fields
             }
         }
 
-        $recommendationRelations = $this->getRecommendationNavigationPostRelations((object) $object);
+        $recommendationRelations = $this->getPosttypeNavigationPostRelations((object) $object, 'recommendation');
+        error_log(print_r($recommendationRelations, true));
 
         if (!empty($recommendationRelations) && is_array($recommendationRelations)) {
             foreach ($recommendationRelations as $recommendationRelation) {
@@ -125,61 +126,30 @@ class NavigationFields extends Fields
             }
         }
 
-        return $result;
-    }
+        $interactiveGuidesRelations = $this->getPosttypeNavigationPostRelations((object) $object, 'interactive_guide');
 
-    /**
-     * Get connected guides
-     * @return array
-     */
-    public function getGuideNavigationPostRelations($taxonomy)
-    {
-        $result = array();
-
-        if (!get_field('include_specific_posts', $taxonomy->taxonomy. '_' . $taxonomy->id)) {
-            $posts = get_posts(array(
-                'post_type' => 'guide',
-                'posts_per_page' => -1,
-            ));
-
-            if (!empty($posts) && is_array($posts)) {
-                foreach ($posts as $relation) {
-                    if (!isset($relation->ID)) {
-                        continue;
-                    }
-
-                    $result[] = $relation->ID;
-                }
-            }
-        } else {
-            $related = get_field('included_posts', $taxonomy->taxonomy. '_' . $taxonomy->id);
-
-            if (!is_null($related) && is_array($related) && !empty($related)) {
-                foreach ($related as $relation) {
-                    if (!isset($relation->ID)) {
-                        continue;
-                    }
-
-                    $result[] = $relation->ID;
-                }
+        if (!empty($interactiveGuidesRelations) && is_array($interactiveGuidesRelations)) {
+            foreach ($interactiveGuidesRelations as $interactiveGuidesRelation) {
+                $result[] = array('id' => $interactiveGuidesRelation, 'type' => 'interactive_guide');
             }
         }
 
         return $result;
     }
 
-
     /**
-     * Get connected recommendations
+     * Get connected post types
      * @return array
      */
-    public function getRecommendationNavigationPostRelations($taxonomy)
+    public function getPosttypeNavigationPostRelations($taxonomy, $postType)
     {
         $result = array();
 
-        if (!get_field('include_specific_recommendations', $taxonomy->taxonomy. '_' . $taxonomy->id)) {
+        $postTypePlural = $postType . 's';
+
+        if (!get_field('include_specific_' . $postTypePlural, $taxonomy->taxonomy. '_' . $taxonomy->id)) {
             $posts = get_posts(array(
-                'post_type' => 'recommendation',
+                'post_type' => $postType,
                 'posts_per_page' => -1,
             ));
 
@@ -193,7 +163,9 @@ class NavigationFields extends Fields
                 }
             }
         } else {
-            $related = get_field('included_recommendations', $taxonomy->taxonomy. '_' . $taxonomy->id);
+            $related = get_field('included_' . $postTypePlural, $taxonomy->taxonomy. '_' . $taxonomy->id);
+            error_log($taxonomy->taxonomy. '_' . $taxonomy->id);
+            error_log(print_r($related, true));
 
             if (!is_null($related) && is_array($related) && !empty($related)) {
                 foreach ($related as $relation) {

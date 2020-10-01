@@ -215,7 +215,7 @@ class Linking extends Fields
     public function addGuideNavigationPostRelations($response, $taxonomy, $request)
     {
         $navigtionFields = new NavigationFields();
-        $related = $navigtionFields->getGuideNavigationPostRelations($taxonomy);
+        $related = $navigtionFields->getPosttypeNavigationPostRelations($taxonomy, 'guide');
 
         if (!is_null($related) && is_array($related) && !empty($related)) {
             foreach ($related as $relation) {
