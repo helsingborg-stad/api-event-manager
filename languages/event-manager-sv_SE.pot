@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "Project-Id-Version: Event Manager\n"
-"POT-Creation-Date: 2020-10-01 16:10+0200\n"
+"POT-Creation-Date: 2020-10-01 16:37+0200\n"
 "PO-Revision-Date: 2016-10-26 08:27+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -2045,6 +2045,7 @@ msgid "Dialog"
 msgstr ""
 
 #: source/php/AcfFields/php/interactive-guide.php:318
+#: source/php/AcfFields/php/interactive-guide.php:536
 #: source/php/AcfFields/php/organizer.php:101
 #: source/php/PostTypes/Events.php:38 source/php/PostTypes/Locations.php:38
 #: source/php/PostTypes/MembershipCards.php:34
@@ -2097,24 +2098,20 @@ msgstr ""
 msgid "This is the last step for an interactive guide."
 msgstr ""
 
-#: source/php/AcfFields/php/interactive-guide.php:536
-msgid "Header title"
-msgstr ""
-
 #: source/php/AcfFields/php/interactive-guide.php:539
 msgid "Title to be displayed on finish screen header."
 msgstr ""
 
 #: source/php/AcfFields/php/interactive-guide.php:555
-msgid "Content area title"
+msgid "Heading"
 msgstr ""
 
 #: source/php/AcfFields/php/interactive-guide.php:558
-msgid "Title to be displayed in the content area."
+msgid "Heading to be displayed in the content area."
 msgstr ""
 
 #: source/php/AcfFields/php/interactive-guide.php:574
-msgid "Content area text"
+msgid "Text"
 msgstr ""
 
 #: source/php/AcfFields/php/interactive-guide.php:577
@@ -2137,19 +2134,19 @@ msgstr ""
 msgid "Share result"
 msgstr ""
 
-#: source/php/AcfFields/php/interactive-guide.php:660
+#: source/php/AcfFields/php/interactive-guide.php:664
 msgid "Share title"
 msgstr ""
 
-#: source/php/AcfFields/php/interactive-guide.php:663
+#: source/php/AcfFields/php/interactive-guide.php:667
 msgid "Title to be shown on share button."
 msgstr ""
 
-#: source/php/AcfFields/php/interactive-guide.php:679
+#: source/php/AcfFields/php/interactive-guide.php:691
 msgid "Share image"
 msgstr ""
 
-#: source/php/AcfFields/php/interactive-guide.php:708
+#: source/php/AcfFields/php/interactive-guide.php:726
 msgid "Add step"
 msgstr ""
 
