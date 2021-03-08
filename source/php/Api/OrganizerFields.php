@@ -34,11 +34,15 @@ class OrganizerFields extends Fields
 
         $post_status = 'publish';
         $query =
-            "
-        SELECT      ID as id, post_title as title
+        "
+        SELECT      ID as id, post_title as title, meta.meta_value as contact_phone, meta_2.meta_value as contact_email
         FROM        $wpdb->posts
+        INNER JOIN  $wpdb->postmeta meta ON id = meta.post_id
+        INNER JOIN  $wpdb->postmeta meta_2 ON id = meta_2.post_id
         WHERE       $wpdb->posts.post_type = %s
                     AND $wpdb->posts.post_status = %s
+                    AND meta.meta_key = \"phone\"
+                    AND meta_2.meta_key = \"email\"
         ORDER BY post_title ASC
         ";
 
