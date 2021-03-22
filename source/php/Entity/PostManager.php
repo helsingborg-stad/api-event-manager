@@ -220,6 +220,11 @@ abstract class PostManager
             }
         }
 
+        // Make sure to update if title changed
+        if (isset($data['post_type']) && $data['post_type'] == 'event' && isset($data['post_title'])) {
+            return get_the_title($postId) != $data['post_title'];
+        }
+
         // Compare old hashed post data with the new
         $oldDataHash = get_post_meta($postId, 'data_hash', true);
         $newDataHash = md5(serialize($this->cleanBeforeHash($data)));
