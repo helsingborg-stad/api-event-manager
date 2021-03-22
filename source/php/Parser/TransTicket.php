@@ -5,6 +5,7 @@ namespace HbgEventImporter\Parser;
 use \HbgEventImporter\Event as Event;
 use \HbgEventImporter\Location as Location;
 use \HbgEventImporter\Helper\Address as Address;
+use WP_Query;
 
 ini_set('memory_limit', '256M');
 ini_set('default_socket_timeout', 60 * 10);
@@ -79,8 +80,6 @@ class TransTicket extends \HbgEventImporter\Parser
             'qry' => urlencode($data['postTitle']),
         ), trim($this->apiKeys['transticket_ticket_url'], '/') . "/Find/");
         $data['startDate'] = !empty($eventData->EventDate) ? $eventData->EventDate : null;
-
-
         $data['endDate'] = !empty($eventData->CloseDate) ? $eventData->CloseDate : null;
         if ($data['endDate'] === null) {
             $data['endDate'] = date("Y-m-d H:i:s", strtotime($data['startDate'] . "+1 hour"));
@@ -210,7 +209,24 @@ class TransTicket extends \HbgEventImporter\Parser
      */
     public function maybeCreateEvent($data, $shortKey, $locationId)
     {
-        $eventId = $this->checkIfPostExists('event', $data['postTitle']);
+        $event_uid_key = 'transticket-' . $shortKey . '-' . $data['uId'];
+        $args = array(
+            'post_type' => 'event',
+            'meta_query' => array(
+                array(
+                    'key' => '_event_manager_uid',
+                    'value' => $event_uid_key
+                )
+            )
+        );
+
+        $query = new \WP_Query($args);
+        if( $query->have_posts() ) {
+            $eventId = $query->posts[0]->ID;
+        } else {
+            $eventId = null;
+        }
+
         $occurred = false;
 
         $eventManagerUid = (get_post_meta($eventId, '_event_manager_uid', true)) ? get_post_meta(
