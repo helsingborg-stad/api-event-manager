@@ -77,8 +77,9 @@ class TransTicket extends \HbgEventImporter\Parser
         $data['postContent'] = isset($eventData->ExtendedDescription) && !empty($eventData->ExtendedDescription) ? strip_tags($eventData->ExtendedDescription, '<a><p><br>') : '';
         $data['uId'] = $eventData->Id;
         $data['booking_link'] = add_query_arg(array(
+            'S' => 0,
             'qry' => urlencode($data['postTitle']),
-        ), trim($this->apiKeys['transticket_ticket_url'], '/') . "/Find/");
+        ), trim($this->apiKeys['transticket_ticket_url'], '/') . "/Tickets/Choose/". $eventData->Id ."/");
         $data['startDate'] = !empty($eventData->EventDate) ? $eventData->EventDate : null;
         $data['endDate'] = !empty($eventData->CloseDate) ? $eventData->CloseDate : null;
         if ($data['endDate'] === null) {
