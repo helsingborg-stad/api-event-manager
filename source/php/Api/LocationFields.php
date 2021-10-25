@@ -182,7 +182,8 @@ class LocationFields extends Fields
     public function registerRestFields()
     {
         // Title as plain text
-        register_rest_field($this->postType,
+        register_rest_field(
+            $this->postType,
             'title',
             array(
                 'get_callback'    => array($this, 'addPlaintextField'),
@@ -192,7 +193,8 @@ class LocationFields extends Fields
         );
 
         //Parent
-        register_rest_field($this->postType,
+        register_rest_field(
+            $this->postType,
             'parent',
             array(
                 'get_callback' => null,
@@ -206,7 +208,8 @@ class LocationFields extends Fields
         );
 
         // Replace category id with taxonomy name
-        register_rest_field($this->postType,
+        register_rest_field(
+            $this->postType,
             'location_categories',
             array(
                 'get_callback' => array($this, 'renameTaxonomies'),
@@ -216,7 +219,8 @@ class LocationFields extends Fields
         );
 
         // Replace group id with taxonomy name
-        register_rest_field($this->postType,
+        register_rest_field(
+            $this->postType,
             'user_groups',
             array(
                 'get_callback' => array($this, 'getTaxonomyCallback'),
@@ -226,7 +230,8 @@ class LocationFields extends Fields
         );
 
         //Street adress
-        register_rest_field($this->postType,
+        register_rest_field(
+            $this->postType,
             'street_address',
             array(
                 'get_callback' => array($this, 'stringGetCallBack'),
@@ -240,7 +245,8 @@ class LocationFields extends Fields
         );
 
         //Postal code
-        register_rest_field($this->postType,
+        register_rest_field(
+            $this->postType,
             'postal_code',
             array(
                 'get_callback' => array($this, 'stringGetCallBack'),
@@ -253,8 +259,9 @@ class LocationFields extends Fields
             )
         );
 
-         //Street adress
-        register_rest_field($this->postType,
+        //Street adress
+        register_rest_field(
+            $this->postType,
             'city',
             array(
                 'get_callback' => array($this, 'stringGetCallBack'),
@@ -268,7 +275,8 @@ class LocationFields extends Fields
         );
 
         //Municipality
-        register_rest_field($this->postType,
+        register_rest_field(
+            $this->postType,
             'municipality',
             array(
                 'get_callback' => array($this, 'stringGetCallBack'),
@@ -282,7 +290,8 @@ class LocationFields extends Fields
         );
 
         //Country
-        register_rest_field($this->postType,
+        register_rest_field(
+            $this->postType,
             'country',
             array(
                 'get_callback' => array($this, 'stringGetCallBack'),
@@ -296,7 +305,8 @@ class LocationFields extends Fields
         );
 
         //Latitude
-        register_rest_field($this->postType,
+        register_rest_field(
+            $this->postType,
             'latitude',
             array(
                 'get_callback' => array($this, 'getLatitude'),
@@ -310,7 +320,8 @@ class LocationFields extends Fields
         );
 
         //Latitude
-        register_rest_field($this->postType,
+        register_rest_field(
+            $this->postType,
             'longitude',
             array(
                 'get_callback' => array($this, 'getLongitude'),
@@ -324,7 +335,8 @@ class LocationFields extends Fields
         );
 
         //Formatted address
-        register_rest_field($this->postType,
+        register_rest_field(
+            $this->postType,
             'formatted_address',
             array(
                 'get_callback' => array($this, 'stringGetCallBack'),
@@ -338,7 +350,8 @@ class LocationFields extends Fields
         );
 
         //Open hours
-        register_rest_field($this->postType,
+        register_rest_field(
+            $this->postType,
             'open_hours',
             array(
                 'get_callback' => array($this, 'openHoursGetCallBack'),
@@ -351,7 +364,8 @@ class LocationFields extends Fields
             )
         );
 
-        register_rest_field($this->postType,
+        register_rest_field(
+            $this->postType,
             'open_hour_exceptions',
             array(
                 'get_callback' => array($this, 'objectGetCallBack'),
@@ -365,7 +379,8 @@ class LocationFields extends Fields
         );
 
         // Links
-        register_rest_field($this->postType,
+        register_rest_field(
+            $this->postType,
             'links',
             array(
                 'get_callback' => array($this, 'objectGetCallBack'),
@@ -379,7 +394,8 @@ class LocationFields extends Fields
         );
 
         // Gallery
-        register_rest_field($this->postType,
+        register_rest_field(
+            $this->postType,
             'gallery',
             array(
                 'get_callback' => array($this, 'objectGetCallBack'),
@@ -393,7 +409,8 @@ class LocationFields extends Fields
         );
 
         // Age restriction details
-        register_rest_field($this->postType,
+        register_rest_field(
+            $this->postType,
             'age_restriction',
             array(
                 'get_callback' => array($this, 'stringGetCallBack'),
@@ -407,7 +424,8 @@ class LocationFields extends Fields
         );
 
         // Included in member cards
-        register_rest_field($this->postType,
+        register_rest_field(
+            $this->postType,
             'membership_cards',
             array(
                 'get_callback' => array($this, 'objectGetCallBack'),
@@ -421,7 +439,8 @@ class LocationFields extends Fields
         );
 
         //Price details
-        register_rest_field($this->postType,
+        register_rest_field(
+            $this->postType,
             'price_information',
             array(
                 'get_callback' => array($this, 'unformattedStringGetCallBack'),
@@ -435,7 +454,8 @@ class LocationFields extends Fields
         );
 
         //Price details
-        register_rest_field($this->postType,
+        register_rest_field(
+            $this->postType,
             'price_adult',
             array(
                 'get_callback' => array($this, 'stringGetCallBack'),
@@ -449,7 +469,8 @@ class LocationFields extends Fields
         );
 
         //Price details
-        register_rest_field($this->postType,
+        register_rest_field(
+            $this->postType,
             'price_children',
             array(
                 'get_callback' => array($this, 'stringGetCallBack'),
@@ -463,7 +484,8 @@ class LocationFields extends Fields
         );
 
         //Price details
-        register_rest_field($this->postType,
+        register_rest_field(
+            $this->postType,
             'children_age',
             array(
                 'get_callback' => array($this, 'stringGetCallBack'),
@@ -477,7 +499,8 @@ class LocationFields extends Fields
         );
 
         //Price details
-        register_rest_field($this->postType,
+        register_rest_field(
+            $this->postType,
             'price_student',
             array(
                 'get_callback' => array($this, 'stringGetCallBack'),
@@ -491,7 +514,8 @@ class LocationFields extends Fields
         );
 
         //Price details
-        register_rest_field($this->postType,
+        register_rest_field(
+            $this->postType,
             'price_senior',
             array(
                 'get_callback' => array($this, 'stringGetCallBack'),
@@ -505,7 +529,8 @@ class LocationFields extends Fields
         );
 
         //Price details
-        register_rest_field($this->postType,
+        register_rest_field(
+            $this->postType,
             'senior_age',
             array(
                 'get_callback' => array($this, 'numericGetCallBack'),
@@ -519,7 +544,8 @@ class LocationFields extends Fields
         );
 
         // Organizer
-        register_rest_field($this->postType,
+        register_rest_field(
+            $this->postType,
             'organizers',
             array(
                 'get_callback' => array($this, 'numericGetCallBack'),
