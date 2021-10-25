@@ -175,6 +175,37 @@ class LocationFields extends Fields
     }
 
     /**
+     * Replaces taxonomy id with array with property data
+     *
+     * @param   object  $object      The response object.
+     * @param   string  $field_name  The name of the field to add.
+     * @param   object  $request     The WP_REST_Request object.
+     *
+     * @return  object|null
+     */
+    public function getPropertyCallback($object, $field_name, $request)
+    {
+        if (empty($object[$field_name])) {
+            return null;
+        }
+
+        $taxonomies = $object[$field_name];
+
+        foreach ($taxonomies as &$val) {
+            $term = get_term($val, $field_name);
+            $icon = get_field('point_property_image', 'property_' . $term->term_id);
+            $val = array(
+              'id'    => $term->term_id,
+              'name'  => $term->name,
+              'slug'  => $term->slug,
+              'icon'  => $icon ?? null
+            );
+        }
+
+        return apply_filters($object['type'] . '_taxonomies', $taxonomies);
+    }
+
+    /**
      * Register rest fields to consumer api
      * @return  void
      * @version 0.3.2 creating consumer accessable meta values.
@@ -555,6 +586,21 @@ class LocationFields extends Fields
                     'type' => 'numeric',
                     'context' => array('view', 'edit', 'embed')
                 )
+            )
+        );
+
+        // Point properties
+        register_rest_field(
+            $this->postType,
+            'property',
+            array(
+                'get_callback' => array($this, 'getPropertyCallback'),
+                'update_callback' => null,
+                'schema' => array(
+                    'description' => 'Field containing array with properties.',
+                    'type' => 'object',
+                    'context' => array('view', 'embed'),
+                ),
             )
         );
     }
