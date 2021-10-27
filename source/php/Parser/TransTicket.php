@@ -74,7 +74,7 @@ class TransTicket extends \HbgEventImporter\Parser
     public function saveEvent($eventData, $shortKey)
     {
         $data['postTitle'] = strip_tags(isset($eventData->Name) && !empty($eventData->Name) ? $eventData->Name : null);
-        $data['postContent'] = isset($eventData->ExtendedDescription) && !empty($eventData->ExtendedDescription) ? strip_tags($eventData->ExtendedDescription, '<a><p><br>') : '';
+        $data['postContent'] = isset($eventData->ExtendedDescription) && !empty($eventData->ExtendedDescription) ? $eventData->ExtendedDescription : '';
         $data['uId'] = $eventData->Id;
         $data['booking_link'] = add_query_arg(array(
             'S' => 0,
