@@ -210,8 +210,24 @@ class TransTicket extends \HbgEventImporter\Parser
      */
     public function maybeCreateEvent($data, $shortKey, $locationId)
     {
-        $eventId = $this->checkIfPostExists('event', $data['postTitle']);
+        $event_uid_key = 'transticket-' . $shortKey . '-' . $data['uId'];
+        $args = array(
+            'post_type' => 'event',
+            'meta_query' => array(
+                array(
+                    'key' => '_event_manager_uid',
+                    'value' => $event_uid_key
+                )
+            )
+        );
 
+        $query = new \WP_Query($args);
+        if( $query->have_posts() ) {
+            $eventId = $query->posts[0]->ID;
+        } else {
+            $eventId = null;
+        }
+        
         $occurred = false;
 
         $eventManagerUid = (get_post_meta($eventId, '_event_manager_uid', true)) ? get_post_meta(
