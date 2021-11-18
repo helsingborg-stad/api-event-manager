@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "Project-Id-Version: Event Manager\n"
-"POT-Creation-Date: 2020-10-01 16:37+0200\n"
+"POT-Creation-Date: 2021-11-18 14:28+0100\n"
 "PO-Revision-Date: 2016-10-26 08:27+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -245,39 +245,39 @@ msgid "Activate user groups on selected post types."
 msgstr ""
 
 #: source/php/AcfFields/php/event-manager-settings.php:60
-#: source/php/App.php:231
+#: source/php/App.php:233
 msgid "Events"
 msgstr ""
 
 #: source/php/AcfFields/php/event-manager-settings.php:61
-#: source/php/App.php:232 source/php/PostTypes/Locations.php:12
+#: source/php/App.php:234 source/php/PostTypes/Locations.php:12
 msgid "Locations"
 msgstr ""
 
 #: source/php/AcfFields/php/event-manager-settings.php:62
-#: source/php/AcfFields/php/event.php:775 source/php/App.php:243
+#: source/php/AcfFields/php/event.php:775 source/php/App.php:245
 #: source/php/PostTypes/Sponsors.php:10
 msgid "Sponsors"
 msgstr ""
 
 #: source/php/AcfFields/php/event-manager-settings.php:63
-#: source/php/App.php:244 source/php/PostTypes/Packages.php:10
+#: source/php/App.php:246 source/php/PostTypes/Packages.php:10
 msgid "Packages"
 msgstr ""
 
 #: source/php/AcfFields/php/event-manager-settings.php:64
-#: source/php/App.php:245
+#: source/php/App.php:247
 msgid "Membership cards"
 msgstr ""
 
 #: source/php/AcfFields/php/event-manager-settings.php:65
-#: source/php/AcfFields/php/event.php:712 source/php/App.php:233
+#: source/php/AcfFields/php/event.php:712 source/php/App.php:235
 #: source/php/PostTypes/Organizers.php:10
 msgid "Organizers"
 msgstr ""
 
 #: source/php/AcfFields/php/event-manager-settings.php:66
-#: source/php/App.php:246 source/php/PostTypes/Guides.php:12
+#: source/php/App.php:248 source/php/PostTypes/Guides.php:12
 msgid "Guides"
 msgstr ""
 
@@ -458,7 +458,6 @@ msgstr ""
 #: source/php/AcfFields/php/event.php:332
 #: source/php/AcfFields/php/event.php:609
 #: source/php/AcfFields/php/event.php:625
-#: source/php/AcfFields/php/guide-basic.php:100
 #: source/php/AcfFields/php/location.php:6
 #: source/php/AcfFields/php/recommendation.php:45
 #: source/php/PostTypes/Events.php:40 source/php/PostTypes/Locations.php:13
@@ -1475,232 +1474,240 @@ msgstr ""
 msgid "Select one or many user groups."
 msgstr ""
 
-#: source/php/AcfFields/php/guide-basic.php:8
+#: source/php/AcfFields/php/guide-basic.php:6
 #: source/php/AcfFields/php/guide-settings.php:8
 msgid "Basic Guide Settings"
 msgstr ""
 
-#: source/php/AcfFields/php/guide-basic.php:12
-#: source/php/AcfFields/php/guide-basic.php:218
+#: source/php/AcfFields/php/guide-basic.php:10
+#: source/php/AcfFields/php/guide-basic.php:123
 #: source/php/AcfFields/php/guide-settings.php:14
 #: source/php/AcfFields/php/guide-settings.php:108
 #: source/php/AcfFields/php/recommendation.php:10
 msgid "General"
 msgstr ""
 
-#: source/php/AcfFields/php/guide-basic.php:28
-msgid "Guide tagline"
+#: source/php/AcfFields/php/guide-basic.php:26
+#: source/php/AcfFields/php/guide-settings.php:33
+msgid "Beskrivning"
 msgstr ""
 
-#: source/php/AcfFields/php/guide-basic.php:31
-msgid "Short tagline that descibes what this is about"
-msgstr ""
-
-#: source/php/AcfFields/php/guide-basic.php:40
-msgid "E.g: Swedish contemporary glassware"
-msgstr ""
-
-#: source/php/AcfFields/php/guide-basic.php:47
-msgid "Date start"
-msgstr ""
-
-#: source/php/AcfFields/php/guide-basic.php:50
-#: source/php/AcfFields/php/guide-basic.php:67
-msgid "This field is strictly informative"
-msgstr ""
-
-#: source/php/AcfFields/php/guide-basic.php:64
-msgid "Date end"
-msgstr ""
-
-#: source/php/AcfFields/php/guide-basic.php:81
-msgid "Description"
-msgstr ""
-
-#: source/php/AcfFields/php/guide-basic.php:123
-#: source/php/AcfFields/php/recommendation.php:68
-msgid "For kids"
-msgstr ""
-
-#: source/php/AcfFields/php/guide-basic.php:135
-msgid "This guide is har target group \"kids\"."
-msgstr ""
-
-#: source/php/AcfFields/php/guide-basic.php:142
-msgid "Images (guide)"
-msgstr ""
-
-#: source/php/AcfFields/php/guide-basic.php:158
-#: source/php/AcfFields/php/guide-settings.php:74
-msgid "Guide images"
-msgstr ""
-
-#: source/php/AcfFields/php/guide-basic.php:183
-#: source/php/AcfFields/php/guide-settings.php:90
-msgid "Content objects"
-msgstr ""
-
-#: source/php/AcfFields/php/guide-basic.php:199
-#: source/php/AcfFields/php/guide-settings.php:466
-msgid "Content (paintings, art, flowers etc.)"
-msgstr ""
-
-#: source/php/AcfFields/php/guide-basic.php:213
-#: source/php/AcfFields/php/guide-settings.php:463
-msgid "Add new object"
-msgstr ""
-
-#: source/php/AcfFields/php/guide-basic.php:234
-#: source/php/AcfFields/php/guide-settings.php:127
-msgid "Object title"
-msgstr ""
-
-#: source/php/AcfFields/php/guide-basic.php:247
-#: source/php/AcfFields/php/guide-settings.php:123
-msgid "The title of the object"
-msgstr ""
-
-#: source/php/AcfFields/php/guide-basic.php:253
-#: source/php/AcfFields/php/guide-settings.php:148
-msgid "Exhibition ID"
-msgstr ""
-
-#: source/php/AcfFields/php/guide-basic.php:269
-#: source/php/AcfFields/php/guide-settings.php:145
-msgid "#"
-msgstr ""
-
-#: source/php/AcfFields/php/guide-basic.php:274
-#: source/php/AcfFields/php/guide-settings.php:167
-msgid "Object description"
-msgstr ""
-
-#: source/php/AcfFields/php/guide-basic.php:293
+#: source/php/AcfFields/php/guide-basic.php:45
+#: source/php/AcfFields/php/guide-basic.php:198
 #: source/php/AcfFields/php/guide-settings.php:49
 #: source/php/AcfFields/php/guide-settings.php:183
 #: source/php/AcfFields/php/recommendation.php:221
 msgid "Media"
 msgstr ""
 
-#: source/php/AcfFields/php/guide-basic.php:309
+#: source/php/AcfFields/php/guide-basic.php:61
+#: source/php/AcfFields/php/guide-settings.php:74
+msgid "Guide images"
+msgstr ""
+
+#: source/php/AcfFields/php/guide-basic.php:88
+#: source/php/AcfFields/php/guide-settings.php:90
+msgid "Content objects"
+msgstr ""
+
+#: source/php/AcfFields/php/guide-basic.php:104
+#: source/php/AcfFields/php/guide-settings.php:466
+msgid "Content (paintings, art, flowers etc.)"
+msgstr ""
+
+#: source/php/AcfFields/php/guide-basic.php:118
+#: source/php/AcfFields/php/guide-settings.php:463
+msgid "Add new object"
+msgstr ""
+
+#: source/php/AcfFields/php/guide-basic.php:139
+#: source/php/AcfFields/php/guide-settings.php:127
+msgid "Object title"
+msgstr ""
+
+#: source/php/AcfFields/php/guide-basic.php:152
+#: source/php/AcfFields/php/guide-settings.php:123
+msgid "The title of the object"
+msgstr ""
+
+#: source/php/AcfFields/php/guide-basic.php:158
+#: source/php/AcfFields/php/guide-settings.php:148
+msgid "Exhibition ID"
+msgstr ""
+
+#: source/php/AcfFields/php/guide-basic.php:174
+#: source/php/AcfFields/php/guide-settings.php:145
+msgid "#"
+msgstr ""
+
+#: source/php/AcfFields/php/guide-basic.php:179
+#: source/php/AcfFields/php/guide-settings.php:167
+msgid "Object description"
+msgstr ""
+
+#: source/php/AcfFields/php/guide-basic.php:214
 #: source/php/AcfFields/php/guide-settings.php:208
 msgid "Object image"
 msgstr ""
 
-#: source/php/AcfFields/php/guide-basic.php:312
+#: source/php/AcfFields/php/guide-basic.php:217
 #: source/php/AcfFields/php/guide-settings.php:211
 msgid "Multiple images in jpg or png format of the object."
 msgstr ""
 
-#: source/php/AcfFields/php/guide-basic.php:334
+#: source/php/AcfFields/php/guide-basic.php:241
 #: source/php/AcfFields/php/guide-settings.php:227
 msgid "Object audio"
 msgstr ""
 
-#: source/php/AcfFields/php/guide-basic.php:337
+#: source/php/AcfFields/php/guide-basic.php:244
 #: source/php/AcfFields/php/guide-settings.php:230
 msgid ""
 "An audiofile describing the object. This should be fairly compressed. "
 "Preferred format of the audio is AAC+ V2."
 msgstr ""
 
-#: source/php/AcfFields/php/guide-basic.php:353
+#: source/php/AcfFields/php/guide-basic.php:260
 #: source/php/AcfFields/php/guide-settings.php:246
 msgid "Object video"
 msgstr ""
 
-#: source/php/AcfFields/php/guide-basic.php:356
+#: source/php/AcfFields/php/guide-basic.php:263
 #: source/php/AcfFields/php/guide-settings.php:249
 msgid ""
 "An videofile describing the object. This should be fairly compressed. "
 "Preferred container of the video is MP4."
 msgstr ""
 
-#: source/php/AcfFields/php/guide-basic.php:372
+#: source/php/AcfFields/php/guide-basic.php:279
 #: source/php/AcfFields/php/guide-settings.php:262
 msgid "Länkar"
 msgstr ""
 
-#: source/php/AcfFields/php/guide-basic.php:388
+#: source/php/AcfFields/php/guide-basic.php:295
 #: source/php/AcfFields/php/guide-settings.php:318
 #: source/php/AcfFields/php/recommendation.php:87
 msgid "Links & Resources"
 msgstr ""
 
-#: source/php/AcfFields/php/guide-basic.php:391
+#: source/php/AcfFields/php/guide-basic.php:298
 #: source/php/AcfFields/php/guide-settings.php:321
 msgid ""
 "Add links related to the object. This can be a website or a published file "
 "(on the web) containing further information about the object."
 msgstr ""
 
-#: source/php/AcfFields/php/guide-basic.php:402
+#: source/php/AcfFields/php/guide-basic.php:309
 #: source/php/AcfFields/php/guide-settings.php:315
 #: source/php/AcfFields/php/recommendation.php:102
 msgid "Add new link"
 msgstr ""
 
-#: source/php/AcfFields/php/guide-basic.php:407
+#: source/php/AcfFields/php/guide-basic.php:314
 #: source/php/AcfFields/php/guide-settings.php:283
 #: source/php/AcfFields/php/recommendation.php:106
 msgid "Linkname"
 msgstr ""
 
-#: source/php/AcfFields/php/guide-basic.php:426
+#: source/php/AcfFields/php/guide-basic.php:333
 #: source/php/AcfFields/php/guide-settings.php:299
 #: source/php/AcfFields/php/recommendation.php:125
 msgid "Web adress"
 msgstr ""
 
-#: source/php/AcfFields/php/guide-basic.php:444
+#: source/php/AcfFields/php/guide-basic.php:351
+#: source/php/AcfFields/php/guide-basic.php:482
+#: source/php/AcfFields/php/guide-settings.php:334
+#: source/php/AcfFields/php/guide-settings.php:482
+msgid "Beacons"
+msgstr ""
+
+#: source/php/AcfFields/php/guide-basic.php:375
+#: source/php/AcfFields/php/guide-settings.php:361
+msgid "Object beacon ID"
+msgstr ""
+
+#: source/php/AcfFields/php/guide-basic.php:378
+#: source/php/AcfFields/php/guide-settings.php:364
+msgid "A unique id for a specific    bluetooth beacon."
+msgstr ""
+
+#: source/php/AcfFields/php/guide-basic.php:402
+#: source/php/AcfFields/php/guide-settings.php:390
+msgid "Beacon trigger distance"
+msgstr ""
+
+#: source/php/AcfFields/php/guide-basic.php:405
+#: source/php/AcfFields/php/guide-settings.php:393
+msgid "Distance that the beacon should be triggered at."
+msgstr ""
+
+#: source/php/AcfFields/php/guide-basic.php:427
+#: source/php/AcfFields/php/guide-settings.php:388
+#: source/php/AcfFields/php/recommendation.php:368
+msgid "meters"
+msgstr ""
+
+#: source/php/AcfFields/php/guide-basic.php:431
 #: source/php/AcfFields/php/guide-settings.php:414
 msgid "Visibility"
 msgstr ""
 
-#: source/php/AcfFields/php/guide-basic.php:460
+#: source/php/AcfFields/php/guide-basic.php:447
 #: source/php/AcfFields/php/guide-settings.php:433
 msgid "Object visibility"
 msgstr ""
 
-#: source/php/AcfFields/php/guide-basic.php:472
+#: source/php/AcfFields/php/guide-basic.php:459
 #: source/php/AcfFields/php/guide-settings.php:428
 msgid "Yes, show this object"
 msgstr ""
 
-#: source/php/AcfFields/php/guide-basic.php:474
+#: source/php/AcfFields/php/guide-basic.php:461
 #: source/php/AcfFields/php/guide-settings.php:430
 msgid "Show"
 msgstr ""
 
-#: source/php/AcfFields/php/guide-basic.php:475
+#: source/php/AcfFields/php/guide-basic.php:462
 #: source/php/AcfFields/php/guide-settings.php:431
 msgid "Hide"
 msgstr ""
 
-#: source/php/AcfFields/php/guide-basic.php:479
+#: source/php/AcfFields/php/guide-basic.php:466
 #: source/php/AcfFields/php/guide-settings.php:447
 msgid "Unique ID"
 msgstr ""
 
-#: source/php/AcfFields/php/guide-basic.php:495
-#: source/php/AcfFields/php/guide-basic.php:511
-msgid "Connect object to location"
+#: source/php/AcfFields/php/guide-basic.php:498
+#: source/php/AcfFields/php/recommendation.php:316
+msgid "Beacon namespace"
 msgstr ""
 
-#: source/php/AcfFields/php/guide-basic.php:525
+#: source/php/AcfFields/php/guide-basic.php:517
+#: source/php/AcfFields/php/guide-settings.php:569
+msgid "Beacon groups"
+msgstr ""
+
+#: source/php/AcfFields/php/guide-basic.php:531
 #: source/php/AcfFields/php/guide-settings.php:566
 msgid "Lägg till grupp"
 msgstr ""
 
-#: source/php/AcfFields/php/guide-basic.php:530
+#: source/php/AcfFields/php/guide-basic.php:536
 #: source/php/AcfFields/php/guide-group-settings.php:92
 #: source/php/AcfFields/php/guide-settings.php:507
 msgid "Plats"
 msgstr ""
 
-#: source/php/AcfFields/php/guide-basic.php:553
+#: source/php/AcfFields/php/guide-basic.php:559
 #: source/php/AcfFields/php/guide-settings.php:531
 msgid "Objects"
+msgstr ""
+
+#: source/php/AcfFields/php/guide-basic.php:583
+#: source/php/AcfFields/php/guide-settings.php:550
+#: source/php/AcfFields/php/recommendation.php:335
+msgid "Beacon ID"
 msgstr ""
 
 #: source/php/AcfFields/php/guide-content-type.php:8
@@ -1841,6 +1848,22 @@ msgstr ""
 msgid "Välj vilken användargrupp som kategorin tillhör."
 msgstr ""
 
+#: source/php/AcfFields/php/guide-middle-layer-api-settings.php:6
+msgid "Middle layer API"
+msgstr ""
+
+#: source/php/AcfFields/php/guide-middle-layer-api-settings.php:10
+msgid "Enable middle layer API sync"
+msgstr ""
+
+#: source/php/AcfFields/php/guide-middle-layer-api-settings.php:29
+msgid "API URL"
+msgstr ""
+
+#: source/php/AcfFields/php/guide-middle-layer-api-settings.php:53
+msgid "API Key"
+msgstr ""
+
 #: source/php/AcfFields/php/guide-navigation.php:6
 msgid "Include in category"
 msgstr ""
@@ -1862,90 +1885,62 @@ msgid "Horizontal"
 msgstr ""
 
 #: source/php/AcfFields/php/guide-navigation.php:37
-msgid "Select specific items (posts)"
+msgid "Select specific items (guides)"
 msgstr ""
 
 #: source/php/AcfFields/php/guide-navigation.php:40
-#: source/php/AcfFields/php/guide-navigation.php:90
-#: source/php/AcfFields/php/guide-navigation.php:139
+#: source/php/AcfFields/php/guide-navigation.php:89
+#: source/php/AcfFields/php/guide-navigation.php:138
+#: source/php/AcfFields/php/guide-navigation.php:187
 msgid ""
 "To select none, please switch to \"select specific items\" and leave "
 "specific items field blank."
 msgstr ""
 
 #: source/php/AcfFields/php/guide-navigation.php:51
-#: source/php/AcfFields/php/guide-navigation.php:101
-#: source/php/AcfFields/php/guide-navigation.php:150
+#: source/php/AcfFields/php/guide-navigation.php:100
+#: source/php/AcfFields/php/guide-navigation.php:149
+#: source/php/AcfFields/php/guide-navigation.php:198
 msgid "Select specific items"
 msgstr ""
 
 #: source/php/AcfFields/php/guide-navigation.php:52
-#: source/php/AcfFields/php/guide-navigation.php:102
-#: source/php/AcfFields/php/guide-navigation.php:151
+#: source/php/AcfFields/php/guide-navigation.php:101
+#: source/php/AcfFields/php/guide-navigation.php:150
+#: source/php/AcfFields/php/guide-navigation.php:199
 msgid "Include all items"
 msgstr ""
 
 #: source/php/AcfFields/php/guide-navigation.php:56
-msgid "Include these items (posts)"
+msgid "Include these items (guides)"
 msgstr ""
 
-#: source/php/AcfFields/php/guide-navigation.php:87
+#: source/php/AcfFields/php/guide-navigation.php:86
 msgid "Select specific items (taxonomy)"
 msgstr ""
 
-#: source/php/AcfFields/php/guide-navigation.php:106
+#: source/php/AcfFields/php/guide-navigation.php:105
 msgid "Include these items (taxonomy)"
 msgstr ""
 
-#: source/php/AcfFields/php/guide-navigation.php:136
+#: source/php/AcfFields/php/guide-navigation.php:135
 msgid "Select specific recommendations"
 msgstr ""
 
-#: source/php/AcfFields/php/guide-navigation.php:155
+#: source/php/AcfFields/php/guide-navigation.php:154
 msgid "Include these recommendations"
 msgstr ""
 
-#: source/php/AcfFields/php/guide-navigation.php:186
+#: source/php/AcfFields/php/guide-navigation.php:184
+msgid "Select specific interactive guides"
+msgstr ""
+
+#: source/php/AcfFields/php/guide-navigation.php:203
+msgid "Include these interactive guides"
+msgstr ""
+
+#: source/php/AcfFields/php/guide-navigation.php:233
 msgid "Group"
-msgstr ""
-
-#: source/php/AcfFields/php/guide-settings.php:33
-msgid "Beskrivning"
-msgstr ""
-
-#: source/php/AcfFields/php/guide-settings.php:334
-#: source/php/AcfFields/php/guide-settings.php:482
-msgid "Beacons"
-msgstr ""
-
-#: source/php/AcfFields/php/guide-settings.php:361
-msgid "Object beacon ID"
-msgstr ""
-
-#: source/php/AcfFields/php/guide-settings.php:364
-msgid "A unique id for a specific    bluetooth beacon."
-msgstr ""
-
-#: source/php/AcfFields/php/guide-settings.php:388
-#: source/php/AcfFields/php/recommendation.php:368
-msgid "meters"
-msgstr ""
-
-#: source/php/AcfFields/php/guide-settings.php:390
-msgid "Beacon trigger distance"
-msgstr ""
-
-#: source/php/AcfFields/php/guide-settings.php:393
-msgid "Distance that the beacon should be triggered at."
-msgstr ""
-
-#: source/php/AcfFields/php/guide-settings.php:550
-#: source/php/AcfFields/php/recommendation.php:335
-msgid "Beacon ID"
-msgstr ""
-
-#: source/php/AcfFields/php/guide-settings.php:569
-msgid "Beacon groups"
 msgstr ""
 
 #: source/php/AcfFields/php/interactive-guide.php:10
@@ -2158,11 +2153,11 @@ msgstr ""
 msgid "Select if this is an internal event."
 msgstr ""
 
-#: source/php/AcfFields/php/internal_event.php:24 source/php/App.php:247
+#: source/php/AcfFields/php/internal_event.php:24 source/php/App.php:249
 msgid "Yes"
 msgstr ""
 
-#: source/php/AcfFields/php/internal_event.php:25 source/php/App.php:248
+#: source/php/AcfFields/php/internal_event.php:25 source/php/App.php:250
 msgid "No"
 msgstr ""
 
@@ -2389,6 +2384,10 @@ msgstr ""
 msgid "Short tagline that describes what this is about."
 msgstr ""
 
+#: source/php/AcfFields/php/recommendation.php:68
+msgid "For kids"
+msgstr ""
+
 #: source/php/AcfFields/php/recommendation.php:79
 msgid "This recommendation has target group \"kids\"."
 msgstr ""
@@ -2451,10 +2450,6 @@ msgstr ""
 
 #: source/php/AcfFields/php/recommendation.php:300
 msgid "Beacon"
-msgstr ""
-
-#: source/php/AcfFields/php/recommendation.php:316
-msgid "Beacon namespace"
 msgstr ""
 
 #: source/php/AcfFields/php/recommendation.php:354
@@ -2681,102 +2676,102 @@ msgstr ""
 msgid "Guide editor"
 msgstr ""
 
-#: source/php/App.php:221
+#: source/php/App.php:223
 msgid "\"Title\" is missing"
 msgstr ""
 
-#: source/php/App.php:222
+#: source/php/App.php:224
 msgid "\"Featured\" image is missing"
 msgstr ""
 
-#: source/php/App.php:223
+#: source/php/App.php:225
 msgid "Create new organizer"
 msgstr ""
 
-#: source/php/App.php:224
+#: source/php/App.php:226
 msgid "Create new sponsor"
 msgstr ""
 
-#: source/php/App.php:225
+#: source/php/App.php:227
 msgid "Create new location"
 msgstr ""
 
-#: source/php/App.php:226 source/php/App.php:227
+#: source/php/App.php:228 source/php/App.php:229
 msgid "Create new membership card"
 msgstr ""
 
-#: source/php/App.php:228
+#: source/php/App.php:230
 msgid "Close"
 msgstr ""
 
-#: source/php/App.php:229
+#: source/php/App.php:231
 msgid "Add images"
 msgstr ""
 
-#: source/php/App.php:230
+#: source/php/App.php:232
 msgid "Imported data"
 msgstr ""
 
-#: source/php/App.php:234
+#: source/php/App.php:236
 msgid "Time until reload"
 msgstr ""
 
-#: source/php/App.php:235
+#: source/php/App.php:237
 msgid "Loading"
 msgstr ""
 
-#: source/php/App.php:236
+#: source/php/App.php:238
 msgid "Choose time"
 msgstr ""
 
-#: source/php/App.php:237
+#: source/php/App.php:239
 msgid "Time"
 msgstr ""
 
-#: source/php/App.php:238
+#: source/php/App.php:240
 msgid "Hour"
 msgstr ""
 
-#: source/php/App.php:239
+#: source/php/App.php:241
 msgid "Minute"
 msgstr ""
 
-#: source/php/App.php:240
+#: source/php/App.php:242
 msgid "Done"
 msgstr ""
 
-#: source/php/App.php:241
+#: source/php/App.php:243
 msgid "Now"
 msgstr ""
 
-#: source/php/App.php:242
+#: source/php/App.php:244
 msgid "with similar name"
 msgstr ""
 
-#: source/php/App.php:249
+#: source/php/App.php:251
 msgid "To upload an image, you need to confirm the statements below"
 msgstr ""
 
-#: source/php/App.php:250
+#: source/php/App.php:252
 msgid "I have the right to use this image to promote this event."
 msgstr ""
 
-#: source/php/App.php:251
+#: source/php/App.php:253
 msgid "Are there identifiable persons on the image/images?"
 msgstr ""
 
-#: source/php/App.php:252
+#: source/php/App.php:254
 msgid ""
 "They have accepted that the image is used to promote this event and have "
 "been informed that after the image has been added to the database, it may "
 "appear in different channels to promote the event."
 msgstr ""
 
-#: source/php/App.php:253
+#: source/php/App.php:255
 msgid "Duplicate occasion"
 msgstr ""
 
-#: source/php/App.php:254
+#: source/php/App.php:256
 msgid "Import scheduled"
 msgstr ""
 
@@ -2875,11 +2870,11 @@ msgstr ""
 msgid "Error"
 msgstr ""
 
-#: source/php/Entity/PostManager.php:310
+#: source/php/Entity/PostManager.php:315
 msgid "Could not create folder"
 msgstr ""
 
-#: source/php/Entity/PostManager.php:311
+#: source/php/Entity/PostManager.php:316
 msgid "please go ahead and create it manually and rerun the import."
 msgstr ""
 
