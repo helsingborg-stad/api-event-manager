@@ -49,6 +49,7 @@ $acfExportManager = new HelsingborgsStad\AcfExportManager();
 $acfExportManager->setTextdomain('event-manager');
 $acfExportManager->setExportFolder(HBGEVENTIMPORTER_PATH . 'source/php/AcfFields/');
 $acfExportManager->autoExport(array(
+    'guide-middle-layer-api-settings' => 'group_61963726b1ddb',
     'guide-basic' => 'group_589497ca3741e',
     'guide-group-select' => 'group_589dd0fbd412e',
     'guide-group-settings' => 'group_589dcf7e047a8',
