@@ -90,6 +90,8 @@ class App
         new Api\NavigationFields();
         new Api\RecommendationFields();
         new Api\InteractiveGuideFields();
+
+        new MiddleLayer\Languages();
     }
 
     /**
