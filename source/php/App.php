@@ -93,6 +93,7 @@ class App
 
         new MiddleLayer\Languages();
         new MiddleLayer\GuideGroups();
+        new MiddleLayer\Navigations();
     }
 
     /**
