@@ -118,7 +118,6 @@ class NavigationFields extends Fields
         }
 
         $recommendationRelations = $this->getPosttypeNavigationPostRelations((object) $object, 'recommendation');
-        error_log(print_r($recommendationRelations, true));
 
         if (!empty($recommendationRelations) && is_array($recommendationRelations)) {
             foreach ($recommendationRelations as $recommendationRelation) {
@@ -164,8 +163,6 @@ class NavigationFields extends Fields
             }
         } else {
             $related = get_field('included_' . $postTypePlural, $taxonomy->taxonomy. '_' . $taxonomy->id);
-            error_log($taxonomy->taxonomy. '_' . $taxonomy->id);
-            error_log(print_r($related, true));
 
             if (!is_null($related) && is_array($related) && !empty($related)) {
                 foreach ($related as $relation) {
