@@ -12,8 +12,8 @@ class GuideGroups extends \HbgEventImporter\MiddleLayer\ApiRequest
         parent::__construct($this->singularName, $this->pluralName);
 
         if ($this->isCdnSyncEnabled) {
-            add_action('create_' . $this->singularName, array($this, 'saveItem'), 10, 2);
-            add_action('edited_' . $this->singularName, array($this, 'saveItem'), 10, 2);
+            add_action('create_' . $this->singularName, array($this, 'saveEmbeddedItem'), 10, 2);
+            add_action('edited_' . $this->singularName, array($this, 'saveEmbeddedItem'), 10, 2);
             add_action('delete_' . $this->singularName, array($this, 'deleteItem'), 10, 1);
         }
     }

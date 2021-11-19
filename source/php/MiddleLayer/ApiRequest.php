@@ -26,6 +26,16 @@ class ApiRequest
 
     public function saveItem($id)
     {
+        $json = $this->getRestResponse($id);
+        if (!$json) {
+            return;
+        }
+
+        $this->post($json);
+    }
+
+    public function saveEmbeddedItem($id)
+    {
         $json = $this->getRestResponse($id, true);
         if (!$json) {
             return;
