@@ -92,6 +92,7 @@ class App
         new Api\InteractiveGuideFields();
 
         new MiddleLayer\Languages();
+        new MiddleLayer\GuideGroups();
     }
 
     /**
