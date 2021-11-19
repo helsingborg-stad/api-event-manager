@@ -2,7 +2,7 @@
 
 namespace HbgEventImporter\MiddleLayer;
 
-class Languages extends \HbgEventImporter\MiddleLayer\ApiRequest
+class Languages extends \HbgEventImporter\MiddleLayer\SyncManager
 {
     public $singularName = "language";
     public $pluralName = "languages";

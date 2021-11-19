@@ -2,7 +2,7 @@
 
 namespace HbgEventImporter\MiddleLayer;
 
-class ApiRequest
+class SyncManager
 {
     public $apiUrl;
     public $apiKey;
@@ -83,7 +83,6 @@ class ApiRequest
 
     public function getRestResponse($id, $embedded = false)
     {
-        error_log(print_r("get embdedded: $embedded", true));
         $request = new \WP_REST_Request('GET', '/wp/v2/' . $this->singularName . '/' . $id);
         $response = rest_do_request($request);
 

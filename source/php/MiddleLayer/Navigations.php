@@ -2,7 +2,7 @@
 
 namespace HbgEventImporter\MiddleLayer;
 
-class Navigations extends \HbgEventImporter\MiddleLayer\ApiRequest
+class Navigations extends \HbgEventImporter\MiddleLayer\SyncManager
 {
     public $singularName = "navigation";
     public $pluralName = "navigations";

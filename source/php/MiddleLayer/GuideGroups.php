@@ -2,7 +2,7 @@
 
 namespace HbgEventImporter\MiddleLayer;
 
-class GuideGroups extends \HbgEventImporter\MiddleLayer\ApiRequest
+class GuideGroups extends \HbgEventImporter\MiddleLayer\SyncManager
 {
     public $singularName = "guidegroup";
     public $pluralName = "guidegroups";
