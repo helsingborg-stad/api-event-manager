@@ -3506,3 +3506,11 @@ msgstr ""
 #. Author URI of the plugin/theme
 msgid "http://www.helsingborg.se"
 msgstr ""
+
+#. Transticket Event grouping
+msgid "Group event occasions"
+msgstr ""
+
+#. Transticket Event grouping
+msgid "Group event occasions under one event"
+msgstr ""

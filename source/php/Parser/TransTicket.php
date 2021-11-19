@@ -92,7 +92,13 @@ class TransTicket extends \HbgEventImporter\Parser
             $data['occasions'][] = array(
                 'start_date' => $data['startDate'],
                 'end_date' => $data['endDate'],
-                'door_time' => $data['startDate']
+                'door_time' => $data['startDate'],
+                'booking_link' => add_query_arg(
+                    array(
+                        'S' => 0,
+                        'qry' => urlencode($data['postTitle']),
+                    ), 
+                    trim($this->apiKeys['transticket_ticket_url'], '/') . "/Tickets/Choose/". $eventData->Id ."/")
             );
         }
 
@@ -210,22 +216,26 @@ class TransTicket extends \HbgEventImporter\Parser
      */
     public function maybeCreateEvent($data, $shortKey, $locationId)
     {
-        $event_uid_key = 'transticket-' . $shortKey . '-' . $data['uId'];
-        $args = array(
-            'post_type' => 'event',
-            'meta_query' => array(
-                array(
-                    'key' => '_event_manager_uid',
-                    'value' => $event_uid_key
-                )
-            )
-        );
-
-        $query = new \WP_Query($args);
-        if( $query->have_posts() ) {
-            $eventId = $query->posts[0]->ID;
+        if ($this->apiKeys['transticket_group_occasions']) {
+            $eventId = $this->checkIfPostExists('event', $data['postTitle']);
         } else {
-            $eventId = null;
+            $event_uid_key = 'transticket-' . $shortKey . '-' . $data['uId'];
+            $args = array(
+                'post_type' => 'event',
+                'meta_query' => array(
+                    array(
+                        'key' => '_event_manager_uid',
+                        'value' => $event_uid_key
+                    )
+                )
+            );
+    
+            $query = new \WP_Query($args);
+            if( $query->have_posts() ) {
+                $eventId = $query->posts[0]->ID;
+            } else {
+                $eventId = null;
+            }
         }
         
         $occurred = false;
@@ -236,6 +246,8 @@ class TransTicket extends \HbgEventImporter\Parser
             true
         ) : 'transticket-' . $shortKey . '-' . $data['uId'];
         $postStatus = $data['postStatus'];
+        $bookingLink = is_string($data['booking_link']) ? $data['booking_link'] : null;
+
         // Get existing event meta data
         $sync = true;
         if ($eventId) {
@@ -243,6 +255,11 @@ class TransTicket extends \HbgEventImporter\Parser
             $postStatus = get_post_status($eventId);
             $levenshteinKey = array_search($eventId, array_column($this->levenshteinTitles['event'], 'ID'));
             $occurred = $this->levenshteinTitles['event'][$levenshteinKey]['occurred'];
+
+            // Always use first occasion's link as primary booking link
+            $existingBookingLink = get_post_meta( $eventId, 'occasions_0_booking_link', true );
+            if ( isset( $existingBookingLink ) && !empty( $existingBookingLink ) )
+                $bookingLink = $existingBookingLink;
         }
 
         if (($eventId && !$sync) || !$this->filter($data['categories'])) {
@@ -266,7 +283,7 @@ class TransTicket extends \HbgEventImporter\Parser
                     'occasions' => $data['occasions'],
                     'location' => $locationId != null ? $locationId : null,
                     'organizer' => null,
-                    'booking_link' => is_string($data['booking_link']) ? $data['booking_link'] : null,
+                    'booking_link' => $bookingLink,
                     'booking_phone' => null,
                     'age_restriction' => null,
                     'price_information' => null,

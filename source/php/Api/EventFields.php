@@ -152,6 +152,12 @@ class EventFields extends Fields
                 'default' => '',
                 'sanitize_callback' => 'sanitize_text_field',
             ),
+            'extended_occasions' => array(
+                'description' => 'Include extended occasions with unique booking links.',
+                'type' => 'integer',
+                'default' => 0,
+                'sanitize_callback' => array($this, 'sanitizeBool'),
+            ),
         );
     }
 
@@ -343,6 +349,8 @@ class EventFields extends Fields
             }
         }
 
+        $extendedOccasions = isset( $parameters[ 'extended_occasions' ]) && $parameters[ 'extended_occasions' ] == '1' ? true : false;
+
         // Search by text string
         $searchString = !empty($parameters['search']) ? $parameters['search'] : null;
 
@@ -394,6 +402,7 @@ class EventFields extends Fields
 
         $data = array();
         if (!empty($allEvents)) {
+            $temp = array();
             foreach ($allEvents as $post) {
                 // Get event as WP_Post
                 $post_object = get_post($post->ID);
@@ -403,7 +412,31 @@ class EventFields extends Fields
                 $post_object->timestamp_door = $post->timestamp_door;
                 // Save WP_Post with WP API formatting
                 $posts = $controller->prepare_item_for_response($post_object, $request);
-                $data[] = $controller->prepare_response_for_collection($posts);
+                $responseObject = $controller->prepare_response_for_collection($posts);
+
+                if ( $extendedOccasions ) {
+                    $addToOutput = false;
+                    foreach( $responseObject[ 'occasions' ] as $occasion ) {
+                        unset(
+                            $occasion['status'], 
+                            $occasion['occ_exeption_information'], 
+                            $occasion['content_mode'], 
+                            $occasion['content'], 
+                            $occasion['location_mode'], 
+                            $occasion['location'],
+                            $occasion['current_occasion'],
+                            $occasion['booking_link'] );
+                        $occasion[ 'id' ] = $post->ID;
+                        if ( !in_array( $occasion, $temp ) ) {
+                            $temp[] = $occasion;
+                            $addToOutput = true;                        
+                        }
+                    }
+                    if ( $addToOutput ) 
+                        $data[] = $responseObject;
+                } else {
+                    $data[] = $responseObject;
+                }
             }
         } else {
             return new \WP_Error(
@@ -513,6 +546,7 @@ class EventFields extends Fields
         $db_occasions = $wpdb->prefix."occasions";
         $id = $object['id'];
         $parameters = $request->get_params();
+        $extendedOccasions = isset( $parameters[ 'extended_occasions' ]) && $parameters[ 'extended_occasions' ] == '1' ? true : false;
         $endParam = $parameters['end'] ?? null;
         $data = array();
 
@@ -536,7 +570,7 @@ class EventFields extends Fields
                         ) > $endParam)) {
                     continue;
                 }
-                $data[] = array(
+                $occasion = array(
                     'start_date' => ($value['start_date']) ? $value['start_date'] : null,
                     'end_date' => ($value['end_date']) ? $value['end_date'] : null,
                     'door_time' => ($value['door_time']) ? $value['door_time'] : null,
@@ -547,6 +581,8 @@ class EventFields extends Fields
                     'location_mode' => ($value['location_mode']) ? $value['location_mode'] : null,
                     'location' => !empty($value['location']) ? $this->getLocationData($value['location']) : null,
                 );
+                if ( $extendedOccasions ) $occasion['booking_link'] = ($value['booking_link']) ? $value['booking_link'] : null;
+                $data[] = $occasion;
             }
         }
 
@@ -569,7 +605,7 @@ class EventFields extends Fields
                             $doorTime = !empty($rule['rcr_door_time']) ? new \DateTime(
                                 $exception['rcr_exc_date'].' '.$rule['rcr_door_time']
                             ) : null;
-                            $data[] = array(
+                            $occasion = array(
                                 'start_date' => $startTime ? date_format($startTime, 'Y-m-d H:i') : null,
                                 'end_date' => $endTime ? date_format($endTime, 'Y-m-d H:i') : null,
                                 'door_time' => $doorTime ? date_format($doorTime, 'Y-m-d H:i') : null,
@@ -580,6 +616,8 @@ class EventFields extends Fields
                                 'location_mode' => null,
                                 'location' => null,
                             );
+                            if ( $extendedOccasions ) $occasions['booking_link'] = null;
+                            $data[] = $occasion;
                         }
                     }
                 }
@@ -588,7 +626,7 @@ class EventFields extends Fields
 
         // Save remaining occasions from occasions table to array
         foreach ($query_results as $key => $value) {
-            $data[] = array(
+            $occasion = array(
                 'start_date' => ($value->timestamp_start) ? date('Y-m-d H:i', $value->timestamp_start) : null,
                 'end_date' => ($value->timestamp_end) ? date('Y-m-d H:i', $value->timestamp_end) : null,
                 'door_time' => ($value->timestamp_door) ? date('Y-m-d H:i', $value->timestamp_door) : null,
@@ -599,12 +637,21 @@ class EventFields extends Fields
                 'location_mode' => null,
                 'location' => null,
             );
+            if ( $extendedOccasions ) $occasion[ 'booking_link' ] = ($value->booking_link) ? $value->booking_link : null;
+            $data[] = $occasion;
         }
         $temp = array();
         $keys = array();
         // Remove duplicates from $data array
         foreach ($data as $key => $val) {
-            unset($val['status'], $val['occ_exeption_information'], $val['content_mode'], $val['content'], $val['location_mode'], $val['location']);
+            unset(
+                $val['status'], 
+                $val['occ_exeption_information'], 
+                $val['content_mode'], 
+                $val['content'], 
+                $val['location_mode'], 
+                $val['location'],
+                $val['booking_link']);
             if (!in_array($val, $temp)) {
                 $temp[] = $val;
                 $keys[$key] = true;

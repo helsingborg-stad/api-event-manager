@@ -131,12 +131,13 @@ class Event extends \HbgEventImporter\Entity\PostManager
         foreach ($this->occasions as $o) {
             $locationMode = isset($o['location_mode']) && !empty($o['location_mode']) ? $o['location_mode'] : null;
             $location = isset($o['location']) && !empty($o['location']) ? $o['location'] : null;
+            $bookingLink = isset( $o[ 'booking_link' ] ) && !empty( $o[ 'booking_link' ] ) ? $o[ 'booking_link' ] : null;
 
-            $occasionError = $this->extractEventOccasion($o['start_date'], $o['end_date'], $o['door_time'], $locationMode, $location);
+            $occasionError = $this->extractEventOccasion($o['start_date'], $o['end_date'], $o['door_time'], $locationMode, $location, $bookingLink);
         }
 
         // Save new list of occasion to meta
-        $query = $wpdb->prepare("SELECT timestamp_start, timestamp_end, timestamp_door, location_mode, location FROM $dbOccasions WHERE event = %d", $this->ID);
+        $query = $wpdb->prepare("SELECT timestamp_start, timestamp_end, timestamp_door, location_mode, location, booking_link FROM $dbOccasions WHERE event = %d", $this->ID);
         $getOccasions = $wpdb->get_results($query, ARRAY_A);
         $newOccasions = array();
         foreach ($getOccasions as $occasion) {
@@ -146,6 +147,7 @@ class Event extends \HbgEventImporter\Entity\PostManager
                 'door_time' => date('Y-m-d H:i:s', $occasion['timestamp_door']),
                 'location_mode' => isset($occasion['location_mode']) && !empty($occasion['location_mode']) ? $occasion['location_mode'] : null,
                 'location' => isset($occasion['location']) && !empty($occasion['location']) ? $occasion['location'] : null,
+                'booking_link' => isset($occasion['booking_link']) && !empty($occasion['booking_link']) ? $occasion['booking_link'] : null,
             );
         }
 
@@ -156,7 +158,7 @@ class Event extends \HbgEventImporter\Entity\PostManager
         return $occasionError;
     }
 
-    public function extractEventOccasion($startDate, $endDate, $doorTime, $locationMode, $location)
+    public function extractEventOccasion($startDate, $endDate, $doorTime, $locationMode, $location, $bookingLink)
     {
         global $wpdb;
 
@@ -186,6 +188,7 @@ class Event extends \HbgEventImporter\Entity\PostManager
                     'timestamp_door' => $timestampDoor,
                     'location_mode' => $locationMode,
                     'location' => $location,
+                    'booking_link' => $bookingLink,
                 )
             );
 

@@ -216,6 +216,25 @@
                     "step": "",
                     "prepend": "",
                     "append": ""
+                },
+                {
+                    "key": "field_61977682f2553",
+                    "label": "Group event occasions",
+                    "name": "transticket_group_occasions",
+                    "type": "true_false",
+                    "instructions": "Group event occasions under one event",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "message": "",
+                    "default_value": 1,
+                    "ui": 1,
+                    "ui_on_text": "",
+                    "ui_off_text": ""
                 }
             ]
         }
@@ -238,4 +257,4 @@
     "active": 1,
     "description": ""
 }]
-
+
