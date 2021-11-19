@@ -4,14 +4,17 @@ namespace HbgEventImporter\MiddleLayer;
 
 class Languages extends \HbgEventImporter\MiddleLayer\ApiRequest
 {
+    public $singularName = "language";
+    public $pluralName = "languages";
+
     public function __construct()
     {
-        parent::__construct("languages");
+        parent::__construct($this->singularName, $this->pluralName);
 
         if ($this->isCdnSyncEnabled) {
             add_action('pll_add_language', array($this, 'saveLanguage'), 10, 1);
             add_action('pll_update_language', array($this, 'saveLanguage'), 10, 1);
-            add_action('delete_language', array($this, 'deleteLanguage'), 10, 4);
+            add_action('delete_' . $this->singularName, array($this, 'deleteItem'), 10, 1);
         }
     }
 
@@ -35,10 +38,5 @@ class Languages extends \HbgEventImporter\MiddleLayer\ApiRequest
         ];
         $body = wp_json_encode($body);
         $this->post($body);
-    }
-
-    public function deleteLanguage($term)
-    {
-        $this->delete($term);
     }
 }
