@@ -26,21 +26,21 @@ class SyncManager
 
     public function saveItem($id)
     {
-        $json = $this->getRestResponse($id);
-        if (!$json) {
+        $data = $this->getRestResponse($id);
+        if (empty($data)) {
             return;
         }
-
+        $json = wp_json_encode($data);
         $this->post($json);
     }
 
     public function saveEmbeddedItem($id)
     {
-        $json = $this->getRestResponse($id, true);
-        if (!$json) {
+        $data = $this->getRestResponse($id, true);
+        if (empty($data)) {
             return;
         }
-
+        $json = wp_json_encode($data);
         $this->post($json);
     }
 
@@ -97,8 +97,7 @@ class SyncManager
 
         $server = rest_get_server();
         $data = $server->response_to_data($response, $embedded);
-        $json = wp_json_encode($data);
 
-        return $json;
+        return $data;
     }
 }
