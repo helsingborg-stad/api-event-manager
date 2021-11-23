@@ -3,7 +3,7 @@
 namespace HbgEventImporter;
 
 global $eventDatabaseVersion;
-$eventDatabaseVersion = '1.1';
+$eventDatabaseVersion = '1.2';
 
 /**
  * Creates/updates necessary database tables
@@ -49,6 +49,7 @@ class Install
                 timestamp_door BIGINT(20) UNSIGNED DEFAULT NULL,
                 location_mode VARCHAR(50) DEFAULT NULL,
                 location LONGTEXT DEFAULT NULL,
+                booking_link LONGTEXT DEFAULT NULL,
                 PRIMARY KEY  (ID)
             ) $charsetCollate;
         ";

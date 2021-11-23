@@ -179,7 +179,8 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
                     'event' => $post_id,
                     'timestamp_start' => $timestampStart,
                     'timestamp_end' => $timestampEnd,
-                    'timestamp_door' => $timestampDoor
+                    'timestamp_door' => $timestampDoor,
+                    'booking_link' => isset($occasion['booking_link']) ? $occasion['booking_link'] : null
                 )
             );
         }

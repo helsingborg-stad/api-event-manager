@@ -1,7 +1,9 @@
 <?php 
 
-if (function_exists('acf_add_local_field_group')) {
-    acf_add_local_field_group(array(
+
+if (function_exists('acf_add_local_field_group')) {
+
+    acf_add_local_field_group(array(
     'key' => 'group_57610ebadcee8',
     'title' => __('Event', 'event-manager'),
     'fields' => array(
@@ -356,6 +358,25 @@
                     'multiple' => 0,
                     'return_format' => 'id',
                     'ui' => 1,
+                ),
+                9 => array(
+                    'key' => 'field_618d0c59b3c15',
+                    'label' => __('Booking link', 'event-manager'),
+                    'name' => 'booking_link',
+                    'type' => 'text',
+                    'instructions' => '',
+                    'required' => 0,
+                    'conditional_logic' => 0,
+                    'wrapper' => array(
+                        'width' => '',
+                        'class' => '',
+                        'id' => '',
+                    ),
+                    'default_value' => '',
+                    'placeholder' => '',
+                    'prepend' => '',
+                    'append' => '',
+                    'maxlength' => '',
                 ),
             ),
         ),
@@ -2015,4 +2036,5 @@
     'active' => true,
     'description' => '',
 ));
-}
+
+}

@@ -197,6 +197,7 @@ class Cron
                 'transticket_groups' => get_sub_field('transticket_publishing_groups'),
                 'transticket_ticket_url' => get_sub_field('transticket_ticket_url'),
                 'transticket_weeks' => get_sub_field('transticket_weeks'),
+                'transticket_group_occasions' => get_sub_field('transticket_group_occasions'),
                 'default_city' => get_sub_field('transticket_default_city')
             );
         }
