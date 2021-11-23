@@ -24,7 +24,7 @@ class Guides extends \HbgEventImporter\MiddleLayer\SyncManager
         }
 
         if ($post->post_status === 'publish') {
-            $this->saveItem($postId);
+            $this->saveEmbeddedItem($postId);
             return;
         }
 
