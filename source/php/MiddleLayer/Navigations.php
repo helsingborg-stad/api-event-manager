@@ -34,18 +34,4 @@ class Navigations extends \HbgEventImporter\MiddleLayer\SyncManager
         $path = sprintf('%s/%s/%s', $groupId, $lang, $termId);
         $this->deleteItem($path);
     }
-
-    public function startPopulate()
-    {
-        $terms = get_terms(array(
-          'taxonomy' => $this->singularName,
-          'hide_empty' => false,
-        ));
-
-        if (!empty($terms) && is_array($terms)) {
-            foreach ($terms as $term) {
-                $this->saveItem($term->term_id);
-            }
-        }
-    }
 }
