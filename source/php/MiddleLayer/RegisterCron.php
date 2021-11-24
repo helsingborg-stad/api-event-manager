@@ -8,7 +8,6 @@ class RegisterCron
     {
         add_action('admin_init', function () {
             if (isset($_GET['populatemiddlelayer'])) {
-                error_log("populatemiddlelayer");
                 $this->schedulePopulate();
             }
         }, 10);
@@ -18,7 +17,7 @@ class RegisterCron
 
     public function schedulePopulate()
     {
-        $classes = ['Guides', 'Navigations'];
+        $classes = ['Languages', 'Navigations', 'GuideGroups', 'Guides'];
         foreach ($classes as $class) {
             wp_schedule_single_event(time(), 'populate_middle_layer_api', array('class' => $class));
         }
