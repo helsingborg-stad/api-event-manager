@@ -39,4 +39,21 @@ class Languages extends \HbgEventImporter\MiddleLayer\SyncManager
         $body = wp_json_encode($body);
         $this->post($body);
     }
+
+    public function startPopulate()
+    {
+        $languages = [];
+
+        if (function_exists('pll_languages_list')) {
+            $languages = pll_languages_list(array('fields' => array()));
+        }
+
+        if (!empty($languages)) {
+            foreach ($languages as $language) {
+                $languageArray = (array)$language;
+                $languageArray['lang_id'] = $languageArray['term_id'] ?? null;
+                $this->saveLanguage($languageArray);
+            }
+        }
+    }
 }
