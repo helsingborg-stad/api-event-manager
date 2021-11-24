@@ -18,7 +18,7 @@ class RegisterCron
 
     public function schedulePopulate()
     {
-        $classes = ['Guides'];
+        $classes = ['Guides', 'Navigations'];
         foreach ($classes as $class) {
             wp_schedule_single_event(time(), 'populate_middle_layer_api', array('class' => $class));
         }
