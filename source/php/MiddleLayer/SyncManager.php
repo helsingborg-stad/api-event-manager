@@ -100,4 +100,18 @@ class SyncManager
 
         return $data;
     }
+
+    public function startPopulate()
+    {
+        $terms = get_terms(array(
+          'taxonomy' => $this->singularName,
+          'hide_empty' => false,
+        ));
+
+        if (!empty($terms) && is_array($terms)) {
+            foreach ($terms as $term) {
+                $this->saveItem($term->term_id);
+            }
+        }
+    }
 }
