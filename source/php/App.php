@@ -91,6 +91,7 @@ class App
         new Api\RecommendationFields();
         new Api\InteractiveGuideFields();
 
+        new MiddleLayer\RegisterCron();
         new MiddleLayer\Languages();
         new MiddleLayer\GuideGroups();
         new MiddleLayer\Navigations();
