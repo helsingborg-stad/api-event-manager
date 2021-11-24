@@ -66,7 +66,7 @@ class Guides extends \HbgEventImporter\MiddleLayer\SyncManager
     {
         $posts = $this->getGuides();
 
-        foreach ($posts as $key => $post) {
+        foreach ($posts as $post) {
             $this->saveEmbeddedItem($post->ID);
         }
     }
