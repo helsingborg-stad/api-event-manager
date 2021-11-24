@@ -65,7 +65,6 @@ class Guides extends \HbgEventImporter\MiddleLayer\SyncManager
     public function startPopulate()
     {
         $posts = $this->getGuides();
-
         foreach ($posts as $post) {
             $this->saveEmbeddedItem($post->ID);
         }
