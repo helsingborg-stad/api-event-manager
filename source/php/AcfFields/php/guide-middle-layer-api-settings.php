@@ -75,6 +75,31 @@
             'append' => '',
             'maxlength' => '',
         ),
+        3 => array(
+            'key' => 'field_619e52665a53b',
+            'label' => '',
+            'name' => '',
+            'type' => 'message',
+            'instructions' => '',
+            'required' => 0,
+            'conditional_logic' => array(
+                0 => array(
+                    0 => array(
+                        'field' => 'field_61963771e9011',
+                        'operator' => '==',
+                        'value' => '1',
+                    ),
+                ),
+            ),
+            'wrapper' => array(
+                'width' => '',
+                'class' => '',
+                'id' => '',
+            ),
+            'message' => __('<button type="button" class="button-primary" id="populate-middle-layer">Synchronize database</button>', 'event-manager'),
+            'new_lines' => 'wpautop',
+            'esc_html' => 0,
+        ),
     ),
     'location' => array(
         0 => array(
