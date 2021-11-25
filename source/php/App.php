@@ -90,6 +90,12 @@ class App
         new Api\NavigationFields();
         new Api\RecommendationFields();
         new Api\InteractiveGuideFields();
+
+        new MiddleLayer\RegisterCron();
+        new MiddleLayer\Languages();
+        new MiddleLayer\GuideGroups();
+        new MiddleLayer\Navigations();
+        new MiddleLayer\Guides();
     }
 
     /**
@@ -252,6 +258,7 @@ class App
             'persons_approve'       => __("They have accepted that the image is used to promote this event and have been informed that after the image has been added to the database, it may appear in different channels to promote the event.", 'event-manager'),
             'duplicate_occasion'    => __("Duplicate occasion", 'event-manager'),
             'import_scheduled'      => __("Import scheduled", 'event-manager'),
+            'middle_layer_synchronization_scheduled' => __("Synchronization scheduled", 'event-manager'),
         ));
     }
 

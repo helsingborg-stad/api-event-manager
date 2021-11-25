@@ -116,7 +116,8 @@ class GuideFields extends Fields
      */
     public function registerTaxonomyRestFields()
     {
-        register_rest_field($this->taxonomyName,
+        register_rest_field(
+            $this->taxonomyName,
             'apperance',
             array(
                 'get_callback' => array($this, 'taxonomyApperance'),
@@ -128,7 +129,8 @@ class GuideFields extends Fields
             )
         );
 
-        register_rest_field($this->taxonomyName,
+        register_rest_field(
+            $this->taxonomyName,
             'settings',
             array(
                 'get_callback' => array($this, 'taxonomySettings'),
@@ -140,7 +142,8 @@ class GuideFields extends Fields
             )
         );
 
-        register_rest_field($this->taxonomyName,
+        register_rest_field(
+            $this->taxonomyName,
             'notice',
             array(
                 'get_callback' => array($this, 'taxonomyNotice'),
@@ -150,6 +153,16 @@ class GuideFields extends Fields
                     'context' => array('view', 'embed')
                 )
             )
+        );
+
+        register_rest_field(
+            $this->taxonomyName,
+            'user_group',
+            array(
+            'get_callback' => array($this, 'getTaxonomyUserGroup'),
+            'update_callback' => null,
+            'schema' => null,
+          )
         );
     }
 
@@ -162,7 +175,8 @@ class GuideFields extends Fields
     {
 
         // Embed type of guide as property
-        register_rest_field($this->postType,
+        register_rest_field(
+            $this->postType,
             'content_type',
             array(
                 'get_callback'    => array($this, 'stringGetCallBack'),
@@ -172,7 +186,8 @@ class GuideFields extends Fields
         );
 
         // Add a tagline datafield
-        register_rest_field($this->postType,
+        register_rest_field(
+            $this->postType,
             'guide_tagline',
             array(
                 'get_callback'    => array($this, 'stringGetCallBack'),
@@ -182,7 +197,8 @@ class GuideFields extends Fields
         );
 
         // When does the guide start?
-        register_rest_field($this->postType,
+        register_rest_field(
+            $this->postType,
             'guide_date_start',
             array(
                 'get_callback'    => array($this, 'stringGetCallBack'),
@@ -192,7 +208,8 @@ class GuideFields extends Fields
         );
 
         // When does the guide end?
-        register_rest_field($this->postType,
+        register_rest_field(
+            $this->postType,
             'guide_date_end',
             array(
                 'get_callback'    => array($this, 'stringGetCallBack'),
@@ -202,7 +219,8 @@ class GuideFields extends Fields
         );
 
         // Title as plain text
-        register_rest_field($this->postType,
+        register_rest_field(
+            $this->postType,
             'title',
             array(
                 'get_callback'    => array($this, 'addPlaintextField'),
@@ -212,7 +230,8 @@ class GuideFields extends Fields
         );
 
         //Main content object
-        register_rest_field($this->postType,
+        register_rest_field(
+            $this->postType,
             'content',
             array(
                 'get_callback' => array($this, 'addDescription'),
@@ -225,7 +244,8 @@ class GuideFields extends Fields
         );
 
         // Guide media objects
-        register_rest_field($this->postType,
+        register_rest_field(
+            $this->postType,
             'guide_kids',
             array(
                 'get_callback' => array($this, 'boolGetCallBack'),
@@ -239,7 +259,8 @@ class GuideFields extends Fields
         );
 
         // Replace group id with taxonomy name
-        register_rest_field($this->postType,
+        register_rest_field(
+            $this->postType,
             'guidegroup',
             array(
                 'get_callback' => array($this, 'getTaxonomyCallback'),
@@ -253,7 +274,8 @@ class GuideFields extends Fields
         );
 
         // Replace group id with taxonomy name
-        register_rest_field($this->postType,
+        register_rest_field(
+            $this->postType,
             'user_groups',
             array(
                 'get_callback' => array($this, 'getTaxonomyCallback'),
@@ -263,7 +285,8 @@ class GuideFields extends Fields
         );
 
         //TODO: REMOVE DEPRICATED
-        register_rest_field($this->postType,
+        register_rest_field(
+            $this->postType,
             'guideBeacon',
             array(
                 'get_callback' => array($this, 'postBeacon'),
@@ -275,7 +298,8 @@ class GuideFields extends Fields
             )
         );
 
-        register_rest_field($this->postType,
+        register_rest_field(
+            $this->postType,
             'guide_beacon',
             array(
                 'get_callback' => array($this, 'postBeacon'),
@@ -288,7 +312,8 @@ class GuideFields extends Fields
         );
 
         // Guide media objects
-        register_rest_field($this->postType,
+        register_rest_field(
+            $this->postType,
             'guide_location',
             array(
                 'get_callback' => array($this, 'numericGetCallBack'),
@@ -302,7 +327,8 @@ class GuideFields extends Fields
         );
 
         // Guide media objects
-        register_rest_field($this->postType,
+        register_rest_field(
+            $this->postType,
             'guide_images',
             array(
                 'get_callback' => array($this, 'objectGetCallBack'),
@@ -316,7 +342,8 @@ class GuideFields extends Fields
         );
 
         //TODO: REMOVE DEPRICATED
-        register_rest_field($this->postType,
+        register_rest_field(
+            $this->postType,
             'contentObjects',
             array(
                 'get_callback' => array($this, 'postObjects'),
@@ -328,7 +355,8 @@ class GuideFields extends Fields
             )
         );
 
-        register_rest_field($this->postType,
+        register_rest_field(
+            $this->postType,
             'content_objects',
             array(
                 'get_callback' => array($this, 'postObjects'),
@@ -340,8 +368,9 @@ class GuideFields extends Fields
             )
         );
 
-         //TODO: REMOVE DEPRICATED
-        register_rest_field($this->postType,
+        //TODO: REMOVE DEPRICATED
+        register_rest_field(
+            $this->postType,
             'subAttractions',
             array(
                 'get_callback' => array($this, 'subAttractionBeacons'),
@@ -353,7 +382,8 @@ class GuideFields extends Fields
             )
         );
 
-        register_rest_field($this->postType,
+        register_rest_field(
+            $this->postType,
             'sub_attractions',
             array(
                 'get_callback' => array($this, 'subAttractionBeacons'),
@@ -366,7 +396,8 @@ class GuideFields extends Fields
         );
 
         //TODO: REMOVE DEPRICATED
-        register_rest_field($this->postType,
+        register_rest_field(
+            $this->postType,
             'orphanContentObjects',
             array(
                 'get_callback' => array($this, 'orphanPostObjects'),
@@ -378,7 +409,8 @@ class GuideFields extends Fields
             )
         );
 
-        register_rest_field($this->postType,
+        register_rest_field(
+            $this->postType,
             'orphan_content_objects',
             array(
                 'get_callback' => array($this, 'orphanPostObjects'),
@@ -463,6 +495,15 @@ class GuideFields extends Fields
             'arrival'           => $this->convertToNull(get_field('guide_arrival_notice', $this->taxonomyKey($object))),
             'departure'         => $this->convertToNull(get_field('guide_departure_notice', $this->taxonomyKey($object))),
         );
+    }
+
+    /**
+     * Get taxonomy user group
+     * @return array
+     */
+    public function getTaxonomyUserGroup($object, $field_name, $request)
+    {
+        return get_field('guide_taxonomy_user_group', $this->taxonomyKey($object));
     }
 
     /**
@@ -643,8 +684,8 @@ class GuideFields extends Fields
     public function postMedia($object, $field_name, $request, $formatted = true)
     {
         $media =    $this->sanitinzeMediaObjectArray(
-                        $this->objectGetCallBack($object, 'guide_main_media', $request, true)
-                    );
+            $this->objectGetCallBack($object, 'guide_main_media', $request, true)
+        );
 
         if (empty(array_filter($media))) {
             return null;
