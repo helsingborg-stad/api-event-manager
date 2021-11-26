@@ -2,10 +2,10 @@
 
 namespace HbgEventImporter\MiddleLayer;
 
-class Guides extends \HbgEventImporter\MiddleLayer\SyncManager
+class InteractiveGuides extends \HbgEventImporter\MiddleLayer\SyncManager
 {
-    public $singularName = "guide";
-    public $pluralName = "guides";
+    public $singularName = "interactive_guide";
+    public $pluralName = "interactive_guides";
 
     public function __construct()
     {

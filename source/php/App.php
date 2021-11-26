@@ -96,6 +96,7 @@ class App
         new MiddleLayer\GuideGroups();
         new MiddleLayer\Navigations();
         new MiddleLayer\Guides();
+        new MiddleLayer\InteractiveGuides();
     }
 
     /**

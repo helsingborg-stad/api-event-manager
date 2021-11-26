@@ -101,17 +101,56 @@ class SyncManager
         return $data;
     }
 
+    public function savePost($postId, $post)
+    {
+        if ($post->post_status === 'auto-draft') {
+            return;
+        }
+
+        if ($post->post_status === 'publish') {
+            $this->saveEmbeddedItem($postId);
+            return;
+        }
+
+        $this->deleteItem($postId);
+    }
+
+    public function deletePost($postId)
+    {
+        $post = get_post($postId);
+        if (empty($post) || $post->post_type !== $this->singularName) {
+            return;
+        }
+
+        $this->deleteItem($postId);
+    }
+
+    public function getPosts($page = 1, $items = [])
+    {
+        $args = array(
+                'paged' => $page,
+                'posts_per_page' => 50,
+                'post_type'   => $this->singularName,
+                'post_status' => 'publish',
+            );
+        $query = new \WP_Query($args);
+
+        if (!empty($query->posts)) {
+            $items = array_merge($items, $query->posts);
+        }
+
+        if ($query->max_num_pages && (int)$page < (int)$query->max_num_pages) {
+            return $this->getPosts(++$page, $items);
+        }
+
+        return $items;
+    }
+
     public function startPopulate()
     {
-        $terms = get_terms(array(
-          'taxonomy' => $this->singularName,
-          'hide_empty' => false,
-        ));
-
-        if (!empty($terms) && is_array($terms)) {
-            foreach ($terms as $term) {
-                $this->saveItem($term->term_id);
-            }
+        $posts = $this->getPosts();
+        foreach ($posts as $post) {
+            $this->saveEmbeddedItem($post->ID);
         }
     }
 }
