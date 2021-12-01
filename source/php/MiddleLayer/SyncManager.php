@@ -101,8 +101,14 @@ class SyncManager
         return $data;
     }
 
-    public function savePost($postId, $post)
+    public function savePost($postId)
     {
+        $post = get_post((int)$postId);
+
+        if (empty($post) || $post->post_type !== $this->singularName) {
+            return;
+        }
+
         if ($post->post_status === 'auto-draft') {
             return;
         }
