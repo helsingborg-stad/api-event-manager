@@ -12,7 +12,9 @@ class Guides extends \HbgEventImporter\MiddleLayer\SyncManager
         parent::__construct($this->singularName, $this->pluralName);
 
         if ($this->isCdnSyncEnabled) {
-            add_action('save_post_' . $this->singularName, array($this, 'savePost'), 10, 3);
+            if (class_exists('ACF')) {
+                add_action('acf/save_post', array($this, 'savePost'), 99, 1);
+            }
             add_action('delete_post', array($this, 'deletePost'), 10);
         }
     }
