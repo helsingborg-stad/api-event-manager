@@ -51,7 +51,7 @@ class SyncManager
           'body' => $body,
           'headers' => [
             'Content-Type' => 'application/json',
-            'Authorization' => $this->apiKey,
+            'x-api-key' => $this->apiKey,
           ],
           'sslverify' => defined('DEV_MODE') && DEV_MODE == true ? false : true,
         ];
@@ -68,7 +68,7 @@ class SyncManager
         $url = $this->apiUrl . '/' . $this->pluralName . '/' . $id;
         $args = array(
           'headers' => [
-            'Authorization' => $this->apiKey,
+            'x-api-key' => $this->apiKey,
           ],
           'method' => 'DELETE',
           'sslverify' => defined('DEV_MODE') && DEV_MODE == true ? false : true,
