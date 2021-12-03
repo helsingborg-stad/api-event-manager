@@ -79,7 +79,10 @@ abstract class Parser
     public function checkIfPostExists($postType, $postTitle)
     {
         foreach ($this->levenshteinTitles[$postType] as $title) {
-            if ($this->isSimilarEnough(trim(html_entity_decode($postTitle)), $title['post_title'], $postType == 'location' ? 1 : 3)) {
+            if ($this->isSimilarEnough(
+                trim(html_entity_decode($postTitle)), 
+                trim(html_entity_decode($title['post_title'])), 
+                $postType == 'location' ? 1 : 3)) {
                 return $title['ID'];
             }
         }
