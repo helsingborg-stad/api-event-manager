@@ -167,6 +167,12 @@ class TransTicket extends \HbgEventImporter\Parser
             });
             $data['price_range_standing_maximum_price'] = (!empty($seated)) ? max(array_column($seated, 'maximum_price')) : null;
         }
+        $data['price_range'] = array(
+            'seated_minimum_price' => $data['price_range_seated_minimum_price'],
+            'seated_maximum_price' => $data['price_range_seated_maximum_price'],
+            'standing_minimum_price' => $data['price_range_standing_minimum_price'],
+            'standing_maximum_price' => $data['price_range_standing_maximum_price']
+        );
 
         $data['additional_ticket_retailers'] = array();
         if (isset($eventData->ReleaseDates) && !empty($eventData->ReleaseDates)) {
@@ -301,6 +307,7 @@ class TransTicket extends \HbgEventImporter\Parser
                     'price_range_seated_maximum_price' => $data['price_range_seated_maximum_price'],
                     'price_range_standing_minimum_price' => $data['price_range_standing_minimum_price'],
                     'price_range_standing_maximum_price' => $data['price_range_standing_maximum_price'],
+                    'price_range' => $data['price_range'],
                     'additional_ticket_types' => $data['additional_ticket_types'],
                     'internal_event' => 0
                 )
