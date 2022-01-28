@@ -2610,8 +2610,8 @@ msgid "Weeks to import"
 msgstr "Antal veckor att importera"
 
 #: source/php/AcfFields/php/transticket.php:210
-msgid "Select how many weeks ahead you want to import"
-msgstr "Ange hur många veckor framåt du vill importera"
+msgid "Select how many weeks ahead you want to import. Try keeping the period as short as possible to avoid unnecessary data transfer."
+msgstr "Ange hur många veckor framåt du vill importera. Försök hålla perioden så kort som möjligt för att undvika onödig dataöverföring."
 
 #: source/php/AcfFields/php/transticket.php:227
 msgid "Group event occasions"

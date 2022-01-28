@@ -2573,7 +2573,7 @@ msgid "Weeks to import"
 msgstr ""
 
 #: source/php/AcfFields/php/transticket.php:210
-msgid "Select how many weeks ahead you want to import"
+msgid "Select how many weeks ahead you want to import. Try keeping the period as short as possible to avoid unnecessary data transfer."
 msgstr ""
 
 #: source/php/AcfFields/php/transticket.php:227
