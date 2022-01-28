@@ -207,7 +207,7 @@ if (function_exists('acf_add_local_field_group')) {
                     'label' => __('Weeks to import', 'event-manager'),
                     'name' => 'transticket_weeks',
                     'type' => 'range',
-                    'instructions' => __('Select how many weeks ahead you want to import', 'event-manager'),
+                    'instructions' => __('Select how many weeks ahead you want to import. Try keeping the period as short as possible to avoid unnecessary data transfer.', 'event-manager'),
                     'required' => 1,
                     'conditional_logic' => 0,
                     'wrapper' => array(
@@ -217,7 +217,7 @@ if (function_exists('acf_add_local_field_group')) {
                     ),
                     'default_value' => 2,
                     'min' => '',
-                    'max' => 52,
+                    'max' => 104,
                     'step' => '',
                     'prepend' => '',
                     'append' => '',

@@ -202,7 +202,7 @@
                     "label": "Weeks to import",
                     "name": "transticket_weeks",
                     "type": "range",
-                    "instructions": "Select how many weeks ahead you want to import",
+                    "instructions": "Select how many weeks ahead you want to import. Try keeping the period as short as possible to avoid unnecessary data transfer.",
                     "required": 1,
                     "conditional_logic": 0,
                     "wrapper": {
@@ -212,7 +212,7 @@
                     },
                     "default_value": 2,
                     "min": "",
-                    "max": 52,
+                    "max": 104,
                     "step": "",
                     "prepend": "",
                     "append": ""
