@@ -213,28 +213,27 @@ abstract class PostManager
     public function postDiff($postId, $data): bool
     {
         // Check if new occasions has been added to post type Event
-        if (isset($data['post_type']) && $data['post_type'] == 'event' && !empty($this->occasions) ) {
+        if (isset($data['post_type']) && $data['post_type'] == 'event' && !empty($this->occasions)) {
             // Return true if new occasions has been added
-            if ($this->hasNewOccasions((int)$postId, $this->occasions)) {
+            if ($this->hasNewOccasions((int) $postId, $this->occasions)) {
                 return true;
             }
         }
 
         // Make sure to update if title or content is changed
-        if ( isset( $data[ 'post_type' ] ) && $data[ 'post_type' ] == 'event' )
-        {
-            $post = get_post( $postId );
-            if ( isset( $data[ 'post_title' ] ) && $post->post_title != $data[ 'post_title' ] )
-            {
+        if (isset($data['post_type']) && $data['post_type'] == 'event') {
+
+            $post = get_post($postId);
+
+            if (isset($data['post_title']) && sanitize_title($post->post_title) != sanitize_title($data['post_title'])) {
                 return true;
             }
-            if ( isset( $data[ 'post_content' ] ) && $post->post_content != $data[ 'post_content' ] )
-            {
+
+            if (isset($data['post_content']) && sanitize_title($post->post_content) != sanitize_title($data['post_content'])) {
                 return true;
             }
         }
 
-        // Compare old hashed post data with the new
         $oldDataHash = get_post_meta($postId, 'data_hash', true);
         $newDataHash = md5(serialize($this->cleanBeforeHash($data)));
 
