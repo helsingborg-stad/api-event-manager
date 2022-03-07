@@ -170,7 +170,9 @@
             "max_width": "",
             "max_height": "",
             "max_size": "",
-            "mime_types": "jpg,jpeg,png"
+            "mime_types": "jpg,jpeg,png",
+            "return_format": "array",
+            "preview_size": "medium"
         },
         {
             "key": "field_5899a94bff0ec",
@@ -321,7 +323,9 @@
                     "max_height": "",
                     "max_size": "",
                     "mime_types": "jpg,jpeg,png",
-                    "insert": "append"
+                    "insert": "append",
+                    "return_format": "array",
+                    "preview_size": "medium"
                 },
                 {
                     "key": "field_5899ab2c38d40",
@@ -486,7 +490,7 @@
         },
         {
             "key": "field_58ab0c6354b09",
-            "label": "Beacons",
+            "label": "Connect object to location",
             "name": "",
             "type": "tab",
             "instructions": "",
@@ -501,27 +505,8 @@
             "endpoint": 0
         },
         {
-            "key": "field_58ac5c65cdffe",
-            "label": "Beacon namespace",
-            "name": "guide_beacon_namespace",
-            "type": "text",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "maxlength": "",
-            "placeholder": "",
-            "prepend": "",
-            "append": ""
-        },
-        {
             "key": "field_58ab0b4454b08",
-            "label": "Beacon groups",
+            "label": "Connect object to location",
             "name": "guide_beacon",
             "type": "repeater",
             "instructions": "",
@@ -532,11 +517,11 @@
                 "class": "",
                 "id": ""
             },
+            "collapsed": "field_58ab0cf054b0b",
             "min": 0,
             "max": 0,
             "layout": "table",
             "button_label": "L\u00e4gg till grupp",
-            "collapsed": "field_58ab0cf054b0b",
             "sub_fields": [
                 {
                     "key": "field_58ab0c9554b0a",
@@ -581,46 +566,6 @@
                     "ajax": 1,
                     "return_format": "value",
                     "placeholder": ""
-                },
-                {
-                    "key": "field_58ac54a64bb06",
-                    "label": "Beacon ID",
-                    "name": "beacon",
-                    "type": "text",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "20",
-                        "class": "",
-                        "id": ""
-                    },
-                    "default_value": "",
-                    "maxlength": "",
-                    "placeholder": "",
-                    "prepend": "",
-                    "append": ""
-                },
-                {
-                    "key": "field_58d4e9dcfd6e8",
-                    "label": "Beacon distance",
-                    "name": "distance",
-                    "type": "number",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "20",
-                        "class": "",
-                        "id": ""
-                    },
-                    "default_value": 5,
-                    "min": 1,
-                    "max": 50,
-                    "step": 1,
-                    "placeholder": "",
-                    "prepend": "",
-                    "append": "meters"
                 }
             ]
         }
@@ -640,7 +585,7 @@
     "label_placement": "top",
     "instruction_placement": "field",
     "hide_on_screen": "",
-    "active": 1,
+    "active": true,
     "description": "Manage main guide object details."
 }]
 

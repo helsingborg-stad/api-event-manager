@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 
 if (function_exists('acf_add_local_field_group')) {
@@ -177,6 +177,8 @@ if (function_exists('acf_add_local_field_group')) {
             'max_height' => '',
             'max_size' => '',
             'mime_types' => 'jpg,jpeg,png',
+            'return_format' => 'array',
+            'preview_size' => 'medium',
         ),
         9 => array(
             'key' => 'field_5899a94bff0ec',
@@ -328,6 +330,8 @@ if (function_exists('acf_add_local_field_group')) {
                     'max_size' => '',
                     'mime_types' => 'jpg,jpeg,png',
                     'insert' => 'append',
+                    'return_format' => 'array',
+                    'preview_size' => 'medium',
                 ),
                 6 => array(
                     'key' => 'field_5899ab2c38d40',
@@ -506,7 +510,7 @@ if (function_exists('acf_add_local_field_group')) {
             'placement' => 'top',
             'endpoint' => 0,
         ),
-        14 => array(
+        12 => array(
             'key' => 'field_58ab0b4454b08',
             'label' => __('Connect object to location', 'event-manager'),
             'name' => 'guide_beacon',
@@ -590,7 +594,7 @@ if (function_exists('acf_add_local_field_group')) {
     'label_placement' => 'top',
     'instruction_placement' => 'field',
     'hide_on_screen' => '',
-    'active' => 1,
+    'active' => true,
     'description' => 'Manage main guide object details.',
 ));
 
