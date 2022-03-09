@@ -233,8 +233,6 @@ class Guides extends \HbgEventImporter\Entity\CustomPostType
                 $includeSpecificGroups = get_field('include_specific_taxonomys', 'navigation_' . $navigation->term_id);
                 if (empty($includeSpecificGroups)) {
                     $hasParentNavigation = true;
-                    echo("<br>");
-                    var_dump($includeSpecificGroups);
                     break;
                 }
 
