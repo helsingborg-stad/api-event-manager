@@ -54,6 +54,7 @@ class Guides extends \HbgEventImporter\Entity\CustomPostType
         add_filter('acf/update_value/key=field_589dcc1a7deb3', array($this, 'padExhibitionID'), 10, 3);
 
         add_filter('acf/load_field/key=field_6225d9af4b1bf', array($this, 'insertGuideDeeplinkUrl'), 10, 1);
+        add_filter('acf/load_field/key=field_62287a6387dfd', array($this, 'insertGroupDeeplinkUrl'), 99, 1);
         add_filter('acf/prepare_field/key=field_62275133b78db', array($this, 'insertObjectDeeplinkUrl'), 10, 1);
     }
 
@@ -175,6 +176,16 @@ class Guides extends \HbgEventImporter\Entity\CustomPostType
             $deeplink = $this->createGuideDeeplink($post);
             $field['message'] = str_replace('{{url}}', $deeplink, $field['message']);
             return $field;
+        }
+        return $field;
+    }
+
+    public function insertGroupDeeplinkUrl($field)
+    {
+        $screen = get_current_screen();
+        if (!empty($screen->taxonomy && $screen->taxonomy == 'guidegroup' && isset($_GET['tag_ID']))) {
+            $deeplink = "guidehbg://group/" . $_GET['tag_ID'];
+            $field['message'] = str_replace('{{url}}', $deeplink, $field['message']);
         }
         return $field;
     }
