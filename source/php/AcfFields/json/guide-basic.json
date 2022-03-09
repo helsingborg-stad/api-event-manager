@@ -132,6 +132,23 @@
             "ui_off_text": ""
         },
         {
+            "key": "field_6225d9af4b1bf",
+            "label": "Sharing",
+            "name": "",
+            "type": "message",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "Share the guide via a QR code that opens the guide directly in the Guide app. \r\n<a href=\"http:\/\/chart.apis.google.com\/chart?cht=qr&chs=300x300&chl={{url}}\" target=\"_blank\">Dowload QR code<\/a>\r\n\r\nIf you want to modify the design of the QR code simply copy the url below and paste it into your generator tool.\r\n<i>{{url}}<\/i>",
+            "new_lines": "wpautop",
+            "esc_html": 0
+        },
+        {
             "key": "field_5894987dfc7b1",
             "label": "Images (guide)",
             "name": "",
@@ -485,6 +502,39 @@
                         "class": "",
                         "id": ""
                     }
+                },
+                {
+                    "key": "field_62275128b78da",
+                    "label": "Sharing",
+                    "name": "",
+                    "type": "tab",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "placement": "top",
+                    "endpoint": 0
+                },
+                {
+                    "key": "field_62275133b78db",
+                    "label": "QR code",
+                    "name": "",
+                    "type": "message",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "message": "Share the object via a QR code that opens the guide directly in the Guide app. \r\n<a href=\"http:\/\/chart.apis.google.com\/chart?cht=qr&chs=300x300&chl={{url}}\" target=\"_blank\">Dowload QR code<\/a>\r\n\r\nIf you want to modify the design of the QR code simply copy the url below and paste it into your generator tool.\r\n<i>{{url}}<\/i>",
+                    "new_lines": "wpautop",
+                    "esc_html": 0
                 }
             ]
         },

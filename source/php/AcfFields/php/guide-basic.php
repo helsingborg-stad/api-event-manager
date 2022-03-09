@@ -1,9 +1,7 @@
-<?php
+<?php 
 
-
-if (function_exists('acf_add_local_field_group')) {
-
-    acf_add_local_field_group(array(
+if (function_exists('acf_add_local_field_group')) {
+    acf_add_local_field_group(array(
     'key' => 'group_589497ca3741e',
     'title' => __('Basic Guide Settings', 'event-manager'),
     'fields' => array(
@@ -138,6 +136,27 @@ if (function_exists('acf_add_local_field_group')) {
             'ui_off_text' => '',
         ),
         7 => array(
+            'key' => 'field_6225d9af4b1bf',
+            'label' => __('Sharing', 'event-manager'),
+            'name' => '',
+            'type' => 'message',
+            'instructions' => '',
+            'required' => 0,
+            'conditional_logic' => 0,
+            'wrapper' => array(
+                'width' => '',
+                'class' => '',
+                'id' => '',
+            ),
+            'message' => __('Share the guide via a QR code that opens the guide directly in the Guide app. 
+<a href="http://chart.apis.google.com/chart?cht=qr&chs=300x300&chl={{url}}" target="_blank">Dowload QR code</a>
+
+If you want to modify the design of the QR code simply copy the url below and paste it into your generator tool.
+<i>{{url}}</i>', 'event-manager'),
+            'new_lines' => 'wpautop',
+            'esc_html' => 0,
+        ),
+        8 => array(
             'key' => 'field_5894987dfc7b1',
             'label' => __('Images (guide)', 'event-manager'),
             'name' => '',
@@ -153,7 +172,7 @@ if (function_exists('acf_add_local_field_group')) {
             'placement' => 'left',
             'endpoint' => 0,
         ),
-        8 => array(
+        9 => array(
             'key' => 'field_589dc93cde2d7',
             'label' => __('Guide images', 'event-manager'),
             'name' => 'guide_images',
@@ -180,7 +199,7 @@ if (function_exists('acf_add_local_field_group')) {
             'return_format' => 'array',
             'preview_size' => 'medium',
         ),
-        9 => array(
+        10 => array(
             'key' => 'field_5899a94bff0ec',
             'label' => __('Content objects', 'event-manager'),
             'name' => '',
@@ -196,7 +215,7 @@ if (function_exists('acf_add_local_field_group')) {
             'placement' => 'top',
             'endpoint' => 0,
         ),
-        10 => array(
+        11 => array(
             'key' => 'field_5899cc4b59d94',
             'label' => __('Content (paintings, art, flowers etc.)', 'event-manager'),
             'name' => 'guide_content_objects',
@@ -492,9 +511,46 @@ if (function_exists('acf_add_local_field_group')) {
                         'id' => '',
                     ),
                 ),
+                13 => array(
+                    'key' => 'field_62275128b78da',
+                    'label' => __('Sharing', 'event-manager'),
+                    'name' => '',
+                    'type' => 'tab',
+                    'instructions' => '',
+                    'required' => 0,
+                    'conditional_logic' => 0,
+                    'wrapper' => array(
+                        'width' => '',
+                        'class' => '',
+                        'id' => '',
+                    ),
+                    'placement' => 'top',
+                    'endpoint' => 0,
+                ),
+                14 => array(
+                    'key' => 'field_62275133b78db',
+                    'label' => __('QR code', 'event-manager'),
+                    'name' => '',
+                    'type' => 'message',
+                    'instructions' => '',
+                    'required' => 0,
+                    'conditional_logic' => 0,
+                    'wrapper' => array(
+                        'width' => '',
+                        'class' => '',
+                        'id' => '',
+                    ),
+                    'message' => __('Share the object via a QR code that opens the guide directly in the Guide app. 
+<a href="http://chart.apis.google.com/chart?cht=qr&chs=300x300&chl={{url}}" target="_blank">Dowload QR code</a>
+
+If you want to modify the design of the QR code simply copy the url below and paste it into your generator tool.
+<i>{{url}}</i>', 'event-manager'),
+                    'new_lines' => 'wpautop',
+                    'esc_html' => 0,
+                ),
             ),
         ),
-        11 => array(
+        12 => array(
             'key' => 'field_58ab0c6354b09',
             'label' => __('Connect object to location', 'event-manager'),
             'name' => '',
@@ -510,7 +566,7 @@ if (function_exists('acf_add_local_field_group')) {
             'placement' => 'top',
             'endpoint' => 0,
         ),
-        12 => array(
+        13 => array(
             'key' => 'field_58ab0b4454b08',
             'label' => __('Connect object to location', 'event-manager'),
             'name' => 'guide_beacon',
@@ -523,11 +579,11 @@ if (function_exists('acf_add_local_field_group')) {
                 'class' => '',
                 'id' => '',
             ),
+            'collapsed' => 'field_58ab0cf054b0b',
             'min' => 0,
             'max' => 0,
             'layout' => 'table',
             'button_label' => __('Lägg till grupp', 'event-manager'),
-            'collapsed' => 'field_58ab0cf054b0b',
             'sub_fields' => array(
                 0 => array(
                     'key' => 'field_58ab0c9554b0a',
@@ -597,5 +653,4 @@ if (function_exists('acf_add_local_field_group')) {
     'active' => true,
     'description' => 'Manage main guide object details.',
 ));
-
-}
+}
