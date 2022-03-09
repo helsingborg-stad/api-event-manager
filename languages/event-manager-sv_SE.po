@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Event Manager\n"
-"POT-Creation-Date: 2022-03-09 13:28+0100\n"
-"PO-Revision-Date: 2022-03-09 13:35+0100\n"
+"POT-Creation-Date: 2022-03-09 14:54+0100\n"
+"PO-Revision-Date: 2022-03-09 14:55+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: sv_SE\n"
@@ -430,7 +430,6 @@ msgid "Use custom content"
 msgstr "Egen beskrivning"
 
 #: source/php/AcfFields/php/event.php:283
-#: source/php/AcfFields/php/interactive-guide.php:119
 msgid "Content"
 msgstr "Innehåll"
 
@@ -1539,6 +1538,7 @@ msgstr ""
 #: source/php/AcfFields/php/guide-basic.php:140
 #: source/php/AcfFields/php/guide-basic.php:536
 #: source/php/AcfFields/php/guide-group-settings.php:215
+#: source/php/AcfFields/php/interactive-guide.php:731
 msgid "QR Code"
 msgstr "QR-kod"
 
@@ -2095,6 +2095,10 @@ msgstr "Beacon ID"
 msgid "Beacon groups"
 msgstr "Grupper av beacons"
 
+#: source/php/AcfFields/php/interactive-guide.php:6
+msgid "Interactive Guide"
+msgstr "Interaktiv Guide"
+
 #: source/php/AcfFields/php/interactive-guide.php:10
 msgid "Steps"
 msgstr "Steg"
@@ -2102,37 +2106,6 @@ msgstr "Steg"
 #: source/php/AcfFields/php/interactive-guide.php:25
 msgid "Start"
 msgstr "Start"
-
-#: source/php/AcfFields/php/interactive-guide.php:41
-msgid ""
-"This is the first step for an interactive guide. It displays a text message, "
-"image and a button to start the guide."
-msgstr ""
-"Detta är första steget för en interaktiv guide. Det innehåller ett "
-"textmeddelande, bild och en knapp för att starta guiden."
-
-#: source/php/AcfFields/php/interactive-guide.php:47
-msgid "Introduction text"
-msgstr "Introduktionstext"
-
-#: source/php/AcfFields/php/interactive-guide.php:50
-msgid "E.g. Hi and welcome to xx that is shown on xx."
-msgstr "T.ex. Hej och välkommen till xx som visas på xx."
-
-#: source/php/AcfFields/php/interactive-guide.php:66
-msgid "Button text"
-msgstr "Knapptext"
-
-#: source/php/AcfFields/php/interactive-guide.php:69
-msgid "Text for button that starts the interactive guide."
-msgstr "Text till knappen som startar den interaktiva guiden."
-
-#: source/php/AcfFields/php/interactive-guide.php:85
-#: source/php/AcfFields/php/interactive-guide.php:172
-#: source/php/AcfFields/php/interactive-guide.php:612
-#: source/php/PostTypes/MembershipCards.php:49
-msgid "Image"
-msgstr "Bild"
 
 #: source/php/AcfFields/php/interactive-guide.php:114
 msgid "Chapter"
@@ -2142,162 +2115,50 @@ msgstr "Kapitel"
 msgid "Text message"
 msgstr "Textmeddelande"
 
-#: source/php/AcfFields/php/interactive-guide.php:148
-msgid "Message"
-msgstr "Meddelande"
-
-#: source/php/AcfFields/php/interactive-guide.php:177
-msgid "Upload image"
-msgstr "Ladda upp bild"
+#: source/php/AcfFields/php/interactive-guide.php:172
+#: source/php/PostTypes/MembershipCards.php:49
+msgid "Image"
+msgstr "Bild"
 
 #: source/php/AcfFields/php/interactive-guide.php:206
 msgid "Button"
 msgstr "Knapp"
 
-#: source/php/AcfFields/php/interactive-guide.php:222
-#: source/php/AcfFields/php/interactive-guide.php:405
-msgid "Add one or many choice alternatives."
-msgstr "Lägg till ett eller flera alternativ."
-
-#: source/php/AcfFields/php/interactive-guide.php:243
-#: source/php/AcfFields/php/interactive-guide.php:417
-msgid "Add alternative"
-msgstr "Lägg till alternativ"
-
-#: source/php/AcfFields/php/interactive-guide.php:247
-#: source/php/AcfFields/php/interactive-guide.php:421
-msgid "Alternative"
-msgstr "Alternativ"
-
-#: source/php/AcfFields/php/interactive-guide.php:266
-#: source/php/AcfFields/php/interactive-guide.php:467
-msgid "Responses"
-msgstr "Svar"
-
-#: source/php/AcfFields/php/interactive-guide.php:269
-#: source/php/AcfFields/php/interactive-guide.php:470
-msgid "Response messages that is shown after this choice is selected."
-msgstr "Svarsmeddelanden som visas efter detta valalternativ."
-
-#: source/php/AcfFields/php/interactive-guide.php:281
-#: source/php/AcfFields/php/interactive-guide.php:482
-msgid "Add response"
-msgstr "Lägg till svar"
-
-#: source/php/AcfFields/php/interactive-guide.php:285
-#: source/php/AcfFields/php/interactive-guide.php:486
-msgid "Response"
-msgstr "Svar"
-
 #: source/php/AcfFields/php/interactive-guide.php:313
 msgid "Dialog"
 msgstr "Dialog"
 
-#: source/php/AcfFields/php/interactive-guide.php:318
-#: source/php/AcfFields/php/interactive-guide.php:536
-#: source/php/AcfFields/php/organizer.php:101
-#: source/php/PostTypes/Events.php:38 source/php/PostTypes/Locations.php:38
-#: source/php/PostTypes/MembershipCards.php:34
-#: source/php/PostTypes/Organizers.php:34 source/php/PostTypes/Packages.php:34
-#: source/php/PostTypes/Recommendations.php:37
-#: source/php/PostTypes/Sponsors.php:34
-msgid "Title"
-msgstr "Titel"
-
-#: source/php/AcfFields/php/interactive-guide.php:337
-msgid "Instructions"
-msgstr "Instruktioner"
-
-#: source/php/AcfFields/php/interactive-guide.php:356
-msgid "Prompt"
-msgstr "Uppmaning"
-
-#: source/php/AcfFields/php/interactive-guide.php:375
-msgid "Icon"
-msgstr "Ikon"
-
-#: source/php/AcfFields/php/interactive-guide.php:387
-msgid "Discuss"
-msgstr "Diskutera"
-
-#: source/php/AcfFields/php/interactive-guide.php:388
-msgid "Look"
-msgstr "Leta"
-
-#: source/php/AcfFields/php/interactive-guide.php:389
-msgid "Question"
-msgstr "Fråga"
-
-#: source/php/AcfFields/php/interactive-guide.php:440
-msgid "Correct"
-msgstr "Rätt svar "
-
-#: source/php/AcfFields/php/interactive-guide.php:443
-msgid ""
-"Set to no if the dialog shall repeat itself until a correct alternative is "
-"answered."
-msgstr ""
-"Sätt nej om frågan ska upprepas tills det rätta alternativet har valts."
-
-#: source/php/AcfFields/php/interactive-guide.php:514
+#: source/php/AcfFields/php/interactive-guide.php:513
 msgid "Finish"
 msgstr "Avslut"
 
-#: source/php/AcfFields/php/interactive-guide.php:530
-msgid "This is the last step for an interactive guide."
-msgstr "Detta är det sista steget för en interaktiv guide."
-
-#: source/php/AcfFields/php/interactive-guide.php:539
-msgid "Title to be displayed on finish screen header."
-msgstr "Titel som ska visas i headern på avslutningssteget."
-
-#: source/php/AcfFields/php/interactive-guide.php:555
-msgid "Heading"
-msgstr "Rubrik"
-
-#: source/php/AcfFields/php/interactive-guide.php:558
-msgid "Heading to be displayed in the content area."
-msgstr "Rubrik som visas i innehållsarean."
-
-#: source/php/AcfFields/php/interactive-guide.php:574
-msgid "Text"
-msgstr "Text"
-
-#: source/php/AcfFields/php/interactive-guide.php:577
-msgid "Text to be displayed in the content area."
-msgstr "Text som ska visas i innehållsarean."
-
-#: source/php/AcfFields/php/interactive-guide.php:593
-msgid "Images"
-msgstr "Bilder"
-
-#: source/php/AcfFields/php/interactive-guide.php:596
-msgid "Images to be shown in content area."
-msgstr "Bilder som visas i innehållsarean."
-
-#: source/php/AcfFields/php/interactive-guide.php:608
-msgid "Add image"
-msgstr "Lägg till bild"
-
-#: source/php/AcfFields/php/interactive-guide.php:645
-msgid "Share result"
-msgstr "Dela resultat"
-
-#: source/php/AcfFields/php/interactive-guide.php:664
-msgid "Share title"
-msgstr "Delningstitel"
-
-#: source/php/AcfFields/php/interactive-guide.php:667
-msgid "Title to be shown on share button."
-msgstr "Titel som ska visas på delningsknapp."
-
-#: source/php/AcfFields/php/interactive-guide.php:691
-msgid "Share image"
-msgstr "Delningsbild"
-
-#: source/php/AcfFields/php/interactive-guide.php:726
+#: source/php/AcfFields/php/interactive-guide.php:725
 msgid "Add step"
 msgstr "Lägg till steg"
+
+#: source/php/AcfFields/php/interactive-guide.php:742
+msgid ""
+"Use the QR code to open the guide directly in the Guide App. \r\n"
+"\r\n"
+"<img src=\"http://chart.apis.google.com/chart?cht=qr&chs=100x100&chld=M|"
+"0&chl={{url}}\" alt=\"QR code\" width=\"100\" height=\"100\"> \r\n"
+"<a href=\"http://chart.apis.google.com/chart?cht=qr&chs=300x300&chld=M|"
+"0&chl={{url}}\" target=\"_blank\">Dowload QR code</a>\r\n"
+"\r\n"
+"If you want to modify the design of the QR code simply copy the url below "
+"and paste it into your generator tool.\r\n"
+"<i>{{url}}</i>"
+msgstr ""
+"Använd QR-koden för att öppna guiden direkt i Guide Appen. \r\n"
+"\r\n"
+"<img src=\"http://chart.apis.google.com/chart?cht=qr&chs=100x100&chld=M|"
+"0&chl={{url}}\" alt=\"QR code\" width=\"100\" height=\"100\"> \r\n"
+"<a href=\"http://chart.apis.google.com/chart?cht=qr&chs=300x300&chld=M|"
+"0&chl={{url}}\" target=\"_blank\">Ladda ner QR-koden</a>\r\n"
+"\r\n"
+"Om du vill ändra designen på QR-koden, kopiera adressen nedan och klistra in "
+"den i ditt generatorverktyg.\r\n"
+"<i>{{url}}</i>"
 
 #: source/php/AcfFields/php/internal_event.php:6
 msgid "Internal event"
@@ -2490,6 +2351,15 @@ msgstr "Namn"
 #: source/php/AcfFields/php/organizer.php:85
 msgid "First and last name."
 msgstr "För- och efternamn."
+
+#: source/php/AcfFields/php/organizer.php:101
+#: source/php/PostTypes/Events.php:38 source/php/PostTypes/Locations.php:38
+#: source/php/PostTypes/MembershipCards.php:34
+#: source/php/PostTypes/Organizers.php:34 source/php/PostTypes/Packages.php:34
+#: source/php/PostTypes/Recommendations.php:37
+#: source/php/PostTypes/Sponsors.php:34
+msgid "Title"
+msgstr "Titel"
 
 #: source/php/AcfFields/php/organizer.php:104
 msgid "Job title or role."
@@ -3707,6 +3577,118 @@ msgstr ""
 msgid "http://www.helsingborg.se"
 msgstr ""
 
+#~ msgid ""
+#~ "This is the first step for an interactive guide. It displays a text "
+#~ "message, image and a button to start the guide."
+#~ msgstr ""
+#~ "Detta är första steget för en interaktiv guide. Det innehåller ett "
+#~ "textmeddelande, bild och en knapp för att starta guiden."
+
+#~ msgid "Introduction text"
+#~ msgstr "Introduktionstext"
+
+#~ msgid "E.g. Hi and welcome to xx that is shown on xx."
+#~ msgstr "T.ex. Hej och välkommen till xx som visas på xx."
+
+#~ msgid "Button text"
+#~ msgstr "Knapptext"
+
+#~ msgid "Text for button that starts the interactive guide."
+#~ msgstr "Text till knappen som startar den interaktiva guiden."
+
+#~ msgid "Message"
+#~ msgstr "Meddelande"
+
+#~ msgid "Upload image"
+#~ msgstr "Ladda upp bild"
+
+#~ msgid "Add one or many choice alternatives."
+#~ msgstr "Lägg till ett eller flera alternativ."
+
+#~ msgid "Add alternative"
+#~ msgstr "Lägg till alternativ"
+
+#~ msgid "Alternative"
+#~ msgstr "Alternativ"
+
+#~ msgid "Responses"
+#~ msgstr "Svar"
+
+#~ msgid "Response messages that is shown after this choice is selected."
+#~ msgstr "Svarsmeddelanden som visas efter detta valalternativ."
+
+#~ msgid "Add response"
+#~ msgstr "Lägg till svar"
+
+#~ msgid "Response"
+#~ msgstr "Svar"
+
+#~ msgid "Instructions"
+#~ msgstr "Instruktioner"
+
+#~ msgid "Prompt"
+#~ msgstr "Uppmaning"
+
+#~ msgid "Icon"
+#~ msgstr "Ikon"
+
+#~ msgid "Discuss"
+#~ msgstr "Diskutera"
+
+#~ msgid "Look"
+#~ msgstr "Leta"
+
+#~ msgid "Question"
+#~ msgstr "Fråga"
+
+#~ msgid "Correct"
+#~ msgstr "Rätt svar "
+
+#~ msgid ""
+#~ "Set to no if the dialog shall repeat itself until a correct alternative "
+#~ "is answered."
+#~ msgstr ""
+#~ "Sätt nej om frågan ska upprepas tills det rätta alternativet har valts."
+
+#~ msgid "This is the last step for an interactive guide."
+#~ msgstr "Detta är det sista steget för en interaktiv guide."
+
+#~ msgid "Title to be displayed on finish screen header."
+#~ msgstr "Titel som ska visas i headern på avslutningssteget."
+
+#~ msgid "Heading"
+#~ msgstr "Rubrik"
+
+#~ msgid "Heading to be displayed in the content area."
+#~ msgstr "Rubrik som visas i innehållsarean."
+
+#~ msgid "Text"
+#~ msgstr "Text"
+
+#~ msgid "Text to be displayed in the content area."
+#~ msgstr "Text som ska visas i innehållsarean."
+
+#~ msgid "Images"
+#~ msgstr "Bilder"
+
+#~ msgid "Images to be shown in content area."
+#~ msgstr "Bilder som visas i innehållsarean."
+
+#~ msgid "Add image"
+#~ msgstr "Lägg till bild"
+
+#~ msgid "Share result"
+#~ msgstr "Dela resultat"
+
+#~ msgid "Share title"
+#~ msgstr "Delningstitel"
+
+#~ msgid "Title to be shown on share button."
+#~ msgstr "Titel som ska visas på delningsknapp."
+
+#~ msgid "Share image"
+#~ msgstr "Delningsbild"
+
 #~ msgid "Synchronize database"
 #~ msgstr "Synkronisera databas"
 
@@ -3721,9 +3703,6 @@ msgstr ""
 
 #~ msgid "Content area text"
 #~ msgstr "Text i innehållsarea"
-
-#~ msgid "Interactive Guide"
-#~ msgstr "Interaktiv Guide"
 
 #~ msgid "Talk"
 #~ msgstr "Prata"
