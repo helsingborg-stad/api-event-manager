@@ -210,6 +210,29 @@
             'return_format' => 'id',
             'multiple' => 0,
         ),
+        10 => array(
+            'key' => 'field_62287a6387dfd',
+            'label' => __('QR Code', 'event-manager'),
+            'name' => '',
+            'type' => 'message',
+            'instructions' => '',
+            'required' => 0,
+            'conditional_logic' => 0,
+            'wrapper' => array(
+                'width' => '',
+                'class' => '',
+                'id' => '',
+            ),
+            'message' => __('Use the QR code to open the group directly in the Guide App. 
+
+<img src="http://chart.apis.google.com/chart?cht=qr&chs=100x100&chld=M|0&chl={{url}}" alt="QR code" width="100" height="100"> 
+<a href="http://chart.apis.google.com/chart?cht=qr&chs=300x300&chld=M|0&chl={{url}}" target="_blank">Dowload QR code</a>
+
+If you want to modify the design of the QR code simply copy the url below and paste it into your generator tool.
+<i>{{url}}</i>', 'event-manager'),
+            'new_lines' => 'br',
+            'esc_html' => 0,
+        ),
     ),
     'location' => array(
         0 => array(

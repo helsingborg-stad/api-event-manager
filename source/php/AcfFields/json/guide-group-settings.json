@@ -205,6 +205,23 @@
             "load_terms": 0,
             "return_format": "id",
             "multiple": 0
+        },
+        {
+            "key": "field_62287a6387dfd",
+            "label": "QR Code",
+            "name": "",
+            "type": "message",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "Use the QR code to open the group directly in the Guide App. \r\n\r\n<img src=\"http:\/\/chart.apis.google.com\/chart?cht=qr&chs=100x100&chld=M|0&chl={{url}}\" alt=\"QR code\" width=\"100\" height=\"100\"> \r\n<a href=\"http:\/\/chart.apis.google.com\/chart?cht=qr&chs=300x300&chld=M|0&chl={{url}}\" target=\"_blank\">Dowload QR code<\/a>\r\n\r\nIf you want to modify the design of the QR code simply copy the url below and paste it into your generator tool.\r\n<i>{{url}}<\/i>",
+            "new_lines": "br",
+            "esc_html": 0
         }
     ],
     "location": [

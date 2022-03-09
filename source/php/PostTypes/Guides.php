@@ -38,7 +38,6 @@ class Guides extends \HbgEventImporter\Entity\CustomPostType
      */
     public function runFilters()
     {
-
         //Update taxonomy
         add_filter('acf/update_value/name=guidegroup', array($this, 'updateTaxonomyRelation'), 10, 3);
 
@@ -53,6 +52,11 @@ class Guides extends \HbgEventImporter\Entity\CustomPostType
 
         //Pad exhibition id on save
         add_filter('acf/update_value/key=field_589dcc1a7deb3', array($this, 'padExhibitionID'), 10, 3);
+
+        add_filter('acf/load_field/key=field_6225d9af4b1bf', array($this, 'insertGuideDeeplinkUrl'), 10, 1);
+        add_filter('acf/load_field/key=field_6228b0460263f', array($this, 'insertGuideDeeplinkUrl'), 10, 1);
+        add_filter('acf/load_field/key=field_62287a6387dfd', array($this, 'insertGroupDeeplinkUrl'), 99, 1);
+        add_filter('acf/prepare_field/key=field_62275133b78db', array($this, 'insertObjectDeeplinkUrl'), 10, 1);
     }
 
     /**
@@ -159,5 +163,99 @@ class Guides extends \HbgEventImporter\Entity\CustomPostType
         }
 
         return $args;
+    }
+
+    /**
+     * Replaces {{url}} placeholder with guide deeplink
+     *
+     * @param  $field     Array containing field details
+     */
+    public function insertGuideDeeplinkUrl($field)
+    {
+        $post = get_post();
+        if ($post->post_type == 'guide' || $post->post_type == 'interactive_guide') {
+            $deeplink = $this->createGuideDeeplink($post);
+            $field['message'] = str_replace('{{url}}', $deeplink, $field['message']);
+            return $field;
+        }
+        return $field;
+    }
+
+    public function insertGroupDeeplinkUrl($field)
+    {
+        $screen = get_current_screen();
+        if (!empty($screen->taxonomy && $screen->taxonomy == 'guidegroup' && isset($_GET['tag_ID']))) {
+            $deeplink = "guidehbg://group/" . $_GET['tag_ID'];
+            $field['message'] = str_replace('{{url}}', $deeplink, $field['message']);
+        }
+        return $field;
+    }
+
+    public function insertObjectDeeplinkUrl($field)
+    {
+        $post = get_post();
+        if ($post->post_type == 'guide') {
+            $objectId = $this->getObjectId($post->ID, $field['id']);
+            $deeplink = $this->createObjectDeeplink($post, $objectId);
+            $field['message'] = str_replace('{{url}}', $deeplink, $field['message']);
+        }
+        return $field;
+    }
+
+    public function getObjectId($postId, $fieldId)
+    {
+          $regex = '/row-(\d+)-/';
+          preg_match($regex, $fieldId, $matches);
+          $rowId = $matches[1];
+          $contentObjects = get_field('guide_content_objects', $postId);
+          $objectId = $contentObjects[$rowId]['guide_object_uid'];
+
+          return $objectId;
+    }
+
+    public function createObjectDeeplink($post, $objectId)
+    {
+        $guideDeeplink = $this->createGuideDeeplink($post);
+        $objectDeeplink = $guideDeeplink . '/' . $objectId;
+        return $objectDeeplink;
+    }
+
+    public function createGuideDeeplink($post)
+    {
+        $guideGroup = get_field('guidegroup', $post->ID);
+        $navigations = get_terms([
+            'taxonomy' => 'navigation',
+            'hide_empty' => false
+        ]);
+        $hasParentNavigation = false;
+
+        if (!empty($guideGroup)) {
+            foreach ($navigations as $navigation) {
+                $includeSpecificGroups = get_field('include_specific_taxonomys', 'navigation_' . $navigation->term_id);
+                if (empty($includeSpecificGroups)) {
+                    $hasParentNavigation = true;
+                    break;
+                }
+
+                $includedGroups = get_field('included_taxonomys', 'navigation_' . $navigation->term_id);
+                if (empty($includedGroups)) {
+                    break;
+                }
+
+                foreach ($includedGroups as $group) {
+                    if ($group->term_id == $guideGroup) {
+                        $hasParentNavigation = true;
+                        break 2;
+                    }
+                }
+            }
+        }
+
+        $deeplink = "guidehbg://guide/" . $post->ID;
+        if ($hasParentNavigation) {
+            $deeplink = "guidehbg://group/" . $guideGroup .  '/' . $post->ID;
+        }
+
+        return $deeplink;
     }
 }
