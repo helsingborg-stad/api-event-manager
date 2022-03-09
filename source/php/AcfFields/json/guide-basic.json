@@ -133,7 +133,7 @@
         },
         {
             "key": "field_6225d9af4b1bf",
-            "label": "Sharing",
+            "label": "QR Code",
             "name": "",
             "type": "message",
             "instructions": "",
@@ -144,7 +144,7 @@
                 "class": "",
                 "id": ""
             },
-            "message": "Share the guide via a QR code that opens the guide directly in the Guide app. \r\n<a href=\"http:\/\/chart.apis.google.com\/chart?cht=qr&chs=300x300&chl={{url}}\" target=\"_blank\">Dowload QR code<\/a>\r\n\r\nIf you want to modify the design of the QR code simply copy the url below and paste it into your generator tool.\r\n<i>{{url}}<\/i>",
+            "message": "Use the QR code to open the guide directly in the Guide App. \r\n\r\n\r\n<img src=\"http:\/\/chart.apis.google.com\/chart?cht=qr&chs=100x100&chld=M|0&chl={{url}}\" alt=\"QR code\" width=\"100\" height=\"100\"> \r\n<a href=\"http:\/\/chart.apis.google.com\/chart?cht=qr&chs=300x300&chld=M|0&chl={{url}}\" target=\"_blank\">Dowload QR code<\/a>\r\n\r\n\r\nIf you want to modify the design of the QR code simply copy the url below and paste it into your generator tool.\r\n<i>{{url}}<\/i>",
             "new_lines": "wpautop",
             "esc_html": 0
         },
@@ -521,7 +521,7 @@
                 },
                 {
                     "key": "field_62275133b78db",
-                    "label": "QR code",
+                    "label": "QR Code",
                     "name": "",
                     "type": "message",
                     "instructions": "",
@@ -532,7 +532,7 @@
                         "class": "",
                         "id": ""
                     },
-                    "message": "Share the object via a QR code that opens the guide directly in the Guide app. \r\n<a href=\"http:\/\/chart.apis.google.com\/chart?cht=qr&chs=300x300&chl={{url}}\" target=\"_blank\">Dowload QR code<\/a>\r\n\r\nIf you want to modify the design of the QR code simply copy the url below and paste it into your generator tool.\r\n<i>{{url}}<\/i>",
+                    "message": "Use the QR code to open the object directly in the Guide App. \r\n\r\n\r\n<img src=\"http:\/\/chart.apis.google.com\/chart?cht=qr&chs=100x100&chld=M|0&chl={{url}}\" alt=\"QR code\" width=\"100\" height=\"100\"> \r\n<a href=\"http:\/\/chart.apis.google.com\/chart?cht=qr&chs=300x300&chld=M|0&chl={{url}}\" target=\"_blank\">Dowload QR code<\/a>\r\n\r\n\r\nIf you want to modify the design of the QR code simply copy the url below and paste it into your generator tool.\r\n<i>{{url}}<\/i>",
                     "new_lines": "wpautop",
                     "esc_html": 0
                 }

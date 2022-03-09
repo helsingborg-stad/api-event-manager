@@ -137,7 +137,7 @@
         ),
         7 => array(
             'key' => 'field_6225d9af4b1bf',
-            'label' => __('Sharing', 'event-manager'),
+            'label' => __('QR Code', 'event-manager'),
             'name' => '',
             'type' => 'message',
             'instructions' => '',
@@ -148,8 +148,12 @@
                 'class' => '',
                 'id' => '',
             ),
-            'message' => __('Share the guide via a QR code that opens the guide directly in the Guide app. 
-<a href="http://chart.apis.google.com/chart?cht=qr&chs=300x300&chl={{url}}" target="_blank">Dowload QR code</a>
+            'message' => __('Use the QR code to open the guide directly in the Guide App. 
+
+
+<img src="http://chart.apis.google.com/chart?cht=qr&chs=100x100&chld=M|0&chl={{url}}" alt="QR code" width="100" height="100"> 
+<a href="http://chart.apis.google.com/chart?cht=qr&chs=300x300&chld=M|0&chl={{url}}" target="_blank">Dowload QR code</a>
+
 
 If you want to modify the design of the QR code simply copy the url below and paste it into your generator tool.
 <i>{{url}}</i>', 'event-manager'),
@@ -529,7 +533,7 @@ If you want to modify the design of the QR code simply copy the url below and pa
                 ),
                 14 => array(
                     'key' => 'field_62275133b78db',
-                    'label' => __('QR code', 'event-manager'),
+                    'label' => __('QR Code', 'event-manager'),
                     'name' => '',
                     'type' => 'message',
                     'instructions' => '',
@@ -540,8 +544,12 @@ If you want to modify the design of the QR code simply copy the url below and pa
                         'class' => '',
                         'id' => '',
                     ),
-                    'message' => __('Share the object via a QR code that opens the guide directly in the Guide app. 
-<a href="http://chart.apis.google.com/chart?cht=qr&chs=300x300&chl={{url}}" target="_blank">Dowload QR code</a>
+                    'message' => __('Use the QR code to open the object directly in the Guide App. 
+
+
+<img src="http://chart.apis.google.com/chart?cht=qr&chs=100x100&chld=M|0&chl={{url}}" alt="QR code" width="100" height="100"> 
+<a href="http://chart.apis.google.com/chart?cht=qr&chs=300x300&chld=M|0&chl={{url}}" target="_blank">Dowload QR code</a>
+
 
 If you want to modify the design of the QR code simply copy the url below and paste it into your generator tool.
 <i>{{url}}</i>', 'event-manager'),
