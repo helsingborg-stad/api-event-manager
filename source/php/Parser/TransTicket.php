@@ -12,6 +12,8 @@ ini_set('default_socket_timeout', 60 * 10);
 
 class TransTicket extends \HbgEventImporter\Parser
 {
+    private $updatedEvents = array();
+
     public function __construct($url, $apiKeys)
     {
         parent::__construct($url, $apiKeys);
@@ -44,6 +46,8 @@ class TransTicket extends \HbgEventImporter\Parser
      */
     public function start()
     {
+        $this->updatedEvents = array();
+
         $eventData = $this->getEventData();
         $this->collectDataForLevenshtein();
 
@@ -272,13 +276,18 @@ class TransTicket extends \HbgEventImporter\Parser
             return $eventId;
         }
 
+        $eventPostData = array(
+            'post_title' => $data['postTitle'],
+            'post_status' => $postStatus,
+        );
+        if (!array_key_exists($eventId, $this->updatedEvents)) {
+            $this->updatedEvents[$eventId] = $data['postContent'];
+        }
+        $eventPostData['post_content'] = $this->updatedEvents[$eventId];
+
         try {
             $event = new Event(
-                array(
-                    'post_title' => $data['postTitle'],
-                    'post_content' => $data['postContent'],
-                    'post_status' => $postStatus,
-                ),
+                $eventPostData,
                 array(
                     '_event_manager_uid' => $eventManagerUid,
                     'sync' => 1,
