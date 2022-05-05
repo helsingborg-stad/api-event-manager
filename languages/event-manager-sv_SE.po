@@ -2,14 +2,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Event Manager\n"
 "POT-Creation-Date: 2022-03-09 14:54+0100\n"
-"PO-Revision-Date: 2022-03-09 14:55+0100\n"
+"PO-Revision-Date: 2022-05-05 10:15+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: sv_SE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.12\n"
+"X-Generator: Poedit 3.0\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-WPHeader: hbg-event-importer.php\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -3577,6 +3577,18 @@ msgstr ""
 msgid "http://www.helsingborg.se"
 msgstr ""
 
+#. TIX translations
+msgid "Enable daily automatic import from TIX"
+msgstr "Daglig automatisk import från TIX"
+
+#. TIX translations
+msgid "Event key"
+msgstr "API nyckel för evenemangsplatsen"
+
+#. TIX translations
+msgid "Add Tix ticket API Key"
+msgstr "Lägg till API nyckel för TIX evenemangsplats"
+
 #~ msgid ""
 #~ "This is the first step for an interactive guide. It displays a text "
 #~ "message, image and a button to start the guide."
@@ -4257,9 +4269,6 @@ msgstr ""
 
 #~ msgid "Senior age"
 #~ msgstr "Åldersgräns pensionär"
-
-#~ msgid "Event link"
-#~ msgstr "Hemsida"
 
 #~ msgid "External link to event website."
 #~ msgstr "Extern länk till evenemangets hemsida."

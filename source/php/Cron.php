@@ -330,6 +330,36 @@ class Cron
         return $keys;
     }
 
+
+    /**
+     * Get TIX ticket keys
+     * @return array
+     */
+    public function getTixTicketKeys(): array
+    {
+        $tixticketKeys = array();
+        $tix_api_url = get_field('tix_api_url', 'option');
+        $tixticketKeys['tix_api_url'] = $tix_api_url;
+
+       if (!have_rows('tix_event_keys', 'option')) {
+            return array();
+        }
+
+        while (have_rows('tix_event_keys', 'option')) {
+            the_row();
+
+            $tixticketKeys['tix_api_key'][] = array(
+                'tix_event_key' => get_sub_field('tix_event_key'),
+                'tix_groups' => get_sub_field('tix_publishing_groups'),
+                'tix_group_occasions' => get_sub_field('tix_group_occasions'),
+                'tix_filter_tags' => get_sub_field('tix_filter_tags'),
+                'default_city' => get_sub_field('tix_default_city')
+            );
+        }
+        return $tixticketKeys;
+    }
+
+
     /**
      * Starts the data import
      * @param $client
@@ -381,6 +411,13 @@ class Cron
                 $api_keys = $this->getOpenLibKeys();
                 foreach ((array)$api_keys as $args) {
                     new Parser\OpenLib($args['api_url'], $args);
+                }
+                break;
+            case 'tixticket':
+                $tix_data = $this->getTixTicketKeys();
+                $api_keys = $tix_data['tix_api_key'];
+                foreach ((array)$api_keys as $key => $api_key) {
+                    new Parser\TixTicket($tix_data['tix_api_url'], $api_key);
                 }
                 break;
         }

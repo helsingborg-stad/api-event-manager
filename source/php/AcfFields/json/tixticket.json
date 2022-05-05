@@ -1,0 +1,206 @@
+[
+    {
+        "key": "group_625fc20c520eb",
+        "title": "TIX",
+        "fields": [
+            {
+                "key": "field_626bde59f2a42",
+                "label": "Daily import",
+                "name": "tix_daily_cron",
+                "type": "true_false",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "message": "Enable daily automatic import from TIX",
+                "default_value": 1,
+                "ui": 0,
+                "ui_on_text": "",
+                "ui_off_text": ""
+            },
+            {
+                "key": "field_625fc25fd7812",
+                "label": "API link",
+                "name": "tix_api_url",
+                "type": "text",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "placeholder": "",
+                "prepend": "",
+                "append": "",
+                "maxlength": ""
+            },
+            {
+                "key": "field_625fd1f72dad4",
+                "label": "Event keys",
+                "name": "tix_event_keys",
+                "type": "repeater",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "collapsed": "",
+                "min": 0,
+                "max": 0,
+                "layout": "block",
+                "button_label": "",
+                "sub_fields": [
+                    {
+                        "key": "field_625fd21d2dad5",
+                        "label": "Event key",
+                        "name": "tix_event_key",
+                        "type": "text",
+                        "instructions": "Add Tix ticket API Key",
+                        "required": 1,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": "",
+                        "placeholder": "",
+                        "prepend": "",
+                        "append": "",
+                        "maxlength": ""
+                    },
+                    {
+                        "key": "field_6262696325ce8",
+                        "label": "Default user groups",
+                        "name": "tix_publishing_groups",
+                        "type": "taxonomy",
+                        "instructions": "Select the user groups that you want to set as default to imported posts.",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "taxonomy": "user_groups",
+                        "field_type": "checkbox",
+                        "add_term": 1,
+                        "save_terms": 0,
+                        "load_terms": 0,
+                        "return_format": "id",
+                        "multiple": 0,
+                        "allow_null": 0
+                    },
+                    {
+                        "key": "field_62736dee9ac1f",
+                        "label": "Exclude tags",
+                        "name": "tix_filter_tags",
+                        "type": "text",
+                        "instructions": "Enter the name of the tags that you want to exclude from the import. Separate with commas.",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": "",
+                        "placeholder": "",
+                        "prepend": "",
+                        "append": "",
+                        "maxlength": ""
+                    },
+                    {
+                        "key": "field_6267b1a230c2f",
+                        "label": "Default city",
+                        "name": "tix_default_city",
+                        "type": "text",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": "",
+                        "placeholder": "",
+                        "prepend": "",
+                        "append": "",
+                        "maxlength": ""
+                    },
+                    {
+                        "key": "field_6267bac59ccf8",
+                        "label": "Group event occasions",
+                        "name": "tix_group_occasions",
+                        "type": "true_false",
+                        "instructions": "Group event occasions under one event",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "message": "",
+                        "default_value": 1,
+                        "ui": 1,
+                        "ui_on_text": "",
+                        "ui_off_text": ""
+                    }
+                ]
+            },
+            {
+                "key": "field_62626499674a6",
+                "label": "Post status",
+                "name": "tix_post_status",
+                "type": "radio",
+                "instructions": "Select status of imported events.",
+                "required": 1,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "choices": {
+                    "draft": "Draft",
+                    "publish": "Published"
+                },
+                "allow_null": 0,
+                "other_choice": 0,
+                "default_value": "publish",
+                "layout": "vertical",
+                "return_format": "value",
+                "save_other_choice": 0
+            }
+        ],
+        "location": [
+            [
+                {
+                    "param": "options_page",
+                    "operator": "==",
+                    "value": "acf-options-options"
+                }
+            ]
+        ],
+        "menu_order": 0,
+        "position": "normal",
+        "style": "default",
+        "label_placement": "top",
+        "instruction_placement": "label",
+        "hide_on_screen": "",
+        "active": true,
+        "description": ""
+    }
+]
