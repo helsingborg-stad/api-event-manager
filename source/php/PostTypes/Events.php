@@ -496,6 +496,10 @@ class Events extends \HbgEventImporter\Entity\CustomPostType
                 $button .= '<button class="button-primary extraspace single-import" data-client="transticket">' . __('Import Transticket', 'event-manager') . '</button>';
             }
 
+            if (have_rows('tix_event_keys', 'option')) {
+                $button .= '<button class="button-primary extraspace single-import" data-client="tixticket">' . __('Import TIX', 'event-manager') . '</button>';
+            }
+
             if (have_rows('ols_api_urls', 'option')) {
                 $button .= '<button class="button-primary extraspace single-import" data-client="ols">' . __('Import Open Library', 'event-manager') . '</button>';
             }
