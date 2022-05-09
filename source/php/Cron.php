@@ -5,7 +5,7 @@ namespace HbgEventImporter;
 class Cron
 {
     public static $postTypeSlug = 'event';
-    public static $clients = array('cbis', 'xcap', 'transticket', 'arcgis', 'ols');
+    public static $clients = array('cbis', 'xcap', 'transticket', 'arcgis', 'ols', 'tixticket');
 
     public function __construct()
     {
