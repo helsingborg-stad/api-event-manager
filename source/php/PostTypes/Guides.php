@@ -185,7 +185,7 @@ class Guides extends \HbgEventImporter\Entity\CustomPostType
     {
         $screen = get_current_screen();
         if (!empty($screen->taxonomy && $screen->taxonomy == 'guidegroup' && isset($_GET['tag_ID']))) {
-            $deeplink = "guidehbg://group/" . $_GET['tag_ID'];
+            $deeplink = "https://guide.helsingborg.se/?page=group/" . $_GET['tag_ID'];
             $field['message'] = str_replace('{{url}}', $deeplink, $field['message']);
         }
         return $field;
@@ -251,9 +251,9 @@ class Guides extends \HbgEventImporter\Entity\CustomPostType
             }
         }
 
-        $deeplink = "guidehbg://guide/" . $post->ID;
+        $deeplink = "https://guide.helsingborg.se/?page=guide/" . $post->ID;
         if ($hasParentNavigation) {
-            $deeplink = "guidehbg://group/" . $guideGroup .  '/' . $post->ID;
+            $deeplink = "https://guide.helsingborg.se/?page=group/" . $guideGroup .  '/' . $post->ID;
         }
 
         return $deeplink;
