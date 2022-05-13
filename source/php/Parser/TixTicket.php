@@ -30,7 +30,6 @@ class TixTicket extends \HbgEventImporter\Parser
             array('Content-Type: application/json')
         ));
     }
-
     /**
      * Start the parsing!
      * @return void
@@ -46,7 +45,8 @@ class TixTicket extends \HbgEventImporter\Parser
         foreach ($eventData as $key => $singleevent) {
             $eventDates = $singleevent->Dates;
             $FeaturedImagePath = $singleevent->FeaturedImagePath;
-            $Description = isset($singleevent->Description) && !empty($singleevent->Description) ? $singleevent->Description : $singleevent->Name;            
+            $Description = isset($singleevent->Description) && !empty($singleevent->Description) ? $singleevent->Description : $singleevent->Name;    
+                   
             foreach ($eventDates as $key => $event) {
 
                 $event->FeaturedImagePath = !empty($FeaturedImagePath) ? $FeaturedImagePath : null;
@@ -56,7 +56,7 @@ class TixTicket extends \HbgEventImporter\Parser
                 if (!isset($event->EventId) || empty($event->EventId)) {
                     continue;
                 }
-
+               
                 $this->saveEvent($event, $shortKey);
             }
         }
@@ -96,7 +96,9 @@ class TixTicket extends \HbgEventImporter\Parser
                 'booking_link' => $eventLink
             );
         }
-        $data['categories'] = isset($eventData->Categories) ? $this->getCategories($eventData->Categories) : array();
+        $data['categories'] = isset($eventData->Categories) ? $this->getTagsCategories($eventData->Categories) : array();
+        //echo "<pre>"; print_r($data['categories']); exit;
+        $data['tags'] = isset($eventData->Tags) ? $this->getTagsCategories($eventData->Tags) : array();
         $data['postStatus'] = get_field('tix_post_status', 'option') ? get_field(
             'tix_post_status',
             'option'
@@ -116,8 +118,8 @@ class TixTicket extends \HbgEventImporter\Parser
 
         // Various data vars not in default setup
         $data['ticket_release_date'] = !empty($eventData->OnlineSaleStart) ?  str_replace(' ', 'T', $eventData->OnlineSaleStart) : null;
-        $data['ticket_stock'] = array_sum(array_column($eventData->Prices, 'Quota'));
-        $data['tickets_remaining'] = array_sum(array_column($eventData->Prices, 'Remaining'));
+        $data['ticket_stock'] = $eventData->Capacity;
+        $data['tickets_remaining'] = $eventData->Remaining;
 
         $data['additional_ticket_types'] = array();
         if (isset($eventData->Prices) && !empty($eventData->Prices)) {
@@ -323,15 +325,12 @@ class TixTicket extends \HbgEventImporter\Parser
         if (!is_null($event->image)) {
             $event->setFeaturedImageFromUrl($event->image);
         }
-
-        //Add & remove tags
         wp_set_post_terms(
             $event->ID,
-            $data['categories'],
+            $data['tags'],
             'event_tags',
             false
         );
-
         return $event->ID;
     }
 
@@ -442,7 +441,7 @@ class TixTicket extends \HbgEventImporter\Parser
      * @param  object $eventData Event data object
      * @return array             Categories
      */
-    public function getCategories($eventCategories)
+    public function getTagsCategories($eventCategories)
     {
         $categories = explode(',', $eventCategories);
 
