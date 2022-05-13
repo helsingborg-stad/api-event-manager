@@ -97,7 +97,6 @@ class TixTicket extends \HbgEventImporter\Parser
             );
         }
         $data['categories'] = isset($eventData->Categories) ? $this->getTagsCategories($eventData->Categories) : array();
-        //echo "<pre>"; print_r($data['categories']); exit;
         $data['tags'] = isset($eventData->Tags) ? $this->getTagsCategories($eventData->Tags) : array();
         $data['postStatus'] = get_field('tix_post_status', 'option') ? get_field(
             'tix_post_status',
