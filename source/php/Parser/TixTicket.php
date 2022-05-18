@@ -79,14 +79,16 @@ class TixTicket extends \HbgEventImporter\Parser
         $eventLink = isset($eventData->PurchaseUrls) && !empty($eventData->PurchaseUrls) ? $eventData->PurchaseUrls[0]->Link : '';
         $data['booking_link'] = $eventLink;
 
-        $data['startDate'] = !empty($eventData->StartDate) ? $eventData->StartDate : null;
-        $data['endDate'] = !empty($eventData->EndDate) ? $eventData->EndDate : null;
+        $data['startDate'] = !empty($eventData->StartDate) ? strstr($eventData->StartDate,'+',true).'Z' : null;
+        $data['endDate'] = !empty($eventData->EndDate) ? strstr($eventData->EndDate,'+',true).'Z' : null;
+        
 
         if ($data['endDate'] === null) {
             $data['endDate'] = date("Y-m-d H:i:s", strtotime($data['startDate'] . "+1 hour"));
             $data['endDate'] = str_replace(' ', 'T', $data['endDate']);
         }
 
+   
         $data['occasions'] = array();
         if ($data['startDate'] != null && $data['endDate'] != null) {
             $data['occasions'][] = array(
