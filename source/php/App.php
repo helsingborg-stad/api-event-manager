@@ -55,7 +55,6 @@ class App
         new PostTypes\MembershipCards();
         new PostTypes\Guides();
         new PostTypes\InteractiveGuides();
-        new PostTypes\Recommendations();
 
         new Taxonomy\EventCategories();
         new Taxonomy\UserGroups();
@@ -88,7 +87,6 @@ class App
         new Api\UserGroupFields();
         new Api\PointPropertyFields();
         new Api\NavigationFields();
-        new Api\RecommendationFields();
         new Api\InteractiveGuideFields();
 
         new MiddleLayer\RegisterCron();

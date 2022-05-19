@@ -50,12 +50,11 @@ class GuideNavigation
             'show_in_rest'          => true,
         );
 
-        register_taxonomy('navigation', array('guide', 'recommendation'), $args);
+        register_taxonomy('navigation', array('guide'), $args);
     }
 
     public function unregisterMetaBox()
     {
         remove_meta_box('tagsdiv-navigation', 'guide', 'side');
-        remove_meta_box('tagsdiv-navigation', 'recommendation', 'side');
     }
 }

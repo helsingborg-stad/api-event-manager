@@ -64,7 +64,6 @@
                 'membership-card' => __('Membership cards', 'event-manager'),
                 'organizer' => __('Organizers', 'event-manager'),
                 'guide' => __('Guides', 'event-manager'),
-                'recommendation' => __('Recommendations', 'event-manager'),
                 'interactive_guide' => __('Interactive Guides', 'event-manager'),
             ),
             'allow_custom' => 0,

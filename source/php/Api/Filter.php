@@ -30,10 +30,8 @@ class Filter
         add_filter('rest_prepare_guide', array($this, 'removeResponseKeys'), 5000, 3);
         add_filter('rest_prepare_guidegroup', array($this, 'removeResponseKeys'), 5000, 3);
         add_filter('rest_prepare_interactive-guide', array($this, 'removeResponseKeys'), 5000, 3);
-        add_filter('rest_prepare_recommendation', array($this, 'removeResponseKeys'), 5000, 3);
 
         add_filter('rest_guide_collection_params', array($this, 'apiCollectionParams'), 10, 1);
-        add_filter('rest_recommendation_collection_params', array($this, 'apiCollectionParams'), 10, 1);
         add_filter('rest_guidegroup_collection_params', array($this, 'apiCollectionParams'), 10, 1);
     }
 
