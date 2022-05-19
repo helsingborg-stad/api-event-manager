@@ -929,6 +929,22 @@ class EventFields extends Fields
             )
         );
 
+
+        // Type of booking link
+        register_rest_field(
+            $this->postType,
+            'booking_link_type',
+            array(
+                'get_callback' => array($this, 'stringGetCallBack'),
+                'update_callback' => array($this, 'stringUpdateCallBack'),
+                'schema' => array(
+                    'description' => 'Field containing string with type of booking link.',
+                    'type' => 'string',
+                    'context' => array('view', 'edit'),
+                ),
+            )
+        );
+
         // Phone number to booking service
         register_rest_field(
             $this->postType,
