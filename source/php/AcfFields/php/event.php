@@ -1,7 +1,9 @@
 <?php 
 
-if (function_exists('acf_add_local_field_group')) {
-    acf_add_local_field_group(array(
+
+if (function_exists('acf_add_local_field_group')) {
+
+    acf_add_local_field_group(array(
     'key' => 'group_57610ebadcee8',
     'title' => __('Event', 'event-manager'),
     'fields' => array(
@@ -170,7 +172,7 @@
                     'allow_null' => 0,
                     'other_choice' => 0,
                     'save_other_choice' => 0,
-                    'default_value' => __('scheduled', 'event-manager'),
+                    'default_value' => 'scheduled',
                     'layout' => 'horizontal',
                     'return_format' => 'value',
                 ),
@@ -587,7 +589,7 @@
                             'allow_null' => 0,
                             'other_choice' => 0,
                             'save_other_choice' => 0,
-                            'default_value' => __('scheduled', 'event-manager'),
+                            'default_value' => 'scheduled',
                             'layout' => 'horizontal',
                             'return_format' => 'value',
                         ),
@@ -2073,4 +2075,5 @@
     'acfe_meta' => '',
     'acfe_note' => '',
 ));
-}
+
+}
