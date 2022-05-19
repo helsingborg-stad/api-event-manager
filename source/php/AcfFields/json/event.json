@@ -415,7 +415,7 @@
                         "Saturday": "Saturday",
                         "Sunday": "Sunday"
                     },
-                    "default_value": [],
+                    "default_value": false,
                     "allow_null": 0,
                     "multiple": 0,
                     "ui": 0,
@@ -835,6 +835,40 @@
             "placeholder": ""
         },
         {
+            "key": "field_62850ccd608e1",
+            "label": "Booking link type",
+            "name": "booking_link_type",
+            "type": "select",
+            "instructions": "Choose label for the link above.",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_57611b82acf1a",
+                        "operator": "!=empty"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "buy": "Buy ticket",
+                "book": "Book now",
+                "submit_interest": "Submit interest",
+                "book_free": "Book free ticket"
+            },
+            "default_value": false,
+            "allow_null": 0,
+            "multiple": 0,
+            "ui": 0,
+            "return_format": "value",
+            "ajax": 0,
+            "placeholder": ""
+        },
+        {
             "key": "field_57611bffacf1d",
             "label": "Booking phone",
             "name": "booking_phone",
@@ -1178,7 +1212,7 @@
                 "24",
                 "25"
             ],
-            "default_value": [],
+            "default_value": false,
             "allow_null": 1,
             "multiple": 0,
             "ui": 0,
@@ -1256,7 +1290,7 @@
                 "84": "84",
                 "85": "85"
             },
-            "default_value": [],
+            "default_value": false,
             "allow_null": 1,
             "multiple": 0,
             "ui": 0,
@@ -1690,7 +1724,9 @@
             "max_width": "",
             "max_height": "",
             "max_size": "",
-            "mime_types": ""
+            "mime_types": "",
+            "return_format": "array",
+            "preview_size": "medium"
         },
         {
             "key": "field_57a9d7f655152",
@@ -2019,6 +2055,12 @@
     "instruction_placement": "label",
     "hide_on_screen": "",
     "active": true,
-    "description": ""
+    "description": "",
+    "show_in_rest": 0,
+    "acfe_display_title": "",
+    "acfe_autosync": "",
+    "acfe_form": 0,
+    "acfe_meta": "",
+    "acfe_note": ""
 }]
-
+
