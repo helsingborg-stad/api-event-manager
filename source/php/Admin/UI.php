@@ -62,7 +62,7 @@ class UI
     // Remove Permalink meta box on edit posts
     public function removeMetaBox()
     {
-        remove_meta_box('slugdiv', array('event', 'location', 'organizer', 'sponsor', 'package', 'membership-card', 'guide'), 'normal');
+        remove_meta_box('slugdiv', array('event', 'location', 'organizer', 'sponsor', 'membership-card', 'guide'), 'normal');
     }
 
     // Add instructions to Featured Image meta box
@@ -227,6 +227,7 @@ class UI
                 array(
                     'submitdiv',
                     'sync-meta-box',
-            )));
+            )
+            ));
     }
 }

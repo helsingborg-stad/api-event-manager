@@ -51,7 +51,6 @@ class App
         new PostTypes\Locations();
         new PostTypes\Organizers();
         new PostTypes\Sponsors();
-        new PostTypes\Packages();
         new PostTypes\MembershipCards();
         new PostTypes\Guides();
         new PostTypes\InteractiveGuides();
@@ -81,7 +80,6 @@ class App
         new Api\LocationFields();
         new Api\OrganizerFields();
         new Api\SponsorFields();
-        new Api\PackageFields();
         new Api\MembershipCardFields();
         new Api\GuideFields();
         new Api\UserGroupFields();
@@ -176,7 +174,7 @@ class App
     {
         global $current_screen;
 
-        if (in_array($current_screen->post_type, array('event', 'location', 'sponsor', 'package', 'membership-card', 'guide', 'organizer', 'interactive_guide'))) {
+        if (in_array($current_screen->post_type, array('event', 'location', 'sponsor', 'membership-card', 'guide', 'organizer', 'interactive_guide'))) {
             wp_enqueue_style('hbg-event-importer', HBGEVENTIMPORTER_URL . '/dist/css/app.min.css');
         }
 
@@ -208,7 +206,6 @@ class App
             'location',
             'organizer',
             'sponsor',
-            'package',
             'membership-card',
             'guide',
             'term',
@@ -246,7 +243,6 @@ class App
             'now'                   => __("Now", 'event-manager'),
             'with_similar_name'     => __("with similar name", 'event-manager'),
             'sponsors'              => __("Sponsors", 'event-manager'),
-            'packages'              => __("Packages", 'event-manager'),
             'membership_cards'      => __("Membership cards", 'event-manager'),
             'guides'                => __("Guides", 'event-manager'),
             'yes'                   => __("Yes", 'event-manager'),

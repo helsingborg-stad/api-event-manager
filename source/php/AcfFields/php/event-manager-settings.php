@@ -60,7 +60,6 @@
                 'event' => __('Events', 'event-manager'),
                 'location' => __('Locations', 'event-manager'),
                 'sponsor' => __('Sponsors', 'event-manager'),
-                'package' => __('Packages', 'event-manager'),
                 'membership-card' => __('Membership cards', 'event-manager'),
                 'organizer' => __('Organizers', 'event-manager'),
                 'guide' => __('Guides', 'event-manager'),

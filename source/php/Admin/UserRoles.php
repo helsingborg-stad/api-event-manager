@@ -245,7 +245,7 @@ class UserRoles
     public function addCapabilities()
     {
         // Administrator
-        $postTypes = array('event', 'location', 'sponsor', 'package', 'membership-card', 'guide', 'organizer', 'interactive_guide');
+        $postTypes = array('event', 'location', 'sponsor', 'membership-card', 'guide', 'organizer', 'interactive_guide');
         $role = get_role('administrator');
         foreach ($postTypes as $key => $type) {
             $role->add_cap('edit_' . $type);
@@ -264,7 +264,7 @@ class UserRoles
         }
 
         // Event administrator
-        $postTypes = array('event', 'location', 'sponsor', 'package', 'membership-card', 'organizer', 'guide', 'interactive_guide');
+        $postTypes = array('event', 'location', 'sponsor', 'membership-card', 'organizer', 'guide', 'interactive_guide');
         $role = get_role('event_administrator');
         if ($role) {
             foreach ($postTypes as $key => $type) {
@@ -288,7 +288,7 @@ class UserRoles
         }
 
         // Editor
-        $postTypes = array('event', 'location', 'sponsor', 'package', 'membership-card', 'guide', 'organizer', 'interactive_guide');
+        $postTypes = array('event', 'location', 'sponsor', 'membership-card', 'guide', 'organizer', 'interactive_guide');
         $role = get_role('editor');
         foreach ($postTypes as $key => $type) {
             $role->add_cap('edit_' . $type);
@@ -307,7 +307,7 @@ class UserRoles
         }
 
         // Event Contributor
-        $postTypes = array('event', 'location', 'sponsor', 'package', 'membership-card', 'organizer');
+        $postTypes = array('event', 'location', 'sponsor', 'membership-card', 'organizer');
         $role = get_role('event_contributor');
         if ($role) {
             foreach ($postTypes as $key => $type) {

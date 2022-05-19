@@ -62,7 +62,6 @@ $acfExportManager->autoExport(array(
     'event' => 'group_57610ebadcee8',
     'groups' => 'group_5885f51260b61',
     'location' => 'group_57612f9baa78b',
-    'package' => 'group_57c94757c2169',
     'publishing-groups' => 'group_585a4624de2e9',
     'sponsor' => 'group_57a9bf12ef1a3',
     'xcap' => 'group_56af507bbd485',

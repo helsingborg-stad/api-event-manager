@@ -12,7 +12,6 @@ ImportEvents.Admin.Suggestions = (function ($) {
         'location',
         'event',
         'sponsor',
-        'package',
         'membership-card',
         'guide'
     ];
@@ -122,9 +121,6 @@ ImportEvents.Admin.Suggestions = (function ($) {
                 break;
             case 'sponsor':
                 suggestionString = eventmanager.sponsors + ' ' + eventmanager.with_similar_name;
-                break;
-            case 'package':
-                suggestionString = eventmanager.packages + ' ' + eventmanager.with_similar_name;
                 break;
             case 'membership-card':
                 suggestionString = eventmanager.membership_cards + ' ' + eventmanager.with_similar_name;

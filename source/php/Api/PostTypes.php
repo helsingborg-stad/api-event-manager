@@ -18,7 +18,7 @@ class PostTypes
     {
         global $wp_post_types;
 
-        $post_types = array('event', 'location', 'sponsor', 'package', 'membership-card', 'guide', 'organizer', 'interactive_guide');
+        $post_types = array('event', 'location', 'sponsor', 'membership-card', 'guide', 'organizer', 'interactive_guide');
 
         if (is_array($post_types) && !empty($post_types)) {
             foreach ($post_types as $post_type) {
