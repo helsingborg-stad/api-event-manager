@@ -421,8 +421,7 @@ if (function_exists('acf_add_local_field_group')) {
                         'Saturday' => __('Saturday', 'event-manager'),
                         'Sunday' => __('Sunday', 'event-manager'),
                     ),
-                    'default_value' => array(
-                    ),
+                    'default_value' => false,
                     'allow_null' => 0,
                     'multiple' => 0,
                     'ui' => 0,
@@ -847,6 +846,40 @@ if (function_exists('acf_add_local_field_group')) {
             'placeholder' => '',
         ),
         17 => array(
+            'key' => 'field_62850ccd608e1',
+            'label' => __('Booking link type', 'event-manager'),
+            'name' => 'booking_link_type',
+            'type' => 'select',
+            'instructions' => __('Choose label for the link above.', 'event-manager'),
+            'required' => 0,
+            'conditional_logic' => array(
+                0 => array(
+                    0 => array(
+                        'field' => 'field_57611b82acf1a',
+                        'operator' => '!=empty',
+                    ),
+                ),
+            ),
+            'wrapper' => array(
+                'width' => '',
+                'class' => '',
+                'id' => '',
+            ),
+            'choices' => array(
+                'buy' => __('Buy ticket', 'event-manager'),
+                'book' => __('Book now', 'event-manager'),
+                'submit_interest' => __('Submit interest', 'event-manager'),
+                'book_free' => __('Book free ticket', 'event-manager'),
+            ),
+            'default_value' => false,
+            'allow_null' => 0,
+            'multiple' => 0,
+            'ui' => 0,
+            'return_format' => 'value',
+            'ajax' => 0,
+            'placeholder' => '',
+        ),
+        18 => array(
             'key' => 'field_57611bffacf1d',
             'label' => __('Booking phone', 'event-manager'),
             'name' => 'booking_phone',
@@ -865,7 +898,7 @@ if (function_exists('acf_add_local_field_group')) {
             'append' => '',
             'maxlength' => '',
         ),
-        18 => array(
+        19 => array(
             'key' => 'field_5b03ca36cd822',
             'label' => __('Email', 'event-manager'),
             'name' => 'booking_email',
@@ -883,7 +916,7 @@ if (function_exists('acf_add_local_field_group')) {
             'prepend' => '',
             'append' => '',
         ),
-        19 => array(
+        20 => array(
             'key' => 'field_5ae2d2fe2f26e',
             'label' => __('Ticket release date', 'event-manager'),
             'name' => 'ticket_release_date',
@@ -900,7 +933,7 @@ if (function_exists('acf_add_local_field_group')) {
             'return_format' => 'Y-m-d H:i',
             'first_day' => 1,
         ),
-        20 => array(
+        21 => array(
             'key' => 'field_57611befacf1c',
             'label' => __('Minimum age to attend the event', 'event-manager'),
             'name' => 'age_restriction',
@@ -921,7 +954,7 @@ if (function_exists('acf_add_local_field_group')) {
             'max' => '',
             'step' => '',
         ),
-        21 => array(
+        22 => array(
             'key' => 'field_5ae2d0ba2f26c',
             'label' => __('Ticket stock', 'event-manager'),
             'name' => 'ticket_stock',
@@ -942,7 +975,7 @@ if (function_exists('acf_add_local_field_group')) {
             'max' => '',
             'step' => '',
         ),
-        22 => array(
+        23 => array(
             'key' => 'field_5ae2d7f3916d3',
             'label' => __('Tickets remaining', 'event-manager'),
             'name' => 'tickets_remaining',
@@ -963,7 +996,7 @@ if (function_exists('acf_add_local_field_group')) {
             'max' => '',
             'step' => '',
         ),
-        23 => array(
+        24 => array(
             'key' => 'field_5ae320279d7e0',
             'label' => __('Additional ticket retailers', 'event-manager'),
             'name' => 'additional_ticket_retailers',
@@ -1053,7 +1086,7 @@ if (function_exists('acf_add_local_field_group')) {
                 ),
             ),
         ),
-        24 => array(
+        25 => array(
             'key' => 'field_57c7ed92054e6',
             'label' => __('Included in membership cards', 'event-manager'),
             'name' => 'membership_cards',
@@ -1076,7 +1109,7 @@ if (function_exists('acf_add_local_field_group')) {
             'return_format' => 'object',
             'ui' => 1,
         ),
-        25 => array(
+        26 => array(
             'key' => 'field_5afc2082b3eed',
             'label' => __('Entrance and ticket prices', 'event-manager'),
             'name' => '',
@@ -1093,7 +1126,7 @@ if (function_exists('acf_add_local_field_group')) {
             'new_lines' => 'wpautop',
             'esc_html' => 0,
         ),
-        26 => array(
+        27 => array(
             'key' => 'field_57611c0cacf1e',
             'label' => __('Default price / Adult', 'event-manager'),
             'name' => 'price_adult',
@@ -1112,7 +1145,7 @@ if (function_exists('acf_add_local_field_group')) {
             'append' => __('SEK', 'event-manager'),
             'maxlength' => '',
         ),
-        27 => array(
+        28 => array(
             'key' => 'field_57b6fe18e65c4',
             'label' => __('Price student', 'event-manager'),
             'name' => 'price_student',
@@ -1131,7 +1164,7 @@ if (function_exists('acf_add_local_field_group')) {
             'append' => __('SEK', 'event-manager'),
             'maxlength' => '',
         ),
-        28 => array(
+        29 => array(
             'key' => 'field_57611c23acf1f',
             'label' => __('Price children', 'event-manager'),
             'name' => 'price_children',
@@ -1150,7 +1183,7 @@ if (function_exists('acf_add_local_field_group')) {
             'append' => __('SEK', 'event-manager'),
             'maxlength' => '',
         ),
-        29 => array(
+        30 => array(
             'key' => 'field_57f4fe8866a2d',
             'label' => __('Age restriction for children price', 'event-manager'),
             'name' => 'children_age',
@@ -1191,8 +1224,7 @@ if (function_exists('acf_add_local_field_group')) {
                 24 => __('24', 'event-manager'),
                 25 => __('25', 'event-manager'),
             ),
-            'default_value' => array(
-            ),
+            'default_value' => false,
             'allow_null' => 1,
             'multiple' => 0,
             'ui' => 0,
@@ -1200,7 +1232,7 @@ if (function_exists('acf_add_local_field_group')) {
             'return_format' => 'value',
             'placeholder' => '',
         ),
-        30 => array(
+        31 => array(
             'key' => 'field_57b6fe5ee65c5',
             'label' => __('Price senior', 'event-manager'),
             'name' => 'price_senior',
@@ -1219,7 +1251,7 @@ if (function_exists('acf_add_local_field_group')) {
             'append' => __('SEK', 'event-manager'),
             'maxlength' => '',
         ),
-        31 => array(
+        32 => array(
             'key' => 'field_57f4fbaa4365e',
             'label' => __('Age restriction for senior price', 'event-manager'),
             'name' => 'senior_age',
@@ -1270,8 +1302,7 @@ if (function_exists('acf_add_local_field_group')) {
                 84 => __('84', 'event-manager'),
                 85 => __('85', 'event-manager'),
             ),
-            'default_value' => array(
-            ),
+            'default_value' => false,
             'allow_null' => 1,
             'multiple' => 0,
             'ui' => 0,
@@ -1279,7 +1310,7 @@ if (function_exists('acf_add_local_field_group')) {
             'return_format' => 'value',
             'placeholder' => '',
         ),
-        32 => array(
+        33 => array(
             'key' => 'field_5ae2e55f94974',
             'label' => __('Additional ticket types', 'event-manager'),
             'name' => 'additional_ticket_types',
@@ -1381,7 +1412,7 @@ if (function_exists('acf_add_local_field_group')) {
                 ),
             ),
         ),
-        33 => array(
+        34 => array(
             'key' => 'field_5ae2e0ececa4c',
             'label' => __('Price range', 'event-manager'),
             'name' => 'price_range',
@@ -1474,7 +1505,7 @@ if (function_exists('acf_add_local_field_group')) {
                 ),
             ),
         ),
-        34 => array(
+        35 => array(
             'key' => 'field_57f4f4ac7479f',
             'label' => __('Price group', 'event-manager'),
             'name' => 'booking_group',
@@ -1556,7 +1587,7 @@ if (function_exists('acf_add_local_field_group')) {
                 ),
             ),
         ),
-        35 => array(
+        36 => array(
             'key' => 'field_57611bd8acf1b',
             'label' => __('Price information', 'event-manager'),
             'name' => 'price_information',
@@ -1575,7 +1606,7 @@ if (function_exists('acf_add_local_field_group')) {
             'rows' => 3,
             'new_lines' => 'wpautop',
         ),
-        36 => array(
+        37 => array(
             'key' => 'field_57b70267e1f32',
             'label' => __('Ticket includes', 'event-manager'),
             'name' => 'ticket_includes',
@@ -1594,7 +1625,7 @@ if (function_exists('acf_add_local_field_group')) {
             'rows' => 3,
             'new_lines' => 'wpautop',
         ),
-        37 => array(
+        38 => array(
             'key' => 'field_5b03c600cd81e',
             'label' => __('Contact', 'event-manager'),
             'name' => '',
@@ -1610,7 +1641,7 @@ if (function_exists('acf_add_local_field_group')) {
             'placement' => 'left',
             'endpoint' => 0,
         ),
-        38 => array(
+        39 => array(
             'key' => 'field_5b03c6f3cd820',
             'label' => __('Phone', 'event-manager'),
             'name' => 'contact_phone',
@@ -1629,7 +1660,7 @@ if (function_exists('acf_add_local_field_group')) {
             'append' => '',
             'maxlength' => '',
         ),
-        39 => array(
+        40 => array(
             'key' => 'field_5b03c671cd81f',
             'label' => __('Email', 'event-manager'),
             'name' => 'contact_email',
@@ -1647,7 +1678,7 @@ if (function_exists('acf_add_local_field_group')) {
             'prepend' => '',
             'append' => '',
         ),
-        40 => array(
+        41 => array(
             'key' => 'field_5b03c744cd821',
             'label' => __('Contact information', 'event-manager'),
             'name' => 'contact_information',
@@ -1666,7 +1697,7 @@ if (function_exists('acf_add_local_field_group')) {
             'rows' => '',
             'new_lines' => '',
         ),
-        41 => array(
+        42 => array(
             'key' => 'field_577a326b71ba8',
             'label' => __('Gallery', 'event-manager'),
             'name' => '',
@@ -1682,7 +1713,7 @@ if (function_exists('acf_add_local_field_group')) {
             'placement' => 'top',
             'endpoint' => 0,
         ),
-        42 => array(
+        43 => array(
             'key' => 'field_577a312acd95d',
             'label' => __('Gallery', 'event-manager'),
             'name' => 'gallery',
@@ -1706,8 +1737,10 @@ if (function_exists('acf_add_local_field_group')) {
             'max_height' => '',
             'max_size' => '',
             'mime_types' => '',
+            'return_format' => 'array',
+            'preview_size' => 'medium',
         ),
-        43 => array(
+        44 => array(
             'key' => 'field_57a9d7f655152',
             'label' => __('Links', 'event-manager'),
             'name' => '',
@@ -1723,7 +1756,7 @@ if (function_exists('acf_add_local_field_group')) {
             'placement' => 'left',
             'endpoint' => 0,
         ),
-        44 => array(
+        45 => array(
             'key' => 'field_58188dfcfc3b9',
             'label' => __('Links', 'event-manager'),
             'name' => '',
@@ -1740,7 +1773,7 @@ if (function_exists('acf_add_local_field_group')) {
             'new_lines' => 'wpautop',
             'esc_html' => 0,
         ),
-        45 => array(
+        46 => array(
             'key' => 'field_57a9d81f55153',
             'label' => __('Facebook', 'event-manager'),
             'name' => 'facebook',
@@ -1756,7 +1789,7 @@ if (function_exists('acf_add_local_field_group')) {
             'default_value' => '',
             'placeholder' => '',
         ),
-        46 => array(
+        47 => array(
             'key' => 'field_57a9d82b55154',
             'label' => __('Twitter', 'event-manager'),
             'name' => 'twitter',
@@ -1772,7 +1805,7 @@ if (function_exists('acf_add_local_field_group')) {
             'default_value' => '',
             'placeholder' => '',
         ),
-        47 => array(
+        48 => array(
             'key' => 'field_57a9d83355155',
             'label' => __('Instagram', 'event-manager'),
             'name' => 'instagram',
@@ -1788,7 +1821,7 @@ if (function_exists('acf_add_local_field_group')) {
             'default_value' => '',
             'placeholder' => '',
         ),
-        48 => array(
+        49 => array(
             'key' => 'field_57c82373297f1',
             'label' => __('Google Music', 'event-manager'),
             'name' => 'google_music',
@@ -1804,7 +1837,7 @@ if (function_exists('acf_add_local_field_group')) {
             'default_value' => '',
             'placeholder' => '',
         ),
-        49 => array(
+        50 => array(
             'key' => 'field_57c82396297f2',
             'label' => __('Apple Music', 'event-manager'),
             'name' => 'apple_music',
@@ -1820,7 +1853,7 @@ if (function_exists('acf_add_local_field_group')) {
             'default_value' => '',
             'placeholder' => '',
         ),
-        50 => array(
+        51 => array(
             'key' => 'field_57c823a8297f3',
             'label' => __('Spotify', 'event-manager'),
             'name' => 'spotify',
@@ -1836,7 +1869,7 @@ if (function_exists('acf_add_local_field_group')) {
             'default_value' => '',
             'placeholder' => '',
         ),
-        51 => array(
+        52 => array(
             'key' => 'field_57c826af782b0',
             'label' => __('Soundcloud', 'event-manager'),
             'name' => 'soundcloud',
@@ -1852,7 +1885,7 @@ if (function_exists('acf_add_local_field_group')) {
             'default_value' => '',
             'placeholder' => '',
         ),
-        52 => array(
+        53 => array(
             'key' => 'field_57c823d7297f4',
             'label' => __('Deezer', 'event-manager'),
             'name' => 'deezer',
@@ -1868,7 +1901,7 @@ if (function_exists('acf_add_local_field_group')) {
             'default_value' => '',
             'placeholder' => '',
         ),
-        53 => array(
+        54 => array(
             'key' => 'field_57a9d84055156',
             'label' => __('YouTube', 'event-manager'),
             'name' => 'youtube',
@@ -1905,7 +1938,7 @@ if (function_exists('acf_add_local_field_group')) {
                 ),
             ),
         ),
-        54 => array(
+        55 => array(
             'key' => 'field_57a9d84955157',
             'label' => __('Vimeo', 'event-manager'),
             'name' => 'vimeo',
@@ -1942,7 +1975,7 @@ if (function_exists('acf_add_local_field_group')) {
                 ),
             ),
         ),
-        55 => array(
+        56 => array(
             'key' => 'field_5c593b9efbba0',
             'label' => __('Age', 'event-manager'),
             'name' => '',
@@ -1958,7 +1991,7 @@ if (function_exists('acf_add_local_field_group')) {
             'placement' => 'top',
             'endpoint' => 0,
         ),
-        56 => array(
+        57 => array(
             'key' => 'field_5c593bd1fbba1',
             'label' => __('Age group', 'event-manager'),
             'name' => 'age_group',
@@ -2035,6 +2068,12 @@ if (function_exists('acf_add_local_field_group')) {
     'hide_on_screen' => '',
     'active' => true,
     'description' => '',
+    'show_in_rest' => 0,
+    'acfe_display_title' => '',
+    'acfe_autosync' => '',
+    'acfe_form' => 0,
+    'acfe_meta' => '',
+    'acfe_note' => '',
 ));
 
 }
