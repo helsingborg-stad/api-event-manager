@@ -27,10 +27,6 @@ class Linking extends Fields
         add_filter('rest_prepare_location', array($this, 'addPostParent'), 20, 3);
         add_filter('rest_prepare_location', array($this, 'addEventMemberCards'), 20, 3);
 
-        add_filter('rest_prepare_package', array($this, 'addEventMemberCards'), 20, 3);
-        add_filter('rest_prepare_package', array($this, 'addIncludedEvents'), 20, 3);
-        add_filter('rest_prepare_package', array($this, 'addEmbedLink'), 20, 3);
-
         add_filter('rest_prepare_guidegroup', array($this, 'addGuideLocation'), 20, 3); //Taxonomy locations
 
         add_filter('rest_prepare_navigation', array($this, 'addGuideNavigationPostRelations'), 20, 3); //Taxonomy -> post locations
@@ -41,10 +37,6 @@ class Linking extends Fields
         add_filter('rest_prepare_guide', array($this, 'addEmbedLink'), 20, 3);
 
         add_filter('rest_prepare_organizer', array($this, 'addEmbedLink'), 20, 3);
-
-        add_filter('rest_prepare_recommendation', array($this, 'addEmbedLink'), 20, 3);
-        add_filter('rest_prepare_recommendation', array($this, 'addLocation'), 20, 3);
-        add_filter('rest_prepare_recommendation', array($this, 'addEventGallery'), 20, 3);
     }
 
     /**

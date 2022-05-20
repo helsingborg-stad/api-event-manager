@@ -51,6 +51,6 @@ class PointProperty
             'show_in_rest'          => true,
         );
 
-        register_taxonomy('property', array('location', 'guide', 'recommendation'), $args);
+        register_taxonomy('property', array('location', 'guide'), $args);
     }
 }

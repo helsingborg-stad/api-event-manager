@@ -22,9 +22,7 @@
                 'cards' => __('Cards', 'event-manager'),
                 'horizontal' => __('Horizontal', 'event-manager'),
             ),
-            'default_value' => array(
-                0 => 'cards',
-            ),
+            'default_value' => 'cards',
             'allow_null' => 0,
             'multiple' => 0,
             'ui' => 1,
@@ -131,55 +129,6 @@
             'multiple' => 0,
         ),
         5 => array(
-            'key' => 'field_5b165c92514b8',
-            'label' => __('Select specific recommendations', 'event-manager'),
-            'name' => 'include_specific_recommendations',
-            'type' => 'true_false',
-            'instructions' => __('To select none, please switch to "select specific items" and leave specific items field blank.', 'event-manager'),
-            'required' => 0,
-            'conditional_logic' => 0,
-            'wrapper' => array(
-                'width' => '',
-                'class' => '',
-                'id' => '',
-            ),
-            'message' => '',
-            'default_value' => 1,
-            'ui' => 1,
-            'ui_on_text' => __('Select specific items', 'event-manager'),
-            'ui_off_text' => __('Include all items', 'event-manager'),
-        ),
-        6 => array(
-            'key' => 'field_5b165c91514b7',
-            'label' => __('Include these recommendations', 'event-manager'),
-            'name' => 'included_recommendations',
-            'type' => 'post_object',
-            'instructions' => '',
-            'required' => 0,
-            'conditional_logic' => array(
-                0 => array(
-                    0 => array(
-                        'field' => 'field_5b165c92514b8',
-                        'operator' => '==',
-                        'value' => '1',
-                    ),
-                ),
-            ),
-            'wrapper' => array(
-                'width' => '',
-                'class' => '',
-                'id' => '',
-            ),
-            'post_type' => array(
-                0 => 'recommendation',
-            ),
-            'taxonomy' => '',
-            'allow_null' => 0,
-            'multiple' => 1,
-            'return_format' => 'object',
-            'ui' => 1,
-        ),
-        7 => array(
             'key' => 'field_5f75eb19a761a',
             'label' => __('Select specific interactive guides', 'event-manager'),
             'name' => 'include_specific_interactive_guides',
@@ -198,7 +147,7 @@
             'ui_on_text' => __('Select specific items', 'event-manager'),
             'ui_off_text' => __('Include all items', 'event-manager'),
         ),
-        8 => array(
+        6 => array(
             'key' => 'field_5f75eb3fa761b',
             'label' => __('Include these interactive guides', 'event-manager'),
             'name' => 'included_interactive_guides',
@@ -228,7 +177,7 @@
             'return_format' => 'object',
             'ui' => 1,
         ),
-        9 => array(
+        7 => array(
             'key' => 'field_5df88da56f5a9',
             'label' => __('Group', 'event-manager'),
             'name' => 'user_groups',

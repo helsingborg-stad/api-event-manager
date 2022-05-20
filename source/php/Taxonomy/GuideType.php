@@ -52,12 +52,11 @@ class GuideType
             'show_in_rest'          => true,
         );
 
-        register_taxonomy('guidetype', array('guide', 'recommendation'), $args);
+        register_taxonomy('guidetype', array('guide'), $args);
     }
 
     public function unregisterMetaBox()
     {
         remove_meta_box('tagsdiv-guidetype', 'guide', 'side');
-        remove_meta_box('tagsdiv-guidetype', 'recommendation', 'side');
     }
 }

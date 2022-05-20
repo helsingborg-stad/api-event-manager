@@ -57,11 +57,9 @@
                 "event": "Events",
                 "location": "Locations",
                 "sponsor": "Sponsors",
-                "package": "Packages",
                 "membership-card": "Membership cards",
                 "organizer": "Organizers",
                 "guide": "Guides",
-                "recommendation": "Recommendations",
                 "interactive_guide": "Interactive Guides"
             },
             "allow_custom": 0,

@@ -117,14 +117,6 @@ class NavigationFields extends Fields
             }
         }
 
-        $recommendationRelations = $this->getPosttypeNavigationPostRelations((object) $object, 'recommendation');
-
-        if (!empty($recommendationRelations) && is_array($recommendationRelations)) {
-            foreach ($recommendationRelations as $recommendationRelation) {
-                $result[] = array('id' => $recommendationRelation, 'type' => 'recommendation');
-            }
-        }
-
         $interactiveGuidesRelations = $this->getPosttypeNavigationPostRelations((object) $object, 'interactive_guide');
 
         if (!empty($interactiveGuidesRelations) && is_array($interactiveGuidesRelations)) {
