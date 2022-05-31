@@ -252,7 +252,7 @@ class TixTicket extends \HbgEventImporter\Parser
                 $bookingLink = $existingBookingLink;
         }
 
-        if (($eventId && !$sync) || !$this->filter($data['categories'])) {
+        if (($eventId && !$sync) || !$this->filter($data['tags'])) {
             return $eventId;
         }
 
@@ -415,20 +415,20 @@ class TixTicket extends \HbgEventImporter\Parser
 
     /**
      * Filter, if add or not to add
-     * @param  array $categories All categories
+     * @param  array $tags All tags
      * @return bool
      */
-    public function filter($categories)
+    public function filter($tags)
     {
         $passes = true;
         $exclude = $this->apiKeys['tix_filter_tags'];
 
         if (!empty($exclude)) {
             $filters = array_map('trim', explode(',', $exclude));
-            $categoriesLower = array_map('strtolower', $categories);
+            $tagsLower = array_map('strtolower', $tags);
 
             foreach ($filters as $filter) {
-                if (in_array(strtolower($filter), $categoriesLower)) {
+                if (in_array(strtolower($filter), $tagsLower)) {
                     $passes = false;
                 }
             }
