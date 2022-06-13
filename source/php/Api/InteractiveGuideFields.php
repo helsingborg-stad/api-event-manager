@@ -20,6 +20,20 @@ class InteractiveGuideFields extends Fields
     {
         register_rest_field(
             $this->postType,
+            'location',
+            array(
+                'get_callback' => array($this, 'numericGetCallBack'),
+                'update_callback' => array($this, 'objectUpdateCallBack'),
+                'schema' => array(
+                    'description' => 'Location object id.',
+                    'type' => 'object',
+                    'context' => array('view', 'embed')
+                )
+            )
+        );
+
+        register_rest_field(
+            $this->postType,
             'featured_media',
             array(
                 'get_callback' => array($this, 'featuredImageData'),

@@ -37,6 +37,8 @@ class Linking extends Fields
         add_filter('rest_prepare_guide', array($this, 'addEmbedLink'), 20, 3);
 
         add_filter('rest_prepare_organizer', array($this, 'addEmbedLink'), 20, 3);
+
+        add_filter('rest_prepare_interactive_guide', array($this, 'addInteractiveGuideLocation'), 20, 3);
     }
 
     /**
@@ -338,5 +340,24 @@ class Linking extends Fields
         }
 
         return false;
+    }
+
+    /**
+     * Register link to connected location, embeddable
+     * @return  object
+     */
+    public function addInteractiveGuideLocation($response, $post, $request)
+    {
+        $id = get_field('location', $post->ID);
+
+        if (!is_null($id)) {
+            $response->add_link(
+                'location',
+                rest_url('/wp/v2/location/' . $id),
+                array( 'embeddable' => true )
+            );
+        }
+
+        return $response;
     }
 }
