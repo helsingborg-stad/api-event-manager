@@ -6,6 +6,51 @@
     'title' => __('Interactive Guide', 'event-manager'),
     'fields' => array(
         0 => array(
+            'key' => 'field_62a72a138a4e4',
+            'label' => __('Location', 'event-manager'),
+            'name' => 'location',
+            'type' => 'post_object',
+            'instructions' => '',
+            'required' => 0,
+            'conditional_logic' => 0,
+            'wrapper' => array(
+                'width' => '',
+                'class' => '',
+                'id' => '',
+            ),
+            'post_type' => array(
+                0 => 'location',
+            ),
+            'taxonomy' => '',
+            'allow_null' => 1,
+            'multiple' => 0,
+            'return_format' => 'id',
+            'ui' => 1,
+        ),
+        1 => array(
+            'key' => 'field_6228b0460263f',
+            'label' => __('QR Code', 'event-manager'),
+            'name' => '',
+            'type' => 'message',
+            'instructions' => '',
+            'required' => 0,
+            'conditional_logic' => 0,
+            'wrapper' => array(
+                'width' => '',
+                'class' => '',
+                'id' => '',
+            ),
+            'message' => __('Use the QR code to open the guide directly in the Guide App. 
+
+<img src="http://chart.apis.google.com/chart?cht=qr&chs=100x100&chld=M|0&chl={{url}}" alt="QR code" width="100" height="100"> 
+<a href="http://chart.apis.google.com/chart?cht=qr&chs=300x300&chld=M|0&chl={{url}}" target="_blank">Dowload QR code</a>
+
+If you want to modify the design of the QR code simply copy the url below and paste it into your generator tool.
+<i>{{url}}</i>', 'event-manager'),
+            'new_lines' => 'wpautop',
+            'esc_html' => 0,
+        ),
+        2 => array(
             'key' => 'field_5f68b2656239c',
             'label' => __('Steps', 'event-manager'),
             'name' => 'steps',
@@ -725,29 +770,6 @@
             'button_label' => __('Add step', 'event-manager'),
             'min' => 1,
             'max' => '',
-        ),
-        1 => array(
-            'key' => 'field_6228b0460263f',
-            'label' => __('QR Code', 'event-manager'),
-            'name' => '',
-            'type' => 'message',
-            'instructions' => '',
-            'required' => 0,
-            'conditional_logic' => 0,
-            'wrapper' => array(
-                'width' => '',
-                'class' => '',
-                'id' => '',
-            ),
-            'message' => __('Use the QR code to open the guide directly in the Guide App. 
-
-<img src="http://chart.apis.google.com/chart?cht=qr&chs=100x100&chld=M|0&chl={{url}}" alt="QR code" width="100" height="100"> 
-<a href="http://chart.apis.google.com/chart?cht=qr&chs=300x300&chld=M|0&chl={{url}}" target="_blank">Dowload QR code</a>
-
-If you want to modify the design of the QR code simply copy the url below and paste it into your generator tool.
-<i>{{url}}</i>', 'event-manager'),
-            'new_lines' => 'wpautop',
-            'esc_html' => 0,
         ),
     ),
     'location' => array(
