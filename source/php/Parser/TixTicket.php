@@ -206,8 +206,8 @@ class TixTicket extends \HbgEventImporter\Parser
     public function maybeCreateEvent($data, $shortKey, $locationId)
     {
         if ($this->apiKeys['tix_group_occasions']) {
-            $eventId = $this->checkIfPostExists('event', $data['postTitle']);
-            
+           
+            $eventId = $this->checkIfPostExists('event', $data['postTitle'], 1);
         } else {
             $event_uid_key = 'tixticket-' . $shortKey . '-' . $data['uId'];
             $args = array(

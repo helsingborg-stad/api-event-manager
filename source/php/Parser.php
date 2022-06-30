@@ -76,17 +76,16 @@ abstract class Parser
      * See if title for post already exists or something that are really similar, using levenshtein
      * @return boolean
      */
-    public function checkIfPostExists($postType, $postTitle)
+    public function checkIfPostExists($postType, $postTitle, $threshold = 3)
     {
         foreach ($this->levenshteinTitles[$postType] as $title) {
             if ($this->isSimilarEnough(
                 trim(html_entity_decode($postTitle)), 
                 trim(html_entity_decode($title['post_title'])), 
-                $postType == 'location' ? 1 : 3)) {
+                $postType == 'location' ? 1 : $threshold)) {
                 return $title['ID'];
             }
         }
-
         return null;
     }
 
@@ -98,11 +97,9 @@ abstract class Parser
     {
         $newTitle       = strtolower($newTitle);
         $existingTitle  = strtolower($existingTitle);
-
         if (levenshtein($newTitle, $existingTitle) <= $threshold) {
             return true;
         }
-
         return false;
     }
 
