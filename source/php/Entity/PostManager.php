@@ -70,7 +70,6 @@ abstract class PostManager
      */
     public function beforeSave()
     {
-
     }
 
     public function afterSave()
@@ -128,6 +127,10 @@ abstract class PostManager
      * Saves the event and it's data
      * @return integer The inserted/updated post id
      */
+    public function ifeventUpdate($eventID)
+    {
+        $this->ID = $eventID;
+    }
     public function save()
     {
         $this->beforeSave();
@@ -280,7 +283,7 @@ abstract class PostManager
             'ticket_stock',
             'occurred',
             'categories'
-            );
+        );
         foreach ($metaFields as $field) {
             unset($data['meta_input'][$field]);
         }
@@ -309,7 +312,6 @@ abstract class PostManager
         if (!isset($this->ID)) {
             return false;
         }
-
         $url = str_replace(' ', '%20', $url);
         $headers = get_headers($url, 1);
         if (!isset($url) || strlen($url) === 0 || !wp_http_validate_url($url) || $headers[0] !== 'HTTP/1.1 200 OK') {
@@ -323,9 +325,13 @@ abstract class PostManager
 
         if (!is_dir($uploadDir)) {
             if (!mkdir($uploadDir, 0776)) {
-                return new WP_Error('event', __('Could not create folder',
-                        'event-manager') . ' "' . $uploadDir . '", ' . __('please go ahead and create it manually and rerun the import.',
-                        'event-manager'));
+                return new WP_Error('event', __(
+                    'Could not create folder',
+                    'event-manager'
+                ) . ' "' . $uploadDir . '", ' . __(
+                    'please go ahead and create it manually and rerun the import.',
+                    'event-manager'
+                ));
             }
         }
 
@@ -339,10 +345,16 @@ abstract class PostManager
 
         // Bail if image already exists in library
         if ($attachmentId = $this->attachmentExists($uploadDir . '/' . basename($filename))) {
-            set_post_thumbnail((int)$this->ID, (int)$attachmentId);
-            return;
-        }
 
+            // Check If image from url and local are same md 5 Check
+            $imageLocal = md5_file($uploadDir . '/' . basename($filename));
+            $imageUrl = md5_file($url);
+
+            if ($imageLocal == $imageUrl) {
+                set_post_thumbnail((int)$this->ID, (int)$attachmentId);
+                return;
+            }
+        }
         // Save file to server
         $contents = file_get_contents(str_replace(' ', '%20', $url));
         $save = fopen($uploadDir . '/' . $filename, 'w');
