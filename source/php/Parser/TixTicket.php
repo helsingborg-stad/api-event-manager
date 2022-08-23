@@ -303,6 +303,13 @@ class TixTicket extends \HbgEventImporter\Parser
 
         if (!$event->save()) {
             // Update ticket stock/remaining even if event itself does not differ
+
+            $event->ifeventUpdate($event->ID);
+            if (!is_null($event->image)) {
+                //Feature Image on Update check
+                $event->setFeaturedImageFromUrl($event->image);
+            }
+            
             $currentTicketStock = get_post_meta($event->ID, 'ticket_stock', true);
             $currentTicketsRemaining = get_post_meta($event->ID, 'tickets_remaining', true);
             if ($currentTicketStock != $data['ticket_stock'] || $currentTicketsRemaining != $data['tickets_remaining']) {
