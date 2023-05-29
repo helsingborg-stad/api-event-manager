@@ -11,7 +11,7 @@ class FilterRestrictions
     {
         add_filter('months_dropdown_results', '__return_empty_array');
         add_filter('parse_query', array($this, 'applyFilterRestrictions'), 10);
-        add_action('pre_get_posts', array($this, 'filterEventsByGroups'), 10);
+        //add_action('pre_get_posts', array($this, 'filterEventsByGroups'), 10);
         add_action('pre_get_posts', array($this, 'filterEventsByClient'), 10);
         add_action('pre_get_posts', array($this, 'applyIntervalRestriction'), 10);
         add_action('restrict_manage_posts', array($this, 'restrictEventsByCategory'), 10);

@@ -22,7 +22,7 @@ class EventFields extends Fields
     {
         register_rest_route(
             'wp/v2',
-            '/'.$this->postType.'/'.'time',
+            '/' . $this->postType . '/' . 'time',
             array(
                 'methods' => \WP_REST_Server::READABLE,
                 'callback' => array($this, 'getEventsByTimestamp'),
@@ -256,7 +256,7 @@ class EventFields extends Fields
         }
         $search = $_GET['term'];
         $query = "SELECT ID as id, post_title as title, post_type FROM $wpdb->posts WHERE post_title LIKE %s AND post_type = %s AND post_status = %s ORDER BY post_title ASC";
-        $completeQuery = $wpdb->prepare($query, $search.'%', $this->postType, 'publish');
+        $completeQuery = $wpdb->prepare($query, $search . '%', $this->postType, 'publish');
         $allEvents = $wpdb->get_results($completeQuery);
 
         return $allEvents;
@@ -281,7 +281,9 @@ class EventFields extends Fields
             $latlng = explode(',', preg_replace('/\s+/', '', urldecode($parameters['latlng'])));
             if (count($latlng) != 2) {
                 return new \WP_Error(
-                    'error_message', 'Parameter \'latlng\' is in wrong format', array('status' => 400)
+                    'error_message',
+                    'Parameter \'latlng\' is in wrong format',
+                    array('status' => 400)
                 );
             }
             $locations = \HbgEventImporter\Helper\Address::getNearbyLocations(
@@ -349,13 +351,13 @@ class EventFields extends Fields
             }
         }
 
-        $extendedOccasions = isset( $parameters[ 'extended_occasions' ]) && $parameters[ 'extended_occasions' ] == '1' ? true : false;
+        $extendedOccasions = isset($parameters[ 'extended_occasions' ]) && $parameters[ 'extended_occasions' ] == '1' ? true : false;
 
         // Search by text string
         $searchString = !empty($parameters['search']) ? $parameters['search'] : null;
 
         $postTable = $wpdb->posts;
-        $db_occasions = $wpdb->prefix."occasions";
+        $db_occasions = $wpdb->prefix . "occasions";
         $query =
             "
             SELECT      $postTable.ID, $postTable.post_type, $postTable.post_status, $db_occasions.event, $db_occasions.timestamp_start, $db_occasions.timestamp_end, $db_occasions.timestamp_door
@@ -389,8 +391,8 @@ class EventFields extends Fields
             $parameters['end']
         ];
         if ($searchString) {
-            $placeholders[] = '%'.$wpdb->esc_like($searchString).'%';
-            $placeholders[] = '%'.$wpdb->esc_like($searchString).'%';
+            $placeholders[] = '%' . $wpdb->esc_like($searchString) . '%';
+            $placeholders[] = '%' . $wpdb->esc_like($searchString) . '%';
         }
 
         $completeQuery = $wpdb->prepare(
@@ -414,26 +416,28 @@ class EventFields extends Fields
                 $posts = $controller->prepare_item_for_response($post_object, $request);
                 $responseObject = $controller->prepare_response_for_collection($posts);
 
-                if ( $extendedOccasions ) {
+                if ($extendedOccasions) {
                     $addToOutput = false;
-                    foreach( $responseObject[ 'occasions' ] as $occasion ) {
+                    foreach ($responseObject[ 'occasions' ] as $occasion) {
                         unset(
-                            $occasion['status'], 
-                            $occasion['occ_exeption_information'], 
-                            $occasion['content_mode'], 
-                            $occasion['content'], 
-                            $occasion['location_mode'], 
+                            $occasion['status'],
+                            $occasion['occ_exeption_information'],
+                            $occasion['content_mode'],
+                            $occasion['content'],
+                            $occasion['location_mode'],
                             $occasion['location'],
                             $occasion['current_occasion'],
-                            $occasion['booking_link'] );
+                            $occasion['booking_link']
+                        );
                         $occasion[ 'id' ] = $post->ID;
-                        if ( !in_array( $occasion, $temp ) ) {
+                        if (!in_array($occasion, $temp)) {
                             $temp[] = $occasion;
-                            $addToOutput = true;                        
+                            $addToOutput = true;
                         }
                     }
-                    if ( $addToOutput ) 
+                    if ($addToOutput) {
                         $data[] = $responseObject;
+                    }
                 } else {
                     $data[] = $responseObject;
                 }
@@ -478,7 +482,7 @@ class EventFields extends Fields
                 $locations,
                 function ($location) use ($areaPoints) {
                     $pointInPolygon = \HbgEventImporter\Helper\PointInPolygon::pointInPolygon(
-                        $location['lat'].','.$location['lng'],
+                        $location['lat'] . ',' . $location['lng'],
                         $areaPoints,
                         true
                     );
@@ -543,10 +547,10 @@ class EventFields extends Fields
     public function getCompleteOccasions($object, $field_name, $request)
     {
         global $wpdb;
-        $db_occasions = $wpdb->prefix."occasions";
+        $db_occasions = $wpdb->prefix . "occasions";
         $id = $object['id'];
         $parameters = $request->get_params();
-        $extendedOccasions = isset( $parameters[ 'extended_occasions' ]) && $parameters[ 'extended_occasions' ] == '1' ? true : false;
+        $extendedOccasions = isset($parameters[ 'extended_occasions' ]) && $parameters[ 'extended_occasions' ] == '1' ? true : false;
         $endParam = $parameters['end'] ?? null;
         $data = array();
 
@@ -565,9 +569,11 @@ class EventFields extends Fields
         if (is_array($return_value) || is_object($return_value) && !empty($return_value)) {
             foreach ($return_value as $key => $value) {
                 // Skip passed occasions and occasions after 'end' parameter
-                if (strtotime($value['end_date']) < $timestamp || ($endParam && strtotime(
-                            $value['start_date']
-                        ) > $endParam)) {
+                if (
+                    strtotime($value['end_date']) < $timestamp || ($endParam && strtotime(
+                        $value['start_date']
+                    ) > $endParam)
+                ) {
                     continue;
                 }
                 $occasion = array(
@@ -581,7 +587,8 @@ class EventFields extends Fields
                     'location_mode' => ($value['location_mode']) ? $value['location_mode'] : null,
                     'location' => !empty($value['location']) ? $this->getLocationData($value['location']) : null,
                 );
-                if ( $extendedOccasions ) $occasion['booking_link'] = ($value['booking_link']) ? $value['booking_link'] : null;
+                $occasion['booking_link'] = ($value['booking_link']) ? $value['booking_link'] : null;
+
                 $data[] = $occasion;
             }
         }
@@ -590,20 +597,22 @@ class EventFields extends Fields
         $recurringRules = self::getFieldGetMetaData($object, 'rcr_rules', $request);
         if (is_array($recurringRules) && !empty($recurringRules)) {
             foreach ($recurringRules as $key => $rule) {
-                if (isset($rule['rcr_exceptions']) && is_array(
+                if (
+                    isset($rule['rcr_exceptions']) && is_array(
                         $rule['rcr_exceptions']
-                    ) && !empty($rule['rcr_exceptions'])) {
+                    ) && !empty($rule['rcr_exceptions'])
+                ) {
                     foreach ($rule['rcr_exceptions'] as $key => $exception) {
-                        $endTimestamp = strtotime($exception['rcr_exc_date'].' '.$rule['rcr_end_time']);
+                        $endTimestamp = strtotime($exception['rcr_exc_date'] . ' ' . $rule['rcr_end_time']);
                         if ($exception['status_rcr_exc'] != 'default' && $endTimestamp > $timestamp) {
                             $startTime = !empty($rule['rcr_start_time']) ? new \DateTime(
-                                $exception['rcr_exc_date'].' '.$rule['rcr_start_time']
+                                $exception['rcr_exc_date'] . ' ' . $rule['rcr_start_time']
                             ) : null;
                             $endTime = !empty($rule['rcr_end_time']) ? new \DateTime(
-                                $exception['rcr_exc_date'].' '.$rule['rcr_end_time']
+                                $exception['rcr_exc_date'] . ' ' . $rule['rcr_end_time']
                             ) : null;
                             $doorTime = !empty($rule['rcr_door_time']) ? new \DateTime(
-                                $exception['rcr_exc_date'].' '.$rule['rcr_door_time']
+                                $exception['rcr_exc_date'] . ' ' . $rule['rcr_door_time']
                             ) : null;
                             $occasion = array(
                                 'start_date' => $startTime ? date_format($startTime, 'Y-m-d H:i') : null,
@@ -616,7 +625,9 @@ class EventFields extends Fields
                                 'location_mode' => null,
                                 'location' => null,
                             );
-                            if ( $extendedOccasions ) $occasions['booking_link'] = null;
+                            if ($extendedOccasions) {
+                                $occasions['booking_link'] = null;
+                            }
                             $data[] = $occasion;
                         }
                     }
@@ -637,7 +648,9 @@ class EventFields extends Fields
                 'location_mode' => null,
                 'location' => null,
             );
-            if ( $extendedOccasions ) $occasion[ 'booking_link' ] = ($value->booking_link) ? $value->booking_link : null;
+            if ($extendedOccasions) {
+                $occasion[ 'booking_link' ] = ($value->booking_link) ? $value->booking_link : null;
+            }
             $data[] = $occasion;
         }
         $temp = array();
@@ -645,13 +658,14 @@ class EventFields extends Fields
         // Remove duplicates from $data array
         foreach ($data as $key => $val) {
             unset(
-                $val['status'], 
-                $val['occ_exeption_information'], 
-                $val['content_mode'], 
-                $val['content'], 
-                $val['location_mode'], 
+                $val['status'],
+                $val['occ_exeption_information'],
+                $val['content_mode'],
+                $val['content'],
+                $val['location_mode'],
                 $val['location'],
-                $val['booking_link']);
+                $val['booking_link']
+            );
             if (!in_array($val, $temp)) {
                 $temp[] = $val;
                 $keys[$key] = true;
