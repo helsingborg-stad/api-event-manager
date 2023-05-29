@@ -51,6 +51,10 @@ class TixTicket extends \HbgEventImporter\Parser
 
                 $event->FeaturedImagePath = !empty($FeaturedImagePath) ? $FeaturedImagePath : null;
                 $event->Description = !empty($Description) ? $Description : null;
+               
+                if ($event->DefaultEventGroupId != $singleevent->EventGroupId) {
+                    continue;
+                }
 
 
                 if (!isset($event->EventId) || empty($event->EventId)) {
