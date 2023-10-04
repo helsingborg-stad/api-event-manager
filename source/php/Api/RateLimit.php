@@ -9,8 +9,8 @@ class RateLimit
 {
 
     private $_ip             = null;
-    private $_rateLimit      = 500; //Number of requests allowed in _timeFrame
-    private $_timeFrame      = 60; //In minutes
+    private $_rateLimit      = 1000; //Number of requests allowed in _timeFrame
+    private $_timeFrame      = 10; //In minutes
     private $_cacheKey       = "event-importer-rate-limit";
     private $_cacheTtl       = 60*60*12; //Auto clear cache after 12 hours
     private $_persistentBan  = array();
