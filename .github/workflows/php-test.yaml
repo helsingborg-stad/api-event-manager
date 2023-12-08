@@ -2,9 +2,9 @@ name: Unit Tests
 
 on:
   push:
-    branches: [ "v2" ]
+    branches: [ "main" ]
   pull_request:
-    branches: [ "v2" ]
+    branches: [ "main" ]
 
 env:
   XDEBUG_MODE: off
@@ -17,7 +17,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php-versions: ['8.1', '8.2', '8.3']
+        php-versions: ['8.1', '8.2']
 
     steps:
     - uses: actions/checkout@v2
