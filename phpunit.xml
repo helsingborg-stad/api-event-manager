@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd"
+         bootstrap="./tests/bootstrap.php"
+         backupGlobals="false"
+         colors="true"
+         convertErrorsToExceptions="true"
+         convertNoticesToExceptions="true"
+         convertWarningsToExceptions="true"
+         printerClass="Codedungeon\PHPUnitPrettyResultPrinter\Printer">
+
+  <coverage processUncoveredFiles="false">
+    <include>
+      <directory suffix=".php">./source/php</directory>
+    </include>
+    <exclude>
+      <directory suffix=".php">./source/php/AcfFields</directory>
+      <directory suffix=".Test.php">./source/php</directory>
+    </exclude>
+    <report>
+      <text outputFile="php://stdout" showUncoveredFiles="true"/>
+      <html outputDirectory="coverage/phpunit"/>
+    </report>
+    
+  </coverage>
+
+  <testsuites>
+    <testsuite name="Plugin Test Suite">
+      <directory suffix="Test.php">./source/php</directory>
+    </testsuite>
+  </testsuites>
+</phpunit>

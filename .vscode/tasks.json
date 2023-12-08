@@ -1,0 +1,63 @@
+{
+	// See https://go.microsoft.com/fwlink/?LinkId=733558 
+	// for the documentation about the tasks.json format
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "php:setup-tests",
+			"type": "shell",
+			"command": "composer run setup-tests test root dev 127.0.0.1",
+			"group": "test",
+			"problemMatcher": []
+		},
+		{
+			"label": "php:test",
+			"type": "shell",
+			"command": "composer run test",
+			"group": "test",
+			"problemMatcher": []
+		},
+		{
+			"label": "php:test:debug",
+			"type": "shell",
+			"command": "composer run test:debug",
+			"group": "test",
+			"problemMatcher": []
+		},
+		{
+			"label": "php:coverage",
+			"type": "shell",
+			"command": "composer run coverage",
+			"group": "test",
+			"problemMatcher": []
+		},
+		{
+			"label": "php:lint",
+			"type": "shell",
+			"command": "composer run php:lint",
+			"group": "test",
+			"problemMatcher": []
+		},
+		{
+			"label": "php:fix",
+			"type": "shell",
+			"command": "composer run php:fix",
+			"group": "build",
+			"problemMatcher": []
+		},
+		{
+			"label": "install acf plugin",
+			"type": "shell",
+			"command": "$(pwd)/.vscode/tasks/install-acf-plugin.sh",
+			"group": "test",
+			"problemMatcher": []
+		},
+		{
+			"label": "set nano as editor for git",
+			"type": "shell",
+			"command": "$(pwd)/.vscode/tasks/set-git-editor-nano.sh",
+			"group": "none",
+			"problemMatcher": []
+		},
+	]
+}
