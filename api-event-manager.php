@@ -40,7 +40,10 @@ add_action('acf/init', function () {
 });
 
 // Start application
-new EventManager\App();
+$postTypeRegistrar = new EventManager\PostTypeRegistrar\PostTypeRegistrar();
+$app               = new EventManager\App($postTypeRegistrar);
+
+add_action('init', [$app, 'registerPostTypes']);
 
 add_action('plugins_loaded', function () {
     load_plugin_textdomain('api-event-manager', false, dirname(plugin_basename(__FILE__)) . '/languages');
