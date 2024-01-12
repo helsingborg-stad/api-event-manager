@@ -10,7 +10,7 @@ use WP_REST_Response;
 
 class Event implements Hookable
 {
-    protected string $targetContext = 'view';
+    protected string $targetContext = 'schema';
     protected PostToSchemaInterface $postToSchema;
 
     public function __construct(PostToSchemaInterface $postToSchema)
