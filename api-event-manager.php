@@ -31,12 +31,17 @@ if (file_exists(EVENT_MANAGER_PATH . 'vendor/autoload.php')) {
     require EVENT_MANAGER_PATH . '/vendor/autoload.php';
 }
 
+// Disable Gutenberg editor for all post types
+add_filter('use_block_editor_for_post_type', '__return_false');
+
 // Acf auto import and export
 add_action('acf/init', function () {
     $acfExportManager = new \AcfExportManager\AcfExportManager();
     $acfExportManager->setTextdomain('api-event-manager');
     $acfExportManager->setExportFolder(EVENT_MANAGER_PATH . 'source/php/AcfFields/');
-    $acfExportManager->autoExport(array());
+    $acfExportManager->autoExport(array(
+        'event-fields' => 'group_65a115157a046'
+    ));
 
     $acfExportManager->import();
 });
