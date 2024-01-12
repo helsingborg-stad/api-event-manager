@@ -2,25 +2,16 @@
 
 namespace EventManager;
 
-use EventManager\PostTypeRegistrar\PostTypeRegistrar;
+use EventManager\Helper\HooksRegistrar\HooksRegistrarInterface;
 
 class App
 {
-    protected PostTypeRegistrar $postTypeRegistrar;
-
-    public function __construct(PostTypeRegistrar $postTypeRegistrar)
+    public function registerHooks(HooksRegistrarInterface $hooksRegistrar)
     {
-        $this->postTypeRegistrar = $postTypeRegistrar;
-    }
+        $postToEventSchema = new \EventManager\Helper\PostToSchema\PostToEventSchema();
 
-    public function registerPostTypes()
-    {
-        $this->postTypeRegistrar->register('event', [
-            'label'        => __('Events', 'api-event-manager'),
-            'show_in_rest' => true,
-            'public'       => true,
-            'hierarchical' => true,
-            'icon'         => 'dashicons-calendar-alt',
-        ]);
+        $hooksRegistrar
+            ->register(new \EventManager\PostTypes\Event())
+            ->register(new \EventManager\ApiResponseModifiers\Event($postToEventSchema));
     }
 }

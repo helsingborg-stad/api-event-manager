@@ -13,6 +13,8 @@
  * Domain Path:       /languages
  */
 
+use Spatie\SchemaOrg\Event;
+
 // Protect agains direct file access
 if (!defined('WPINC')) {
     die;
@@ -40,10 +42,9 @@ add_action('acf/init', function () {
 });
 
 // Start application
-$postTypeRegistrar = new EventManager\PostTypeRegistrar\PostTypeRegistrar();
-$app               = new EventManager\App($postTypeRegistrar);
-
-add_action('init', [$app, 'registerPostTypes']);
+$hooksRegistrar = new EventManager\Helper\HooksRegistrar();
+$app            = new EventManager\App();
+$app->registerHooks($hooksRegistrar);
 
 add_action('plugins_loaded', function () {
     load_plugin_textdomain('api-event-manager', false, dirname(plugin_basename(__FILE__)) . '/languages');
