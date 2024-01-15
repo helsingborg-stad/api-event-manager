@@ -13,8 +13,6 @@
  * Domain Path:       /languages
  */
 
-use Spatie\SchemaOrg\Event;
-
 // Protect agains direct file access
 if (!defined('WPINC')) {
     die;
@@ -40,7 +38,8 @@ add_action('acf/init', function () {
     $acfExportManager->setTextdomain('api-event-manager');
     $acfExportManager->setExportFolder(EVENT_MANAGER_PATH . 'source/php/AcfFields/');
     $acfExportManager->autoExport(array(
-        'event-fields' => 'group_65a115157a046'
+        'event-fields'        => 'group_65a115157a046',
+        'organization-fields' => 'group_65a4f5a847d62',
     ));
 
     $acfExportManager->import();

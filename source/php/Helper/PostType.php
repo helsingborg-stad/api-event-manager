@@ -11,10 +11,10 @@ abstract class PostType implements Hookable
 
     public function addHooks(): void
     {
-        add_action('init', [$this, 'registerPostType']);
+        add_action('init', [$this, 'register']);
     }
 
-    public function registerPostType(): void
+    public function register(): void
     {
         $args = array_merge($this->getArgs(), [
             'labels' => $this->getLabels(),

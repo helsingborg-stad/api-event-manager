@@ -41,7 +41,8 @@
     "require": {
         "php": ">=8.1",
         "helsingborg-stad/acf-export-manager": ">=1.0.0",
-        "spatie/schema-org": "^3.14"
+        "spatie/schema-org": "^3.14",
+        "helsingborg-stad/wpmu-acf-google-maps-key": "^1.0"
     },
     "require-dev": {
         "codedungeon/phpunit-result-printer": "^0.32.0",

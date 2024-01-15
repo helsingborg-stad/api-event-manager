@@ -3,6 +3,7 @@
 namespace EventManager\PostTypes;
 
 use EventManager\Helper\PostType;
+use EventManager\PostTypes\Icons\Icon;
 
 class Event extends PostType
 {
@@ -17,10 +18,11 @@ class Event extends PostType
             'show_in_rest'          => true,
             'public'                => true,
             'hierarchical'          => true,
-            'icon'                  => 'dashicons-calendar-alt',
+            'menu_icon'             => (new Icon('Event'))->getIcon(),
             'rest_base'             => 'events',
             'rest_controller_class' => \EventManager\RestControllers\EventController::class,
-            'supports'              => [ 'title', 'editor', 'excerpt', 'thumbnail', 'revisions', ]
+            'supports'              => [ 'title', 'editor', 'excerpt', 'thumbnail', 'revisions', ],
+            'taxonomies'            => [ 'audience-type' ],
         ];
     }
 

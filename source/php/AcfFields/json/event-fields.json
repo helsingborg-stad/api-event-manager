@@ -4,15 +4,351 @@
     "fields": [
         {
             "key": "field_65a115151a872",
-            "label": "",
-            "name": "",
+            "label": "Description",
+            "name": "about",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "rows": "",
+            "placeholder": "",
+            "new_lines": ""
+        },
+        {
+            "key": "field_65a5319a9d01d",
+            "label": "Status",
+            "name": "eventStatus",
+            "aria-label": "",
+            "type": "select",
+            "instructions": "",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "https:\/\/schema.org\/EventScheduled": "Schemalagt",
+                "https:\/\/schema.org\/EventRescheduled": "Omplanerat",
+                "https:\/\/schema.org\/EventCancelled": "Inst\u00e4llt",
+                "https:\/\/schema.org\/EventPostponed": "Framskjutet"
+            },
+            "default_value": "https:\/\/schema.org\/EventScheduled",
+            "return_format": "value",
+            "multiple": 0,
+            "allow_null": 0,
+            "ui": 0,
+            "ajax": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_65a24b25d5242",
+            "label": "Tid",
+            "name": "doorTime",
+            "aria-label": "",
+            "type": "date_time_picker",
+            "instructions": "",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "display_format": "Y-m-d H:i:s",
+            "return_format": "Y-m-d H:i:s",
+            "first_day": 1
+        },
+        {
+            "key": "field_65a532b5c3b07",
+            "label": "New start date",
+            "name": "rescheduledStartDate",
+            "aria-label": "",
+            "type": "date_time_picker",
+            "instructions": "",
+            "required": 1,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_65a5319a9d01d",
+                        "operator": "==contains",
+                        "value": "EventRescheduled"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "display_format": "Y-m-d H:i:s",
+            "return_format": "Y-m-d H:i:s",
+            "first_day": 1
+        },
+        {
+            "key": "field_65a12b1451bf8",
+            "label": "Startdatum",
+            "name": "startDate",
+            "aria-label": "",
+            "type": "date_time_picker",
+            "instructions": "",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "display_format": "Y-m-d H:i:s",
+            "return_format": "Y-m-d H:i:s",
+            "first_day": 1
+        },
+        {
+            "key": "field_65a12b7151bf9",
+            "label": "Slutdatum",
+            "name": "endDate",
+            "aria-label": "",
+            "type": "date_time_picker",
+            "instructions": "",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "34",
+                "class": "",
+                "id": ""
+            },
+            "display_format": "Y-m-d H:i:s",
+            "return_format": "Y-m-d H:i:s",
+            "first_day": 1
+        },
+        {
+            "key": "field_65a15156f4c37",
+            "label": "Gratis",
+            "name": "isAccessibleForFree",
+            "aria-label": "",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 1,
+            "ui_on_text": "",
+            "ui_off_text": "",
+            "ui": 1
+        },
+        {
+            "key": "field_65a4f8a493691",
+            "label": "Offers",
+            "name": "offers",
+            "aria-label": "",
+            "type": "repeater",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_65a15156f4c37",
+                        "operator": "!=",
+                        "value": "1"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "layout": "table",
+            "pagination": 0,
+            "min": 0,
+            "max": 0,
+            "collapsed": "",
+            "button_label": "L\u00e4gg till rad",
+            "rows_per_page": 20,
+            "sub_fields": [
+                {
+                    "key": "field_65a4f92093694",
+                    "label": "Name",
+                    "name": "name",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "parent_repeater": "field_65a4f8a493691"
+                },
+                {
+                    "key": "field_65a4f8e293692",
+                    "label": "Price",
+                    "name": "price",
+                    "aria-label": "",
+                    "type": "number",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "min": 0,
+                    "max": "",
+                    "placeholder": "",
+                    "step": "",
+                    "prepend": "",
+                    "append": "SEK",
+                    "parent_repeater": "field_65a4f8a493691"
+                },
+                {
+                    "key": "field_65a4f91693693",
+                    "label": "URL",
+                    "name": "url",
+                    "aria-label": "",
+                    "type": "url",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "placeholder": "",
+                    "parent_repeater": "field_65a4f8a493691"
+                }
+            ]
+        },
+        {
+            "key": "field_65a245c3a4062",
+            "label": "Plats",
+            "name": "location",
+            "aria-label": "",
+            "type": "google_map",
+            "instructions": "",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "center_lat": "",
+            "center_lng": "",
+            "zoom": "",
+            "height": ""
+        },
+        {
+            "key": "field_65a4f6af50302",
+            "label": "Organizer",
+            "name": "organizer",
+            "aria-label": "",
+            "type": "post_object",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "post_type": [
+                "organization"
+            ],
+            "post_status": [
+                "publish"
+            ],
+            "taxonomy": "",
+            "return_format": "id",
+            "multiple": 0,
+            "allow_null": 0,
+            "bidirectional": 0,
+            "ui": 1,
+            "bidirectional_target": []
+        },
+        {
+            "key": "field_65a52a6374b0c",
+            "label": "Audience",
+            "name": "audience",
+            "aria-label": "",
+            "type": "taxonomy",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "taxonomy": "audience",
+            "add_term": 1,
+            "save_terms": 0,
+            "load_terms": 0,
+            "return_format": "id",
+            "field_type": "select",
+            "allow_null": 1,
+            "bidirectional": 0,
+            "multiple": 0,
+            "bidirectional_target": []
+        },
+        {
+            "key": "field_65a52bf7f7e4d",
+            "label": "Typical age rande start",
+            "name": "typicalAgeRangeStart",
+            "aria-label": "",
+            "type": "number",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "10",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "min": 0,
+            "max": "",
+            "placeholder": "",
+            "step": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_65a52c24f7e4e",
+            "label": "Typical age range end",
+            "name": "typicalAgeRangeEnd",
             "aria-label": "",
             "type": "text",
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
-                "width": "",
+                "width": "10",
                 "class": "",
                 "id": ""
             },
@@ -28,16 +364,27 @@
             {
                 "param": "post_type",
                 "operator": "==",
-                "value": "post"
+                "value": "event"
             }
         ]
     ],
     "menu_order": 0,
-    "position": "normal",
+    "position": "acf_after_title",
     "style": "default",
-    "label_placement": "top",
+    "label_placement": "left",
     "instruction_placement": "label",
-    "hide_on_screen": "",
+    "hide_on_screen": [
+        "permalink",
+        "the_content",
+        "excerpt",
+        "discussion",
+        "comments",
+        "format",
+        "page_attributes",
+        "categories",
+        "tags",
+        "send-trackbacks"
+    ],
     "active": true,
     "description": "",
     "show_in_rest": 0
