@@ -3,9 +3,9 @@
     "title": "Event Fields",
     "fields": [
         {
-            "key": "field_65a115151a872",
-            "label": "Description",
-            "name": "about",
+            "key": "field_65a6206610d45",
+            "label": "Short description",
+            "name": "description",
             "aria-label": "",
             "type": "textarea",
             "instructions": "",
@@ -21,6 +21,26 @@
             "rows": "",
             "placeholder": "",
             "new_lines": ""
+        },
+        {
+            "key": "field_65a115151a872",
+            "label": "About",
+            "name": "about",
+            "aria-label": "",
+            "type": "wysiwyg",
+            "instructions": "",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "tabs": "all",
+            "toolbar": "basic",
+            "media_upload": 0,
+            "delay": 1
         },
         {
             "key": "field_65a5319a9d01d",
@@ -380,7 +400,6 @@
         "discussion",
         "comments",
         "format",
-        "page_attributes",
         "categories",
         "tags",
         "send-trackbacks"

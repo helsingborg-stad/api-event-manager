@@ -7,7 +7,7 @@ use WP_Post;
 
 class PostToEventSchema implements PostToSchemaInterface
 {
-    public function transform(WP_Post $post): array
+    public function transform(WP_Post $post, $allowRecurse = true): array
     {
         $event = new \Spatie\SchemaOrg\Event();
         $event->identifier($post->ID);
@@ -20,6 +20,7 @@ class PostToEventSchema implements PostToSchemaInterface
         $event->endDate(get_post_meta($post->ID, 'endDate', true) ?: null);
         $event->duration($this->getDuration($event));
 
+        $event->description(get_post_meta($post->ID, 'description', true) ?: null);
         $event->about(get_post_meta($post->ID, 'about', true) ?: null);
         $event->image(get_the_post_thumbnail_url($post->ID) ?: null);
         $event->isAccessibleForFree($this->getIsAccessibleForFree($post));
@@ -29,6 +30,11 @@ class PostToEventSchema implements PostToSchemaInterface
         $event->organizer($this->getOrganizer($post));
         $event->audience($this->getAudience($post));
         $event->typicalAgeRange($this->getTypicalAgeRange($post));
+
+        if ($allowRecurse) {
+            $event->superEvent($this->getSuperEvent($post));
+            $event->subEvents($this->getSubEvents($post));
+        }
 
         return $event->toArray();
     }
@@ -47,11 +53,13 @@ class PostToEventSchema implements PostToSchemaInterface
         }
 
         // Address
-        $address = new \Spatie\SchemaOrg\PostalAddress();
-        $address->streetAddress("{$locationMeta['street_name']} {$locationMeta['street_number']}");
-        $address->addressLocality($locationMeta['city']);
-        $address->postalCode($locationMeta['post_code']);
-        $address->addressCountry($locationMeta['country_short']);
+        $address      = new \Spatie\SchemaOrg\PostalAddress();
+        $streetName   = $locationMeta['street_name'] ?? '';
+        $streetNumber = $locationMeta['street_number'] ?? '';
+        $address->streetAddress("{$streetName} {$streetNumber}");
+        $address->addressLocality($locationMeta['city'] ?? null);
+        $address->postalCode($locationMeta['post_code'] ?? null);
+        $address->addressCountry($locationMeta['country_short'] ?? null);
 
         // Location
         $location = new \Spatie\SchemaOrg\Place();
@@ -197,5 +205,31 @@ class PostToEventSchema implements PostToSchemaInterface
         }
 
         return $previousStartDate;
+    }
+
+    private function getSuperEvent(WP_Post $post): ?array
+    {
+        $superEventPost = get_post_parent($post->ID);
+
+        if (!$superEventPost) {
+            return null;
+        }
+
+        return $this->transform($superEventPost, false);
+    }
+
+    private function getSubEvents(WP_Post $post): ?array
+    {
+        $subEventPosts = get_posts([
+            'post_parent' => $post->ID,
+            'post_type'   => 'event',
+            'numberposts' => -1
+        ]);
+
+        if (empty($subEventPosts)) {
+            return null;
+        }
+
+        return array_map(fn($subPost) => $this->transform($subPost, false), $subEventPosts);
     }
 }

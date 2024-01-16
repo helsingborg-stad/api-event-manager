@@ -6,9 +6,9 @@
     'title' => __('Event Fields', 'api-event-manager'),
     'fields' => array(
         0 => array(
-            'key' => 'field_65a115151a872',
-            'label' => __('Description', 'api-event-manager'),
-            'name' => 'about',
+            'key' => 'field_65a6206610d45',
+            'label' => __('Short description', 'api-event-manager'),
+            'name' => 'description',
             'aria-label' => '',
             'type' => 'textarea',
             'instructions' => '',
@@ -26,6 +26,26 @@
             'new_lines' => '',
         ),
         1 => array(
+            'key' => 'field_65a115151a872',
+            'label' => __('About', 'api-event-manager'),
+            'name' => 'about',
+            'aria-label' => '',
+            'type' => 'wysiwyg',
+            'instructions' => '',
+            'required' => 1,
+            'conditional_logic' => 0,
+            'wrapper' => array(
+                'width' => '',
+                'class' => '',
+                'id' => '',
+            ),
+            'default_value' => '',
+            'tabs' => 'all',
+            'toolbar' => 'basic',
+            'media_upload' => 0,
+            'delay' => 1,
+        ),
+        2 => array(
             'key' => 'field_65a5319a9d01d',
             'label' => __('Status', 'api-event-manager'),
             'name' => 'eventStatus',
@@ -53,7 +73,7 @@
             'ajax' => 0,
             'placeholder' => '',
         ),
-        2 => array(
+        3 => array(
             'key' => 'field_65a24b25d5242',
             'label' => __('Tid', 'api-event-manager'),
             'name' => 'doorTime',
@@ -71,7 +91,7 @@
             'return_format' => 'Y-m-d H:i:s',
             'first_day' => 1,
         ),
-        3 => array(
+        4 => array(
             'key' => 'field_65a532b5c3b07',
             'label' => __('New start date', 'api-event-manager'),
             'name' => 'rescheduledStartDate',
@@ -97,7 +117,7 @@
             'return_format' => 'Y-m-d H:i:s',
             'first_day' => 1,
         ),
-        4 => array(
+        5 => array(
             'key' => 'field_65a12b1451bf8',
             'label' => __('Startdatum', 'api-event-manager'),
             'name' => 'startDate',
@@ -115,7 +135,7 @@
             'return_format' => 'Y-m-d H:i:s',
             'first_day' => 1,
         ),
-        5 => array(
+        6 => array(
             'key' => 'field_65a12b7151bf9',
             'label' => __('Slutdatum', 'api-event-manager'),
             'name' => 'endDate',
@@ -133,7 +153,7 @@
             'return_format' => 'Y-m-d H:i:s',
             'first_day' => 1,
         ),
-        6 => array(
+        7 => array(
             'key' => 'field_65a15156f4c37',
             'label' => __('Gratis', 'api-event-manager'),
             'name' => 'isAccessibleForFree',
@@ -153,7 +173,7 @@
             'ui_off_text' => '',
             'ui' => 1,
         ),
-        7 => array(
+        8 => array(
             'key' => 'field_65a4f8a493691',
             'label' => __('Offers', 'api-event-manager'),
             'name' => 'offers',
@@ -247,7 +267,7 @@
                 ),
             ),
         ),
-        8 => array(
+        9 => array(
             'key' => 'field_65a245c3a4062',
             'label' => __('Plats', 'api-event-manager'),
             'name' => 'location',
@@ -266,7 +286,7 @@
             'zoom' => '',
             'height' => '',
         ),
-        9 => array(
+        10 => array(
             'key' => 'field_65a4f6af50302',
             'label' => __('Organizer', 'api-event-manager'),
             'name' => 'organizer',
@@ -295,7 +315,7 @@
             'bidirectional_target' => array(
             ),
         ),
-        10 => array(
+        11 => array(
             'key' => 'field_65a52a6374b0c',
             'label' => __('Audience', 'api-event-manager'),
             'name' => 'audience',
@@ -321,7 +341,7 @@
             'bidirectional_target' => array(
             ),
         ),
-        11 => array(
+        12 => array(
             'key' => 'field_65a52bf7f7e4d',
             'label' => __('Typical age rande start', 'api-event-manager'),
             'name' => 'typicalAgeRangeStart',
@@ -343,7 +363,7 @@
             'prepend' => '',
             'append' => '',
         ),
-        12 => array(
+        13 => array(
             'key' => 'field_65a52c24f7e4e',
             'label' => __('Typical age range end', 'api-event-manager'),
             'name' => 'typicalAgeRangeEnd',
@@ -385,10 +405,9 @@
         3 => 'discussion',
         4 => 'comments',
         5 => 'format',
-        6 => 'page_attributes',
-        7 => 'categories',
-        8 => 'tags',
-        9 => 'send-trackbacks',
+        6 => 'categories',
+        7 => 'tags',
+        8 => 'send-trackbacks',
     ),
     'active' => true,
     'description' => '',
