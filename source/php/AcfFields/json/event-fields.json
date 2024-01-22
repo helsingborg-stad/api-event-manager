@@ -71,88 +71,8 @@
             "placeholder": ""
         },
         {
-            "key": "field_65a24b25d5242",
-            "label": "Tid",
-            "name": "doorTime",
-            "aria-label": "",
-            "type": "date_time_picker",
-            "instructions": "",
-            "required": 1,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "33",
-                "class": "",
-                "id": ""
-            },
-            "display_format": "Y-m-d H:i:s",
-            "return_format": "Y-m-d H:i:s",
-            "first_day": 1
-        },
-        {
-            "key": "field_65a532b5c3b07",
-            "label": "New start date",
-            "name": "rescheduledStartDate",
-            "aria-label": "",
-            "type": "date_time_picker",
-            "instructions": "",
-            "required": 1,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_65a5319a9d01d",
-                        "operator": "==contains",
-                        "value": "EventRescheduled"
-                    }
-                ]
-            ],
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "display_format": "Y-m-d H:i:s",
-            "return_format": "Y-m-d H:i:s",
-            "first_day": 1
-        },
-        {
-            "key": "field_65a12b1451bf8",
-            "label": "Startdatum",
-            "name": "startDate",
-            "aria-label": "",
-            "type": "date_time_picker",
-            "instructions": "",
-            "required": 1,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "33",
-                "class": "",
-                "id": ""
-            },
-            "display_format": "Y-m-d H:i:s",
-            "return_format": "Y-m-d H:i:s",
-            "first_day": 1
-        },
-        {
-            "key": "field_65a12b7151bf9",
-            "label": "Slutdatum",
-            "name": "endDate",
-            "aria-label": "",
-            "type": "date_time_picker",
-            "instructions": "",
-            "required": 1,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "34",
-                "class": "",
-                "id": ""
-            },
-            "display_format": "Y-m-d H:i:s",
-            "return_format": "Y-m-d H:i:s",
-            "first_day": 1
-        },
-        {
             "key": "field_65a15156f4c37",
-            "label": "Gratis",
+            "label": "Accessible for free",
             "name": "isAccessibleForFree",
             "aria-label": "",
             "type": "true_false",
@@ -266,7 +186,7 @@
         },
         {
             "key": "field_65a245c3a4062",
-            "label": "Plats",
+            "label": "Location",
             "name": "location",
             "aria-label": "",
             "type": "google_map",
@@ -377,6 +297,374 @@
             "placeholder": "",
             "prepend": "",
             "append": ""
+        },
+        {
+            "key": "field_65a66d8cadeef",
+            "label": "Occasions",
+            "name": "occasions",
+            "aria-label": "",
+            "type": "repeater",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "layout": "block",
+            "pagination": 0,
+            "min": 0,
+            "max": 0,
+            "collapsed": "",
+            "button_label": "Add occation",
+            "rows_per_page": 20,
+            "sub_fields": [
+                {
+                    "key": "field_65a6809ba99e7",
+                    "label": "Repeat",
+                    "name": "repeat",
+                    "aria-label": "",
+                    "type": "select",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "choices": {
+                        "no": "No",
+                        "byDay": "By Day",
+                        "byWeek": "By Week",
+                        "byMonth": "By Month"
+                    },
+                    "default_value": false,
+                    "return_format": "value",
+                    "multiple": 0,
+                    "allow_null": 0,
+                    "ui": 0,
+                    "ajax": 0,
+                    "placeholder": "",
+                    "parent_repeater": "field_65a66d8cadeef"
+                },
+                {
+                    "key": "field_65a6817aa99e8",
+                    "label": "Every",
+                    "name": "daysInterval",
+                    "aria-label": "",
+                    "type": "number",
+                    "instructions": "",
+                    "required": 1,
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_65a6809ba99e7",
+                                "operator": "==",
+                                "value": "byDay"
+                            }
+                        ]
+                    ],
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": 1,
+                    "min": 1,
+                    "max": "",
+                    "placeholder": "",
+                    "step": "",
+                    "prepend": "",
+                    "append": "day\/days",
+                    "parent_repeater": "field_65a66d8cadeef"
+                },
+                {
+                    "key": "field_65a686d8af87f",
+                    "label": "Every",
+                    "name": "weeksInterval",
+                    "aria-label": "",
+                    "type": "number",
+                    "instructions": "",
+                    "required": 1,
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_65a6809ba99e7",
+                                "operator": "==",
+                                "value": "byWeek"
+                            }
+                        ]
+                    ],
+                    "wrapper": {
+                        "width": "50",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": 1,
+                    "min": 1,
+                    "max": "",
+                    "placeholder": "",
+                    "step": "",
+                    "prepend": "",
+                    "append": "week\/weeks",
+                    "parent_repeater": "field_65a66d8cadeef"
+                },
+                {
+                    "key": "field_65a6886e30f9d",
+                    "label": "Every",
+                    "name": "monthsInterval",
+                    "aria-label": "",
+                    "type": "number",
+                    "instructions": "",
+                    "required": 1,
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_65a6809ba99e7",
+                                "operator": "==",
+                                "value": "byMonth"
+                            }
+                        ]
+                    ],
+                    "wrapper": {
+                        "width": "25",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": 1,
+                    "min": 1,
+                    "max": "",
+                    "placeholder": "",
+                    "step": "",
+                    "prepend": "",
+                    "append": "week\/weeks",
+                    "parent_repeater": "field_65a66d8cadeef"
+                },
+                {
+                    "key": "field_65a68707af880",
+                    "label": "Day",
+                    "name": "weekDays",
+                    "aria-label": "",
+                    "type": "button_group",
+                    "instructions": "",
+                    "required": 1,
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_65a6809ba99e7",
+                                "operator": "==",
+                                "value": "byWeek"
+                            }
+                        ]
+                    ],
+                    "wrapper": {
+                        "width": "50",
+                        "class": "",
+                        "id": ""
+                    },
+                    "choices": {
+                        "Monday": "Mon",
+                        "Tuesday": "Tue",
+                        "Wednesday": "Wed",
+                        "Thursday": "Thu",
+                        "Friday": "Fri",
+                        "Saturday": "Sat",
+                        "Sunday": "Sun"
+                    },
+                    "default_value": "",
+                    "return_format": "value",
+                    "allow_null": 0,
+                    "layout": "horizontal",
+                    "parent_repeater": "field_65a66d8cadeef"
+                },
+                {
+                    "key": "field_65a689f5a4918",
+                    "label": "Day",
+                    "name": "monthDay",
+                    "aria-label": "",
+                    "type": "select",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_65a6809ba99e7",
+                                "operator": "==",
+                                "value": "byMonth"
+                            }
+                        ]
+                    ],
+                    "wrapper": {
+                        "width": "25",
+                        "class": "",
+                        "id": ""
+                    },
+                    "choices": {
+                        "day": "Day",
+                        "first": "First",
+                        "second": "Second",
+                        "third": "Third",
+                        "fourth": "Fourth",
+                        "last": "Last"
+                    },
+                    "default_value": "day",
+                    "return_format": "value",
+                    "multiple": 0,
+                    "allow_null": 0,
+                    "ui": 0,
+                    "ajax": 0,
+                    "placeholder": "",
+                    "parent_repeater": "field_65a66d8cadeef"
+                },
+                {
+                    "key": "field_65a68a6ea4919",
+                    "label": "By number",
+                    "name": "monthDayNumber",
+                    "aria-label": "",
+                    "type": "number",
+                    "instructions": "",
+                    "required": 1,
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_65a689f5a4918",
+                                "operator": "==",
+                                "value": "day"
+                            }
+                        ]
+                    ],
+                    "wrapper": {
+                        "width": "25",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": 1,
+                    "min": 1,
+                    "max": 31,
+                    "placeholder": "",
+                    "step": "",
+                    "prepend": "",
+                    "append": "",
+                    "parent_repeater": "field_65a66d8cadeef"
+                },
+                {
+                    "key": "field_65a68b6b72235",
+                    "label": "By type",
+                    "name": "monthDayLiteral",
+                    "aria-label": "",
+                    "type": "select",
+                    "instructions": "",
+                    "required": 1,
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_65a689f5a4918",
+                                "operator": "==",
+                                "value": "day"
+                            }
+                        ]
+                    ],
+                    "wrapper": {
+                        "width": "25",
+                        "class": "",
+                        "id": ""
+                    },
+                    "choices": {
+                        "Day": "Day",
+                        "Monday": "Monday",
+                        "Tuesday": "Tuesday",
+                        "Wednesday": "Wednesday",
+                        "Thursday": "Thursday",
+                        "Friday": "Friday",
+                        "Saturday": "Saturday",
+                        "Sunday": "Sunday"
+                    },
+                    "default_value": false,
+                    "return_format": "value",
+                    "multiple": 0,
+                    "allow_null": 0,
+                    "ui": 0,
+                    "ajax": 0,
+                    "placeholder": "",
+                    "parent_repeater": "field_65a66d8cadeef"
+                },
+                {
+                    "key": "field_65a681f9a99e9",
+                    "label": "Start date",
+                    "name": "startDate",
+                    "aria-label": "",
+                    "type": "date_picker",
+                    "instructions": "",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "25",
+                        "class": "",
+                        "id": ""
+                    },
+                    "display_format": "Y-m-d",
+                    "return_format": "Y-m-d",
+                    "first_day": 1,
+                    "parent_repeater": "field_65a66d8cadeef"
+                },
+                {
+                    "key": "field_65a68507a99eb",
+                    "label": "Start time",
+                    "name": "startTime",
+                    "aria-label": "",
+                    "type": "time_picker",
+                    "instructions": "",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "25",
+                        "class": "",
+                        "id": ""
+                    },
+                    "display_format": "H:i:s",
+                    "return_format": "H:i:s",
+                    "parent_repeater": "field_65a66d8cadeef"
+                },
+                {
+                    "key": "field_65a684e0a99ea",
+                    "label": "End date",
+                    "name": "endDate",
+                    "aria-label": "",
+                    "type": "date_picker",
+                    "instructions": "",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "25",
+                        "class": "",
+                        "id": ""
+                    },
+                    "display_format": "Y-m-d",
+                    "return_format": "Y-m-d",
+                    "first_day": 1,
+                    "parent_repeater": "field_65a66d8cadeef"
+                },
+                {
+                    "key": "field_65a6852da99ec",
+                    "label": "End time",
+                    "name": "endTime",
+                    "aria-label": "",
+                    "type": "time_picker",
+                    "instructions": "",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "25",
+                        "class": "",
+                        "id": ""
+                    },
+                    "display_format": "H:i:s",
+                    "return_format": "H:i:s",
+                    "parent_repeater": "field_65a66d8cadeef"
+                }
+            ]
         }
     ],
     "location": [

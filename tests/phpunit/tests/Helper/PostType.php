@@ -22,7 +22,7 @@ class PostTypeTest extends TestCase
         $mockPostType = $this->getMockForAbstractClass('EventManager\Helper\PostType');
         $mockPostType->expects($this->once())->method('getName')->willReturn($postTypeName);
 
-        $mockPostType->registerPostType();
+        $mockPostType->register();
     }
 
     /**
@@ -46,7 +46,7 @@ class PostTypeTest extends TestCase
         $mockPostType->expects($this->once())->method('getLabelSingular')->willReturn($labelSingular);
         $mockPostType->expects($this->once())->method('getLabelPlural')->willReturn($labelPlural);
 
-        $mockPostType->registerPostType();
+        $mockPostType->register();
     }
 
     public function testRegistersWithProvidedArgs()
@@ -61,6 +61,6 @@ class PostTypeTest extends TestCase
         $mockPostType = $this->getMockForAbstractClass('EventManager\Helper\PostType');
         $mockPostType->expects($this->once())->method('getArgs')->willReturn($args);
 
-        $mockPostType->registerPostType();
+        $mockPostType->register();
     }
 }

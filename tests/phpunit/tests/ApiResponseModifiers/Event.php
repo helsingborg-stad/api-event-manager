@@ -2,6 +2,7 @@
 
 namespace EventManager\Tests\ApiResponseModifiers;
 
+use EventManager\Services\WPService\WPService;
 use Mockery;
 use WP_Mock;
 use WP_Mock\Tools\TestCase;
@@ -29,9 +30,17 @@ class EventTest extends TestCase
 
     /**
      * @testdox response is modified in the schema context.
+     * @runInSeparateProcess
      */
     public function testResponseModifiedInSchemaContext()
     {
+        Mockery::mock('alias:\EventManager\Services\WPService\WPServiceFactory')
+            ->shouldReceive('create')
+            ->andReturn(Mockery::mock(WPService::class));
+        Mockery::mock('overload:\EventManager\Helper\PostToSchema\PostToEventSchema')
+            ->shouldReceive('toArray')
+            ->andReturn([]);
+
         /** @var \WP_Post $mockPost */
         $mockPost         = $this->mockPost();
         $mockResponse     = Mockery::mock('WP_REST_Response');

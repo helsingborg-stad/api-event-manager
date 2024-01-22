@@ -2,51 +2,72 @@
 
 namespace EventManager\Helper\PostToSchema;
 
-use Spatie\SchemaOrg\Contracts\EventContract;
+use EventManager\Helper\Arrayable;
+use EventManager\Services\WPService\WPService;
+use Spatie\SchemaOrg\BaseType;
 use WP_Post;
 
-class PostToEventSchema implements PostToSchemaInterface
+class PostToEventSchema implements Arrayable
 {
-    public function transform(WP_Post $post, $allowRecurse = true): array
+    protected WPService $wp;
+    protected BaseType $event;
+    protected WP_Post $post;
+    private bool $allowRecurse;
+
+    public function __construct(
+        WPService $wp,
+        WP_Post $post,
+        $allowRecurse = true
+    ) {
+        $this->wp           = $wp;
+        $this->post         = $post;
+        $this->allowRecurse = $allowRecurse;
+        $this->event        = new \Spatie\SchemaOrg\Event();
+        $this->addPropertiesToEvent();
+    }
+
+    private function addPropertiesToEvent()
     {
-        $event = new \Spatie\SchemaOrg\Event();
-        $event->identifier($post->ID);
-        $event->name($post->post_title);
-        $event->eventStatus(get_post_meta($post->ID, 'eventStatus', true) ?: null);
+        $this->event->identifier($this->post->ID);
+        $this->event->name($this->post->post_title);
 
-        $event->doorTime(get_post_meta($post->ID, 'doorTime', true) ?: null);
-        $event->startDate($this->getStartDate($event));
-        $event->previousStartDate($this->getPreviousStartDate($event));
-        $event->endDate(get_post_meta($post->ID, 'endDate', true) ?: null);
-        $event->duration($this->getDuration($event));
+        $this->event->startDate($this->getStartDate($this->event));
+        $this->event->previousStartDate($this->getPreviousStartDate($this->event));
+        $this->event->endDate($this->wp->getPostMeta($this->post->ID, 'endDate', true) ?: null);
+        $this->event->duration($this->getDuration($this->event));
 
-        $event->description(get_post_meta($post->ID, 'description', true) ?: null);
-        $event->about(get_post_meta($post->ID, 'about', true) ?: null);
-        $event->image(get_the_post_thumbnail_url($post->ID) ?: null);
-        $event->isAccessibleForFree($this->getIsAccessibleForFree($post));
-        $event->offers($this->getOffers($event));
-        $event->location($this->getLocation($post));
-        $event->url(get_permalink($post->ID));
-        $event->organizer($this->getOrganizer($post));
-        $event->audience($this->getAudience($post));
-        $event->typicalAgeRange($this->getTypicalAgeRange($post));
+        $this->event->description($this->wp->getPostMeta($this->post->ID, 'description', true) ?: null);
+        $this->event->about($this->wp->getPostMeta($this->post->ID, 'about', true) ?: null);
+        $this->event->image($this->wp->getThePostThumbnailUrl($this->post->ID) ?: null);
+        $this->event->isAccessibleForFree($this->getIsAccessibleForFree());
+        $this->event->offers($this->getOffers($this->event));
 
-        if ($allowRecurse) {
-            $event->superEvent($this->getSuperEvent($post));
-            $event->subEvents($this->getSubEvents($post));
+        $this->event->location($this->getLocation());
+
+        $this->event->url($this->wp->getPermalink($this->post->ID));
+        $this->event->audience($this->getAudience());
+        $this->event->typicalAgeRange($this->getTypicalAgeRange());
+        $this->event->organizer($this->getOrganizer());
+
+        if ($this->allowRecurse) {
+            $this->event->superEvent($this->getSuperEvent());
+            $this->event->subEvents($this->getSubEvents());
         }
-
-        return $event->toArray();
     }
 
-    public function getIsAccessibleForFree(WP_Post $post): bool
+    public function toArray(): array
     {
-        return get_post_meta($post->ID, 'isAccessibleForFree', true) ?: false;
+        return $this->event->toArray();
     }
 
-    private function getLocation(WP_Post $post): ?\Spatie\SchemaOrg\Place
+    private function getIsAccessibleForFree(): bool
     {
-        $locationMeta = get_post_meta($post->ID, 'location', true) ?: null;
+        return (bool)$this->wp->getPostMeta($this->post->ID, 'isAccessibleForFree', true);
+    }
+
+    private function getLocation(): ?\Spatie\SchemaOrg\Place
+    {
+        $locationMeta = $this->wp->getPostMeta($this->post->ID, 'location', true) ?: null;
 
         if (!$locationMeta) {
             return null;
@@ -64,8 +85,8 @@ class PostToEventSchema implements PostToSchemaInterface
         // Location
         $location = new \Spatie\SchemaOrg\Place();
         $location->address($address);
-        $location->longitude($locationMeta['lng']);
-        $location->latitude($locationMeta['lat']);
+        $location->longitude($locationMeta['lng'] ?? null);
+        $location->latitude($locationMeta['lat'] ?? null);
 
         return $location;
     }
@@ -77,10 +98,10 @@ class PostToEventSchema implements PostToSchemaInterface
      *
      * @return string|null
      */
-    private function getDuration(\Spatie\SchemaOrg\Event $event): ?string
+    private function getDuration(): ?string
     {
-        $startDate = $event->getProperty('startDate');
-        $endDate   = $event->getProperty('endDate');
+        $startDate = $this->event->getProperty('startDate');
+        $endDate   = $this->event->getProperty('endDate');
 
         if ($startDate && $endDate) {
             $startDate = new \DateTime($startDate);
@@ -92,20 +113,20 @@ class PostToEventSchema implements PostToSchemaInterface
         return null;
     }
 
-    private function getOrganizer(WP_Post $post): ?\Spatie\SchemaOrg\Organization
+    private function getOrganizer(): ?\Spatie\SchemaOrg\Organization
     {
-        $organizationId = get_post_meta($post->ID, 'organizer', true) ?: null;
+        $organizationId = $this->wp->getPostMeta($this->post->ID, 'organizer', true) ?: null;
 
-        if (!$organizationId) {
+        if (!$organizationId || !is_numeric($organizationId)) {
             return null;
         }
 
         $organization = new \Spatie\SchemaOrg\Organization();
         $organization->identifier((int)$organizationId);
         $organization->name(get_the_title($organizationId));
-        $organization->url(get_post_meta($organizationId, 'url', true) ?: null);
-        $organization->email(get_post_meta($organizationId, 'email', true) ?: null);
-        $organization->telephone(get_post_meta($organizationId, 'telephone', true) ?: null);
+        $organization->url($this->wp->getPostMeta($organizationId, 'url', true) ?: null);
+        $organization->email($this->wp->getPostMeta($organizationId, 'email', true) ?: null);
+        $organization->telephone($this->wp->getPostMeta($organizationId, 'telephone', true) ?: null);
 
         return $organization;
     }
@@ -118,21 +139,20 @@ class PostToEventSchema implements PostToSchemaInterface
      *
      * @return \Spatie\SchemaOrg\Offer[]|null
      */
-    private function getOffers(\Spatie\SchemaOrg\Event $event): ?array
+    private function getOffers(): ?array
     {
-        if ($event->getProperty('isAccessibleForFree') === true) {
+        if ($this->event->getProperty('isAccessibleForFree') === true) {
             return null;
         }
 
-        $eventId     = $event->getProperty('identifier');
         $offers      = [];
-        $nbrOfOffers = get_post_meta($eventId, 'offers', true);
+        $nbrOfOffers = $this->wp->getPostMeta($this->post->ID, 'offers', true) ?: 0;
 
         for ($i = 0; $i < $nbrOfOffers; $i++) {
             $offer = new \Spatie\SchemaOrg\Offer();
-            $offer->name(get_post_meta($eventId, "offers_{$i}_name", true) ?: null);
-            $offer->url(get_post_meta($eventId, "offers_{$i}_url", true) ?: null);
-            $offer->price(get_post_meta($eventId, "offers_{$i}_price", true) ?: null);
+            $offer->name($this->wp->getPostMeta($this->post->ID, "offers_{$i}_name", true) ?: null);
+            $offer->url($this->wp->getPostMeta($this->post->ID, "offers_{$i}_url", true) ?: null);
+            $offer->price($this->wp->getPostMeta($this->post->ID, "offers_{$i}_price", true) ?: null);
 
             if ($offer->getProperty('price') !== null) {
                 $offer->priceCurrency("SEK");
@@ -144,16 +164,16 @@ class PostToEventSchema implements PostToSchemaInterface
         return $offers;
     }
 
-    private function getAudience(WP_Post $post): ?\Spatie\SchemaOrg\Audience
+    private function getAudience(): ?\Spatie\SchemaOrg\Audience
     {
-        $audienceId = get_post_meta($post->ID, 'audience', true) ?: null;
+        $audienceId = $this->wp->getPostMeta($this->post->ID, 'audience', true) ?: null;
 
         if (!$audienceId) {
             return null;
         }
 
         // Get audience term
-        $audienceTerm = get_term($audienceId);
+        $audienceTerm = $this->wp->getTerm($audienceId);
         $audience     = new \Spatie\SchemaOrg\Audience();
         $audience->identifier((int)$audienceTerm->term_id);
         $audience->name($audienceTerm->name);
@@ -161,10 +181,17 @@ class PostToEventSchema implements PostToSchemaInterface
         return $audience;
     }
 
-    private function getTypicalAgeRange(WP_Post $post): ?string
+    private function getTypicalAgeRange(): ?string
     {
-        $rangeStart = get_post_meta($post->ID, 'typicalAgeRangeStart', true) ?: null;
-        $rangeEnd   = get_post_meta($post->ID, 'typicalAgeRangeEnd', true) ?: null;
+        $audience = $this->getAudience();
+
+        if (!$audience || !$audience->getProperty('identifier')) {
+            return null;
+        }
+
+        $termId     = $audience->getProperty('identifier');
+        $rangeStart = $this->wp->getTermMeta($termId, 'typicalAgeRangeStart', true) ?: null;
+        $rangeEnd   = $this->wp->getTermMeta($termId, 'typicalAgeRangeEnd', true) ?: null;
 
         if ($rangeStart && $rangeEnd) {
             return "{$rangeStart}-{$rangeEnd}";
@@ -177,11 +204,11 @@ class PostToEventSchema implements PostToSchemaInterface
         return null;
     }
 
-    private function getPreviousStartDate(\Spatie\SchemaOrg\Event $event): ?string
+    private function getPreviousStartDate(): ?string
     {
-        $eventStatus          = $event->getProperty('eventStatus');
-        $previousStartDate    = get_post_meta($event->getProperty('identifier'), 'startDate', true) ?: null;
-        $rescheduledStartDate = get_post_meta($event->getProperty('identifier'), 'rescheduledStartDate', true) ?: null;
+        $eventStatus          = $this->event->getProperty('eventStatus');
+        $previousStartDate    = $this->wp->getPostMeta($this->post->ID, 'startDate', true) ?: null;
+        $rescheduledStartDate = $this->wp->getPostMeta($this->post->ID, 'rescheduledStartDate', true) ?: null;
 
         if ($eventStatus === 'https://schema.org/EventRescheduled') {
             return $previousStartDate;
@@ -194,11 +221,11 @@ class PostToEventSchema implements PostToSchemaInterface
         return null;
     }
 
-    private function getStartDate(\Spatie\SchemaOrg\Event $event): ?string
+    private function getStartDate(): ?string
     {
-        $eventStatus          = $event->getProperty('eventStatus');
-        $previousStartDate    = get_post_meta($event->getProperty('identifier'), 'startDate', true) ?: null;
-        $rescheduledStartDate = get_post_meta($event->getProperty('identifier'), 'rescheduledStartDate', true) ?: null;
+        $eventStatus          = $this->event->getProperty('eventStatus');
+        $previousStartDate    = $this->wp->getPostMeta($this->post->ID, 'startDate', true) ?: null;
+        $rescheduledStartDate = $this->wp->getPostMeta($this->post->ID, 'rescheduledStartDate', true) ?: null;
 
         if ($eventStatus === 'https://schema.org/EventRescheduled') {
             return $rescheduledStartDate;
@@ -207,21 +234,23 @@ class PostToEventSchema implements PostToSchemaInterface
         return $previousStartDate;
     }
 
-    private function getSuperEvent(WP_Post $post): ?array
+    private function getSuperEvent(): ?array
     {
-        $superEventPost = get_post_parent($post->ID);
+        $superEventPost = $this->wp->getPostParent($this->post->ID);
 
         if (!$superEventPost) {
             return null;
         }
 
-        return $this->transform($superEventPost, false);
+        $superEvent = new self($this->wp, $superEventPost, false);
+
+        return $superEvent->toArray();
     }
 
-    private function getSubEvents(WP_Post $post): ?array
+    private function getSubEvents(): ?array
     {
-        $subEventPosts = get_posts([
-            'post_parent' => $post->ID,
+        $subEventPosts = $this->wp->getPosts([
+            'post_parent' => $this->post->ID,
             'post_type'   => 'event',
             'numberposts' => -1
         ]);
@@ -230,6 +259,10 @@ class PostToEventSchema implements PostToSchemaInterface
             return null;
         }
 
-        return array_map(fn($subPost) => $this->transform($subPost, false), $subEventPosts);
+        return array_map(function ($subPost) {
+            $subEvent = new self($this->wp, $subPost, false);
+
+            return $subEvent->toArray();
+        }, $subEventPosts);
     }
 }
