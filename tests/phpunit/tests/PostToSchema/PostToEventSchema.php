@@ -105,29 +105,6 @@ class PostToEventSchemaTest extends TestCase
         $this->assertEquals('1-2', $schemaArray['typicalAgeRange']);
     }
 
-    public function testOffersNotSetIfEventIsFree()
-    {
-        $offerMeta              = ['offers' => 1, 'offers_0_name' => 'TestOffer'];
-        $meta                   = ['isAccessibleForFree' => '1'] + $offerMeta;
-        [$post, $wpServiceMock] = $this->getBasicPropertiesTestDependencies($meta);
-        $postToEventSchema      = new PostToEventSchema($wpServiceMock, $post);
-        $schemaArray            = $postToEventSchema->toArray();
-
-        $this->assertArrayNotHasKey('offers', $schemaArray);
-    }
-
-    public function testOffersIsSetIfEventIsNotFree()
-    {
-        $offerMeta              = ['offers' => 1, 'offers_0_name' => 'TestOffer'];
-        $meta                   = ['isAccessibleForFree' => '0'] + $offerMeta;
-        [$post, $wpServiceMock] = $this->getBasicPropertiesTestDependencies($meta);
-        $postToEventSchema      = new PostToEventSchema($wpServiceMock, $post);
-        $schemaArray            = $postToEventSchema->toArray();
-
-        $this->assertArrayHasKey('offers', $schemaArray);
-        $this->assertEquals('TestOffer', $schemaArray['offers'][0]['name']);
-    }
-
     private function getBasicPropertiesTestDependencies(array $additionalMeta = []): array
     {
         /** @var \WP_Post $post */

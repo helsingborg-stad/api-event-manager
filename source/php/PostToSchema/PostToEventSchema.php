@@ -34,7 +34,6 @@ class PostToEventSchema implements Arrayable
         $this->setAbout();
         $this->setImage();
         $this->setIsAccessibleForFree();
-        $this->setOffers();
         $this->setLocation();
         $this->setUrl();
         $this->setAudience();
@@ -150,31 +149,6 @@ class PostToEventSchema implements Arrayable
         $organization->telephone($this->wp->getPostMeta($organizationId, 'telephone', true) ?: null);
 
         $this->event->organizer($organization);
-    }
-
-    private function setOffers(): void
-    {
-        if ($this->event->getProperty('isAccessibleForFree') === true) {
-            return;
-        }
-
-        $offers      = [];
-        $nbrOfOffers = $this->wp->getPostMeta($this->post->ID, 'offers', true) ?: 0;
-
-        for ($i = 0; $i < $nbrOfOffers; $i++) {
-            $offer = new \Spatie\SchemaOrg\Offer();
-            $offer->name($this->wp->getPostMeta($this->post->ID, "offers_{$i}_name", true) ?: null);
-            $offer->url($this->wp->getPostMeta($this->post->ID, "offers_{$i}_url", true) ?: null);
-            $offer->price($this->wp->getPostMeta($this->post->ID, "offers_{$i}_price", true) ?: null);
-
-            if ($offer->getProperty('price') !== null) {
-                $offer->priceCurrency("SEK");
-            }
-
-            $offers[] = $offer;
-        }
-
-        $this->event->offers($offers);
     }
 
     private function setAudience(): void

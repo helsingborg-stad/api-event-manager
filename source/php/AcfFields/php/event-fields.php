@@ -94,100 +94,6 @@
             'ui' => 1,
         ),
         4 => array(
-            'key' => 'field_65a4f8a493691',
-            'label' => __('Offers', 'api-event-manager'),
-            'name' => 'offers',
-            'aria-label' => '',
-            'type' => 'repeater',
-            'instructions' => '',
-            'required' => 0,
-            'conditional_logic' => array(
-                0 => array(
-                    0 => array(
-                        'field' => 'field_65a15156f4c37',
-                        'operator' => '!=',
-                        'value' => '1',
-                    ),
-                ),
-            ),
-            'wrapper' => array(
-                'width' => '',
-                'class' => '',
-                'id' => '',
-            ),
-            'layout' => 'table',
-            'pagination' => 0,
-            'min' => 0,
-            'max' => 0,
-            'collapsed' => '',
-            'button_label' => __('Lägg till rad', 'api-event-manager'),
-            'rows_per_page' => 20,
-            'sub_fields' => array(
-                0 => array(
-                    'key' => 'field_65a4f92093694',
-                    'label' => __('Name', 'api-event-manager'),
-                    'name' => 'name',
-                    'aria-label' => '',
-                    'type' => 'text',
-                    'instructions' => '',
-                    'required' => 0,
-                    'conditional_logic' => 0,
-                    'wrapper' => array(
-                        'width' => '',
-                        'class' => '',
-                        'id' => '',
-                    ),
-                    'default_value' => '',
-                    'maxlength' => '',
-                    'placeholder' => '',
-                    'prepend' => '',
-                    'append' => '',
-                    'parent_repeater' => 'field_65a4f8a493691',
-                ),
-                1 => array(
-                    'key' => 'field_65a4f8e293692',
-                    'label' => __('Price', 'api-event-manager'),
-                    'name' => 'price',
-                    'aria-label' => '',
-                    'type' => 'number',
-                    'instructions' => '',
-                    'required' => 0,
-                    'conditional_logic' => 0,
-                    'wrapper' => array(
-                        'width' => '',
-                        'class' => '',
-                        'id' => '',
-                    ),
-                    'default_value' => '',
-                    'min' => 0,
-                    'max' => '',
-                    'placeholder' => '',
-                    'step' => '',
-                    'prepend' => '',
-                    'append' => __('SEK', 'api-event-manager'),
-                    'parent_repeater' => 'field_65a4f8a493691',
-                ),
-                2 => array(
-                    'key' => 'field_65a4f91693693',
-                    'label' => __('URL', 'api-event-manager'),
-                    'name' => 'url',
-                    'aria-label' => '',
-                    'type' => 'url',
-                    'instructions' => '',
-                    'required' => 0,
-                    'conditional_logic' => 0,
-                    'wrapper' => array(
-                        'width' => '',
-                        'class' => '',
-                        'id' => '',
-                    ),
-                    'default_value' => '',
-                    'placeholder' => '',
-                    'parent_repeater' => 'field_65a4f8a493691',
-                ),
-            ),
-        ),
-        5 => array(
             'key' => 'field_65a245c3a4062',
             'label' => __('Location', 'api-event-manager'),
             'name' => 'location',
@@ -206,7 +112,7 @@
             'zoom' => '',
             'height' => '',
         ),
-        6 => array(
+        5 => array(
             'key' => 'field_65a4f6af50302',
             'label' => __('Organizer', 'api-event-manager'),
             'name' => 'organizer',
@@ -235,7 +141,7 @@
             'bidirectional_target' => array(
             ),
         ),
-        7 => array(
+        6 => array(
             'key' => 'field_65a52a6374b0c',
             'label' => __('Audience', 'api-event-manager'),
             'name' => 'audience',
@@ -261,7 +167,7 @@
             'bidirectional_target' => array(
             ),
         ),
-        8 => array(
+        7 => array(
             'key' => 'field_65a52bf7f7e4d',
             'label' => __('Typical age rande start', 'api-event-manager'),
             'name' => 'typicalAgeRangeStart',
@@ -283,7 +189,7 @@
             'prepend' => '',
             'append' => '',
         ),
-        9 => array(
+        8 => array(
             'key' => 'field_65a52c24f7e4e',
             'label' => __('Typical age range end', 'api-event-manager'),
             'name' => 'typicalAgeRangeEnd',
@@ -303,7 +209,7 @@
             'prepend' => '',
             'append' => '',
         ),
-        10 => array(
+        9 => array(
             'key' => 'field_65a66d8cadeef',
             'label' => __('Occasions', 'api-event-manager'),
             'name' => 'occasions',
