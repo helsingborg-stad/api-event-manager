@@ -2,6 +2,7 @@
 
 namespace EventManager\Tests\ApiResponseModifiers;
 
+use EventManager\Services\WPService\WPService;
 use Mockery;
 use WP_Mock;
 use WP_Mock\Tools\TestCase;
@@ -16,7 +17,7 @@ class EventTest extends TestCase
         $mockPost         = Mockery::mock('WP_Post');
         $mockResponse     = Mockery::mock('WP_REST_Response');
         $mockRequest      = Mockery::mock('WP_REST_Request');
-        $mockPostToSchema = Mockery::mock('EventManager\Helper\PostToSchema\PostToSchemaInterface');
+        $mockPostToSchema = Mockery::mock('EventManager\PostToSchema\PostToSchemaInterface');
 
         $mockRequest->shouldReceive('get_param')->with('context')->andReturn('view');
         WP_Mock::userFunction('rest_ensure_response')->never();
@@ -29,14 +30,22 @@ class EventTest extends TestCase
 
     /**
      * @testdox response is modified in the schema context.
+     * @runInSeparateProcess
      */
     public function testResponseModifiedInSchemaContext()
     {
+        Mockery::mock('alias:\EventManager\Services\WPService\WPServiceFactory')
+            ->shouldReceive('create')
+            ->andReturn(Mockery::mock(WPService::class));
+        Mockery::mock('overload:\EventManager\PostToSchema\PostToEventSchema')
+            ->shouldReceive('toArray')
+            ->andReturn([]);
+
         /** @var \WP_Post $mockPost */
         $mockPost         = $this->mockPost();
         $mockResponse     = Mockery::mock('WP_REST_Response');
         $mockRequest      = Mockery::mock('WP_REST_Request');
-        $mockPostToSchema = Mockery::mock('EventManager\Helper\PostToSchema\PostToSchemaInterface');
+        $mockPostToSchema = Mockery::mock('EventManager\PostToSchema\PostToSchemaInterface');
         $mockPostToSchema->shouldReceive('transform')->with($mockPost)->andReturn([]);
 
         $mockRequest->shouldReceive('get_param')->with('context')->andReturn('schema');

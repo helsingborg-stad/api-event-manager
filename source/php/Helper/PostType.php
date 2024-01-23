@@ -2,25 +2,33 @@
 
 namespace EventManager\Helper;
 
+use EventManager\Services\WPService\WPService;
+
 abstract class PostType implements Hookable
 {
     abstract public function getName(): string;
     abstract public function getArgs(): array;
     abstract public function getLabelSingular(): string;
     abstract public function getLabelPlural(): string;
+    private WPService $wp;
+
+    public function __construct(WPService $wpService)
+    {
+        $this->wp = $wpService;
+    }
 
     public function addHooks(): void
     {
-        add_action('init', [$this, 'registerPostType']);
+        $this->wp->addAction('init', [$this, 'register']);
     }
 
-    public function registerPostType(): void
+    public function register(): void
     {
         $args = array_merge($this->getArgs(), [
             'labels' => $this->getLabels(),
         ]);
 
-        register_post_type($this->getName(), $args);
+        $this->wp->registerPostType($this->getName(), $args);
     }
 
     private function getLabels()

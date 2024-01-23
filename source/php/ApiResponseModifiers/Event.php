@@ -2,8 +2,9 @@
 
 namespace EventManager\ApiResponseModifiers;
 
+use EventManager\Helper\Arrayable;
 use EventManager\Helper\Hookable;
-use EventManager\Helper\PostToSchema\PostToSchemaInterface;
+use EventManager\PostToSchema\PostToEventSchema;
 use WP_Post;
 use WP_REST_Request;
 use WP_REST_Response;
@@ -11,12 +12,7 @@ use WP_REST_Response;
 class Event implements Hookable
 {
     protected string $targetContext = 'schema';
-    protected PostToSchemaInterface $postToSchema;
-
-    public function __construct(PostToSchemaInterface $postToSchema)
-    {
-        $this->postToSchema = $postToSchema;
-    }
+    protected Arrayable $postToSchema;
 
     public function addHooks(): void
     {
@@ -29,8 +25,9 @@ class Event implements Hookable
             return $response;
         }
 
-        $eventSchema = $this->postToSchema->transform($post);
-        return rest_ensure_response($eventSchema);
+        $wp          = \EventManager\Services\WPService\WPServiceFactory::create();
+        $eventSchema = new PostToEventSchema($wp, $post);
+        return rest_ensure_response($eventSchema->toArray());
     }
 
     private function shouldModify(WP_REST_Request $request): bool
