@@ -2,7 +2,7 @@
 
 namespace EventManager\Tests\Help\PostToSchema;
 
-use EventManager\Helper\PostToSchema\PostToEventSchema;
+use EventManager\PostToSchema\PostToEventSchema;
 use EventManager\Services\WPService\WPService;
 use Mockery;
 use WP_Mock\Tools\TestCase;
@@ -13,7 +13,7 @@ class PostToEventSchemaTest extends TestCase
 
     public function testClassExists()
     {
-        $this->assertTrue(class_exists('EventManager\Helper\PostToSchema\PostToEventSchema'));
+        $this->assertTrue(class_exists('EventManager\PostToSchema\PostToEventSchema'));
     }
 
     public function testIdentifierIsSet()

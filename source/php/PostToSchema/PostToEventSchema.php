@@ -1,6 +1,6 @@
 <?php
 
-namespace EventManager\Helper\PostToSchema;
+namespace EventManager\PostToSchema;
 
 use EventManager\Helper\Arrayable;
 use EventManager\Services\WPService\WPService;
@@ -28,30 +28,27 @@ class PostToEventSchema implements Arrayable
 
     private function addPropertiesToEvent()
     {
-        $this->event->identifier($this->post->ID);
-        $this->event->name($this->post->post_title);
+        $this->setIdentifier();
+        $this->setName();
+        $this->setDescription();
+        $this->setAbout();
+        $this->setImage();
+        $this->setIsAccessibleForFree();
+        $this->setOffers();
+        $this->setLocation();
+        $this->setUrl();
+        $this->setAudience();
+        $this->setTypicalAgeRange();
+        $this->setOrganizer();
 
-        $this->event->startDate($this->getStartDate($this->event));
-        $this->event->previousStartDate($this->getPreviousStartDate($this->event));
-        $this->event->endDate($this->wp->getPostMeta($this->post->ID, 'endDate', true) ?: null);
-        $this->event->duration($this->getDuration($this->event));
-
-        $this->event->description($this->wp->getPostMeta($this->post->ID, 'description', true) ?: null);
-        $this->event->about($this->wp->getPostMeta($this->post->ID, 'about', true) ?: null);
-        $this->event->image($this->wp->getThePostThumbnailUrl($this->post->ID) ?: null);
-        $this->event->isAccessibleForFree($this->getIsAccessibleForFree());
-        $this->event->offers($this->getOffers($this->event));
-
-        $this->event->location($this->getLocation());
-
-        $this->event->url($this->wp->getPermalink($this->post->ID));
-        $this->event->audience($this->getAudience());
-        $this->event->typicalAgeRange($this->getTypicalAgeRange());
-        $this->event->organizer($this->getOrganizer());
+        $this->setStartDate();
+        $this->setPreviousStartDate();
+        $this->setEndDate();
+        $this->setDuration();
 
         if ($this->allowRecurse) {
-            $this->event->superEvent($this->getSuperEvent());
-            $this->event->subEvents($this->getSubEvents());
+            $this->setSuperEvent();
+            $this->setSubEvents();
         }
     }
 
@@ -60,17 +57,47 @@ class PostToEventSchema implements Arrayable
         return $this->event->toArray();
     }
 
-    private function getIsAccessibleForFree(): bool
+    private function setIdentifier(): void
     {
-        return (bool)$this->wp->getPostMeta($this->post->ID, 'isAccessibleForFree', true);
+        $this->event->identifier($this->post->ID);
     }
 
-    private function getLocation(): ?\Spatie\SchemaOrg\Place
+    private function setName(): void
+    {
+        $this->event->name($this->post->post_title);
+    }
+
+    private function setDescription(): void
+    {
+        $this->event->description($this->wp->getPostMeta($this->post->ID, 'description', true) ?: null);
+    }
+
+    private function setAbout(): void
+    {
+        $this->event->about($this->wp->getPostMeta($this->post->ID, 'about', true) ?: null);
+    }
+
+    private function setImage(): void
+    {
+        $this->event->image($this->wp->getThePostThumbnailUrl($this->post->ID) ?: null);
+    }
+
+    private function setUrl(): void
+    {
+        $this->event->url($this->wp->getPermalink($this->post->ID));
+    }
+
+    private function setIsAccessibleForFree(): void
+    {
+        $this->event->isAccessibleForFree((bool)$this->wp->getPostMeta($this->post->ID, 'isAccessibleForFree', true));
+    }
+
+    private function setLocation(): void
     {
         $locationMeta = $this->wp->getPostMeta($this->post->ID, 'location', true) ?: null;
 
         if (!$locationMeta) {
-            return null;
+            return;
         }
 
         // Address
@@ -88,37 +115,31 @@ class PostToEventSchema implements Arrayable
         $location->longitude($locationMeta['lng'] ?? null);
         $location->latitude($locationMeta['lat'] ?? null);
 
-        return $location;
+        $this->event->location($location);
     }
 
-    /**
-     * Get the duration of the event in ISO 8601 duration format.
-     *
-     * @param \Spatie\SchemaOrg\Event $event
-     *
-     * @return string|null
-     */
-    private function getDuration(): ?string
+    private function setDuration(): void
     {
         $startDate = $this->event->getProperty('startDate');
         $endDate   = $this->event->getProperty('endDate');
+        $duration  = null;
 
         if ($startDate && $endDate) {
             $startDate = new \DateTime($startDate);
             $endDate   = new \DateTime($endDate);
 
-            return $startDate->diff($endDate)->format('P%yY%mM%dDT%hH%iM%sS');
+            $duration = $startDate->diff($endDate)->format('P%yY%mM%dDT%hH%iM%sS');
         }
 
-        return null;
+        $this->event->duration($duration);
     }
 
-    private function getOrganizer(): ?\Spatie\SchemaOrg\Organization
+    private function setOrganizer(): void
     {
         $organizationId = $this->wp->getPostMeta($this->post->ID, 'organizer', true) ?: null;
 
         if (!$organizationId || !is_numeric($organizationId)) {
-            return null;
+            return;
         }
 
         $organization = new \Spatie\SchemaOrg\Organization();
@@ -128,21 +149,13 @@ class PostToEventSchema implements Arrayable
         $organization->email($this->wp->getPostMeta($organizationId, 'email', true) ?: null);
         $organization->telephone($this->wp->getPostMeta($organizationId, 'telephone', true) ?: null);
 
-        return $organization;
+        $this->event->organizer($organization);
     }
 
-    /**
-     * Get the offers for the event.
-     * If the event is free, return null.
-     *
-     * @param \Spatie\SchemaOrg\Event $event
-     *
-     * @return \Spatie\SchemaOrg\Offer[]|null
-     */
-    private function getOffers(): ?array
+    private function setOffers(): void
     {
         if ($this->event->getProperty('isAccessibleForFree') === true) {
-            return null;
+            return;
         }
 
         $offers      = [];
@@ -161,15 +174,15 @@ class PostToEventSchema implements Arrayable
             $offers[] = $offer;
         }
 
-        return $offers;
+        $this->event->offers($offers);
     }
 
-    private function getAudience(): ?\Spatie\SchemaOrg\Audience
+    private function setAudience(): void
     {
         $audienceId = $this->wp->getPostMeta($this->post->ID, 'audience', true) ?: null;
 
         if (!$audienceId) {
-            return null;
+            return;
         }
 
         // Get audience term
@@ -178,15 +191,16 @@ class PostToEventSchema implements Arrayable
         $audience->identifier((int)$audienceTerm->term_id);
         $audience->name($audienceTerm->name);
 
-        return $audience;
+        $this->event->audience($audience);
     }
 
-    private function getTypicalAgeRange(): ?string
+    private function setTypicalAgeRange(): void
     {
-        $audience = $this->getAudience();
+        $audience = $this->event->getProperty('audience');
+        $range    = null;
 
         if (!$audience || !$audience->getProperty('identifier')) {
-            return null;
+            return;
         }
 
         $termId     = $audience->getProperty('identifier');
@@ -194,60 +208,66 @@ class PostToEventSchema implements Arrayable
         $rangeEnd   = $this->wp->getTermMeta($termId, 'typicalAgeRangeEnd', true) ?: null;
 
         if ($rangeStart && $rangeEnd) {
-            return "{$rangeStart}-{$rangeEnd}";
+            $range = "{$rangeStart}-{$rangeEnd}";
+        } elseif ($rangeStart) {
+            $range = "{$rangeStart}-";
         }
 
-        if ($rangeStart) {
-            return "{$rangeStart}-";
-        }
-
-        return null;
+        $this->event->typicalAgeRange($range);
     }
 
-    private function getPreviousStartDate(): ?string
+    private function setPreviousStartDate(): void
+    {
+        $eventStatus          = $this->event->getProperty('eventStatus');
+        $previousStartDate    = null;
+        $startDate            = $this->wp->getPostMeta($this->post->ID, 'startDate', true) ?: null;
+        $rescheduledStartDate = $this->wp->getPostMeta($this->post->ID, 'rescheduledStartDate', true) ?: null;
+
+
+        if ($eventStatus === 'https://schema.org/EventRescheduled') {
+            $previousStartDate = $startDate;
+        } elseif ($startDate && $rescheduledStartDate) {
+            $previousStartDate = $startDate;
+        }
+
+        $this->event->previousStartDate($previousStartDate);
+    }
+
+    private function setStartDate(): void
     {
         $eventStatus          = $this->event->getProperty('eventStatus');
         $previousStartDate    = $this->wp->getPostMeta($this->post->ID, 'startDate', true) ?: null;
         $rescheduledStartDate = $this->wp->getPostMeta($this->post->ID, 'rescheduledStartDate', true) ?: null;
+        $startDate            = null;
 
         if ($eventStatus === 'https://schema.org/EventRescheduled') {
-            return $previousStartDate;
+            $startDate = $rescheduledStartDate;
+        } else {
+            $startDate = $previousStartDate;
         }
 
-        if ($previousStartDate && $rescheduledStartDate) {
-            return $previousStartDate;
-        }
-
-        return null;
+        $this->event->startDate($startDate);
     }
 
-    private function getStartDate(): ?string
+    private function setEndDate(): void
     {
-        $eventStatus          = $this->event->getProperty('eventStatus');
-        $previousStartDate    = $this->wp->getPostMeta($this->post->ID, 'startDate', true) ?: null;
-        $rescheduledStartDate = $this->wp->getPostMeta($this->post->ID, 'rescheduledStartDate', true) ?: null;
-
-        if ($eventStatus === 'https://schema.org/EventRescheduled') {
-            return $rescheduledStartDate;
-        }
-
-        return $previousStartDate;
+        $this->event->endDate($this->wp->getPostMeta($this->post->ID, 'endDate', true) ?: null);
     }
 
-    private function getSuperEvent(): ?array
+    private function setSuperEvent(): void
     {
         $superEventPost = $this->wp->getPostParent($this->post->ID);
 
         if (!$superEventPost) {
-            return null;
+            return;
         }
 
         $superEvent = new self($this->wp, $superEventPost, false);
 
-        return $superEvent->toArray();
+        $this->event->superEvent($superEvent->toArray());
     }
 
-    private function getSubEvents(): ?array
+    private function setSubEvents(): void
     {
         $subEventPosts = $this->wp->getPosts([
             'post_parent' => $this->post->ID,
@@ -256,13 +276,15 @@ class PostToEventSchema implements Arrayable
         ]);
 
         if (empty($subEventPosts)) {
-            return null;
+            return;
         }
 
-        return array_map(function ($subPost) {
+        $subEvents = array_map(function ($subPost) {
             $subEvent = new self($this->wp, $subPost, false);
 
             return $subEvent->toArray();
         }, $subEventPosts);
+
+        $this->event->subEvents($subEvents);
     }
 }

@@ -2,9 +2,9 @@
 
 namespace EventManager\ApiResponseModifiers;
 
+use EventManager\Helper\Arrayable;
 use EventManager\Helper\Hookable;
-use EventManager\Helper\PostToSchema\PostToEventSchema;
-use EventManager\Helper\PostToSchema\PostToSchemaInterface;
+use EventManager\PostToSchema\PostToEventSchema;
 use WP_Post;
 use WP_REST_Request;
 use WP_REST_Response;
@@ -12,7 +12,7 @@ use WP_REST_Response;
 class Event implements Hookable
 {
     protected string $targetContext = 'schema';
-    protected PostToSchemaInterface $postToSchema;
+    protected Arrayable $postToSchema;
 
     public function addHooks(): void
     {

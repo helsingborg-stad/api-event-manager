@@ -4,7 +4,6 @@ namespace EventManager\Tests\Helper;
 
 use EventManager\Services\WPService\WPService;
 use Mockery;
-use WP_Mock;
 use WP_Mock\Tools\TestCase;
 
 class PostTypeTest extends TestCase
