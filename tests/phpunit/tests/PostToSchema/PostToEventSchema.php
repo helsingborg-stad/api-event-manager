@@ -1,6 +1,6 @@
 <?php
 
-namespace EventManager\Tests\Help\PostToSchema;
+namespace EventManager\Tests\PostToSchema;
 
 use EventManager\PostToSchema\PostToEventSchema;
 use EventManager\Services\WPService\WPService;
