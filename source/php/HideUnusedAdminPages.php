@@ -3,26 +3,34 @@
 namespace EventManager;
 
 use EventManager\Helper\Hookable;
+use EventManager\Services\WPService\WPService;
 
 class HideUnusedAdminPages implements Hookable
 {
+    private WPService $wpService;
+
+    public function __construct(WPService $wpService)
+    {
+        $this->wpService = $wpService;
+    }
+
     public function addHooks(): void
     {
-        add_action('admin_menu', [$this, 'hideUnusedAdminPages']);
+        $this->wpService->addAction('admin_menu', [$this, 'hideUnusedAdminPages']);
     }
 
     public function hideUnusedAdminPages()
     {
-        remove_menu_page('edit.php');
-        remove_menu_page('edit.php?post_type=page');
-        remove_menu_page('link-manager.php');
-        remove_menu_page('edit-comments.php');
-        remove_menu_page('themes.php');
-        remove_menu_page('tools.php');
-        remove_menu_page('index.php');
+        $this->wpService->removeMenuPage('edit.php');
+        $this->wpService->removeMenuPage('edit.php?post_type=page');
+        $this->wpService->removeMenuPage('link-manager.php');
+        $this->wpService->removeMenuPage('edit-comments.php');
+        $this->wpService->removeMenuPage('themes.php');
+        $this->wpService->removeMenuPage('tools.php');
+        $this->wpService->removeMenuPage('index.php');
 
-        remove_submenu_page('options-general.php', 'options-discussion.php');
-        remove_submenu_page('options-general.php', 'options-writing.php');
-        remove_submenu_page('options-general.php', 'options-privacy.php');
+        $this->wpService->removeSubMenuPage('options-general.php', 'options-discussion.php');
+        $this->wpService->removeSubMenuPage('options-general.php', 'options-writing.php');
+        $this->wpService->removeSubMenuPage('options-general.php', 'options-privacy.php');
     }
 }

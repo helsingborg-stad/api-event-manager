@@ -29,11 +29,13 @@ if (file_exists(EVENT_MANAGER_PATH . 'vendor/autoload.php')) {
     require EVENT_MANAGER_PATH . '/vendor/autoload.php';
 }
 
+$wpService = EventManager\Services\WPService\WPServiceFactory::create();
+
 // Disable Gutenberg editor for all post types
-add_filter('use_block_editor_for_post_type', '__return_false');
+$wpService->addFilter('use_block_editor_for_post_type', '__return_false');
 
 // Acf auto import and export
-add_action('acf/init', function () {
+$wpService->addAction('acf/init', function () {
     $acfExportManager = new \AcfExportManager\AcfExportManager();
     $acfExportManager->setTextdomain('api-event-manager');
     $acfExportManager->setExportFolder(EVENT_MANAGER_PATH . 'source/php/AcfFields/');
@@ -48,9 +50,9 @@ add_action('acf/init', function () {
 
 // Start application
 $hooksRegistrar = new EventManager\Helper\HooksRegistrar();
-$app            = new EventManager\App();
+$app            = new EventManager\App($wpService);
 $app->registerHooks($hooksRegistrar);
 
-add_action('plugins_loaded', function () {
+$wpService->addAction('plugins_loaded', function () {
     load_plugin_textdomain('api-event-manager', false, dirname(plugin_basename(__FILE__)) . '/languages');
 });

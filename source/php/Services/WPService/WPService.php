@@ -9,6 +9,13 @@ interface WPService extends
     GetThePostThumbnailUrl,
     GetPermalink,
     GetTerm,
-    GetTermMeta
+    GetTermMeta,
+    GetTheTitle,
+    AddAction,
+    AddFilter,
+    RegisterPostType,
+    RegisterTaxonomy,
+    RemoveMenuPage,
+    RemoveSubMenuPage
 {
 }

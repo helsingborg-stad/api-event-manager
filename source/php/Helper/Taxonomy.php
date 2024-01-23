@@ -2,7 +2,7 @@
 
 namespace EventManager\Helper;
 
-use WP_Term;
+use EventManager\Services\WPService\WPService;
 
 abstract class Taxonomy implements Hookable
 {
@@ -11,10 +11,16 @@ abstract class Taxonomy implements Hookable
     abstract public function getArgs(): array;
     abstract public function getLabelSingular(): string;
     abstract public function getLabelPlural(): string;
+    private WPService $wp;
+
+    public function __construct(WPService $wpService)
+    {
+        $this->wp = $wpService;
+    }
 
     public function addHooks(): void
     {
-        add_action('init', [$this, 'register']);
+        $this->wp->addAction('init', [$this, 'register']);
     }
 
     public function register(): void
@@ -23,7 +29,7 @@ abstract class Taxonomy implements Hookable
             'labels' => $this->getLabels(),
         ]);
 
-        register_taxonomy($this->getName(), $this->getObjectType(), $args);
+        $this->wp->registerTaxonomy($this->getName(), $this->getObjectType(), $args);
     }
 
     private function getLabels()

@@ -57,6 +57,49 @@ class WPServiceFactory
             {
                 return get_term_meta($term_id, $key, $single);
             }
+
+            public function getTheTitle(int|WP_Post $post = 0): string
+            {
+                return get_the_title($post);
+            }
+
+            public function addAction(
+                string $tag,
+                callable $function_to_add,
+                int $priority = 10,
+                int $accepted_args = 1
+            ): bool {
+                return add_action($tag, $function_to_add, $priority, $accepted_args);
+            }
+
+            public function addFilter(
+                string $tag,
+                callable $function_to_add,
+                int $priority = 10,
+                int $accepted_args = 1
+            ): bool {
+                return add_filter($tag, $function_to_add, $priority, $accepted_args);
+            }
+
+            public function registerPostType(string $postType, array $args = []): void
+            {
+                register_post_type($postType, $args);
+            }
+
+            public function registerTaxonomy(string $taxonomy, array|string $objectType, array|string $args = []): void
+            {
+                register_taxonomy($taxonomy, $objectType, $args);
+            }
+
+            public function removeMenuPage(string $menuSlug): array|false
+            {
+                return remove_menu_page($menuSlug);
+            }
+
+            public function removeSubMenuPage(string $menuSlug, string $submenuSlug): array|false
+            {
+                return remove_submenu_page($menuSlug, $submenuSlug);
+            }
         };
     }
 }
