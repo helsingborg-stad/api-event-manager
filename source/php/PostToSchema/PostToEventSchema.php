@@ -254,7 +254,7 @@ class PostToEventSchema implements Arrayable
             return;
         }
 
-        for ($i = 0; $i < $numberOfOccasions; $i++) {
+        $schedules = array_map(function ($i) {
             $repeat    = $this->wp->getPostMeta($this->post->ID, "occasions_{$i}_repeat", true) ?: null;
             $startDate = $this->wp->getPostMeta($this->post->ID, "occasions_{$i}_startDate", true) ?: null;
             $startTime = $this->wp->getPostMeta($this->post->ID, "occasions_{$i}_startTime", true) ?: null;
@@ -262,22 +262,24 @@ class PostToEventSchema implements Arrayable
             $endTime   = $this->wp->getPostMeta($this->post->ID, "occasions_{$i}_endTime", true) ?: null;
 
             if ($repeat === 'no') {
-                continue;
+                return null;
             }
 
             if ($repeat === 'byDay') {
                 $daysInterval    = $this->wp->getPostMeta($this->post->ID, "occasions_{$i}_daysInterval", true) ?: 1;
                 $scheduleFactory = new ScheduleByDayFactory($startDate, $endDate, $startTime, $endTime, $daysInterval);
-                $schedules[$i]   = $scheduleFactory->create();
+                return $scheduleFactory->create();
             }
 
             if ($repeat === 'byWeek') {
                 $daysInterval    = $this->wp->getPostMeta($this->post->ID, "occasions_{$i}_weeksInterval", true) ?: 1;
                 $weekDays        = $this->wp->getPostMeta($this->post->ID, "occasions_{$i}_weekDays", true) ?: [];
                 $scheduleFactory = new ScheduleByWeekFactory($startDate, $endDate, $startTime, $endTime, $daysInterval, $weekDays);
-                $schedules[$i]   = $scheduleFactory->create();
+                return $scheduleFactory->create();
             }
-        }
+        }, range(0, $numberOfOccasions - 1));
+
+        $schedules = array_filter($schedules); // Remove null values
 
         $this->event->eventSchedule($schedules ?: null);
     }
