@@ -3,8 +3,11 @@
 namespace EventManager\PostToSchema;
 
 use EventManager\Helper\Arrayable;
+use EventManager\PostToSchema\Schedule\ScheduleByDayFactory;
+use EventManager\PostToSchema\Schedule\ScheduleByWeekFactory;
 use EventManager\Services\WPService\WPService;
 use Spatie\SchemaOrg\BaseType;
+use Spatie\SchemaOrg\Schedule;
 use WP_Post;
 
 class PostToEventSchema implements Arrayable
@@ -262,88 +265,21 @@ class PostToEventSchema implements Arrayable
                 continue;
             }
 
-            $schedules[$i] = new \Spatie\SchemaOrg\Schedule();
-            $schedules[$i]->startDate($startDate);
-            $schedules[$i]->startTime($startTime);
-            $schedules[$i]->endDate($endDate);
-            $schedules[$i]->endTime($endTime);
-
             if ($repeat === 'byDay') {
                 $daysInterval    = $this->wp->getPostMeta($this->post->ID, "occasions_{$i}_daysInterval", true) ?: 1;
-                $iso8601Interval = "P{$daysInterval}D";
-
-                $schedules[$i]->repeatFrequency($iso8601Interval);
-
-                // Calculate repeat count
-                $startDateTime = new \DateTime($startDate);
-                $endDateTime   = new \DateTime($endDate);
-                $interval      = $startDateTime->diff($endDateTime);
-                $days          = $interval->days;
-                $repeatCount   = ($days + 1) / (int)$daysInterval;
-                $repeatCount   = ceil($repeatCount);
-
-                $schedules[$i]->repeatCount($repeatCount);
+                $scheduleFactory = new ScheduleByDayFactory($startDate, $endDate, $startTime, $endTime, $daysInterval);
+                $schedules[$i]   = $scheduleFactory->create();
             }
 
             if ($repeat === 'byWeek') {
-                $weekDays        = $this->wp->getPostMeta($this->post->ID, "occasions_{$i}_weekDays", true) ?: [];
                 $daysInterval    = $this->wp->getPostMeta($this->post->ID, "occasions_{$i}_weeksInterval", true) ?: 1;
-                $iso8601Interval = "P{$daysInterval}W";
-
-                $schedules[$i]->byDay($weekDays);
-                $schedules[$i]->repeatFrequency($iso8601Interval);
-                $repeatCount = 0;
-
-                for ($j = 0; $j < count($weekDays); $j++) {
-                    $weekDay = $weekDays[$j];
-                    $weekDay = $this->getWeekDayFromString($weekDay);
-
-                    if ($weekDay) {
-                        $repeatCount += $this->countWeekdayOccurrences($startDate, $endDate, $weekDay);
-                    }
-                }
-
-                // ISO-8601 interval
-                $schedules[$i]->repeatCount($repeatCount);
+                $weekDays        = $this->wp->getPostMeta($this->post->ID, "occasions_{$i}_weekDays", true) ?: [];
+                $scheduleFactory = new ScheduleByWeekFactory($startDate, $endDate, $startTime, $endTime, $daysInterval, $weekDays);
+                $schedules[$i]   = $scheduleFactory->create();
             }
         }
 
         $this->event->eventSchedule($schedules ?: null);
-    }
-
-    private function countWeekdayOccurrences($startDate, $endDate, $weekday): int
-    {
-        $startDateTime = new \DateTime($startDate);
-        $endDateTime   = new \DateTime($endDate);
-        $endDateTime   = $endDateTime->modify('+1 day');
-
-        // Get all dates in range
-        $dateRange = new \DatePeriod($startDateTime, new \DateInterval('P1D'), $endDateTime);
-
-        // Count all matching weekdays in range
-        $count = 0;
-
-        foreach ($dateRange as $date) {
-            if ($date->format('l') === $weekday) {
-                $count++;
-            }
-        }
-
-        return $count;
-    }
-
-    private function getWeekDayFromString($weekDay): ?string
-    {
-        $weekDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
-
-        // Get weekday from string that probably contains a single weekday, e.g. "something / Monday".
-        foreach ($weekDays as $day) {
-            if (strpos($weekDay, $day) !== false) {
-                return $day;
-            }
-        }
-
-        return null;
     }
 
     private function setSuperEvent(): void
