@@ -105,6 +105,125 @@ class PostToEventSchemaTest extends TestCase
         $this->assertEquals('1-2', $schemaArray['typicalAgeRange']);
     }
 
+    /**
+     * @testdox Event gets start and end date for simple occation.
+     */
+    public function testEventGetsStartAndEndDateForSimpleOccation()
+    {
+
+        $occasionsMeta = [
+            'occasions'             => 1,
+            'occasions_0_repeat'    => 'no',
+            'occasions_0_startDate' => '2021-03-02',
+            'occasions_0_startTime' => '22:00',
+            'occasions_0_endDate'   => '2021-03-02',
+            'occasions_0_endTime'   => '23:00'
+        ];
+
+        [$post, $wpServiceMock] = $this->getBasicPropertiesTestDependencies($occasionsMeta);
+        $postToEventSchema      = new PostToEventSchema($wpServiceMock, $post);
+        $schemaArray            = $postToEventSchema->toArray();
+
+        $this->assertEquals('2021-03-02 22:00', $schemaArray['startDate']);
+        $this->assertEquals('2021-03-02 23:00', $schemaArray['endDate']);
+    }
+
+    /**
+     * @testdox Event gets duration from start and end date if present.
+     */
+    public function testEventHasDurationIfSimpleOccasion()
+    {
+        $occasionsMeta = [
+            'occasions'             => 1,
+            'occasions_0_repeat'    => 'no',
+            'occasions_0_startDate' => '2021-03-02',
+            'occasions_0_startTime' => '22:00',
+            'occasions_0_endDate'   => '2021-03-02',
+            'occasions_0_endTime'   => '23:00'
+        ];
+
+        [$post, $wpServiceMock] = $this->getBasicPropertiesTestDependencies($occasionsMeta);
+        $postToEventSchema      = new PostToEventSchema($wpServiceMock, $post);
+        $schemaArray            = $postToEventSchema->toArray();
+
+        $this->assertEquals('P0Y0M0DT1H0M0S', $schemaArray['duration']);
+    }
+
+    public function testEventScheduleByDay()
+    {
+        $occasionsMeta = [
+            'occasions'                => 1,
+            'occasions_0_repeat'       => 'byDay',
+            'occasions_0_daysInterval' => '1',
+            'occasions_0_startDate'    => '2021-03-01',
+            'occasions_0_startTime'    => '13:00',
+            'occasions_0_endDate'      => '2021-03-10',
+            'occasions_0_endTime'      => '14:00',
+        ];
+
+        [$post, $wpServiceMock] = $this->getBasicPropertiesTestDependencies($occasionsMeta);
+        $postToEventSchema      = new PostToEventSchema($wpServiceMock, $post);
+        $schemaArray            = $postToEventSchema->toArray();
+        $schedule               = $schemaArray['eventSchedule'][0];
+
+        $this->assertEquals('2021-03-01', $schedule['startDate']);
+        $this->assertEquals('2021-03-10', $schedule['endDate']);
+        $this->assertEquals('13:00', $schedule['startTime']);
+        $this->assertEquals('14:00', $schedule['endTime']);
+    }
+
+    /**
+     * @testdox Event gets duration from start and end date if present.
+     */
+    public function testEventScheduleByEverySecondDay()
+    {
+        $occasionsMeta = [
+            'occasions'                => 1,
+            'occasions_0_repeat'       => 'byDay',
+            'occasions_0_daysInterval' => '2',
+            'occasions_0_startDate'    => '2021-03-01',
+            'occasions_0_startTime'    => '13:00',
+            'occasions_0_endDate'      => '2021-03-11',
+            'occasions_0_endTime'      => '14:00',
+        ];
+
+        [$post, $wpServiceMock] = $this->getBasicPropertiesTestDependencies($occasionsMeta);
+        $postToEventSchema      = new PostToEventSchema($wpServiceMock, $post);
+        $schemaArray            = $postToEventSchema->toArray();
+        $schedule               = $schemaArray['eventSchedule'][0];
+
+        $this->assertEquals('P2D', $schedule['repeatFrequency']);
+        $this->assertEquals(6, $schedule['repeatCount']);
+    }
+
+    public function testEventScheduleByWeek()
+    {
+        $occasionsMeta = [
+            'occasions'                 => 1,
+            'occasions_0_repeat'        => 'byWeek',
+            'occasions_0_weeksInterval' => '1',
+            'occasions_0_weekDays'      => [
+                'https://schema.org/Monday',
+                'https://schema.org/Wednesday',
+            ],
+            'occasions_0_startDate'     => '2024-01-01',
+            'occasions_0_startTime'     => '13:00',
+            'occasions_0_endDate'       => '2024-01-17',
+            'occasions_0_endTime'       => '14:00',
+        ];
+
+        [$post, $wpServiceMock] = $this->getBasicPropertiesTestDependencies($occasionsMeta);
+        $postToEventSchema      = new PostToEventSchema($wpServiceMock, $post);
+        $schemaArray            = $postToEventSchema->toArray();
+        $schedule               = $schemaArray['eventSchedule'][0];
+
+        $this->assertCount(2, $schedule['byDay']);
+        $this->assertContains('https://schema.org/Monday', $schedule['byDay']);
+        $this->assertContains('https://schema.org/Wednesday', $schedule['byDay']);
+        $this->assertEquals('P1W', $schedule['repeatFrequency']);
+        $this->assertEquals(6, $schedule['repeatCount']);
+    }
+
     private function getBasicPropertiesTestDependencies(array $additionalMeta = []): array
     {
         /** @var \WP_Post $post */

@@ -353,7 +353,7 @@
                     "label": "Day",
                     "name": "weekDays",
                     "aria-label": "",
-                    "type": "button_group",
+                    "type": "checkbox",
                     "instructions": "",
                     "required": 1,
                     "conditional_logic": [
@@ -371,18 +371,21 @@
                         "id": ""
                     },
                     "choices": {
-                        "Monday": "Mon",
-                        "Tuesday": "Tue",
-                        "Wednesday": "Wed",
-                        "Thursday": "Thu",
-                        "Friday": "Fri",
-                        "Saturday": "Sat",
-                        "Sunday": "Sun"
+                        "https:\/\/schema.org\/Monday": "Mon",
+                        "https:\/\/schema.org\/Tuesday": "Tue",
+                        "https:\/\/schema.org\/Wednesday": "Wed",
+                        "https:\/\/schema.org\/Thursday": "Thu",
+                        "https:\/\/schema.org\/Friday": "Fri",
+                        "https:\/\/schema.org\/Saturday": "Sat",
+                        "https:\/\/schema.org\/Sunday": "Sun"
                     },
-                    "default_value": "",
+                    "default_value": [],
                     "return_format": "value",
-                    "allow_null": 0,
+                    "allow_custom": 0,
                     "layout": "horizontal",
+                    "toggle": 0,
+                    "save_custom": 0,
+                    "custom_choice_button_text": "L\u00e4gg till nytt val",
                     "parent_repeater": "field_65a66d8cadeef"
                 },
                 {

@@ -41,9 +41,9 @@ class PostToEventSchema implements Arrayable
         $this->setOrganizer();
 
         $this->setStartDate();
-        $this->setPreviousStartDate();
         $this->setEndDate();
         $this->setDuration();
+        $this->setSchedule();
 
         if ($this->allowRecurse) {
             $this->setSuperEvent();
@@ -117,22 +117,6 @@ class PostToEventSchema implements Arrayable
         $this->event->location($location);
     }
 
-    private function setDuration(): void
-    {
-        $startDate = $this->event->getProperty('startDate');
-        $endDate   = $this->event->getProperty('endDate');
-        $duration  = null;
-
-        if ($startDate && $endDate) {
-            $startDate = new \DateTime($startDate);
-            $endDate   = new \DateTime($endDate);
-
-            $duration = $startDate->diff($endDate)->format('P%yY%mM%dDT%hH%iM%sS');
-        }
-
-        $this->event->duration($duration);
-    }
-
     private function setOrganizer(): void
     {
         $organizationId = $this->wp->getPostMeta($this->post->ID, 'organizer', true) ?: null;
@@ -190,42 +174,176 @@ class PostToEventSchema implements Arrayable
         $this->event->typicalAgeRange($range);
     }
 
-    private function setPreviousStartDate(): void
-    {
-        $eventStatus          = $this->event->getProperty('eventStatus');
-        $previousStartDate    = null;
-        $startDate            = $this->wp->getPostMeta($this->post->ID, 'startDate', true) ?: null;
-        $rescheduledStartDate = $this->wp->getPostMeta($this->post->ID, 'rescheduledStartDate', true) ?: null;
-
-
-        if ($eventStatus === 'https://schema.org/EventRescheduled') {
-            $previousStartDate = $startDate;
-        } elseif ($startDate && $rescheduledStartDate) {
-            $previousStartDate = $startDate;
-        }
-
-        $this->event->previousStartDate($previousStartDate);
-    }
-
     private function setStartDate(): void
     {
-        $eventStatus          = $this->event->getProperty('eventStatus');
-        $previousStartDate    = $this->wp->getPostMeta($this->post->ID, 'startDate', true) ?: null;
-        $rescheduledStartDate = $this->wp->getPostMeta($this->post->ID, 'rescheduledStartDate', true) ?: null;
-        $startDate            = null;
+        $numberOfOccasions = $this->wp->getPostMeta($this->post->ID, 'occasions', true) ?: [];
+        $dateTime          = null;
 
-        if ($eventStatus === 'https://schema.org/EventRescheduled') {
-            $startDate = $rescheduledStartDate;
-        } else {
-            $startDate = $previousStartDate;
+        if (!is_numeric($numberOfOccasions) || (int)$numberOfOccasions !== 1) {
+            return;
         }
 
-        $this->event->startDate($startDate);
+        $repeat = $this->wp->getPostMeta($this->post->ID, 'occasions_0_repeat', true) ?: null;
+        $date   = $this->wp->getPostMeta($this->post->ID, 'occasions_0_startDate', true) ?: null;
+        $time   = $this->wp->getPostMeta($this->post->ID, 'occasions_0_startTime', true) ?: null;
+
+        if ($repeat !== 'no') {
+            return;
+        }
+
+        // Combine date and time
+        if ($date && $time) {
+            $date     = new \DateTime("{$date} {$time}");
+            $dateTime = $date->format('Y-m-d H:i');
+        }
+
+        $this->event->startDate($dateTime);
     }
 
     private function setEndDate(): void
     {
-        $this->event->endDate($this->wp->getPostMeta($this->post->ID, 'endDate', true) ?: null);
+        $numberOfOccasions = $this->wp->getPostMeta($this->post->ID, 'occasions', true) ?: [];
+        $dateTime          = null;
+
+        if (!is_numeric($numberOfOccasions) || (int)$numberOfOccasions !== 1) {
+            return;
+        }
+
+        $repeat = $this->wp->getPostMeta($this->post->ID, 'occasions_0_repeat', true) ?: null;
+        $date   = $this->wp->getPostMeta($this->post->ID, 'occasions_0_endDate', true) ?: null;
+        $time   = $this->wp->getPostMeta($this->post->ID, 'occasions_0_endTime', true) ?: null;
+
+        if ($repeat !== 'no') {
+            return;
+        }
+
+        // Combine date and time
+        if ($date && $time) {
+            $date     = new \DateTime("{$date} {$time}");
+            $dateTime = $date->format('Y-m-d H:i');
+        }
+
+        $this->event->endDate($dateTime);
+    }
+
+    private function setDuration(): void
+    {
+        $startDate = $this->event->getProperty('startDate');
+        $endDate   = $this->event->getProperty('endDate');
+        $duration  = null;
+
+        if ($startDate && $endDate) {
+            $startDate = new \DateTime($startDate);
+            $endDate   = new \DateTime($endDate);
+
+            $duration = $startDate->diff($endDate)->format('P%yY%mM%dDT%hH%iM%sS');
+        }
+
+        $this->event->duration($duration);
+    }
+
+    private function setSchedule(): void
+    {
+        $schedules         = [];
+        $numberOfOccasions = $this->wp->getPostMeta($this->post->ID, 'occasions', true) ?: [];
+
+        if (!is_numeric($numberOfOccasions) || (int)$numberOfOccasions < 1) {
+            return;
+        }
+
+        for ($i = 0; $i < $numberOfOccasions; $i++) {
+            $repeat    = $this->wp->getPostMeta($this->post->ID, "occasions_{$i}_repeat", true) ?: null;
+            $startDate = $this->wp->getPostMeta($this->post->ID, "occasions_{$i}_startDate", true) ?: null;
+            $startTime = $this->wp->getPostMeta($this->post->ID, "occasions_{$i}_startTime", true) ?: null;
+            $endDate   = $this->wp->getPostMeta($this->post->ID, "occasions_{$i}_endDate", true) ?: null;
+            $endTime   = $this->wp->getPostMeta($this->post->ID, "occasions_{$i}_endTime", true) ?: null;
+
+            if ($repeat === 'no') {
+                continue;
+            }
+
+            $schedules[$i] = new \Spatie\SchemaOrg\Schedule();
+            $schedules[$i]->startDate($startDate);
+            $schedules[$i]->startTime($startTime);
+            $schedules[$i]->endDate($endDate);
+            $schedules[$i]->endTime($endTime);
+
+            if ($repeat === 'byDay') {
+                $daysInterval    = $this->wp->getPostMeta($this->post->ID, "occasions_{$i}_daysInterval", true) ?: 1;
+                $iso8601Interval = "P{$daysInterval}D";
+
+                $schedules[$i]->repeatFrequency($iso8601Interval);
+
+                // Calculate repeat count
+                $startDateTime = new \DateTime($startDate);
+                $endDateTime   = new \DateTime($endDate);
+                $interval      = $startDateTime->diff($endDateTime);
+                $days          = $interval->days;
+                $repeatCount   = ($days + 1) / (int)$daysInterval;
+                $repeatCount   = ceil($repeatCount);
+
+                $schedules[$i]->repeatCount($repeatCount);
+            }
+
+            if ($repeat === 'byWeek') {
+                $weekDays        = $this->wp->getPostMeta($this->post->ID, "occasions_{$i}_weekDays", true) ?: [];
+                $daysInterval    = $this->wp->getPostMeta($this->post->ID, "occasions_{$i}_weeksInterval", true) ?: 1;
+                $iso8601Interval = "P{$daysInterval}W";
+
+                $schedules[$i]->byDay($weekDays);
+                $schedules[$i]->repeatFrequency($iso8601Interval);
+                $repeatCount = 0;
+
+                for ($j = 0; $j < count($weekDays); $j++) {
+                    $weekDay = $weekDays[$j];
+                    $weekDay = $this->getWeekDayFromString($weekDay);
+
+                    if ($weekDay) {
+                        $repeatCount += $this->countWeekdayOccurrences($startDate, $endDate, $weekDay);
+                    }
+                }
+
+                // ISO-8601 interval
+                $schedules[$i]->repeatCount($repeatCount);
+            }
+        }
+
+        $this->event->eventSchedule($schedules ?: null);
+    }
+
+    private function countWeekdayOccurrences($startDate, $endDate, $weekday): int
+    {
+        $startDateTime = new \DateTime($startDate);
+        $endDateTime   = new \DateTime($endDate);
+        $endDateTime   = $endDateTime->modify('+1 day');
+
+        // Get all dates in range
+        $dateRange = new \DatePeriod($startDateTime, new \DateInterval('P1D'), $endDateTime);
+
+        // Count all matching weekdays in range
+        $count = 0;
+
+        foreach ($dateRange as $date) {
+            if ($date->format('l') === $weekday) {
+                $count++;
+            }
+        }
+
+        return $count;
+    }
+
+    private function getWeekDayFromString($weekDay): ?string
+    {
+        $weekDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+
+        // Get weekday from string that probably contains a single weekday, e.g. "something / Monday".
+        foreach ($weekDays as $day) {
+            if (strpos($weekDay, $day) !== false) {
+                return $day;
+            }
+        }
+
+        return null;
     }
 
     private function setSuperEvent(): void
