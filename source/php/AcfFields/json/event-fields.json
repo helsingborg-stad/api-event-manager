@@ -470,7 +470,7 @@
                         [
                             {
                                 "field": "field_65a689f5a4918",
-                                "operator": "==",
+                                "operator": "!=",
                                 "value": "day"
                             }
                         ]
@@ -482,13 +482,13 @@
                     },
                     "choices": {
                         "Day": "Day",
-                        "Monday": "Monday",
-                        "Tuesday": "Tuesday",
-                        "Wednesday": "Wednesday",
-                        "Thursday": "Thursday",
-                        "Friday": "Friday",
-                        "Saturday": "Saturday",
-                        "Sunday": "Sunday"
+                        "https:\/\/schema.org\/Monday": "Monday",
+                        "https:\/\/schema.org\/Tuesday": "Tuesday",
+                        "https:\/\/schema.org\/Wednesday": "Wednesday",
+                        "https:\/\/schema.org\/Thursday": "Thursday",
+                        "https:\/\/schema.org\/Friday": "Friday",
+                        "https:\/\/schema.org\/Saturday": "Saturday",
+                        "https:\/\/schema.org\/Sunday": "Sunday"
                     },
                     "default_value": false,
                     "return_format": "value",

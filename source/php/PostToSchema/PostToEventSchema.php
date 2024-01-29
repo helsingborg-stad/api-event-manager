@@ -4,6 +4,7 @@ namespace EventManager\PostToSchema;
 
 use EventManager\Helper\Arrayable;
 use EventManager\PostToSchema\Schedule\ScheduleByDayFactory;
+use EventManager\PostToSchema\Schedule\ScheduleByMonthFactory;
 use EventManager\PostToSchema\Schedule\ScheduleByWeekFactory;
 use EventManager\Services\WPService\WPService;
 use Spatie\SchemaOrg\BaseType;
@@ -261,21 +262,25 @@ class PostToEventSchema implements Arrayable
             $endDate   = $this->wp->getPostMeta($this->post->ID, "occasions_{$i}_endDate", true) ?: null;
             $endTime   = $this->wp->getPostMeta($this->post->ID, "occasions_{$i}_endTime", true) ?: null;
 
-            if ($repeat === 'no') {
-                return null;
-            }
-
-            if ($repeat === 'byDay') {
-                $daysInterval    = $this->wp->getPostMeta($this->post->ID, "occasions_{$i}_daysInterval", true) ?: 1;
-                $scheduleFactory = new ScheduleByDayFactory($startDate, $endDate, $startTime, $endTime, $daysInterval);
-                return $scheduleFactory->create();
-            }
-
-            if ($repeat === 'byWeek') {
-                $daysInterval    = $this->wp->getPostMeta($this->post->ID, "occasions_{$i}_weeksInterval", true) ?: 1;
-                $weekDays        = $this->wp->getPostMeta($this->post->ID, "occasions_{$i}_weekDays", true) ?: [];
-                $scheduleFactory = new ScheduleByWeekFactory($startDate, $endDate, $startTime, $endTime, $daysInterval, $weekDays);
-                return $scheduleFactory->create();
+            switch ($repeat) {
+                case 'byDay':
+                    $daysInterval    = $this->wp->getPostMeta($this->post->ID, "occasions_{$i}_daysInterval", true) ?: 1;
+                    $scheduleFactory = new ScheduleByDayFactory($startDate, $endDate, $startTime, $endTime, $daysInterval);
+                    return $scheduleFactory->create();
+                case 'byWeek':
+                    $daysInterval    = $this->wp->getPostMeta($this->post->ID, "occasions_{$i}_weeksInterval", true) ?: 1;
+                    $weekDays        = $this->wp->getPostMeta($this->post->ID, "occasions_{$i}_weekDays", true) ?: [];
+                    $scheduleFactory = new ScheduleByWeekFactory($startDate, $endDate, $startTime, $endTime, $daysInterval, $weekDays);
+                    return $scheduleFactory->create();
+                case 'byMonth':
+                    $daysInterval    = $this->wp->getPostMeta($this->post->ID, "occasions_{$i}_monthsInterval", true) ?: 1;
+                    $monthDay        = $this->wp->getPostMeta($this->post->ID, "occasions_{$i}_monthDay", true) ?: 'day';
+                    $monthDayNumber  = $this->wp->getPostMeta($this->post->ID, "occasions_{$i}_monthDayNumber", true) ?: null;
+                    $monthDayLiteral = $this->wp->getPostMeta($this->post->ID, "occasions_{$i}_monthDayLiteral", true) ?: null;
+                    $scheduleFactory = new ScheduleByMonthFactory($startDate, $endDate, $startTime, $endTime, $daysInterval, $monthDay, $monthDayNumber, $monthDayLiteral);
+                    return $scheduleFactory->create();
+                dafault:
+                    return null;
             }
         }, range(0, $numberOfOccasions - 1));
 

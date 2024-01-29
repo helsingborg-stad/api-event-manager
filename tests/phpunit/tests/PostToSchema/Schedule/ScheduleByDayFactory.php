@@ -14,12 +14,11 @@ class ScheduleByDayFactoryTest extends TestCase
     {
         $schemaFactory = new ScheduleByDayFactory('2021-03-01', '2021-03-10', '13:00', '14:00', '1');
         $schedule      = $schemaFactory->create();
-        $scheduleArray = $schedule->toArray();
 
-        $this->assertEquals('2021-03-01', $scheduleArray['startDate']);
-        $this->assertEquals('2021-03-10', $scheduleArray['endDate']);
-        $this->assertEquals('13:00', $scheduleArray['startTime']);
-        $this->assertEquals('14:00', $scheduleArray['endTime']);
+        $this->assertEquals('2021-03-01', $schedule->getProperty('startDate'));
+        $this->assertEquals('2021-03-10', $schedule->getProperty('endDate'));
+        $this->assertEquals('13:00', $schedule->getProperty('startTime'));
+        $this->assertEquals('14:00', $schedule->getProperty('endTime'));
     }
 
     /**
@@ -29,9 +28,8 @@ class ScheduleByDayFactoryTest extends TestCase
     {
         $schemaFactory = new ScheduleByDayFactory('2021-03-01', '2021-03-11', '13:00', '14:00', '2');
         $schedule      = $schemaFactory->create();
-        $scheduleArray = $schedule->toArray();
 
-        $this->assertEquals('P2D', $scheduleArray['repeatFrequency']);
+        $this->assertEquals('P2D', $schedule->getProperty('repeatFrequency'));
     }
 
 
