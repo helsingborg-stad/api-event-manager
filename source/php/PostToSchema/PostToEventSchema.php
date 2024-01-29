@@ -3,8 +3,12 @@
 namespace EventManager\PostToSchema;
 
 use EventManager\Helper\Arrayable;
+use EventManager\PostToSchema\Schedule\ScheduleByDayFactory;
+use EventManager\PostToSchema\Schedule\ScheduleByMonthFactory;
+use EventManager\PostToSchema\Schedule\ScheduleByWeekFactory;
 use EventManager\Services\WPService\WPService;
 use Spatie\SchemaOrg\BaseType;
+use Spatie\SchemaOrg\Schedule;
 use WP_Post;
 
 class PostToEventSchema implements Arrayable
@@ -34,7 +38,6 @@ class PostToEventSchema implements Arrayable
         $this->setAbout();
         $this->setImage();
         $this->setIsAccessibleForFree();
-        $this->setOffers();
         $this->setLocation();
         $this->setUrl();
         $this->setAudience();
@@ -42,9 +45,9 @@ class PostToEventSchema implements Arrayable
         $this->setOrganizer();
 
         $this->setStartDate();
-        $this->setPreviousStartDate();
         $this->setEndDate();
         $this->setDuration();
+        $this->setSchedule();
 
         if ($this->allowRecurse) {
             $this->setSuperEvent();
@@ -118,22 +121,6 @@ class PostToEventSchema implements Arrayable
         $this->event->location($location);
     }
 
-    private function setDuration(): void
-    {
-        $startDate = $this->event->getProperty('startDate');
-        $endDate   = $this->event->getProperty('endDate');
-        $duration  = null;
-
-        if ($startDate && $endDate) {
-            $startDate = new \DateTime($startDate);
-            $endDate   = new \DateTime($endDate);
-
-            $duration = $startDate->diff($endDate)->format('P%yY%mM%dDT%hH%iM%sS');
-        }
-
-        $this->event->duration($duration);
-    }
-
     private function setOrganizer(): void
     {
         $organizationId = $this->wp->getPostMeta($this->post->ID, 'organizer', true) ?: null;
@@ -150,31 +137,6 @@ class PostToEventSchema implements Arrayable
         $organization->telephone($this->wp->getPostMeta($organizationId, 'telephone', true) ?: null);
 
         $this->event->organizer($organization);
-    }
-
-    private function setOffers(): void
-    {
-        if ($this->event->getProperty('isAccessibleForFree') === true) {
-            return;
-        }
-
-        $offers      = [];
-        $nbrOfOffers = $this->wp->getPostMeta($this->post->ID, 'offers', true) ?: 0;
-
-        for ($i = 0; $i < $nbrOfOffers; $i++) {
-            $offer = new \Spatie\SchemaOrg\Offer();
-            $offer->name($this->wp->getPostMeta($this->post->ID, "offers_{$i}_name", true) ?: null);
-            $offer->url($this->wp->getPostMeta($this->post->ID, "offers_{$i}_url", true) ?: null);
-            $offer->price($this->wp->getPostMeta($this->post->ID, "offers_{$i}_price", true) ?: null);
-
-            if ($offer->getProperty('price') !== null) {
-                $offer->priceCurrency("SEK");
-            }
-
-            $offers[] = $offer;
-        }
-
-        $this->event->offers($offers);
     }
 
     private function setAudience(): void
@@ -216,42 +178,139 @@ class PostToEventSchema implements Arrayable
         $this->event->typicalAgeRange($range);
     }
 
-    private function setPreviousStartDate(): void
-    {
-        $eventStatus          = $this->event->getProperty('eventStatus');
-        $previousStartDate    = null;
-        $startDate            = $this->wp->getPostMeta($this->post->ID, 'startDate', true) ?: null;
-        $rescheduledStartDate = $this->wp->getPostMeta($this->post->ID, 'rescheduledStartDate', true) ?: null;
-
-
-        if ($eventStatus === 'https://schema.org/EventRescheduled') {
-            $previousStartDate = $startDate;
-        } elseif ($startDate && $rescheduledStartDate) {
-            $previousStartDate = $startDate;
-        }
-
-        $this->event->previousStartDate($previousStartDate);
-    }
-
     private function setStartDate(): void
     {
-        $eventStatus          = $this->event->getProperty('eventStatus');
-        $previousStartDate    = $this->wp->getPostMeta($this->post->ID, 'startDate', true) ?: null;
-        $rescheduledStartDate = $this->wp->getPostMeta($this->post->ID, 'rescheduledStartDate', true) ?: null;
-        $startDate            = null;
+        $numberOfOccasions = $this->wp->getPostMeta($this->post->ID, 'occasions', true) ?: [];
+        $dateTime          = null;
 
-        if ($eventStatus === 'https://schema.org/EventRescheduled') {
-            $startDate = $rescheduledStartDate;
-        } else {
-            $startDate = $previousStartDate;
+        if (!is_numeric($numberOfOccasions) || (int)$numberOfOccasions !== 1) {
+            return;
         }
 
-        $this->event->startDate($startDate);
+        $repeat = $this->wp->getPostMeta($this->post->ID, 'occasions_0_repeat', true) ?: null;
+        $date   = $this->wp->getPostMeta($this->post->ID, 'occasions_0_startDate', true) ?: null;
+        $time   = $this->wp->getPostMeta($this->post->ID, 'occasions_0_startTime', true) ?: null;
+
+        if ($repeat !== 'no') {
+            return;
+        }
+
+        // Combine date and time
+        if ($date && $time) {
+            $date     = new \DateTime("{$date} {$time}");
+            $dateTime = $date->format('Y-m-d H:i');
+        }
+
+        $this->event->startDate($dateTime);
     }
 
     private function setEndDate(): void
     {
-        $this->event->endDate($this->wp->getPostMeta($this->post->ID, 'endDate', true) ?: null);
+        $numberOfOccasions = $this->wp->getPostMeta($this->post->ID, 'occasions', true) ?: [];
+        $dateTime          = null;
+
+        if (!is_numeric($numberOfOccasions) || (int)$numberOfOccasions !== 1) {
+            return;
+        }
+
+        $repeat = $this->wp->getPostMeta($this->post->ID, 'occasions_0_repeat', true) ?: null;
+        $date   = $this->wp->getPostMeta($this->post->ID, 'occasions_0_endDate', true) ?: null;
+        $time   = $this->wp->getPostMeta($this->post->ID, 'occasions_0_endTime', true) ?: null;
+
+        if ($repeat !== 'no') {
+            return;
+        }
+
+        // Combine date and time
+        if ($date && $time) {
+            $date     = new \DateTime("{$date} {$time}");
+            $dateTime = $date->format('Y-m-d H:i');
+        }
+
+        $this->event->endDate($dateTime);
+    }
+
+    private function setDuration(): void
+    {
+        $startDate = $this->event->getProperty('startDate');
+        $endDate   = $this->event->getProperty('endDate');
+        $duration  = null;
+
+        if ($startDate && $endDate) {
+            $startDate = new \DateTime($startDate);
+            $endDate   = new \DateTime($endDate);
+
+            $duration = $startDate->diff($endDate)->format('P%yY%mM%dDT%hH%iM%sS');
+        }
+
+        $this->event->duration($duration);
+    }
+
+    private function setSchedule(): void
+    {
+        $schedules         = [];
+        $numberOfOccasions = $this->wp->getPostMeta($this->post->ID, 'occasions', true) ?: [];
+
+        if (!is_numeric($numberOfOccasions) || (int)$numberOfOccasions < 1) {
+            return;
+        }
+
+        $getMetaRow = fn ($i, $key) => $this->wp->getPostMeta($this->post->ID, "occasions_{$i}_{$key}", true) ?: null;
+
+        $schedules = array_map(function ($i) use ($getMetaRow) {
+            $repeat    = $getMetaRow($i, 'repeat');
+            $startDate = $getMetaRow($i, 'startDate');
+            $startTime = $getMetaRow($i, 'startTime');
+            $endDate   = $getMetaRow($i, 'endDate');
+            $endTime   = $getMetaRow($i, 'endTime');
+
+            switch ($repeat) {
+                case 'byDay':
+                    $daysInterval    = $getMetaRow($i, 'daysInterval') ?: 1;
+                    $scheduleFactory = new ScheduleByDayFactory(
+                        $startDate,
+                        $endDate,
+                        $startTime,
+                        $endTime,
+                        $daysInterval
+                    );
+                    return $scheduleFactory->create();
+                case 'byWeek':
+                    $daysInterval    = $getMetaRow($i, 'weeksInterval') ?: 1;
+                    $weekDays        = $getMetaRow($i, 'weekDays') ?: [];
+                    $scheduleFactory = new ScheduleByWeekFactory(
+                        $startDate,
+                        $endDate,
+                        $startTime,
+                        $endTime,
+                        $daysInterval,
+                        $weekDays
+                    );
+                    return $scheduleFactory->create();
+                case 'byMonth':
+                    $daysInterval    = $getMetaRow($i, 'monthsInterval') ?: 1;
+                    $monthDay        = $getMetaRow($i, 'monthDay') ?: null;
+                    $monthDayNumber  = $getMetaRow($i, 'monthDayNumber') ?: null;
+                    $monthDayLiteral = $getMetaRow($i, 'monthDayLiteral') ?: null;
+                    $scheduleFactory = new ScheduleByMonthFactory(
+                        $startDate,
+                        $endDate,
+                        $startTime,
+                        $endTime,
+                        $daysInterval,
+                        $monthDay,
+                        $monthDayNumber,
+                        $monthDayLiteral
+                    );
+                    return $scheduleFactory->create();
+                dafault:
+                    return null;
+            }
+        }, range(0, $numberOfOccasions - 1));
+
+        $schedules = array_filter($schedules); // Remove null values
+
+        $this->event->eventSchedule($schedules ?: null);
     }
 
     private function setSuperEvent(): void

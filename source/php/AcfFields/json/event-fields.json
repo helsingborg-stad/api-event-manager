@@ -91,100 +91,6 @@
             "ui": 1
         },
         {
-            "key": "field_65a4f8a493691",
-            "label": "Offers",
-            "name": "offers",
-            "aria-label": "",
-            "type": "repeater",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_65a15156f4c37",
-                        "operator": "!=",
-                        "value": "1"
-                    }
-                ]
-            ],
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "layout": "table",
-            "pagination": 0,
-            "min": 0,
-            "max": 0,
-            "collapsed": "",
-            "button_label": "L\u00e4gg till rad",
-            "rows_per_page": 20,
-            "sub_fields": [
-                {
-                    "key": "field_65a4f92093694",
-                    "label": "Name",
-                    "name": "name",
-                    "aria-label": "",
-                    "type": "text",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "default_value": "",
-                    "maxlength": "",
-                    "placeholder": "",
-                    "prepend": "",
-                    "append": "",
-                    "parent_repeater": "field_65a4f8a493691"
-                },
-                {
-                    "key": "field_65a4f8e293692",
-                    "label": "Price",
-                    "name": "price",
-                    "aria-label": "",
-                    "type": "number",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "default_value": "",
-                    "min": 0,
-                    "max": "",
-                    "placeholder": "",
-                    "step": "",
-                    "prepend": "",
-                    "append": "SEK",
-                    "parent_repeater": "field_65a4f8a493691"
-                },
-                {
-                    "key": "field_65a4f91693693",
-                    "label": "URL",
-                    "name": "url",
-                    "aria-label": "",
-                    "type": "url",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "default_value": "",
-                    "placeholder": "",
-                    "parent_repeater": "field_65a4f8a493691"
-                }
-            ]
-        },
-        {
             "key": "field_65a245c3a4062",
             "label": "Location",
             "name": "location",
@@ -447,7 +353,7 @@
                     "label": "Day",
                     "name": "weekDays",
                     "aria-label": "",
-                    "type": "button_group",
+                    "type": "checkbox",
                     "instructions": "",
                     "required": 1,
                     "conditional_logic": [
@@ -465,18 +371,21 @@
                         "id": ""
                     },
                     "choices": {
-                        "Monday": "Mon",
-                        "Tuesday": "Tue",
-                        "Wednesday": "Wed",
-                        "Thursday": "Thu",
-                        "Friday": "Fri",
-                        "Saturday": "Sat",
-                        "Sunday": "Sun"
+                        "https:\/\/schema.org\/Monday": "Mon",
+                        "https:\/\/schema.org\/Tuesday": "Tue",
+                        "https:\/\/schema.org\/Wednesday": "Wed",
+                        "https:\/\/schema.org\/Thursday": "Thu",
+                        "https:\/\/schema.org\/Friday": "Fri",
+                        "https:\/\/schema.org\/Saturday": "Sat",
+                        "https:\/\/schema.org\/Sunday": "Sun"
                     },
-                    "default_value": "",
+                    "default_value": [],
                     "return_format": "value",
-                    "allow_null": 0,
+                    "allow_custom": 0,
                     "layout": "horizontal",
+                    "toggle": 0,
+                    "save_custom": 0,
+                    "custom_choice_button_text": "L\u00e4gg till nytt val",
                     "parent_repeater": "field_65a66d8cadeef"
                 },
                 {
@@ -561,7 +470,7 @@
                         [
                             {
                                 "field": "field_65a689f5a4918",
-                                "operator": "==",
+                                "operator": "!=",
                                 "value": "day"
                             }
                         ]
@@ -573,13 +482,13 @@
                     },
                     "choices": {
                         "Day": "Day",
-                        "Monday": "Monday",
-                        "Tuesday": "Tuesday",
-                        "Wednesday": "Wednesday",
-                        "Thursday": "Thursday",
-                        "Friday": "Friday",
-                        "Saturday": "Saturday",
-                        "Sunday": "Sunday"
+                        "https:\/\/schema.org\/Monday": "Monday",
+                        "https:\/\/schema.org\/Tuesday": "Tuesday",
+                        "https:\/\/schema.org\/Wednesday": "Wednesday",
+                        "https:\/\/schema.org\/Thursday": "Thursday",
+                        "https:\/\/schema.org\/Friday": "Friday",
+                        "https:\/\/schema.org\/Saturday": "Saturday",
+                        "https:\/\/schema.org\/Sunday": "Sunday"
                     },
                     "default_value": false,
                     "return_format": "value",

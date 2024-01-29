@@ -105,27 +105,48 @@ class PostToEventSchemaTest extends TestCase
         $this->assertEquals('1-2', $schemaArray['typicalAgeRange']);
     }
 
-    public function testOffersNotSetIfEventIsFree()
+    /**
+     * @testdox Event gets start and end date for simple occation.
+     */
+    public function testEventGetsStartAndEndDateForSimpleOccation()
     {
-        $offerMeta              = ['offers' => 1, 'offers_0_name' => 'TestOffer'];
-        $meta                   = ['isAccessibleForFree' => '1'] + $offerMeta;
-        [$post, $wpServiceMock] = $this->getBasicPropertiesTestDependencies($meta);
+
+        $occasionsMeta = [
+            'occasions'             => 1,
+            'occasions_0_repeat'    => 'no',
+            'occasions_0_startDate' => '2021-03-02',
+            'occasions_0_startTime' => '22:00',
+            'occasions_0_endDate'   => '2021-03-02',
+            'occasions_0_endTime'   => '23:00'
+        ];
+
+        [$post, $wpServiceMock] = $this->getBasicPropertiesTestDependencies($occasionsMeta);
         $postToEventSchema      = new PostToEventSchema($wpServiceMock, $post);
         $schemaArray            = $postToEventSchema->toArray();
 
-        $this->assertArrayNotHasKey('offers', $schemaArray);
+        $this->assertEquals('2021-03-02 22:00', $schemaArray['startDate']);
+        $this->assertEquals('2021-03-02 23:00', $schemaArray['endDate']);
     }
 
-    public function testOffersIsSetIfEventIsNotFree()
+    /**
+     * @testdox Event gets duration from start and end date if present.
+     */
+    public function testEventHasDurationIfSimpleOccasion()
     {
-        $offerMeta              = ['offers' => 1, 'offers_0_name' => 'TestOffer'];
-        $meta                   = ['isAccessibleForFree' => '0'] + $offerMeta;
-        [$post, $wpServiceMock] = $this->getBasicPropertiesTestDependencies($meta);
+        $occasionsMeta = [
+            'occasions'             => 1,
+            'occasions_0_repeat'    => 'no',
+            'occasions_0_startDate' => '2021-03-02',
+            'occasions_0_startTime' => '22:00',
+            'occasions_0_endDate'   => '2021-03-02',
+            'occasions_0_endTime'   => '23:00'
+        ];
+
+        [$post, $wpServiceMock] = $this->getBasicPropertiesTestDependencies($occasionsMeta);
         $postToEventSchema      = new PostToEventSchema($wpServiceMock, $post);
         $schemaArray            = $postToEventSchema->toArray();
 
-        $this->assertArrayHasKey('offers', $schemaArray);
-        $this->assertEquals('TestOffer', $schemaArray['offers'][0]['name']);
+        $this->assertEquals('P0Y0M0DT1H0M0S', $schemaArray['duration']);
     }
 
     private function getBasicPropertiesTestDependencies(array $additionalMeta = []): array
