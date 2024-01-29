@@ -255,29 +255,53 @@ class PostToEventSchema implements Arrayable
             return;
         }
 
-        $schedules = array_map(function ($i) {
-            $repeat    = $this->wp->getPostMeta($this->post->ID, "occasions_{$i}_repeat", true) ?: null;
-            $startDate = $this->wp->getPostMeta($this->post->ID, "occasions_{$i}_startDate", true) ?: null;
-            $startTime = $this->wp->getPostMeta($this->post->ID, "occasions_{$i}_startTime", true) ?: null;
-            $endDate   = $this->wp->getPostMeta($this->post->ID, "occasions_{$i}_endDate", true) ?: null;
-            $endTime   = $this->wp->getPostMeta($this->post->ID, "occasions_{$i}_endTime", true) ?: null;
+        $getMetaRow = fn ($i, $key) => $this->wp->getPostMeta($this->post->ID, "occasions_{$i}_{$key}", true) ?: null;
+
+        $schedules = array_map(function ($i) use ($getMetaRow) {
+            $repeat    = $getMetaRow($i, 'repeat');
+            $startDate = $getMetaRow($i, 'startDate');
+            $startTime = $getMetaRow($i, 'startTime');
+            $endDate   = $getMetaRow($i, 'endDate');
+            $endTime   = $getMetaRow($i, 'endTime');
 
             switch ($repeat) {
                 case 'byDay':
-                    $daysInterval    = $this->wp->getPostMeta($this->post->ID, "occasions_{$i}_daysInterval", true) ?: 1;
-                    $scheduleFactory = new ScheduleByDayFactory($startDate, $endDate, $startTime, $endTime, $daysInterval);
+                    $daysInterval    = $getMetaRow($i, 'daysInterval') ?: 1;
+                    $scheduleFactory = new ScheduleByDayFactory(
+                        $startDate,
+                        $endDate,
+                        $startTime,
+                        $endTime,
+                        $daysInterval
+                    );
                     return $scheduleFactory->create();
                 case 'byWeek':
-                    $daysInterval    = $this->wp->getPostMeta($this->post->ID, "occasions_{$i}_weeksInterval", true) ?: 1;
-                    $weekDays        = $this->wp->getPostMeta($this->post->ID, "occasions_{$i}_weekDays", true) ?: [];
-                    $scheduleFactory = new ScheduleByWeekFactory($startDate, $endDate, $startTime, $endTime, $daysInterval, $weekDays);
+                    $daysInterval    = $getMetaRow($i, 'weeksInterval') ?: 1;
+                    $weekDays        = $getMetaRow($i, 'weekDays') ?: [];
+                    $scheduleFactory = new ScheduleByWeekFactory(
+                        $startDate,
+                        $endDate,
+                        $startTime,
+                        $endTime,
+                        $daysInterval,
+                        $weekDays
+                    );
                     return $scheduleFactory->create();
                 case 'byMonth':
-                    $daysInterval    = $this->wp->getPostMeta($this->post->ID, "occasions_{$i}_monthsInterval", true) ?: 1;
-                    $monthDay        = $this->wp->getPostMeta($this->post->ID, "occasions_{$i}_monthDay", true) ?: 'day';
-                    $monthDayNumber  = $this->wp->getPostMeta($this->post->ID, "occasions_{$i}_monthDayNumber", true) ?: null;
-                    $monthDayLiteral = $this->wp->getPostMeta($this->post->ID, "occasions_{$i}_monthDayLiteral", true) ?: null;
-                    $scheduleFactory = new ScheduleByMonthFactory($startDate, $endDate, $startTime, $endTime, $daysInterval, $monthDay, $monthDayNumber, $monthDayLiteral);
+                    $daysInterval    = $getMetaRow($i, 'monthsInterval') ?: 1;
+                    $monthDay        = $getMetaRow($i, 'monthDay') ?: null;
+                    $monthDayNumber  = $getMetaRow($i, 'monthDayNumber') ?: null;
+                    $monthDayLiteral = $getMetaRow($i, 'monthDayLiteral') ?: null;
+                    $scheduleFactory = new ScheduleByMonthFactory(
+                        $startDate,
+                        $endDate,
+                        $startTime,
+                        $endTime,
+                        $daysInterval,
+                        $monthDay,
+                        $monthDayNumber,
+                        $monthDayLiteral
+                    );
                     return $scheduleFactory->create();
                 dafault:
                     return null;
