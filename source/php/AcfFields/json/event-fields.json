@@ -572,6 +572,24 @@
                     "display_format": "H:i:s",
                     "return_format": "H:i:s",
                     "parent_repeater": "field_65a66d8cadeef"
+                },
+                {
+                    "key": "field_65b89293153f9",
+                    "label": "Booking page URL",
+                    "name": "url",
+                    "aria-label": "",
+                    "type": "url",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "placeholder": "",
+                    "parent_repeater": "field_65a66d8cadeef"
                 }
             ]
         }

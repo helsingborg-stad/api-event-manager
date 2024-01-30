@@ -87,7 +87,17 @@ class PostToEventSchema implements Arrayable
 
     private function setUrl(): void
     {
-        $this->event->url($this->wp->getPermalink($this->post->ID));
+        $numberOfOccasions = $this->wp->getPostMeta($this->post->ID, 'occasions', true) ?: [];
+
+        if (!is_numeric($numberOfOccasions) || (int)$numberOfOccasions !== 1) {
+            return;
+        }
+
+        $occasionsUrl = $this->wp->getPostMeta($this->post->ID, 'occasions_0_url', true) ?: null;
+
+        if ($occasionsUrl && filter_var($occasionsUrl, FILTER_VALIDATE_URL)) {
+            $this->event->url($occasionsUrl);
+        }
     }
 
     private function setIsAccessibleForFree(): void

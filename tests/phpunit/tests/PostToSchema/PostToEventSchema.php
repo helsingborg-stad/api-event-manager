@@ -52,15 +52,6 @@ class PostToEventSchemaTest extends TestCase
         $this->assertEquals('TestImageUrl', $schemaArray['image']);
     }
 
-    public function testUrlIsSet()
-    {
-        [$post, $wpServiceMock] = $this->getBasicPropertiesTestDependencies();
-        $postToEventSchema      = new PostToEventSchema($wpServiceMock, $post);
-        $schemaArray            = $postToEventSchema->toArray();
-
-        $this->assertEquals('TestUrl', $schemaArray['url']);
-    }
-
     public function testLocationIsSet()
     {
         $locationMeta           = ['location' => ['street_name' => 'TestLocation']];
@@ -147,6 +138,44 @@ class PostToEventSchemaTest extends TestCase
         $schemaArray            = $postToEventSchema->toArray();
 
         $this->assertEquals('P0Y0M0DT1H0M0S', $schemaArray['duration']);
+    }
+
+    public function testEventOccasionUrlSetsEventUrl()
+    {
+        $occasionsMeta = [
+            'occasions'             => 1,
+            'occasions_0_repeat'    => 'no',
+            'occasions_0_startDate' => '2021-03-02',
+            'occasions_0_startTime' => '22:00',
+            'occasions_0_endDate'   => '2021-03-02',
+            'occasions_0_endTime'   => '23:00',
+            'occasions_0_url'       => 'https://www.example.com',
+        ];
+
+        [$post, $wpServiceMock] = $this->getBasicPropertiesTestDependencies($occasionsMeta);
+        $postToEventSchema      = new PostToEventSchema($wpServiceMock, $post);
+        $schemaArray            = $postToEventSchema->toArray();
+
+        $this->assertEquals('https://www.example.com', $schemaArray['url']);
+    }
+
+    public function testEventOccasionUrslSetsOfferUrl()
+    {
+        $occasionsMeta = [
+            'occasions'             => 1,
+            'occasions_0_repeat'    => 'no',
+            'occasions_0_startDate' => '2021-03-02',
+            'occasions_0_startTime' => '22:00',
+            'occasions_0_endDate'   => '2021-03-02',
+            'occasions_0_endTime'   => '23:00',
+            'occasions_0_url'       => 'https://www.example.com',
+        ];
+
+        [$post, $wpServiceMock] = $this->getBasicPropertiesTestDependencies($occasionsMeta);
+        $postToEventSchema      = new PostToEventSchema($wpServiceMock, $post);
+        $schemaArray            = $postToEventSchema->toArray();
+
+        $this->assertEquals('https://www.example.com', $schemaArray['url']);
     }
 
     private function getBasicPropertiesTestDependencies(array $additionalMeta = []): array
