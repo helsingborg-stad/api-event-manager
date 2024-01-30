@@ -100,6 +100,19 @@ class WPServiceFactory
             {
                 return remove_submenu_page($menuSlug, $submenuSlug);
             }
+
+            public function wpGetPostTerms(
+                int $post_id,
+                string|array $taxonomy = 'post_tag',
+                array $args = array()
+            ): array|WP_Error {
+                return wp_get_post_terms($post_id, $taxonomy, $args);
+            }
+
+            public function isWPError(mixed $thing): bool
+            {
+                return is_wp_error($thing);
+            }
         };
     }
 }
