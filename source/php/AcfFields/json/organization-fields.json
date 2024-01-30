@@ -81,7 +81,7 @@
     "location": [
         [
             {
-                "param": "post_type",
+                "param": "taxonomy",
                 "operator": "==",
                 "value": "organization"
             }

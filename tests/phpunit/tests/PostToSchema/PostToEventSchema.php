@@ -178,7 +178,54 @@ class PostToEventSchemaTest extends TestCase
         $this->assertEquals('https://www.example.com', $schemaArray['url']);
     }
 
-    private function getBasicPropertiesTestDependencies(array $additionalMeta = []): array
+    public function testEventGetsOrganizationFromTerm()
+    {
+        $organizationTerm          = Mockery::mock(\WP_Term::class);
+        $organizationTerm->term_id = 1;
+        $organizationTerm->name    = 'TestOrganization';
+        [$post, $wpServiceMock]    = $this->getBasicPropertiesTestDependencies([], $organizationTerm);
+        $termMeta                  = [
+            'url'       => 'https://www.example.com',
+            'email'     => 'organizer@event.foo',
+            'telephone' => '123',
+            'address'   => ['street_name' => 'TestLocation']
+        ];
+        $wpServiceMock
+            ->shouldReceive('wpGetPostTerms')
+            ->andReturn([$organizationTerm]);
+        $wpServiceMock
+            ->shouldReceive('isWPError')
+            ->andReturn(false);
+        $wpServiceMock
+            ->shouldReceive('getTermMeta')
+            ->with($organizationTerm->term_id, 'url', true)
+            ->andReturn($termMeta['url']);
+        $wpServiceMock
+            ->shouldReceive('getTermMeta')
+            ->with($organizationTerm->term_id, 'email', true)
+            ->andReturn($termMeta['email']);
+        $wpServiceMock
+            ->shouldReceive('getTermMeta')
+            ->with($organizationTerm->term_id, 'telephone', true)
+            ->andReturn($termMeta['telephone']);
+        $wpServiceMock
+            ->shouldReceive('getTermMeta')
+            ->with($organizationTerm->term_id, 'address', true)
+            ->andReturn($termMeta['address']);
+
+        $postToEventSchema = new PostToEventSchema($wpServiceMock, $post);
+        $schemaArray       = $postToEventSchema->toArray();
+
+        $this->assertEquals('Organization', $schemaArray['organizer']['@type']);
+        $this->assertEquals($organizationTerm->name, $schemaArray['organizer']['name']);
+        $this->assertEquals($termMeta['url'], $schemaArray['organizer']['url']);
+        $this->assertEquals($termMeta['email'], $schemaArray['organizer']['email']);
+        $this->assertEquals($termMeta['telephone'], $schemaArray['organizer']['telephone']);
+        $this->assertEquals('Place', $schemaArray['organizer']['location']['@type']);
+        $this->assertEquals('TestLocation', $schemaArray['organizer']['location']['address']['streetAddress']);
+    }
+
+    private function getBasicPropertiesTestDependencies(array $additionalMeta = [], $organizationTerm = null): array
     {
         /** @var \WP_Post $post */
         $post          = $this->mockPost(['ID' => '123', 'post_title' => 'Test']);
@@ -189,6 +236,8 @@ class PostToEventSchemaTest extends TestCase
         $wpServiceMock->shouldReceive('getPermalink')->andReturn('TestUrl');
         $wpServiceMock->shouldReceive('getPostParent')->andReturn(null);
         $wpServiceMock->shouldReceive('getPosts')->andReturn([]);
+
+        $wpServiceMock->shouldReceive('wpGetPostTerms')->andReturn($organizationTerm ? [$organizationTerm] : []);
 
         return [$post, $wpServiceMock];
     }

@@ -113,38 +113,55 @@ class PostToEventSchema implements Arrayable
             return;
         }
 
+        $place = $this->getPlaceFromAcfMapField($locationMeta);
+        $this->event->location($place);
+    }
+
+    private function getPlaceFromAcfMapField(array $acfMapField)
+    {
         // Address
-        $address      = new \Spatie\SchemaOrg\PostalAddress();
-        $streetName   = $locationMeta['street_name'] ?? '';
-        $streetNumber = $locationMeta['street_number'] ?? '';
-        $address->streetAddress("{$streetName} {$streetNumber}");
-        $address->addressLocality($locationMeta['city'] ?? null);
-        $address->postalCode($locationMeta['post_code'] ?? null);
-        $address->addressCountry($locationMeta['country_short'] ?? null);
+        $address       = new \Spatie\SchemaOrg\PostalAddress();
+        $streetName    = $acfMapField['street_name'] ?? '';
+        $streetNumber  = $acfMapField['street_number'] ?? '';
+        $streetAddress = trim("{$streetName} {$streetNumber}");
+        $address->streetAddress($streetAddress);
+        $address->addressLocality($acfMapField['city'] ?? null);
+        $address->postalCode($acfMapField['post_code'] ?? null);
+        $address->addressCountry($acfMapField['country_short'] ?? null);
 
         // Location
         $location = new \Spatie\SchemaOrg\Place();
         $location->address($address);
-        $location->longitude($locationMeta['lng'] ?? null);
-        $location->latitude($locationMeta['lat'] ?? null);
+        $location->longitude($acfMapField['lng'] ?? null);
+        $location->latitude($acfMapField['lat'] ?? null);
 
-        $this->event->location($location);
+        return $location->toArray();
     }
 
     private function setOrganizer(): void
     {
-        $organizationId = $this->wp->getPostMeta($this->post->ID, 'organizer', true) ?: null;
+        $organizationTerms = $this->wp->wpGetPostTerms($this->post->ID, 'organization', []);
 
-        if (!$organizationId || !is_numeric($organizationId)) {
+        if (empty($organizationTerms) || $this->wp->isWPError($organizationTerms)) {
             return;
         }
 
+        $organizationTerm = $organizationTerms[0];
+        $url              = $this->wp->getTermMeta($organizationTerm->term_id, 'url', true) ?: null;
+        $email            = $this->wp->getTermMeta($organizationTerm->term_id, 'email', true) ?: null;
+        $telephone        = $this->wp->getTermMeta($organizationTerm->term_id, 'telephone', true) ?: null;
+        $address          = $this->wp->getTermMeta($organizationTerm->term_id, 'address', true) ?: null;
+
         $organization = new \Spatie\SchemaOrg\Organization();
-        $organization->identifier((int)$organizationId);
-        $organization->name(get_the_title($organizationId));
-        $organization->url($this->wp->getPostMeta($organizationId, 'url', true) ?: null);
-        $organization->email($this->wp->getPostMeta($organizationId, 'email', true) ?: null);
-        $organization->telephone($this->wp->getPostMeta($organizationId, 'telephone', true) ?: null);
+        $organization->name($organizationTerm->name);
+        $organization->url($url);
+        $organization->email($email);
+        $organization->telephone($telephone);
+
+        if ($address) {
+            $place = $this->getPlaceFromAcfMapField($address);
+            $organization->location($place);
+        }
 
         $this->event->organizer($organization);
     }

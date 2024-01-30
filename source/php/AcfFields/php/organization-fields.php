@@ -84,7 +84,7 @@
     'location' => array(
         0 => array(
             0 => array(
-                'param' => 'post_type',
+                'param' => 'taxonomy',
                 'operator' => '==',
                 'value' => 'organization',
             ),

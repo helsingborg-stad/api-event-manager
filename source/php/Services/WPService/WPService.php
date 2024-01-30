@@ -16,6 +16,8 @@ interface WPService extends
     RegisterPostType,
     RegisterTaxonomy,
     RemoveMenuPage,
-    RemoveSubMenuPage
+    RemoveSubMenuPage,
+    WPGetPostTerms,
+    IsWPError
 {
 }

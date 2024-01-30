@@ -19,8 +19,8 @@ class App
         $hooksRegistrar
             ->register(new \EventManager\HideUnusedAdminPages($this->wpService))
             ->register(new \EventManager\PostTypes\Event($this->wpService))
-            ->register(new \EventManager\PostTypes\Organization($this->wpService))
             ->register(new \EventManager\Taxonomies\Audience($this->wpService))
+            ->register(new \EventManager\Taxonomies\Organization($this->wpService))
             ->register(new \EventManager\ApiResponseModifiers\Event());
     }
 }

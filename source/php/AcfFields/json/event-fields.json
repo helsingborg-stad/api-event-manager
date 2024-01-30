@@ -112,9 +112,9 @@
         {
             "key": "field_65a4f6af50302",
             "label": "Organizer",
-            "name": "organizer",
+            "name": "organization",
             "aria-label": "",
-            "type": "post_object",
+            "type": "taxonomy",
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -123,19 +123,16 @@
                 "class": "",
                 "id": ""
             },
-            "post_type": [
-                "organization"
-            ],
-            "post_status": [
-                "publish"
-            ],
-            "taxonomy": "",
+            "taxonomy": "organization",
+            "add_term": 0,
+            "save_terms": 1,
+            "load_terms": 0,
             "return_format": "id",
-            "multiple": 0,
-            "allow_null": 0,
-            "bidirectional": 0,
-            "ui": 1,
-            "bidirectional_target": []
+            "field_type": "select",
+            "allow_null": 1,
+            "bidirectional": 1,
+            "bidirectional_target": "",
+            "multiple": 0
         },
         {
             "key": "field_65a52a6374b0c",
