@@ -16,20 +16,6 @@
             "commit-msg": [
                 "./bin/commit-msg.sh $1"
             ]
-        },
-        "installer-paths": {
-            "/var/www/html/wp-content/mu-plugins": [
-                "bueltge/must-use-loader"
-            ],
-            "/var/www/html/wp-content/mu-plugins/{$name}": [
-                "type:wordpress-muplugin"
-            ],
-            "/var/www/html/wp-content/plugins/{$name}": [
-                "type:wordpress-plugin"
-            ],
-            "/var/www/html/wp-content/themes/{$name}": [
-                "type:wordpress-theme"
-            ]
         }
     },
     "authors": [
@@ -47,8 +33,7 @@
     "require": {
         "php": ">=8.1",
         "helsingborg-stad/acf-export-manager": ">=1.0.0",
-        "spatie/schema-org": "^3.14",
-        "helsingborg-stad/wpmu-acf-google-maps-key": "^1.0"
+        "spatie/schema-org": "^3.14"
     },
     "require-dev": {
         "codedungeon/phpunit-result-printer": "^0.32.0",
@@ -58,7 +43,6 @@
         "brainmaestro/composer-git-hooks": "^2.8",
         "10up/wp_mock": "^1.0",
         "lucatume/function-mocker": "^1.3",
-        "bueltge/must-use-loader": "^1.3",
         "composer/installers": "~1.0"
     },
     "config": {
