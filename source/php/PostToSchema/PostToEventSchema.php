@@ -8,7 +8,6 @@ use EventManager\PostToSchema\Schedule\ScheduleByMonthFactory;
 use EventManager\PostToSchema\Schedule\ScheduleByWeekFactory;
 use EventManager\Services\WPService\WPService;
 use Spatie\SchemaOrg\BaseType;
-use Spatie\SchemaOrg\Schedule;
 use WP_Post;
 
 class PostToEventSchema implements Arrayable
