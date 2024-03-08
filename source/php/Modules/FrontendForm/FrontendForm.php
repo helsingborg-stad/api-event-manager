@@ -6,7 +6,7 @@
 
 namespace EventManager\Modules\FrontendForm;
 
-use EventManager\Helper\CacheBust;
+//use EventManager\Helper\CacheBust;
 
 /**
  * @property string $description
@@ -55,16 +55,16 @@ class FrontendForm extends \Modularity\Module
 
     public function script()
     {
-        wp_enqueue_script(
+        /*wp_enqueue_script(
             'frontend-form',
             EVENT_MANAGER_URL . '/dist/'. CacheBust::name('js/assignment-form.js')
-        );
+        );*/ 
     }
 
     public function style() {
-        wp_enqueue_style(
+        /*wp_enqueue_style(
             'frontend-form',
             EVENT_MANAGER_URL . '/dist/'. CacheBust::name('js/assignment-form.css')
-        );
+        );*/ 
     }
 }

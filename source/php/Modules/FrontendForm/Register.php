@@ -6,13 +6,11 @@ use EventManager\Helper\Module;
 
 class Register extends Module
 {
-    public function register(): void
-    {
-      if (function_exists('modularity_register_module')) {
-        modularity_register_module(
-          EVENT_MANAGER_PATH . 'source/php/Modules/FrontendForm/',
-          'FrontendForm'
-        );
-      }
+    public function getModuleName(): string {
+      return 'FrontendForm';
+    }
+
+    public function getModulePath(): string {
+      return EVENT_MANAGER_PATH . 'source/php/Modules/FrontendForm/';
     }
 }
