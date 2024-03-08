@@ -26,9 +26,26 @@ class FrontendForm extends \Modularity\Module
         $this->description  = __('Module for creating public event form', 'api-event-manager');
         //$this->cacheTtl     = 60;
     }
+
     public function data(): array
     {
-      return []; 
+      return [
+        'formHead' => function() {
+          acf_form_head();
+        },
+        'form' => function() {
+          acf_form([
+            'post_id' => 'new_post',
+            'post_title' => true,
+            'post_content' => true,
+            'new_post' => [
+              'post_type' => 'event',
+              'post_status' => 'publish'
+            ],
+            'submit_value' => __('Create Event', 'api-event-manager')
+          ]);
+        }
+      ]; 
     }
 
     public function template(): string
