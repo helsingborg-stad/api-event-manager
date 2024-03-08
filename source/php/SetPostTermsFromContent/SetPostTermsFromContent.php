@@ -23,7 +23,6 @@ class SetPostTermsFromContent implements Hookable
 
     public function addHooks(): void
     {
-        add_action('edit_post', [$this, 'setPostTermsFromContent']);
         add_action('save_post', [$this, 'setPostTermsFromContent']);
     }
 
