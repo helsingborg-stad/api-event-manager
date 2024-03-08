@@ -12,8 +12,6 @@ class App
     public function __construct(WPService $wpService)
     {
         $this->wpService = $wpService;
-
-        $a = new \EventManager\Modules\FrontendForm\FrontendForm();
     }
 
     public function registerHooks(HooksRegistrarInterface $hooksRegistrar)

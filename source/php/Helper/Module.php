@@ -6,7 +6,7 @@ use EventManager\Services\WPService\WPService;
 
 abstract class Module implements Hookable
 {
-    private WPService $wp;
+    protected WPService $wp;
 
     abstract public function register(): void;
 

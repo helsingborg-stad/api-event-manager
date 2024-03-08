@@ -4,7 +4,7 @@
 /** @noinspection PhpUndefinedClassInspection */
 /** @noinspection PhpUndefinedNamespaceInspection */
 
-namespace EventManager\Modularity\FrontendForm;
+namespace EventManager\Modules\FrontendForm;
 
 use EventManager\Helper\CacheBust;
 
@@ -14,7 +14,7 @@ use EventManager\Helper\CacheBust;
  * @property string $nameSingular
  * @property int $ID
  */
-class Module extends \Modularity\Module
+class FrontendForm extends \Modularity\Module
 {
     public $slug = 'event-form';
     public $supports = [];
