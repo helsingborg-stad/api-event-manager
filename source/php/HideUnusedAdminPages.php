@@ -21,6 +21,12 @@ class HideUnusedAdminPages implements Hookable
 
     public function hideUnusedAdminPages()
     {
+        //Do not hide admin pages on local environment
+        if(constant('WP_ENVIRONMENT_TYPE') === 'local') {
+            return;
+        }
+
+        //Hide unused admin pages
         $this->wpService->removeMenuPage('edit.php');
         $this->wpService->removeMenuPage('edit.php?post_type=page');
         $this->wpService->removeMenuPage('link-manager.php');
