@@ -12,6 +12,8 @@ class App
     public function __construct(WPService $wpService)
     {
         $this->wpService = $wpService;
+
+        $a = new \EventManager\Modules\FrontendForm\FrontendForm();
     }
 
     public function registerHooks(HooksRegistrarInterface $hooksRegistrar)
@@ -21,6 +23,7 @@ class App
             ->register(new \EventManager\PostTypes\Event($this->wpService))
             ->register(new \EventManager\Taxonomies\Audience($this->wpService))
             ->register(new \EventManager\Taxonomies\Organization($this->wpService))
-            ->register(new \EventManager\ApiResponseModifiers\Event());
+            ->register(new \EventManager\ApiResponseModifiers\Event())
+            ->register(new \EventManager\Modules\FrontendForm\Register($this->wpService));
     }
 }
