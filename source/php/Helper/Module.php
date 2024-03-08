@@ -23,21 +23,23 @@ abstract class Module implements Hookable
 
     public function register(): bool
     {
-      add_filter('/Modularity/externalViewPath', function($paths) {
-          $paths[] = $this->getModulePath() . '/views';
-          return $paths;
-      });
+    
+        //Register view path
+        add_filter('/Modularity/externalViewPath', function($paths) {
+            $paths[] = $this->getModulePath() . '/views';
+            return $paths;
+        });
 
-      //TODO: Make this use abstract config functions
-      if (function_exists('modularity_register_module')) {
-        modularity_register_module(
-          $this->getModulePath(),
-          $this->getModuleName()
-        );
+        //Register the module
+        if (function_exists('modularity_register_module')) {
+            modularity_register_module(
+                $this->getModulePath(),
+                $this->getModuleName()
+            );
 
-        return true;
-      }
-      
-      throw new \Exception('Modularity not found');
+            return true;
+        }
+        
+        throw new \Exception('Modularity not found');
     }
 }
