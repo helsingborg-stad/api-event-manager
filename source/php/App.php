@@ -2,7 +2,6 @@
 
 namespace EventManager;
 
-use EventManager\Helper\Hookable;
 use EventManager\Helper\HooksRegistrar\HooksRegistrarInterface;
 use EventManager\Services\WPService\WPService;
 use EventManager\SetPostTermsFromContent\SetPostTermsFromContent;
@@ -29,6 +28,7 @@ class App
             ->register(new \EventManager\ApiResponseModifiers\Event())
             ->register(new SetPostTermsFromContent($tagReader, $this->wpService, 'event', 'keyword'))
             ->register(new \EventManager\Modifiers\ModifyPostContentBeforeReadingTags($this->wpService))
-            ->register(new \EventManager\CleanupUnusedTags\CleanupUnusedTags('keyword', $this->wpService));
+            ->register(new \EventManager\CleanupUnusedTags\CleanupUnusedTags('keyword', $this->wpService))
+            ->register(new \EventManager\Modules\FrontendForm\Register($this->wpService));
     }
 }
