@@ -2,57 +2,55 @@
 
 namespace EventManager\PostToSchema;
 
-use EventManager\Helper\Arrayable;
 use EventManager\PostToSchema\Schedule\ScheduleByDayFactory;
 use EventManager\PostToSchema\Schedule\ScheduleByMonthFactory;
 use EventManager\PostToSchema\Schedule\ScheduleByWeekFactory;
+use EventManager\Services\AcfService\AcfService;
 use EventManager\Services\WPService\WPService;
 use Spatie\SchemaOrg\BaseType;
-use Spatie\SchemaOrg\Schedule;
 use WP_Post;
 
-class PostToEventSchema implements Arrayable
+class EventBuilder implements BaseTypeBuilder
 {
-    protected WPService $wp;
     protected BaseType $event;
     protected WP_Post $post;
-    private bool $allowRecurse;
+    protected WPService $wp;
+    protected AcfService $acf;
 
     public function __construct(
-        WPService $wp,
         WP_Post $post,
-        $allowRecurse = true
+        WPService $wp,
+        AcfService $acf
     ) {
-        $this->wp           = $wp;
-        $this->post         = $post;
-        $this->allowRecurse = $allowRecurse;
-        $this->event        = new \Spatie\SchemaOrg\Event();
-        $this->addPropertiesToEvent();
+        $this->post  = $post;
+        $this->wp    = $wp;
+        $this->acf   = $acf;
+        $this->event = new \Spatie\SchemaOrg\Event();
     }
 
-    private function addPropertiesToEvent()
+    public function build(): BaseType
     {
-        $this->setIdentifier();
-        $this->setName();
-        $this->setDescription();
-        $this->setAbout();
-        $this->setImage();
-        $this->setIsAccessibleForFree();
-        $this->setLocation();
-        $this->setUrl();
-        $this->setAudience();
-        $this->setTypicalAgeRange();
-        $this->setOrganizer();
+        $this
+            ->setIdentifier()
+            ->setName()
+            ->setDescription()
+            ->setAbout()
+            ->setImage()
+            ->setIsAccessibleForFree()
+            ->setLocation()
+            ->setUrl()
+            ->setAudience()
+            ->setTypicalAgeRange()
+            ->setOrganizer()
+            ->setStartDate()
+            ->setEndDate()
+            ->setDuration()
+            ->setKeywords()
+            ->setSchedule()
+            ->setSuperEvent()
+            ->setSubEvents();
 
-        $this->setStartDate();
-        $this->setEndDate();
-        $this->setDuration();
-        $this->setSchedule();
-
-        if ($this->allowRecurse) {
-            $this->setSuperEvent();
-            $this->setSubEvents();
-        }
+        return $this->event;
     }
 
     public function toArray(): array
@@ -60,61 +58,71 @@ class PostToEventSchema implements Arrayable
         return $this->event->toArray();
     }
 
-    private function setIdentifier(): void
+    public function setIdentifier(): EventBuilder
     {
         $this->event->identifier($this->post->ID);
+        return $this;
     }
 
-    private function setName(): void
+    public function setName(): EventBuilder
     {
         $this->event->name($this->post->post_title);
+        return $this;
     }
 
-    private function setDescription(): void
+    public function setDescription(): EventBuilder
     {
         $this->event->description($this->wp->getPostMeta($this->post->ID, 'description', true) ?: null);
+        return $this;
     }
 
-    private function setAbout(): void
+    public function setAbout(): EventBuilder
     {
         $this->event->about($this->wp->getPostMeta($this->post->ID, 'about', true) ?: null);
+        return $this;
     }
 
-    private function setImage(): void
+    public function setImage(): EventBuilder
     {
         $this->event->image($this->wp->getThePostThumbnailUrl($this->post->ID) ?: null);
+        return $this;
     }
 
-    private function setUrl(): void
+    public function setUrl(): EventBuilder
     {
-        $numberOfOccasions = $this->wp->getPostMeta($this->post->ID, 'occasions', true) ?: [];
+        $occasions = $this->acf->getField('occasions', $this->post->ID) ?: [];
 
-        if (!is_numeric($numberOfOccasions) || (int)$numberOfOccasions !== 1) {
-            return;
+        if (empty($occasions) || count($occasions) !== 1) {
+            return $this;
         }
 
-        $occasionsUrl = $this->wp->getPostMeta($this->post->ID, 'occasions_0_url', true) ?: null;
+        $occasionsUrl = $occasions[0]['url'] ?: null;
 
         if ($occasionsUrl && filter_var($occasionsUrl, FILTER_VALIDATE_URL)) {
             $this->event->url($occasionsUrl);
         }
+
+        return $this;
     }
 
-    private function setIsAccessibleForFree(): void
+    public function setIsAccessibleForFree(): EventBuilder
     {
         $this->event->isAccessibleForFree((bool)$this->wp->getPostMeta($this->post->ID, 'isAccessibleForFree', true));
+        return $this;
     }
 
-    private function setLocation(): void
+    public function setLocation(): EventBuilder
     {
         $locationMeta = $this->wp->getPostMeta($this->post->ID, 'location', true) ?: null;
 
         if (!$locationMeta) {
-            return;
+            return $this;
         }
 
         $place = $this->getPlaceFromAcfMapField($locationMeta);
         $this->event->location($place);
+
+        return $this;
     }
 
     private function getPlaceFromAcfMapField(array $acfMapField)
@@ -138,12 +146,12 @@ class PostToEventSchema implements Arrayable
         return $location->toArray();
     }
 
-    private function setOrganizer(): void
+    public function setOrganizer(): EventBuilder
     {
-        $organizationTerms = $this->wp->wpGetPostTerms($this->post->ID, 'organization', []);
+        $organizationTerms = $this->wp->getPostTerms($this->post->ID, 'organization', []);
 
         if (empty($organizationTerms) || $this->wp->isWPError($organizationTerms)) {
-            return;
+            return $this;
         }
 
         $organizationTerm = $organizationTerms[0];
@@ -164,14 +172,15 @@ class PostToEventSchema implements Arrayable
         }
 
         $this->event->organizer($organization);
+        return $this;
     }
 
-    private function setAudience(): void
+    public function setAudience(): EventBuilder
     {
         $audienceId = $this->wp->getPostMeta($this->post->ID, 'audience', true) ?: null;
 
         if (!$audienceId) {
-            return;
+            return $this;
         }
 
         // Get audience term
@@ -181,15 +190,16 @@ class PostToEventSchema implements Arrayable
         $audience->name($audienceTerm->name);
 
         $this->event->audience($audience);
+        return $this;
     }
 
-    private function setTypicalAgeRange(): void
+    public function setTypicalAgeRange(): EventBuilder
     {
         $audience = $this->event->getProperty('audience');
         $range    = null;
 
         if (!$audience || !$audience->getProperty('identifier')) {
-            return;
+            return $this;
         }
 
         $termId     = $audience->getProperty('identifier');
@@ -203,23 +213,25 @@ class PostToEventSchema implements Arrayable
         }
 
         $this->event->typicalAgeRange($range);
+
+        return $this;
     }
 
-    private function setStartDate(): void
+    public function setStartDate(): EventBuilder
     {
-        $numberOfOccasions = $this->wp->getPostMeta($this->post->ID, 'occasions', true) ?: [];
-        $dateTime          = null;
+        $occasions = $this->acf->getField('occasions', $this->post->ID) ?: [];
 
-        if (!is_numeric($numberOfOccasions) || (int)$numberOfOccasions !== 1) {
-            return;
+        if (empty($occasions) || count($occasions) !== 1) {
+            return $this;
         }
 
-        $repeat = $this->wp->getPostMeta($this->post->ID, 'occasions_0_repeat', true) ?: null;
-        $date   = $this->wp->getPostMeta($this->post->ID, 'occasions_0_startDate', true) ?: null;
-        $time   = $this->wp->getPostMeta($this->post->ID, 'occasions_0_startTime', true) ?: null;
+        $dateTime = null;
+        $repeat   = $occasions[0]['repeat'] ?: null;
+        $date     = $occasions[0]['startDate'] ?: null;
+        $time     = $occasions[0]['startTime'] ?: null;
 
         if ($repeat !== 'no') {
-            return;
+            return $this;
         }
 
         // Combine date and time
@@ -229,23 +241,25 @@ class PostToEventSchema implements Arrayable
         }
 
         $this->event->startDate($dateTime);
+
+        return $this;
     }
 
-    private function setEndDate(): void
+    public function setEndDate(): EventBuilder
     {
-        $numberOfOccasions = $this->wp->getPostMeta($this->post->ID, 'occasions', true) ?: [];
-        $dateTime          = null;
+        $occasions = $this->acf->getField('occasions', $this->post->ID) ?: [];
+        $dateTime  = null;
 
-        if (!is_numeric($numberOfOccasions) || (int)$numberOfOccasions !== 1) {
-            return;
+        if (empty($occasions) || count($occasions) !== 1) {
+            return $this;
         }
 
-        $repeat = $this->wp->getPostMeta($this->post->ID, 'occasions_0_repeat', true) ?: null;
-        $date   = $this->wp->getPostMeta($this->post->ID, 'occasions_0_endDate', true) ?: null;
-        $time   = $this->wp->getPostMeta($this->post->ID, 'occasions_0_endTime', true) ?: null;
+        $repeat = $occasions[0]['repeat'] ?: null;
+        $date   = $occasions[0]['endDate'] ?: null;
+        $time   = $occasions[0]['endTime'] ?: null;
 
         if ($repeat !== 'no') {
-            return;
+            return $this;
         }
 
         // Combine date and time
@@ -255,9 +269,10 @@ class PostToEventSchema implements Arrayable
         }
 
         $this->event->endDate($dateTime);
+        return $this;
     }
 
-    private function setDuration(): void
+    public function setDuration(): EventBuilder
     {
         $startDate = $this->event->getProperty('startDate');
         $endDate   = $this->event->getProperty('endDate');
@@ -271,15 +286,28 @@ class PostToEventSchema implements Arrayable
         }
 
         $this->event->duration($duration);
+        return $this;
     }
 
-    private function setSchedule(): void
+    public function setKeywords(): EventBuilder
+    {
+        $keywordTerms = $this->wp->getPostTerms($this->post->ID, 'keyword', []);
+
+        if (is_array($keywordTerms) && !empty($keywordTerms)) {
+            $terms = array_map(fn ($term) => $term->name, $keywordTerms);
+            $this->event->keywords($terms);
+        }
+
+        return $this;
+    }
+
+    public function setSchedule(): EventBuilder
     {
         $schedules         = [];
         $numberOfOccasions = $this->wp->getPostMeta($this->post->ID, 'occasions', true) ?: [];
 
         if (!is_numeric($numberOfOccasions) || (int)$numberOfOccasions < 1) {
-            return;
+            return $this;
         }
 
         $getMetaRow = fn ($i, $key) => $this->wp->getPostMeta($this->post->ID, "occasions_{$i}_{$key}", true) ?: null;
@@ -338,22 +366,25 @@ class PostToEventSchema implements Arrayable
         $schedules = array_filter($schedules); // Remove null values
 
         $this->event->eventSchedule($schedules ?: null);
+        return $this;
     }
 
-    private function setSuperEvent(): void
+    public function setSuperEvent(): EventBuilder
     {
         $superEventPost = $this->wp->getPostParent($this->post->ID);
 
         if (!$superEventPost) {
-            return;
+            return $this;
         }
 
         $superEvent = new self($this->wp, $superEventPost, false);
 
         $this->event->superEvent($superEvent->toArray());
+
+        return $this;
     }
 
-    private function setSubEvents(): void
+    public function setSubEvents(): EventBuilder
     {
         $subEventPosts = $this->wp->getPosts([
             'post_parent' => $this->post->ID,
@@ -362,7 +393,7 @@ class PostToEventSchema implements Arrayable
         ]);
 
         if (empty($subEventPosts)) {
-            return;
+            return $this;
         }
 
         $subEvents = array_map(function ($subPost) {
@@ -372,5 +403,7 @@ class PostToEventSchema implements Arrayable
         }, $subEventPosts);
 
         $this->event->subEvents($subEvents);
+
+        return $this;
     }
 }

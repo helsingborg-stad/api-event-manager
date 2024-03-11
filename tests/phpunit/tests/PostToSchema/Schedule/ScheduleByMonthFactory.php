@@ -121,7 +121,19 @@ class ScheduleByMonthFactoryTest extends TestCase
                     'monthDayNumber'  => null,
                     'monthDayLiteral' => 'Day'
                 ], 5
-            )
+            ),
+            array(
+                [
+                    'startDate'       => '2024-11-18',
+                    'endDate'         => '2025-04-18',
+                    'startTime'       => '13:00',
+                    'endTime'         => '14:00',
+                    'interval'        => 1,
+                    'monthDay'        => 'third',
+                    'monthDayNumber'  => null,
+                    'monthDayLiteral' => 'https://schema.org/Wednesday'
+                ], 6
+            ),
         );
     }
 }

@@ -4,7 +4,7 @@ namespace EventManager\ApiResponseModifiers;
 
 use EventManager\Helper\Arrayable;
 use EventManager\Helper\Hookable;
-use EventManager\PostToSchema\PostToEventSchema;
+use EventManager\PostToSchema\EventBuilder;
 use WP_Post;
 use WP_REST_Request;
 use WP_REST_Response;
@@ -25,9 +25,11 @@ class Event implements Hookable
             return $response;
         }
 
-        $wp          = \EventManager\Services\WPService\WPServiceFactory::create();
-        $eventSchema = new PostToEventSchema($wp, $post);
-        return rest_ensure_response($eventSchema->toArray());
+        $wp           = \EventManager\Services\WPService\WPServiceFactory::create();
+        $acf          = \EventManager\Services\AcfService\AcfServiceFactory::create();
+        $eventBuilder = new EventBuilder($post, $wp, $acf);
+        $eventSchema  = $eventBuilder->build()->toArray();
+        return rest_ensure_response($eventSchema);
     }
 
     private function shouldModify(WP_REST_Request $request): bool
