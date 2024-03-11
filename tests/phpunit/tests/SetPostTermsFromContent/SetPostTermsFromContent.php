@@ -19,7 +19,6 @@ class SetPostTermsFromContentTest extends TestCase
         $wpService   = $this->createMock('EventManager\Services\WPService\WPService');
         $sutInstance = new SetPostTermsFromContent($tagReader, $wpService, 'post', 'category');
 
-        WP_Mock::expectActionAdded('edit_post', [$sutInstance, 'setPostTermsFromContent']);
         WP_Mock::expectActionAdded('save_post', [$sutInstance, 'setPostTermsFromContent']);
 
         $sutInstance->addHooks();
