@@ -232,7 +232,7 @@ class EventBuilderTest extends TestCase
             'address'   => ['street_name' => 'TestLocation']
         ];
         $wpService
-            ->shouldReceive('wpGetPostTerms')
+            ->shouldReceive('getPostTerms')
             ->andReturn([$organizationTerm]);
         $wpService
             ->shouldReceive('isWPError')
@@ -265,5 +265,23 @@ class EventBuilderTest extends TestCase
         $this->assertEquals($termMeta['telephone'], $schemaArray['organizer']['telephone']);
         $this->assertEquals('Place', $schemaArray['organizer']['location']['@type']);
         $this->assertEquals('TestLocation', $schemaArray['organizer']['location']['address']['streetAddress']);
+    }
+
+    /**
+     * @testdox setKeywords() sets keywords from post tags
+     */
+    public function testSetKeywordsSetsKeywordsFromPostTags()
+    {
+        $post       = $this->getMockedPost(['ID' => 123]);
+        $term       = Mockery::mock(\WP_Term::class);
+        $term->name = 'tag1';
+        $wpService  = Mockery::mock(WPService::class);
+        $acfService = Mockery::mock(AcfService::class);
+        $wpService->shouldReceive('getPostTerms')->with($post->ID, 'keyword', [])->andReturn([$term]);
+        $event = new EventBuilder($post, $wpService, $acfService);
+
+        $event->setKeywords();
+
+        $this->assertEquals(['tag1'], $event->toArray()['keywords']);
     }
 }

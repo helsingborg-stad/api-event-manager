@@ -5,7 +5,7 @@ namespace EventManager\Services\WPService;
 use WP_Error;
 use WP_Term;
 
-interface WPGetPostTerms
+interface GetPostTerms
 {
     /**
      * Get all terms for a given post.
@@ -14,9 +14,9 @@ interface WPGetPostTerms
      * @param string|string[] $taxonomy
      * @param array $args
      *
-     * @return array|WP_Error
+     * @return WP_Term[]|WP_Error
      */
-    public function wpGetPostTerms(
+    public function getPostTerms(
         int $post_id,
         string|array $taxonomy = 'post_tag',
         array $args = array()

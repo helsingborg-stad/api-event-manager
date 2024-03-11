@@ -4,9 +4,9 @@ namespace EventManager\Services\WPService\Traits;
 
 use WP_Error;
 
-trait WPGetPostTerms
+trait GetPostTerms
 {
-    public function wpGetPostTerms(
+    public function getPostTerms(
         int $post_id,
         string|array $taxonomy = 'post_tag',
         array $args = array()

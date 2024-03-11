@@ -45,6 +45,7 @@ class EventBuilder implements BaseTypeBuilder
             ->setStartDate()
             ->setEndDate()
             ->setDuration()
+            ->setKeywords()
             ->setSchedule()
             ->setSuperEvent()
             ->setSubEvents();
@@ -147,7 +148,7 @@ class EventBuilder implements BaseTypeBuilder
 
     public function setOrganizer(): EventBuilder
     {
-        $organizationTerms = $this->wp->wpGetPostTerms($this->post->ID, 'organization', []);
+        $organizationTerms = $this->wp->getPostTerms($this->post->ID, 'organization', []);
 
         if (empty($organizationTerms) || $this->wp->isWPError($organizationTerms)) {
             return $this;
@@ -285,6 +286,18 @@ class EventBuilder implements BaseTypeBuilder
         }
 
         $this->event->duration($duration);
+        return $this;
+    }
+
+    public function setKeywords(): EventBuilder
+    {
+        $keywordTerms = $this->wp->getPostTerms($this->post->ID, 'keyword', []);
+
+        if (is_array($keywordTerms) && !empty($keywordTerms)) {
+            $terms = array_map(fn ($term) => $term->name, $keywordTerms);
+            $this->event->keywords($terms);
+        }
+
         return $this;
     }
 

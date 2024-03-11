@@ -29,7 +29,7 @@ class WPServiceFactory
             use Traits\RemoveMenuPage;
             use Traits\RemoveSubMenuPage;
             use Traits\TermExists;
-            use Traits\WPGetPostTerms;
+            use Traits\GetPostTerms;
             use Traits\WPInsertTerm;
             use Traits\WPSetPostTerms;
         };
