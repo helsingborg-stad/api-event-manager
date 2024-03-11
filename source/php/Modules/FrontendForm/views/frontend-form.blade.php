@@ -1,4 +1,4 @@
 @paper(['padding' => 4])
-  {!! $formHead !!}
-  {!! $form !!}
+  {!! $formHead() !!}
+  {!! $form() !!}
 @endpaper
