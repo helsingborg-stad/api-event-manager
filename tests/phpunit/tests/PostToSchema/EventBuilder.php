@@ -77,15 +77,20 @@ class EventBuilderTest extends TestCase
 
     public function testLocationIsSet()
     {
+        $location = ['latitude' => 1.2, 'longitude' => 3.4, 'address' => 'TestAddress'];
+
         $post       = $this->getMockedPost(['ID' => 123]);
         $wpService  = Mockery::mock(WPService::class);
         $acfService = Mockery::mock(AcfService::class);
-        $wpService->shouldReceive('getPostMeta')->with($post->ID, 'location', true)->andReturn(['street_name' => 'TestLocation']);
+        $wpService->shouldReceive('getPostMeta')->with($post->ID, 'location', true)->andReturn($location);
         $event = new EventBuilder($post, $wpService, $acfService);
 
         $event->setLocation();
 
         $this->assertEquals('Place', $event->toArray()['location']['@type']);
+        $this->assertEquals('TestAddress', $event->toArray()['location']['address']);
+        $this->assertEquals(1.2, $event->toArray()['location']['latitude']);
+        $this->assertEquals(3.4, $event->toArray()['location']['longitude']);
     }
 
     public function testAudienceIsSet()
@@ -229,7 +234,7 @@ class EventBuilderTest extends TestCase
             'url'       => 'https://www.example.com',
             'email'     => 'organizer@event.foo',
             'telephone' => '123',
-            'address'   => ['street_name' => 'TestLocation']
+            'address'   => ['address' => 'TestAddress']
         ];
         $wpService
             ->shouldReceive('getPostTerms')
@@ -264,7 +269,7 @@ class EventBuilderTest extends TestCase
         $this->assertEquals($termMeta['email'], $schemaArray['organizer']['email']);
         $this->assertEquals($termMeta['telephone'], $schemaArray['organizer']['telephone']);
         $this->assertEquals('Place', $schemaArray['organizer']['location']['@type']);
-        $this->assertEquals('TestLocation', $schemaArray['organizer']['location']['address']['streetAddress']);
+        $this->assertEquals('TestAddress', $schemaArray['organizer']['location']['address']);
     }
 
     /**
