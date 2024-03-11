@@ -2,6 +2,7 @@
 
 namespace EventManager\Tests\ApiResponseModifiers;
 
+use EventManager\Services\AcfService\AcfService;
 use EventManager\Services\WPService\WPService;
 use Mockery;
 use WP_Mock;
@@ -37,9 +38,13 @@ class EventTest extends TestCase
         Mockery::mock('alias:\EventManager\Services\WPService\WPServiceFactory')
             ->shouldReceive('create')
             ->andReturn(Mockery::mock(WPService::class));
-        Mockery::mock('overload:\EventManager\PostToSchema\PostToEventSchema')
-            ->shouldReceive('toArray')
-            ->andReturn([]);
+        Mockery::mock('alias:\EventManager\Services\AcfService\AcfServiceFactory')
+            ->shouldReceive('create')
+            ->andReturn(Mockery::mock(AcfService::class));
+        $eventBuilder = Mockery::mock('overload:\EventManager\PostToSchema\EventBuilder');
+        $eventBuilder->shouldReceive('build')->andReturnSelf();
+        $eventBuilder->shouldReceive('toArray')->andReturn([]);
+
 
         /** @var \WP_Post $mockPost */
         $mockPost         = $this->mockPost();

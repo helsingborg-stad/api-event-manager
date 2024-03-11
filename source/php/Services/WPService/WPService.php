@@ -3,21 +3,28 @@
 namespace EventManager\Services\WPService;
 
 interface WPService extends
+    AddAction,
+    AddFilter,
+    ApplyFilters,
+    DeleteTerm,
+    GetPermalink,
+    GetPost,
     GetPostMeta,
     GetPostParent,
     GetPosts,
-    GetThePostThumbnailUrl,
-    GetPermalink,
     GetTerm,
     GetTermMeta,
+    GetTerms,
+    GetThePostThumbnailUrl,
     GetTheTitle,
-    AddAction,
-    AddFilter,
+    IsWPError,
     RegisterPostType,
     RegisterTaxonomy,
     RemoveMenuPage,
     RemoveSubMenuPage,
-    WPGetPostTerms,
-    IsWPError
+    TermExists,
+    GetPostTerms,
+    WPInsertTerm,
+    WPSetPostTerms
 {
 }

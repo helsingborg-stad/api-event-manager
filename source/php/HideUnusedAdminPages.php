@@ -32,7 +32,6 @@ class HideUnusedAdminPages implements Hookable
         $this->wpService->removeMenuPage('link-manager.php');
         $this->wpService->removeMenuPage('edit-comments.php');
         $this->wpService->removeMenuPage('themes.php');
-        $this->wpService->removeMenuPage('tools.php');
         $this->wpService->removeMenuPage('index.php');
 
         $this->wpService->removeSubMenuPage('options-general.php', 'options-discussion.php');
