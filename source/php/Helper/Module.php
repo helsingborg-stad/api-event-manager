@@ -19,17 +19,17 @@ abstract class Module implements Hookable
     public function addHooks(): void
     {
         $this->wp->addAction('init', [$this, 'register']);
+        $this->wp->addFilter('/Modularity/externalViewPath', [$this, 'addViewPath']);
+    }
+
+    public function addViewPath($paths): array
+    {
+        $paths['mod-event-form'] = $this->getModulePath() . '/views';
+        return $paths;
     }
 
     public function register(): bool
     {
-    
-        //Register view path
-        add_filter('/Modularity/externalViewPath', function($paths) {
-            $paths['mod-event-form'] = $this->getModulePath() . '/views';
-            return $paths;
-        });
-
         //Register the module
         if (function_exists('modularity_register_module')) {
             modularity_register_module(
