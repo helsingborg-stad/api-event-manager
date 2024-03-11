@@ -42,8 +42,7 @@ $wpService->addAction('acf/init', function () {
     $acfExportManager->autoExport(array(
         'event-fields'        => 'group_65a115157a046',
         'organization-fields' => 'group_65a4f5a847d62',
-        'audience-fields'     => 'group_65ae1b865887a',
-        'frontend-fields'     => 'group_65eebfb9c35a7'
+        'audience-fields'     => 'group_65ae1b865887a'
     ));
 
     $acfExportManager->import();
