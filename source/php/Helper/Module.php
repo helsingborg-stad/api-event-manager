@@ -26,7 +26,7 @@ abstract class Module implements Hookable
     
         //Register view path
         add_filter('/Modularity/externalViewPath', function($paths) {
-            $paths[] = $this->getModulePath() . '/views';
+            $paths['mod-event-form'] = $this->getModulePath() . '/views';
             return $paths;
         });
 

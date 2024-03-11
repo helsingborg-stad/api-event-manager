@@ -19,7 +19,7 @@ class FrontendForm extends \Modularity\Module
     public $slug = 'event-form';
     public $supports = [];
 
-    public function init()
+    public function init(): void
     {
         $this->nameSingular = __('Event Form', );
         $this->namePlural   = __('Event Forms', 'api-event-manager');
@@ -53,7 +53,7 @@ class FrontendForm extends \Modularity\Module
         return 'frontend-form.blade.php';
     }
 
-    public function script()
+    public function script(): void
     {
         /*wp_enqueue_script(
             'frontend-form',
@@ -61,7 +61,7 @@ class FrontendForm extends \Modularity\Module
         );*/ 
     }
 
-    public function style() {
+    public function style(): void {
         /*wp_enqueue_style(
             'frontend-form',
             EVENT_MANAGER_URL . '/dist/'. CacheBust::name('js/assignment-form.css')
