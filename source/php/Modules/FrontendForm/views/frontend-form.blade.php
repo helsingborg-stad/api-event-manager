@@ -1,5 +1,5 @@
 @if (!$hideTitle && !empty($postTitle))
-  <h2 class="event-form-title">{{ $postTitle }}</hjson>
+  <h2 class="event-form-title">{{ $postTitle }}</h2>
 @endif
 
 

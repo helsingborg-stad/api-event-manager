@@ -19,6 +19,7 @@
                 'class' => '',
                 'id' => '',
             ),
+            'is_publicly_hidden' => 1,
             'default_value' => '',
             'maxlength' => '',
             'rows' => '',
