@@ -58,7 +58,15 @@
             "type": "textarea",
             "instructions": "",
             "required": 1,
-            "conditional_logic": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_65a5319a9d01d",
+                        "operator": "==",
+                        "value": "https"
+                    }
+                ]
+            ],
             "wrapper": {
                 "width": "",
                 "class": "",

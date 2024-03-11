@@ -61,7 +61,15 @@
             'type' => 'textarea',
             'instructions' => '',
             'required' => 1,
-            'conditional_logic' => 0,
+            'conditional_logic' => array(
+                0 => array(
+                    0 => array(
+                        'field' => 'field_65a5319a9d01d',
+                        'operator' => '==',
+                        'value' => 'https',
+                    ),
+                ),
+            ),
             'wrapper' => array(
                 'width' => '',
                 'class' => '',
