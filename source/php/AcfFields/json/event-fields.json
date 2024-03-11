@@ -91,23 +91,30 @@
             "ui": 1
         },
         {
+            "center_lat": 53.55064,
+            "center_lng": 10.00065,
+            "zoom": 12,
+            "height": 400,
+            "return_format": "raw",
+            "allow_map_layers": 1,
+            "max_markers": 1,
+            "layers": [
+                "OpenStreetMap.Mapnik"
+            ],
             "key": "field_65a245c3a4062",
             "label": "Location",
             "name": "location",
             "aria-label": "",
-            "type": "google_map",
+            "type": "open_street_map",
             "instructions": "",
-            "required": 1,
+            "required": 0,
             "conditional_logic": 0,
             "wrapper": {
                 "width": "",
                 "class": "",
                 "id": ""
             },
-            "center_lat": "",
-            "center_lng": "",
-            "zoom": "",
-            "height": ""
+            "leaflet_map": "{\"lat\":53.55064,\"lng\":10.00065,\"zoom\":12,\"layers\":[\"OpenStreetMap.Mapnik\"],\"markers\":[]}"
         },
         {
             "key": "field_65a4f6af50302",
