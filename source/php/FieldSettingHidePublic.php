@@ -31,15 +31,35 @@ class FieldSettingHidePublic implements Hookable
     }
 
     public function hideFieldFromFrontendForms($field) {
-        
+
+
         //Set default
         if (!isset($field['is_publicly_hidden'])) {
             $field['is_publicly_hidden'] = 0;
         }
 
+        // Do not hide fields in admin
+        if(is_admin()) {
+            return $field;
+        }
+
         //Hide field from frontend forms
         if ($field['is_publicly_hidden'] == 1) {
-            return false;
+
+            //Will generate offset error
+            //return false;
+
+
+            //Make a impossible statement to test if the field is hidden? 
+            $field['conditional_logic'] = [
+                [
+                    "field" => "field_fake_field_id",
+                    "operator" => "!=",
+                    "value" => "fake_value"
+                ]
+            ];
+            var_dump($field);
+
         }
 
         return $field;
