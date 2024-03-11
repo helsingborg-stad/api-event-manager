@@ -13,21 +13,13 @@
             'type' => 'textarea',
             'instructions' => '',
             'required' => 1,
-            'conditional_logic' => array(
-                0 => array(
-                    0 => array(
-                        'field' => 'field_65a5319a9d01d',
-                        'operator' => '==',
-                        'value' => 'https',
-                    ),
-                ),
-            ),
+            'conditional_logic' => 0,
             'wrapper' => array(
                 'width' => '',
                 'class' => '',
                 'id' => '',
             ),
-            'is_publicly_hidden' => 1,
+            'is_publicly_hidden' => 0,
             'default_value' => '',
             'maxlength' => '',
             'rows' => '',
