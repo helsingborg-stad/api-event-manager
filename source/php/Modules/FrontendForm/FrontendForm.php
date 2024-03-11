@@ -29,9 +29,11 @@ class FrontendForm extends \Modularity\Module
 
     public function data(): array
     {
+      $fields = $this->getFields();
+
       return [
-        'formHead' => function() {
-          acf_form_head();
+        'formStart' => function() {
+          
         },
         'form' => function() {
           acf_form([
@@ -40,11 +42,14 @@ class FrontendForm extends \Modularity\Module
             'post_content' => true,
             'new_post' => [
               'post_type' => 'event',
-              'post_status' => 'publish'
+              'post_status' => 'draft'
             ],
             'submit_value' => __('Create Event', 'api-event-manager')
           ]);
-        }
+        },
+        'formEnd' => function() {
+          
+        },
       ]; 
     }
 
@@ -55,10 +60,11 @@ class FrontendForm extends \Modularity\Module
 
     public function script(): void
     {
-        /*wp_enqueue_script(
-            'frontend-form',
-            EVENT_MANAGER_URL . '/dist/'. CacheBust::name('js/assignment-form.js')
-        );*/ 
+      acf_form_head();
+      /*wp_enqueue_script(
+          'frontend-form',
+          EVENT_MANAGER_URL . '/dist/'. CacheBust::name('js/assignment-form.js')
+      );*/ 
     }
 
     public function style(): void {
