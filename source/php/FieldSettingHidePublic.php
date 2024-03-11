@@ -31,8 +31,6 @@ class FieldSettingHidePublic implements Hookable
     }
 
     public function hideFieldFromFrontendForms($field) {
-
-
         //Set default
         if (!isset($field['is_publicly_hidden'])) {
             $field['is_publicly_hidden'] = 0;
@@ -45,21 +43,10 @@ class FieldSettingHidePublic implements Hookable
 
         //Hide field from frontend forms
         if ($field['is_publicly_hidden'] == 1) {
-
-            //Will generate offset error
-            //return false;
-
-
-            //Make a impossible statement to test if the field is hidden? 
-            $field['conditional_logic'] = [
-                [
-                    "field" => "field_fake_field_id",
-                    "operator" => "!=",
-                    "value" => "fake_value"
-                ]
-            ];
-            var_dump($field);
-
+            // This code may generate an offset error.
+            // For more information, refer to the following GitHub issue:
+            // https://github.com/AdvancedCustomFields/acf/issues/901 
+            return false;
         }
 
         return $field;
