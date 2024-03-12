@@ -4,9 +4,9 @@ namespace EventManager\Services\WPService;
 
 use WP_Error;
 
-interface WPInsertTerm
+interface InsertTerm
 {
-    public function wpInsertTerm(
+    public function insertTerm(
         string $term,
         string $taxonomy = "",
         array $args = []

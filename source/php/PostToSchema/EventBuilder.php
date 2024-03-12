@@ -170,8 +170,13 @@ class EventBuilder implements BaseTypeBuilder
         }
 
         // Get audience term
-        $audienceTerm = $this->wp->getTerm($audienceId);
-        $audience     = new \Spatie\SchemaOrg\Audience();
+        $audienceTerm = $this->wp->getTerm($audienceId, 'audience');
+
+        if (!is_a($audienceTerm, \WP_Term::class)) {
+            return $this;
+        }
+
+        $audience = new \Spatie\SchemaOrg\Audience();
         $audience->identifier((int)$audienceTerm->term_id);
         $audience->name($audienceTerm->name);
 
