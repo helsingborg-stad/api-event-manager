@@ -73,8 +73,12 @@ class WPServiceFactory
                 return get_posts($args);
             }
 
-            public function getTerm(int|object $term, string $taxonomy = '', string $output = OBJECT, string $filter = 'raw'): WP_Term|array|WP_Error|null
-            {
+            public function getTerm(
+                int|object $term,
+                string $taxonomy = '',
+                string $output = OBJECT,
+                string $filter = 'raw'
+            ): WP_Term|array|WP_Error|null {
                 return get_term($term, $taxonomy, $output, $filter);
             }
 
@@ -88,8 +92,10 @@ class WPServiceFactory
                 return get_terms($args, $deprecated);
             }
 
-            public function getThePostThumbnailUrl(int|WP_Post $postId, string|array $size = 'post-thumbnail'): string|false
-            {
+            public function getThePostThumbnailUrl(
+                int|WP_Post $postId,
+                string|array $size = 'post-thumbnail'
+            ): string|false {
                 return get_the_post_thumbnail_url($postId, $size);
             }
 
@@ -128,18 +134,28 @@ class WPServiceFactory
                 return term_exists($term, $taxonomy, $parentTerm);
             }
 
-            public function getPostTerms(int $post_id, string|array $taxonomy = 'post_tag', array $args = array()): array|WP_Error
-            {
+            public function getPostTerms(
+                int $post_id,
+                string|array $taxonomy = 'post_tag',
+                array $args = array()
+            ): array|WP_Error {
                 return wp_get_post_terms($post_id, $taxonomy, $args);
             }
 
-            public function insertTerm(string $term, string $taxonomy = "", array $args = []): array|WP_Error
-            {
+            public function insertTerm(
+                string $term,
+                string $taxonomy = "",
+                array $args = []
+            ): array|WP_Error {
                 return wp_insert_term($term, $taxonomy, $args);
             }
 
-            public function setPostTerms(int $postId, string|array $terms = "", string $taxonomy = "post_tag", bool $append = false): array|false|WP_Error
-            {
+            public function setPostTerms(
+                int $postId,
+                string|array $terms = "",
+                string $taxonomy = "post_tag",
+                bool $append = false
+            ): array|false|WP_Error {
                 return wp_set_post_terms($postId, $terms, $taxonomy, $append);
             }
         };
