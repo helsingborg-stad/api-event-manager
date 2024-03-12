@@ -4,9 +4,9 @@ namespace EventManager\Services\WPService;
 
 use WP_Error;
 
-interface WPSetPostTerms
+interface SetPostTerms
 {
-    public function wpSetPostTerms(
+    public function setPostTerms(
         int $postId,
         string|array $terms = "",
         string $taxonomy = "post_tag",
