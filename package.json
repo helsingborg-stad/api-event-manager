@@ -1,0 +1,19 @@
+{
+  "name": "api-event-manager",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "env:update": "wp-env start --update",
+    "composer": "wp-env run cli --env-cwd=wp-content/plugins/api-event-manager composer",
+    "wp": "wp-env run cli wp",
+    "test": "npm run composer test",
+    "test:coverage": "npm run composer test:coverage",
+    "bash": "wp-env run cli bash"
+  },
+  "author": "",
+  "license": "ISC"
+}

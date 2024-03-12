@@ -54,14 +54,16 @@ if (!defined('DB_COLLATE')) {
     define('DB_COLLATE', '');
 }
 
-if (!defined('WP_SITEURL')) {
+if (!defined('WP_SITEURL') && isset($_SERVER['HTTP_HOST'])) {
     define('WP_SITEURL', 'http://' . $_SERVER['HTTP_HOST']);
-}
-if (!defined('WP_HOME')) {
-    define('WP_HOME', WP_SITEURL);
-}
-if (!defined('WP_CONTENT_URL')) {
-    define('WP_CONTENT_URL', WP_SITEURL . '/wp-content');
+
+    if (!defined('WP_HOME')) {
+        define('WP_HOME', WP_SITEURL);
+    }
+
+    if (!defined('WP_CONTENT_URL')) {
+        define('WP_CONTENT_URL', WP_SITEURL . '/wp-content');
+    }
 }
 
 /**#@+

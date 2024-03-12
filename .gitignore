@@ -65,6 +65,7 @@ wp-content
 # devcontainer
 !.devcontainer
 .devcontainer/wp-config-local.php
+/composer.local.json
 
 # .vscode settings
 !.vscode
