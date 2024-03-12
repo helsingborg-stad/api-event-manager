@@ -368,7 +368,7 @@ class EventBuilder implements BaseTypeBuilder
             return $this;
         }
 
-        $superEvent = new self($this->wp, $superEventPost, false);
+        $superEvent = new self($superEventPost, $this->wp, $this->acf);
 
         $this->event->superEvent($superEvent->toArray());
 
@@ -388,7 +388,7 @@ class EventBuilder implements BaseTypeBuilder
         }
 
         $subEvents = array_map(function ($subPost) {
-            $subEvent = new self($this->wp, $subPost, false);
+            $subEvent = new self($subPost, $this->wp, $this->acf);
 
             return $subEvent->toArray();
         }, $subEventPosts);

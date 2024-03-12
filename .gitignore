@@ -8,6 +8,9 @@ node_modules/
 # ignore composer vendor directory
 vendor
 
+# ignore composer lock file.
+composer.lock
+
 # ignore jekyll build directory
 /_site
 
@@ -65,6 +68,7 @@ wp-content
 # devcontainer
 !.devcontainer
 .devcontainer/wp-config-local.php
+/composer.local.json
 
 # .vscode settings
 !.vscode
