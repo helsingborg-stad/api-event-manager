@@ -8,8 +8,5 @@
       {{ $postTitle }}
     @endtypography
   @endif
-
-  {!! $formStart() !!}
   {!! $form() !!}
-  {!! $formEnd() !!}
 @endpaper
