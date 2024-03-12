@@ -13,6 +13,16 @@
  * Domain Path:       /languages
  */
 
+use EventManager\CleanupUnusedTags\CleanupUnusedTags;
+use EventManager\Helper\DIContainer\DIContainerFactory;
+use EventManager\Helper\HooksRegistrar;
+use EventManager\Helper\HooksRegistrar\HooksRegistrarInterface;
+use EventManager\Services\WPService\WPService;
+use EventManager\Services\WPService\WPServiceFactory;
+use EventManager\SetPostTermsFromContent\SetPostTermsFromContent;
+use EventManager\TagReader\TagReader;
+use EventManager\TagReader\TagReaderInterface;
+
 // Protect agains direct file access
 if (!defined('WPINC')) {
     die;
@@ -22,37 +32,23 @@ define('EVENT_MANAGER_PATH', plugin_dir_path(__FILE__));
 define('EVENT_MANAGER_URL', plugins_url('', __FILE__));
 define('EVENT_MANAGER_TEMPLATE_PATH', EVENT_MANAGER_PATH . 'templates/');
 
-require_once EVENT_MANAGER_PATH . 'Public.php';
-
 // Register the autoloader
 if (file_exists(EVENT_MANAGER_PATH . 'vendor/autoload.php')) {
     require EVENT_MANAGER_PATH . '/vendor/autoload.php';
 }
 
-$wpService = EventManager\Services\WPService\WPServiceFactory::create();
-
-// Disable Gutenberg editor for all post types
-$wpService->addFilter('use_block_editor_for_post_type', '__return_false');
-
-// Acf auto import and export
-$wpService->addAction('acf/init', function () {
-    $acfExportManager = new \AcfExportManager\AcfExportManager();
-    $acfExportManager->setTextdomain('api-event-manager');
-    $acfExportManager->setExportFolder(EVENT_MANAGER_PATH . 'source/php/AcfFields/');
-    $acfExportManager->autoExport(array(
-        'event-fields'        => 'group_65a115157a046',
-        'organization-fields' => 'group_65a4f5a847d62',
-        'audience-fields'     => 'group_65ae1b865887a'
+// Start application
+$diContainer = DIContainerFactory::create();
+$diContainer
+    ->bind(HooksRegistrarInterface::class, new HooksRegistrar())
+    ->bind(WPService::class, WPServiceFactory::create())
+    ->bind(TagReaderInterface::class, new TagReader())
+    ->bind(CleanupUnusedTags::class, new CleanupUnusedTags('keyword', $diContainer->get(WPService::class)))
+    ->bind(SetPostTermsFromContent::class, new SetPostTermsFromContent(
+        'event',
+        'keyword',
+        $diContainer->get(TagReaderInterface::class),
+        $diContainer->get(WPService::class)
     ));
 
-    $acfExportManager->import();
-});
-
-// Start application
-$hooksRegistrar = new EventManager\Helper\HooksRegistrar();
-$app            = new EventManager\App($wpService);
-$app->registerHooks($hooksRegistrar);
-
-$wpService->addAction('plugins_loaded', function () {
-    load_plugin_textdomain('api-event-manager', false, dirname(plugin_basename(__FILE__)) . '/languages');
-});
+(new EventManager\App($diContainer, $diContainer->get(HooksRegistrarInterface::class)))->registerHooks();

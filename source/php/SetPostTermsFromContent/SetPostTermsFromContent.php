@@ -13,7 +13,7 @@ class SetPostTermsFromContent implements Hookable
     private string $postType;
     private string $taxonomy;
 
-    public function __construct(TagReaderInterface $tagReader, WPService $wpService, string $postType, string $taxonomy)
+    public function __construct(string $postType, string $taxonomy, TagReaderInterface $tagReader, WPService $wpService)
     {
         $this->tagReader = $tagReader;
         $this->wpService = $wpService;
