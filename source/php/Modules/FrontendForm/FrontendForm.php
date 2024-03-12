@@ -24,10 +24,12 @@ class FrontendForm extends \Modularity\Module
     // The field groups that should be displayed in the form.
     private $fieldGroups = [
       'group_65a115157a046'
-    ];
+    ]; 
 
     public function init(): void
     {
+
+      acf_enqueue_scripts();
         $this->nameSingular = __('Event Form', 'api-event-manager');
         $this->namePlural   = __('Event Forms', 'api-event-manager');
         $this->description  = __('Module for creating public event form', 'api-event-manager');

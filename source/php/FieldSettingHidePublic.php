@@ -43,9 +43,6 @@ class FieldSettingHidePublic implements Hookable
 
         //Hide field from frontend forms
         if ($field['is_publicly_hidden'] == 1) {
-            // This code may generate an offset error.
-            // For more information, refer to the following GitHub issue:
-            // https://github.com/AdvancedCustomFields/acf/issues/901 
             return false;
         }
 
