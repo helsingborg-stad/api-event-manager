@@ -18,6 +18,7 @@ interface WPService extends
     GetThePostThumbnailUrl,
     GetTheTitle,
     IsWPError,
+    LoadPluginTextDomain,
     RegisterPostType,
     RegisterTaxonomy,
     RemoveMenuPage,

@@ -158,6 +158,11 @@ class WPServiceFactory
             ): array|false|WP_Error {
                 return wp_set_post_terms($postId, $terms, $taxonomy, $append);
             }
+
+            public function loadPluginTextDomain(string $domain, string $path, string $relativeTo): void
+            {
+                load_plugin_textdomain($domain, $path, $relativeTo);
+            }
         };
     }
 }

@@ -16,7 +16,7 @@ class SetPostTermsFromContentTest extends TestCase
     {
         $tagReader   = $this->createMock('EventManager\TagReader\TagReaderInterface');
         $wpService   = $this->createMock('EventManager\Services\WPService\WPService');
-        $sutInstance = new SetPostTermsFromContent($tagReader, $wpService, 'post', 'category');
+        $sutInstance = new SetPostTermsFromContent('post', 'category', $tagReader, $wpService);
 
         WP_Mock::expectActionAdded('save_post', [$sutInstance, 'setPostTermsFromContent']);
 
@@ -41,7 +41,7 @@ class SetPostTermsFromContentTest extends TestCase
         $wpService->shouldReceive('termExists')->once()->andReturn(true);
         $wpService->shouldReceive('setPostTerms')->once()->with(1, ['tag1'], 'category', false);
 
-        $sutInstance = new SetPostTermsFromContent($tagReader, $wpService, 'post', 'category');
+        $sutInstance = new SetPostTermsFromContent('post', 'category', $tagReader, $wpService);
         $sutInstance->setPostTermsFromContent($post->ID);
 
         $this->assertConditionsMet();
@@ -64,7 +64,7 @@ class SetPostTermsFromContentTest extends TestCase
         $wpService->shouldReceive('insertTerm')->once()->with('tag1', 'category');
         $wpService->shouldReceive('setPostTerms')->once()->with(1, ['tag1'], 'category', false);
 
-        $sutInstance = new SetPostTermsFromContent($tagReader, $wpService, 'post', 'category');
+        $sutInstance = new SetPostTermsFromContent('post', 'category', $tagReader, $wpService);
         $sutInstance->setPostTermsFromContent($post->ID);
 
         $this->assertConditionsMet();
@@ -86,7 +86,7 @@ class SetPostTermsFromContentTest extends TestCase
         $wpService->shouldReceive('termExists')->never();
         $wpService->shouldReceive('setPostTerms')->once()->with(1, [], 'category', false);
 
-        $sutInstance = new SetPostTermsFromContent($tagReader, $wpService, 'post', 'category');
+        $sutInstance = new SetPostTermsFromContent('post', 'category', $tagReader, $wpService);
         $sutInstance->setPostTermsFromContent($post->ID);
 
         $this->assertConditionsMet();

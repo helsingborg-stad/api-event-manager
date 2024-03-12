@@ -2,33 +2,41 @@
 
 namespace EventManager;
 
+use EventManager\Helper\DIContainer\DIContainer;
 use EventManager\Helper\HooksRegistrar\HooksRegistrarInterface;
-use EventManager\Services\WPService\WPService;
-use EventManager\SetPostTermsFromContent\SetPostTermsFromContent;
 
 class App
 {
-    private WPService $wpService;
+    private DIContainer $diContainer;
+    private HooksRegistrarInterface $hooksRegistrar;
 
-    public function __construct(WPService $wpService)
+    public function __construct(DIContainer $diContainer, HooksRegistrarInterface $hooksRegistrar)
     {
-        $this->wpService = $wpService;
+        $this->diContainer    = $diContainer;
+        $this->hooksRegistrar = $hooksRegistrar;
     }
 
-    public function registerHooks(HooksRegistrarInterface $hooksRegistrar)
+    public function registerHooks()
     {
-        $tagReader = new \EventManager\TagReader\TagReader();
+        $hookableClasses = [
+            \EventManager\Helper\LoadTextDomain::class,
+            \EventManager\Helper\RegisterAcfExportManager::class,
+            \EventManager\HideUnusedAdminPages::class,
+            \EventManager\PostTypes\Event::class,
+            \EventManager\Taxonomies\Audience::class,
+            \EventManager\Taxonomies\Organization::class,
+            \EventManager\Taxonomies\Keyword::class,
+            \EventManager\ApiResponseModifiers\Event::class,
+            \EventManager\SetPostTermsFromContent\SetPostTermsFromContent::class,
+            \EventManager\Modifiers\ModifyPostContentBeforeReadingTags::class,
+            \EventManager\CleanupUnusedTags\CleanupUnusedTags::class,
+            \EventManager\Modules\FrontendForm\Register::class,
+            \EventManager\Modifiers\DisableGutenbergEditor::class
+        ];
 
-        $hooksRegistrar
-            ->register(new \EventManager\HideUnusedAdminPages($this->wpService))
-            ->register(new \EventManager\PostTypes\Event($this->wpService))
-            ->register(new \EventManager\Taxonomies\Audience($this->wpService))
-            ->register(new \EventManager\Taxonomies\Organization($this->wpService))
-            ->register(new \EventManager\Taxonomies\Keyword($this->wpService))
-            ->register(new \EventManager\ApiResponseModifiers\Event())
-            ->register(new SetPostTermsFromContent($tagReader, $this->wpService, 'event', 'keyword'))
-            ->register(new \EventManager\Modifiers\ModifyPostContentBeforeReadingTags($this->wpService))
-            ->register(new \EventManager\CleanupUnusedTags\CleanupUnusedTags('keyword', $this->wpService))
-            ->register(new \EventManager\Modules\FrontendForm\Register($this->wpService));
+        foreach ($hookableClasses as $hookableClass) {
+            $hookableClassInstance = $this->diContainer->get($hookableClass);
+            $this->hooksRegistrar->register($hookableClassInstance);
+        }
     }
 }
