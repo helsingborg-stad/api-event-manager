@@ -1,10 +1,14 @@
-@if (!$hideTitle && !empty($postTitle))
-  <h2 class="event-form-title">{{ $postTitle }}</h2>
-@endif
-
-
-
 @paper(['padding' => 4])
+@if (!$hideTitle && !empty($postTitle))
+    @typography([
+        'element' => 'h4',
+        'variant' => 'h2',
+        'classList' => ['module-title']
+    ])
+      {{ $postTitle }}
+    @endtypography
+  @endif
+
   {!! $formStart() !!}
   {!! $form() !!}
   {!! $formEnd() !!}
