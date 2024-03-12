@@ -24,7 +24,7 @@
             "ignore-duplicates": false,
             "merge-dev": true,
             "merge-extra": true,
-            "merge-scripts": false
+            "merge-scripts": true
         }
     },
     "authors": [
