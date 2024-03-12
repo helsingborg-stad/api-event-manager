@@ -3,7 +3,6 @@
 namespace EventManager\Tests\SetPostTermsFromContent;
 
 use EventManager\SetPostTermsFromContent\SetPostTermsFromContent;
-use EventManager\TagsFromPostContentManager\TagsFromPostContentManager;
 use Mockery;
 use WP_Mock;
 use WP_Mock\Tools\TestCase;
@@ -40,7 +39,7 @@ class SetPostTermsFromContentTest extends TestCase
         $wpService->shouldReceive('getPost')->once()->andReturn($post);
         $wpService->allows('applyFilters')->once()->andReturnArg(2);
         $wpService->shouldReceive('termExists')->once()->andReturn(true);
-        $wpService->shouldReceive('wpSetPostTerms')->once()->with(1, ['tag1'], 'category', false);
+        $wpService->shouldReceive('setPostTerms')->once()->with(1, ['tag1'], 'category', false);
 
         $sutInstance = new SetPostTermsFromContent($tagReader, $wpService, 'post', 'category');
         $sutInstance->setPostTermsFromContent($post->ID);
@@ -62,8 +61,8 @@ class SetPostTermsFromContentTest extends TestCase
         $wpService->shouldReceive('getPost')->once()->andReturn($post);
         $wpService->allows('applyFilters')->once()->andReturnArg(2);
         $wpService->shouldReceive('termExists')->once()->with('tag1', 'category')->andReturn(false);
-        $wpService->shouldReceive('wpInsertTerm')->once()->with('tag1', 'category');
-        $wpService->shouldReceive('wpSetPostTerms')->once()->with(1, ['tag1'], 'category', false);
+        $wpService->shouldReceive('insertTerm')->once()->with('tag1', 'category');
+        $wpService->shouldReceive('setPostTerms')->once()->with(1, ['tag1'], 'category', false);
 
         $sutInstance = new SetPostTermsFromContent($tagReader, $wpService, 'post', 'category');
         $sutInstance->setPostTermsFromContent($post->ID);
@@ -72,9 +71,9 @@ class SetPostTermsFromContentTest extends TestCase
     }
 
     /**
-     * @testdox update() passes empty array to wpSetPostTerms() if no tags are found in content
+     * @testdox update() passes empty array to setPostTerms() if no tags are found in content
      */
-    public function testUpdatePassesEmptyArrayToWpSetPostTermsIfNoTagsAreFoundInContent()
+    public function testUpdatePassesEmptyArrayToSetPostTermsIfNoTagsAreFoundInContent()
     {
         $postContent = 'content';
         $post        = $this->mockPost(['ID' => 1, 'post_content' => $postContent, 'post_type' => 'post']);
@@ -85,7 +84,7 @@ class SetPostTermsFromContentTest extends TestCase
         $wpService->shouldReceive('getPost')->once()->andReturn($post);
         $wpService->allows('applyFilters')->once()->andReturnArg(2);
         $wpService->shouldReceive('termExists')->never();
-        $wpService->shouldReceive('wpSetPostTerms')->once()->with(1, [], 'category', false);
+        $wpService->shouldReceive('setPostTerms')->once()->with(1, [], 'category', false);
 
         $sutInstance = new SetPostTermsFromContent($tagReader, $wpService, 'post', 'category');
         $sutInstance->setPostTermsFromContent($post->ID);

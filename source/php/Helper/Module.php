@@ -39,7 +39,7 @@ abstract class Module implements Hookable
 
             return true;
         }
-        
+
         throw new \Exception('Modularity not found');
     }
 }

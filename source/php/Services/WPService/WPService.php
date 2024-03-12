@@ -24,7 +24,7 @@ interface WPService extends
     RemoveSubMenuPage,
     TermExists,
     GetPostTerms,
-    WPInsertTerm,
-    WPSetPostTerms
+    InsertTerm,
+    SetPostTerms
 {
 }

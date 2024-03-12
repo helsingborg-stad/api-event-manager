@@ -40,7 +40,7 @@ class SetPostTermsFromContent implements Hookable
 
         $this->ensureFoundTagsExist($tagNames);
 
-        $this->wpService->wpSetPostTerms($postId, $tagNames, $this->taxonomy, false);
+        $this->wpService->setPostTerms($postId, $tagNames, $this->taxonomy, false);
     }
 
     private function ensureFoundTagsExist(array $tagNames): void
@@ -48,7 +48,7 @@ class SetPostTermsFromContent implements Hookable
         foreach ($tagNames as $tagName) {
             // If the tag does not exist, create it
             if (!$this->wpService->termExists($tagName, $this->taxonomy)) {
-                $this->wpService->wpInsertTerm($tagName, $this->taxonomy);
+                $this->wpService->insertTerm($tagName, $this->taxonomy);
             }
         }
     }
