@@ -7,6 +7,7 @@
 namespace EventManager\Modules\FrontendForm;
 
 use ComponentLibrary\Init as ComponentLibraryInit;
+use Throwable;
 
 //use EventManager\Helper\CacheBust;
 
@@ -24,15 +25,15 @@ class FrontendForm extends \Modularity\Module
     // The field groups that should be displayed in the form.
     private $fieldGroups = [
       'group_65a115157a046'
-    ]; 
+    ];
+
+    private $blade = null; 
 
     public function init(): void
     {
-
-      acf_enqueue_scripts();
-        $this->nameSingular = __('Event Form', 'api-event-manager');
-        $this->namePlural   = __('Event Forms', 'api-event-manager');
-        $this->description  = __('Module for creating public event form', 'api-event-manager');
+      $this->nameSingular = __('Event Form', 'api-event-manager');
+      $this->namePlural   = __('Event Forms', 'api-event-manager');
+      $this->description  = __('Module for creating public event form', 'api-event-manager');
     }
 
     public function data(): array
@@ -51,9 +52,6 @@ class FrontendForm extends \Modularity\Module
 
       // Return the data
       return [
-        'formStart' => function() {
-          
-        },
         'form' => function() use($htmlUpdatedMessage, $htmlSubmitButton) {
           acf_form([
             'post_id' => 'new_post',
@@ -70,10 +68,7 @@ class FrontendForm extends \Modularity\Module
             ],
             'submit_value' => __('Create Event', 'api-event-manager')
           ]);
-        },
-        'formEnd' => function() {
-          
-        },
+        }
       ]; 
     }
 
@@ -107,11 +102,14 @@ class FrontendForm extends \Modularity\Module
      */
     public function renderView($view, $data = array()): string
     {
-        $init = new ComponentLibraryInit([]);
-        $blade = $init->getEngine();
+        if (is_null($this->blade)) {
+          $this->blade = (
+            new ComponentLibraryInit([])
+          )->getEngine();
+        }
 
         try {
-            return $blade->makeView($view, $data, [], $this->templateDir)->render();
+            return $this->blade->makeView($view, $data, [], $this->templateDir)->render();
         } catch (Throwable $e) {
             echo '<pre class="c-paper" style="max-height: 400px; overflow: auto;">';
             echo '<h2>Could not find view</h2>'; 
