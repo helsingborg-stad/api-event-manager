@@ -42,8 +42,7 @@ class EventBuilder implements BaseTypeBuilder
             ->setAudience()
             ->setTypicalAgeRange()
             ->setOrganizer()
-            ->setStartDate()
-            ->setEndDate()
+            ->setDates()
             ->setDuration()
             ->setKeywords()
             ->setSchedule()
@@ -208,7 +207,7 @@ class EventBuilder implements BaseTypeBuilder
         return $this;
     }
 
-    public function setStartDate(): EventBuilder
+    public function setDates(): EventBuilder
     {
         $occasions = $this->acf->getField('occasions', $this->post->ID) ?: [];
 
@@ -216,50 +215,37 @@ class EventBuilder implements BaseTypeBuilder
             return $this;
         }
 
-        $dateTime = null;
-        $repeat   = $occasions[0]['repeat'] ?: null;
-        $date     = $occasions[0]['startDate'] ?: null;
-        $time     = $occasions[0]['startTime'] ?: null;
+        $repeat    = $occasions[0]['repeat'] ?: null;
+        $date      = $occasions[0]['date'] ?: null;
+        $startTime = $occasions[0]['startTime'] ?: null;
+        $endTime   = $occasions[0]['endTime'] ?: null;
 
         if ($repeat !== 'no') {
             return $this;
         }
 
-        // Combine date and time
-        if ($date && $time) {
-            $date     = new \DateTime("{$date} {$time}");
-            $dateTime = $date->format('Y-m-d H:i');
+        if ($startTime && $endTime) {
+            // If endTime is earlier than startTime, set endTime to null
+            $startTimeUnix = strtotime($startTime);
+            $endTimeUnix   = strtotime($endTime);
+
+            if ($endTimeUnix < $startTimeUnix) {
+                $endTime = null;
+            }
         }
 
-        $this->event->startDate($dateTime);
-
-        return $this;
-    }
-
-    public function setEndDate(): EventBuilder
-    {
-        $occasions = $this->acf->getField('occasions', $this->post->ID) ?: [];
-        $dateTime  = null;
-
-        if (empty($occasions) || count($occasions) !== 1) {
-            return $this;
+        if ($date && $startTime) {
+            $startDateTime       = new \DateTime("{$date} {$startTime}");
+            $startDateTimeString = $startDateTime->format('Y-m-d H:i');
+            $this->event->startDate($startDateTimeString);
         }
 
-        $repeat = $occasions[0]['repeat'] ?: null;
-        $date   = $occasions[0]['endDate'] ?: null;
-        $time   = $occasions[0]['endTime'] ?: null;
-
-        if ($repeat !== 'no') {
-            return $this;
+        if ($date && $endTime) {
+            $endDateTime       = new \DateTime("{$date} {$endTime}");
+            $endDateTimeString = $endDateTime->format('Y-m-d H:i');
+            $this->event->endDate($endDateTimeString);
         }
 
-        // Combine date and time
-        if ($date && $time) {
-            $date     = new \DateTime("{$date} {$time}");
-            $dateTime = $date->format('Y-m-d H:i');
-        }
-
-        $this->event->endDate($dateTime);
         return $this;
     }
 
