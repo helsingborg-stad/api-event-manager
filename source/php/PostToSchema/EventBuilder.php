@@ -35,6 +35,7 @@ class EventBuilder implements BaseTypeBuilder
             ->setName()
             ->setDescription()
             ->setAbout()
+            ->setAccessabilityInformation()
             ->setImage()
             ->setIsAccessibleForFree()
             ->setLocation()
@@ -78,6 +79,19 @@ class EventBuilder implements BaseTypeBuilder
     public function setAbout(): EventBuilder
     {
         $this->event->about($this->wp->getPostMeta($this->post->ID, 'about', true) ?: null);
+        return $this;
+    }
+
+    public function setAccessabilityInformation(): EventBuilder
+    {
+
+        $accessabilityInformation = $this->wp->getPostMeta($this->post->ID, 'accessabilityInformation', true) ?: null;
+        $about                    = $this->event->getProperty('about');
+
+        if ($accessabilityInformation && $about) {
+            $this->event->about("{$about}\n\n{$accessabilityInformation}");
+        }
+
         return $this;
     }
 

@@ -44,6 +44,26 @@
             "delay": 1
         },
         {
+            "key": "field_65f14f7826756",
+            "label": "Accessability information",
+            "name": "accessabilityInformation",
+            "aria-label": "",
+            "type": "wysiwyg",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "tabs": "all",
+            "toolbar": "basic",
+            "media_upload": 0,
+            "delay": 1
+        },
+        {
             "key": "field_65a5319a9d01d",
             "label": "Status",
             "name": "eventStatus",

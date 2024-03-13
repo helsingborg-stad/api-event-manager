@@ -336,4 +336,23 @@ class EventBuilderTest extends TestCase
 
         $this->assertEquals(['tag1'], $event->toArray()['keywords']);
     }
+
+    /**
+     * @testdox setAbout() appends accessibility information if available
+     */
+    public function testSetAboutAppendsAccessabilityInformationIfAvailable()
+    {
+        $post       = $this->getMockedPost(['ID' => 123]);
+        $wpService  = Mockery::mock(WPService::class);
+        $acfService = Mockery::mock(AcfService::class);
+        $wpService->shouldReceive('getPostMeta')->with($post->ID, 'about', true)->andReturn('testabout');
+        $wpService->shouldReceive('getPostMeta')->with($post->ID, 'accessabilityInformation', true)->andReturn('testaccessability');
+        $event = new EventBuilder($post, $wpService, $acfService);
+
+        $event->setAbout();
+        $event->setAccessabilityInformation();
+
+        $this->assertStringContainsString("testabout", $event->toArray()['about']);
+        $this->assertStringContainsString("testaccessability", $event->toArray()['about']);
+    }
 }
