@@ -224,29 +224,36 @@ class EventBuilder implements BaseTypeBuilder
             return $this;
         }
 
-        if ($startTime && $endTime) {
-            // If endTime is earlier than startTime, set endTime to null
-            $startTimeUnix = strtotime($startTime);
-            $endTimeUnix   = strtotime($endTime);
-
-            if ($endTimeUnix < $startTimeUnix) {
-                $endTime = null;
-            }
+        if ($this->endTimeIsEarlierThanStartTime($startTime, $endTime)) {
+            $endTime = null;
         }
 
-        if ($date && $startTime) {
-            $startDateTime       = new \DateTime("{$date} {$startTime}");
-            $startDateTimeString = $startDateTime->format('Y-m-d H:i');
-            $this->event->startDate($startDateTimeString);
-        }
-
-        if ($date && $endTime) {
-            $endDateTime       = new \DateTime("{$date} {$endTime}");
-            $endDateTimeString = $endDateTime->format('Y-m-d H:i');
-            $this->event->endDate($endDateTimeString);
-        }
+        $this->event->startDate($this->formatDateFromDateAndTime($date, $startTime));
+        $this->event->endDate($this->formatDateFromDateAndTime($date, $endTime));
 
         return $this;
+    }
+
+    private function endTimeIsEarlierThanStartTime(?string $startTime, ?string $endTime): bool
+    {
+        if (!$startTime || !$endTime) {
+            return false;
+        }
+
+        $startTimeUnix = strtotime($startTime);
+        $endTimeUnix   = strtotime($endTime);
+
+        return $endTimeUnix < $startTimeUnix;
+    }
+
+    private function formatDateFromDateAndTime(?string $date, ?string $time): ?string
+    {
+        if (!$date || !$time) {
+            return null;
+        }
+
+        $dateTime = new \DateTime("{$date} {$time}");
+        return $dateTime->format('Y-m-d H:i');
     }
 
     public function setDuration(): EventBuilder
