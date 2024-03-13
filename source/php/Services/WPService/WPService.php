@@ -25,6 +25,8 @@ interface WPService extends
     TermExists,
     GetPostTerms,
     InsertTerm,
-    SetPostTerms
+    SetPostTerms,
+    EnqueueStyle,
+    EnqueueScript
 {
 }
