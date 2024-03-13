@@ -37,6 +37,9 @@ interface WPService extends
     NextScheduled,
     ScheduleEvent,
     EnqueueStyle,
-    EnqueueScript
+    EnqueueScript,
+    IsAdmin,
+    GetEnvironmentType
+    
 {
 }

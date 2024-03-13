@@ -3,7 +3,6 @@
 namespace EventManager\Services\WPService;
 
 use WP_Error;
-use WP_HTTP_Response;
 use WP_Post;
 use WP_REST_Response;
 use WP_Screen;
@@ -215,6 +214,37 @@ class WPServiceFactory
                 bool $wpError = false
             ): bool|WP_Error {
                 return wp_schedule_event($timestamp, $recurrence, $hook, $args, $wpError);
+            }
+
+            public function enqueueStyle(
+                string $handle, 
+                string $src = '', 
+                array $deps = array(), 
+                string|bool|null $ver = false, 
+                string $media = 'all'
+            ): void {
+                wp_enqueue_style($handle, $src, $deps, $ver, $media);
+            }
+
+            public function enqueueScript(
+                string $handle, 
+                string $src = '', 
+                array $deps = array(), 
+                string|bool|null $ver = false, 
+                array|bool $args = array(),
+                bool $in_footer = false
+            ): void {
+                wp_enqueue_script($handle, $src, $deps, $ver, $in_footer);
+            }
+
+            public function isAdmin(): bool
+            {
+                return is_admin();
+            }
+
+            public function getEnvironmentType(): string
+            {
+                return wp_get_environment_type();
             }
         };
     }
