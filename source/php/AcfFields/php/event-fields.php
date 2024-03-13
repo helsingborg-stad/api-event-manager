@@ -47,6 +47,26 @@
             'delay' => 1,
         ),
         2 => array(
+            'key' => 'field_65f14f7826756',
+            'label' => __('Accessability information', 'api-event-manager'),
+            'name' => 'accessabilityInformation',
+            'aria-label' => '',
+            'type' => 'wysiwyg',
+            'instructions' => '',
+            'required' => 0,
+            'conditional_logic' => 0,
+            'wrapper' => array(
+                'width' => '',
+                'class' => '',
+                'id' => '',
+            ),
+            'default_value' => '',
+            'tabs' => 'all',
+            'toolbar' => 'basic',
+            'media_upload' => 0,
+            'delay' => 1,
+        ),
+        3 => array(
             'key' => 'field_65a5319a9d01d',
             'label' => __('Status', 'api-event-manager'),
             'name' => 'eventStatus',
@@ -76,7 +96,7 @@
             'allow_custom' => 0,
             'search_placeholder' => '',
         ),
-        3 => array(
+        4 => array(
             'key' => 'field_65a15156f4c37',
             'label' => __('Accessible for free', 'api-event-manager'),
             'name' => 'isAccessibleForFree',
@@ -96,7 +116,7 @@
             'ui_off_text' => '',
             'ui' => 1,
         ),
-        4 => array(
+        5 => array(
             'center_lat' => 53.55064,
             'center_lng' => 10.00065,
             'zoom' => 12,
@@ -122,7 +142,7 @@
             ),
             'leaflet_map' => '{"lat":53.55064,"lng":10.00065,"zoom":12,"layers":["OpenStreetMap.Mapnik"],"markers":[]}',
         ),
-        5 => array(
+        6 => array(
             'key' => 'field_65a4f6af50302',
             'label' => __('Organizer', 'api-event-manager'),
             'name' => 'organization',
@@ -147,7 +167,7 @@
             'bidirectional_target' => '',
             'multiple' => 0,
         ),
-        6 => array(
+        7 => array(
             'key' => 'field_65a52a6374b0c',
             'label' => __('Audience', 'api-event-manager'),
             'name' => 'audience',
@@ -173,7 +193,7 @@
             'bidirectional_target' => array(
             ),
         ),
-        7 => array(
+        8 => array(
             'key' => 'field_65a52bf7f7e4d',
             'label' => __('Typical age rande start', 'api-event-manager'),
             'name' => 'typicalAgeRangeStart',
@@ -195,7 +215,7 @@
             'prepend' => '',
             'append' => '',
         ),
-        8 => array(
+        9 => array(
             'key' => 'field_65a52c24f7e4e',
             'label' => __('Typical age range end', 'api-event-manager'),
             'name' => 'typicalAgeRangeEnd',
@@ -215,7 +235,7 @@
             'prepend' => '',
             'append' => '',
         ),
-        9 => array(
+        10 => array(
             'key' => 'field_65a66d8cadeef',
             'label' => __('Occasions', 'api-event-manager'),
             'name' => 'occasions',
