@@ -139,16 +139,15 @@ class EventBuilderTest extends TestCase
     }
 
     /**
-     * @testdox Event gets start and end date for simple occation.
+     * @testdox endDate gets the same value as startDate to avoid events spanning multiple days
      */
-    public function testEventGetsStartAndEndDateForSimpleOccation()
+    public function testEndDateGetsTheSameValueAsStartDateToAvoidEventsSpanningMultipleDays()
     {
         $occasions = [
             [
                 'repeat'    => 'no',
-                'startDate' => '2021-03-02',
+                'date'      => '2021-03-02',
                 'startTime' => '22:00',
-                'endDate'   => '2021-03-02',
                 'endTime'   => '23:00'
             ]
         ];
@@ -160,8 +159,59 @@ class EventBuilderTest extends TestCase
 
         $event = new EventBuilder($post, $wpService, $acfService);
 
-        $event->setStartDate();
-        $event->setEndDate();
+        $event->setDates();
+
+        $this->assertEquals('2021-03-02 23:00', $event->toArray()['endDate']);
+    }
+
+    /**
+     * @testdox endDate can never be earlier than startDate
+     */
+    public function testEndDateCanNeverBeEarlierThanStartDate()
+    {
+        $occasions = [
+            [
+                'repeat'    => 'no',
+                'date'      => '2021-03-02',
+                'startTime' => '23:00',
+                'endTime'   => '22:00'
+            ]
+        ];
+
+        $post       = $this->getMockedPost(['ID' => 123]);
+        $wpService  = Mockery::mock(WPService::class);
+        $acfService = Mockery::mock(AcfService::class);
+        $acfService->shouldReceive('getField')->with('occasions', $post->ID)->andReturn($occasions);
+
+        $event = new EventBuilder($post, $wpService, $acfService);
+
+        $event->setDates();
+
+        $this->assertArrayNotHasKey('endDate', $event->toArray());
+    }
+
+    /**
+     * @testdox Event gets start and end date for simple occation, and uses same date for start and end date.
+     */
+    public function testEventGetsStartAndEndDateForSimpleOccation()
+    {
+        $occasions = [
+            [
+                'repeat'    => 'no',
+                'date'      => '2021-03-02',
+                'startTime' => '22:00',
+                'endTime'   => '23:00'
+            ]
+        ];
+
+        $post       = $this->getMockedPost(['ID' => 123]);
+        $wpService  = Mockery::mock(WPService::class);
+        $acfService = Mockery::mock(AcfService::class);
+        $acfService->shouldReceive('getField')->with('occasions', $post->ID)->andReturn($occasions);
+
+        $event = new EventBuilder($post, $wpService, $acfService);
+
+        $event->setDates();
 
         $this->assertEquals('2021-03-02 22:00', $event->toArray()['startDate']);
         $this->assertEquals('2021-03-02 23:00', $event->toArray()['endDate']);
@@ -175,9 +225,8 @@ class EventBuilderTest extends TestCase
         $occasions = [
             [
                 'repeat'    => 'no',
-                'startDate' => '2021-03-02',
+                'date'      => '2021-03-02',
                 'startTime' => '22:00',
-                'endDate'   => '2021-03-02',
                 'endTime'   => '23:00'
             ]
         ];
@@ -188,8 +237,7 @@ class EventBuilderTest extends TestCase
         $acfService->shouldReceive('getField')->with('occasions', 123)->andReturn($occasions);
 
         $eventBuilder = new EventBuilder($post, $wpService, $acfService);
-        $eventBuilder->setStartDate();
-        $eventBuilder->setEndDate();
+        $eventBuilder->setDates();
         $eventBuilder->setDuration();
         $schemaArray = $eventBuilder->toArray();
 
@@ -203,7 +251,6 @@ class EventBuilderTest extends TestCase
                 'repeat'    => 'no',
                 'startDate' => '2021-03-02',
                 'startTime' => '22:00',
-                'endDate'   => '2021-03-02',
                 'endTime'   => '23:00',
                 'url'       => 'https://www.example.com'
             ]

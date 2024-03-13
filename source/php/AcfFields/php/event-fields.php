@@ -24,6 +24,7 @@
             'rows' => '',
             'placeholder' => '',
             'new_lines' => '',
+            'acfe_textarea_code' => 0,
         ),
         1 => array(
             'key' => 'field_65a115151a872',
@@ -72,6 +73,8 @@
             'ui' => 0,
             'ajax' => 0,
             'placeholder' => '',
+            'allow_custom' => 0,
+            'search_placeholder' => '',
         ),
         3 => array(
             'key' => 'field_65a15156f4c37',
@@ -261,6 +264,8 @@
                     'ui' => 0,
                     'ajax' => 0,
                     'placeholder' => '',
+                    'allow_custom' => 0,
+                    'search_placeholder' => '',
                     'parent_repeater' => 'field_65a66d8cadeef',
                 ),
                 1 => array(
@@ -434,6 +439,8 @@
                     'ui' => 0,
                     'ajax' => 0,
                     'placeholder' => '',
+                    'allow_custom' => 0,
+                    'search_placeholder' => '',
                     'parent_repeater' => 'field_65a66d8cadeef',
                 ),
                 6 => array(
@@ -506,12 +513,14 @@
                     'ui' => 0,
                     'ajax' => 0,
                     'placeholder' => '',
+                    'allow_custom' => 0,
+                    'search_placeholder' => '',
                     'parent_repeater' => 'field_65a66d8cadeef',
                 ),
                 8 => array(
                     'key' => 'field_65a681f9a99e9',
-                    'label' => __('Start date', 'api-event-manager'),
-                    'name' => 'startDate',
+                    'label' => __('Date', 'api-event-manager'),
+                    'name' => 'date',
                     'aria-label' => '',
                     'type' => 'date_picker',
                     'instructions' => '',
@@ -546,25 +555,6 @@
                     'parent_repeater' => 'field_65a66d8cadeef',
                 ),
                 10 => array(
-                    'key' => 'field_65a684e0a99ea',
-                    'label' => __('End date', 'api-event-manager'),
-                    'name' => 'endDate',
-                    'aria-label' => '',
-                    'type' => 'date_picker',
-                    'instructions' => '',
-                    'required' => 1,
-                    'conditional_logic' => 0,
-                    'wrapper' => array(
-                        'width' => '25',
-                        'class' => '',
-                        'id' => '',
-                    ),
-                    'display_format' => 'Y-m-d',
-                    'return_format' => 'Y-m-d',
-                    'first_day' => 1,
-                    'parent_repeater' => 'field_65a66d8cadeef',
-                ),
-                11 => array(
                     'key' => 'field_65a6852da99ec',
                     'label' => __('End time', 'api-event-manager'),
                     'name' => 'endTime',
@@ -582,7 +572,7 @@
                     'return_format' => 'H:i:s',
                     'parent_repeater' => 'field_65a66d8cadeef',
                 ),
-                12 => array(
+                11 => array(
                     'key' => 'field_65b89293153f9',
                     'label' => __('Booking page URL', 'api-event-manager'),
                     'name' => 'url',
@@ -601,6 +591,7 @@
                     'parent_repeater' => 'field_65a66d8cadeef',
                 ),
             ),
+            'acfe_repeater_stylised_button' => 0,
         ),
     ),
     'location' => array(
@@ -631,5 +622,10 @@
     'active' => true,
     'description' => '',
     'show_in_rest' => 0,
+    'acfe_display_title' => '',
+    'acfe_autosync' => '',
+    'acfe_form' => 0,
+    'acfe_meta' => '',
+    'acfe_note' => '',
 ));
 }

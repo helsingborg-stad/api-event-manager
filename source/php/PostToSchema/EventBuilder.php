@@ -42,8 +42,7 @@ class EventBuilder implements BaseTypeBuilder
             ->setAudience()
             ->setTypicalAgeRange()
             ->setOrganizer()
-            ->setStartDate()
-            ->setEndDate()
+            ->setDates()
             ->setDuration()
             ->setKeywords()
             ->setSchedule()
@@ -208,7 +207,7 @@ class EventBuilder implements BaseTypeBuilder
         return $this;
     }
 
-    public function setStartDate(): EventBuilder
+    public function setDates(): EventBuilder
     {
         $occasions = $this->acf->getField('occasions', $this->post->ID) ?: [];
 
@@ -216,51 +215,45 @@ class EventBuilder implements BaseTypeBuilder
             return $this;
         }
 
-        $dateTime = null;
-        $repeat   = $occasions[0]['repeat'] ?: null;
-        $date     = $occasions[0]['startDate'] ?: null;
-        $time     = $occasions[0]['startTime'] ?: null;
+        $repeat    = $occasions[0]['repeat'] ?: null;
+        $date      = $occasions[0]['date'] ?: null;
+        $startTime = $occasions[0]['startTime'] ?: null;
+        $endTime   = $occasions[0]['endTime'] ?: null;
 
         if ($repeat !== 'no') {
             return $this;
         }
 
-        // Combine date and time
-        if ($date && $time) {
-            $date     = new \DateTime("{$date} {$time}");
-            $dateTime = $date->format('Y-m-d H:i');
+        if ($this->endTimeIsEarlierThanStartTime($startTime, $endTime)) {
+            $endTime = null;
         }
 
-        $this->event->startDate($dateTime);
+        $this->event->startDate($this->formatDateFromDateAndTime($date, $startTime));
+        $this->event->endDate($this->formatDateFromDateAndTime($date, $endTime));
 
         return $this;
     }
 
-    public function setEndDate(): EventBuilder
+    private function endTimeIsEarlierThanStartTime(?string $startTime, ?string $endTime): bool
     {
-        $occasions = $this->acf->getField('occasions', $this->post->ID) ?: [];
-        $dateTime  = null;
-
-        if (empty($occasions) || count($occasions) !== 1) {
-            return $this;
+        if (!$startTime || !$endTime) {
+            return false;
         }
 
-        $repeat = $occasions[0]['repeat'] ?: null;
-        $date   = $occasions[0]['endDate'] ?: null;
-        $time   = $occasions[0]['endTime'] ?: null;
+        $startTimeUnix = strtotime($startTime);
+        $endTimeUnix   = strtotime($endTime);
 
-        if ($repeat !== 'no') {
-            return $this;
+        return $endTimeUnix < $startTimeUnix;
+    }
+
+    private function formatDateFromDateAndTime(?string $date, ?string $time): ?string
+    {
+        if (!$date || !$time) {
+            return null;
         }
 
-        // Combine date and time
-        if ($date && $time) {
-            $date     = new \DateTime("{$date} {$time}");
-            $dateTime = $date->format('Y-m-d H:i');
-        }
-
-        $this->event->endDate($dateTime);
-        return $this;
+        $dateTime = new \DateTime("{$date} {$time}");
+        return $dateTime->format('Y-m-d H:i');
     }
 
     public function setDuration(): EventBuilder
