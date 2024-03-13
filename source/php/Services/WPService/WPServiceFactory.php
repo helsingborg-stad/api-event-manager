@@ -158,6 +158,37 @@ class WPServiceFactory
             ): array|false|WP_Error {
                 return wp_set_post_terms($postId, $terms, $taxonomy, $append);
             }
+
+            public function enqueueStyle(
+                string $handle, 
+                string $src = '', 
+                array $deps = array(), 
+                string|bool|null $ver = false, 
+                string $media = 'all'
+            ): void {
+                wp_enqueue_style($handle, $src, $deps, $ver, $media);
+            }
+
+            public function enqueueScript(
+                string $handle, 
+                string $src = '', 
+                array $deps = array(), 
+                string|bool|null $ver = false, 
+                array|bool $args = array(),
+                bool $in_footer = false
+            ): void {
+                wp_enqueue_script($handle, $src, $deps, $ver, $in_footer);
+            }
+
+            public function isAdmin(): bool
+            {
+                return is_admin();
+            }
+
+            public function getEnvironmentType(): string
+            {
+                return wp_get_environment_type();
+            }
         };
     }
 }

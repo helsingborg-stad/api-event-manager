@@ -2,12 +2,12 @@
 
 namespace EventManager\Services\WPService;
 
-interface IsAdmin
+interface GetEnvironmentType
 {
   /**
    * Check whether the current user is an administrator.
    *
    * @return bool
    */
-  public function isAdmin(): bool;
+  public function getEnvironmentType(): string;
 }
