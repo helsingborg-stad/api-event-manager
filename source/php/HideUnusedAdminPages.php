@@ -22,7 +22,7 @@ class HideUnusedAdminPages implements Hookable
     public function hideUnusedAdminPages()
     {
         //Do not hide admin pages on local environment
-        if ($this->wpService->wpGetEnvironmentType() === 'local') {
+        if ($this->wpService->getEnvironmentType() === 'local') {
             return;
         }
 
