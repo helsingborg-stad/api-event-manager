@@ -23,12 +23,8 @@ abstract class Enqueue implements Hookable
     private function getType($filename): string
     {
         $extension = pathinfo($filename, PATHINFO_EXTENSION);
-
-        if($extension == "css") {
-          return "style";
-        }
-        if($extension == "js") {
-          return "script";
+        if(in_array($extension, ["css", "js"])) {
+          return $extension;
         }
 
         throw new \Exception('Invalid type enqueued in Enqueue class. Must be either ".js" or ".css"');
@@ -36,9 +32,12 @@ abstract class Enqueue implements Hookable
 
     private function getHandle(): string
     {
-        $filename = pathinfo($this->getFilename(), PATHINFO_FILENAME);
-        $filename = str_replace(['.', '-'], '-', $filename);
-        return $filename;
+        return str_replace(['.', '-'], '-', 
+          pathinfo(
+            $this->getFilename(), 
+            PATHINFO_FILENAME
+          )
+        );
     }
 
     private function getSource(): string
@@ -56,14 +55,14 @@ abstract class Enqueue implements Hookable
     {
       $filename = $this->getFilename();
 
-      if($this->getType($filename) === 'script') {
+      if($this->getType($filename) === 'js') {
         $this->wp->enqueueScript(
             $this->getHandle(),
             $this->getSource()
         );
       }
       
-      if($this->getType($filename) === 'style') {
+      if($this->getType($filename) === 'css') {
         $this->wp->enqueueStyle(
             $this->getHandle(),
             $this->getSource()
