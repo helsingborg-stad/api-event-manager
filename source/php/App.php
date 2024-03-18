@@ -2,15 +2,19 @@
 
 namespace EventManager;
 
-use EventManager\Helper\DIContainer\DIContainer;
 use EventManager\Helper\HooksRegistrar\HooksRegistrarInterface;
+use EventManager\Services\WPService\WPService;
+use EventManager\TableColumns\PostTableColumns\OpenStreetMapTableColumn;
+use EventManager\TableColumns\PostTableColumns\PostTableColumnsManager;
+use EventManager\TableColumns\PostTableColumns\TermNameTableColumn;
+use Psr\Container\ContainerInterface;
 
 class App
 {
-    private DIContainer $diContainer;
+    private ContainerInterface $diContainer;
     private HooksRegistrarInterface $hooksRegistrar;
 
-    public function __construct(DIContainer $diContainer, HooksRegistrarInterface $hooksRegistrar)
+    public function __construct(ContainerInterface $diContainer, HooksRegistrarInterface $hooksRegistrar)
     {
         $this->diContainer    = $diContainer;
         $this->hooksRegistrar = $hooksRegistrar;
@@ -31,7 +35,8 @@ class App
             \EventManager\Modifiers\ModifyPostContentBeforeReadingTags::class,
             \EventManager\CleanupUnusedTags\CleanupUnusedTags::class,
             \EventManager\Modules\FrontendForm\Register::class,
-            \EventManager\Modifiers\DisableGutenbergEditor::class
+            \EventManager\Modifiers\DisableGutenbergEditor::class,
+            \EventManager\TableColumns\PostTableColumns\PostTableColumnsManager::class,
         ];
 
         foreach ($hookableClasses as $hookableClass) {

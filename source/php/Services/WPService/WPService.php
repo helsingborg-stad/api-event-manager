@@ -26,6 +26,8 @@ interface WPService extends
     TermExists,
     GetPostTerms,
     InsertTerm,
-    SetPostTerms
+    SetPostTerms,
+    GetTheId,
+    GetEditTermLink
 {
 }
