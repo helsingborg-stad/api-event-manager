@@ -10,8 +10,10 @@ use EventManager\TableColumns\TableColumnsManagerInterface;
 
 class PostTableColumnsManager implements TableColumnsManagerInterface, Hookable
 {
-    public function __construct(private AddAction&AddFilter $wpService)
-    {
+    public function __construct(
+        private array $postTypes,
+        private AddAction&AddFilter $wpService
+    ) {
     }
 
     /**
@@ -31,30 +33,30 @@ class PostTableColumnsManager implements TableColumnsManagerInterface, Hookable
 
     public function addHooks(): void
     {
-        $this->addColumnsToTable();
-        $this->populateTableCells();
+        foreach ($this->postTypes as $postType) {
+            $this->wpService->addFilter("manage_{$postType}_posts_columns", [$this, 'addColumnsToTable']);
+        }
+
+        foreach ($this->postTypes as $postType) {
+            $this->wpService->addAction("manage_{$postType}_posts_custom_column", [$this, 'populateTableCells'], 10, 1);
+        }
     }
 
-    public function addColumnsToTable(): void
+    public function addColumnsToTable(array $tableColumnsArray): array
     {
-        $this->wpService->addFilter('manage_event_posts_columns', function (array $tableColumnsArray) {
+        foreach ($this->columns as $column) {
+            $tableColumnsArray[$column->getName()] = $column->getHeader();
+        }
 
-            foreach ($this->columns as $column) {
-                $tableColumnsArray[$column->getName()] = $column->getHeader();
-            }
-
-            return $tableColumnsArray;
-        });
+        return $tableColumnsArray;
     }
 
-    public function populateTableCells(): void
+    public function populateTableCells(string $currentColumnName): void
     {
-        $this->wpService->addAction('manage_event_posts_custom_column', function (string $currentColumnName, int $postId) {
-            foreach ($this->columns as $column) {
-                if ($currentColumnName === $column->getName()) {
-                    echo $column->getCellContent();
-                }
+        foreach ($this->columns as $column) {
+            if ($currentColumnName === $column->getName()) {
+                echo $column->getCellContent();
             }
-        }, 10, 2);
+        }
     }
 }

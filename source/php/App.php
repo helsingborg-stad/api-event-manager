@@ -56,7 +56,7 @@ class App
             new TermNameTableColumn(__('Organizer', 'api-event-manager'), 'organization', $wpService),
         ];
 
-        $manager = new PostTableColumnsManager($wpService);
+        $manager = new PostTableColumnsManager(['event'], $wpService);
 
         foreach ($columns as $column) {
             $manager->register($column);
