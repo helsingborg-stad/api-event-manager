@@ -162,12 +162,14 @@ class WPServiceFactory
             public function enqueueStyle(
                 string $handle
             ): void {
+                //TODO: Check if the handle is registered before enqueue. Throw error if not.
                 wp_enqueue_style($handle);
             }
 
             public function enqueueScript(
                 string $handle
             ): void {
+                //TODO: Check if the handle is registered before enqueue. Throw error if not.
                 wp_enqueue_script($handle);
             }
 
