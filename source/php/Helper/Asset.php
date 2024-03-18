@@ -4,7 +4,7 @@ namespace EventManager\Helper;
 
 use EventManager\Services\WPService\WPService;
 
-abstract class Enqueue implements Hookable
+abstract class Asset implements Hookable
 {
     abstract public function getFilename(): string;
 
@@ -30,7 +30,12 @@ abstract class Enqueue implements Hookable
         throw new \Exception('Invalid type enqueued in Enqueue class. Must be either ".js" or ".css"');
     }
 
-    private function getHandle(): string
+    public function getHandle(): string|bool
+    {
+        return false;
+    }
+
+    private function generateHandle(): string
     {
         return str_replace(['.', '-'], '-', 
           pathinfo(
@@ -57,14 +62,14 @@ abstract class Enqueue implements Hookable
 
       if($this->getType($filename) === 'js') {
         $this->wp->registerScript(
-            $this->getHandle(),
+            $this->getHandle() ?? $this->generateHandle(),
             $this->getSource()
         );
       }
       
       if($this->getType($filename) === 'css') {
         $this->wp->registerStyle(
-            $this->getHandle(),
+            $this->getHandle() ?? $this->generateHandle(),
             $this->getSource()
         );
       }

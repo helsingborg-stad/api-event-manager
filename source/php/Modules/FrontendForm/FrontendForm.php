@@ -7,9 +7,10 @@
 namespace EventManager\Modules\FrontendForm;
 
 use ComponentLibrary\Init as ComponentLibraryInit;
+use EventManager\Services\WPService\EnqueueScript;
+use EventManager\Services\WPService\WPServiceFactory;
+use EventManager\Decorators\ManifestFilePathDecorator;
 use Throwable;
-
-//use EventManager\Helper\CacheBust;
 
 /**
  * @property string $description
@@ -27,6 +28,8 @@ class FrontendForm extends \Modularity\Module
       'group_65a115157a046'
     ];
 
+    private EnqueueScript $wpService;
+
     private $blade = null; 
 
     public function init(): void
@@ -34,6 +37,11 @@ class FrontendForm extends \Modularity\Module
       $this->nameSingular = __('Event Form', 'api-event-manager');
       $this->namePlural   = __('Event Forms', 'api-event-manager');
       $this->description  = __('Module for creating public event form', 'api-event-manager');
+
+      $manifestFilePathDecorator = new ManifestFilePathDecorator();
+      $this->wpService = WPServiceFactory::create(
+          $manifestFilePathDecorator
+      );
     }
 
     public function data(): array
@@ -80,17 +88,10 @@ class FrontendForm extends \Modularity\Module
     public function script(): void
     {
       acf_form_head();
-      /*wp_enqueue_script(
-          'frontend-form',
-          EVENT_MANAGER_URL . '/dist/'. CacheBust::name('js/assignment-form.js')
-      );*/ 
     }
 
     public function style(): void {
-        /*wp_enqueue_style(
-            'frontend-form',
-            EVENT_MANAGER_URL . '/dist/'. CacheBust::name('js/assignment-form.css')
-        );*/ 
+        $this->wpService->enqueueScript('event-manager-frontend-form');
     }
 
     /**

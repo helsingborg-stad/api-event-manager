@@ -49,6 +49,11 @@ if (file_exists(EVENT_MANAGER_PATH . 'vendor/autoload.php')) {
 $wpService  = WPServiceFactory::create();
 $acfService = AcfServiceFactory::create();
 
+$manifestFilePathDecorator = new EventManager\Decorators\ManifestFilePathDecorator();
+$wpService = EventManager\Services\WPService\WPServiceFactory::create(
+    $manifestFilePathDecorator
+);
+
 /**
  * Load text domain
  */
