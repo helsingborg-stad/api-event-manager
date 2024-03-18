@@ -28,8 +28,9 @@ interface WPService extends
     SetPostTerms,
     EnqueueStyle,
     EnqueueScript,
+    RegisterStyle,
+    RegisterScript,
     IsAdmin,
     GetEnvironmentType
-    
 {
 }

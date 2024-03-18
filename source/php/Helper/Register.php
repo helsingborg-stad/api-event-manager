@@ -17,7 +17,7 @@ abstract class Enqueue implements Hookable
 
     public function addHooks(): void
     {
-        $this->wp->addAction('wp_enqueue_scripts', [$this, 'enqueue']);
+        $this->wp->addAction('wp_enqueue_scripts', [$this, 'register']);
     }
 
     private function getType($filename): string
@@ -51,19 +51,19 @@ abstract class Enqueue implements Hookable
      * @return void
      * @thows \Exception
      */
-    public function enqueue(): void
+    public function register(): void
     {
       $filename = $this->getFilename();
 
       if($this->getType($filename) === 'js') {
-        $this->wp->enqueueScript(
+        $this->wp->registerScript(
             $this->getHandle(),
             $this->getSource()
         );
       }
       
       if($this->getType($filename) === 'css') {
-        $this->wp->enqueueStyle(
+        $this->wp->registerStyle(
             $this->getHandle(),
             $this->getSource()
         );

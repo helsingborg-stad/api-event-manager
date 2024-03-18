@@ -160,6 +160,18 @@ class WPServiceFactory
             }
 
             public function enqueueStyle(
+                string $handle
+            ): void {
+                wp_enqueue_style($handle);
+            }
+
+            public function enqueueScript(
+                string $handle
+            ): void {
+                wp_enqueue_script($handle);
+            }
+
+            public function registerStyle(
                 string $handle, 
                 string $src = '', 
                 array $deps = array(), 
@@ -169,12 +181,11 @@ class WPServiceFactory
                 wp_enqueue_style($handle, $src, $deps, $ver, $media);
             }
 
-            public function enqueueScript(
+            public function registerScript(
                 string $handle, 
                 string $src = '', 
                 array $deps = array(), 
                 string|bool|null $ver = false, 
-                array|bool $args = array(),
                 bool $in_footer = false
             ): void {
                 wp_enqueue_script($handle, $src, $deps, $ver, $in_footer);
