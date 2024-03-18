@@ -6,7 +6,7 @@ use EventManager\Helper\Asset;
 
 class FrontEndFormStyle extends Asset
 {
-    public function getHandle(): string|bool
+    public function getHandle(): string
     {
         return 'event-manager-frontend-form';
     }

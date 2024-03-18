@@ -7,9 +7,10 @@
 namespace EventManager\Modules\FrontendForm;
 
 use ComponentLibrary\Init as ComponentLibraryInit;
-use EventManager\Services\WPService\EnqueueScript;
+use EventManager\Services\WPService\EnqueueStyle;
 use EventManager\Services\WPService\WPServiceFactory;
 use EventManager\Decorators\ManifestFilePathDecorator;
+
 use Throwable;
 
 /**
@@ -28,7 +29,7 @@ class FrontendForm extends \Modularity\Module
       'group_65a115157a046'
     ];
 
-    private EnqueueScript $wpService;
+    private EnqueueStyle $wpService;
 
     private $blade = null; 
 
@@ -91,7 +92,7 @@ class FrontendForm extends \Modularity\Module
     }
 
     public function style(): void {
-        $this->wpService->enqueueScript('event-manager-frontend-form');
+        $this->wpService->enqueueStyle('event-manager-frontend-form');
     }
 
     /**

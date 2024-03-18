@@ -7,6 +7,7 @@ use EventManager\Services\WPService\WPService;
 abstract class Asset implements Hookable
 {
     abstract public function getFilename(): string;
+    abstract public function getHandle(): string;
 
     private WPService $wp;
 
@@ -30,26 +31,6 @@ abstract class Asset implements Hookable
         throw new \Exception('Invalid type enqueued in Enqueue class. Must be either ".js" or ".css"');
     }
 
-    public function getHandle(): string|bool
-    {
-        return false;
-    }
-
-    private function generateHandle(): string
-    {
-        return str_replace(['.', '-'], '-', 
-          pathinfo(
-            $this->getFilename(), 
-            PATHINFO_FILENAME
-          )
-        );
-    }
-
-    private function getSource(): string
-    {
-        return $this->getFilename(); //TODO: Cachebust here. 
-    }
-
     /**
      * Register the script or style
      * 
@@ -62,15 +43,15 @@ abstract class Asset implements Hookable
 
       if($this->getType($filename) === 'js') {
         $this->wp->registerScript(
-            $this->getHandle() ?? $this->generateHandle(),
-            $this->getSource()
+            $this->getHandle(),
+            $this->getFilename()
         );
       }
       
       if($this->getType($filename) === 'css') {
         $this->wp->registerStyle(
-            $this->getHandle() ?? $this->generateHandle(),
-            $this->getSource()
+            $this->getHandle(),
+            $this->getFilename()
         );
       }
     }
