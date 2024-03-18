@@ -38,8 +38,9 @@ interface WPService extends
     ScheduleEvent,
     EnqueueStyle,
     EnqueueScript,
+    RegisterStyle,
+    RegisterScript,
     IsAdmin,
     GetEnvironmentType
-    
 {
 }
