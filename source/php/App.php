@@ -2,21 +2,19 @@
 
 namespace EventManager;
 
-use EventManager\Helper\DIContainer\DIContainer;
 use EventManager\Helper\HooksRegistrar\HooksRegistrarInterface;
 use EventManager\Services\WPService\WPService;
-use EventManager\TableColumns\PostMetaTableColumn;
 use EventManager\TableColumns\PostTableColumns\OpenStreetMapTableColumn;
 use EventManager\TableColumns\PostTableColumns\PostTableColumnsManager;
 use EventManager\TableColumns\PostTableColumns\TermNameTableColumn;
-use EventManager\TableColumns\PostTermTableColumn;
+use Psr\Container\ContainerInterface;
 
 class App
 {
-    private DIContainer $diContainer;
+    private ContainerInterface $diContainer;
     private HooksRegistrarInterface $hooksRegistrar;
 
-    public function __construct(DIContainer $diContainer, HooksRegistrarInterface $hooksRegistrar)
+    public function __construct(ContainerInterface $diContainer, HooksRegistrarInterface $hooksRegistrar)
     {
         $this->diContainer    = $diContainer;
         $this->hooksRegistrar = $hooksRegistrar;
@@ -37,31 +35,13 @@ class App
             \EventManager\Modifiers\ModifyPostContentBeforeReadingTags::class,
             \EventManager\CleanupUnusedTags\CleanupUnusedTags::class,
             \EventManager\Modules\FrontendForm\Register::class,
-            \EventManager\Modifiers\DisableGutenbergEditor::class
+            \EventManager\Modifiers\DisableGutenbergEditor::class,
+            \EventManager\TableColumns\PostTableColumns\PostTableColumnsManager::class,
         ];
 
         foreach ($hookableClasses as $hookableClass) {
             $hookableClassInstance = $this->diContainer->get($hookableClass);
             $this->hooksRegistrar->register($hookableClassInstance);
         }
-
-        $this->hooksRegistrar->register($this->getPostTableColumnsManager());
-    }
-
-    private function getPostTableColumnsManager(): PostTableColumnsManager
-    {
-        $wpService = $this->diContainer->get(WPService::class);
-        $columns   = [
-            new OpenStreetMapTableColumn(__('Location', 'api-event-manager'), 'location', $wpService),
-            new TermNameTableColumn(__('Organizer', 'api-event-manager'), 'organization', $wpService),
-        ];
-
-        $manager = new PostTableColumnsManager(['event'], $wpService);
-
-        foreach ($columns as $column) {
-            $manager->register($column);
-        }
-
-        return $manager;
     }
 }

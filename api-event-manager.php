@@ -14,12 +14,14 @@
  */
 
 use EventManager\CleanupUnusedTags\CleanupUnusedTags;
-use EventManager\Helper\DIContainer\DIContainerFactory;
 use EventManager\Helper\HooksRegistrar;
 use EventManager\Helper\HooksRegistrar\HooksRegistrarInterface;
 use EventManager\Services\WPService\WPService;
 use EventManager\Services\WPService\WPServiceFactory;
 use EventManager\SetPostTermsFromContent\SetPostTermsFromContent;
+use EventManager\TableColumns\PostTableColumns\OpenStreetMapTableColumn;
+use EventManager\TableColumns\PostTableColumns\PostTableColumnsManager;
+use EventManager\TableColumns\PostTableColumns\TermNameTableColumn;
 use EventManager\TagReader\TagReader;
 use EventManager\TagReader\TagReaderInterface;
 
@@ -37,18 +39,53 @@ if (file_exists(EVENT_MANAGER_PATH . 'vendor/autoload.php')) {
     require EVENT_MANAGER_PATH . '/vendor/autoload.php';
 }
 
-// Start application
-$diContainer = DIContainerFactory::create();
-$diContainer
-    ->bind(HooksRegistrarInterface::class, new HooksRegistrar())
-    ->bind(WPService::class, WPServiceFactory::create())
-    ->bind(TagReaderInterface::class, new TagReader())
-    ->bind(CleanupUnusedTags::class, new CleanupUnusedTags('keyword', $diContainer->get(WPService::class)))
-    ->bind(SetPostTermsFromContent::class, new SetPostTermsFromContent(
-        'event',
-        'keyword',
-        $diContainer->get(TagReaderInterface::class),
-        $diContainer->get(WPService::class)
-    ));
+/**
+ * Configure application
+ */
+$diContainer = new \DI\Container();
+$diContainer->set(HooksRegistrarInterface::class, \DI\create(HooksRegistrar::class));
+$diContainer->set(WPService::class, WPServiceFactory::create());
+$diContainer->set(TagReaderInterface::class, \DI\create(TagReader::class));
 
-(new EventManager\App($diContainer, $diContainer->get(HooksRegistrarInterface::class)))->registerHooks();
+/**
+ * Clean up unused tags.
+ */
+$diContainer->set(
+    CleanupUnusedTags::class,
+    \DI\autowire()
+        ->constructorParameter('taxonomy', 'keyword')
+        ->constructorParameter('wpService', \DI\get(WPService::class))
+);
+
+/**
+ * Set post terms from content.
+ */
+$diContainer->set(
+    SetPostTermsFromContent::class,
+    \DI\autowire()
+        ->constructorParameter('postType', 'event')
+        ->constructorParameter('taxonomy', 'keyword')
+        ->constructorParameter('tagReader', $diContainer->get(TagReaderInterface::class))
+        ->constructorParameter('wpService', \DI\get(WPService::class))
+);
+
+/**
+ * Register table columns manager.
+ */
+$diContainer->set(
+    PostTableColumnsManager::class,
+    DI\autowire()
+        ->constructorParameter('postTypes', ['event'])
+        ->constructorParameter('wpService', \DI\get(WPService::class))
+        ->method('register', \DI\autowire(OpenStreetMapTableColumn::class)
+            ->constructorParameter('header', __('Location', 'api-event-manager'))
+            ->constructorParameter('metaKey', 'location')
+            ->constructorParameter('wpService', \DI\get(WPService::class)))
+        ->method('register', \DI\autowire(TermNameTableColumn::class)
+            ->constructorParameter('header', __('Organizer', 'api-event-manager'))
+            ->constructorParameter('taxonomy', 'organization')
+            ->constructorParameter('wpService', \DI\get(WPService::class)))
+);
+
+$app = $diContainer->get(EventManager\App::class);
+$app->registerHooks();
