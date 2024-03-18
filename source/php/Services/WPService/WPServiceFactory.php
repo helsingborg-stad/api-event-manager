@@ -163,6 +163,16 @@ class WPServiceFactory
             {
                 load_plugin_textdomain($domain, $path, $relativeTo);
             }
+
+            public function getTheId(): int|false
+            {
+                return get_the_ID();
+            }
+
+            public function getEditTermLink(int|WP_Term $term, string $taxonomy = '', string $objectType = ''): ?string
+            {
+                return get_edit_term_link($term, $taxonomy, $objectType);
+            }
         };
     }
 }

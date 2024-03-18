@@ -4,6 +4,12 @@ namespace EventManager;
 
 use EventManager\Helper\DIContainer\DIContainer;
 use EventManager\Helper\HooksRegistrar\HooksRegistrarInterface;
+use EventManager\Services\WPService\WPService;
+use EventManager\TableColumns\PostMetaTableColumn;
+use EventManager\TableColumns\PostTableColumns\OpenStreetMapTableColumn;
+use EventManager\TableColumns\PostTableColumns\PostTableColumnsManager;
+use EventManager\TableColumns\PostTableColumns\TermNameTableColumn;
+use EventManager\TableColumns\PostTermTableColumn;
 
 class App
 {
@@ -38,5 +44,24 @@ class App
             $hookableClassInstance = $this->diContainer->get($hookableClass);
             $this->hooksRegistrar->register($hookableClassInstance);
         }
+
+        $this->hooksRegistrar->register($this->getPostTableColumnsManager());
+    }
+
+    private function getPostTableColumnsManager(): PostTableColumnsManager
+    {
+        $wpService = $this->diContainer->get(WPService::class);
+        $columns   = [
+            new OpenStreetMapTableColumn(__('Location', 'api-event-manager'), 'location', $wpService),
+            new TermNameTableColumn(__('Organizer', 'api-event-manager'), 'organization', $wpService),
+        ];
+
+        $manager = new PostTableColumnsManager($wpService);
+
+        foreach ($columns as $column) {
+            $manager->register($column);
+        }
+
+        return $manager;
     }
 }
