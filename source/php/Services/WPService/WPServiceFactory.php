@@ -186,10 +186,7 @@ class WPServiceFactory
                 string $media = 'all'
             ): void {
                 $src = $this->filePathDecorator->decorate($src);
-
-                var_dump($src);
-
-                wp_enqueue_style($handle, $src, $deps, $ver, $media);
+                wp_register_style($handle, $src, $deps, $ver, $media);
             }
 
             public function registerScript(
@@ -199,11 +196,8 @@ class WPServiceFactory
                 string|bool|null $ver = false, 
                 bool $in_footer = false
             ): void {
-
                 $src = $this->filePathDecorator->decorate($src);
-
-                var_dump($src);
-                wp_enqueue_script($handle, $src, $deps, $ver, $in_footer);
+                wp_register_script($handle, $src, $deps, $ver, $in_footer);
             }
 
             public function isAdmin(): bool

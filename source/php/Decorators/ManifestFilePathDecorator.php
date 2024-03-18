@@ -25,9 +25,10 @@ class ManifestFilePathDecorator implements FilePathDecoratorInterface
     return EVENT_MANAGER_URL . "/" . $this->assetDirectory . "/" . $filePath;
   }
 
-  private function initFilesystem(): \WP_Filesystem_Base|\WP_Filesystem_Direct|\WP_Filesystem_FTPext|\WP_Filesystem_ftpsocket|\WP_Filesystem_SSH2 {
+  private function initFilesystem(): \WP_Filesystem_Base|\WP_Filesystem_Direct|\WP_Filesystem_FTPext|\WP_Filesystem_ftpsocket|\WP_Filesystem_SSH2
+  {
     global $wp_filesystem;
-    require_once ( ABSPATH . '/wp-admin/includes/file.php' );
+    require_once(ABSPATH . '/wp-admin/includes/file.php');
     WP_Filesystem();
     return $wp_filesystem;
   }
