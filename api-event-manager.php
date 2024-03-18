@@ -29,7 +29,11 @@ if (file_exists(EVENT_MANAGER_PATH . 'vendor/autoload.php')) {
     require EVENT_MANAGER_PATH . '/vendor/autoload.php';
 }
 
-$wpService = EventManager\Services\WPService\WPServiceFactory::create();
+$manifestFilePathDecorator = new EventManager\Decorators\ManifestFilePathDecorator();
+
+$wpService = EventManager\Services\WPService\WPServiceFactory::create(
+    $manifestFilePathDecorator
+);
 
 // Disable Gutenberg editor for all post types
 $wpService->addFilter('use_block_editor_for_post_type', '__return_false');

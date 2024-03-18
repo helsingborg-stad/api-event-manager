@@ -2,22 +2,27 @@
 
 namespace EventManager\Services\WPService;
 
+use EventManager\Decorators\FilePathDecoratorInterface;
 use WP_Error;
 use WP_Post;
 use WP_Term;
 
 class WPServiceFactory
 {
-    public static function create(): WPService
+    public static function create(FilePathDecoratorInterface $filePathDecorator): WPService
     {
-        return new class implements WPService {
+        return new class ($filePathDecorator) implements WPService {
+
+            public function __construct(private FilePathDecoratorInterface $filePathDecorator)
+            {
+            }
+
             public function addAction(
                 string $tag,
                 callable $function_to_add,
                 int $priority = 10,
                 int $accepted_args = 1
             ): bool {
-
                 return add_action($tag, $function_to_add, $priority, $accepted_args);
             }
 
@@ -180,6 +185,10 @@ class WPServiceFactory
                 string|bool|null $ver = false, 
                 string $media = 'all'
             ): void {
+                $src = $this->filePathDecorator->decorate($src);
+
+                var_dump($src);
+
                 wp_enqueue_style($handle, $src, $deps, $ver, $media);
             }
 
@@ -190,6 +199,10 @@ class WPServiceFactory
                 string|bool|null $ver = false, 
                 bool $in_footer = false
             ): void {
+
+                $src = $this->filePathDecorator->decorate($src);
+
+                var_dump($src);
                 wp_enqueue_script($handle, $src, $deps, $ver, $in_footer);
             }
 

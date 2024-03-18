@@ -30,6 +30,7 @@ class App
             ->register(new \EventManager\Modifiers\ModifyPostContentBeforeReadingTags($this->wpService))
             ->register(new \EventManager\CleanupUnusedTags\CleanupUnusedTags('keyword', $this->wpService))
             ->register(new \EventManager\Modules\FrontendForm\Register($this->wpService))
-            ->register(new \EventManager\FieldSettingHidePublic($this->wpService));
+            ->register(new \EventManager\FieldSettingHidePublic($this->wpService))
+            ->register(new \EventManager\AssetRegistry\FrontEndFormStyle($this->wpService));
     }
 }
