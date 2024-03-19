@@ -8,6 +8,9 @@ use EventManager\PostTableColumns\Helpers\GetNestedArrayStringValueRecursive;
 use EventManager\Services\WPService\GetPostMeta;
 use EventManager\Services\WPService\GetTheId;
 
+/**
+ * @covers \EventManager\PostTableColumns\ColumnCellContent\NestedMetaStringCellContent
+ */
 class NestedMetaStringCellContentTest extends TestCase
 {
     /**
@@ -19,11 +22,25 @@ class NestedMetaStringCellContentTest extends TestCase
         $meta                               = [1 => ['foo' => ['bar' => ['baz' => 'booze']]]];
         $wpService                          = $this->getWpService($postId, $meta);
         $getNestedArrayStringValueRecursive = new GetNestedArrayStringValueRecursive();
-        $nestedMetaStringCellContent        = new NestedMetaStringCellContent($wpService, $getNestedArrayStringValueRecursive);
+        $nestedMetaStringCellContent        = new NestedMetaStringCellContent('foo.bar.baz', $wpService, $getNestedArrayStringValueRecursive);
 
-        $cellContent = $nestedMetaStringCellContent->getCellContent('foo.bar.baz');
+        $cellContent = $nestedMetaStringCellContent->getCellContent();
 
         $this->assertEquals('booze', $cellContent);
+    }
+
+    /**
+     * @testdox getCellContent() returns empty string if the nested value is not found
+     */
+    public function testGetCellContentReturnsEmptyStringIfTheNestedValueIsNotFound()
+    {
+        $wpService                          = $this->getWpService();
+        $getNestedArrayStringValueRecursive = new GetNestedArrayStringValueRecursive();
+        $nestedMetaStringCellContent        = new NestedMetaStringCellContent('fe.fi.fo', $wpService, $getNestedArrayStringValueRecursive);
+
+        $cellContent = $nestedMetaStringCellContent->getCellContent();
+
+        $this->assertEquals('', $cellContent);
     }
 
     private function getWpService($postId = 1, $meta = []): GetTheId&GetPostMeta

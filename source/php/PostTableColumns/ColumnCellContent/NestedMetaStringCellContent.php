@@ -8,16 +8,25 @@ use EventManager\Services\WPService\GetTheId;
 
 class NestedMetaStringCellContent implements ColumnCellContentInterface
 {
+    /**
+     * Class NestedMetaStringCellContent
+     *
+     * Represents the cell content for a nested meta string column in a post table.
+     *
+     * @param string $nestedMetaKeys Eg. 'foo.bar.baz' to retrieve $meta[1]['foo']['bar']['baz']
+     * @param GetTheId&GetPostMeta $wpService
+     */
     public function __construct(
+        private string $nestedMetaKeys,
         private GetTheId&GetPostMeta $wpService,
         private GetNestedArrayStringValueRecursiveInterface $getNestedArrayStringValueRecursive
     ) {
     }
 
-    public function getCellContent(string $cellIdentifier): string
+    public function getCellContent(): string
     {
         $postId          = $this->wpService->getTheId();
-        $cellIdentifiers = explode('.', $cellIdentifier);
+        $cellIdentifiers = explode('.', $this->nestedMetaKeys);
         $metaValueArray  = $this->wpService->getPostMeta($postId, $cellIdentifiers[0], true);
 
 

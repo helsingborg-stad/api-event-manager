@@ -7,14 +7,16 @@ use EventManager\Services\WPService\GetTheId;
 
 class MetaStringCellContent implements ColumnCellContentInterface
 {
-    public function __construct(private GetTheId&GetPostMeta $wpService)
-    {
+    public function __construct(
+        private string $metaKey,
+        private GetTheId&GetPostMeta $wpService
+    ) {
     }
 
-    public function getCellContent(string $cellIdentifier): string
+    public function getCellContent(): string
     {
         $postId = $this->wpService->getTheId();
-        $value  = $this->wpService->getPostMeta($postId, $cellIdentifier, true);
+        $value  = $this->wpService->getPostMeta($postId, $this->metaKey, true);
         return $this->sanitizeValue($value);
     }
 

@@ -6,9 +6,13 @@ use WP_Query;
 
 class MetaStringSort implements ColumnSortInterface
 {
-    public function sort(string $columnIdentifier, WP_Query $query): WP_Query
+    public function __construct(private string $metaKey)
     {
-        $query->set('meta_key', $columnIdentifier);
+    }
+
+    public function sort(WP_Query $query): WP_Query
+    {
+        $query->set('meta_key', $this->metaKey);
         $query->set('orderby', 'meta_value');
 
         return $query;

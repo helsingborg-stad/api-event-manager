@@ -38,6 +38,6 @@ class Column implements ColumnInterface
 
     public function sort(WP_Query $query): WP_Query
     {
-        return $this->columnSorter->sort($this->getIdentifier(), $query);
+        return $this->columnSorter->sort($query);
     }
 }

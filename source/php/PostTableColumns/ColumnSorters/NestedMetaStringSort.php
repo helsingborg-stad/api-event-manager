@@ -9,15 +9,25 @@ use WP_Query;
 
 class NestedMetaStringSort implements ColumnSortInterface
 {
+    /**
+     * Class NestedMetaStringSort
+     *
+     * Represents the sorting for a nested meta string column in a post table.
+     *
+     * @param string $nestedMetaKeys Eg. 'foo.bar.baz' to retrieve $meta[1]['foo']['bar']['baz']
+     * @param GetPosts&GetPostMeta $wpService
+     * @param GetNestedArrayStringValueRecursiveInterface $getNestedArrayStringValueRecursive
+     */
     public function __construct(
+        private string $nestedMetaKeys,
         private GetPosts&GetPostMeta $wpService,
         private GetNestedArrayStringValueRecursiveInterface $getNestedArrayStringValueRecursive
     ) {
     }
 
-    public function sort(string $columnIdentifier, WP_Query $query): WP_Query
+    public function sort(WP_Query $query): WP_Query
     {
-        $columnIdentifiers             = explode('.', $columnIdentifier);
+        $columnIdentifiers             = explode('.', $this->nestedMetaKeys);
         $order                         = $query->get('order') === 'asc' ? 'ASC' : 'DESC';
         $postIds                       = $this->wpService->getPosts([
             'meta_key'  => $columnIdentifiers[0],

@@ -10,14 +10,14 @@ use WP_Term;
 
 class TermNameCellContent implements ColumnCellContentInterface
 {
-    public function __construct(private GetTheId&GetPostTerms&GetEditTermLink $wpService)
+    public function __construct(private string $taxonomy, private GetTheId&GetPostTerms&GetEditTermLink $wpService)
     {
     }
 
-    public function getCellContent(string $cellIdentifier): string
+    public function getCellContent(): string
     {
         $postId = $this->wpService->getTheId();
-        $terms  = $this->wpService->getPostTerms($postId, $cellIdentifier);
+        $terms  = $this->wpService->getPostTerms($postId, $this->taxonomy);
         return $this->formatOutput($terms);
     }
 
@@ -37,7 +37,7 @@ class TermNameCellContent implements ColumnCellContentInterface
 
     private function termToTermLink(WP_Term $term): string
     {
-        $editUrl = $this->wpService->getEditTermLink($term->term_id, $term->taxonomy);
+        $editUrl = $this->wpService->getEditTermLink($term, $term->taxonomy);
         return "<a href=\"{$editUrl}\">{$term->name}</a>";
     }
 }
