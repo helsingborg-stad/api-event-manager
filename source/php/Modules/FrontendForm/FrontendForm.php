@@ -75,6 +75,7 @@ class FrontendForm extends \Modularity\Module
               'post_type' => 'event',
               'post_status' => 'draft'
             ],
+            'instruction_placement' => 'field',
             'submit_value' => __('Create Event', 'api-event-manager')
           ]);
         }
