@@ -87,7 +87,7 @@ $postTableColumnsManager->register($locationColumn);
 
 $diContainer->set(
     \EventManager\PostTableColumns\Manager::class,
-    $postTableColumnsManageer
+    $postTableColumnsManager
 );
 
 /**
