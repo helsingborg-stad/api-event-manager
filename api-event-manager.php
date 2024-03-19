@@ -35,6 +35,8 @@ $wpService = EventManager\Services\WPService\WPServiceFactory::create(
     $manifestFilePathDecorator
 );
 
+$acfService = EventManager\Services\AcfService\AcfServiceFactory::create();
+
 // Disable Gutenberg editor for all post types
 $wpService->addFilter('use_block_editor_for_post_type', '__return_false');
 
@@ -54,7 +56,7 @@ $wpService->addAction('acf/init', function () {
 
 // Start application
 $hooksRegistrar = new EventManager\Helper\HooksRegistrar();
-$app            = new EventManager\App($wpService);
+$app            = new EventManager\App($wpService, $acfService);
 $app->registerHooks($hooksRegistrar);
 
 $wpService->addAction('plugins_loaded', function () {

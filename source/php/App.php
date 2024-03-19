@@ -4,16 +4,12 @@ namespace EventManager;
 
 use EventManager\Helper\HooksRegistrar\HooksRegistrarInterface;
 use EventManager\Services\WPService\WPService;
+use EventManager\Services\AcfService\AcfService;
 use EventManager\SetPostTermsFromContent\SetPostTermsFromContent;
 
 class App
 {
-    private WPService $wpService;
-
-    public function __construct(WPService $wpService)
-    {
-        $this->wpService = $wpService;
-    }
+    public function __construct(private WPService $wpService, private AcfService $acfService){}
 
     public function registerHooks(HooksRegistrarInterface $hooksRegistrar)
     {
@@ -30,7 +26,7 @@ class App
             ->register(new \EventManager\Modifiers\ModifyPostContentBeforeReadingTags($this->wpService))
             ->register(new \EventManager\CleanupUnusedTags\CleanupUnusedTags('keyword', $this->wpService))
             ->register(new \EventManager\Modules\FrontendForm\Register($this->wpService))
-            ->register(new \EventManager\FieldSettingHidePublic($this->wpService))
+            ->register(new \EventManager\FieldSettingHidePublic($this->wpService, $this->acfService))
             ->register(new \EventManager\AssetRegistry\FrontEndFormStyle($this->wpService));
     }
 }
