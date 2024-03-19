@@ -8,13 +8,7 @@ use EventManager\Services\AcfService\AcfService;
 
 class FieldSettingHidePublic implements Hookable
 {
-    private WPService $wpService;
-    private AcfService $acfService;
-
-    public function __construct(WPService $wpService)
-    {
-        $this->wpService = $wpService;
-    }
+    public function __construct(private WPService $wpService, private AcfService $acfService){}
 
     public function addHooks(): void
     {
