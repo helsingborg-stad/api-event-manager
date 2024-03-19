@@ -3,10 +3,6 @@
 namespace EventManager;
 
 use EventManager\Helper\HooksRegistrar\HooksRegistrarInterface;
-use EventManager\Services\WPService\WPService;
-use EventManager\TableColumns\PostTableColumns\OpenStreetMapTableColumn;
-use EventManager\TableColumns\PostTableColumns\PostTableColumnsManager;
-use EventManager\TableColumns\PostTableColumns\TermNameTableColumn;
 use Psr\Container\ContainerInterface;
 
 class App
@@ -36,7 +32,7 @@ class App
             \EventManager\CleanupUnusedTags\CleanupUnusedTags::class,
             \EventManager\Modules\FrontendForm\Register::class,
             \EventManager\Modifiers\DisableGutenbergEditor::class,
-            \EventManager\TableColumns\PostTableColumns\PostTableColumnsManager::class,
+            \EventManager\PostTableColumns\Manager::class,
         ];
 
         foreach ($hookableClasses as $hookableClass) {

@@ -16,12 +16,16 @@
 use EventManager\CleanupUnusedTags\CleanupUnusedTags;
 use EventManager\Helper\HooksRegistrar;
 use EventManager\Helper\HooksRegistrar\HooksRegistrarInterface;
+use EventManager\PostTableColumns\Column as PostTableColumn;
+use EventManager\PostTableColumns\ColumnCellContent\MetaStringCellContent;
+use EventManager\PostTableColumns\ColumnCellContent\NestedMetaStringCellContent;
+use EventManager\PostTableColumns\ColumnCellContent\TermNameCellContent;
+use EventManager\PostTableColumns\ColumnSorters\MetaStringSort;
+use EventManager\PostTableColumns\ColumnSorters\NestedMetaStringSort;
+use EventManager\PostTableColumns\Helpers\GetNestedArrayStringValueRecursive;
 use EventManager\Services\WPService\WPService;
 use EventManager\Services\WPService\WPServiceFactory;
 use EventManager\SetPostTermsFromContent\SetPostTermsFromContent;
-use EventManager\TableColumns\PostTableColumns\OpenStreetMapTableColumn;
-use EventManager\TableColumns\PostTableColumns\PostTableColumnsManager;
-use EventManager\TableColumns\PostTableColumns\TermNameTableColumn;
 use EventManager\TagReader\TagReader;
 use EventManager\TagReader\TagReaderInterface;
 
@@ -65,27 +69,27 @@ $diContainer->set(
     \DI\autowire()
         ->constructorParameter('postType', 'event')
         ->constructorParameter('taxonomy', 'keyword')
-        ->constructorParameter('tagReader', $diContainer->get(TagReaderInterface::class))
+        ->constructorParameter('tagReader', \DI\get(TagReaderInterface::class))
         ->constructorParameter('wpService', \DI\get(WPService::class))
 );
 
 /**
- * Register table columns manager.
+ * Register table columns.
  */
+$postTableColumnsManager = new \EventManager\PostTableColumns\Manager(['event'], $diContainer->get(WPService::class));
+$wpService               = $diContainer->get(WPService::class);
+$organizationColumn      = new PostTableColumn(__('Organizer', 'api-event-manager'), 'organization', new TermNameCellContent('organization', $wpService), new MetaStringSort('organization', $wpService));
+$locationColumn          = new PostTableColumn(__('Location', 'api-event-manager'), 'location.address', new NestedMetaStringCellContent('location.address', $wpService, new GetNestedArrayStringValueRecursive()), new NestedMetaStringSort('location.address', $wpService, new GetNestedArrayStringValueRecursive()));
+$postTableColumnsManager->register($organizationColumn);
+$postTableColumnsManager->register($locationColumn);
+
 $diContainer->set(
-    PostTableColumnsManager::class,
-    DI\autowire()
-        ->constructorParameter('postTypes', ['event'])
-        ->constructorParameter('wpService', \DI\get(WPService::class))
-        ->method('register', \DI\autowire(OpenStreetMapTableColumn::class)
-            ->constructorParameter('header', __('Location', 'api-event-manager'))
-            ->constructorParameter('metaKey', 'location')
-            ->constructorParameter('wpService', \DI\get(WPService::class)))
-        ->method('register', \DI\autowire(TermNameTableColumn::class)
-            ->constructorParameter('header', __('Organizer', 'api-event-manager'))
-            ->constructorParameter('taxonomy', 'organization')
-            ->constructorParameter('wpService', \DI\get(WPService::class)))
+    \EventManager\PostTableColumns\Manager::class,
+    $postTableColumnsManager
 );
 
+/**
+ * Initialize application
+ */
 $app = $diContainer->get(EventManager\App::class);
 $app->registerHooks();
