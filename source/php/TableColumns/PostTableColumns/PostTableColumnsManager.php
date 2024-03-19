@@ -3,12 +3,13 @@
 namespace EventManager\TableColumns\PostTableColumns;
 
 use EventManager\Helper\Hookable;
+use EventManager\PostTableColumns\ColumnInterface;
+use EventManager\PostTableColumns\ManagerInterface;
 use EventManager\Services\WPService\AddAction;
 use EventManager\Services\WPService\AddFilter;
 use EventManager\TableColumns\TableColumnInterface;
-use EventManager\TableColumns\TableColumnsManagerInterface;
 
-class PostTableColumnsManager implements TableColumnsManagerInterface, Hookable
+class PostTableColumnsManager implements ManagerInterface, Hookable
 {
     public function __construct(
         private array $postTypes,
@@ -21,7 +22,7 @@ class PostTableColumnsManager implements TableColumnsManagerInterface, Hookable
      */
     private array $columns = [];
 
-    public function register(TableColumnInterface $column): void
+    public function register(ColumnInterface $column): void
     {
         $this->columns[] = $column;
     }
