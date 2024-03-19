@@ -78,10 +78,8 @@ $diContainer->set(
  */
 $postTableColumnsManager = new \EventManager\PostTableColumns\Manager(['event'], $diContainer->get(WPService::class));
 $wpService               = $diContainer->get(WPService::class);
-$aboutColumn             = new PostTableColumn(__('About', 'api-event-manager'), 'about', new MetaStringCellContent('about', $wpService), new MetaStringSort('about', $wpService));
 $organizationColumn      = new PostTableColumn(__('Organizer', 'api-event-manager'), 'organization', new TermNameCellContent('organization', $wpService), new MetaStringSort('organization', $wpService));
 $locationColumn          = new PostTableColumn(__('Location', 'api-event-manager'), 'location.address', new NestedMetaStringCellContent('location.address', $wpService, new GetNestedArrayStringValueRecursive()), new NestedMetaStringSort('location.address', $wpService, new GetNestedArrayStringValueRecursive()));
-$postTableColumnsManager->register($aboutColumn);
 $postTableColumnsManager->register($organizationColumn);
 $postTableColumnsManager->register($locationColumn);
 
