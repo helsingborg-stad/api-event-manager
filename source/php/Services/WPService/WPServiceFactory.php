@@ -13,7 +13,7 @@ class WPServiceFactory
     {
         return new class ($filePathDecorator) implements WPService {
 
-            public function __construct(private FilePathDecoratorInterface $filePathDecorator)
+            public function __construct(private ?FilePathDecoratorInterface $filePathDecorator = null)
             {
             }
 
@@ -185,7 +185,9 @@ class WPServiceFactory
                 string|bool|null $ver = false, 
                 string $media = 'all'
             ): void {
-                $src = $this->filePathDecorator->decorate($src);
+                if($this->filePathDecorator instanceof FilePathDecoratorInterface) {
+                    $src = $this->filePathDecorator->decorate($src);
+                } 
                 wp_register_style($handle, $src, $deps, $ver, $media);
             }
 
@@ -196,7 +198,9 @@ class WPServiceFactory
                 string|bool|null $ver = false, 
                 bool $in_footer = false
             ): void {
-                $src = $this->filePathDecorator->decorate($src);
+                if($this->filePathDecorator instanceof FilePathDecoratorInterface) {
+                    $src = $this->filePathDecorator->decorate($src);
+                } 
                 wp_register_script($handle, $src, $deps, $ver, $in_footer);
             }
 
@@ -208,6 +212,11 @@ class WPServiceFactory
             public function getEnvironmentType(): string
             {
                 return wp_get_environment_type();
+            }
+
+            public function fileSystem()
+            {
+                
             }
         };
     }
