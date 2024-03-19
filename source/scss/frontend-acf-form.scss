@@ -13,6 +13,12 @@
     border-top: none;
   }
 
+  /* Editor */
+  .acf-editor-wrap .wp-editor-container,
+  .wp-editor-container {
+    border: none;
+  }
+
   /* Labels */ 
   .acf-field .acf-label {
     margin: 0;
@@ -67,7 +73,7 @@
   textarea,
   select {
     border-radius: calc(var(--base, 8px)* var(--c-field-border-radius, .25));
-    border: var(--c-select-border-width,var(--border-width-input,1px)) solid var(--c-select-border-color,#cacaca);
+    border: var(--c-field-border-width,var(--border-width-input,1px)) solid var(--c-field-border-color,#cacaca);
     height: calc(var(--c-field-height, calc(var(--base, 8px)* 6)) - var(--c-field-border-width, var(--border-width-input, 1px))* 2);
     padding: calc(var(--base, 8px)* 2);
     line-height: var(--c-field-font-size-md-line-height, calc(var(--base, 8px)* 2));
@@ -128,5 +134,22 @@
       padding: calc(var(--base, 8px)* 2);
     }
 
+  }
+
+  .acf-true-false {
+    border-radius: calc(var(--base, 8px)* var(--c-field-border-radius, .25));
+    border: var(--c-select-border-width,var(--border-width-input,1px)) solid var(--c-select-border-color,#cacaca);
+
+    .acf-switch {
+      border-radius: 0;
+      border: none;
+      background: var(--c-select-background-color,#cacaca);
+      border-radius: calc(var(--base, 8px)* var(--c-field-border-radius, .25));
+    }
+
+    .acf-switch.-on {
+      background-color: var(--color-primary, #007bff);
+      color: var(--color-primary-contrasting, #fff);
+    }
   }
 }
