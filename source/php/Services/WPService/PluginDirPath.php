@@ -2,12 +2,12 @@
 
 namespace EventManager\Services\WPService;
 
-interface IsAdmin
+interface PluginDirPath
 {
   /**
-   * Check whether the current user is an administrator.
+   * Get the filesystem directory path (with trailing slash) for the plugin __FILE__ passed in.
    *
-   * @return bool
+   * @return string
    */
-  public function isAdmin(): bool;
+  public function pluginDirPath(string $file): string;
 }
