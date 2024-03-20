@@ -270,7 +270,7 @@ class WPServiceFactory
                 return plugin_dir_path($file);
             }
 
-            public function pluginsUrl(string $path, string $plugin):string
+            public function pluginsUrl(string $path = '', string $plugin = ''): string
             {
                 return plugins_url($path, $plugin);
             }
