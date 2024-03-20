@@ -34,7 +34,7 @@ if (file_exists(EVENT_MANAGER_PATH . 'vendor/autoload.php')) {
 }
 
 $manifestFilePathDecorator = new EventManager\Resolvers\FileSystem\ManifestFilePathResolver(
-    EVENT_MANAGER_PATH . "/dist/manifest.json",
+    EVENT_MANAGER_PATH . "dist/manifest.json",
     EventManager\Services\FileSystem\FileSystemFactory::create(),
     new EventManager\Resolvers\FileSystem\StrictFilePathResolver()
 );
