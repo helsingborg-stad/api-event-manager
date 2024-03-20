@@ -5,7 +5,7 @@ namespace EventManager\Resolvers\FileSystem;
 use EventManager\Services\FileSystem\FileExists;
 use EventManager\Services\FileSystem\GetFileContent;
 
-class ManifestFilePathResolver implements FilePathResolverInterface
+class ManifestFilePathResolver implements ManifestFilePathResolverInterface
 {
 
   public function __construct(
@@ -26,6 +26,22 @@ class ManifestFilePathResolver implements FilePathResolverInterface
       }
     }
     return $this->inner->resolve($filePath);
+  }
+
+  public function resolveToUrl(string $filePath): string
+  {
+
+    //Make out the additional path to the manifest file
+    $additionalPath = str_replace(
+      plugin_dir_path(dirname($this->manifestFilePath)), 
+      '', 
+      dirname($this->manifestFilePath)
+    ) . "/";
+
+    return plugins_url(
+      $additionalPath . $this->resolve($filePath), 
+      dirname($this->manifestFilePath)
+    );
   }
 }
 

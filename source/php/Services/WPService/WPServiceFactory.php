@@ -240,8 +240,7 @@ class WPServiceFactory
                 string|bool|null $ver = false, 
                 string $media = 'all'
             ): void {
-                $src = $this->filePathResolver->resolve($src);
-                $src = EVENT_MANAGER_URL . "/dist/" . $src; //TODO: make decorator for this
+                $src = $this->filePathResolver->resolveToUrl($src);
                 wp_register_style($handle, $src, $deps, $ver, $media);
             }
 
@@ -252,8 +251,7 @@ class WPServiceFactory
                 string|bool|null $ver = false, 
                 bool $in_footer = true
             ): void {
-                $src = $this->filePathResolver->resolve($src);
-                $src = EVENT_MANAGER_URL . "/dist/" . $src; // Todo make decorator for this
+                $src = $this->filePathResolver->resolveToUrl($src) ?? $src;
                 wp_register_script($handle, $src, $deps, $ver, $in_footer);
             }
 
@@ -265,11 +263,6 @@ class WPServiceFactory
             public function getEnvironmentType(): string
             {
                 return wp_get_environment_type();
-            }
-
-            public function fileSystem()
-            {
-                
             }
         };
     }

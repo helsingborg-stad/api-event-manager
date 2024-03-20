@@ -59,7 +59,7 @@ $wpService  = WPServiceFactory::create();
 $acfService = AcfServiceFactory::create();
 
 $manifestFilePathDecorator = new EventManager\Resolvers\FileSystem\ManifestFilePathResolver(
-    EVENT_MANAGER_PATH . "/dist/manifest.json",
+    EVENT_MANAGER_PATH . "dist/manifest.json",
     EventManager\Services\FileSystem\FileSystemFactory::create(),
     new EventManager\Resolvers\FileSystem\StrictFilePathResolver()
 );
