@@ -5,27 +5,23 @@ namespace EventManager\PostToSchema;
 use EventManager\PostToSchema\Schedule\ScheduleByDayFactory;
 use EventManager\PostToSchema\Schedule\ScheduleByMonthFactory;
 use EventManager\PostToSchema\Schedule\ScheduleByWeekFactory;
-use EventManager\Services\AcfService\AcfService;
-use EventManager\Services\WPService\WPService;
+use EventManager\Services\AcfService\Functions\GetField;
 use Spatie\SchemaOrg\BaseType;
+use WP_Error;
 use WP_Post;
 
 class EventBuilder implements BaseTypeBuilder
 {
     protected BaseType $event;
-    protected WP_Post $post;
-    protected WPService $wp;
-    protected AcfService $acf;
+    protected array $postMeta;
 
     public function __construct(
-        WP_Post $post,
-        WPService $wp,
-        AcfService $acf
+        protected WP_Post $post,
+        protected EventBuilderWpServiceInterface $wpService,
+        protected GetField $acf
     ) {
-        $this->post  = $post;
-        $this->wp    = $wp;
-        $this->acf   = $acf;
-        $this->event = new \Spatie\SchemaOrg\Event();
+        $this->event    = new \Spatie\SchemaOrg\Event();
+        $this->postMeta = $this->wpService->getPostMeta($this->post->ID);
     }
 
     public function build(): BaseType
@@ -72,20 +68,20 @@ class EventBuilder implements BaseTypeBuilder
 
     public function setDescription(): EventBuilder
     {
-        $this->event->description($this->wp->getPostMeta($this->post->ID, 'description', true) ?: null);
+        $this->event->description($this->wpService->getPostMeta($this->post->ID, 'description', true) ?: null);
         return $this;
     }
 
     public function setAbout(): EventBuilder
     {
-        $this->event->about($this->wp->getPostMeta($this->post->ID, 'about', true) ?: null);
+        $this->event->about($this->postMeta['about'] ?: null);
         return $this;
     }
 
     public function setAccessabilityInformation(): EventBuilder
     {
 
-        $accessabilityInformation = $this->wp->getPostMeta($this->post->ID, 'accessabilityInformation', true) ?: null;
+        $accessabilityInformation = $this->postMeta['accessabilityInformation'] ?: null;
         $about                    = $this->event->getProperty('about');
 
         if ($accessabilityInformation && $about) {
@@ -97,7 +93,7 @@ class EventBuilder implements BaseTypeBuilder
 
     public function setImage(): EventBuilder
     {
-        $this->event->image($this->wp->getThePostThumbnailUrl($this->post->ID) ?: null);
+        $this->event->image($this->wpService->getThePostThumbnailUrl($this->post->ID) ?: null);
         return $this;
     }
 
@@ -120,13 +116,13 @@ class EventBuilder implements BaseTypeBuilder
 
     public function setIsAccessibleForFree(): EventBuilder
     {
-        $this->event->isAccessibleForFree((bool)$this->wp->getPostMeta($this->post->ID, 'isAccessibleForFree', true));
+        $this->event->isAccessibleForFree((bool)$this->wpService->getPostMeta($this->post->ID, 'isAccessibleForFree', true));
         return $this;
     }
 
     public function setLocation(): EventBuilder
     {
-        $location = $this->wp->getPostMeta($this->post->ID, 'location', true) ?: null;
+        $location = $this->wpService->getPostMeta($this->post->ID, 'location', true) ?: null;
 
         if (!$location) {
             return $this;
@@ -144,28 +140,27 @@ class EventBuilder implements BaseTypeBuilder
 
     public function setOrganizer(): EventBuilder
     {
-        $organizationTerms = $this->wp->getPostTerms($this->post->ID, 'organization', []);
+        $organizationTerms = $this->wpService->getPostTerms($this->post->ID, 'organization', []);
 
-        if (empty($organizationTerms) || $this->wp->isWPError($organizationTerms)) {
+        if (empty($organizationTerms) || $organizationTerms instanceof WP_Error) {
             return $this;
         }
 
         $organizationTerm = $organizationTerms[0];
-        $url              = $this->wp->getTermMeta($organizationTerm->term_id, 'url', true) ?: null;
-        $email            = $this->wp->getTermMeta($organizationTerm->term_id, 'email', true) ?: null;
-        $telephone        = $this->wp->getTermMeta($organizationTerm->term_id, 'telephone', true) ?: null;
-        $location         = $this->wp->getTermMeta($organizationTerm->term_id, 'address', true) ?: null;
+        $termMeta         = $this->wpService->getTermMeta($organizationTerm->term_id);
+        ;
+        $location = $termMeta['address'] ?: null;
 
         $organization = new \Spatie\SchemaOrg\Organization();
         $organization->name($organizationTerm->name);
-        $organization->url($url);
-        $organization->email($email);
-        $organization->telephone($telephone);
+        $organization->url($termMeta['url'] ?: null);
+        $organization->email($termMeta['email'] ?: null);
+        $organization->telephone($termMeta['telephone'] ?: null);
 
         if ($location) {
             $place = new \Spatie\SchemaOrg\Place();
-            $place->address($location['address'] ?? null);
-            $place->latitude($location['latitude'] ?? null);
+            $place->address($termMeta['address']['address'] ?: null);
+            $place->latitude($termMeta['address']['latitude'] ?? null);
             $place->longitude($location['longitude'] ?? null);
             $organization->location($place);
         }
@@ -176,18 +171,19 @@ class EventBuilder implements BaseTypeBuilder
 
     public function setAudience(): EventBuilder
     {
-        $audienceId = $this->wp->getPostMeta($this->post->ID, 'audience', true) ?: null;
+        $audienceId = $this->postMeta['audience'] ?: null;
 
         if (!$audienceId) {
             return $this;
         }
 
         // Get audience term
-        $audienceTerm = $this->wp->getTerm($audienceId, 'audience');
+        $audienceTerm = $this->wpService->getTerm($audienceId, 'audience');
 
         if (!is_a($audienceTerm, \WP_Term::class)) {
             return $this;
         }
+
 
         $audience = new \Spatie\SchemaOrg\Audience();
         $audience->identifier((int)$audienceTerm->term_id);
@@ -207,8 +203,8 @@ class EventBuilder implements BaseTypeBuilder
         }
 
         $termId     = $audience->getProperty('identifier');
-        $rangeStart = $this->wp->getTermMeta($termId, 'typicalAgeRangeStart', true) ?: null;
-        $rangeEnd   = $this->wp->getTermMeta($termId, 'typicalAgeRangeEnd', true) ?: null;
+        $rangeStart = $this->wpService->getTermMeta($termId, 'typicalAgeRangeStart', true) ?: null;
+        $rangeEnd   = $this->wpService->getTermMeta($termId, 'typicalAgeRangeEnd', true) ?: null;
 
         if ($rangeStart && $rangeEnd) {
             $range = "{$rangeStart}-{$rangeEnd}";
@@ -289,7 +285,7 @@ class EventBuilder implements BaseTypeBuilder
 
     public function setKeywords(): EventBuilder
     {
-        $keywordTerms = $this->wp->getPostTerms($this->post->ID, 'keyword', []);
+        $keywordTerms = $this->wpService->getPostTerms($this->post->ID, 'keyword', []);
 
         if (is_array($keywordTerms) && !empty($keywordTerms)) {
             $terms = array_map(fn ($term) => $term->name, $keywordTerms);
@@ -302,13 +298,13 @@ class EventBuilder implements BaseTypeBuilder
     public function setSchedule(): EventBuilder
     {
         $schedules         = [];
-        $numberOfOccasions = $this->wp->getPostMeta($this->post->ID, 'occasions', true) ?: [];
+        $numberOfOccasions = $this->wpService->getPostMeta($this->post->ID, 'occasions', true) ?: [];
 
         if (!is_numeric($numberOfOccasions) || (int)$numberOfOccasions < 1) {
             return $this;
         }
 
-        $getMetaRow = fn ($i, $key) => $this->wp->getPostMeta($this->post->ID, "occasions_{$i}_{$key}", true) ?: null;
+        $getMetaRow = fn ($i, $key) => $this->wpService->getPostMeta($this->post->ID, "occasions_{$i}_{$key}", true) ?: null;
 
         $schedules = array_map(function ($i) use ($getMetaRow) {
             $repeat    = $getMetaRow($i, 'repeat');
@@ -369,13 +365,13 @@ class EventBuilder implements BaseTypeBuilder
 
     public function setSuperEvent(): EventBuilder
     {
-        $superEventPost = $this->wp->getPostParent($this->post->ID);
+        $superEventPost = $this->wpService->getPostParent($this->post->ID);
 
         if (!$superEventPost) {
             return $this;
         }
 
-        $superEvent = new self($superEventPost, $this->wp, $this->acf);
+        $superEvent = new self($superEventPost, $this->wpService, $this->acf);
 
         $this->event->superEvent($superEvent->toArray());
 
@@ -384,7 +380,7 @@ class EventBuilder implements BaseTypeBuilder
 
     public function setSubEvents(): EventBuilder
     {
-        $subEventPosts = $this->wp->getPosts([
+        $subEventPosts = $this->wpService->getPosts([
             'post_parent' => $this->post->ID,
             'post_type'   => 'event',
             'numberposts' => -1
@@ -395,7 +391,7 @@ class EventBuilder implements BaseTypeBuilder
         }
 
         $subEvents = array_map(function ($subPost) {
-            $subEvent = new self($subPost, $this->wp, $this->acf);
+            $subEvent = new self($subPost, $this->wpService, $this->acf);
 
             return $subEvent->toArray();
         }, $subEventPosts);
