@@ -26,6 +26,7 @@
   <testsuites>
     <testsuite name="Plugin Test Suite">
       <directory suffix=".php">./tests/phpunit/tests</directory>
+      <directory suffix=".test.php">./source/php</directory>
     </testsuite>
   </testsuites>
 </phpunit>

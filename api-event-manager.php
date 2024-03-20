@@ -24,12 +24,20 @@ define('EVENT_MANAGER_TEMPLATE_PATH', EVENT_MANAGER_PATH . 'templates/');
 
 require_once EVENT_MANAGER_PATH . 'Public.php';
 
+$configuration = [
+
+];
+
 // Register the autoloader
 if (file_exists(EVENT_MANAGER_PATH . 'vendor/autoload.php')) {
     require EVENT_MANAGER_PATH . '/vendor/autoload.php';
 }
 
-$manifestFilePathDecorator = new EventManager\Decorators\ManifestFilePathDecorator();
+$manifestFilePathDecorator = new EventManager\Resolvers\FileSystem\ManifestFilePathResolver(
+    EVENT_MANAGER_PATH . "/dist/manifest.json",
+    EventManager\Services\FileSystem\FileSystemFactory::create(),
+    new EventManager\Resolvers\FileSystem\StrictFilePathResolver()
+);
 
 $wpService = EventManager\Services\WPService\WPServiceFactory::create(
     $manifestFilePathDecorator
