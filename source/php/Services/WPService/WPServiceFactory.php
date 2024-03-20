@@ -264,6 +264,16 @@ class WPServiceFactory
             {
                 return wp_get_environment_type();
             }
+
+            public function pluginDirPath(string $file): string
+            {
+                return plugin_dir_path($file);
+            }
+
+            public function pluginsUrl(string $path, string $plugin):string
+            {
+                return plugins_url($path, $plugin);
+            }
         };
     }
 }

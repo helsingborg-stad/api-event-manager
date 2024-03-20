@@ -41,6 +41,8 @@ interface WPService extends
     RegisterStyle,
     RegisterScript,
     IsAdmin,
-    GetEnvironmentType
+    GetEnvironmentType,
+    PluginDirPath,
+    PluginsUrl
 {
 }
