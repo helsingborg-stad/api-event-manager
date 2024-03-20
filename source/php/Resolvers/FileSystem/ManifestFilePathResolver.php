@@ -33,12 +33,12 @@ class ManifestFilePathResolver implements ManifestFilePathResolverInterface
 
     //Make out the additional path to the manifest file
     $additionalPath = str_replace(
-      plugin_dir_path(dirname($this->manifestFilePath)), 
+      plugin_dir_path(dirname($this->manifestFilePath)), // TODO: Create a wpService for plugin_dir_path
       '', 
       dirname($this->manifestFilePath)
     ) . "/";
 
-    return plugins_url(
+    return plugins_url( //TODO: Create a wpService for plugins_url
       $additionalPath . $this->resolve($filePath), 
       dirname($this->manifestFilePath)
     );
