@@ -39,6 +39,7 @@
     },
     "scripts": {
         "build:dev": "cross-env NODE_ENV=development webpack",
+        "watch:dev": "cross-env NODE_ENV=development webpack --watch",
         "build": "cross-env NODE_ENV=production webpack",
         "env:update": "wp-env start --update",
         "composer": "wp-env run cli --env-cwd=wp-content/plugins/api-event-manager composer",

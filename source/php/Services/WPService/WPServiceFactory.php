@@ -2,7 +2,8 @@
 
 namespace EventManager\Services\WPService;
 
-use EventManager\Decorators\FilePathDecoratorInterface;
+use EventManager\Resolvers\FileSystem\FilePathResolverInterface;
+use EventManager\Resolvers\FileSystem\NullFilePathResolver;
 use WP_Error;
 use WP_Post;
 use WP_REST_Response;
@@ -11,13 +12,10 @@ use WP_Term;
 
 class WPServiceFactory
 {
-    public static function create(FilePathDecoratorInterface $filePathDecorator): WPService
+    public static function create(?FilePathResolverInterface $filePathResolver = new NullFilePathResolver()): WPService
     {
-        return new class ($filePathDecorator) implements WPService {
-
-            public function __construct(private ?FilePathDecoratorInterface $filePathDecorator = null)
-            {
-            }
+        return new class ($filePathResolver) implements WPService {
+            public function __construct(private FilePathResolverInterface $filePathResolver){}
 
             public function addAction(
                 string $tag,
@@ -242,9 +240,8 @@ class WPServiceFactory
                 string|bool|null $ver = false, 
                 string $media = 'all'
             ): void {
-                if($this->filePathDecorator instanceof FilePathDecoratorInterface) {
-                    $src = $this->filePathDecorator->decorate($src);
-                } 
+                $src = $this->filePathResolver->resolve($src);
+                $src = EVENT_MANAGER_URL . "/dist/" . $src; //TODO: make decorator for this
                 wp_register_style($handle, $src, $deps, $ver, $media);
             }
 
@@ -253,11 +250,10 @@ class WPServiceFactory
                 string $src = '', 
                 array $deps = array(), 
                 string|bool|null $ver = false, 
-                bool $in_footer = false
+                bool $in_footer = true
             ): void {
-                if($this->filePathDecorator instanceof FilePathDecoratorInterface) {
-                    $src = $this->filePathDecorator->decorate($src);
-                } 
+                $src = $this->filePathResolver->resolve($src);
+                $src = EVENT_MANAGER_URL . "/dist/" . $src; // Todo make decorator for this
                 wp_register_script($handle, $src, $deps, $ver, $in_footer);
             }
 

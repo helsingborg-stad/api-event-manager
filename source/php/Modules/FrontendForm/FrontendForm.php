@@ -9,7 +9,8 @@ namespace EventManager\Modules\FrontendForm;
 use ComponentLibrary\Init as ComponentLibraryInit;
 use EventManager\Services\WPService\EnqueueStyle;
 use EventManager\Services\WPService\WPServiceFactory;
-use EventManager\Decorators\ManifestFilePathDecorator;
+use EventManager\Resolvers\FileSystem\ManifestFilePathResolver;
+use EventManager\Services\FileSystem\FileSystemFactory;
 
 use Throwable;
 
@@ -39,9 +40,12 @@ class FrontendForm extends \Modularity\Module
       $this->namePlural   = __('Event Forms', 'api-event-manager');
       $this->description  = __('Module for creating public event form', 'api-event-manager');
 
-      $manifestFilePathDecorator = new ManifestFilePathDecorator();
+      $manifestFilePathResolver = new ManifestFilePathResolver(
+        EVENT_MANAGER_PATH . "/dist/manifest.json",
+        FileSystemFactory::create(),
+      );
       $this->wpService = WPServiceFactory::create(
-          $manifestFilePathDecorator
+          $manifestFilePathResolver
       );
     }
 
@@ -65,7 +69,7 @@ class FrontendForm extends \Modularity\Module
           acf_form([
             'post_id' => 'new_post',
             'post_title' => true,
-            'post_content' => true,
+            'post_content' => false,
             'field_groups' => $this->fieldGroups,
             'uploader' => 'basic',
             'updated_message' => __("The event has been submitted for review. You will be notified when the event has been published.", 'acf'),
