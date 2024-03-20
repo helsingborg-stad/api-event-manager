@@ -54,7 +54,8 @@
         "10up/wp_mock": "^1.0",
         "composer/installers": "~1.0",
         "php-mock/php-mock-mockery": "^1.4",
-        "wikimedia/composer-merge-plugin": "^2.1"
+        "wikimedia/composer-merge-plugin": "^2.1",
+        "php-stubs/acf-pro-stubs": "dev-master"
     },
     "config": {
         "allow-plugins": {
