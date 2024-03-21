@@ -3,21 +3,23 @@
 namespace EventManager\Tests\PostToSchema;
 
 use EventManager\PostToSchema\EventBuilder;
-use EventManager\Services\WPService\WPService;
+use EventManager\Services\AcfService\Functions\GetField;
+use EventManager\Services\AcfService\Functions\GetFields;
+use EventManager\Services\WPService\GetPostParent;
+use EventManager\Services\WPService\GetPosts;
+use EventManager\Services\WPService\GetPostTerms;
+use EventManager\Services\WPService\GetTerm;
+use EventManager\Services\WPService\GetThePostThumbnailUrl;
 use Mockery;
 use Mockery\MockInterface;
-use EventManager\Services\AcfService\AcfService;
+use WP_Error;
 use WP_Mock\Tools\TestCase;
 use WP_Post;
+use WP_Term;
 
 class EventBuilderTest extends TestCase
 {
     use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
-
-    public function testClassExists()
-    {
-        $this->assertTrue(class_exists('EventManager\PostToSchema\EventBuilder'));
-    }
 
     private function getMockedPost(array $args): WP_Post|MockInterface
     {
@@ -26,8 +28,8 @@ class EventBuilderTest extends TestCase
 
     public function testIdentifierIsSet()
     {
-        $wpService  = Mockery::mock(WPService::class);
-        $acfService = Mockery::mock(AcfService::class);
+        $wpService  = $this->getWpService();
+        $acfService = $this->getAcfService();
         $post       = $this->getMockedPost(['ID' => 123]);
         $event      = new EventBuilder($post, $wpService, $acfService);
 
@@ -39,11 +41,12 @@ class EventBuilderTest extends TestCase
     public function testDescriptionIsSet()
     {
         $post       = $this->getMockedPost(['ID' => 123]);
-        $wpService  = Mockery::mock(WPService::class);
-        $acfService = Mockery::mock(AcfService::class);
-        $wpService->shouldReceive('getPostMeta')->with($post->ID, 'description', true)->andReturn('testdescription');
-        $event = new EventBuilder($post, $wpService, $acfService);
+        $acfService = $this->getAcfService([
+            'getFields' => [$post->ID => ['description' => 'testdescription']]
+        ]);
+        $wpService  = $this->getWpService();
 
+        $event = new EventBuilder($post, $wpService, $acfService);
         $event->setDescription();
 
         $this->assertEquals('testdescription', $event->toArray()['description']);
@@ -52,11 +55,10 @@ class EventBuilderTest extends TestCase
     public function testAboutIsSet()
     {
         $post       = $this->getMockedPost(['ID' => 123]);
-        $wpService  = Mockery::mock(WPService::class);
-        $acfService = Mockery::mock(AcfService::class);
-        $wpService->shouldReceive('getPostMeta')->with($post->ID, 'about', true)->andReturn('testabout');
-        $event = new EventBuilder($post, $wpService, $acfService);
+        $acfService = $this->getAcfService(['getFields' => [$post->ID => ['about' => 'testabout']]]);
+        $wpService  = $this->getWpService();
 
+        $event = new EventBuilder($post, $wpService, $acfService);
         $event->setAbout();
 
         $this->assertEquals('testabout', $event->toArray()['about']);
@@ -65,11 +67,12 @@ class EventBuilderTest extends TestCase
     public function testImageIsSet()
     {
         $post       = $this->getMockedPost(['ID' => 123]);
-        $wpService  = Mockery::mock(WPService::class);
-        $acfService = Mockery::mock(AcfService::class);
-        $wpService->shouldReceive('getThePostThumbnailUrl')->with($post->ID)->andReturn('http://images.com/image.jpg');
-        $event = new EventBuilder($post, $wpService, $acfService);
+        $acfService = $this->getAcfService();
+        $wpService  = $this->getWpService([
+            'getThePostThumbnailUrl' => [$post->ID => 'http://images.com/image.jpg']
+        ]);
 
+        $event = new EventBuilder($post, $wpService, $acfService);
         $event->setImage();
 
         $this->assertEquals('http://images.com/image.jpg', $event->toArray()['image']);
@@ -77,14 +80,13 @@ class EventBuilderTest extends TestCase
 
     public function testLocationIsSet()
     {
-        $location = ['latitude' => 1.2, 'longitude' => 3.4, 'address' => 'TestAddress'];
+        $location = ['lat' => 1.2, 'lng' => 3.4, 'address' => 'TestAddress'];
 
         $post       = $this->getMockedPost(['ID' => 123]);
-        $wpService  = Mockery::mock(WPService::class);
-        $acfService = Mockery::mock(AcfService::class);
-        $wpService->shouldReceive('getPostMeta')->with($post->ID, 'location', true)->andReturn($location);
-        $event = new EventBuilder($post, $wpService, $acfService);
+        $wpService  = $this->getWpService();
+        $acfService = $this->getAcfService(['getFields' => [$post->ID => ['location' => $location]]]);
 
+        $event = new EventBuilder($post, $wpService, $acfService);
         $event->setLocation();
 
         $this->assertEquals('Place', $event->toArray()['location']['@type']);
@@ -99,14 +101,15 @@ class EventBuilderTest extends TestCase
         $audienceTerm          = Mockery::mock(\WP_Term::class);
         $audienceTerm->term_id = 321;
         $audienceTerm->name    = 'TestAudience';
+        $acfService            = $this->getAcfService([
+            'getFields' => [$post->ID => ['audience' => $audienceTerm->term_id]]
+        ]);
+        $wpService             = $this->getWpService([
+            'getTerm'     => ['audience' => [$audienceTerm->term_id => $audienceTerm]],
+            'getTermMeta' => [$audienceTerm->term_id => []]
+        ]);
 
-        $wpService  = Mockery::mock(WPService::class);
-        $acfService = Mockery::mock(AcfService::class);
-        $wpService->shouldReceive('getPostMeta')->with($post->ID, 'audience', true)->andReturn($audienceTerm->term_id);
-        $wpService->shouldReceive('getTerm')->andReturn($audienceTerm);
-        $wpService->shouldReceive('getTermMeta')->andReturn(null);
         $event = new EventBuilder($post, $wpService, $acfService);
-
         $event->setAudience();
 
         $this->assertEquals('Audience', $event->toArray()['audience']['@type']);
@@ -124,13 +127,19 @@ class EventBuilderTest extends TestCase
         $audienceTerm->term_id = 321;
         $audienceTerm->name    = 'TestAudience';
 
-        $wpService  = Mockery::mock(WPService::class);
-        $acfService = Mockery::mock(AcfService::class);
-        $wpService->shouldReceive('getPostMeta')->with($post->ID, 'audience', true)->andReturn($audienceTerm->term_id);
-        $wpService->shouldReceive('getTerm')->andReturn($audienceTerm);
-        $wpService->shouldReceive('getTermMeta')->with($audienceTerm->term_id, 'typicalAgeRangeStart', true)->andReturn('18');
-        $wpService->shouldReceive('getTermMeta')->with($audienceTerm->term_id, 'typicalAgeRangeEnd', true)->andReturn('35');
-        $event = new EventBuilder($post, $wpService, $acfService);
+        $wpService  = $this->getWpService([
+            'getTerm' => ['audience' => [$audienceTerm->term_id => $audienceTerm]],
+        ]);
+        $acfService = $this->getAcfService([
+            'getFields' => [
+                $post->ID      => ['audience' => $audienceTerm->term_id],
+                'audience_321' => [
+                    'typicalAgeRangeStart' => '18',
+                    'typicalAgeRangeEnd'   => '35'
+                ]
+            ]
+        ]);
+        $event      = new EventBuilder($post, $wpService, $acfService);
 
         $event->setAudience();
         $event->setTypicalAgeRange();
@@ -153,9 +162,8 @@ class EventBuilderTest extends TestCase
         ];
 
         $post       = $this->getMockedPost(['ID' => 123]);
-        $wpService  = Mockery::mock(WPService::class);
-        $acfService = Mockery::mock(AcfService::class);
-        $acfService->shouldReceive('getField')->with('occasions', $post->ID)->andReturn($occasions);
+        $wpService  = $this->getWpService();
+        $acfService = $this->getAcfService(['getField' => [123 => ['occasions' => $occasions]]]);
 
         $event = new EventBuilder($post, $wpService, $acfService);
 
@@ -179,11 +187,9 @@ class EventBuilderTest extends TestCase
         ];
 
         $post       = $this->getMockedPost(['ID' => 123]);
-        $wpService  = Mockery::mock(WPService::class);
-        $acfService = Mockery::mock(AcfService::class);
-        $acfService->shouldReceive('getField')->with('occasions', $post->ID)->andReturn($occasions);
-
-        $event = new EventBuilder($post, $wpService, $acfService);
+        $wpService  = $this->getWpService();
+        $acfService = $this->getAcfService(['getField' => [123 => ['occasions' => $occasions]]]);
+        $event      = new EventBuilder($post, $wpService, $acfService);
 
         $event->setDates();
 
@@ -205,9 +211,8 @@ class EventBuilderTest extends TestCase
         ];
 
         $post       = $this->getMockedPost(['ID' => 123]);
-        $wpService  = Mockery::mock(WPService::class);
-        $acfService = Mockery::mock(AcfService::class);
-        $acfService->shouldReceive('getField')->with('occasions', $post->ID)->andReturn($occasions);
+        $wpService  = $this->getWpService();
+        $acfService = $this->getAcfService([ 'getField' => [123 => ['occasions' => $occasions]]]);
 
         $event = new EventBuilder($post, $wpService, $acfService);
 
@@ -232,9 +237,8 @@ class EventBuilderTest extends TestCase
         ];
 
         $post       = $this->getMockedPost(['ID' => 123]);
-        $wpService  = Mockery::mock(WPService::class);
-        $acfService = Mockery::mock(AcfService::class);
-        $acfService->shouldReceive('getField')->with('occasions', 123)->andReturn($occasions);
+        $wpService  = $this->getWpService();
+        $acfService = $this->getAcfService(['getField' => [123 => ['occasions' => $occasions]]]);
 
         $eventBuilder = new EventBuilder($post, $wpService, $acfService);
         $eventBuilder->setDates();
@@ -257,9 +261,8 @@ class EventBuilderTest extends TestCase
         ];
 
         $post       = $this->getMockedPost(['ID' => 123]);
-        $wpService  = Mockery::mock(WPService::class);
-        $acfService = Mockery::mock(AcfService::class);
-        $acfService->shouldReceive('getField')->with('occasions', 123)->andReturn($occasions);
+        $wpService  = $this->getWpService();
+        $acfService = $this->getAcfService(['getField' => [123 => ['occasions' => $occasions]]]);
 
         $eventBuilder = new EventBuilder($post, $wpService, $acfService);
         $eventBuilder->setUrl();
@@ -270,41 +273,31 @@ class EventBuilderTest extends TestCase
 
     public function testEventGetsOrganizationFromTerm()
     {
-        $organizationTerm          = Mockery::mock(\WP_Term::class);
-        $organizationTerm->term_id = 1;
-        $organizationTerm->name    = 'TestOrganization';
-        $post                      = $this->getMockedPost(['ID' => 123]);
-        $wpService                 = Mockery::mock(WPService::class);
-        $acfService                = Mockery::mock(AcfService::class);
-
-        $termMeta = [
+        $post                       = $this->getMockedPost(['ID' => 123]);
+        $organizationTerm           = Mockery::mock(\WP_Term::class);
+        $organizationTerm->taxonomy = 'organization';
+        $organizationTerm->term_id  = 1;
+        $organizationTerm->name     = 'TestOrganization';
+        $termMeta                   = [
             'url'       => 'https://www.example.com',
             'email'     => 'organizer@event.foo',
             'telephone' => '123',
             'address'   => ['address' => 'TestAddress']
         ];
-        $wpService
-            ->shouldReceive('getPostTerms')
-            ->andReturn([$organizationTerm]);
-        $wpService
-            ->shouldReceive('isWPError')
-            ->andReturn(false);
-        $wpService
-            ->shouldReceive('getTermMeta')
-            ->with($organizationTerm->term_id, 'url', true)
-            ->andReturn($termMeta['url']);
-        $wpService
-            ->shouldReceive('getTermMeta')
-            ->with($organizationTerm->term_id, 'email', true)
-            ->andReturn($termMeta['email']);
-        $wpService
-            ->shouldReceive('getTermMeta')
-            ->with($organizationTerm->term_id, 'telephone', true)
-            ->andReturn($termMeta['telephone']);
-        $wpService
-            ->shouldReceive('getTermMeta')
-            ->with($organizationTerm->term_id, 'address', true)
-            ->andReturn($termMeta['address']);
+        $wpServiceData              = [
+            'getPostTerms' => ['organization' => [123 => [$organizationTerm]]],
+        ];
+        $acfData                    = [
+            'getFields' => ['organization_1' => [
+                'url'       => 'https://www.example.com',
+                'email'     => 'organizer@event.foo',
+                'telephone' => '123',
+                'address'   => ['address' => 'TestAddress']
+            ]]
+        ];
+
+        $wpService  = $this->getWpService($wpServiceData);
+        $acfService = $this->getAcfService($acfData);
 
         $eventBuilder = new EventBuilder($post, $wpService, $acfService);
         $eventBuilder->setOrganizer();
@@ -327,10 +320,9 @@ class EventBuilderTest extends TestCase
         $post       = $this->getMockedPost(['ID' => 123]);
         $term       = Mockery::mock(\WP_Term::class);
         $term->name = 'tag1';
-        $wpService  = Mockery::mock(WPService::class);
-        $acfService = Mockery::mock(AcfService::class);
-        $wpService->shouldReceive('getPostTerms')->with($post->ID, 'keyword', [])->andReturn([$term]);
-        $event = new EventBuilder($post, $wpService, $acfService);
+        $wpService  = $this->getWpService(['getPostTerms' => ['keyword' => [$post->ID => [$term]]]]);
+        $acfService = $this->getAcfService();
+        $event      = new EventBuilder($post, $wpService, $acfService);
 
         $event->setKeywords();
 
@@ -343,16 +335,114 @@ class EventBuilderTest extends TestCase
     public function testSetAboutAppendsAccessabilityInformationIfAvailable()
     {
         $post       = $this->getMockedPost(['ID' => 123]);
-        $wpService  = Mockery::mock(WPService::class);
-        $acfService = Mockery::mock(AcfService::class);
-        $wpService->shouldReceive('getPostMeta')->with($post->ID, 'about', true)->andReturn('testabout');
-        $wpService->shouldReceive('getPostMeta')->with($post->ID, 'accessabilityInformation', true)->andReturn('testaccessability');
-        $event = new EventBuilder($post, $wpService, $acfService);
+        $fields     = ['about' => 'testabout', 'accessabilityInformation' => 'testaccessability'];
+        $acfService = $this->getAcfService(['getFields' => [$post->ID => $fields]]);
+        $wpService  = $this->getWpService();
+        $event      = new EventBuilder($post, $wpService, $acfService);
 
         $event->setAbout();
         $event->setAccessabilityInformation();
 
         $this->assertStringContainsString("testabout", $event->toArray()['about']);
         $this->assertStringContainsString("testaccessability", $event->toArray()['about']);
+    }
+
+    private function getWpService(
+        array $args = []
+    ): GetThePostThumbnailUrl&GetPostTerms&GetTerm&GetPosts&GetPostParent {
+        $defaultArgs = [
+            'getPostTerms'           => [],
+            'getThePostThumbnailUrl' => false,
+            'getTermMeta'            => null,
+            'getTerm'                => null,
+            'getPostParent'          => null,
+            'getPosts'               => []
+        ];
+
+        $data = array_merge($defaultArgs, $args);
+
+        return new class ($data) implements
+            GetThePostThumbnailUrl,
+            GetPostTerms,
+            GetTerm,
+            GetPosts,
+            GetPostParent
+        {
+            public function __construct(private array $data)
+            {
+            }
+
+            public function getThePostThumbnailUrl(int|WP_Post $postId, string|array $size = 'post-thumbnail'): string|false
+            {
+                if (is_int($postId)) {
+                    return $this->data['getThePostThumbnailUrl'][$postId] ?? false;
+                }
+
+                return $this->data[$postId->ID]['getThePostThumbnailUrl'] ?? false;
+            }
+
+            public function getPostTerms(int $post_id, string|array $taxonomy = 'post_tag', array $args = array()): array|WP_Error
+            {
+                return $this->data['getPostTerms'][$taxonomy][$post_id] ?? [];
+            }
+
+            public function getTermMeta(int $term_id, string $key = '', bool $single = false): mixed
+            {
+                if (!empty($key)) {
+                    return $this->data['getTermMeta'][$term_id][$key] ?? [];
+                }
+
+                return $this->data['getTermMeta'][$term_id] ?? [];
+            }
+
+            public function getTerm(int|object $term, string $taxonomy = '', string $output = OBJECT, string $filter = 'raw'): WP_Term|array|WP_Error|null
+            {
+                if (is_int($term) && !empty($taxonomy)) {
+                    return $this->data['getTerm'][$taxonomy][$term] ?? null;
+                } elseif (is_int($term)) {
+                    return $this->data['getTerm'][$term] ?? null;
+                } elseif (!empty($taxonomy)) {
+                    return $this->data['getTerm'][$taxonomy][$term->term_id] ?? null;
+                }
+
+                return $this->data['getTerm'][$term->term_id] ?? null;
+            }
+
+            public function getPostParent(int|WP_Post|null $postId): ?WP_Post
+            {
+                return null;
+            }
+
+            public function getPosts(array $args): array
+            {
+                return [];
+            }
+        };
+    }
+
+    private function getAcfService(array $args = []): GetField&GetFields
+    {
+        $defaultArgs = [
+            'getField'  => [],
+            'getFields' => []
+        ];
+
+        $data = array_merge($defaultArgs, $args);
+
+        return new class ($data) implements GetField, GetFields {
+            public function __construct(private array $data)
+            {
+            }
+
+            public function getField(string $selector, int|false|string $postId = false, bool $formatValue = true, bool $escapeHtml = false)
+            {
+                return $this->data['getField'][$postId][$selector] ?? [];
+            }
+
+            public function getFields(mixed $postId = false, bool $formatValue = true, bool $escapeHtml = false): array
+            {
+                return $this->data['getFields'][$postId] ?? [];
+            }
+        };
     }
 }

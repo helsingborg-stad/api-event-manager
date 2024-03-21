@@ -9,11 +9,16 @@ class AcfServiceFactory
         return new class implements AcfService {
             public function getField(
                 string $selector,
-                int|false $postId = false,
+                int|false|string $postId = false,
                 bool $formatValue = true,
                 bool $escapeHtml = false
             ) {
                 return get_field($selector, $postId, $formatValue, $escapeHtml);
+            }
+
+            public function getFields(mixed $postId = false, bool $formatValue = true, bool $escapeHtml = false): array
+            {
+                return get_fields($postId, $formatValue, $escapeHtml);
             }
         };
     }

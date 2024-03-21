@@ -6,7 +6,7 @@ interface GetField
 {
     public function getField(
         string $selector,
-        int|false $postId = false,
+        int|false|string $postId = false,
         bool $formatValue = true,
         bool $escapeHtml = false
     );

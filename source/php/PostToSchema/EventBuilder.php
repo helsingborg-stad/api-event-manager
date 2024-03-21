@@ -5,27 +5,29 @@ namespace EventManager\PostToSchema;
 use EventManager\PostToSchema\Schedule\ScheduleByDayFactory;
 use EventManager\PostToSchema\Schedule\ScheduleByMonthFactory;
 use EventManager\PostToSchema\Schedule\ScheduleByWeekFactory;
-use EventManager\Services\AcfService\AcfService;
-use EventManager\Services\WPService\WPService;
+use EventManager\Services\AcfService\Functions\GetField;
+use EventManager\Services\AcfService\Functions\GetFields;
+use EventManager\Services\WPService\GetPostParent;
+use EventManager\Services\WPService\GetPosts;
+use EventManager\Services\WPService\GetPostTerms;
+use EventManager\Services\WPService\GetTerm;
+use EventManager\Services\WPService\GetThePostThumbnailUrl;
 use Spatie\SchemaOrg\BaseType;
+use WP_Error;
 use WP_Post;
 
 class EventBuilder implements BaseTypeBuilder
 {
     protected BaseType $event;
-    protected WP_Post $post;
-    protected WPService $wp;
-    protected AcfService $acf;
+    protected array $fields;
 
     public function __construct(
-        WP_Post $post,
-        WPService $wp,
-        AcfService $acf
+        protected WP_Post $post,
+        protected GetThePostThumbnailUrl&GetPostTerms&GetTerm&GetPosts&GetPostParent $wpService,
+        protected GetField&GetFields $acf
     ) {
-        $this->post  = $post;
-        $this->wp    = $wp;
-        $this->acf   = $acf;
-        $this->event = new \Spatie\SchemaOrg\Event();
+        $this->event  = new \Spatie\SchemaOrg\Event();
+        $this->fields = $this->acf->getFields($this->post->ID) ?: [];
     }
 
     public function build(): BaseType
@@ -72,20 +74,20 @@ class EventBuilder implements BaseTypeBuilder
 
     public function setDescription(): EventBuilder
     {
-        $this->event->description($this->wp->getPostMeta($this->post->ID, 'description', true) ?: null);
+        $this->event->description($this->fields['description'] ?: null);
         return $this;
     }
 
     public function setAbout(): EventBuilder
     {
-        $this->event->about($this->wp->getPostMeta($this->post->ID, 'about', true) ?: null);
+        $this->event->about($this->fields['about'] ?: null);
         return $this;
     }
 
     public function setAccessabilityInformation(): EventBuilder
     {
 
-        $accessabilityInformation = $this->wp->getPostMeta($this->post->ID, 'accessabilityInformation', true) ?: null;
+        $accessabilityInformation = $this->fields['accessabilityInformation'] ?: null;
         $about                    = $this->event->getProperty('about');
 
         if ($accessabilityInformation && $about) {
@@ -97,7 +99,7 @@ class EventBuilder implements BaseTypeBuilder
 
     public function setImage(): EventBuilder
     {
-        $this->event->image($this->wp->getThePostThumbnailUrl($this->post->ID) ?: null);
+        $this->event->image($this->wpService->getThePostThumbnailUrl($this->post->ID) ?: null);
         return $this;
     }
 
@@ -120,54 +122,60 @@ class EventBuilder implements BaseTypeBuilder
 
     public function setIsAccessibleForFree(): EventBuilder
     {
-        $this->event->isAccessibleForFree((bool)$this->wp->getPostMeta($this->post->ID, 'isAccessibleForFree', true));
+        $this->event->isAccessibleForFree((bool)$this->fields['isAccessibleForFree'] ?? null);
         return $this;
     }
 
     public function setLocation(): EventBuilder
     {
-        $location = $this->wp->getPostMeta($this->post->ID, 'location', true) ?: null;
+        $location = $this->fields['location'] ?? null;
 
-        if (!$location) {
+        if (!$location || !is_array($location)) {
             return $this;
         }
 
-        $place = new \Spatie\SchemaOrg\Place();
-        $place->address($location['address'] ?? null);
-        $place->latitude($location['latitude'] ?? null);
-        $place->longitude($location['longitude'] ?? null);
-
+        $place = $this->mapOpenStreetMapDataToPlace($location);
         $this->event->location($place);
 
         return $this;
     }
 
+    private function mapOpenStreetMapDataToPlace(array $openStreetMapData): \Spatie\SchemaOrg\Place
+    {
+        $place = new \Spatie\SchemaOrg\Place();
+        $place->address($openStreetMapData['address'] ?? null);
+        $place->latitude($openStreetMapData['lat'] ?? null);
+        $place->longitude($openStreetMapData['lng'] ?? null);
+
+        return $place;
+    }
+
     public function setOrganizer(): EventBuilder
     {
-        $organizationTerms = $this->wp->getPostTerms($this->post->ID, 'organization', []);
+        $organizationTerms = $this->wpService->getPostTerms($this->post->ID, 'organization', []);
 
-        if (empty($organizationTerms) || $this->wp->isWPError($organizationTerms)) {
+        if (empty($organizationTerms) || $organizationTerms instanceof WP_Error) {
             return $this;
         }
 
         $organizationTerm = $organizationTerms[0];
-        $url              = $this->wp->getTermMeta($organizationTerm->term_id, 'url', true) ?: null;
-        $email            = $this->wp->getTermMeta($organizationTerm->term_id, 'email', true) ?: null;
-        $telephone        = $this->wp->getTermMeta($organizationTerm->term_id, 'telephone', true) ?: null;
-        $location         = $this->wp->getTermMeta($organizationTerm->term_id, 'address', true) ?: null;
+        $termFields       = $this->acf->getFields($organizationTerm->taxonomy . '_' . $organizationTerm->term_id) ?: [];
 
         $organization = new \Spatie\SchemaOrg\Organization();
         $organization->name($organizationTerm->name);
-        $organization->url($url);
-        $organization->email($email);
-        $organization->telephone($telephone);
+        $organization->url($termFields['url'] ?? null);
+        $organization->email($termFields['email'] ?? null);
+        $organization->telephone($termFields['telephone'] ?? null);
 
-        if ($location) {
-            $place = new \Spatie\SchemaOrg\Place();
-            $place->address($location['address'] ?? null);
-            $place->latitude($location['latitude'] ?? null);
-            $place->longitude($location['longitude'] ?? null);
-            $organization->location($place);
+        if (isset($termFields['address'])) {
+            if (is_string($termFields['address'])) {
+                $termFields['address'] = unserialize($termFields['address']);
+            }
+
+            if (is_array($termFields['address'])) {
+                $place = $this->mapOpenStreetMapDataToPlace($termFields['address']);
+                $organization->location($place);
+            }
         }
 
         $this->event->organizer($organization);
@@ -176,18 +184,19 @@ class EventBuilder implements BaseTypeBuilder
 
     public function setAudience(): EventBuilder
     {
-        $audienceId = $this->wp->getPostMeta($this->post->ID, 'audience', true) ?: null;
+        $audienceId = $this->fields['audience'] ?: null;
 
         if (!$audienceId) {
             return $this;
         }
 
         // Get audience term
-        $audienceTerm = $this->wp->getTerm($audienceId, 'audience');
+        $audienceTerm = $this->wpService->getTerm($audienceId, 'audience');
 
         if (!is_a($audienceTerm, \WP_Term::class)) {
             return $this;
         }
+
 
         $audience = new \Spatie\SchemaOrg\Audience();
         $audience->identifier((int)$audienceTerm->term_id);
@@ -207,8 +216,9 @@ class EventBuilder implements BaseTypeBuilder
         }
 
         $termId     = $audience->getProperty('identifier');
-        $rangeStart = $this->wp->getTermMeta($termId, 'typicalAgeRangeStart', true) ?: null;
-        $rangeEnd   = $this->wp->getTermMeta($termId, 'typicalAgeRangeEnd', true) ?: null;
+        $termFields = $this->acf->getFields("audience_{$termId}") ?: [];
+        $rangeStart = $termFields['typicalAgeRangeStart'] ?: null;
+        $rangeEnd   = $termFields['typicalAgeRangeEnd'] ?: null;
 
         if ($rangeStart && $rangeEnd) {
             $range = "{$rangeStart}-{$rangeEnd}";
@@ -289,7 +299,7 @@ class EventBuilder implements BaseTypeBuilder
 
     public function setKeywords(): EventBuilder
     {
-        $keywordTerms = $this->wp->getPostTerms($this->post->ID, 'keyword', []);
+        $keywordTerms = $this->wpService->getPostTerms($this->post->ID, 'keyword', []);
 
         if (is_array($keywordTerms) && !empty($keywordTerms)) {
             $terms = array_map(fn ($term) => $term->name, $keywordTerms);
@@ -302,13 +312,13 @@ class EventBuilder implements BaseTypeBuilder
     public function setSchedule(): EventBuilder
     {
         $schedules         = [];
-        $numberOfOccasions = $this->wp->getPostMeta($this->post->ID, 'occasions', true) ?: [];
+        $numberOfOccasions = $this->fields['occasions'] ?: null;
 
         if (!is_numeric($numberOfOccasions) || (int)$numberOfOccasions < 1) {
             return $this;
         }
 
-        $getMetaRow = fn ($i, $key) => $this->wp->getPostMeta($this->post->ID, "occasions_{$i}_{$key}", true) ?: null;
+        $getMetaRow = fn ($i, $key) => $this->fields["occasions_{$i}_{$key}"][0];
 
         $schedules = array_map(function ($i) use ($getMetaRow) {
             $repeat    = $getMetaRow($i, 'repeat');
@@ -369,13 +379,13 @@ class EventBuilder implements BaseTypeBuilder
 
     public function setSuperEvent(): EventBuilder
     {
-        $superEventPost = $this->wp->getPostParent($this->post->ID);
+        $superEventPost = $this->wpService->getPostParent($this->post->ID);
 
         if (!$superEventPost) {
             return $this;
         }
 
-        $superEvent = new self($superEventPost, $this->wp, $this->acf);
+        $superEvent = new self($superEventPost, $this->wpService, $this->acf);
 
         $this->event->superEvent($superEvent->toArray());
 
@@ -384,7 +394,7 @@ class EventBuilder implements BaseTypeBuilder
 
     public function setSubEvents(): EventBuilder
     {
-        $subEventPosts = $this->wp->getPosts([
+        $subEventPosts = $this->wpService->getPosts([
             'post_parent' => $this->post->ID,
             'post_type'   => 'event',
             'numberposts' => -1
@@ -395,7 +405,7 @@ class EventBuilder implements BaseTypeBuilder
         }
 
         $subEvents = array_map(function ($subPost) {
-            $subEvent = new self($subPost, $this->wp, $this->acf);
+            $subEvent = new self($subPost, $this->wpService, $this->acf);
 
             return $subEvent->toArray();
         }, $subEventPosts);
