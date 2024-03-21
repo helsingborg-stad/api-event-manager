@@ -26,8 +26,8 @@ class EventBuilder implements BaseTypeBuilder
         protected GetThePostThumbnailUrl&GetPostTerms&GetTerm&GetPosts&GetPostParent $wpService,
         protected GetField&GetFields $acf
     ) {
-        $this->event  = new \Spatie\SchemaOrg\Event();
         $this->fields = $this->acf->getFields($this->post->ID) ?: [];
+        $this->event  = new \Spatie\SchemaOrg\Event();
     }
 
     public function build(): BaseType
