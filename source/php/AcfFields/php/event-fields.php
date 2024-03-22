@@ -6,6 +6,54 @@
     'title' => __('Event Fields', 'api-event-manager'),
     'fields' => array(
         0 => array(
+            'key' => 'field_65fd4c7a55b91',
+            'label' => __('Event Type', 'api-event-manager'),
+            'name' => 'type',
+            'aria-label' => '',
+            'type' => 'select',
+            'instructions' => '',
+            'required' => 0,
+            'conditional_logic' => 0,
+            'wrapper' => array(
+                'width' => '',
+                'class' => '',
+                'id' => '',
+            ),
+            'choices' => array(
+                'Event' => __('Event', 'api-event-manager'),
+                'BusinessEvent' => __('Business Event', 'api-event-manager'),
+                'ChildrensEvent' => __('Childrens Event', 'api-event-manager'),
+                'ComedyEvent' => __('Comedy Event', 'api-event-manager'),
+                'CourseInstance' => __('CourseInstance', 'api-event-manager'),
+                'DanceEvent' => __('Dance Event', 'api-event-manager'),
+                'DeliveryEvent' => __('Delivery Event', 'api-event-manager'),
+                'EducationEvent' => __('Education Event', 'api-event-manager'),
+                'EventSeries' => __('Event Series', 'api-event-manager'),
+                'ExhibitionEvent' => __('Exhibition Event', 'api-event-manager'),
+                'Festival' => __('Festival', 'api-event-manager'),
+                'FoodEvent' => __('Food Event', 'api-event-manager'),
+                'Hackathon' => __('Hackathon', 'api-event-manager'),
+                'LiteraryEvent' => __('Literary Event', 'api-event-manager'),
+                'MusicEvent' => __('Music Event', 'api-event-manager'),
+                'PublicationEvent' => __('Publication Event', 'api-event-manager'),
+                'SaleEvent' => __('Sale Event', 'api-event-manager'),
+                'ScreeningEvent' => __('Screening Event', 'api-event-manager'),
+                'SocialEvent' => __('Social Event', 'api-event-manager'),
+                'SportsEvent' => __('Sports Event', 'api-event-manager'),
+                'TheaterEvent' => __('Theater Event', 'api-event-manager'),
+                'VisualArtsEvent' => __('VisualArts Event', 'api-event-manager'),
+            ),
+            'default_value' => __('Event', 'api-event-manager'),
+            'return_format' => 'value',
+            'multiple' => 0,
+            'allow_null' => 0,
+            'ui' => 0,
+            'ajax' => 0,
+            'placeholder' => '',
+            'allow_custom' => 0,
+            'search_placeholder' => '',
+        ),
+        1 => array(
             'key' => 'field_65a6206610d45',
             'label' => __('Short description', 'api-event-manager'),
             'name' => 'description',
@@ -26,7 +74,7 @@
             'new_lines' => '',
             'acfe_textarea_code' => 0,
         ),
-        1 => array(
+        2 => array(
             'key' => 'field_65a115151a872',
             'label' => __('About', 'api-event-manager'),
             'name' => 'about',
@@ -46,7 +94,7 @@
             'media_upload' => 0,
             'delay' => 1,
         ),
-        2 => array(
+        3 => array(
             'key' => 'field_65f14f7826756',
             'label' => __('Accessability information', 'api-event-manager'),
             'name' => 'accessabilityInformation',
@@ -66,7 +114,7 @@
             'media_upload' => 0,
             'delay' => 1,
         ),
-        3 => array(
+        4 => array(
             'key' => 'field_65a5319a9d01d',
             'label' => __('Status', 'api-event-manager'),
             'name' => 'eventStatus',
@@ -96,7 +144,7 @@
             'allow_custom' => 0,
             'search_placeholder' => '',
         ),
-        4 => array(
+        5 => array(
             'key' => 'field_65a15156f4c37',
             'label' => __('Accessible for free', 'api-event-manager'),
             'name' => 'isAccessibleForFree',
@@ -116,7 +164,7 @@
             'ui_off_text' => '',
             'ui' => 1,
         ),
-        5 => array(
+        6 => array(
             'center_lat' => 53.55064,
             'center_lng' => 10.00065,
             'zoom' => 12,
@@ -142,7 +190,7 @@
             ),
             'leaflet_map' => '{"lat":53.55064,"lng":10.00065,"zoom":12,"layers":["OpenStreetMap.Mapnik"],"markers":[]}',
         ),
-        6 => array(
+        7 => array(
             'key' => 'field_65a4f6af50302',
             'label' => __('Organizer', 'api-event-manager'),
             'name' => 'organization',
@@ -167,7 +215,7 @@
             'bidirectional_target' => '',
             'multiple' => 0,
         ),
-        7 => array(
+        8 => array(
             'key' => 'field_65a52a6374b0c',
             'label' => __('Audience', 'api-event-manager'),
             'name' => 'audience',
@@ -193,7 +241,7 @@
             'bidirectional_target' => array(
             ),
         ),
-        8 => array(
+        9 => array(
             'key' => 'field_65a52bf7f7e4d',
             'label' => __('Typical age rande start', 'api-event-manager'),
             'name' => 'typicalAgeRangeStart',
@@ -215,7 +263,7 @@
             'prepend' => '',
             'append' => '',
         ),
-        9 => array(
+        10 => array(
             'key' => 'field_65a52c24f7e4e',
             'label' => __('Typical age range end', 'api-event-manager'),
             'name' => 'typicalAgeRangeEnd',
@@ -235,7 +283,7 @@
             'prepend' => '',
             'append' => '',
         ),
-        10 => array(
+        11 => array(
             'key' => 'field_65a66d8cadeef',
             'label' => __('Occasions', 'api-event-manager'),
             'name' => 'occasions',

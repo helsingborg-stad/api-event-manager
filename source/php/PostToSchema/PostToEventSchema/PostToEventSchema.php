@@ -35,7 +35,7 @@ class PostToEventSchema implements IPostToSchemaAdapter
     {
         $this->post   = $post;
         $this->fields = $this->acfService->getFields($this->post->ID) ?: [];
-        $this->event  = $this->stringToSchemaMapper->map('Event');
+        $this->event  = $this->stringToSchemaMapper->map($this->fields['type'] ?? 'Event');
         $this
             ->setIdentifier()
             ->setName()
