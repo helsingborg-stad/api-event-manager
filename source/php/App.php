@@ -26,7 +26,7 @@ class App
             \EventManager\Taxonomies\Audience::class,
             \EventManager\Taxonomies\Organization::class,
             \EventManager\Taxonomies\Keyword::class,
-            \EventManager\ApiResponseModifiers\Event::class,
+            \EventManager\ApiResponseModifiers\EventResponseModifier::class,
             \EventManager\SetPostTermsFromContent\SetPostTermsFromContent::class,
             \EventManager\Modifiers\ModifyPostContentBeforeReadingTags::class,
             \EventManager\CleanupUnusedTags\CleanupUnusedTags::class,
