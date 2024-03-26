@@ -13,23 +13,27 @@
  * Domain Path:       /languages
  */
 
+use EventManager\ApiResponseModifiers\EventResponseModifier;
 use EventManager\CleanupUnusedTags\CleanupUnusedTags;
 use EventManager\Helper\HooksRegistrar;
 use EventManager\Helper\HooksRegistrar\HooksRegistrarInterface;
 use EventManager\PostTableColumns\Column as PostTableColumn;
-use EventManager\PostTableColumns\ColumnCellContent\MetaStringCellContent;
 use EventManager\PostTableColumns\ColumnCellContent\NestedMetaStringCellContent;
 use EventManager\PostTableColumns\ColumnCellContent\TermNameCellContent;
 use EventManager\PostTableColumns\ColumnSorters\MetaStringSort;
 use EventManager\PostTableColumns\ColumnSorters\NestedMetaStringSort;
 use EventManager\PostTableColumns\Helpers\GetNestedArrayStringValueRecursive;
+use EventManager\PostToSchema\Mappers\StringToEventSchemaMapper;
+use EventManager\PostToSchema\PostToEventSchema\PostToEventSchema;
+use EventManager\Services\AcfService\AcfService;
+use EventManager\Services\AcfService\AcfServiceFactory;
 use EventManager\Services\WPService\WPService;
 use EventManager\Services\WPService\WPServiceFactory;
 use EventManager\SetPostTermsFromContent\SetPostTermsFromContent;
 use EventManager\TagReader\TagReader;
 use EventManager\TagReader\TagReaderInterface;
 
-// Protect agains direct file access
+// Protect against direct file access
 if (!defined('WPINC')) {
     die;
 }
@@ -49,47 +53,60 @@ if (file_exists(EVENT_MANAGER_PATH . 'vendor/autoload.php')) {
 $diContainer = new \DI\Container();
 $diContainer->set(HooksRegistrarInterface::class, \DI\create(HooksRegistrar::class));
 $diContainer->set(WPService::class, WPServiceFactory::create());
+$diContainer->set(AcfService::class, AcfServiceFactory::create());
 $diContainer->set(TagReaderInterface::class, \DI\create(TagReader::class));
+
+$diContainer->set(PostToEventSchema::class, \DI\autowire(PostToEventSchema::class)
+    ->constructorParameter('stringToSchemaMapper', \DI\get(StringToEventSchemaMapper::class))
+    ->constructorParameter('wpService', \DI\get(WPService::class))
+    ->constructorParameter('acfService', \DI\get(AcfService::class)));
+
+$diContainer->set(
+    EventResponseModifier::class,
+    \DI\autowire(EventResponseModifier::class)
+        ->constructorParameter('postToSchemaAdapter', \DI\get(PostToEventSchema::class))
+        ->constructorParameter('wpService', \DI\get(WPService::class))
+);
 
 /**
  * Clean up unused tags.
  */
-$diContainer->set(
-    CleanupUnusedTags::class,
-    \DI\autowire()
+    $diContainer->set(
+        CleanupUnusedTags::class,
+        \DI\autowire()
         ->constructorParameter('taxonomy', 'keyword')
         ->constructorParameter('wpService', \DI\get(WPService::class))
-);
+    );
 
 /**
  * Set post terms from content.
  */
-$diContainer->set(
-    SetPostTermsFromContent::class,
-    \DI\autowire()
+    $diContainer->set(
+        SetPostTermsFromContent::class,
+        \DI\autowire()
         ->constructorParameter('postType', 'event')
         ->constructorParameter('taxonomy', 'keyword')
         ->constructorParameter('tagReader', \DI\get(TagReaderInterface::class))
         ->constructorParameter('wpService', \DI\get(WPService::class))
-);
+    );
 
 /**
  * Register table columns.
  */
-$postTableColumnsManager = new \EventManager\PostTableColumns\Manager(['event'], $diContainer->get(WPService::class));
-$wpService               = $diContainer->get(WPService::class);
-$organizationColumn      = new PostTableColumn(__('Organizer', 'api-event-manager'), 'organization', new TermNameCellContent('organization', $wpService), new MetaStringSort('organization', $wpService));
-$locationColumn          = new PostTableColumn(__('Location', 'api-event-manager'), 'location.address', new NestedMetaStringCellContent('location.address', $wpService, new GetNestedArrayStringValueRecursive()), new NestedMetaStringSort('location.address', $wpService, new GetNestedArrayStringValueRecursive()));
-$postTableColumnsManager->register($organizationColumn);
-$postTableColumnsManager->register($locationColumn);
+    $postTableColumnsManager = new \EventManager\PostTableColumns\Manager(['event'], $diContainer->get(WPService::class));
+    $wpService               = $diContainer->get(WPService::class);
+    $organizationColumn      = new PostTableColumn(__('Organizer', 'api-event-manager'), 'organization', new TermNameCellContent('organization', $wpService), new MetaStringSort('organization', $wpService));
+    $locationColumn          = new PostTableColumn(__('Location', 'api-event-manager'), 'location.address', new NestedMetaStringCellContent('location.address', $wpService, new GetNestedArrayStringValueRecursive()), new NestedMetaStringSort('location.address', $wpService, new GetNestedArrayStringValueRecursive()));
+    $postTableColumnsManager->register($organizationColumn);
+    $postTableColumnsManager->register($locationColumn);
 
-$diContainer->set(
-    \EventManager\PostTableColumns\Manager::class,
-    $postTableColumnsManager
-);
+    $diContainer->set(
+        \EventManager\PostTableColumns\Manager::class,
+        $postTableColumnsManager
+    );
 
 /**
  * Initialize application
  */
-$app = $diContainer->get(EventManager\App::class);
-$app->registerHooks();
+    $app = $diContainer->get(EventManager\App::class);
+    $app->registerHooks();

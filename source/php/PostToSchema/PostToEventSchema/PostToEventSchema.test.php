@@ -1,8 +1,9 @@
 <?php
 
-namespace EventManager\Tests\PostToSchema;
+namespace EventManager\PostToSchema;
 
-use EventManager\PostToSchema\EventBuilder;
+use EventManager\PostToSchema\Mappers\IStringToSchemaMapper;
+use EventManager\PostToSchema\PostToEventSchema\PostToEventSchema;
 use EventManager\Services\AcfService\Functions\GetField;
 use EventManager\Services\AcfService\Functions\GetFields;
 use EventManager\Services\WPService\GetPostParent;
@@ -10,14 +11,15 @@ use EventManager\Services\WPService\GetPosts;
 use EventManager\Services\WPService\GetPostTerms;
 use EventManager\Services\WPService\GetTerm;
 use EventManager\Services\WPService\GetThePostThumbnailUrl;
-use Mockery;
 use Mockery\MockInterface;
-use WP_Error;
 use WP_Mock\Tools\TestCase;
+use Mockery;
+use Spatie\SchemaOrg\BaseType;
+use WP_Error;
 use WP_Post;
 use WP_Term;
 
-class EventBuilderTest extends TestCase
+class PostToEventSchemaTest extends TestCase
 {
     use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 
@@ -28,75 +30,101 @@ class EventBuilderTest extends TestCase
 
     public function testIdentifierIsSet()
     {
-        $wpService  = $this->getWpService();
-        $acfService = $this->getAcfService();
-        $post       = $this->getMockedPost(['ID' => 123]);
-        $event      = new EventBuilder($post, $wpService, $acfService);
+        $stringToSchemaMapper = $this->getStringToSchemaMapper();
+        $wpService            = $this->getWpService();
+        $acfService           = $this->getAcfService();
+        $postToEventSchema    = new PostToEventSchema($stringToSchemaMapper, $wpService, $acfService);
 
-        $event->setIdentifier();
+        $post = $this->getMockedPost(['ID' => 123]);
+        $postToEventSchema->setupFields($post);
+        $postToEventSchema->setIdentifier();
 
-        $this->assertEquals('123', $event->toArray()['@id']);
+        $this->assertEquals('123', $postToEventSchema->event->toArray()['@id']);
+    }
+
+    public function testTypeIsSet()
+    {
+        $stringToSchemaMapper = $this->getStringToSchemaMapper(['BusinessEvent' => new \Spatie\SchemaOrg\BusinessEvent()]);
+        $wpService            = $this->getWpService();
+        $post                 = $this->getMockedPost(['ID' => 123]);
+        $acfService           = $this->getAcfService([
+            'getFields' => [$post->ID => ['type' => 'BusinessEvent']]
+        ]);
+        $postToEventSchema    = new PostToEventSchema($stringToSchemaMapper, $wpService, $acfService);
+
+        $postToEventSchema->setupFields($post);
+
+        $this->assertEquals('BusinessEvent', $postToEventSchema->event->toArray()['@type']);
     }
 
     public function testDescriptionIsSet()
     {
-        $post       = $this->getMockedPost(['ID' => 123]);
-        $acfService = $this->getAcfService([
+        $stringToSchemaMapper = $this->getStringToSchemaMapper();
+        $post                 = $this->getMockedPost(['ID' => 123]);
+        $acfService           = $this->getAcfService([
             'getFields' => [$post->ID => ['description' => 'testdescription']]
         ]);
-        $wpService  = $this->getWpService();
+        $wpService            = $this->getWpService();
 
-        $event = new EventBuilder($post, $wpService, $acfService);
-        $event->setDescription();
+        $postToEventSchema = new PostToEventSchema($stringToSchemaMapper, $wpService, $acfService);
+        $postToEventSchema->setupFields($post);
+        $postToEventSchema->setDescription();
 
-        $this->assertEquals('testdescription', $event->toArray()['description']);
+        $this->assertEquals('testdescription', $postToEventSchema->event->toArray()['description']);
     }
 
     public function testAboutIsSet()
     {
-        $post       = $this->getMockedPost(['ID' => 123]);
-        $acfService = $this->getAcfService(['getFields' => [$post->ID => ['about' => 'testabout']]]);
-        $wpService  = $this->getWpService();
+        $stringToSchemaMapper = $this->getStringToSchemaMapper();
+        $post                 = $this->getMockedPost(['ID' => 123]);
+        $acfService           = $this->getAcfService(['getFields' => [$post->ID => ['about' => 'testabout']]]);
+        $wpService            = $this->getWpService();
 
-        $event = new EventBuilder($post, $wpService, $acfService);
-        $event->setAbout();
+        $postToEventSchema = new PostToEventSchema($stringToSchemaMapper, $wpService, $acfService);
+        $postToEventSchema->setupFields($post);
+        $postToEventSchema->setAbout();
 
-        $this->assertEquals('testabout', $event->toArray()['about']);
+        $this->assertEquals('testabout', $postToEventSchema->event->toArray()['about']);
     }
 
     public function testImageIsSet()
     {
-        $post       = $this->getMockedPost(['ID' => 123]);
-        $acfService = $this->getAcfService();
-        $wpService  = $this->getWpService([
+        $stringToSchemaMapper = $this->getStringToSchemaMapper();
+        $post                 = $this->getMockedPost(['ID' => 123]);
+        $acfService           = $this->getAcfService();
+        $wpService            = $this->getWpService([
             'getThePostThumbnailUrl' => [$post->ID => 'http://images.com/image.jpg']
         ]);
 
-        $event = new EventBuilder($post, $wpService, $acfService);
-        $event->setImage();
+        $postToEventSchema = new PostToEventSchema($stringToSchemaMapper, $wpService, $acfService);
+        $postToEventSchema->setupFields($post);
+        $postToEventSchema->setImage();
 
-        $this->assertEquals('http://images.com/image.jpg', $event->toArray()['image']);
+        $this->assertEquals('http://images.com/image.jpg', $postToEventSchema->event->toArray()['image']);
     }
 
     public function testLocationIsSet()
     {
-        $location = ['lat' => 1.2, 'lng' => 3.4, 'address' => 'TestAddress'];
+        $stringToSchemaMapper = $this->getStringToSchemaMapper();
+        $location             = ['lat' => 1.2, 'lng' => 3.4, 'address' => 'TestAddress'];
 
         $post       = $this->getMockedPost(['ID' => 123]);
         $wpService  = $this->getWpService();
         $acfService = $this->getAcfService(['getFields' => [$post->ID => ['location' => $location]]]);
 
-        $event = new EventBuilder($post, $wpService, $acfService);
-        $event->setLocation();
+        $postToEventSchema = new PostToEventSchema($stringToSchemaMapper, $wpService, $acfService);
+        $postToEventSchema->setupFields($post);
+        $postToEventSchema->setLocation();
 
-        $this->assertEquals('Place', $event->toArray()['location']['@type']);
-        $this->assertEquals('TestAddress', $event->toArray()['location']['address']);
-        $this->assertEquals(1.2, $event->toArray()['location']['latitude']);
-        $this->assertEquals(3.4, $event->toArray()['location']['longitude']);
+        $this->assertEquals('Place', $postToEventSchema->event->toArray()['location']['@type']);
+        $this->assertEquals('TestAddress', $postToEventSchema->event->toArray()['location']['address']);
+        $this->assertEquals(1.2, $postToEventSchema->event->toArray()['location']['latitude']);
+        $this->assertEquals(3.4, $postToEventSchema->event->toArray()['location']['longitude']);
     }
 
     public function testAudienceIsSet()
     {
+        $stringToSchemaMapper  = $this->getStringToSchemaMapper();
         $post                  = $this->getMockedPost(['ID' => 123]);
         $audienceTerm          = Mockery::mock(\WP_Term::class);
         $audienceTerm->term_id = 321;
@@ -109,11 +137,12 @@ class EventBuilderTest extends TestCase
             'getTermMeta' => [$audienceTerm->term_id => []]
         ]);
 
-        $event = new EventBuilder($post, $wpService, $acfService);
-        $event->setAudience();
+        $postToEventSchema = new PostToEventSchema($stringToSchemaMapper, $wpService, $acfService);
+        $postToEventSchema->setupFields($post);
+        $postToEventSchema->setAudience();
 
-        $this->assertEquals('Audience', $event->toArray()['audience']['@type']);
-        $this->assertEquals('TestAudience', $event->toArray()['audience']['name']);
+        $this->assertEquals('Audience', $postToEventSchema->event->toArray()['audience']['@type']);
+        $this->assertEquals('TestAudience', $postToEventSchema->event->toArray()['audience']['name']);
     }
 
 
@@ -122,6 +151,7 @@ class EventBuilderTest extends TestCase
      */
     public function testEventGetsTypicalAgeRangeFromAudienceIfAudienceIsSet()
     {
+        $stringToSchemaMapper  = $this->getStringToSchemaMapper();
         $post                  = $this->getMockedPost(['ID' => 123]);
         $audienceTerm          = Mockery::mock(\WP_Term::class);
         $audienceTerm->term_id = 321;
@@ -139,12 +169,13 @@ class EventBuilderTest extends TestCase
                 ]
             ]
         ]);
-        $event      = new EventBuilder($post, $wpService, $acfService);
 
-        $event->setAudience();
-        $event->setTypicalAgeRange();
+        $postToEventSchema = new PostToEventSchema($stringToSchemaMapper, $wpService, $acfService);
+        $postToEventSchema->setupFields($post);
+        $postToEventSchema->setAudience();
+        $postToEventSchema->setTypicalAgeRange();
 
-        $this->assertEquals('18-35', $event->toArray()['typicalAgeRange']);
+        $this->assertEquals('18-35', $postToEventSchema->event->toArray()['typicalAgeRange']);
     }
 
     /**
@@ -152,7 +183,8 @@ class EventBuilderTest extends TestCase
      */
     public function testEndDateGetsTheSameValueAsStartDateToAvoidEventsSpanningMultipleDays()
     {
-        $occasions = [
+        $stringToSchemaMapper = $this->getStringToSchemaMapper();
+        $occasions            = [
             [
                 'repeat'    => 'no',
                 'date'      => '2021-03-02',
@@ -165,11 +197,12 @@ class EventBuilderTest extends TestCase
         $wpService  = $this->getWpService();
         $acfService = $this->getAcfService(['getField' => [123 => ['occasions' => $occasions]]]);
 
-        $event = new EventBuilder($post, $wpService, $acfService);
+        $postToEventSchema = new PostToEventSchema($stringToSchemaMapper, $wpService, $acfService);
+        $postToEventSchema->setupFields($post);
 
-        $event->setDates();
+        $postToEventSchema->setDates();
 
-        $this->assertEquals('2021-03-02 23:00', $event->toArray()['endDate']);
+        $this->assertEquals('2021-03-02 23:00', $postToEventSchema->event->toArray()['endDate']);
     }
 
     /**
@@ -177,7 +210,8 @@ class EventBuilderTest extends TestCase
      */
     public function testEndDateCanNeverBeEarlierThanStartDate()
     {
-        $occasions = [
+        $stringToSchemaMapper = $this->getStringToSchemaMapper();
+        $occasions            = [
             [
                 'repeat'    => 'no',
                 'date'      => '2021-03-02',
@@ -186,14 +220,15 @@ class EventBuilderTest extends TestCase
             ]
         ];
 
-        $post       = $this->getMockedPost(['ID' => 123]);
-        $wpService  = $this->getWpService();
-        $acfService = $this->getAcfService(['getField' => [123 => ['occasions' => $occasions]]]);
-        $event      = new EventBuilder($post, $wpService, $acfService);
+        $post              = $this->getMockedPost(['ID' => 123]);
+        $wpService         = $this->getWpService();
+        $acfService        = $this->getAcfService(['getField' => [123 => ['occasions' => $occasions]]]);
+        $postToEventSchema = new PostToEventSchema($stringToSchemaMapper, $wpService, $acfService);
 
-        $event->setDates();
+        $postToEventSchema->setupFields($post);
+        $postToEventSchema->setDates();
 
-        $this->assertArrayNotHasKey('endDate', $event->toArray());
+        $this->assertArrayNotHasKey('endDate', $postToEventSchema->event->toArray());
     }
 
     /**
@@ -201,7 +236,8 @@ class EventBuilderTest extends TestCase
      */
     public function testEventGetsStartAndEndDateForSimpleOccation()
     {
-        $occasions = [
+        $stringToSchemaMapper = $this->getStringToSchemaMapper();
+        $occasions            = [
             [
                 'repeat'    => 'no',
                 'date'      => '2021-03-02',
@@ -214,12 +250,13 @@ class EventBuilderTest extends TestCase
         $wpService  = $this->getWpService();
         $acfService = $this->getAcfService([ 'getField' => [123 => ['occasions' => $occasions]]]);
 
-        $event = new EventBuilder($post, $wpService, $acfService);
+        $postToEventSchema = new PostToEventSchema($stringToSchemaMapper, $wpService, $acfService);
+        $postToEventSchema->setupFields($post);
 
-        $event->setDates();
+        $postToEventSchema->setDates();
 
-        $this->assertEquals('2021-03-02 22:00', $event->toArray()['startDate']);
-        $this->assertEquals('2021-03-02 23:00', $event->toArray()['endDate']);
+        $this->assertEquals('2021-03-02 22:00', $postToEventSchema->event->toArray()['startDate']);
+        $this->assertEquals('2021-03-02 23:00', $postToEventSchema->event->toArray()['endDate']);
     }
 
     /**
@@ -227,7 +264,8 @@ class EventBuilderTest extends TestCase
      */
     public function testEventHasDurationIfSimpleOccasion()
     {
-        $occasions = [
+        $stringToSchemaMapper = $this->getStringToSchemaMapper();
+        $occasions            = [
             [
                 'repeat'    => 'no',
                 'date'      => '2021-03-02',
@@ -240,7 +278,8 @@ class EventBuilderTest extends TestCase
         $wpService  = $this->getWpService();
         $acfService = $this->getAcfService(['getField' => [123 => ['occasions' => $occasions]]]);
 
-        $eventBuilder = new EventBuilder($post, $wpService, $acfService);
+        $eventBuilder = new PostToEventSchema($stringToSchemaMapper, $wpService, $acfService);
+        $eventBuilder->setupFields($post);
         $eventBuilder->setDates();
         $eventBuilder->setDuration();
         $schemaArray = $eventBuilder->toArray();
@@ -250,7 +289,8 @@ class EventBuilderTest extends TestCase
 
     public function testEventOccasionUrlSetsEventUrl()
     {
-        $occasions = [
+        $stringToSchemaMapper = $this->getStringToSchemaMapper();
+        $occasions            = [
             [
                 'repeat'    => 'no',
                 'startDate' => '2021-03-02',
@@ -264,7 +304,8 @@ class EventBuilderTest extends TestCase
         $wpService  = $this->getWpService();
         $acfService = $this->getAcfService(['getField' => [123 => ['occasions' => $occasions]]]);
 
-        $eventBuilder = new EventBuilder($post, $wpService, $acfService);
+        $eventBuilder = new PostToEventSchema($stringToSchemaMapper, $wpService, $acfService);
+        $eventBuilder->setupFields($post);
         $eventBuilder->setUrl();
         $schemaArray = $eventBuilder->toArray();
 
@@ -273,6 +314,7 @@ class EventBuilderTest extends TestCase
 
     public function testEventGetsOrganizationFromTerm()
     {
+        $stringToSchemaMapper       = $this->getStringToSchemaMapper();
         $post                       = $this->getMockedPost(['ID' => 123]);
         $organizationTerm           = Mockery::mock(\WP_Term::class);
         $organizationTerm->taxonomy = 'organization';
@@ -299,7 +341,8 @@ class EventBuilderTest extends TestCase
         $wpService  = $this->getWpService($wpServiceData);
         $acfService = $this->getAcfService($acfData);
 
-        $eventBuilder = new EventBuilder($post, $wpService, $acfService);
+        $eventBuilder = new PostToEventSchema($stringToSchemaMapper, $wpService, $acfService);
+        $eventBuilder->setupFields($post);
         $eventBuilder->setOrganizer();
         $schemaArray = $eventBuilder->toArray();
 
@@ -317,16 +360,18 @@ class EventBuilderTest extends TestCase
      */
     public function testSetKeywordsSetsKeywordsFromPostTags()
     {
-        $post       = $this->getMockedPost(['ID' => 123]);
-        $term       = Mockery::mock(\WP_Term::class);
-        $term->name = 'tag1';
-        $wpService  = $this->getWpService(['getPostTerms' => ['keyword' => [$post->ID => [$term]]]]);
-        $acfService = $this->getAcfService();
-        $event      = new EventBuilder($post, $wpService, $acfService);
+        $stringToSchemaMapper = $this->getStringToSchemaMapper();
+        $post                 = $this->getMockedPost(['ID' => 123]);
+        $term                 = Mockery::mock(\WP_Term::class);
+        $term->name           = 'tag1';
+        $wpService            = $this->getWpService(['getPostTerms' => ['keyword' => [$post->ID => [$term]]]]);
+        $acfService           = $this->getAcfService();
+        $postToEventSchema    = new PostToEventSchema($stringToSchemaMapper, $wpService, $acfService);
 
-        $event->setKeywords();
+        $postToEventSchema->setupFields($post);
+        $postToEventSchema->setKeywords();
 
-        $this->assertEquals(['tag1'], $event->toArray()['keywords']);
+        $this->assertEquals(['tag1'], $postToEventSchema->event->toArray()['keywords']);
     }
 
     /**
@@ -334,17 +379,33 @@ class EventBuilderTest extends TestCase
      */
     public function testSetAboutAppendsAccessabilityInformationIfAvailable()
     {
-        $post       = $this->getMockedPost(['ID' => 123]);
-        $fields     = ['about' => 'testabout', 'accessabilityInformation' => 'testaccessability'];
-        $acfService = $this->getAcfService(['getFields' => [$post->ID => $fields]]);
-        $wpService  = $this->getWpService();
-        $event      = new EventBuilder($post, $wpService, $acfService);
+        $stringToSchemaMapper = $this->getStringToSchemaMapper();
+        $post                 = $this->getMockedPost(['ID' => 123]);
+        $fields               = ['about' => 'testabout', 'accessabilityInformation' => 'testaccessability'];
+        $acfService           = $this->getAcfService(['getFields' => [$post->ID => $fields]]);
+        $wpService            = $this->getWpService();
+        $postToEventSchema    = new PostToEventSchema($stringToSchemaMapper, $wpService, $acfService);
 
-        $event->setAbout();
-        $event->setAccessabilityInformation();
+        $postToEventSchema->setupFields($post);
+        $postToEventSchema->setAbout();
+        $postToEventSchema->setAccessabilityInformation();
 
-        $this->assertStringContainsString("testabout", $event->toArray()['about']);
-        $this->assertStringContainsString("testaccessability", $event->toArray()['about']);
+        $this->assertStringContainsString("testabout", $postToEventSchema->event->toArray()['about']);
+        $this->assertStringContainsString("testaccessability", $postToEventSchema->event->toArray()['about']);
+    }
+
+    private function getStringToSchemaMapper(
+        $schemas = ['Event' => new \Spatie\SchemaOrg\Event()]
+    ): IStringToSchemaMapper {
+        return new class ($schemas) implements IStringToSchemaMapper {
+            public function __construct(private array $schemas)
+            {
+            }
+            public function map(string $schemaType): ?BaseType
+            {
+                return $this->schemas[$schemaType] ?? null;
+            }
+        };
     }
 
     private function getWpService(

@@ -1,7 +1,9 @@
 <?php
 
-namespace EventManager\PostToSchema;
+namespace EventManager\PostToSchema\PostToEventSchema;
 
+use EventManager\PostToSchema\IPostToSchemaAdapter;
+use EventManager\PostToSchema\Mappers\IStringToSchemaMapper;
 use EventManager\PostToSchema\Schedule\ScheduleByDayFactory;
 use EventManager\PostToSchema\Schedule\ScheduleByMonthFactory;
 use EventManager\PostToSchema\Schedule\ScheduleByWeekFactory;
@@ -16,22 +18,30 @@ use Spatie\SchemaOrg\BaseType;
 use WP_Error;
 use WP_Post;
 
-class EventBuilder implements BaseTypeBuilder
+class PostToEventSchema implements IPostToSchemaAdapter
 {
-    protected BaseType $event;
+    protected WP_Post $post;
+    public ?BaseType $event = null;
     protected array $fields;
 
     public function __construct(
-        protected WP_Post $post,
+        protected IStringToSchemaMapper $stringToSchemaMapper,
         protected GetThePostThumbnailUrl&GetPostTerms&GetTerm&GetPosts&GetPostParent $wpService,
-        protected GetField&GetFields $acf
+        protected GetField&GetFields $acfService
     ) {
-        $this->event  = new \Spatie\SchemaOrg\Event();
-        $this->fields = $this->acf->getFields($this->post->ID) ?: [];
     }
 
-    public function build(): BaseType
+    public function setupFields(WP_Post $post): void
     {
+        $this->post   = $post;
+        $this->fields = $this->acfService->getFields($this->post->ID) ?: [];
+        $this->event  = $this->stringToSchemaMapper->map($this->fields['type'] ?? 'Event');
+    }
+
+    public function getSchema(WP_Post $post): BaseType
+    {
+        $this->setupFields($post);
+
         $this
             ->setIdentifier()
             ->setName()
@@ -49,8 +59,8 @@ class EventBuilder implements BaseTypeBuilder
             ->setDuration()
             ->setKeywords()
             ->setSchedule()
-            ->setSuperEvent()
-            ->setSubEvents();
+            ->setSuperEvent();
+            // ->setSubEvents();
 
         return $this->event;
     }
@@ -60,31 +70,31 @@ class EventBuilder implements BaseTypeBuilder
         return $this->event->toArray();
     }
 
-    public function setIdentifier(): EventBuilder
+    public function setIdentifier(): PostToEventSchema
     {
         $this->event->identifier($this->post->ID);
         return $this;
     }
 
-    public function setName(): EventBuilder
+    public function setName(): PostToEventSchema
     {
         $this->event->name($this->post->post_title);
         return $this;
     }
 
-    public function setDescription(): EventBuilder
+    public function setDescription(): PostToEventSchema
     {
         $this->event->description($this->fields['description'] ?: null);
         return $this;
     }
 
-    public function setAbout(): EventBuilder
+    public function setAbout(): PostToEventSchema
     {
         $this->event->about($this->fields['about'] ?: null);
         return $this;
     }
 
-    public function setAccessabilityInformation(): EventBuilder
+    public function setAccessabilityInformation(): PostToEventSchema
     {
 
         $accessabilityInformation = $this->fields['accessabilityInformation'] ?: null;
@@ -97,15 +107,15 @@ class EventBuilder implements BaseTypeBuilder
         return $this;
     }
 
-    public function setImage(): EventBuilder
+    public function setImage(): PostToEventSchema
     {
         $this->event->image($this->wpService->getThePostThumbnailUrl($this->post->ID) ?: null);
         return $this;
     }
 
-    public function setUrl(): EventBuilder
+    public function setUrl(): PostToEventSchema
     {
-        $occasions = $this->acf->getField('occasions', $this->post->ID) ?: [];
+        $occasions = $this->acfService->getField('occasions', $this->post->ID) ?: [];
 
         if (empty($occasions) || count($occasions) !== 1) {
             return $this;
@@ -120,13 +130,13 @@ class EventBuilder implements BaseTypeBuilder
         return $this;
     }
 
-    public function setIsAccessibleForFree(): EventBuilder
+    public function setIsAccessibleForFree(): PostToEventSchema
     {
         $this->event->isAccessibleForFree((bool)$this->fields['isAccessibleForFree'] ?? null);
         return $this;
     }
 
-    public function setLocation(): EventBuilder
+    public function setLocation(): PostToEventSchema
     {
         $location = $this->fields['location'] ?? null;
 
@@ -150,7 +160,7 @@ class EventBuilder implements BaseTypeBuilder
         return $place;
     }
 
-    public function setOrganizer(): EventBuilder
+    public function setOrganizer(): PostToEventSchema
     {
         $organizationTerms = $this->wpService->getPostTerms($this->post->ID, 'organization', []);
 
@@ -159,7 +169,7 @@ class EventBuilder implements BaseTypeBuilder
         }
 
         $organizationTerm = $organizationTerms[0];
-        $termFields       = $this->acf->getFields($organizationTerm->taxonomy . '_' . $organizationTerm->term_id) ?: [];
+        $termFields       = $this->acfService->getFields($organizationTerm->taxonomy . '_' . $organizationTerm->term_id) ?: [];
 
         $organization = new \Spatie\SchemaOrg\Organization();
         $organization->name($organizationTerm->name);
@@ -182,7 +192,7 @@ class EventBuilder implements BaseTypeBuilder
         return $this;
     }
 
-    public function setAudience(): EventBuilder
+    public function setAudience(): PostToEventSchema
     {
         $audienceId = $this->fields['audience'] ?: null;
 
@@ -206,7 +216,7 @@ class EventBuilder implements BaseTypeBuilder
         return $this;
     }
 
-    public function setTypicalAgeRange(): EventBuilder
+    public function setTypicalAgeRange(): PostToEventSchema
     {
         $audience = $this->event->getProperty('audience');
         $range    = null;
@@ -216,7 +226,7 @@ class EventBuilder implements BaseTypeBuilder
         }
 
         $termId     = $audience->getProperty('identifier');
-        $termFields = $this->acf->getFields("audience_{$termId}") ?: [];
+        $termFields = $this->acfService->getFields("audience_{$termId}") ?: [];
         $rangeStart = $termFields['typicalAgeRangeStart'] ?: null;
         $rangeEnd   = $termFields['typicalAgeRangeEnd'] ?: null;
 
@@ -231,9 +241,9 @@ class EventBuilder implements BaseTypeBuilder
         return $this;
     }
 
-    public function setDates(): EventBuilder
+    public function setDates(): PostToEventSchema
     {
-        $occasions = $this->acf->getField('occasions', $this->post->ID) ?: [];
+        $occasions = $this->acfService->getField('occasions', $this->post->ID) ?: [];
 
         if (empty($occasions) || count($occasions) !== 1) {
             return $this;
@@ -280,7 +290,7 @@ class EventBuilder implements BaseTypeBuilder
         return $dateTime->format('Y-m-d H:i');
     }
 
-    public function setDuration(): EventBuilder
+    public function setDuration(): PostToEventSchema
     {
         $startDate = $this->event->getProperty('startDate');
         $endDate   = $this->event->getProperty('endDate');
@@ -297,7 +307,7 @@ class EventBuilder implements BaseTypeBuilder
         return $this;
     }
 
-    public function setKeywords(): EventBuilder
+    public function setKeywords(): PostToEventSchema
     {
         $keywordTerms = $this->wpService->getPostTerms($this->post->ID, 'keyword', []);
 
@@ -309,7 +319,7 @@ class EventBuilder implements BaseTypeBuilder
         return $this;
     }
 
-    public function setSchedule(): EventBuilder
+    public function setSchedule(): PostToEventSchema
     {
         $schedules         = [];
         $numberOfOccasions = $this->fields['occasions'] ?: null;
@@ -377,22 +387,23 @@ class EventBuilder implements BaseTypeBuilder
         return $this;
     }
 
-    public function setSuperEvent(): EventBuilder
+    public function setSuperEvent(): PostToEventSchema
     {
+
         $superEventPost = $this->wpService->getPostParent($this->post->ID);
 
         if (!$superEventPost) {
             return $this;
         }
 
-        $superEvent = new self($superEventPost, $this->wpService, $this->acf);
+        $superEvent = (new self($this->stringToSchemaMapper, $this->wpService, $this->acfService))->getSchema($superEventPost);
 
         $this->event->superEvent($superEvent->toArray());
 
         return $this;
     }
 
-    public function setSubEvents(): EventBuilder
+    public function setSubEvents(): PostToEventSchema
     {
         $subEventPosts = $this->wpService->getPosts([
             'post_parent' => $this->post->ID,
@@ -405,7 +416,7 @@ class EventBuilder implements BaseTypeBuilder
         }
 
         $subEvents = array_map(function ($subPost) {
-            $subEvent = new self($subPost, $this->wpService, $this->acf);
+            $subEvent = (new self($this->stringToSchemaMapper, $this->wpService, $this->acfService))->getSchema($subPost);
 
             return $subEvent->toArray();
         }, $subEventPosts);

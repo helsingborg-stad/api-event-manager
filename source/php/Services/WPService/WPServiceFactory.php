@@ -3,7 +3,9 @@
 namespace EventManager\Services\WPService;
 
 use WP_Error;
+use WP_HTTP_Response;
 use WP_Post;
+use WP_REST_Response;
 use WP_Term;
 
 class WPServiceFactory
@@ -172,6 +174,11 @@ class WPServiceFactory
             public function getEditTermLink(int|WP_Term $term, string $taxonomy = '', string $objectType = ''): ?string
             {
                 return get_edit_term_link($term, $taxonomy, $objectType);
+            }
+
+            public function restEnsureResponse($response): WP_REST_Response|WP_Error
+            {
+                return rest_ensure_response($response);
             }
         };
     }

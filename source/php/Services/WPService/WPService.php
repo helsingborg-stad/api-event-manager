@@ -28,6 +28,7 @@ interface WPService extends
     InsertTerm,
     SetPostTerms,
     GetTheId,
-    GetEditTermLink
+    GetEditTermLink,
+    RestEnsureResponse
 {
 }
