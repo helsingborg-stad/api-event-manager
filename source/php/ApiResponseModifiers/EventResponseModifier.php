@@ -4,8 +4,7 @@ namespace EventManager\ApiResponseModifiers;
 
 use EventManager\Helper\Hookable;
 use EventManager\PostToSchema\IPostToSchemaAdapter;
-use EventManager\Services\AcfService\AcfService;
-use EventManager\Services\WPService\WPService;
+use EventManager\Services\WPService\RestEnsureResponse;
 use WP_Post;
 use WP_REST_Request;
 use WP_REST_Response;
@@ -16,8 +15,7 @@ class EventResponseModifier implements Hookable, IResponseModifier
 
     public function __construct(
         private IPostToSchemaAdapter $postToSchemaAdapter,
-        private WPService $wpService,
-        private AcfService $acfService,
+        private RestEnsureResponse $wpService,
     ) {
     }
 
@@ -33,7 +31,7 @@ class EventResponseModifier implements Hookable, IResponseModifier
         }
 
         $schema = $this->postToSchemaAdapter->getSchema($post);
-        return rest_ensure_response($schema->toArray());
+        return $this->wpService->restEnsureResponse($schema->toArray());
     }
 
     private function shouldModify(WP_REST_Request $request): bool

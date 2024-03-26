@@ -3,7 +3,7 @@
 namespace EventManager\PostToSchema\PostToEventSchema;
 
 use EventManager\PostToSchema\IPostToSchemaAdapter;
-use EventManager\PostToSchema\Mappers\StringToEventSchemaMapper;
+use EventManager\PostToSchema\Mappers\IStringToSchemaMapper;
 use EventManager\PostToSchema\Schedule\ScheduleByDayFactory;
 use EventManager\PostToSchema\Schedule\ScheduleByMonthFactory;
 use EventManager\PostToSchema\Schedule\ScheduleByWeekFactory;
@@ -21,21 +21,27 @@ use WP_Post;
 class PostToEventSchema implements IPostToSchemaAdapter
 {
     protected WP_Post $post;
-    protected BaseType $event;
+    public ?BaseType $event = null;
     protected array $fields;
 
     public function __construct(
-        protected StringToEventSchemaMapper $stringToSchemaMapper,
+        protected IStringToSchemaMapper $stringToSchemaMapper,
         protected GetThePostThumbnailUrl&GetPostTerms&GetTerm&GetPosts&GetPostParent $wpService,
         protected GetField&GetFields $acfService
     ) {
     }
 
-    public function getSchema(WP_Post $post): BaseType
+    public function setupFields(WP_Post $post): void
     {
         $this->post   = $post;
         $this->fields = $this->acfService->getFields($this->post->ID) ?: [];
         $this->event  = $this->stringToSchemaMapper->map($this->fields['type'] ?? 'Event');
+    }
+
+    public function getSchema(WP_Post $post): BaseType
+    {
+        $this->setupFields($post);
+
         $this
             ->setIdentifier()
             ->setName()

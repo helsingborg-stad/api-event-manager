@@ -64,7 +64,8 @@ $diContainer->set(PostToEventSchema::class, \DI\autowire(PostToEventSchema::clas
 $diContainer->set(
     EventResponseModifier::class,
     \DI\autowire(EventResponseModifier::class)
-    ->constructorParameter('postToSchemaAdapter', \DI\get(PostToEventSchema::class))
+        ->constructorParameter('postToSchemaAdapter', \DI\get(PostToEventSchema::class))
+        ->constructorParameter('wpService', \DI\get(WPService::class))
 );
 
 /**
