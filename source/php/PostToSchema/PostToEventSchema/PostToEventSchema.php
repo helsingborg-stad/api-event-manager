@@ -42,33 +42,33 @@ class PostToEventSchema implements IPostToSchemaAdapter
         $this->setupFields($post);
 
         $commands = [
-            new Commands\SetIdentifierCommand($this->event, $this->post),
-            new Commands\SetNameCommand($this->event, $this->post),
-            new Commands\SetDescriptionCommand($this->event, $this->fields),
-            new Commands\SetAboutCommand($this->event, $this->fields),
-            new Commands\SetAccessabilityInformationCommand($this->event, $this->fields),
-            new Commands\SetImageCommand($this->event, $this->post->ID, $this->wpService),
-            new Commands\SetIsAccessibleForFreeCommand($this->event, $this->fields),
-            new Commands\SetLocationCommand($this->event, $this->fields, $this->commandHelpers),
-            new Commands\SetUrlCommand($this->event, $this->fields),
-            new Commands\SetAudienceCommand($this->event, $this->fields, $this->wpService),
-            new Commands\SetTypicalAgeRangeCommand($this->event, $this->acfService),
-            new Commands\SetDatesCommand($this->event, $this->fields),
-            new Commands\SetDurationCommand($this->event),
-            new Commands\SetKeywordsCommand($this->event, $this->post->ID, $this->wpService),
-            new Commands\SetScheduleCommand($this->event, $this->fields),
-            new Commands\SetOrganizerCommand($this->event, $this->post->ID, $this->wpService, $this->acfService, $this->commandHelpers),
+            new Commands\SetIdentifier($this->event, $this->post),
+            new Commands\SetName($this->event, $this->post),
+            new Commands\SetDescription($this->event, $this->fields),
+            new Commands\SetAbout($this->event, $this->fields),
+            new Commands\SetAccessabilityInformation($this->event, $this->fields),
+            new Commands\SetImage($this->event, $this->post->ID, $this->wpService),
+            new Commands\SetIsAccessibleForFree($this->event, $this->fields),
+            new Commands\SetLocation($this->event, $this->fields, $this->commandHelpers),
+            new Commands\SetUrl($this->event, $this->fields),
+            new Commands\SetAudience($this->event, $this->fields, $this->wpService),
+            new Commands\SetTypicalAgeRange($this->event, $this->acfService),
+            new Commands\SetDates($this->event, $this->fields),
+            new Commands\SetDuration($this->event),
+            new Commands\SetKeywords($this->event, $this->post->ID, $this->wpService),
+            new Commands\SetSchedule($this->event, $this->fields),
+            new Commands\SetOrganizer($this->event, $this->post->ID, $this->wpService, $this->acfService, $this->commandHelpers),
         ];
 
         if ($this->allowSubAndSuperEvents) {
-            $commands[] = new Commands\SetSubEventsCommand(
+            $commands[] = new Commands\SetSubEvents(
                 $this->event,
                 $this->post->ID,
                 $this->wpService,
                 $this->acfService,
                 new self($this->stringToSchemaMapper, $this->wpService, $this->acfService, $this->commandHelpers, false)
             );
-            $commands[] = new Commands\SetSuperEventCommand(
+            $commands[] = new Commands\SetSuperEvent(
                 $this->event,
                 $this->post->ID,
                 $this->wpService,
