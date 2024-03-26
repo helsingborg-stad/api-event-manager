@@ -4,27 +4,14 @@ namespace EventManager\PostToSchema\Schedule;
 
 class ScheduleByWeekFactory implements ScheduleFactory
 {
-    private string $startDate;
-    private string $endDate;
-    private string $startTime;
-    private string $endTime;
-    private string|int $interval;
-    private array $weekDays;
-
     public function __construct(
-        string $startDate,
-        string $endDate,
-        string $startTime,
-        string $endTime,
-        string|int $interval,
-        array $weekDays
+        private string $startDate,
+        private string $untilDate,
+        private string $startTime,
+        private string $endTime,
+        private string|int $interval,
+        private array $weekDays
     ) {
-        $this->startDate = $startDate;
-        $this->endDate   = $endDate;
-        $this->startTime = $startTime;
-        $this->endTime   = $endTime;
-        $this->interval  = $interval;
-        $this->weekDays  = $weekDays;
     }
 
     public function create(): ?\Spatie\SchemaOrg\Schedule
@@ -34,7 +21,7 @@ class ScheduleByWeekFactory implements ScheduleFactory
         $schedule = new \Spatie\SchemaOrg\Schedule();
         $schedule->startDate($this->startDate);
         $schedule->startTime($this->startTime);
-        $schedule->endDate($this->endDate);
+        $schedule->endDate($this->untilDate);
         $schedule->endTime($this->endTime);
         $schedule->repeatFrequency($iso8601Interval);
         $schedule->byDay($this->weekDays);
@@ -51,7 +38,7 @@ class ScheduleByWeekFactory implements ScheduleFactory
             $weekDay = $this->getWeekDayFromString($weekDay);
 
             if ($weekDay) {
-                $repeatCount += $this->countWeekdayOccurrences($this->startDate, $this->endDate, $weekDay);
+                $repeatCount += $this->countWeekdayOccurrences($this->startDate, $this->untilDate, $weekDay);
             }
         }
 
@@ -71,14 +58,14 @@ class ScheduleByWeekFactory implements ScheduleFactory
         return null;
     }
 
-    private function countWeekdayOccurrences($startDate, $endDate, $weekday): int
+    private function countWeekdayOccurrences($startDate, $untilDate, $weekday): int
     {
         $startDateTime = new \DateTime($startDate);
-        $endDateTime   = new \DateTime($endDate);
-        $endDateTime   = $endDateTime->modify('+1 day');
+        $untilDateTime = new \DateTime($untilDate);
+        $untilDateTime = $untilDateTime->modify('+1 day');
 
         // Get all dates in range
-        $dateRange = new \DatePeriod($startDateTime, new \DateInterval('P1D'), $endDateTime);
+        $dateRange = new \DatePeriod($startDateTime, new \DateInterval('P1D'), $untilDateTime);
 
         // Count all matching weekdays in range
         $count = 0;

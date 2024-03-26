@@ -4,24 +4,13 @@ namespace EventManager\PostToSchema\Schedule;
 
 class ScheduleByDayFactory implements ScheduleFactory
 {
-    private string $startDate;
-    private string $endDate;
-    private string $startTime;
-    private string $endTime;
-    private string|int $interval;
-
     public function __construct(
-        string $startDate,
-        string $endDate,
-        string $startTime,
-        string $endTime,
-        string|int $interval
+        private string $startDate,
+        private string $untilDate,
+        private string $startTime,
+        private string $endTime,
+        private string|int $interval
     ) {
-        $this->startDate = $startDate;
-        $this->endDate   = $endDate;
-        $this->startTime = $startTime;
-        $this->endTime   = $endTime;
-        $this->interval  = $interval;
     }
 
     public function create(): ?\Spatie\SchemaOrg\Schedule
@@ -31,7 +20,7 @@ class ScheduleByDayFactory implements ScheduleFactory
         $schedule = new \Spatie\SchemaOrg\Schedule();
         $schedule->startDate($this->startDate);
         $schedule->startTime($this->startTime);
-        $schedule->endDate($this->endDate);
+        $schedule->endDate($this->untilDate);
         $schedule->endTime($this->endTime);
         $schedule->repeatFrequency($iso8601Interval);
         $schedule->repeatCount($this->getRepeatCount());
@@ -42,7 +31,7 @@ class ScheduleByDayFactory implements ScheduleFactory
     private function getRepeatCount(): ?int
     {
         $startDateTime = new \DateTime($this->startDate);
-        $endDateTime   = new \DateTime($this->endDate);
+        $endDateTime   = new \DateTime($this->untilDate);
         $interval      = $startDateTime->diff($endDateTime);
         $days          = $interval->days;
         $repeatCount   = ($days + 1) / (int)$this->interval;

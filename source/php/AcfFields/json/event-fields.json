@@ -600,6 +600,33 @@
                     "parent_repeater": "field_65a66d8cadeef"
                 },
                 {
+                    "key": "field_6602d3163612a",
+                    "label": "Until Date",
+                    "name": "untilDate",
+                    "aria-label": "",
+                    "type": "date_picker",
+                    "instructions": "",
+                    "required": 1,
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_65a6809ba99e7",
+                                "operator": "!=",
+                                "value": "no"
+                            }
+                        ]
+                    ],
+                    "wrapper": {
+                        "width": "25",
+                        "class": "",
+                        "id": ""
+                    },
+                    "display_format": "Y-m-d",
+                    "return_format": "Y-m-d",
+                    "first_day": 1,
+                    "parent_repeater": "field_65a66d8cadeef"
+                },
+                {
                     "key": "field_65a68507a99eb",
                     "label": "Start time",
                     "name": "startTime",

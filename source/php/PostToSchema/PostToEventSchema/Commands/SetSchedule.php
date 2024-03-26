@@ -15,39 +15,37 @@ class SetSchedule implements CommandInterface
 
     public function execute(): void
     {
-        $schedules         = [];
-        $numberOfOccasions = $this->meta['occasions'] ?: null;
+        $schedules = [];
+        $occasions = $this->meta['occasions'] ?: null;
 
-        if (!is_numeric($numberOfOccasions) || (int)$numberOfOccasions < 1) {
+        if (!is_array($occasions) || sizeof($occasions) < 1) {
             return;
         }
 
-        $getMetaRow = fn ($i, $key) => $this->meta["occasions_{$i}_{$key}"][0];
-
-        $schedules = array_map(function ($i) use ($getMetaRow) {
-            $repeat    = $getMetaRow($i, 'repeat');
-            $startDate = $getMetaRow($i, 'startDate');
-            $startTime = $getMetaRow($i, 'startTime');
-            $endDate   = $getMetaRow($i, 'endDate');
-            $endTime   = $getMetaRow($i, 'endTime');
+        $schedules = array_map(function ($occasion) {
+            $repeat    = $occasion['repeat'];
+            $startDate = $occasion['date'];
+            $untilDate = $occasion['untilDate'];
+            $startTime = $occasion['startTime'];
+            $endTime   = $occasion['endTime'];
 
             switch ($repeat) {
                 case 'byDay':
-                    $daysInterval    = $getMetaRow($i, 'daysInterval') ?: 1;
+                    $daysInterval    = $occasion['daysInterval'] ?: 1;
                     $scheduleFactory = new ScheduleByDayFactory(
                         $startDate,
-                        $endDate,
+                        $untilDate,
                         $startTime,
                         $endTime,
                         $daysInterval
                     );
                     return $scheduleFactory->create();
                 case 'byWeek':
-                    $daysInterval    = $getMetaRow($i, 'weeksInterval') ?: 1;
-                    $weekDays        = $getMetaRow($i, 'weekDays') ?: [];
+                    $daysInterval    = $occasion['weeksInterval'] ?: 1;
+                    $weekDays        = $occasion['weekDays'] ?: [];
                     $scheduleFactory = new ScheduleByWeekFactory(
                         $startDate,
-                        $endDate,
+                        $untilDate,
                         $startTime,
                         $endTime,
                         $daysInterval,
@@ -55,13 +53,13 @@ class SetSchedule implements CommandInterface
                     );
                     return $scheduleFactory->create();
                 case 'byMonth':
-                    $daysInterval    = $getMetaRow($i, 'monthsInterval') ?: 1;
-                    $monthDay        = $getMetaRow($i, 'monthDay') ?: null;
-                    $monthDayNumber  = $getMetaRow($i, 'monthDayNumber') ?: null;
-                    $monthDayLiteral = $getMetaRow($i, 'monthDayLiteral') ?: null;
+                    $daysInterval    = $occasion['monthsInterval'] ?: 1;
+                    $monthDay        = $occasion['monthDay'] ?: null;
+                    $monthDayNumber  = $occasion['monthDayNumber'] ?: null;
+                    $monthDayLiteral = $occasion['monthDayLiteral'] ?: null;
                     $scheduleFactory = new ScheduleByMonthFactory(
                         $startDate,
-                        $endDate,
+                        $untilDate,
                         $startTime,
                         $endTime,
                         $daysInterval,
@@ -73,7 +71,7 @@ class SetSchedule implements CommandInterface
                 dafault:
                     return null;
             }
-        }, range(0, $numberOfOccasions - 1));
+        }, $occasions);
 
         $schedules = array_filter($schedules); // Remove null values
 

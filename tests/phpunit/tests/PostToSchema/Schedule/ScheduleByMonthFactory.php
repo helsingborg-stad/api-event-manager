@@ -57,7 +57,7 @@ class ScheduleByMonthFactoryTest extends TestCase
     {
         $schemaFactory = new ScheduleByMonthFactory(
             $params['startDate'],
-            $params['endDate'],
+            $params['untilDate'],
             $params['startTime'],
             $params['endTime'],
             $params['interval'],
@@ -77,7 +77,7 @@ class ScheduleByMonthFactoryTest extends TestCase
             array(
                 [
                     'startDate'       => '2024-01-01',
-                    'endDate'         => '2024-02-29',
+                    'untilDate'       => '2024-02-29',
                     'startTime'       => '13:00',
                     'endTime'         => '14:00',
                     'interval'        => 1,
@@ -89,7 +89,7 @@ class ScheduleByMonthFactoryTest extends TestCase
             array(
                 [
                     'startDate'       => '2024-01-01',
-                    'endDate'         => '2024-02-05',
+                    'untilDate'       => '2024-02-05',
                     'startTime'       => '13:00',
                     'endTime'         => '14:00',
                     'interval'        => 1,
@@ -101,7 +101,7 @@ class ScheduleByMonthFactoryTest extends TestCase
             array(
                 [
                     'startDate'       => '2024-01-18',
-                    'endDate'         => '2024-04-18',
+                    'untilDate'       => '2024-04-18',
                     'startTime'       => '13:00',
                     'endTime'         => '14:00',
                     'interval'        => 1,
@@ -113,7 +113,7 @@ class ScheduleByMonthFactoryTest extends TestCase
             array(
                 [
                     'startDate'       => '2024-01-03',
-                    'endDate'         => '2024-06-03',
+                    'untilDate'       => '2024-06-03',
                     'startTime'       => '13:00',
                     'endTime'         => '14:00',
                     'interval'        => 1,
@@ -125,7 +125,7 @@ class ScheduleByMonthFactoryTest extends TestCase
             array(
                 [
                     'startDate'       => '2024-11-18',
-                    'endDate'         => '2025-04-18',
+                    'untilDate'       => '2025-04-18',
                     'startTime'       => '13:00',
                     'endTime'         => '14:00',
                     'interval'        => 1,

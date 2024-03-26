@@ -6,33 +6,16 @@ use DateTime;
 
 class ScheduleByMonthFactory implements ScheduleFactory
 {
-    private string $startDate;
-    private string $endDate;
-    private string $startTime;
-    private string $endTime;
-    private string|int $interval;
-    private string $monthDay;
-    private string|int|null $monthDayNumber;
-    private ?string $monthDayLiteral;
-
     public function __construct(
-        string $startDate,
-        string $endDate,
-        string $startTime,
-        string $endTime,
-        string|int $interval,
-        string $monthDay,
-        string|int|null $monthDayNumber = null,
-        ?string $monthDayLiteral = null
+        private string $startDate,
+        private string $untilDate,
+        private string $startTime,
+        private string $endTime,
+        private string|int $interval,
+        private string $monthDay,
+        private string|int|null $monthDayNumber = null,
+        private ?string $monthDayLiteral = null
     ) {
-        $this->startDate       = $startDate;
-        $this->endDate         = $endDate;
-        $this->startTime       = $startTime;
-        $this->endTime         = $endTime;
-        $this->interval        = $interval;
-        $this->monthDay        = $monthDay;
-        $this->monthDayNumber  = $monthDayNumber;
-        $this->monthDayLiteral = $monthDayLiteral;
     }
 
     public function create(): ?\Spatie\SchemaOrg\Schedule
@@ -42,7 +25,7 @@ class ScheduleByMonthFactory implements ScheduleFactory
         $schedule = new \Spatie\SchemaOrg\Schedule();
         $schedule->startDate($this->startDate);
         $schedule->startTime($this->startTime);
-        $schedule->endDate($this->endDate);
+        $schedule->endDate($this->untilDate);
         $schedule->endTime($this->endTime);
         $schedule->repeatFrequency($iso8601Interval);
         $schedule->byMonthDay($this->getByMonthday());
@@ -65,7 +48,7 @@ class ScheduleByMonthFactory implements ScheduleFactory
         if ($this->monthDay === 'day') {
             $dayOfMonthNumber = (int)$this->monthDayNumber;
             $start            = new \DateTime($this->startDate);
-            $end              = new \DateTime($this->endDate);
+            $end              = new \DateTime($this->untilDate);
             $end              = $end->modify('+1 day');
             $interval         = new \DateInterval("P1D");
             $period           = new \DatePeriod($start, $interval, $end);
@@ -96,7 +79,7 @@ class ScheduleByMonthFactory implements ScheduleFactory
 
         // Get the first day of the month
         $startDate = new \DateTimeImmutable($this->startDate);
-        $endDate   = new \DateTimeImmutable($this->endDate);
+        $endDate   = new \DateTimeImmutable($this->untilDate);
 
         // For each month in range
         $interval             = new \DateInterval("P1M");
