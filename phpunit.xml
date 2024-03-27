@@ -14,6 +14,7 @@
       <directory suffix=".php">./source/php</directory>
     </include>
     <exclude>
+      <directory suffix=".test.php">./source/php</directory>
       <directory suffix=".php">./source/php/AcfFields</directory>
     </exclude>
     <report>
