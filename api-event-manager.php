@@ -13,7 +13,6 @@
  * Domain Path:       /languages
  */
 
-use EventManager\ApiResponseModifiers\EventResponseModifier;
 use EventManager\CleanupUnusedTags\CleanupUnusedTags;
 use EventManager\Helper\HooksRegistrar;
 use EventManager\Helper\HooksRegistrar\HooksRegistrarInterface;
@@ -32,6 +31,8 @@ use EventManager\Services\WPService\WPServiceFactory;
 use EventManager\SetPostTermsFromContent\SetPostTermsFromContent;
 use EventManager\TagReader\TagReader;
 use EventManager\TagReader\TagReaderInterface;
+use EventManager\ApiResponseModifiers\EventResponseModifier;
+use EventManager\PostToSchema\PostToEventSchema\Commands\Helpers\CommandHelpers;
 
 // Protect against direct file access
 if (!defined('WPINC')) {
@@ -59,7 +60,8 @@ $diContainer->set(TagReaderInterface::class, \DI\create(TagReader::class));
 $diContainer->set(PostToEventSchema::class, \DI\autowire(PostToEventSchema::class)
     ->constructorParameter('stringToSchemaMapper', \DI\get(StringToEventSchemaMapper::class))
     ->constructorParameter('wpService', \DI\get(WPService::class))
-    ->constructorParameter('acfService', \DI\get(AcfService::class)));
+    ->constructorParameter('acfService', \DI\get(AcfService::class))
+    ->constructorParameter('commandHelpers', \DI\create(CommandHelpers::class)));
 
 $diContainer->set(
     EventResponseModifier::class,

@@ -1,6 +1,6 @@
 <?php
 
-namespace EventManager\Tests\PostToSchema\Schedule;
+namespace EventManager\PostToSchema\Schedule;
 
 use EventManager\PostToSchema\Schedule\ScheduleByWeekFactory;
 use WP_Mock\Tools\TestCase;
@@ -12,9 +12,17 @@ class ScheduleByWeekFactoryTest extends TestCase
      */
     public function testSetsExpectedProperties()
     {
-        $weekDays      = [ 'https://schema.org/Monday', 'https://schema.org/Wednesday', ];
-        $schemaFactory = new ScheduleByWeekFactory('2024-01-01', '2024-01-17', '13:00', '14:00', '1', $weekDays);
-        $schedule      = $schemaFactory->create();
+        $occasion = [
+            'date'          => '2024-01-01',
+            'untilDate'     => '2024-01-17',
+            'startTime'     => '13:00',
+            'endTime'       => '14:00',
+            'weeksInterval' => '1',
+            'weekDays'      => [ 'https://schema.org/Monday', 'https://schema.org/Wednesday' ]
+        ];
+
+        $schemaFactory = new ScheduleByWeekFactory();
+        $schedule      = $schemaFactory->create($occasion);
 
         $this->assertEquals('2024-01-01', $schedule->getProperty('startDate'));
         $this->assertEquals('2024-01-17', $schedule->getProperty('endDate'));

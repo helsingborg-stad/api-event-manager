@@ -605,6 +605,33 @@
                     'parent_repeater' => 'field_65a66d8cadeef',
                 ),
                 9 => array(
+                    'key' => 'field_6602d3163612a',
+                    'label' => __('Until Date', 'api-event-manager'),
+                    'name' => 'untilDate',
+                    'aria-label' => '',
+                    'type' => 'date_picker',
+                    'instructions' => '',
+                    'required' => 1,
+                    'conditional_logic' => array(
+                        0 => array(
+                            0 => array(
+                                'field' => 'field_65a6809ba99e7',
+                                'operator' => '!=',
+                                'value' => 'no',
+                            ),
+                        ),
+                    ),
+                    'wrapper' => array(
+                        'width' => '25',
+                        'class' => '',
+                        'id' => '',
+                    ),
+                    'display_format' => 'Y-m-d',
+                    'return_format' => 'Y-m-d',
+                    'first_day' => 1,
+                    'parent_repeater' => 'field_65a66d8cadeef',
+                ),
+                10 => array(
                     'key' => 'field_65a68507a99eb',
                     'label' => __('Start time', 'api-event-manager'),
                     'name' => 'startTime',
@@ -622,7 +649,7 @@
                     'return_format' => 'H:i:s',
                     'parent_repeater' => 'field_65a66d8cadeef',
                 ),
-                10 => array(
+                11 => array(
                     'key' => 'field_65a6852da99ec',
                     'label' => __('End time', 'api-event-manager'),
                     'name' => 'endTime',
@@ -640,7 +667,7 @@
                     'return_format' => 'H:i:s',
                     'parent_repeater' => 'field_65a66d8cadeef',
                 ),
-                11 => array(
+                12 => array(
                     'key' => 'field_65b89293153f9',
                     'label' => __('Booking page URL', 'api-event-manager'),
                     'name' => 'url',
