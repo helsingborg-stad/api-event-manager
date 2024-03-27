@@ -17,7 +17,6 @@ use WP_Post;
 
 class PostToEventSchema implements IPostToSchemaAdapter
 {
-    protected WP_Post $post;
     public ?BaseType $event = null;
     protected array $fields;
 
@@ -30,50 +29,51 @@ class PostToEventSchema implements IPostToSchemaAdapter
     ) {
     }
 
-    public function setupFields(WP_Post $post): void
-    {
-        $this->post   = $post;
-        $this->fields = $this->acfService->getFields($this->post->ID) ?: [];
-        $this->event  = $this->stringToSchemaMapper->map($this->fields['type'] ?? 'Event');
-    }
-
     public function getSchema(WP_Post $post): BaseType
     {
-        $this->setupFields($post);
+        $this->fields = $this->acfService->getFields($post->ID) ?: [];
+        $this->event  = $this->stringToSchemaMapper->map($this->fields['type'] ?? 'Event');
+        $childPosts   = $this->wpService->getPosts(['post_parent' => $post->ID, 'post_type' => $post->post_type]);
 
-        $commands = [
-            new Commands\SetIdentifier($this->event, $this->post),
-            new Commands\SetName($this->event, $this->post),
-            new Commands\SetDescription($this->event, $this->fields),
-            new Commands\SetAbout($this->event, $this->fields),
-            new Commands\SetAccessabilityInformation($this->event, $this->fields),
-            new Commands\SetImage($this->event, $this->post->ID, $this->wpService),
-            new Commands\SetIsAccessibleForFree($this->event, $this->fields),
-            new Commands\SetLocation($this->event, $this->fields, $this->commandHelpers),
-            new Commands\SetUrl($this->event, $this->fields),
-            new Commands\SetAudience($this->event, $this->fields, $this->wpService),
-            new Commands\SetTypicalAgeRange($this->event, $this->acfService),
-            new Commands\SetDates($this->event, $this->fields),
-            new Commands\SetDuration($this->event),
-            new Commands\SetKeywords($this->event, $this->post->ID, $this->wpService),
-            new Commands\SetSchedule($this->event, $this->fields),
-            new Commands\SetOrganizer($this->event, $this->post->ID, $this->wpService, $this->acfService, $this->commandHelpers),
-        ];
+        $commands   = [];
+        $commands[] = new Commands\SetIdentifier($this->event, $post);
+        $commands[] = new Commands\SetName($this->event, $post);
+        $commands[] = new Commands\SetDescription($this->event, $this->fields);
+        $commands[] = new Commands\SetAbout($this->event, $this->fields);
+        $commands[] = new Commands\SetAccessabilityInformation($this->event, $this->fields);
+        $commands[] = new Commands\SetImage($this->event, $post->ID, $this->wpService);
+        $commands[] = new Commands\SetIsAccessibleForFree($this->event, $this->fields);
+        $commands[] = new Commands\SetLocation($this->event, $this->fields, $this->commandHelpers);
+        $commands[] = new Commands\SetUrl($this->event, $this->fields);
+        $commands[] = new Commands\SetOrganizer($this->event, $post->ID, $this->wpService, $this->acfService, $this->commandHelpers);
+        $commands[] = new Commands\SetAudience($this->event, $this->fields, $this->wpService);
+        $commands[] = new Commands\SetTypicalAgeRange($this->event, $this->acfService);
+        $commands[] = new Commands\SetKeywords($this->event, $post->ID, $this->wpService);
 
         if ($this->allowSubAndSuperEvents) {
             $commands[] = new Commands\SetSubEvents(
                 $this->event,
-                $this->post->ID,
+                $post->ID,
                 $this->wpService,
                 $this->acfService,
                 new self($this->stringToSchemaMapper, $this->wpService, $this->acfService, $this->commandHelpers, false)
             );
             $commands[] = new Commands\SetSuperEvent(
                 $this->event,
-                $this->post->ID,
+                $post->ID,
                 $this->wpService,
                 new self($this->stringToSchemaMapper, $this->wpService, $this->acfService, $this->commandHelpers, false)
             );
+        }
+
+        if (!empty($childPosts)) {
+            // This is a SuperEvent
+            $commands[] = new Commands\SetDatesFromSubEvents($this->event);
+            // $commands[] = new Commands\SetDurationFromSubEvents($this->event);
+        } else {
+            $commands[] = new Commands\SetSchedule($this->event, $this->fields);
+            $commands[] = new Commands\SetDates($this->event, $this->fields);
+            $commands[] = new Commands\SetDuration($this->event);
         }
 
         $this->executeCommands($commands);

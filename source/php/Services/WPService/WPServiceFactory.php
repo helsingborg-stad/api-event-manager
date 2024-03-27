@@ -180,6 +180,11 @@ class WPServiceFactory
             {
                 return rest_ensure_response($response);
             }
+
+            public function getChildren(mixed $args = '', string $output = OBJECT): array
+            {
+                return get_children($args, $output);
+            }
         };
     }
 }

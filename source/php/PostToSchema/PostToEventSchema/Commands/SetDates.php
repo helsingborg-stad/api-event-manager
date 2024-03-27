@@ -14,37 +14,23 @@ class SetDates implements CommandInterface
     {
         $occasions = $this->meta['occasions'] ?? [];
 
-        if (empty($occasions) || count($occasions) !== 1) {
+        if (empty($occasions)) {
             return;
         }
 
-        $repeat    = $occasions[0]['repeat'] ?: null;
-        $date      = $occasions[0]['date'] ?: null;
-        $startTime = $occasions[0]['startTime'] ?: null;
-        $endTime   = $occasions[0]['endTime'] ?: null;
+        // StartDate is the earliest date and time of the occasions
+        $startDate = min(array_map(function ($occasion) {
+            return $this->formatDateFromDateAndTime($occasion['date'], $occasion['startTime']);
+        }, $occasions));
 
-        if ($repeat !== 'no') {
-            return;
-        }
+        // EndDate is the latest date and time of the occasions
+        $endDate = max(array_map(function ($occasion) {
+            $date = $occasion['untilDate'] ?? $occasion['date'];
+            return $this->formatDateFromDateAndTime($date, $occasion['endTime']);
+        }, $occasions));
 
-        if ($this->endTimeIsEarlierThanStartTime($startTime, $endTime)) {
-            $endTime = null;
-        }
-
-        $this->schema->startDate($this->formatDateFromDateAndTime($date, $startTime));
-        $this->schema->endDate($this->formatDateFromDateAndTime($date, $endTime));
-    }
-
-    private function endTimeIsEarlierThanStartTime(?string $startTime, ?string $endTime): bool
-    {
-        if (!$startTime || !$endTime) {
-            return false;
-        }
-
-        $startTimeUnix = strtotime($startTime);
-        $endTimeUnix   = strtotime($endTime);
-
-        return $endTimeUnix < $startTimeUnix;
+        $this->schema->startDate($startDate);
+        $this->schema->endDate($endDate);
     }
 
     private function formatDateFromDateAndTime(?string $date, ?string $time): ?string
