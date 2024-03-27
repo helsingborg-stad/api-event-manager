@@ -4,7 +4,7 @@ namespace EventManager\PostToSchema\PostToEventSchema\Commands;
 
 use PHPUnit\Framework\TestCase;
 
-class SetAccessabilityInformationCommandTest extends TestCase
+class SetAccessabilityInformationTest extends TestCase
 {
     /**
      * @testdox execute appends accessability information to about

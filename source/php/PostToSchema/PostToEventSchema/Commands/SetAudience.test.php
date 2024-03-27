@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
 use WP_Term;
 use WP_Error;
 
-class SetAudienceCommandTest extends TestCase
+class SetAudienceTest extends TestCase
 {
     /**
      * @testdox sets audience from occasions

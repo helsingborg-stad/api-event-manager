@@ -5,7 +5,7 @@ namespace EventManager\PostToSchema\PostToEventSchema\Commands;
 use EventManager\PostToSchema\PostToEventSchema\Commands\Helpers\CommandHelpers;
 use PHPUnit\Framework\TestCase;
 
-class SetLocationCommandTest extends TestCase
+class SetLocationTest extends TestCase
 {
     /**
      * @testdox sets location from available post meta.

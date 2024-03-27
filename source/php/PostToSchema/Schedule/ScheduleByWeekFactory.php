@@ -4,18 +4,22 @@ namespace EventManager\PostToSchema\Schedule;
 
 class ScheduleByWeekFactory implements ScheduleFactory
 {
-    public function __construct(
-        private string $startDate,
-        private string $untilDate,
-        private string $startTime,
-        private string $endTime,
-        private string|int $interval,
-        private array $weekDays
-    ) {
-    }
+    private string $startDate;
+    private string $untilDate;
+    private string $startTime;
+    private string $endTime;
+    private string|int $interval;
+    private array $weekDays;
 
-    public function create(): ?\Spatie\SchemaOrg\Schedule
+    public function create(array $occasion): ?\Spatie\SchemaOrg\Schedule
     {
+        $this->startDate = $occasion['date'] ?? null;
+        $this->untilDate = $occasion['untilDate'] ?? null;
+        $this->startTime = $occasion['startTime'] ?? null;
+        $this->endTime   = $occasion['endTime'] ?? null;
+        $this->interval  = $occasion['weeksInterval'] ?? 1;
+        $this->weekDays  = $occasion['weekDays'] ?? [];
+
         $iso8601Interval = "P{$this->interval}W";
 
         $schedule = new \Spatie\SchemaOrg\Schedule();

@@ -6,7 +6,7 @@ use EventManager\Services\WPService\GetPostTerms;
 use PHPUnit\Framework\TestCase;
 use Spatie\SchemaOrg\BaseType;
 
-class SetKeywordsCommandTest extends TestCase
+class SetKeywordsTest extends TestCase
 {
     /**
      * @testdox sets keywords from post terms

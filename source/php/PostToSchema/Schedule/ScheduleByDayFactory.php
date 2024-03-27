@@ -4,17 +4,20 @@ namespace EventManager\PostToSchema\Schedule;
 
 class ScheduleByDayFactory implements ScheduleFactory
 {
-    public function __construct(
-        private string $startDate,
-        private string $untilDate,
-        private string $startTime,
-        private string $endTime,
-        private string|int $interval
-    ) {
-    }
+    private string $startDate;
+    private string $untilDate;
+    private string $startTime;
+    private string $endTime;
+    private string|int $interval;
 
-    public function create(): ?\Spatie\SchemaOrg\Schedule
+    public function create(array $occasion): ?\Spatie\SchemaOrg\Schedule
     {
+        $this->startDate = $occasion['date'] ?? null;
+        $this->untilDate = $occasion['untilDate'] ?? null;
+        $this->startTime = $occasion['startTime'] ?? null;
+        $this->endTime   = $occasion['endTime'] ?? null;
+        $this->interval  = $occasion['daysInterval'] ?? 1;
+
         $iso8601Interval = "P{$this->interval}D";
 
         $schedule = new \Spatie\SchemaOrg\Schedule();

@@ -5,7 +5,7 @@ namespace EventManager\PostToSchema\PostToEventSchema\Commands;
 use PHPUnit\Framework\TestCase;
 use Spatie\SchemaOrg\BaseType;
 
-class SetDurationCommandTest extends TestCase
+class SetDurationTest extends TestCase
 {
     /**
      * @testdox sets duration from start and end date

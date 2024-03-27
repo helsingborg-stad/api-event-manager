@@ -4,7 +4,7 @@ namespace EventManager\PostToSchema\PostToEventSchema\Commands;
 
 use PHPUnit\Framework\TestCase;
 
-class SetIsAccessibleForFreeCommandTest extends TestCase
+class SetIsAccessibleForFreeTest extends TestCase
 {
     /**
      * @testdox sets isAccessibleForFree from available post meta.

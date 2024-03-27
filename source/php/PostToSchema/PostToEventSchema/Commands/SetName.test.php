@@ -6,7 +6,7 @@ use Mockery;
 use PHPUnit\Framework\TestCase;
 use WP_Post;
 
-class SetNameCommandTest extends TestCase
+class SetNameTest extends TestCase
 {
     /**
      * @testdox sets name from post title.

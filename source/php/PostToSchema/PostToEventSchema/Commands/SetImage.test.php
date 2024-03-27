@@ -6,7 +6,7 @@ use EventManager\Services\WPService\GetThePostThumbnailUrl;
 use PHPUnit\Framework\TestCase;
 use WP_Post;
 
-class SetImageCommandTest extends TestCase
+class SetImageTest extends TestCase
 {
     /**
      * @testdox sets image from post thumbnail

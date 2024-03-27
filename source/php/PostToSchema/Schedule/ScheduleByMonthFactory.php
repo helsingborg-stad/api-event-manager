@@ -6,20 +6,26 @@ use DateTime;
 
 class ScheduleByMonthFactory implements ScheduleFactory
 {
-    public function __construct(
-        private string $startDate,
-        private string $untilDate,
-        private string $startTime,
-        private string $endTime,
-        private string|int $interval,
-        private string $monthDay,
-        private string|int|null $monthDayNumber = null,
-        private ?string $monthDayLiteral = null
-    ) {
-    }
+    private string $startDate;
+    private string $untilDate;
+    private string $startTime;
+    private string $endTime;
+    private string|int $interval;
+    private string $monthDay;
+    private string|int|null $monthDayNumber = null;
+    private ?string $monthDayLiteral        = null;
 
-    public function create(): ?\Spatie\SchemaOrg\Schedule
+    public function create(array $occasion): ?\Spatie\SchemaOrg\Schedule
     {
+        $this->startDate       = $occasion['date'];
+        $this->untilDate       = $occasion['untilDate'];
+        $this->startTime       = $occasion['startTime'];
+        $this->endTime         = $occasion['endTime'];
+        $this->interval        = $occasion['monthsInterval'] ?: 1;
+        $this->monthDay        = $occasion['monthDay'] ?: null;
+        $this->monthDayNumber  = $occasion['monthDayNumber'] ?: null;
+        $this->monthDayLiteral = $occasion['monthDayLiteral'] ?? null;
+
         $iso8601Interval = "P{$this->interval}M";
 
         $schedule = new \Spatie\SchemaOrg\Schedule();

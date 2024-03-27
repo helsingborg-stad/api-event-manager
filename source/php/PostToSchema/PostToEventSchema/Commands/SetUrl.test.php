@@ -4,7 +4,7 @@ namespace EventManager\PostToSchema\PostToEventSchema\Commands;
 
 use PHPUnit\Framework\TestCase;
 
-class SetUrlCommandTest extends TestCase
+class SetUrlTest extends TestCase
 {
     /**
      * @testdox sets url from occasions

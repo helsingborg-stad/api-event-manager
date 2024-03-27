@@ -9,7 +9,7 @@ use PHPUnit\Framework\TestCase;
 use Spatie\SchemaOrg\BaseType;
 use WP_Error;
 
-class SetOrganizerCommandTest extends TestCase
+class SetOrganizerTest extends TestCase
 {
     /**
      * @testdox sets organizer from post terms

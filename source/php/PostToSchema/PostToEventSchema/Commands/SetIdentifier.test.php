@@ -6,7 +6,7 @@ use Mockery;
 use PHPUnit\Framework\TestCase;
 use WP_Post;
 
-class SetIdentifierCommandTest extends TestCase
+class SetIdentifierTest extends TestCase
 {
     /**
      * @testdox sets @id from post id.

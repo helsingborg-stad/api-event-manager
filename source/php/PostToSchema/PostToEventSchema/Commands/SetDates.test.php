@@ -5,7 +5,7 @@ namespace EventManager\PostToSchema\PostToEventSchema\Commands;
 use PHPUnit\Framework\TestCase;
 use Spatie\SchemaOrg\BaseType;
 
-class SetDatesCommandTest extends TestCase
+class SetDatesTest extends TestCase
 {
     /**
      * @testdox sets dates from occasions

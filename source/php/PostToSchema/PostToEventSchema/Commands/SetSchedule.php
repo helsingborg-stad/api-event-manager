@@ -2,9 +2,11 @@
 
 namespace EventManager\PostToSchema\PostToEventSchema\Commands;
 
+use EventManager\PostToSchema\Schedule\NullScheduleFactory;
 use EventManager\PostToSchema\Schedule\ScheduleByDayFactory;
 use EventManager\PostToSchema\Schedule\ScheduleByMonthFactory;
 use EventManager\PostToSchema\Schedule\ScheduleByWeekFactory;
+use EventManager\PostToSchema\Schedule\ScheduleFactory;
 use Spatie\SchemaOrg\BaseType;
 
 class SetSchedule implements CommandInterface
@@ -23,58 +25,19 @@ class SetSchedule implements CommandInterface
         }
 
         $schedules = array_map(function ($occasion) {
-            $repeat    = $occasion['repeat'];
-            $startDate = $occasion['date'];
-            $untilDate = $occasion['untilDate'];
-            $startTime = $occasion['startTime'];
-            $endTime   = $occasion['endTime'];
-
-            switch ($repeat) {
-                case 'byDay':
-                    $daysInterval    = $occasion['daysInterval'] ?: 1;
-                    $scheduleFactory = new ScheduleByDayFactory(
-                        $startDate,
-                        $untilDate,
-                        $startTime,
-                        $endTime,
-                        $daysInterval
-                    );
-                    return $scheduleFactory->create();
-                case 'byWeek':
-                    $daysInterval    = $occasion['weeksInterval'] ?: 1;
-                    $weekDays        = $occasion['weekDays'] ?: [];
-                    $scheduleFactory = new ScheduleByWeekFactory(
-                        $startDate,
-                        $untilDate,
-                        $startTime,
-                        $endTime,
-                        $daysInterval,
-                        $weekDays
-                    );
-                    return $scheduleFactory->create();
-                case 'byMonth':
-                    $daysInterval    = $occasion['monthsInterval'] ?: 1;
-                    $monthDay        = $occasion['monthDay'] ?: null;
-                    $monthDayNumber  = $occasion['monthDayNumber'] ?: null;
-                    $monthDayLiteral = $occasion['monthDayLiteral'] ?: null;
-                    $scheduleFactory = new ScheduleByMonthFactory(
-                        $startDate,
-                        $untilDate,
-                        $startTime,
-                        $endTime,
-                        $daysInterval,
-                        $monthDay,
-                        $monthDayNumber,
-                        $monthDayLiteral
-                    );
-                    return $scheduleFactory->create();
-                dafault:
-                    return null;
-            }
+            $factory = $this->getFactory($occasion['repeat']);
+            return $factory->create($occasion);
         }, $occasions);
 
-        $schedules = array_filter($schedules); // Remove null values
+        $this->event->eventSchedule(array_filter($schedules) ?: null);
+    }
 
-        $this->event->eventSchedule($schedules ?: null);
+    public function getFactory($repeat): ScheduleFactory
+    {
+        return [
+            'byDay'   => new ScheduleByDayFactory(),
+            'byWeek'  => new ScheduleByWeekFactory(),
+            'byMonth' => new ScheduleByMonthFactory(),
+        ][$repeat] ?? new NullScheduleFactory();
     }
 }

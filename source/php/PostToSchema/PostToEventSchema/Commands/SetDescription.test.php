@@ -4,7 +4,7 @@ namespace EventManager\PostToSchema\PostToEventSchema\Commands;
 
 use PHPUnit\Framework\TestCase;
 
-class SetDescriptionCommandTest extends TestCase
+class SetDescriptionTest extends TestCase
 {
     /**
      * @testdox sets description from available post meta.
