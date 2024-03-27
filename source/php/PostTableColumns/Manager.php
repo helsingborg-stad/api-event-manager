@@ -10,7 +10,7 @@ use WP_Query;
 class Manager implements ManagerInterface, Hookable
 {
     public function __construct(
-        private array $postTypes,
+        public array $postTypes,
         private AddAction&AddFilter $wpService
     ) {
     }
@@ -38,7 +38,7 @@ class Manager implements ManagerInterface, Hookable
         }
 
         foreach ($this->postTypes as $postType) {
-            $this->wpService->addAction("manage_{$postType}_posts_custom_column", [$this, 'populateTableCells'], 10, 1);
+            $this->wpService->addAction("manage_{$postType}_posts_custom_column", [$this, 'populateTableCells']);
         }
 
         $this->wpService->addAction("pre_get_posts", [$this, 'sort']);
@@ -75,11 +75,11 @@ class Manager implements ManagerInterface, Hookable
 
     public function sort(WP_Query &$query)
     {
-        if (!is_admin() || !$query->is_main_query()) {
+        if (!$query->is_admin() || !$query->is_main_query()) {
             return;
         }
 
-        $orderby = $query->get('orderby');
+        $orderby = $query->query_vars['orderby'];
 
         foreach ($this->columns as $column) {
             if ($column->getIdentifier() === $orderby) {

@@ -69,7 +69,6 @@ class PostToEventSchema implements IPostToSchemaAdapter
         if (!empty($childPosts)) {
             // This is a SuperEvent
             $commands[] = new Commands\SetDatesFromSubEvents($this->event);
-            // $commands[] = new Commands\SetDurationFromSubEvents($this->event);
         } else {
             $commands[] = new Commands\SetSchedule($this->event, $this->fields);
             $commands[] = new Commands\SetDates($this->event, $this->fields);
