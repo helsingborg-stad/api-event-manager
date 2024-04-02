@@ -41,35 +41,23 @@ define('EVENT_MANAGER_PATH', plugin_dir_path(__FILE__));
 define('EVENT_MANAGER_URL', plugins_url('', __FILE__));
 define('EVENT_MANAGER_TEMPLATE_PATH', EVENT_MANAGER_PATH . 'templates/');
 
-
-// Register the autoloader
+/**
+ * Composer autoload
+ */
 if (file_exists(EVENT_MANAGER_PATH . 'vendor/autoload.php')) {
     require EVENT_MANAGER_PATH . '/vendor/autoload.php';
 }
 
+/**
+ * Init services
+ */
 $wpService  = WPServiceFactory::create();
 $acfService = AcfServiceFactory::create();
-
-$manifestFilePathResolver = new EventManager\Resolvers\FileSystem\ManifestFilePathResolver(
-    EVENT_MANAGER_PATH . "dist/manifest.json",
-    EventManager\Services\FileSystem\FileSystemFactory::create(),
-    new EventManager\Resolvers\FileSystem\StrictFilePathResolver()
-);
-
-$wpService = EventManager\Services\WPService\WPServiceFactory::create(
-    $manifestFilePathResolver
-);
 
 /**
  * Load text domain
  */
 $loadTextDomain = new \EventManager\Helper\LoadTextDomain($wpService);
-
-
-$acfService = EventManager\Services\AcfService\AcfServiceFactory::create();
-
-// Disable Gutenberg editor for all post types
-$wpService->addFilter('use_block_editor_for_post_type', '__return_false');
 
 /**
  * Acf export manager
@@ -88,11 +76,6 @@ $eventResponseModifier             = new EventResponseModifier($postToSchemaAdap
  * Clean up unused tags.
  */
 $cleanUpUnusedTags = new CleanupUnusedTags('keyword', $wpService);
-
-// Start application
-$hooksRegistrar = new EventManager\HooksRegistrar\HooksRegistrar();
-$app            = new EventManager\App($wpService, $acfService);
-$app->registerHooks($hooksRegistrar);
 
 /**
  * Set post terms from content.
