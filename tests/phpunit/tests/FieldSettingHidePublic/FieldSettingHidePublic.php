@@ -4,6 +4,7 @@ namespace EventManager\Tests\FieldSettingHidePublic;
 
 use EventManager\FieldSettingHidePublic;
 use EventManager\Services\WPService\WPService;
+use EventManager\Services\AcfService\AcfService;
 use Mockery;
 use WP_Mock;
 use WP_Mock\Tools\TestCase;
@@ -23,7 +24,9 @@ class FieldSettingHidePublicTest extends TestCase
         $wpService = Mockery::mock(WPService::class);
         $wpService->shouldReceive('isAdmin')->once()->andReturn(false);
 
-        $fieldSettingHidePublic = new FieldSettingHidePublic($wpService);
+        $acfService = Mockery::mock(AcfService::class);
+
+        $fieldSettingHidePublic = new FieldSettingHidePublic($wpService, $acfService);
 
         $result = $fieldSettingHidePublic->hideFieldFromFrontendForms($field);
 
@@ -38,7 +41,9 @@ class FieldSettingHidePublicTest extends TestCase
         $wpService = Mockery::mock(WPService::class);
         $wpService->shouldReceive('isAdmin')->once()->andReturn(true);
 
-        $fieldSettingHidePublic = new FieldSettingHidePublic($wpService);
+        $acfService = Mockery::mock(AcfService::class);
+
+        $fieldSettingHidePublic = new FieldSettingHidePublic($wpService, $acfService);
 
         $result = $fieldSettingHidePublic->hideFieldFromFrontendForms($field);
 
@@ -53,7 +58,9 @@ class FieldSettingHidePublicTest extends TestCase
         $wpService = Mockery::mock(WPService::class);
         $wpService->shouldReceive('isAdmin')->once()->andReturn(false);
 
-        $fieldSettingHidePublic = new FieldSettingHidePublic($wpService);
+        $acfService = Mockery::mock(AcfService::class);
+
+        $fieldSettingHidePublic = new FieldSettingHidePublic($wpService, $acfService);
 
         $result = $fieldSettingHidePublic->hideFieldFromFrontendForms($field);
 
@@ -68,7 +75,9 @@ class FieldSettingHidePublicTest extends TestCase
         $wpService = Mockery::mock(WPService::class);
         $wpService->shouldReceive('isAdmin')->once()->andReturn(true);
 
-        $fieldSettingHidePublic = new FieldSettingHidePublic($wpService);
+        $acfService = Mockery::mock(AcfService::class);
+
+        $fieldSettingHidePublic = new FieldSettingHidePublic($wpService, $acfService);
 
         $result = $fieldSettingHidePublic->hideFieldFromFrontendForms($field);
 
