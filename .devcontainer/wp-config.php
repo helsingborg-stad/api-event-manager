@@ -54,6 +54,10 @@ if (!defined('DB_COLLATE')) {
     define('DB_COLLATE', '');
 }
 
+if (defined('WP_CLI') && constant('WP_CLI')) {
+    $_SERVER['HTTP_HOST'] = 'localhost';
+}
+
 if (!defined('WP_SITEURL') && isset($_SERVER['HTTP_HOST'])) {
     define('WP_SITEURL', 'http://' . $_SERVER['HTTP_HOST']);
 

@@ -33,6 +33,8 @@ interface WPService extends
     GetChildren,
     DeletePost,
     AdminNotice,
-    GetCurrentScreen
+    GetCurrentScreen,
+    NextScheduled,
+    ScheduleEvent
 {
 }

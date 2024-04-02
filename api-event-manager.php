@@ -29,6 +29,7 @@ use EventManager\SetPostTermsFromContent\SetPostTermsFromContent;
 use EventManager\TagReader\TagReader;
 use EventManager\ApiResponseModifiers\EventResponseModifier;
 use EventManager\ContentExpirationManagement\ExpiredEvents;
+use EventManager\CronScheduler\CronScheduler;
 use EventManager\PostToSchema\PostToEventSchema\Commands\Helpers\CommandHelpers;
 
 // Protect against direct file access
@@ -90,6 +91,12 @@ $adminNotifyExpiredEvents  = new \EventManager\ContentExpirationManagement\Admin
 $deleteExpiredEvents       = new \EventManager\ContentExpirationManagement\DeleteExpiredPosts([$eventsReadyForDeletion], $wpService);
 
 /**
+ * Cron scheduler
+ */
+$cronScheduler = new CronScheduler($wpService);
+$cronScheduler->addEvent(new \EventManager\CronScheduler\CronEvent('daily', 'event_manager_delete_expired_events_cron', [$deleteExpiredEvents, 'delete']));
+
+/**
  * Table columns.
  */
 $organizationCellContent =  new TermNameCellContent('organization', $wpService);
@@ -137,7 +144,7 @@ $hooksRegistrar->register($cleanUpUnusedTags);
 $hooksRegistrar->register($setPostTermsFromContent);
 $hooksRegistrar->register($modifyPostcontentBefore);
 $hooksRegistrar->register($adminNotifyExpiredEvents);
-$hooksRegistrar->register($deleteExpiredEvents);
+$hooksRegistrar->register($cronScheduler);
 $hooksRegistrar->register($postTableColumnsManager);
 $hooksRegistrar->register($disableGutenbergEditor);
 $hooksRegistrar->register($hideUnusedAdminPages);

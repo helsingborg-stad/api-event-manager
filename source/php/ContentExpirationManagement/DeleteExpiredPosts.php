@@ -10,7 +10,7 @@ use EventManager\Services\WPService\DeletePost;
  *
  * This class is responsible for deleting expired posts.
  */
-class DeleteExpiredPosts implements Hookable
+class DeleteExpiredPosts
 {
     /**
      * Constructor.
@@ -20,11 +20,6 @@ class DeleteExpiredPosts implements Hookable
      */
     public function __construct(private array $expired, private DeletePost $wpService)
     {
-    }
-
-    public function addHooks(): void
-    {
-        add_action('event_manager_daily_cron_hook', [$this, 'delete']);
     }
 
     /**

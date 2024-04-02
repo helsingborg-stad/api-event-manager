@@ -201,6 +201,21 @@ class WPServiceFactory
             {
                 return get_current_screen();
             }
+
+            public function nextScheduled(string $hook, array $args = []): int|false
+            {
+                return wp_next_scheduled($hook, $args);
+            }
+
+            public function scheduleEvent(
+                int $timestamp,
+                string $recurrence,
+                string $hook,
+                array $args = [],
+                bool $wpError = false
+            ): bool|WP_Error {
+                return wp_schedule_event($timestamp, $recurrence, $hook, $args, $wpError);
+            }
         };
     }
 }
