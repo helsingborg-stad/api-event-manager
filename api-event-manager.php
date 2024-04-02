@@ -137,6 +137,7 @@ $keywordTaxonomy      = new \EventManager\Taxonomies\Keyword($wpService);
  * Frontend form
  */
 $frontendForm = new \EventManager\Modules\FrontendForm\Register($wpService, $acfService);
+$frontendFormStyle = new \EventManager\AssetRegistry\FrontEndFormStyle($wpService);
 
 /**
  * Register hooks.
@@ -158,3 +159,4 @@ $hooksRegistrar->register($audienceTaxonomy);
 $hooksRegistrar->register($organizationTaxonomy);
 $hooksRegistrar->register($keywordTaxonomy);
 $hooksRegistrar->register($frontendForm);
+$hooksRegistrar->register($frontendFormStyle);
