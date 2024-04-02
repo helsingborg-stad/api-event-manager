@@ -41,14 +41,6 @@ define('EVENT_MANAGER_PATH', plugin_dir_path(__FILE__));
 define('EVENT_MANAGER_URL', plugins_url('', __FILE__));
 define('EVENT_MANAGER_TEMPLATE_PATH', EVENT_MANAGER_PATH . 'templates/');
 
-
-require_once EVENT_MANAGER_PATH . 'Public.php';
-
-$configuration = [
-
-];
-
-
 // Register the autoloader
 if (file_exists(EVENT_MANAGER_PATH . 'vendor/autoload.php')) {
     require EVENT_MANAGER_PATH . '/vendor/autoload.php';
@@ -58,17 +50,14 @@ if (file_exists(EVENT_MANAGER_PATH . 'vendor/autoload.php')) {
 $wpService  = WPServiceFactory::create();
 $acfService = AcfServiceFactory::create();
 
-$manifestFilePathDecorator = new EventManager\Resolvers\FileSystem\ManifestFilePathResolver(
+$manifestFilePathResolver = new EventManager\Resolvers\FileSystem\ManifestFilePathResolver(
     EVENT_MANAGER_PATH . "dist/manifest.json",
     EventManager\Services\FileSystem\FileSystemFactory::create(),
     new EventManager\Resolvers\FileSystem\StrictFilePathResolver()
 );
-
-$manifestFilePathDecorator = new EventManager\Decorators\ManifestFilePathDecorator();
 $wpService = EventManager\Services\WPService\WPServiceFactory::create(
-    $manifestFilePathDecorator
+    $manifestFilePathResolver
 );
-
 
 /**
  * Load text domain
@@ -99,7 +88,7 @@ $eventResponseModifier             = new EventResponseModifier($postToSchemaAdap
 $cleanUpUnusedTags = new CleanupUnusedTags('keyword', $wpService);
 
 // Start application
-$hooksRegistrar = new EventManager\Helper\HooksRegistrar();
+$hooksRegistrar = new EventManager\HooksRegistrar\HooksRegistrar();
 $app            = new EventManager\App($wpService, $acfService);
 $app->registerHooks($hooksRegistrar);
 
