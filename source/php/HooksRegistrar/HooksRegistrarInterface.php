@@ -1,6 +1,6 @@
 <?php
 
-namespace EventManager\Helper\HooksRegistrar;
+namespace EventManager\HooksRegistrar;
 
 use EventManager\Helper\Hookable;
 

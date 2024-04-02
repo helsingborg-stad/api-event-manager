@@ -14,7 +14,7 @@
  */
 
 use EventManager\CleanupUnusedTags\CleanupUnusedTags;
-use EventManager\Helper\HooksRegistrar;
+use EventManager\HooksRegistrar\HooksRegistrar;
 use EventManager\PostTableColumns\Column as PostTableColumn;
 use EventManager\PostTableColumns\ColumnCellContent\NestedMetaStringCellContent;
 use EventManager\PostTableColumns\ColumnCellContent\TermNameCellContent;

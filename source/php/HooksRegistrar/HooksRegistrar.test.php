@@ -1,7 +1,8 @@
 <?php
 
-namespace EventManager\Helper;
+namespace EventManager\HooksRegistrar;
 
+use EventManager\Helper\Hookable;
 use WP_Mock\Tools\TestCase;
 
 class HooksRegistrarTest extends TestCase
@@ -12,7 +13,7 @@ class HooksRegistrarTest extends TestCase
     public function testRegisterCallsAddHooksOnProvidedObject()
     {
         $hookable       = $this->getHookableClass();
-        $hooksRegistrar = new \EventManager\Helper\HooksRegistrar();
+        $hooksRegistrar = new \EventManager\HooksRegistrar\HooksRegistrar();
 
         ob_start();
         $hooksRegistrar->register($hookable);

@@ -1,8 +1,8 @@
 <?php
 
-namespace EventManager\Helper;
+namespace EventManager\HooksRegistrar;
 
-use EventManager\Helper\HooksRegistrar\HooksRegistrarInterface;
+use EventManager\Helper\Hookable;
 
 class HooksRegistrar implements HooksRegistrarInterface
 {
