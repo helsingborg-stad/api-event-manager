@@ -46,9 +46,8 @@ if (file_exists(EVENT_MANAGER_PATH . 'vendor/autoload.php')) {
     require EVENT_MANAGER_PATH . '/vendor/autoload.php';
 }
 
-$hooksRegistrar = new HooksRegistrar();
-$wpService      = WPServiceFactory::create();
-$acfService     = AcfServiceFactory::create();
+$wpService  = WPServiceFactory::create();
+$acfService = AcfServiceFactory::create();
 
 /**
  * Load text domain
@@ -137,6 +136,7 @@ $frontendForm = new \EventManager\Modules\FrontendForm\Register($wpService, $acf
 /**
  * Register hooks.
  */
+$hooksRegistrar = new HooksRegistrar();
 $hooksRegistrar->register($loadTextDomain);
 $hooksRegistrar->register($acfExportManager);
 $hooksRegistrar->register($eventResponseModifier);
