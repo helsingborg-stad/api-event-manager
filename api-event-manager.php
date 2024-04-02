@@ -41,11 +41,11 @@ define('EVENT_MANAGER_PATH', plugin_dir_path(__FILE__));
 define('EVENT_MANAGER_URL', plugins_url('', __FILE__));
 define('EVENT_MANAGER_TEMPLATE_PATH', EVENT_MANAGER_PATH . 'templates/');
 
+
 // Register the autoloader
 if (file_exists(EVENT_MANAGER_PATH . 'vendor/autoload.php')) {
     require EVENT_MANAGER_PATH . '/vendor/autoload.php';
 }
-
 
 $wpService  = WPServiceFactory::create();
 $acfService = AcfServiceFactory::create();
@@ -55,6 +55,7 @@ $manifestFilePathResolver = new EventManager\Resolvers\FileSystem\ManifestFilePa
     EventManager\Services\FileSystem\FileSystemFactory::create(),
     new EventManager\Resolvers\FileSystem\StrictFilePathResolver()
 );
+
 $wpService = EventManager\Services\WPService\WPServiceFactory::create(
     $manifestFilePathResolver
 );
@@ -63,6 +64,7 @@ $wpService = EventManager\Services\WPService\WPServiceFactory::create(
  * Load text domain
  */
 $loadTextDomain = new \EventManager\Helper\LoadTextDomain($wpService);
+
 
 $acfService = EventManager\Services\AcfService\AcfServiceFactory::create();
 

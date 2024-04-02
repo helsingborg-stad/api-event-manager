@@ -240,7 +240,6 @@ class WPServiceFactory
                 string|bool|null $ver = false, 
                 string $media = 'all'
             ): void {
-                $src = $this->filePathResolver->resolveToUrl($src);
                 wp_register_style($handle, $src, $deps, $ver, $media);
             }
 
@@ -251,7 +250,6 @@ class WPServiceFactory
                 string|bool|null $ver = false, 
                 bool $in_footer = true
             ): void {
-                $src = $this->filePathResolver->resolveToUrl($src) ?? $src;
                 wp_register_script($handle, $src, $deps, $ver, $in_footer);
             }
 
