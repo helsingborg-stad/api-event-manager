@@ -30,6 +30,9 @@ interface WPService extends
     GetTheId,
     GetEditTermLink,
     RestEnsureResponse,
-    GetChildren
+    GetChildren,
+    DeletePost,
+    AdminNotice,
+    GetCurrentScreen
 {
 }

@@ -6,6 +6,7 @@ use WP_Error;
 use WP_HTTP_Response;
 use WP_Post;
 use WP_REST_Response;
+use WP_Screen;
 use WP_Term;
 
 class WPServiceFactory
@@ -184,6 +185,21 @@ class WPServiceFactory
             public function getChildren(mixed $args = '', string $output = OBJECT): array
             {
                 return get_children($args, $output);
+            }
+
+            public function deletePost(int $postId, bool $forceDelete): void
+            {
+                wp_delete_post($postId, $forceDelete);
+            }
+
+            public function adminNotice(string $message, array $args): void
+            {
+                wp_admin_notice($message, $args);
+            }
+
+            public function getCurrentScreen(): ?WP_Screen
+            {
+                return get_current_screen();
             }
         };
     }
