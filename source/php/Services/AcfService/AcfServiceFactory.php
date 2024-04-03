@@ -25,6 +25,11 @@ class AcfServiceFactory
             {
                 acf_add_options_page($options);
             }
+
+            public function renderFieldSetting(array $field, array $configuration, bool $global = false): void
+            {
+                acf_render_field_setting($field, $configuration, $global);
+            }
         };
     }
 }

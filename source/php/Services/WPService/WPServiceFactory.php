@@ -2,8 +2,9 @@
 
 namespace EventManager\Services\WPService;
 
+use EventManager\Resolvers\FileSystem\FilePathResolverInterface;
+use EventManager\Resolvers\FileSystem\NullFilePathResolver;
 use WP_Error;
-use WP_HTTP_Response;
 use WP_Post;
 use WP_REST_Response;
 use WP_Screen;
@@ -11,16 +12,19 @@ use WP_Term;
 
 class WPServiceFactory
 {
-    public static function create(): WPService
+    public static function create(?FilePathResolverInterface $filePathResolver = new NullFilePathResolver()): WPService
     {
-        return new class implements WPService {
+        return new class ($filePathResolver) implements WPService {
+            public function __construct(private FilePathResolverInterface $filePathResolver)
+            {
+            }
+
             public function addAction(
                 string $tag,
                 callable $function_to_add,
                 int $priority = 10,
                 int $accepted_args = 1
             ): bool {
-
                 return add_action($tag, $function_to_add, $priority, $accepted_args);
             }
 
@@ -217,9 +221,64 @@ class WPServiceFactory
                 return wp_schedule_event($timestamp, $recurrence, $hook, $args, $wpError);
             }
 
+
             public function getOption(string $option, mixed $defaultValue = false): mixed
             {
                 return get_option($option, $defaultValue);
+            }
+
+            public function enqueueStyle(
+                string $handle
+            ): void {
+                //TODO: Check if the handle is registered before enqueue. Throw error if not.
+                wp_enqueue_style($handle);
+            }
+
+            public function enqueueScript(
+                string $handle
+            ): void {
+                //TODO: Check if the handle is registered before enqueue. Throw error if not.
+                wp_enqueue_script($handle);
+            }
+
+            public function registerStyle(
+                string $handle,
+                string $src = '',
+                array $deps = array(),
+                string|bool|null $ver = false,
+                string $media = 'all'
+            ): void {
+                wp_register_style($handle, $src, $deps, $ver, $media);
+            }
+
+            public function registerScript(
+                string $handle,
+                string $src = '',
+                array $deps = array(),
+                string|bool|null $ver = false,
+                bool $in_footer = true
+            ): void {
+                wp_register_script($handle, $src, $deps, $ver, $in_footer);
+            }
+
+            public function isAdmin(): bool
+            {
+                return is_admin();
+            }
+
+            public function getEnvironmentType(): string
+            {
+                return wp_get_environment_type();
+            }
+
+            public function pluginDirPath(string $file): string
+            {
+                return plugin_dir_path($file);
+            }
+
+            public function pluginsUrl(string $path = '', string $plugin = ''): string
+            {
+                return plugins_url($path, $plugin);
             }
         };
     }

@@ -36,6 +36,14 @@ interface WPService extends
     GetCurrentScreen,
     NextScheduled,
     ScheduleEvent,
-    GetOption
+    GetOption,
+    EnqueueStyle,
+    EnqueueScript,
+    RegisterStyle,
+    RegisterScript,
+    IsAdmin,
+    GetEnvironmentType,
+    PluginDirPath,
+    PluginsUrl
 {
 }

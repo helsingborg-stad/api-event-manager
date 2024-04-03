@@ -31,6 +31,10 @@
         {
             "name": "Thor Brink",
             "email": "thor.brink@helsingborg.se"
+        },
+        {
+            "name": "Sebastian Thulin",
+            "email": "sebastian.thulin@helsingborg.se"
         }
     ],
     "autoload": {
