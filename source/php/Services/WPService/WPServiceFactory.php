@@ -15,7 +15,9 @@ class WPServiceFactory
     public static function create(?FilePathResolverInterface $filePathResolver = new NullFilePathResolver()): WPService
     {
         return new class ($filePathResolver) implements WPService {
-            public function __construct(private FilePathResolverInterface $filePathResolver){}
+            public function __construct(private FilePathResolverInterface $filePathResolver)
+            {
+            }
 
             public function addAction(
                 string $tag,
@@ -219,6 +221,12 @@ class WPServiceFactory
                 return wp_schedule_event($timestamp, $recurrence, $hook, $args, $wpError);
             }
 
+
+            public function getOption(string $option, mixed $defaultValue = false): mixed
+            {
+                return get_option($option, $defaultValue);
+            }
+
             public function enqueueStyle(
                 string $handle
             ): void {
@@ -234,20 +242,20 @@ class WPServiceFactory
             }
 
             public function registerStyle(
-                string $handle, 
-                string $src = '', 
-                array $deps = array(), 
-                string|bool|null $ver = false, 
+                string $handle,
+                string $src = '',
+                array $deps = array(),
+                string|bool|null $ver = false,
                 string $media = 'all'
             ): void {
                 wp_register_style($handle, $src, $deps, $ver, $media);
             }
 
             public function registerScript(
-                string $handle, 
-                string $src = '', 
-                array $deps = array(), 
-                string|bool|null $ver = false, 
+                string $handle,
+                string $src = '',
+                array $deps = array(),
+                string|bool|null $ver = false,
                 bool $in_footer = true
             ): void {
                 wp_register_script($handle, $src, $deps, $ver, $in_footer);
