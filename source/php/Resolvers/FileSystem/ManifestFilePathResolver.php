@@ -22,12 +22,16 @@ class ManifestFilePathResolver implements FilePathResolverInterface
   {
     if($this->fileSystem->fileExists($this->manifestFilePath)) {
 
-      $manifestFilePath = $this->getManifestPath($this->manifestFilePath);
+      $manifestPath = $this->getManifestPath($this->manifestFilePath);
       $basePath         = $this->getBasePath();
-      $pathDiff         = $this->pathDiff($manifestFilePath, $basePath);
+      $pathDiff         = $this->pathDiff($manifestPath, $basePath);
 
       $manifestFileContent = $this->fileSystem->getFileContent($this->manifestFilePath);
       $manifest = json_decode($manifestFileContent, true);
+
+      if($manifest === null) {
+        throw new \Exception('Manifest file ('. $this->manifestFilePath .') is not a valid JSON: '. json_last_error_msg());
+      }
 
       if(isset($manifest[$filePath])) {
         $filePath = $pathDiff . DIRECTORY_SEPARATOR . $manifest[$filePath];
