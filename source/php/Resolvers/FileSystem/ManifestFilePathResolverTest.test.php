@@ -13,11 +13,11 @@ class ManifestFilePathResolverTest extends TestCase
         $manifestFilePath = 'manifest.json';
         $manifestFileContents = json_encode([ 'css/file.css' => 'css/file-123.css' ]);
         $fileSystem = $this->getFileSystem([ $manifestFilePath => $manifestFileContents ]);
-        $decorator = new ManifestFilePathResolver($manifestFilePath, $fileSystem);
+        $resolver = new ManifestFilePathResolver($manifestFilePath, $fileSystem);
 
-        $decoratedFilePath = $decorator->resolve('css/file.css');
+        $resolvedFilePath = $resolver->resolve('css/file.css');
 
-        $this->assertEquals('css/file-123.css', $decoratedFilePath);
+        $this->assertEquals('css/file-123.css', $resolvedFilePath);
     }
 
     public function testDecorateReturnsCorrectFilePathWhenEntryDoesntExist()
@@ -25,11 +25,11 @@ class ManifestFilePathResolverTest extends TestCase
         $manifestFilePath = 'manifest.json';
         $manifestFileContents = json_encode([ 'css/file.css' => 'css/file-123.css' ]);
         $fileSystem = $this->getFileSystem([ $manifestFilePath => $manifestFileContents ]);
-        $decorator = new ManifestFilePathResolver($manifestFilePath, $fileSystem);
+        $resolver = new ManifestFilePathResolver($manifestFilePath, $fileSystem);
 
-        $decoratedFilePath = $decorator->resolve('css/file2.css');  
+        $resolvedFilePath = $resolver->resolve('css/file2.css');  
 
-        $this->assertEquals('css/file2.css', $decoratedFilePath);
+        $this->assertEquals('css/file2.css', $resolvedFilePath);
     }
 
     private function getFileSystem(array $files):FileExists&GetFileContent

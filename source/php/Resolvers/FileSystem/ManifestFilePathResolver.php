@@ -4,15 +4,16 @@ namespace EventManager\Resolvers\FileSystem;
 
 use EventManager\Services\FileSystem\FileExists;
 use EventManager\Services\FileSystem\GetFileContent;
+use EventManager\Services\WPService\WPServiceFactory;
 
-class ManifestFilePathResolver implements ManifestFilePathResolverInterface
+class ManifestFilePathResolver implements FilePathResolverInterface
 {
-
   public function __construct(
     private string $manifestFilePath, 
     private FileExists&GetFileContent $fileSystem,
-    private ?FilePathResolverInterface $inner = new NullFilePathResolver())
+    private ?FilePathResolverInterface $inner = new StrictFilePathResolver())
   {
+    
   }
 
   public function resolve(string $filePath): string
@@ -22,26 +23,18 @@ class ManifestFilePathResolver implements ManifestFilePathResolverInterface
       $manifest = json_decode($manifestFileContent, true);
 
       if(isset($manifest[$filePath])) {
-        return $manifest[$filePath];
+        return $this->resolveToUrl($manifest[$filePath]);
       }
     }
     return $this->inner->resolve($filePath);
   }
 
-  public function resolveToUrl(string $filePath): string
+  private function resolveToUrl(string $filePath): string
   {
+    $wpService = WPServiceFactory::create();
 
-    //Make out the additional path to the manifest file
-    $additionalPath = str_replace(
-      plugin_dir_path(dirname($this->manifestFilePath)), // TODO: Create a wpService for plugin_dir_path
-      '', 
-      dirname($this->manifestFilePath)
-    ) . "/";
-
-    return plugins_url( //TODO: Create a wpService for plugins_url
-      $additionalPath . $this->resolve($filePath), 
-      dirname($this->manifestFilePath)
+    return $wpService->pluginsUrl(
+      dirname($this->manifestFilePath) . "/" . $filePath
     );
   }
 }
-

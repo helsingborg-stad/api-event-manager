@@ -34,6 +34,7 @@ use EventManager\PostToSchema\PostToEventSchema\Commands\Helpers\CommandHelpers;
 use EventManager\Resolvers\FileSystem\ManifestFilePathResolver;
 use EventManager\Resolvers\FileSystem\StrictFilePathResolver;
 use EventManager\Services\FileSystem\FileSystemFactory;
+use \EventManager\AssetRegistry\FrontEndFormStyle;
 
 // Protect against direct file access
 if (!defined('WPINC')) {
@@ -52,15 +53,14 @@ if (file_exists(EVENT_MANAGER_PATH . 'vendor/autoload.php')) {
 }
 
 $hooksRegistrar = new HooksRegistrar();
-$manifestFilePathResolver = new ManifestFilePathResolver(
-    EVENT_MANAGER_PATH . "/dist/manifest.json",
-    FileSystemFactory::create(),
-    new StrictFilePathResolver()
-  );
-  $wpService = WPServiceFactory::create(
-      $manifestFilePathResolver
-  );
+
 $acfService     = AcfServiceFactory::create();
+$wpService      = WPServiceFactory::create(
+                    new ManifestFilePathResolver(
+                        EVENT_MANAGER_PATH . "/dist/manifest.json",
+                        FileSystemFactory::create()
+                    )
+                );
 
 /**
  * Load text domain

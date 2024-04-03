@@ -12,7 +12,7 @@ use EventManager\Services\WPService\WPServiceFactory;
 use EventManager\Resolvers\FileSystem\ManifestFilePathResolver;
 use EventManager\Resolvers\FileSystem\StrictFilePathResolver;
 use EventManager\Services\FileSystem\FileSystemFactory;
-
+use PharIo\Manifest\Manifest;
 use Throwable;
 
 /**
@@ -31,9 +31,9 @@ class FrontendForm extends \Modularity\Module
       'group_65a115157a046'
     ];
 
-    private EnqueueStyle $wpService;
-
     private $blade = null; 
+
+    private EnqueueStyle $wpService;
 
     public function init(): void
     {
@@ -41,21 +41,12 @@ class FrontendForm extends \Modularity\Module
       $this->namePlural   = __('Event Forms', 'api-event-manager');
       $this->description  = __('Module for creating public event form', 'api-event-manager');
 
-
-
-      $manifestFilePathResolver = new ManifestFilePathResolver(
-        EVENT_MANAGER_PATH . "/dist/manifest.json",
-        FileSystemFactory::create(),
-        new StrictFilePathResolver()
-      );
-      $this->wpService = WPServiceFactory::create(
-          $manifestFilePathResolver
-      );
+      $this->wpService = WPServiceFactory::create();
     }
 
     public function data(): array
     {
-      $fields = $this->getFields();
+      $fields = $this->getFields(); //Needs to be called, otherwise a notice will be thrown.
 
       $htmlUpdatedMessage = $this->renderView('partials.message', [
         'text' => '%s',
