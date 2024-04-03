@@ -230,14 +230,25 @@ class WPServiceFactory
             public function enqueueStyle(
                 string $handle
             ): void {
-                //TODO: Check if the handle is registered before enqueue. Throw error if not.
+                if(wp_style_is($handle, 'registered') === false) {
+                    throw new \Exception("The style with handle " . $handle . " is not registered and cannot be enqueued.");
+                }
+                if(wp_style_is($handle, 'enqueued') === true) {
+                    throw new \Exception("The style with handle " . $handle . " is already enqueued and cannot be enqueued again.");
+                }
                 wp_enqueue_style($handle);
             }
 
             public function enqueueScript(
                 string $handle
             ): void {
-                //TODO: Check if the handle is registered before enqueue. Throw error if not.
+                if(wp_script_is($handle, 'registered') === false) {
+                    throw new \Exception("The script with handle " . $handle . " is not registered and cannot be enqueued.");
+                }
+
+                if(wp_script_is($handle, 'enqueued') === true) {
+                    throw new \Exception("The script with handle " . $handle . " is already enqueued and cannot be enqueued again.");
+                }
                 wp_enqueue_script($handle);
             }
 
@@ -248,6 +259,7 @@ class WPServiceFactory
                 string|bool|null $ver = false,
                 string $media = 'all'
             ): void {
+                $src = $this->filePathResolver->resolve($src);
                 wp_register_style($handle, $src, $deps, $ver, $media);
             }
 
@@ -258,6 +270,7 @@ class WPServiceFactory
                 string|bool|null $ver = false,
                 bool $in_footer = true
             ): void {
+                $src = $this->filePathResolver->resolve($src);
                 wp_register_script($handle, $src, $deps, $ver, $in_footer);
             }
 
