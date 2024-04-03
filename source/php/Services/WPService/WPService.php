@@ -35,6 +35,14 @@ interface WPService extends
     AdminNotice,
     GetCurrentScreen,
     NextScheduled,
-    ScheduleEvent
+    ScheduleEvent,
+    EnqueueStyle,
+    EnqueueScript,
+    RegisterStyle,
+    RegisterScript,
+    IsAdmin,
+    GetEnvironmentType,
+    PluginDirPath,
+    PluginsUrl
 {
 }

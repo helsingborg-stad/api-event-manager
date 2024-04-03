@@ -5,7 +5,7 @@
  * Plugin URI:        https://github.com/helsingborg-stad/api-event-manager
  * Description:       Creates a api that may be used to manage events
  * Version: 2.15.1
- * Author:            Thor Brink @ Helsingborg Stad
+ * Author:            Thor Brink, Sebastian Thulin @ Helsingborg Stad
  * Author URI:        https://github.com/helsingborg-stad
  * License:           MIT
  * License URI:       https://opensource.org/licenses/MIT
@@ -41,11 +41,16 @@ define('EVENT_MANAGER_PATH', plugin_dir_path(__FILE__));
 define('EVENT_MANAGER_URL', plugins_url('', __FILE__));
 define('EVENT_MANAGER_TEMPLATE_PATH', EVENT_MANAGER_PATH . 'templates/');
 
-// Register the autoloader
+/**
+ * Composer autoload
+ */
 if (file_exists(EVENT_MANAGER_PATH . 'vendor/autoload.php')) {
     require EVENT_MANAGER_PATH . '/vendor/autoload.php';
 }
 
+/**
+ * Init services
+ */
 $wpService  = WPServiceFactory::create();
 $acfService = AcfServiceFactory::create();
 
@@ -132,6 +137,7 @@ $keywordTaxonomy      = new \EventManager\Taxonomies\Keyword($wpService);
  * Frontend form
  */
 $frontendForm = new \EventManager\Modules\FrontendForm\Register($wpService, $acfService);
+$frontendFormStyle = new \EventManager\AssetRegistry\FrontEndFormStyle($wpService);
 
 /**
  * Register hooks.
@@ -153,3 +159,4 @@ $hooksRegistrar->register($audienceTaxonomy);
 $hooksRegistrar->register($organizationTaxonomy);
 $hooksRegistrar->register($keywordTaxonomy);
 $hooksRegistrar->register($frontendForm);
+$hooksRegistrar->register($frontendFormStyle);

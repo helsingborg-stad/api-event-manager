@@ -20,6 +20,12 @@ class AcfServiceFactory
             {
                 return get_fields($postId, $formatValue, $escapeHtml);
             }
+
+            public function renderFieldSetting(array $field, array $configuration, bool $global = false): void
+            {
+                acf_render_field_setting($field, $configuration, $global);
+            }
         };
     }
+    
 }
