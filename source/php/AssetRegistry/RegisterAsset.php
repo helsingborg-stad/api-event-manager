@@ -1,10 +1,11 @@
 <?php
 
-namespace EventManager\Helper;
+namespace EventManager\AssetRegistry;
 
 use EventManager\Services\WPService\WPService;
+use EventManager\Helper\Hookable;
 
-abstract class Asset implements Hookable
+abstract class RegisterAsset implements Hookable
 {
     abstract public function getFilename(): string;
     abstract public function getHandle(): string;
