@@ -35,6 +35,7 @@ interface WPService extends
     AdminNotice,
     GetCurrentScreen,
     NextScheduled,
-    ScheduleEvent
+    ScheduleEvent,
+    GetOption
 {
 }

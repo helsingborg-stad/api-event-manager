@@ -109,10 +109,10 @@ $hooksRegistrar->register($cronScheduler);
  * Expired events
  */
 
-$cleanupExpiredEvents = get_option('options_cleanup_cleanupExpiredEvents') === '1';
+$cleanupExpiredEvents = $wpService->getOption('options_cleanup_cleanupExpiredEvents') === '1';
 
 if ($cleanupExpiredEvents) {
-    $deleteExpiredPostsAfter   = strtotime(get_option('options_cleanup_deleteExpiredPostsAfter'));
+    $deleteExpiredPostsAfter   = strtotime($wpService->getOption('options_cleanup_deleteExpiredPostsAfter', '-1 month'));
     $eventGracePeriodTimestamp = strtotime('-1 day');
 
     $eventsInGracePeriod      = new ExpiredEvents($eventGracePeriodTimestamp, $wpService, $acfService);

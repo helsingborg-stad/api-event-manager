@@ -216,6 +216,11 @@ class WPServiceFactory
             ): bool|WP_Error {
                 return wp_schedule_event($timestamp, $recurrence, $hook, $args, $wpError);
             }
+
+            public function getOption(string $option, mixed $defaultValue = false): mixed
+            {
+                return get_option($option, $defaultValue);
+            }
         };
     }
 }
