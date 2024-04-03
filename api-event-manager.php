@@ -46,18 +46,30 @@ if (file_exists(EVENT_MANAGER_PATH . 'vendor/autoload.php')) {
     require EVENT_MANAGER_PATH . '/vendor/autoload.php';
 }
 
-$wpService  = WPServiceFactory::create();
-$acfService = AcfServiceFactory::create();
+$hooksRegistrar = new HooksRegistrar();
+$wpService      = WPServiceFactory::create();
+$acfService     = AcfServiceFactory::create();
 
 /**
  * Load text domain
  */
 $loadTextDomain = new \EventManager\Helper\LoadTextDomain($wpService);
 
+$hooksRegistrar->register($loadTextDomain);
+
 /**
  * Acf export manager
  */
 $acfExportManager = new \EventManager\Helper\RegisterAcfExportManager($wpService);
+
+$hooksRegistrar->register($acfExportManager);
+
+/**
+ * Settings
+ */
+$adminSettingsPage = new \EventManager\Settings\AdminSettingsPage($wpService, $acfService);
+
+$hooksRegistrar->register($adminSettingsPage);
 
 /**
  * Convert REST api posts to event schemas.
@@ -67,10 +79,14 @@ $postToSchemaAdapterCommandHelpers = new CommandHelpers();
 $postToSchemaAdapter               = new PostToEventSchema($stringToEventSchemaMapper, $wpService, $acfService, $postToSchemaAdapterCommandHelpers);
 $eventResponseModifier             = new EventResponseModifier($postToSchemaAdapter, $wpService);
 
+$hooksRegistrar->register($eventResponseModifier);
+
 /**
  * Clean up unused tags.
  */
 $cleanUpUnusedTags = new CleanupUnusedTags('keyword', $wpService);
+
+$hooksRegistrar->register($cleanUpUnusedTags);
 
 /**
  * Set post terms from content.
@@ -79,21 +95,35 @@ $tagReader               = new TagReader($wpService);
 $modifyPostcontentBefore = new \EventManager\Modifiers\ModifyPostContentBeforeReadingTags($wpService);
 $setPostTermsFromContent = new SetPostTermsFromContent('event', 'keyword', $tagReader, $wpService);
 
-/**
- * Expired events
- */
-$eventGracePeriodTimestamp = strtotime('-1 day');
-$eventDeleteAfterTimestamp = strtotime('-1 month');
-$eventsInGracePeriod       = new ExpiredEvents($eventGracePeriodTimestamp, $wpService, $acfService);
-$eventsReadyForDeletion    = new ExpiredEvents($eventDeleteAfterTimestamp, $wpService, $acfService);
-$adminNotifyExpiredEvents  = new \EventManager\ContentExpirationManagement\AdminNotifyExpiredPost([$eventsInGracePeriod], $wpService);
-$deleteExpiredEvents       = new \EventManager\ContentExpirationManagement\DeleteExpiredPosts([$eventsReadyForDeletion], $wpService);
+$hooksRegistrar->register($setPostTermsFromContent);
+$hooksRegistrar->register($modifyPostcontentBefore);
 
 /**
  * Cron scheduler
  */
 $cronScheduler = new CronScheduler($wpService);
-$cronScheduler->addEvent(new \EventManager\CronScheduler\CronEvent('daily', 'event_manager_delete_expired_events_cron', [$deleteExpiredEvents, 'delete']));
+
+$hooksRegistrar->register($cronScheduler);
+
+/**
+ * Expired events
+ */
+
+$cleanupExpiredEvents = get_option('options_cleanup_cleanupExpiredEvents') === '1';
+
+if ($cleanupExpiredEvents) {
+    $deleteExpiredPostsAfter   = strtotime(get_option('options_cleanup_deleteExpiredPostsAfter'));
+    $eventGracePeriodTimestamp = strtotime('-1 day');
+
+    $eventsInGracePeriod      = new ExpiredEvents($eventGracePeriodTimestamp, $wpService, $acfService);
+    $eventsReadyForDeletion   = new ExpiredEvents($deleteExpiredPostsAfter, $wpService, $acfService);
+    $adminNotifyExpiredEvents = new \EventManager\ContentExpirationManagement\AdminNotifyExpiredPost([$eventsInGracePeriod], $wpService);
+    $deleteExpiredEvents      = new \EventManager\ContentExpirationManagement\DeleteExpiredPosts([$eventsReadyForDeletion], $wpService);
+
+    $cronScheduler->addEvent(new \EventManager\CronScheduler\CronEvent('daily', 'event_manager_delete_expired_events_cron', [$deleteExpiredEvents, 'delete']));
+
+    $hooksRegistrar->register($adminNotifyExpiredEvents);
+}
 
 /**
  * Table columns.
@@ -110,16 +140,23 @@ $postTableColumnsManager = new \EventManager\PostTableColumns\Manager(['event'],
 $postTableColumnsManager->register($organizationColumn);
 $postTableColumnsManager->register($locationColumn);
 
+$hooksRegistrar->register($postTableColumnsManager);
+
 /**
  * Disable gutenberg editor
  */
 $disableGutenbergEditor = new \EventManager\Modifiers\DisableGutenbergEditor($wpService);
 $hideUnusedAdminPages   = new \EventManager\HideUnusedAdminPages($wpService);
 
+$hooksRegistrar->register($disableGutenbergEditor);
+$hooksRegistrar->register($hideUnusedAdminPages);
+
 /**
  * Post types
  */
 $eventPostType = new \EventManager\PostTypes\Event($wpService, $acfService);
+
+$hooksRegistrar->register($eventPostType);
 
 /**
  * Taxonomies
@@ -128,28 +165,13 @@ $audienceTaxonomy     = new \EventManager\Taxonomies\Audience($wpService);
 $organizationTaxonomy = new \EventManager\Taxonomies\Organization($wpService);
 $keywordTaxonomy      = new \EventManager\Taxonomies\Keyword($wpService);
 
+$hooksRegistrar->register($audienceTaxonomy);
+$hooksRegistrar->register($organizationTaxonomy);
+$hooksRegistrar->register($keywordTaxonomy);
+
 /**
  * Frontend form
  */
 $frontendForm = new \EventManager\Modules\FrontendForm\Register($wpService, $acfService);
 
-/**
- * Register hooks.
- */
-$hooksRegistrar = new HooksRegistrar();
-$hooksRegistrar->register($loadTextDomain);
-$hooksRegistrar->register($acfExportManager);
-$hooksRegistrar->register($eventResponseModifier);
-$hooksRegistrar->register($cleanUpUnusedTags);
-$hooksRegistrar->register($setPostTermsFromContent);
-$hooksRegistrar->register($modifyPostcontentBefore);
-$hooksRegistrar->register($adminNotifyExpiredEvents);
-$hooksRegistrar->register($cronScheduler);
-$hooksRegistrar->register($postTableColumnsManager);
-$hooksRegistrar->register($disableGutenbergEditor);
-$hooksRegistrar->register($hideUnusedAdminPages);
-$hooksRegistrar->register($eventPostType);
-$hooksRegistrar->register($audienceTaxonomy);
-$hooksRegistrar->register($organizationTaxonomy);
-$hooksRegistrar->register($keywordTaxonomy);
 $hooksRegistrar->register($frontendForm);

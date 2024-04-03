@@ -20,6 +20,11 @@ class AcfServiceFactory
             {
                 return get_fields($postId, $formatValue, $escapeHtml);
             }
+
+            public function addOptionsPage(array $options): void
+            {
+                acf_add_options_page($options);
+            }
         };
     }
 }

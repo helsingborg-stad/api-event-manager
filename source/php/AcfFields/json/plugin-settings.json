@@ -1,0 +1,116 @@
+[{
+    "key": "group_660cec468b833",
+    "title": "Plugin Settings",
+    "fields": [
+        {
+            "key": "field_660cec46b22c4",
+            "label": "Cleanup",
+            "name": "cleanup",
+            "aria-label": "",
+            "type": "group",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "layout": "block",
+            "acfe_seamless_style": 0,
+            "acfe_group_modal": 0,
+            "sub_fields": [
+                {
+                    "key": "field_660ceca3b22c5",
+                    "label": "Clean up expired events",
+                    "name": "cleanupExpiredEvents",
+                    "aria-label": "",
+                    "type": "true_false",
+                    "instructions": "Enables automatic deletion of expired events",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "message": "",
+                    "default_value": 0,
+                    "ui": 0,
+                    "ui_on_text": "",
+                    "ui_off_text": ""
+                },
+                {
+                    "key": "field_660ced26b22c6",
+                    "label": "Delete expired posts after",
+                    "name": "deleteExpiredPostsAfter",
+                    "aria-label": "",
+                    "type": "select",
+                    "instructions": "",
+                    "required": 1,
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_660ceca3b22c5",
+                                "operator": "==",
+                                "value": "1"
+                            }
+                        ]
+                    ],
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "choices": {
+                        "## Weeks": "## Weeks",
+                        "-1 week": "1 week",
+                        "-2 weeks": "2 weeks",
+                        "-3 weeks": "3 weeks",
+                        "## Months": "## Months",
+                        "-1 month": "1 month",
+                        "-2 months": "2 months",
+                        "-3 months": "3 months",
+                        "-6 months": "6 months"
+                    },
+                    "default_value": "-1 month",
+                    "return_format": "value",
+                    "multiple": 0,
+                    "allow_null": 0,
+                    "ui": 0,
+                    "ajax": 0,
+                    "placeholder": "",
+                    "allow_custom": 0,
+                    "search_placeholder": ""
+                }
+            ],
+            "acfe_group_modal_close": 0,
+            "acfe_group_modal_button": "",
+            "acfe_group_modal_size": "large"
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "options_page",
+                "operator": "==",
+                "value": "event-manager-settings"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "left",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "acfe_display_title": "",
+    "acfe_autosync": "",
+    "acfe_form": 0,
+    "acfe_meta": "",
+    "acfe_note": ""
+}]
+
