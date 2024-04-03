@@ -8,33 +8,50 @@ use EventManager\Services\WPService\WPServiceFactory;
 
 class ManifestFilePathResolver implements FilePathResolverInterface
 {
+  private $wpService;
+
   public function __construct(
     private string $manifestFilePath, 
     private FileExists&GetFileContent $fileSystem,
     private ?FilePathResolverInterface $inner = new StrictFilePathResolver())
   {
-    
+    $this->wpService = WPServiceFactory::create();
   }
 
   public function resolve(string $filePath): string
   {
     if($this->fileSystem->fileExists($this->manifestFilePath)) {
+
+      $manifestFilePath = $this->getManifestPath($this->manifestFilePath);
+      $basePath         = $this->getBasePath();
+      $pathDiff         = $this->pathDiff($manifestFilePath, $basePath);
+
       $manifestFileContent = $this->fileSystem->getFileContent($this->manifestFilePath);
       $manifest = json_decode($manifestFileContent, true);
 
       if(isset($manifest[$filePath])) {
-        return $this->resolveToUrl($manifest[$filePath]);
+        $filePath = $pathDiff . DIRECTORY_SEPARATOR . $manifest[$filePath];
       }
     }
+
     return $this->inner->resolve($filePath);
   }
 
-  private function resolveToUrl(string $filePath): string
+  private function pathDiff(string $manifestFilePath, string $basePath): string
   {
-    $wpService = WPServiceFactory::create();
+    $manifestFilePath = explode('/', $manifestFilePath);
+    $basePath         = explode('/', $basePath);
+    $diff             = array_diff($manifestFilePath, $basePath);
+    return implode('/', $diff);
+  }
 
-    return $wpService->pluginsUrl(
-      dirname($this->manifestFilePath) . "/" . $filePath
-    );
+  private function getBasePath(): string
+  {
+    return $this->wpService->pluginDirPath(__FILE__);
+  }
+
+  private function getManifestPath(): string
+  {
+    return dirname($this->manifestFilePath);
   }
 }

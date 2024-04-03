@@ -32,9 +32,8 @@ use EventManager\ContentExpirationManagement\ExpiredEvents;
 use EventManager\CronScheduler\CronScheduler;
 use EventManager\PostToSchema\PostToEventSchema\Commands\Helpers\CommandHelpers;
 use EventManager\Resolvers\FileSystem\ManifestFilePathResolver;
-use EventManager\Resolvers\FileSystem\StrictFilePathResolver;
+use EventManager\Resolvers\FileSystem\UrlFilePathResolver;
 use EventManager\Services\FileSystem\FileSystemFactory;
-use \EventManager\AssetRegistry\FrontEndFormStyle;
 
 // Protect against direct file access
 if (!defined('WPINC')) {
@@ -57,8 +56,9 @@ $hooksRegistrar = new HooksRegistrar();
 $acfService     = AcfServiceFactory::create();
 $wpService      = WPServiceFactory::create(
                     new ManifestFilePathResolver(
-                        EVENT_MANAGER_PATH . "/dist/manifest.json",
-                        FileSystemFactory::create()
+                        EVENT_MANAGER_PATH . "dist/manifest.json",
+                        FileSystemFactory::create(),
+                        new UrlFilePathResolver()
                     )
                 );
 

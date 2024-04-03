@@ -44,6 +44,7 @@ interface WPService extends
     IsAdmin,
     GetEnvironmentType,
     PluginDirPath,
-    PluginsUrl
+    PluginsUrl,
+    PluginBasename
 {
 }

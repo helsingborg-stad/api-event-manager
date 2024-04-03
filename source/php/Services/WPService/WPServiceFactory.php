@@ -293,6 +293,11 @@ class WPServiceFactory
             {
                 return plugins_url($path, $plugin);
             }
+
+            public function pluginBasename(string $file): string
+            {
+                return plugin_basename($file);
+            }
         };
     }
 }
