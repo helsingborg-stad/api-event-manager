@@ -10,6 +10,7 @@ use ComponentLibrary\Init as ComponentLibraryInit;
 use EventManager\Services\WPService\EnqueueStyle;
 use EventManager\Services\WPService\WPServiceFactory;
 use EventManager\Resolvers\FileSystem\ManifestFilePathResolver;
+use EventManager\Resolvers\FileSystem\StrictFilePathResolver;
 use EventManager\Services\FileSystem\FileSystemFactory;
 
 use Throwable;
@@ -40,9 +41,12 @@ class FrontendForm extends \Modularity\Module
       $this->namePlural   = __('Event Forms', 'api-event-manager');
       $this->description  = __('Module for creating public event form', 'api-event-manager');
 
+
+
       $manifestFilePathResolver = new ManifestFilePathResolver(
         EVENT_MANAGER_PATH . "/dist/manifest.json",
         FileSystemFactory::create(),
+        new StrictFilePathResolver()
       );
       $this->wpService = WPServiceFactory::create(
           $manifestFilePathResolver

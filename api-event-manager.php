@@ -31,6 +31,9 @@ use EventManager\ApiResponseModifiers\EventResponseModifier;
 use EventManager\ContentExpirationManagement\ExpiredEvents;
 use EventManager\CronScheduler\CronScheduler;
 use EventManager\PostToSchema\PostToEventSchema\Commands\Helpers\CommandHelpers;
+use EventManager\Resolvers\FileSystem\ManifestFilePathResolver;
+use EventManager\Resolvers\FileSystem\StrictFilePathResolver;
+use EventManager\Services\FileSystem\FileSystemFactory;
 
 // Protect against direct file access
 if (!defined('WPINC')) {
@@ -49,7 +52,14 @@ if (file_exists(EVENT_MANAGER_PATH . 'vendor/autoload.php')) {
 }
 
 $hooksRegistrar = new HooksRegistrar();
-$wpService      = WPServiceFactory::create();
+$manifestFilePathResolver = new ManifestFilePathResolver(
+    EVENT_MANAGER_PATH . "/dist/manifest.json",
+    FileSystemFactory::create(),
+    new StrictFilePathResolver()
+  );
+  $wpService = WPServiceFactory::create(
+      $manifestFilePathResolver
+  );
 $acfService     = AcfServiceFactory::create();
 
 /**
