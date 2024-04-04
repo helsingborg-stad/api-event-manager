@@ -56,7 +56,7 @@
             "name": "description",
             "aria-label": "",
             "type": "textarea",
-            "instructions": "",
+            "instructions": "Enter a brief, enticing description of your event. Make it irresistible - an event not to be missed!",
             "required": 1,
             "conditional_logic": 0,
             "wrapper": {
@@ -64,22 +64,20 @@
                 "class": "",
                 "id": ""
             },
-            "is_publicly_hidden": 0,
             "default_value": "",
             "maxlength": "",
             "rows": "",
             "placeholder": "",
-            "new_lines": "",
-            "acfe_textarea_code": 0
+            "new_lines": ""
         },
         {
             "key": "field_65a115151a872",
             "label": "About",
             "name": "about",
             "aria-label": "",
-            "type": "wysiwyg",
-            "instructions": "",
-            "required": 1,
+            "type": "textarea",
+            "instructions": "Provide essential information about your event, including featured speakers or performers, activities, and any other pertinent details.",
+            "required": 0,
             "conditional_logic": 0,
             "wrapper": {
                 "width": "",
@@ -87,17 +85,17 @@
                 "id": ""
             },
             "default_value": "",
-            "tabs": "all",
-            "toolbar": "basic",
-            "media_upload": 0,
-            "delay": 1
+            "maxlength": "",
+            "rows": 12,
+            "placeholder": "",
+            "new_lines": ""
         },
         {
             "key": "field_65f14f7826756",
             "label": "Accessability information",
             "name": "accessabilityInformation",
             "aria-label": "",
-            "type": "wysiwyg",
+            "type": "textarea",
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -107,10 +105,10 @@
                 "id": ""
             },
             "default_value": "",
-            "tabs": "all",
-            "toolbar": "basic",
-            "media_upload": 0,
-            "delay": 1
+            "maxlength": "",
+            "rows": "",
+            "placeholder": "",
+            "new_lines": ""
         },
         {
             "key": "field_65a5319a9d01d",
@@ -163,16 +161,6 @@
             "ui": 1
         },
         {
-            "center_lat": 53.55064,
-            "center_lng": 10.00065,
-            "zoom": 12,
-            "height": 400,
-            "return_format": "raw",
-            "allow_map_layers": 1,
-            "max_markers": 1,
-            "layers": [
-                "OpenStreetMap.Mapnik"
-            ],
             "key": "field_65a245c3a4062",
             "label": "Location",
             "name": "location",
@@ -186,6 +174,16 @@
                 "class": "",
                 "id": ""
             },
+            "center_lat": 53.55064,
+            "center_lng": 10.00065,
+            "zoom": 12,
+            "height": 400,
+            "return_format": "raw",
+            "allow_map_layers": 1,
+            "max_markers": 1,
+            "layers": [
+                "OpenStreetMap.Mapnik"
+            ],
             "leaflet_map": "{\"lat\":53.55064,\"lng\":10.00065,\"zoom\":12,\"layers\":[\"OpenStreetMap.Mapnik\"],\"markers\":[]}"
         },
         {
@@ -208,7 +206,7 @@
             "load_terms": 0,
             "return_format": "id",
             "field_type": "select",
-            "allow_null": 1,
+            "allow_null": 0,
             "bidirectional": 1,
             "bidirectional_target": "",
             "multiple": 0
@@ -301,6 +299,7 @@
             "collapsed": "",
             "button_label": "Add occation",
             "rows_per_page": 20,
+            "acfe_repeater_stylised_button": 0,
             "sub_fields": [
                 {
                     "key": "field_65a6809ba99e7",
@@ -681,8 +680,7 @@
                     "placeholder": "",
                     "parent_repeater": "field_65a66d8cadeef"
                 }
-            ],
-            "acfe_repeater_stylised_button": 0
+            ]
         }
     ],
     "location": [
@@ -712,11 +710,6 @@
     ],
     "active": true,
     "description": "",
-    "show_in_rest": 0,
-    "acfe_display_title": "",
-    "acfe_autosync": "",
-    "acfe_form": 0,
-    "acfe_meta": "",
-    "acfe_note": ""
+    "show_in_rest": 0
 }]
 
