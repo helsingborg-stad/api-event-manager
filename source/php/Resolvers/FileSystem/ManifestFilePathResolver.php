@@ -4,18 +4,16 @@ namespace EventManager\Resolvers\FileSystem;
 
 use EventManager\Services\FileSystem\FileExists;
 use EventManager\Services\FileSystem\GetFileContent;
-use EventManager\Services\WPService\WPServiceFactory;
+use EventManager\Services\WPService\PluginDirPath;
 
 class ManifestFilePathResolver implements FilePathResolverInterface
 {
-    private $wpService;
-
     public function __construct(
         private string $manifestFilePath,
         private FileExists&GetFileContent $fileSystem,
-        private ?FilePathResolverInterface $inner = new StrictFilePathResolver()
+        private PluginDirPath $wpService,
+        private ?FilePathResolverInterface $inner = new StrictFilePathResolver(),
     ) {
-        $this->wpService = WPServiceFactory::create();
     }
 
     public function resolve(string $filePath): string

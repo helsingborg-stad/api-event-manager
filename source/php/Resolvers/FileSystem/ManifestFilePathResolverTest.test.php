@@ -5,6 +5,7 @@ namespace EventManager\Resolvers\FileSystem;
 use EventManager\Resolvers\FileSystem\ManifestFilePathResolver;
 use EventManager\Services\FileSystem\FileExists;
 use EventManager\Services\FileSystem\GetFileContent;
+use EventManager\Services\WPService\PluginDirPath;
 use Exception;
 use PHPUnit\Framework\TestCase;
 
@@ -15,24 +16,37 @@ class ManifestFilePathResolverTest extends TestCase
         $manifestFilePath     = 'manifest.json';
         $manifestFileContents = "This is not a json file";
         $fileSystem           = $this->getFileSystem([ $manifestFilePath => $manifestFileContents ]);
-        $resolver             = new ManifestFilePathResolver($manifestFilePath, $fileSystem);
-
-        $resolver->resolve('css/file.css');
+        $wpService            = $this->getWpService();
+        $nullResolver         = new NullFilePathResolver();
+        $resolver             = new ManifestFilePathResolver($manifestFilePath, $fileSystem, $wpService, $nullResolver);
 
         $this->expectException(Exception::class);
+
+        $resolver->resolve('css/file.css');
     }
 
+    private function getWpService(): PluginDirPath
+    {
+        return new class implements PluginDirPath {
+            public function pluginDirPath(string $file): string
+            {
+                return 'pluginDirPath';
+            }
+        };
+    }
 
     public function testManifestResolverReturnsCorrectFilePath()
     {
         $manifestFilePath     = 'manifest.json';
         $manifestFileContents = json_encode([ 'css/file.css' => 'css/file-123.css' ]);
         $fileSystem           = $this->getFileSystem([ $manifestFilePath => $manifestFileContents ]);
-        $resolver             = new ManifestFilePathResolver($manifestFilePath, $fileSystem);
+        $wpService            = $this->getWpService();
+        $nullResolver         = new NullFilePathResolver();
+        $resolver             = new ManifestFilePathResolver($manifestFilePath, $fileSystem, $wpService, $nullResolver);
 
         $resolvedFilePath = $resolver->resolve('css/file.css');
 
-        $this->assertEquals('css/file-123.css', $resolvedFilePath);
+        $this->assertEquals('./css/file-123.css', $resolvedFilePath);
     }
 
     public function testManifestResolverReturnsCorrectFilePathWhenEntryDoesntExist()
@@ -40,7 +54,9 @@ class ManifestFilePathResolverTest extends TestCase
         $manifestFilePath     = 'manifest.json';
         $manifestFileContents = json_encode([ 'css/file.css' => 'css/file-123.css' ]);
         $fileSystem           = $this->getFileSystem([ $manifestFilePath => $manifestFileContents ]);
-        $resolver             = new ManifestFilePathResolver($manifestFilePath, $fileSystem);
+        $wpService            = $this->getWpService();
+        $nullResolver         = new NullFilePathResolver();
+        $resolver             = new ManifestFilePathResolver($manifestFilePath, $fileSystem, $wpService, $nullResolver);
 
         $resolvedFilePath = $resolver->resolve('css/file2.css');
 
