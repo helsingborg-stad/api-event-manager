@@ -6,7 +6,7 @@
   {
     public function resolve(string $filePath): string
     {
-      die('StrictFilePathResolver:: could not resolve: ' . $filePath ); 
-      return $filePath;
+      throw new \Exception('StrictFilePathResolver:: could not resolve: ' . $filePath );
+      return "";
     }
   }

@@ -1,47 +1,58 @@
-<?php 
+<?php
 
 namespace EventManager\Resolvers\FileSystem;
 
 use EventManager\Services\FileSystem\FileExists;
 use EventManager\Services\FileSystem\GetFileContent;
+use EventManager\Services\WPService\PluginDirPath;
 
-class ManifestFilePathResolver implements ManifestFilePathResolverInterface
+class ManifestFilePathResolver implements FilePathResolverInterface
 {
-
-  public function __construct(
-    private string $manifestFilePath, 
-    private FileExists&GetFileContent $fileSystem,
-    private ?FilePathResolverInterface $inner = new NullFilePathResolver())
-  {
-  }
-
-  public function resolve(string $filePath): string
-  {
-    if($this->fileSystem->fileExists($this->manifestFilePath)) {
-      $manifestFileContent = $this->fileSystem->getFileContent($this->manifestFilePath);
-      $manifest = json_decode($manifestFileContent, true);
-
-      if(isset($manifest[$filePath])) {
-        return $manifest[$filePath];
-      }
+    public function __construct(
+        private string $manifestFilePath,
+        private FileExists&GetFileContent $fileSystem,
+        private PluginDirPath $wpService,
+        private ?FilePathResolverInterface $inner = new StrictFilePathResolver(),
+    ) {
     }
-    return $this->inner->resolve($filePath);
-  }
 
-  public function resolveToUrl(string $filePath): string
-  {
+    public function resolve(string $filePath): string
+    {
+        if ($this->fileSystem->fileExists($this->manifestFilePath)) {
+            $manifestPath = $this->getManifestPath($this->manifestFilePath);
+            $basePath     = $this->getBasePath();
+            $pathDiff     = $this->pathDiff($manifestPath, $basePath);
 
-    //Make out the additional path to the manifest file
-    $additionalPath = str_replace(
-      plugin_dir_path(dirname($this->manifestFilePath)), // TODO: Create a wpService for plugin_dir_path
-      '', 
-      dirname($this->manifestFilePath)
-    ) . "/";
+            $manifestFileContent = $this->fileSystem->getFileContent($this->manifestFilePath);
+            $manifest            = json_decode($manifestFileContent, true);
 
-    return plugins_url( //TODO: Create a wpService for plugins_url
-      $additionalPath . $this->resolve($filePath), 
-      dirname($this->manifestFilePath)
-    );
-  }
+            if ($manifest === null) {
+                throw new \Exception('Manifest file (' . $this->manifestFilePath . ') is not a valid JSON: ' . json_last_error_msg());
+            }
+
+            if (isset($manifest[$filePath])) {
+                $filePath = $pathDiff . DIRECTORY_SEPARATOR . $manifest[$filePath];
+            }
+        }
+
+        return $this->inner->resolve($filePath);
+    }
+
+    private function pathDiff(string $manifestFilePath, string $basePath): string
+    {
+        $manifestFilePath = explode('/', $manifestFilePath);
+        $basePath         = explode('/', $basePath);
+        $diff             = array_diff($manifestFilePath, $basePath);
+        return implode('/', $diff);
+    }
+
+    private function getBasePath(): string
+    {
+        return $this->wpService->pluginDirPath(__FILE__);
+    }
+
+    private function getManifestPath(): string
+    {
+        return dirname($this->manifestFilePath);
+    }
 }
-

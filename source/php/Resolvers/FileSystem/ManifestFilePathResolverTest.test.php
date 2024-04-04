@@ -1,41 +1,71 @@
 <?php
 
+namespace EventManager\Resolvers\FileSystem;
+
 use EventManager\Resolvers\FileSystem\ManifestFilePathResolver;
-use EventManager\Resolvers\FileSystem\NullFilePathResolver;
 use EventManager\Services\FileSystem\FileExists;
 use EventManager\Services\FileSystem\GetFileContent;
+use EventManager\Services\WPService\PluginDirPath;
+use Exception;
 use PHPUnit\Framework\TestCase;
 
 class ManifestFilePathResolverTest extends TestCase
 {
-    public function testDecorateReturnsCorrectFilePath()
+    public function testManifestResolverWasGivenAFaultyJson()
     {
-        $manifestFilePath = 'manifest.json';
-        $manifestFileContents = json_encode([ 'css/file.css' => 'css/file-123.css' ]);
-        $fileSystem = $this->getFileSystem([ $manifestFilePath => $manifestFileContents ]);
-        $decorator = new ManifestFilePathResolver($manifestFilePath, $fileSystem);
+        $manifestFilePath     = 'manifest.json';
+        $manifestFileContents = "This is not a json file";
+        $fileSystem           = $this->getFileSystem([ $manifestFilePath => $manifestFileContents ]);
+        $wpService            = $this->getWpService();
+        $nullResolver         = new NullFilePathResolver();
+        $resolver             = new ManifestFilePathResolver($manifestFilePath, $fileSystem, $wpService, $nullResolver);
 
-        $decoratedFilePath = $decorator->resolve('css/file.css');
+        $this->expectException(Exception::class);
 
-        $this->assertEquals('css/file-123.css', $decoratedFilePath);
+        $resolver->resolve('css/file.css');
     }
 
-    public function testDecorateReturnsCorrectFilePathWhenEntryDoesntExist()
+    private function getWpService(): PluginDirPath
     {
-        $manifestFilePath = 'manifest.json';
-        $manifestFileContents = json_encode([ 'css/file.css' => 'css/file-123.css' ]);
-        $fileSystem = $this->getFileSystem([ $manifestFilePath => $manifestFileContents ]);
-        $decorator = new ManifestFilePathResolver($manifestFilePath, $fileSystem);
-
-        $decoratedFilePath = $decorator->resolve('css/file2.css');  
-
-        $this->assertEquals('css/file2.css', $decoratedFilePath);
+        return new class implements PluginDirPath {
+            public function pluginDirPath(string $file): string
+            {
+                return 'pluginDirPath';
+            }
+        };
     }
 
-    private function getFileSystem(array $files):FileExists&GetFileContent
+    public function testManifestResolverReturnsCorrectFilePath()
     {
-        return new class($files) implements FileExists, GetFileContent {
+        $manifestFilePath     = 'manifest.json';
+        $manifestFileContents = json_encode([ 'css/file.css' => 'css/file-123.css' ]);
+        $fileSystem           = $this->getFileSystem([ $manifestFilePath => $manifestFileContents ]);
+        $wpService            = $this->getWpService();
+        $nullResolver         = new NullFilePathResolver();
+        $resolver             = new ManifestFilePathResolver($manifestFilePath, $fileSystem, $wpService, $nullResolver);
 
+        $resolvedFilePath = $resolver->resolve('css/file.css');
+
+        $this->assertEquals('./css/file-123.css', $resolvedFilePath);
+    }
+
+    public function testManifestResolverReturnsCorrectFilePathWhenEntryDoesntExist()
+    {
+        $manifestFilePath     = 'manifest.json';
+        $manifestFileContents = json_encode([ 'css/file.css' => 'css/file-123.css' ]);
+        $fileSystem           = $this->getFileSystem([ $manifestFilePath => $manifestFileContents ]);
+        $wpService            = $this->getWpService();
+        $nullResolver         = new NullFilePathResolver();
+        $resolver             = new ManifestFilePathResolver($manifestFilePath, $fileSystem, $wpService, $nullResolver);
+
+        $resolvedFilePath = $resolver->resolve('css/file2.css');
+
+        $this->assertEquals('css/file2.css', $resolvedFilePath);
+    }
+
+    private function getFileSystem(array $files): FileExists&GetFileContent
+    {
+        return new class ($files) implements FileExists, GetFileContent {
             public function __construct(private array $files)
             {
             }
@@ -45,7 +75,7 @@ class ManifestFilePathResolverTest extends TestCase
                 return array_key_exists($path, $this->files);
             }
 
-            public function getFileContent(string $file):string
+            public function getFileContent(string $file): string
             {
                 return $this->files[$file];
             }

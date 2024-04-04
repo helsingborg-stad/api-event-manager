@@ -24,13 +24,18 @@ use EventManager\PostTableColumns\Helpers\GetNestedArrayStringValueRecursive;
 use EventManager\PostToSchema\Mappers\StringToEventSchemaMapper;
 use EventManager\PostToSchema\PostToEventSchema\PostToEventSchema;
 use EventManager\Services\AcfService\AcfServiceFactory;
-use EventManager\Services\WPService\WPServiceFactory;
 use EventManager\SetPostTermsFromContent\SetPostTermsFromContent;
 use EventManager\TagReader\TagReader;
 use EventManager\ApiResponseModifiers\EventResponseModifier;
 use EventManager\ContentExpirationManagement\ExpiredEvents;
 use EventManager\CronScheduler\CronScheduler;
 use EventManager\PostToSchema\PostToEventSchema\Commands\Helpers\CommandHelpers;
+use EventManager\Resolvers\FileSystem\ManifestFilePathResolver;
+use EventManager\Resolvers\FileSystem\UrlFilePathResolver;
+use EventManager\Services\FileSystem\FileSystemFactory;
+use EventManager\Services\WPService\Implementations\FilePathResolvingWpService;
+use EventManager\Services\WPService\Implementations\NativeWpService;
+use EventManager\Services\WPService\Implementations\WpServiceLazyDecorator;
 
 // Protect against direct file access
 if (!defined('WPINC')) {
@@ -49,8 +54,20 @@ if (file_exists(EVENT_MANAGER_PATH . 'vendor/autoload.php')) {
 }
 
 $hooksRegistrar = new HooksRegistrar();
-$wpService      = WPServiceFactory::create();
 $acfService     = AcfServiceFactory::create();
+
+$manifestFileWpService = new WpServiceLazyDecorator();
+$wpService             = new FilePathResolvingWpService(
+    new NativeWpService(),
+    new ManifestFilePathResolver(
+        EVENT_MANAGER_PATH . "dist/manifest.json",
+        FileSystemFactory::create(),
+        $manifestFileWpService,
+        new UrlFilePathResolver($manifestFileWpService)
+    )
+);
+
+$manifestFileWpService->setInner($wpService);
 
 /**
  * Load text domain
@@ -93,9 +110,14 @@ $hooksRegistrar->register($cleanUpUnusedTags);
 /**
  * Set post terms from content.
  */
+$config = [
+    'eventPostType'        => 'event',
+    'eventKeywordTaxonomy' => 'keyword'
+];
+
 $tagReader               = new TagReader($wpService);
 $modifyPostcontentBefore = new \EventManager\Modifiers\ModifyPostContentBeforeReadingTags($wpService);
-$setPostTermsFromContent = new SetPostTermsFromContent('event', 'keyword', $tagReader, $wpService);
+$setPostTermsFromContent = new SetPostTermsFromContent($config['eventPostType'], $config['eventKeywordTaxonomy'], $tagReader, $wpService);
 
 $hooksRegistrar->register($setPostTermsFromContent);
 $hooksRegistrar->register($modifyPostcontentBefore);

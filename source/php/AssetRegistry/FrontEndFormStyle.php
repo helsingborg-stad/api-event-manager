@@ -2,9 +2,9 @@
 
 namespace EventManager\AssetRegistry;
 
-use EventManager\Helper\Asset;
+use EventManager\AssetRegistry\RegisterAsset;
 
-class FrontEndFormStyle extends Asset
+class FrontEndFormStyle extends RegisterAsset
 {
     public function getHandle(): string
     {
