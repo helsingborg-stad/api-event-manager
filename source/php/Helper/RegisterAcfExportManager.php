@@ -24,7 +24,8 @@ class RegisterAcfExportManager implements Hookable
             'event-fields'        => 'group_65a115157a046',
             'organization-fields' => 'group_65a4f5a847d62',
             'audience-fields'     => 'group_65ae1b865887a',
-            'plugin-settings'     => 'group_660cec468b833'
+            'plugin-settings'     => 'group_660cec468b833',
+            'user-fields'         => 'group_660d1667d32a0'
         ));
 
         $acfExportManager->import();
