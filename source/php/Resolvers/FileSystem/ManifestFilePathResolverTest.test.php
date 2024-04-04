@@ -1,18 +1,21 @@
 <?php
 
+namespace EventManager\Resolvers\FileSystem;
+
 use EventManager\Resolvers\FileSystem\ManifestFilePathResolver;
 use EventManager\Services\FileSystem\FileExists;
 use EventManager\Services\FileSystem\GetFileContent;
+use Exception;
 use PHPUnit\Framework\TestCase;
 
 class ManifestFilePathResolverTest extends TestCase
 {
     public function testManifestResolverWasGivenAFaultyJson()
     {
-        $manifestFilePath = 'manifest.json';
+        $manifestFilePath     = 'manifest.json';
         $manifestFileContents = "This is not a json file";
-        $fileSystem = $this->getFileSystem([ $manifestFilePath => $manifestFileContents ]);
-        $resolver = new ManifestFilePathResolver($manifestFilePath, $fileSystem);
+        $fileSystem           = $this->getFileSystem([ $manifestFilePath => $manifestFileContents ]);
+        $resolver             = new ManifestFilePathResolver($manifestFilePath, $fileSystem);
 
         $resolver->resolve('css/file.css');
 
@@ -22,10 +25,10 @@ class ManifestFilePathResolverTest extends TestCase
 
     public function testManifestResolverReturnsCorrectFilePath()
     {
-        $manifestFilePath = 'manifest.json';
+        $manifestFilePath     = 'manifest.json';
         $manifestFileContents = json_encode([ 'css/file.css' => 'css/file-123.css' ]);
-        $fileSystem = $this->getFileSystem([ $manifestFilePath => $manifestFileContents ]);
-        $resolver = new ManifestFilePathResolver($manifestFilePath, $fileSystem);
+        $fileSystem           = $this->getFileSystem([ $manifestFilePath => $manifestFileContents ]);
+        $resolver             = new ManifestFilePathResolver($manifestFilePath, $fileSystem);
 
         $resolvedFilePath = $resolver->resolve('css/file.css');
 
@@ -34,20 +37,19 @@ class ManifestFilePathResolverTest extends TestCase
 
     public function testManifestResolverReturnsCorrectFilePathWhenEntryDoesntExist()
     {
-        $manifestFilePath = 'manifest.json';
+        $manifestFilePath     = 'manifest.json';
         $manifestFileContents = json_encode([ 'css/file.css' => 'css/file-123.css' ]);
-        $fileSystem = $this->getFileSystem([ $manifestFilePath => $manifestFileContents ]);
-        $resolver = new ManifestFilePathResolver($manifestFilePath, $fileSystem);
+        $fileSystem           = $this->getFileSystem([ $manifestFilePath => $manifestFileContents ]);
+        $resolver             = new ManifestFilePathResolver($manifestFilePath, $fileSystem);
 
-        $resolvedFilePath = $resolver->resolve('css/file2.css');  
+        $resolvedFilePath = $resolver->resolve('css/file2.css');
 
         $this->assertEquals('css/file2.css', $resolvedFilePath);
     }
 
-    private function getFileSystem(array $files):FileExists&GetFileContent
+    private function getFileSystem(array $files): FileExists&GetFileContent
     {
-        return new class($files) implements FileExists, GetFileContent {
-
+        return new class ($files) implements FileExists, GetFileContent {
             public function __construct(private array $files)
             {
             }
@@ -57,7 +59,7 @@ class ManifestFilePathResolverTest extends TestCase
                 return array_key_exists($path, $this->files);
             }
 
-            public function getFileContent(string $file):string
+            public function getFileContent(string $file): string
             {
                 return $this->files[$file];
             }

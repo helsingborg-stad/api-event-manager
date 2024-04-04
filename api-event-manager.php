@@ -53,14 +53,14 @@ if (file_exists(EVENT_MANAGER_PATH . 'vendor/autoload.php')) {
 
 $hooksRegistrar = new HooksRegistrar();
 
-$acfService     = AcfServiceFactory::create();
-$wpService      = WPServiceFactory::create(
-                    new ManifestFilePathResolver(
-                        EVENT_MANAGER_PATH . "dist/manifest.json",
-                        FileSystemFactory::create(),
-                        new UrlFilePathResolver()
-                    )
-                );
+$acfService = AcfServiceFactory::create();
+$wpService  = WPServiceFactory::create(
+    new ManifestFilePathResolver(
+        EVENT_MANAGER_PATH . "dist/manifest.json",
+        FileSystemFactory::create(),
+        new UrlFilePathResolver()
+    )
+);
 
 /**
  * Load text domain
