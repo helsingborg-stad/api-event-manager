@@ -23,7 +23,7 @@ class SetPostTermsFromContent implements Hookable
 
     public function addHooks(): void
     {
-        add_action('save_post', [$this, 'setPostTermsFromContent']);
+        $this->wpService->addAction('save_post', [$this, 'setPostTermsFromContent']);
     }
 
     public function setPostTermsFromContent(int $postId): void

@@ -4,7 +4,6 @@ namespace EventManager\Tests\SetPostTermsFromContent;
 
 use EventManager\SetPostTermsFromContent\SetPostTermsFromContent;
 use Mockery;
-use WP_Mock;
 use WP_Mock\Tools\TestCase;
 
 class SetPostTermsFromContentTest extends TestCase
@@ -18,11 +17,9 @@ class SetPostTermsFromContentTest extends TestCase
         $wpService   = $this->createMock('EventManager\Services\WPService\WPService');
         $sutInstance = new SetPostTermsFromContent('post', 'category', $tagReader, $wpService);
 
-        WP_Mock::expectActionAdded('save_post', [$sutInstance, 'setPostTermsFromContent']);
+        $wpService->expects($this->once())->method('addAction')->with('save_post', [$sutInstance, 'setPostTermsFromContent']);
 
         $sutInstance->addHooks();
-
-        $this->assertConditionsMet();
     }
 
     /**
