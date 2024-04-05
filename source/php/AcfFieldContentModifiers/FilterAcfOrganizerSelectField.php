@@ -10,10 +10,20 @@ class FilterAcfOrganizerSelectField extends AcfSelectFieldContentModifier
         return 'field_65a4f6af50302';
     }
     public function getFieldValue(): array {
-        return [
-            'org-a' => 'Organization A',
-            'org-b' => 'Organization B',
-            'org-c' => 'Organization C',
-        ];
+        $terms = get_terms([
+            'taxonomy'   => 'organization',
+            'hide_empty' => false,
+            'fields'     => 'id=>name'
+        ]);
+
+        if (is_wp_error($terms)) {
+            return [];
+        }
+
+        if (empty($terms)) {
+            return [];
+        }
+
+        return $terms;
     }
 }

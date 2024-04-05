@@ -20,7 +20,7 @@ abstract class AcfSelectFieldContentModifier implements Hookable, IAcfFieldConte
         );
     }
 
-    public function filterField($field): array
+    public function filterField($field, $method = null): array
     {
         $field['choices'] = $this->getFieldValue() ?? [];
         return $field;
