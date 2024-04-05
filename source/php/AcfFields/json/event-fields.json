@@ -96,7 +96,7 @@
             "name": "accessabilityInformation",
             "aria-label": "",
             "type": "textarea",
-            "instructions": "",
+            "instructions": "Include details on event accessibility for all attendees, covering wheelchair access, parking, elevators, sign language interpreters, and other accommodations.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -142,7 +142,7 @@
         },
         {
             "key": "field_65a15156f4c37",
-            "label": "Accessible for free",
+            "label": "You may attend this event for free",
             "name": "isAccessibleForFree",
             "aria-label": "",
             "type": "true_false",
@@ -238,7 +238,7 @@
         },
         {
             "key": "field_65a52bf7f7e4d",
-            "label": "Typical age rande start",
+            "label": "Minimum age to attend",
             "name": "typicalAgeRangeStart",
             "aria-label": "",
             "type": "number",
@@ -260,21 +260,22 @@
         },
         {
             "key": "field_65a52c24f7e4e",
-            "label": "Typical age range end",
+            "label": "Maximum age to attend",
             "name": "typicalAgeRangeEnd",
             "aria-label": "",
-            "type": "text",
+            "type": "range",
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
-                "width": "10",
+                "width": "50",
                 "class": "",
                 "id": ""
             },
             "default_value": "",
-            "maxlength": "",
-            "placeholder": "",
+            "min": "",
+            "max": "",
+            "step": "",
             "prepend": "",
             "append": ""
         },
