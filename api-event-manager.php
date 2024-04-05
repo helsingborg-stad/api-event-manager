@@ -186,10 +186,12 @@ $hooksRegistrar->register($eventPostType);
 /**
  * User roles
  */
-$organizationMemberUserRole = new \EventManager\User\Role('organization_member', 'Organization Member', []);
-$userRolRegistrar           = new \EventManager\User\RoleRegistrar([$organizationMemberUserRole], $wpService);
+$organizationMemberUserRole          = new \EventManager\User\Role('organization_member', 'Organization Member', ['read', 'edit_posts']);
+$userRoleRegistrar                   = new \EventManager\User\RoleRegistrar([$organizationMemberUserRole], $wpService);
+$syncRoleCapabilitiesToExistingUsers = new \EventManager\User\SyncRoleCapabilitiesToExistingUsers([$organizationMemberUserRole], $wpService);
 
-$hooksRegistrar->register($userRolRegistrar);
+$hooksRegistrar->register($userRoleRegistrar);
+$hooksRegistrar->register($syncRoleCapabilitiesToExistingUsers);
 
 /**
  * Taxonomies

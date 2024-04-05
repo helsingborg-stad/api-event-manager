@@ -3,18 +3,19 @@
 namespace EventManager\CleanupUnusedTags;
 
 use EventManager\Helper\Hookable;
+use EventManager\Services\WPService\AddAction;
 use EventManager\Services\WPService\DeleteTerm;
 use EventManager\Services\WPService\GetTerms;
 
 class CleanupUnusedTags implements Hookable
 {
-    public function __construct(private string $taxonomy, private GetTerms&DeleteTerm $wpService)
+    public function __construct(private string $taxonomy, private GetTerms&DeleteTerm&AddAction $wpService)
     {
     }
 
     public function addHooks(): void
     {
-        add_action('save_post', [$this, 'cleanupUnusedTags']);
+        $this->wpService->addAction('save_post', [$this, 'cleanupUnusedTags']);
     }
 
     public function cleanupUnusedTags(): void

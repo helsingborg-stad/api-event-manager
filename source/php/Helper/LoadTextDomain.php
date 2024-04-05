@@ -2,17 +2,17 @@
 
 namespace EventManager\Helper;
 
-use EventManager\Services\WPService\WPService;
+use EventManager\Services\WPService\AddAction;
 
 class LoadTextDomain implements Hookable
 {
-    public function __construct(private WPService $wpService)
+    public function __construct(private AddAction $wpService)
     {
     }
 
     public function addHooks(): void
     {
-        add_action('plugins_loaded', array($this, 'loadTextDomain'));
+        $this->wpService->addAction('plugins_loaded', array($this, 'loadTextDomain'));
     }
 
     public function loadTextDomain(): void

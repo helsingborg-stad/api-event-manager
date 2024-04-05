@@ -18,7 +18,7 @@
 		}
 	},
 	"remoteEnv": {
-		"XDEBUG_MODE": "off"
+		"XDEBUG_MODE": "debug"
 	},
 	"customizations": {
 		"vscode": {

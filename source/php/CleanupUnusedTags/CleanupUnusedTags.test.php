@@ -2,6 +2,7 @@
 
 namespace EventManager\CleanupUnusedTags;
 
+use EventManager\Services\WPService\AddAction;
 use EventManager\Services\WPService\DeleteTerm;
 use EventManager\Services\WPService\GetTerms;
 use PHPUnit\Framework\TestCase;
@@ -23,10 +24,19 @@ class CleanupUnusedTagsTest extends TestCase
         $this->assertEquals([1, 'category', []], $wpService->deleteTermCalls[0]);
     }
 
-    private function getWPService(): GetTerms&DeleteTerm
+    private function getWPService(): GetTerms&DeleteTerm&AddAction
     {
-        return new class implements GetTerms, DeleteTerm {
+        return new class implements GetTerms, DeleteTerm, AddAction {
             public array $deleteTermCalls = [];
+
+            public function addAction(
+                string $tag,
+                callable $function_to_add,
+                int $priority = 10,
+                int $accepted_args = 1
+            ): bool {
+                return true;
+            }
 
             public function getTerms(array|string $args = array(), array|string $deprecated = ""): array|string|WP_Error
             {
