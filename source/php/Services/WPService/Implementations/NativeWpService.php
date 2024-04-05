@@ -291,4 +291,9 @@ class NativeWpService implements WPService
     {
         return add_role($role, $displayName, $capabilities) ?: null;
     }
+
+    public function getUsers(array $args): array
+    {
+        return get_users($args);
+    }
 }
