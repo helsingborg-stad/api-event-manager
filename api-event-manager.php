@@ -201,3 +201,7 @@ $frontendFormStyle = new \EventManager\AssetRegistry\FrontEndFormStyle($wpServic
 
 $hooksRegistrar->register($frontendForm);
 $hooksRegistrar->register($frontendFormStyle);
+
+/* Fill Taxonomy selectors (TODO: Move to appropriate location) */ 
+new \EventManager\AcfFieldContentModifiers\FilterAcfAudienceSelectField($wpService);
+new \EventManager\AcfFieldContentModifiers\FilterAcfOrganizerSelectField($wpService);

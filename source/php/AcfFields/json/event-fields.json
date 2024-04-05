@@ -191,7 +191,7 @@
             "label": "Organizer",
             "name": "organization",
             "aria-label": "",
-            "type": "taxonomy",
+            "type": "select",
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -200,23 +200,21 @@
                 "class": "",
                 "id": ""
             },
-            "taxonomy": "organization",
-            "add_term": 0,
-            "save_terms": 1,
-            "load_terms": 0,
-            "return_format": "id",
-            "field_type": "select",
+            "choices": [],
+            "default_value": false,
+            "return_format": "value",
+            "multiple": 0,
             "allow_null": 0,
-            "bidirectional": 1,
-            "bidirectional_target": "",
-            "multiple": 0
+            "ui": 0,
+            "ajax": 0,
+            "placeholder": ""
         },
         {
             "key": "field_65a52a6374b0c",
             "label": "Audience",
             "name": "audience",
             "aria-label": "",
-            "type": "taxonomy",
+            "type": "select",
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -225,16 +223,18 @@
                 "class": "",
                 "id": ""
             },
-            "taxonomy": "audience",
-            "add_term": 1,
-            "save_terms": 0,
-            "load_terms": 0,
-            "return_format": "id",
-            "field_type": "select",
-            "allow_null": 1,
-            "bidirectional": 0,
+            "choices": {
+                "all": "All",
+                "members": "Members",
+                "non-members": "Non-Members"
+            },
+            "default_value": false,
+            "return_format": "value",
             "multiple": 0,
-            "bidirectional_target": []
+            "allow_null": 0,
+            "ui": 0,
+            "ajax": 0,
+            "placeholder": ""
         },
         {
             "key": "field_65a52bf7f7e4d",
