@@ -13,6 +13,7 @@
  * Domain Path:       /languages
  */
 
+use Composer\Installers\UserFrostingInstaller;
 use EventManager\CleanupUnusedTags\CleanupUnusedTags;
 use EventManager\HooksRegistrar\HooksRegistrar;
 use EventManager\PostTableColumns\Column as PostTableColumn;
@@ -181,6 +182,14 @@ $hooksRegistrar->register($hideUnusedAdminPages);
 $eventPostType = new \EventManager\PostTypes\Event($wpService, $acfService);
 
 $hooksRegistrar->register($eventPostType);
+
+/**
+ * User roles
+ */
+$organizationMemberUserRole = new \EventManager\User\Role('organization_member', 'Organization Member', []);
+$userRolRegistrar           = new \EventManager\User\RoleRegistrar([$organizationMemberUserRole], $wpService);
+
+$hooksRegistrar->register($userRolRegistrar);
 
 /**
  * Taxonomies

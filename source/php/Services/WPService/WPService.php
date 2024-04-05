@@ -45,6 +45,7 @@ interface WPService extends
     GetEnvironmentType,
     PluginDirPath,
     PluginsUrl,
-    PluginBasename
+    PluginBasename,
+    AddRole
 {
 }

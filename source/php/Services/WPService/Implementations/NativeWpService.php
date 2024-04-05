@@ -6,6 +6,7 @@ use EventManager\Services\WPService\WPService;
 use WP_Error;
 use WP_Post;
 use WP_REST_Response;
+use WP_Role;
 use WP_Screen;
 use WP_Term;
 
@@ -284,5 +285,10 @@ class NativeWpService implements WPService
     public function pluginBasename(string $file): string
     {
         return plugin_basename($file);
+    }
+
+    public function addRole(string $role, string $displayName, array $capabilities): ?WP_Role
+    {
+        return add_role($role, $displayName, $capabilities) ?: null;
     }
 }

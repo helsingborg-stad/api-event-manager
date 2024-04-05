@@ -6,6 +6,7 @@ use EventManager\Services\WPService\WPService;
 use WP_Error;
 use WP_Post;
 use WP_REST_Response;
+use WP_Role;
 use WP_Screen;
 use WP_Term;
 
@@ -273,6 +274,11 @@ class WpServiceDecorator implements WPService
     }
 
     public function pluginBasename(string $file): string
+    {
+        return $this->inner->{__FUNCTION__}(...func_get_args());
+    }
+
+    public function addRole(string $role, string $displayName, array $capabilities): ?WP_Role
     {
         return $this->inner->{__FUNCTION__}(...func_get_args());
     }
