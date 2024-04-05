@@ -3,19 +3,24 @@
 namespace EventManager\User;
 
 use EventManager\Helper\Hookable;
+use EventManager\Services\WPService\AddAction;
 use EventManager\Services\WPService\AddRole;
 
 class RoleRegistrar implements Hookable
 {
+    /**
+     * @param Role[] $roles
+     * @param AddRole&AddAction $wpService
+     */
     public function __construct(
         private array $roles,
-        private AddRole $wpService
+        private AddRole&AddAction $wpService
     ) {
     }
 
     public function addHooks(): void
     {
-        add_action('init', [$this, 'registerRoles']);
+        $this->wpService->addAction('init', [$this, 'registerRoles']);
     }
 
     public function registerRoles()
