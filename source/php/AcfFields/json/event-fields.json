@@ -200,7 +200,10 @@
                 "class": "",
                 "id": ""
             },
-            "choices": [],
+            "choices": {
+                "374": "Organization A",
+                "375": "Organization B"
+            },
             "default_value": false,
             "return_format": "value",
             "multiple": 0,
@@ -224,9 +227,10 @@
                 "id": ""
             },
             "choices": {
-                "all": "All",
-                "members": "Members",
-                "non-members": "Non-Members"
+                "370": "Audience A",
+                "371": "Audience B",
+                "372": "Audience C",
+                "373": "Audience D"
             },
             "default_value": false,
             "return_format": "value",
@@ -241,19 +245,18 @@
             "label": "Minimum age to attend",
             "name": "typicalAgeRangeStart",
             "aria-label": "",
-            "type": "number",
-            "instructions": "",
+            "type": "range",
+            "instructions": "The optimal maximum age for this event.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
-                "width": "10",
+                "width": "50",
                 "class": "",
                 "id": ""
             },
-            "default_value": "",
-            "min": 0,
-            "max": "",
-            "placeholder": "",
+            "default_value": 0,
+            "min": "",
+            "max": 119,
             "step": "",
             "prepend": "",
             "append": ""
@@ -264,7 +267,7 @@
             "name": "typicalAgeRangeEnd",
             "aria-label": "",
             "type": "range",
-            "instructions": "",
+            "instructions": "The optimal maximum age for this event.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -272,12 +275,12 @@
                 "class": "",
                 "id": ""
             },
-            "default_value": "",
-            "min": "",
-            "max": "",
+            "default_value": 120,
+            "min": 5,
+            "max": 120,
             "step": "",
             "prepend": "",
-            "append": ""
+            "append": "years"
         },
         {
             "key": "field_65a66d8cadeef",
@@ -285,7 +288,7 @@
             "name": "occasions",
             "aria-label": "",
             "type": "repeater",
-            "instructions": "",
+            "instructions": "When is the event scheduled to take place? You have the option to establish a recurring schedule or specify up to 10 distinct dates and times.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -295,12 +298,11 @@
             },
             "layout": "block",
             "pagination": 0,
-            "min": 0,
-            "max": 0,
+            "min": 1,
+            "max": 10,
             "collapsed": "",
             "button_label": "Add occation",
             "rows_per_page": 20,
-            "acfe_repeater_stylised_button": 0,
             "sub_fields": [
                 {
                     "key": "field_65a6809ba99e7",
@@ -682,6 +684,31 @@
                     "parent_repeater": "field_65a66d8cadeef"
                 }
             ]
+        },
+        {
+            "key": "field_66106dc161830",
+            "label": "Image",
+            "name": "Image",
+            "aria-label": "",
+            "type": "image",
+            "instructions": "Enhance your event by including a high-resolution image. As the initial point of contact, the image plays a pivotal role in capturing users' attention, making it essential for attracting attendees.",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "library": "uploadedTo",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": "",
+            "preview_size": "medium"
         }
     ],
     "location": [
