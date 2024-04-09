@@ -3,6 +3,31 @@
     "title": "Event Fields",
     "fields": [
         {
+            "key": "field_66106dc161830",
+            "label": "Image",
+            "name": "_thumbnail_id",
+            "aria-label": "",
+            "type": "image",
+            "instructions": "Enhance your event by including a high-resolution image. As the initial point of contact, the image plays a pivotal role in capturing users' attention, making it essential for attracting attendees.",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "library": "uploadedTo",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": "",
+            "preview_size": "medium"
+        },
+        {
             "key": "field_65fd4c7a55b91",
             "label": "Event Type",
             "name": "type",
@@ -87,31 +112,6 @@
             "rows": 12,
             "placeholder": "",
             "new_lines": ""
-        },
-        {
-            "key": "field_66106dc161830",
-            "label": "Image",
-            "name": "_thumbnail_id",
-            "aria-label": "",
-            "type": "image",
-            "instructions": "Enhance your event by including a high-resolution image. As the initial point of contact, the image plays a pivotal role in capturing users' attention, making it essential for attracting attendees.",
-            "required": 1,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "return_format": "array",
-            "library": "uploadedTo",
-            "min_width": "",
-            "min_height": "",
-            "min_size": "",
-            "max_width": "",
-            "max_height": "",
-            "max_size": "",
-            "mime_types": "",
-            "preview_size": "medium"
         },
         {
             "key": "field_65f14f7826756",
