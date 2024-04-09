@@ -11,7 +11,7 @@
             'name' => 'type',
             'aria-label' => '',
             'type' => 'select',
-            'instructions' => '',
+            'instructions' => __('What category do you feel accurately reflects your event\'s purpose? This gives a brief overview of the event\'s content. If you\'re unsure, you can opt for the generic label \'event\'.', 'api-event-manager'),
             'required' => 0,
             'conditional_logic' => 0,
             'wrapper' => array(
@@ -50,8 +50,6 @@
             'ui' => 0,
             'ajax' => 0,
             'placeholder' => '',
-            'allow_custom' => 0,
-            'search_placeholder' => '',
         ),
         1 => array(
             'key' => 'field_65a6206610d45',
