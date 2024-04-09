@@ -17,13 +17,40 @@
   background-color: var(--c-button-secondary-color, var(--color-secondary, #ec6701));
   color: var(--c-button-secondary-color-contrasting, var(--color-secondary-contrasting, var(--color-white, #fff)));
   cursor: pointer;
+  gap: var(--base, 8px);
+  position: relative;
+
+  &::after {
+    position: absolute;
+    content: "";
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(255,255,255,0);
+    transition: 100ms all;
+  }
+
+  &:hover::after {
+    background-color: rgba(255,255,255,.2);
+  }
+
+  .c-icon.c-icon--size-md {
+    margin-left: calc(var(--base, 8px) * -1);
+  }
 }
 
 #acf-form.acf-form .acf-fields {
 
   display: flex;
-  gap: calc(var(--base, 8px) * var(--o-grid-gap, 4));
+  gap: calc(var(--base, 8px) * var(--o-grid-gap, 4) * 2) calc(var(--base, 8px) * var(--o-grid-gap, 4));
   flex-wrap: wrap;
+
+  &::after {
+    content: unset;
+    display: none;
+    clear: unset;
+  }
 
   /* Remove builtin icons */
   .acf-url .acf-icon {
@@ -142,7 +169,7 @@
 
   textarea {
     resize: vertical;
-    min-height: calc(var(--base, 8px) * 12);
+    min-height: calc(var(--base, 8px) * 20);
   }
 
   /* Select */
@@ -191,10 +218,11 @@
     }
 
     input[type="number"] {
-      padding: 0;
       height: auto;
-      width: 1em;
-      border: none;
+      width: 3em;
+      background: #fff;
+      padding: 8px;
+      border: var(--c-select-border-width,var(--border-width-input,1px)) solid var(--c-select-border-color,#cacaca);
     }
 
     .acf-append {
@@ -208,6 +236,10 @@
     div[data-width="#{$data-width}"] {
       width: calc(#{$data-width}#{'%'} - var(--base, 8px) * 1.5) !important;
       display: inline-block;
+
+      &.acf-field-range {
+        width: calc(#{$data-width}#{'%'} - var(--base, 8px)) !important;
+      }
     } 
   }
 
@@ -230,10 +262,11 @@
 
   /* Repeater */ 
   .acf-repeater {
+    margin-bottom: calc(var(--base, 8px));
 
-    //Remove handle (left)
-    .ui-sortable-handle {
-      display: none;
+    .acf-table {
+      margin: 0;
+      width: calc(100% - 2px);
     }
 
     .acf-fields {
@@ -241,12 +274,47 @@
       border-left: none;
     }
 
-    > .acf-actions .acf-button {
-      @include button-styles();
-      float: none;
-      margin-top: calc(var(--base, 8px)* 2);
+    /* Add new button etc */
+    .acf-actions {
+      .acf-button {
+        float: none;
+        @include button-styles();
+      }
+
+      .acf-repeater-add-row {
+        margin-top: calc(var(--base, 8px) * 2);
+        display: flex;
+        justify-content: center;
+      }
+    }
+
+    /* Row actions */
+    .acf-row-handle {
+
+      &.remove .acf-icon {
+        display: block;
+        position: relative;
+        margin: var(--base, 8px) 0 0 0;
+        width: calc(var(--base, 8px) * 3);
+        height: calc(var(--base, 8px) * 3);
+
+        &::before { /* Icons */
+          top: 50%;
+          position: absolute;
+          left: 50%;
+          transform: translateY(-50%) translateX(-50%);
+        }
+
+        &.-duplicate {
+          display: none !important; /* Todo: Should we have this? */
+        }
+
+        &.-plus {
+          display: none !important; /* Todo: Should we have this? */
+        }
     }
   }
+}
 
   /* Switch */ 
   .acf-true-false {
@@ -264,13 +332,6 @@
     }
   }
 
-  /* Editor tools are always hidden */
-  .wp-editor-tools,
-  .acf-editor-toolbar {
-    /*display: none !important;*/ 
-  }
-
-
   /* Headings */ 
   .acf-field-message {
     .acf-label label {
@@ -279,30 +340,6 @@
       font-weight: var(--h3-font-weight, var(--font-weight-heading, 500));
       line-height: var(--h3-line-height, var(--line-height-heading, 1.33));
       text-transform: none;
-    }
-  }
-
-  /* Repeater */
-  .acf-repeater .acf-row-handle .acf-icon {
-    display: block;
-    position: relative;
-    margin: var(--base, 8px) 0 0 0;
-    width: calc(var(--base, 8px) * 3);
-    height: calc(var(--base, 8px) * 3);
-
-    &::before {
-      top: 50%;
-      position: absolute;
-      left: 50%;
-      transform: translateY(-50%) translateX(-50%);
-    }
-
-    &.-duplicate {
-      display: none !important; /* Todo: Style duplicate button */
-    }
-
-    &.-plus {
-      display: none !important; /* Todo: Should we have this? */
     }
   }
 
@@ -325,5 +362,20 @@
   .acf-image-uploader + p.description {
     margin-top: calc(var(--base, 8px) / 2);
   }
+
+  /* Location field (open street map) */
+
+  .acf-field-open-street-map {
+
+    /* Button */ 
+    .acf-osm-above .leaflet-control-geocoder>.leaflet-control-geocoder-icon {
+      height: auto;
+    
+    }
+    .markers-instruction {
+      display: none;
+    }
+  }
+  
 }
 
