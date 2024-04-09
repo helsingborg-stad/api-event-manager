@@ -91,6 +91,31 @@
             "new_lines": ""
         },
         {
+            "key": "field_66106dc161830",
+            "label": "Image",
+            "name": "_thumbnail_id",
+            "aria-label": "",
+            "type": "image",
+            "instructions": "Enhance your event by including a high-resolution image. As the initial point of contact, the image plays a pivotal role in capturing users' attention, making it essential for attracting attendees.",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "library": "uploadedTo",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": "",
+            "preview_size": "medium"
+        },
+        {
             "key": "field_65f14f7826756",
             "label": "Accessability information",
             "name": "accessabilityInformation",
@@ -139,26 +164,6 @@
             "placeholder": "",
             "allow_custom": 0,
             "search_placeholder": ""
-        },
-        {
-            "key": "field_65a15156f4c37",
-            "label": "You may attend this event for free",
-            "name": "isAccessibleForFree",
-            "aria-label": "",
-            "type": "true_false",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "message": "",
-            "default_value": 1,
-            "ui_on_text": "",
-            "ui_off_text": "",
-            "ui": 1
         },
         {
             "key": "field_65a245c3a4062",
@@ -301,7 +306,7 @@
             "min": 1,
             "max": 10,
             "collapsed": "",
-            "button_label": "Add occation",
+            "button_label": "<span class=\"c-icon c-icon--material material-symbols-outlined material-symbols-outlined--filled c-icon--size-md\" material-symbol=\"arrow_right_alt\" role=\"img\" aria-label=\"Icon: Undefined\" alt=\"Icon: Repeat\" data-nosnippet=\"\" translate=\"no\" aria-hidden=\"true\">add<\/span> Add occation",
             "rows_per_page": 20,
             "sub_fields": [
                 {
@@ -320,9 +325,9 @@
                     },
                     "choices": {
                         "no": "No",
-                        "byDay": "By Day",
-                        "byWeek": "By Week",
-                        "byMonth": "By Month"
+                        "byDay": "Daily occasion",
+                        "byWeek": "Weekly occasion",
+                        "byMonth": "Monthly occasion"
                     },
                     "default_value": false,
                     "return_format": "value",
@@ -331,8 +336,6 @@
                     "ui": 0,
                     "ajax": 0,
                     "placeholder": "",
-                    "allow_custom": 0,
-                    "search_placeholder": "",
                     "parent_repeater": "field_65a66d8cadeef"
                 },
                 {
@@ -686,29 +689,72 @@
             ]
         },
         {
-            "key": "field_66106dc161830",
-            "label": "Image",
-            "name": "Image",
+            "key": "field_6613fdbd6090e",
+            "label": "Prices",
+            "name": "pricesList",
             "aria-label": "",
-            "type": "image",
-            "instructions": "Enhance your event by including a high-resolution image. As the initial point of contact, the image plays a pivotal role in capturing users' attention, making it essential for attracting attendees.",
-            "required": 1,
+            "type": "repeater",
+            "instructions": "You have the option to offer multiple pricing tiers to accommodate attendees of different age groups. By not adding any ticket variations, your event will show up as free of charge.",
+            "required": 0,
             "conditional_logic": 0,
             "wrapper": {
                 "width": "",
                 "class": "",
                 "id": ""
             },
-            "return_format": "array",
-            "library": "uploadedTo",
-            "min_width": "",
-            "min_height": "",
-            "min_size": "",
-            "max_width": "",
-            "max_height": "",
-            "max_size": "",
-            "mime_types": "",
-            "preview_size": "medium"
+            "layout": "block",
+            "pagination": 0,
+            "min": 0,
+            "max": 0,
+            "collapsed": "",
+            "button_label": "<span class=\"c-icon c-icon--material material-symbols-outlined material-symbols-outlined--filled c-icon--size-md\" material-symbol=\"arrow_right_alt\" role=\"img\" aria-label=\"Icon: Undefined\" alt=\"Icon: Repeat\" data-nosnippet=\"\" translate=\"no\" aria-hidden=\"true\">add<\/span> Add Ticket \/ Variation",
+            "rows_per_page": 20,
+            "sub_fields": [
+                {
+                    "key": "field_6613fdcc6090f",
+                    "label": "Price Label",
+                    "name": "priceLabel",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "50",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "Standard Ticket",
+                    "maxlength": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "parent_repeater": "field_6613fdbd6090e"
+                },
+                {
+                    "key": "field_6613fdea60910",
+                    "label": "Price",
+                    "name": "price",
+                    "aria-label": "",
+                    "type": "number",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "50",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": 100,
+                    "min": "",
+                    "max": "",
+                    "placeholder": "",
+                    "step": "",
+                    "prepend": "",
+                    "append": "$",
+                    "parent_repeater": "field_6613fdbd6090e"
+                }
+            ]
         }
     ],
     "location": [
