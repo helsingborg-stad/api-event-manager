@@ -169,6 +169,16 @@
             'search_placeholder' => '',
         ),
         6 => array(
+            'center_lat' => 53.55064,
+            'center_lng' => 10.00065,
+            'zoom' => 12,
+            'height' => 400,
+            'return_format' => 'raw',
+            'allow_map_layers' => 1,
+            'max_markers' => 1,
+            'layers' => array(
+                0 => 'OpenStreetMap.Mapnik',
+            ),
             'key' => 'field_65a245c3a4062',
             'label' => __('Location', 'api-event-manager'),
             'name' => 'location',
@@ -181,16 +191,6 @@
                 'width' => '',
                 'class' => '',
                 'id' => '',
-            ),
-            'center_lat' => 53.55064,
-            'center_lng' => 10.00065,
-            'zoom' => 12,
-            'height' => 400,
-            'return_format' => 'raw',
-            'allow_map_layers' => 1,
-            'max_markers' => 1,
-            'layers' => array(
-                0 => 'OpenStreetMap.Mapnik',
             ),
             'leaflet_map' => '{"lat":53.55064,"lng":10.00065,"zoom":12,"layers":["OpenStreetMap.Mapnik"],"markers":[]}',
         ),
@@ -328,7 +328,6 @@
                     ),
                     'choices' => array(
                         'no' => __('No', 'api-event-manager'),
-                        'byDay' => __('Daily occasion', 'api-event-manager'),
                         'byWeek' => __('Weekly occasion', 'api-event-manager'),
                         'byMonth' => __('Monthly occasion', 'api-event-manager'),
                     ),
@@ -342,37 +341,6 @@
                     'parent_repeater' => 'field_65a66d8cadeef',
                 ),
                 1 => array(
-                    'key' => 'field_65a6817aa99e8',
-                    'label' => __('Every', 'api-event-manager'),
-                    'name' => 'daysInterval',
-                    'aria-label' => '',
-                    'type' => 'number',
-                    'instructions' => '',
-                    'required' => 1,
-                    'conditional_logic' => array(
-                        0 => array(
-                            0 => array(
-                                'field' => 'field_65a6809ba99e7',
-                                'operator' => '==',
-                                'value' => 'byDay',
-                            ),
-                        ),
-                    ),
-                    'wrapper' => array(
-                        'width' => '',
-                        'class' => '',
-                        'id' => '',
-                    ),
-                    'default_value' => 1,
-                    'min' => 1,
-                    'max' => '',
-                    'placeholder' => '',
-                    'step' => '',
-                    'prepend' => '',
-                    'append' => __('day/days', 'api-event-manager'),
-                    'parent_repeater' => 'field_65a66d8cadeef',
-                ),
-                2 => array(
                     'key' => 'field_65a686d8af87f',
                     'label' => __('Every', 'api-event-manager'),
                     'name' => 'weeksInterval',
@@ -403,7 +371,7 @@
                     'append' => __('week/weeks', 'api-event-manager'),
                     'parent_repeater' => 'field_65a66d8cadeef',
                 ),
-                3 => array(
+                2 => array(
                     'key' => 'field_65a6886e30f9d',
                     'label' => __('Every', 'api-event-manager'),
                     'name' => 'monthsInterval',
@@ -434,7 +402,7 @@
                     'append' => __('week/weeks', 'api-event-manager'),
                     'parent_repeater' => 'field_65a66d8cadeef',
                 ),
-                4 => array(
+                3 => array(
                     'key' => 'field_65a68707af880',
                     'label' => __('Day', 'api-event-manager'),
                     'name' => 'weekDays',
@@ -475,7 +443,7 @@
                     'custom_choice_button_text' => 'Lägg till nytt val',
                     'parent_repeater' => 'field_65a66d8cadeef',
                 ),
-                5 => array(
+                4 => array(
                     'key' => 'field_65a689f5a4918',
                     'label' => __('Day', 'api-event-manager'),
                     'name' => 'monthDay',
@@ -516,7 +484,7 @@
                     'search_placeholder' => '',
                     'parent_repeater' => 'field_65a66d8cadeef',
                 ),
-                6 => array(
+                5 => array(
                     'key' => 'field_65a68a6ea4919',
                     'label' => __('By number', 'api-event-manager'),
                     'name' => 'monthDayNumber',
@@ -547,50 +515,7 @@
                     'append' => '',
                     'parent_repeater' => 'field_65a66d8cadeef',
                 ),
-                7 => array(
-                    'key' => 'field_65a68b6b72235',
-                    'label' => __('By type', 'api-event-manager'),
-                    'name' => 'monthDayLiteral',
-                    'aria-label' => '',
-                    'type' => 'select',
-                    'instructions' => '',
-                    'required' => 1,
-                    'conditional_logic' => array(
-                        0 => array(
-                            0 => array(
-                                'field' => 'field_65a689f5a4918',
-                                'operator' => '!=',
-                                'value' => 'day',
-                            ),
-                        ),
-                    ),
-                    'wrapper' => array(
-                        'width' => '25',
-                        'class' => '',
-                        'id' => '',
-                    ),
-                    'choices' => array(
-                        'Day' => __('Day', 'api-event-manager'),
-                        'https://schema.org/Monday' => __('Monday', 'api-event-manager'),
-                        'https://schema.org/Tuesday' => __('Tuesday', 'api-event-manager'),
-                        'https://schema.org/Wednesday' => __('Wednesday', 'api-event-manager'),
-                        'https://schema.org/Thursday' => __('Thursday', 'api-event-manager'),
-                        'https://schema.org/Friday' => __('Friday', 'api-event-manager'),
-                        'https://schema.org/Saturday' => __('Saturday', 'api-event-manager'),
-                        'https://schema.org/Sunday' => __('Sunday', 'api-event-manager'),
-                    ),
-                    'default_value' => false,
-                    'return_format' => 'value',
-                    'multiple' => 0,
-                    'allow_null' => 0,
-                    'ui' => 0,
-                    'ajax' => 0,
-                    'placeholder' => '',
-                    'allow_custom' => 0,
-                    'search_placeholder' => '',
-                    'parent_repeater' => 'field_65a66d8cadeef',
-                ),
-                8 => array(
+                6 => array(
                     'key' => 'field_65a681f9a99e9',
                     'label' => __('Date', 'api-event-manager'),
                     'name' => 'date',
@@ -609,7 +534,7 @@
                     'first_day' => 1,
                     'parent_repeater' => 'field_65a66d8cadeef',
                 ),
-                9 => array(
+                7 => array(
                     'key' => 'field_6602d3163612a',
                     'label' => __('Until Date', 'api-event-manager'),
                     'name' => 'untilDate',
@@ -636,7 +561,7 @@
                     'first_day' => 1,
                     'parent_repeater' => 'field_65a66d8cadeef',
                 ),
-                10 => array(
+                8 => array(
                     'key' => 'field_65a68507a99eb',
                     'label' => __('Start time', 'api-event-manager'),
                     'name' => 'startTime',
@@ -654,7 +579,7 @@
                     'return_format' => 'H:i:s',
                     'parent_repeater' => 'field_65a66d8cadeef',
                 ),
-                11 => array(
+                9 => array(
                     'key' => 'field_65a6852da99ec',
                     'label' => __('End time', 'api-event-manager'),
                     'name' => 'endTime',
@@ -672,7 +597,7 @@
                     'return_format' => 'H:i:s',
                     'parent_repeater' => 'field_65a66d8cadeef',
                 ),
-                12 => array(
+                10 => array(
                     'key' => 'field_65b89293153f9',
                     'label' => __('Booking page URL', 'api-event-manager'),
                     'name' => 'url',

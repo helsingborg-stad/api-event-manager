@@ -166,6 +166,16 @@
             "search_placeholder": ""
         },
         {
+            "center_lat": 53.55064,
+            "center_lng": 10.00065,
+            "zoom": 12,
+            "height": 400,
+            "return_format": "raw",
+            "allow_map_layers": 1,
+            "max_markers": 1,
+            "layers": [
+                "OpenStreetMap.Mapnik"
+            ],
             "key": "field_65a245c3a4062",
             "label": "Location",
             "name": "location",
@@ -179,16 +189,6 @@
                 "class": "",
                 "id": ""
             },
-            "center_lat": 53.55064,
-            "center_lng": 10.00065,
-            "zoom": 12,
-            "height": 400,
-            "return_format": "raw",
-            "allow_map_layers": 1,
-            "max_markers": 1,
-            "layers": [
-                "OpenStreetMap.Mapnik"
-            ],
             "leaflet_map": "{\"lat\":53.55064,\"lng\":10.00065,\"zoom\":12,\"layers\":[\"OpenStreetMap.Mapnik\"],\"markers\":[]}"
         },
         {
@@ -325,7 +325,6 @@
                     },
                     "choices": {
                         "no": "No",
-                        "byDay": "Daily occasion",
                         "byWeek": "Weekly occasion",
                         "byMonth": "Monthly occasion"
                     },
@@ -336,37 +335,6 @@
                     "ui": 0,
                     "ajax": 0,
                     "placeholder": "",
-                    "parent_repeater": "field_65a66d8cadeef"
-                },
-                {
-                    "key": "field_65a6817aa99e8",
-                    "label": "Every",
-                    "name": "daysInterval",
-                    "aria-label": "",
-                    "type": "number",
-                    "instructions": "",
-                    "required": 1,
-                    "conditional_logic": [
-                        [
-                            {
-                                "field": "field_65a6809ba99e7",
-                                "operator": "==",
-                                "value": "byDay"
-                            }
-                        ]
-                    ],
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "default_value": 1,
-                    "min": 1,
-                    "max": "",
-                    "placeholder": "",
-                    "step": "",
-                    "prepend": "",
-                    "append": "day\/days",
                     "parent_repeater": "field_65a66d8cadeef"
                 },
                 {
@@ -541,49 +509,6 @@
                     "step": "",
                     "prepend": "",
                     "append": "",
-                    "parent_repeater": "field_65a66d8cadeef"
-                },
-                {
-                    "key": "field_65a68b6b72235",
-                    "label": "By type",
-                    "name": "monthDayLiteral",
-                    "aria-label": "",
-                    "type": "select",
-                    "instructions": "",
-                    "required": 1,
-                    "conditional_logic": [
-                        [
-                            {
-                                "field": "field_65a689f5a4918",
-                                "operator": "!=",
-                                "value": "day"
-                            }
-                        ]
-                    ],
-                    "wrapper": {
-                        "width": "25",
-                        "class": "",
-                        "id": ""
-                    },
-                    "choices": {
-                        "Day": "Day",
-                        "https:\/\/schema.org\/Monday": "Monday",
-                        "https:\/\/schema.org\/Tuesday": "Tuesday",
-                        "https:\/\/schema.org\/Wednesday": "Wednesday",
-                        "https:\/\/schema.org\/Thursday": "Thursday",
-                        "https:\/\/schema.org\/Friday": "Friday",
-                        "https:\/\/schema.org\/Saturday": "Saturday",
-                        "https:\/\/schema.org\/Sunday": "Sunday"
-                    },
-                    "default_value": false,
-                    "return_format": "value",
-                    "multiple": 0,
-                    "allow_null": 0,
-                    "ui": 0,
-                    "ajax": 0,
-                    "placeholder": "",
-                    "allow_custom": 0,
-                    "search_placeholder": "",
                     "parent_repeater": "field_65a66d8cadeef"
                 },
                 {
