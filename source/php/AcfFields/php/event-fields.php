@@ -19,6 +19,8 @@
                 'class' => '',
                 'id' => '',
             ),
+            'is_publicly_hidden' => 0,
+            'is_privately_hidden' => 1,
             'return_format' => 'array',
             'library' => 'uploadedTo',
             'min_width' => '',
@@ -150,6 +152,8 @@
                 'class' => '',
                 'id' => '',
             ),
+            'is_publicly_hidden' => 1,
+            'is_privately_hidden' => 0,
             'choices' => array(
                 'https://schema.org/EventScheduled' => __('Schemalagt', 'api-event-manager'),
                 'https://schema.org/EventRescheduled' => __('Omplanerat', 'api-event-manager'),
@@ -163,8 +167,6 @@
             'ui' => 0,
             'ajax' => 0,
             'placeholder' => '',
-            'allow_custom' => 0,
-            'search_placeholder' => '',
         ),
         6 => array(
             'center_lat' => 53.55064,
@@ -190,6 +192,8 @@
                 'class' => '',
                 'id' => '',
             ),
+            'is_publicly_hidden' => 0,
+            'is_privately_hidden' => 0,
             'leaflet_map' => '{"lat":53.55064,"lng":10.00065,"zoom":12,"layers":["OpenStreetMap.Mapnik"],"markers":[]}',
         ),
         7 => array(

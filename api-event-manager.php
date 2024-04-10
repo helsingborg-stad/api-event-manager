@@ -205,3 +205,11 @@ $hooksRegistrar->register($frontendFormStyle);
 /* Fill Taxonomy selectors (TODO: Move to appropriate location) */ 
 new \EventManager\AcfFieldContentModifiers\FilterAcfAudienceSelectField($wpService);
 new \EventManager\AcfFieldContentModifiers\FilterAcfOrganizerSelectField($wpService);
+
+/**
+ * Field setting hide public
+ */
+$fieldSettingHidePublic = new \EventManager\FieldSettingHidePublic($wpService, $acfService);
+$fieldSettingHidePublic->addHooks();
+$fieldSettingHidePrivate = new \EventManager\FieldSettingHidePrivate($wpService, $acfService);
+$fieldSettingHidePrivate->addHooks();
