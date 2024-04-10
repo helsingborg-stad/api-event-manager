@@ -169,12 +169,12 @@
             'placeholder' => '',
         ),
         6 => array(
-            'center_lat' => 53.55064,
-            'center_lng' => 10.00065,
-            'zoom' => 12,
+            'center_lat' => 59.1083083,
+            'center_lng' => 13.8208008,
+            'zoom' => 6,
             'height' => 400,
             'return_format' => 'raw',
-            'allow_map_layers' => 1,
+            'allow_map_layers' => 0,
             'max_markers' => 1,
             'layers' => array(
                 0 => 'OpenStreetMap.Mapnik',
@@ -194,7 +194,7 @@
             ),
             'is_publicly_hidden' => 0,
             'is_privately_hidden' => 0,
-            'leaflet_map' => '{"lat":53.55064,"lng":10.00065,"zoom":12,"layers":["OpenStreetMap.Mapnik"],"markers":[]}',
+            'leaflet_map' => '{"lat":59.1083083,"lng":13.8208008,"zoom":6,"layers":["OpenStreetMap.Mapnik"],"markers":[]}',
         ),
         7 => array(
             'key' => 'field_65a4f6af50302',
