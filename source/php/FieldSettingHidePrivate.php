@@ -13,7 +13,7 @@ class FieldSettingHidePrivate implements Hookable
     public function addHooks(): void
     {
         $this->wpService->addAction('acf/render_field_settings', [$this, 'addPublicFieldOption']);
-        $this->wpService->addAction('acf/prepare_field', [$this, 'hideFieldFromFrontendForms']);
+        $this->wpService->addAction('acf/prepare_field', [$this, 'hideFieldFromBackendForms']);
     }
 
     public function addPublicFieldOption($field) {
@@ -28,7 +28,7 @@ class FieldSettingHidePrivate implements Hookable
         );
     }
 
-    public function hideFieldFromFrontendForms($field) {
+    public function hideFieldFromBackendForms($field) {
         //Set default
         if (!isset($field['is_privately_hidden'])) {
             $field['is_privately_hidden'] = 0;
