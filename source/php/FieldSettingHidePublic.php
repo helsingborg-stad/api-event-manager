@@ -29,18 +29,14 @@ class FieldSettingHidePublic implements Hookable
     }
 
     public function hideFieldFromFrontendForms($field) {
-        //Set default
-        if (!isset($field['is_publicly_hidden'])) {
-            $field['is_publicly_hidden'] = 0;
-        }
 
         // Do not hide fields in admin
         if($this->wpService->isAdmin()) {
             return $field;
         }
 
-        //Hide field from frontend forms
-        if ($field['is_publicly_hidden'] == 1) {
+        //Hide field from backend forms
+        if (isset($field['is_publicly_hidden']) && $field['is_publicly_hidden'] == 1) {
             return false;
         }
 
