@@ -193,49 +193,17 @@ $syncRoleCapabilitiesToExistingUsers = new \EventManager\User\SyncRoleCapabiliti
 $hooksRegistrar->register($userRoleRegistrar);
 $hooksRegistrar->register($syncRoleCapabilitiesToExistingUsers);
 
-$memberCanEditPostCallback = new \EventManager\User\Capabilities\UserCan\MemberUserCanEditPost($wpService, $acfService);
-
-$memberCanEditPostCap       = new \EventManager\User\Capabilities\CapabilityUsingCallback('edit_post', $memberCanEditPostCallback);
-$memberCanEditOthersPostCap = new \EventManager\User\Capabilities\CapabilityUsingCallback('edit_others_posts', $memberCanEditPostCallback);
-
-$capabilities = [
-    $memberCanEditPostCap,
-    $memberCanEditOthersPostCap
-];
 
 /**
- * Dynamically filter a user's capabilities.
- *
- * @since 2.0.0
- * @since 3.7.0 Added the `$user` parameter.
- *
- * @param bool[]   $allcaps Array of key/value pairs where keys represent a capability name
- *                          and boolean values represent whether the user has that capability.
- * @param string[] $caps    Required primitive capabilities for the requested capability.
- * @param array    $args {
- *     Arguments that accompany the requested capability check.
- *
- *     @type string    $0 Requested capability.
- *     @type int       $1 Concerned user ID.
- *     @type mixed  ...$2 Optional second and further parameters, typically object ID.
- * }
- * @param WP_User  $user    The user object.
+ * User capabilities
  */
-add_filter('user_has_cap', function ($allcaps, $caps, $args, $user) use ($capabilities) {
+$memberCanEditPostCallback = new \EventManager\User\Capabilities\UserCan\MemberUserCanEditPost($wpService, $acfService);
+$capabilityRegistrar       = new \EventManager\User\Capabilities\CapabilityRegistrar([
+    new \EventManager\User\Capabilities\CapabilityUsingCallback('edit_post', $memberCanEditPostCallback),
+    new \EventManager\User\Capabilities\CapabilityUsingCallback('edit_others_posts', $memberCanEditPostCallback)
+], $wpService);
 
-    foreach ($capabilities as $capability) {
-        if ($capability->getName() === $args[0]) {
-            $userCan = $capability->userCan($user->ID, array_slice($args, 2));
-
-            if ($userCan) {
-                // Set all capabilities to true
-                $allcaps = array_fill_keys($caps, true);
-            }
-        }
-    }
-
-    return $allcaps;
-}, 10, 4);
+$hooksRegistrar->register($capabilityRegistrar);
 
 /**
  * Taxonomies
