@@ -45,6 +45,8 @@ class FrontendForm extends \Modularity\Module
         $this->description  = __('Module for creating public event form', 'api-event-manager');
 
         $this->wpService = new NativeWpService(); // TODO: use custom modularity middleware.
+
+        
     }
 
     public function data(): array
@@ -69,6 +71,7 @@ class FrontendForm extends \Modularity\Module
             'post_title'            => true,
             'post_content'          => false,
             'field_groups'          => $this->fieldGroups,
+            'form_attributes' => ['class' => 'acf-form js-form-validation js-form-validation'],
             'uploader'              => 'basic',
             'updated_message'       => __("The event has been submitted for review. You will be notified when the event has been published.", 'acf'),
             'html_updated_message'  => $htmlUpdatedMessage,
@@ -92,6 +95,7 @@ class FrontendForm extends \Modularity\Module
     public function script(): void
     {
         acf_form_head();
+        
     }
 
     public function style(): void

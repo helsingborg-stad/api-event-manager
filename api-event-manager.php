@@ -4,7 +4,7 @@
  * Plugin Name:       Event Manager
  * Plugin URI:        https://github.com/helsingborg-stad/api-event-manager
  * Description:       Creates a api that may be used to manage events
- * Version: 2.19.0
+ * Version: 2.20.1
  * Author:            Thor Brink, Sebastian Thulin @ Helsingborg Stad
  * Author URI:        https://github.com/helsingborg-stad
  * License:           MIT
@@ -224,3 +224,15 @@ $frontendFormStyle = new \EventManager\AssetRegistry\FrontEndFormStyle($wpServic
 
 $hooksRegistrar->register($frontendForm);
 $hooksRegistrar->register($frontendFormStyle);
+
+/* Fill Taxonomy selectors (TODO: Move to appropriate location) */ 
+new \EventManager\AcfFieldContentModifiers\FilterAcfAudienceSelectField($wpService);
+new \EventManager\AcfFieldContentModifiers\FilterAcfOrganizerSelectField($wpService);
+
+/**
+ * Field setting hide public
+ */
+$fieldSettingHidePublic = new \EventManager\FieldSettingHidePublic($wpService, $acfService);
+$fieldSettingHidePublic->addHooks();
+$fieldSettingHidePrivate = new \EventManager\FieldSettingHidePrivate($wpService, $acfService);
+$fieldSettingHidePrivate->addHooks();

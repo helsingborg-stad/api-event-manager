@@ -1,6 +1,6 @@
 <?php
 
-namespace EventManager\Tests\FieldSettingHidePublic;
+namespace EventManager\Tests\FieldSettingHide;
 
 use EventManager\FieldSettingHidePublic;
 use EventManager\Services\WPService\WPService;
