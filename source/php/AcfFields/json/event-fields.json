@@ -208,8 +208,6 @@
                 "id": ""
             },
             "choices": {
-                "374": "Organization A",
-                "375": "Organization B"
             },
             "default_value": false,
             "return_format": "value",
@@ -234,10 +232,6 @@
                 "id": ""
             },
             "choices": {
-                "370": "Audience A",
-                "371": "Audience B",
-                "372": "Audience C",
-                "373": "Audience D"
             },
             "default_value": false,
             "return_format": "value",
@@ -715,4 +709,4 @@
     "description": "",
     "show_in_rest": 0
 }]
-
+

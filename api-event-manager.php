@@ -225,9 +225,15 @@ $frontendFormStyle = new \EventManager\AssetRegistry\FrontEndFormStyle($wpServic
 $hooksRegistrar->register($frontendForm);
 $hooksRegistrar->register($frontendFormStyle);
 
-/* Fill Taxonomy selectors (TODO: Move to appropriate location) */ 
-new \EventManager\AcfFieldContentModifiers\FilterAcfAudienceSelectField($wpService);
-new \EventManager\AcfFieldContentModifiers\FilterAcfOrganizerSelectField($wpService);
+/**
+ * ACF Field content modifiers
+ */
+$acfFieldContentModifierRegistrar = new \EventManager\AcfFieldContentModifiers\Registrar([
+    new \EventManager\AcfFieldContentModifiers\FilterAcfAudienceSelectField('field_65a52a6374b0c', $wpService),
+    new \EventManager\AcfFieldContentModifiers\FilterAcfOrganizerSelectField('field_65a4f6af50302', $wpService)
+], $wpService);
+
+$hooksRegistrar->register($acfFieldContentModifierRegistrar);
 
 /**
  * Field setting hide public

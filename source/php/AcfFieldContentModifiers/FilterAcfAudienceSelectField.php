@@ -2,28 +2,31 @@
 
 namespace EventManager\AcfFieldContentModifiers;
 
-use EventManager\AcfFieldContentModifiers\AcfSelectFieldContentModifier;
+use EventManager\Services\WPService\GetTerms;
 
-class FilterAcfAudienceSelectField extends AcfSelectFieldContentModifier
+class FilterAcfAudienceSelectField implements IAcfFieldContentModifier
 {
-    public function getFieldKey(): string {
-        return 'field_65a52a6374b0c';
+    public function __construct(private string $fieldKey, private GetTerms $wpService)
+    {
     }
-    public function getFieldValue(): array {
-        $terms = get_terms( array(
+
+    public function getFieldKey(): string
+    {
+        return $this->fieldKey;
+    }
+
+    public function modifyFieldContent(array $field): array
+    {
+        $terms = $this->wpService->getTerms(array(
             'taxonomy'   => 'audience',
             'hide_empty' => false,
             'fields'     => 'id=>name'
         ));
 
-        if (is_wp_error($terms)) {
-            return [];
+        if (is_array($terms) && !empty($terms)) {
+            $field['choices'] = $terms;
         }
 
-        if (empty($terms)) {
-            return [];
-        }
-        
-        return $terms;
+        return $field;
     }
 }
