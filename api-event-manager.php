@@ -186,12 +186,24 @@ $hooksRegistrar->register($eventPostType);
 /**
  * User roles
  */
-$organizationMemberUserRole          = new \EventManager\User\Role('organization_member', 'Organization Member', ['read', 'edit_posts']);
+$organizationMemberUserRole          = new \EventManager\User\Role('organization_member', 'Organization Member', ['edit_post', 'edit_others_posts']);
 $userRoleRegistrar                   = new \EventManager\User\RoleRegistrar([$organizationMemberUserRole], $wpService);
 $syncRoleCapabilitiesToExistingUsers = new \EventManager\User\SyncRoleCapabilitiesToExistingUsers([$organizationMemberUserRole], $wpService);
 
 $hooksRegistrar->register($userRoleRegistrar);
 $hooksRegistrar->register($syncRoleCapabilitiesToExistingUsers);
+
+
+/**
+ * User capabilities
+ */
+$memberCanEditPostCallback = new \EventManager\User\Capabilities\UserCan\MemberUserCanEditPost($wpService, $acfService);
+$capabilityRegistrar       = new \EventManager\User\Capabilities\CapabilityRegistrar([
+    new \EventManager\User\Capabilities\CapabilityUsingCallback('edit_post', $memberCanEditPostCallback),
+    new \EventManager\User\Capabilities\CapabilityUsingCallback('edit_others_posts', $memberCanEditPostCallback)
+], $wpService);
+
+$hooksRegistrar->register($capabilityRegistrar);
 
 /**
  * Taxonomies
