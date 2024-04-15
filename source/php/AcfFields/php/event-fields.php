@@ -1,7 +1,9 @@
 <?php 
 
-if (function_exists('acf_add_local_field_group')) {
-    acf_add_local_field_group(array(
+
+if (function_exists('acf_add_local_field_group')) {
+
+    acf_add_local_field_group(array(
     'key' => 'group_65a115157a046',
     'title' => __('Event Fields', 'api-event-manager'),
     'fields' => array(
@@ -211,8 +213,6 @@
                 'id' => '',
             ),
             'choices' => array(
-                374 => __('Organization A', 'api-event-manager'),
-                375 => __('Organization B', 'api-event-manager'),
             ),
             'default_value' => false,
             'return_format' => 'value',
@@ -237,10 +237,6 @@
                 'id' => '',
             ),
             'choices' => array(
-                370 => __('Audience A', 'api-event-manager'),
-                371 => __('Audience B', 'api-event-manager'),
-                372 => __('Audience C', 'api-event-manager'),
-                373 => __('Audience D', 'api-event-manager'),
             ),
             'default_value' => false,
             'return_format' => 'value',
@@ -719,4 +715,5 @@
     'description' => '',
     'show_in_rest' => 0,
 ));
-}
+
+}
