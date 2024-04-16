@@ -3,7 +3,7 @@
 if (function_exists('acf_add_local_field_group')) {
     acf_add_local_field_group(array(
     'key' => 'group_661e41bb1781f',
-    'title' => __('Step 1', 'api-event-manager'),
+    'title' => __('Step 1 [ABC123]', 'api-event-manager'),
     'fields' => array(
         0 => array(
             'key' => 'field_661e41bdd59fa',

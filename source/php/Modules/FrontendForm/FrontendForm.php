@@ -17,6 +17,7 @@ use EventManager\Services\FileSystem\FileSystemFactory;
 use EventManager\Services\WPService\Implementations\NativeWpService;
 use PharIo\Manifest\Manifest;
 use Throwable;
+use function acf_get_field_groups;
 
 /**
  * @property string $description
@@ -60,25 +61,50 @@ class FrontendForm extends \Modularity\Module
         $htmlUpdatedMessage = $this->renderView('partials.message', [
             'text' => '%s',
             'icon' => ['name' => 'info'],
-            'type' => 'warning'
+            'type' => 'sucess'
         ]);
 
         $htmlSubmitButton = $this->renderView('partials.submit', [
             'text' => __('Create Event', 'api-event-manager')
         ]);
 
-        $currentStep = $this->getFieldGroup($this->formStepKey);
+        //Collect state data
+        $currentStep        = $this->getCurrentFormStep($this->formStepKey); // eg: 1
+        $currentStepKey     = $this->getFieldGroup($this->formStepKey); // eg: group_abc123
+        $isValidStep        = $this->isValidStep($this->fieldGroups, $currentStep);
 
-        var_dump($currentStep);
+        $editMode           = $this->toggleEditMode($currentStep);
 
-        return [
-        'form' => function () use ($htmlUpdatedMessage, $htmlSubmitButton, $currentStep) {
+        //Show error if step is not valid
+        if(!$isValidStep) {
+            return [
+                'error' => $this->renderView('partials.message', [
+                    'text' => __('Whoops! It looks like we ran out of form.', 'api-event-manager'),
+                    'icon' => ['name' => 'error'],
+                    'type' => 'sucess'
+                ])
+            ];
+        } else {
+            $data['error'] = false;
+        }
+
+        //Create step objects
+        foreach($this->fieldGroups as $fieldGroup) {
+            $data['steps'][$fieldGroup] = (object) [
+                'title' => $this->getStepTitle($fieldGroup),
+                'isCurrent' => ($fieldGroup === $currentStepKey),
+                'isPassed' => $this->isStepPassed($fieldGroup, $this->fieldGroups),
+            ];
+        }
+
+        //Get current step form
+        $data['form'] = (function () use ($htmlUpdatedMessage, $htmlSubmitButton, $currentStepKey, $editMode) {
             acf_form([
                 'post_id'               => 'new_post',
-                'post_title'            => true,
+                'post_title'            => ($editMode === 'update_post'),
                 'post_content'          => false,
                 'field_groups'          => [
-                    $currentStep
+                    $currentStepKey
                 ],
                 'form_attributes' => ['class' => 'acf-form js-form-validation js-form-validation'],
                 'uploader'              => 'basic',
@@ -86,14 +112,34 @@ class FrontendForm extends \Modularity\Module
                 'html_updated_message'  => $htmlUpdatedMessage,
                 'html_submit_button'    => $htmlSubmitButton,
                 'new_post'              => [
-                'post_type'   => 'event',
-                'post_status' => 'draft'
+                    'post_type'   => 'event',
+                    'post_status' => 'draft'
                 ],
                 'instruction_placement' => 'field',
                 'submit_value'          => __('Create Event', 'api-event-manager')
             ]);
-        }
-        ];
+        });
+
+        return $data;
+    }
+
+    /**
+     * Retrive the step title, based on the step key.
+     * If no title is found, the default title will be returned.
+     *
+     * @param string $stepKey The key of the step.
+     * @param string $stepTitle The default title of the step.
+     * 
+     * @return string The title of the step.
+     */
+    public function getStepTitle($stepKey, $stepTitle = ''): string {
+        $fieldGroups = acf_get_field_groups();
+        array_walk($fieldGroups, function($fieldGroup) use ($stepKey, &$stepTitle) {
+            if($fieldGroup['key'] === $stepKey) {
+                $stepTitle = $fieldGroup['title'];
+            }
+        });
+        return $stepTitle;
     }
 
     public function template(): string
@@ -197,6 +243,23 @@ class FrontendForm extends \Modularity\Module
      * @return string The edit mode, either 'edit' or 'create'.
      */
     private function toggleEditMode(int $step): string {
-        return empty($step) ? 'edit' : 'create';
+        return empty($step) ? 'update_post' : 'new_post';
+    }
+
+    private function isLastStep($currentStep, $fieldGroups) {
+        return $currentStep === (count($fieldGroups) + 1);
+    }
+
+    //Function that checks if this step is passed using array_search
+    private function isStepPassed($currentStep, $fieldGroups) {
+        return array_search($currentStep, $fieldGroups) !== false;
+    }
+
+    public function isCurrentStep($fieldGroup, $currentStepKey){
+        return ($fieldGroup === $currentStepKey); 
+    }
+
+    public function isValidStep($fieldGroups, $currentStepKey){
+        return count($fieldGroups) >= $currentStepKey;
     }
 }

@@ -191,6 +191,7 @@
             },
             "is_publicly_hidden": 0,
             "is_privately_hidden": 0,
+            "hide_admin": 0,
             "leaflet_map": "{\"lat\":59.1083083,\"lng\":13.8208008,\"zoom\":6,\"layers\":[\"OpenStreetMap.Mapnik\"],\"markers\":[]}"
         },
         {
@@ -208,6 +209,8 @@
                 "id": ""
             },
             "choices": {
+                "374": "Organization A",
+                "375": "Organization B"
             },
             "default_value": false,
             "return_format": "value",
@@ -232,6 +235,10 @@
                 "id": ""
             },
             "choices": {
+                "370": "Audience A",
+                "371": "Audience B",
+                "372": "Audience C",
+                "373": "Audience D"
             },
             "default_value": false,
             "return_format": "value",
@@ -240,50 +247,6 @@
             "ui": 0,
             "ajax": 0,
             "placeholder": ""
-        },
-        {
-            "key": "field_65a52bf7f7e4d",
-            "label": "Minimum age to attend",
-            "name": "typicalAgeRangeStart",
-            "aria-label": "",
-            "type": "range",
-            "instructions": "The optimal maximum age for this event.",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "50",
-                "class": "",
-                "id": ""
-            },
-            "is_publicly_hidden": 0,
-            "is_privately_hidden": 0,
-            "default_value": 0,
-            "min": "",
-            "max": 119,
-            "step": "",
-            "prepend": "",
-            "append": "years"
-        },
-        {
-            "key": "field_65a52c24f7e4e",
-            "label": "Maximum age to attend",
-            "name": "typicalAgeRangeEnd",
-            "aria-label": "",
-            "type": "range",
-            "instructions": "The optimal maximum age for this event.",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "50",
-                "class": "",
-                "id": ""
-            },
-            "default_value": 120,
-            "min": 5,
-            "max": 120,
-            "step": "",
-            "prepend": "",
-            "append": "years"
         },
         {
             "key": "field_65a66d8cadeef",
@@ -687,6 +650,13 @@
                 "operator": "==",
                 "value": "event"
             }
+        ],
+        [
+            {
+                "param": "af_form",
+                "operator": "==",
+                "value": "form_661e607554317"
+            }
         ]
     ],
     "menu_order": 0,
@@ -709,4 +679,4 @@
     "description": "",
     "show_in_rest": 0
 }]
-
+

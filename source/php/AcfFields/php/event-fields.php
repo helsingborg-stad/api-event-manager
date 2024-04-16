@@ -1,9 +1,7 @@
 <?php 
 
-
-if (function_exists('acf_add_local_field_group')) {
-
-    acf_add_local_field_group(array(
+if (function_exists('acf_add_local_field_group')) {
+    acf_add_local_field_group(array(
     'key' => 'group_65a115157a046',
     'title' => __('Event Fields', 'api-event-manager'),
     'fields' => array(
@@ -196,6 +194,7 @@ if (function_exists('acf_add_local_field_group')) {
             ),
             'is_publicly_hidden' => 0,
             'is_privately_hidden' => 0,
+            'hide_admin' => 0,
             'leaflet_map' => '{"lat":59.1083083,"lng":13.8208008,"zoom":6,"layers":["OpenStreetMap.Mapnik"],"markers":[]}',
         ),
         7 => array(
@@ -213,6 +212,8 @@ if (function_exists('acf_add_local_field_group')) {
                 'id' => '',
             ),
             'choices' => array(
+                374 => __('Organization A', 'api-event-manager'),
+                375 => __('Organization B', 'api-event-manager'),
             ),
             'default_value' => false,
             'return_format' => 'value',
@@ -237,6 +238,10 @@ if (function_exists('acf_add_local_field_group')) {
                 'id' => '',
             ),
             'choices' => array(
+                370 => __('Audience A', 'api-event-manager'),
+                371 => __('Audience B', 'api-event-manager'),
+                372 => __('Audience C', 'api-event-manager'),
+                373 => __('Audience D', 'api-event-manager'),
             ),
             'default_value' => false,
             'return_format' => 'value',
@@ -247,50 +252,6 @@ if (function_exists('acf_add_local_field_group')) {
             'placeholder' => '',
         ),
         9 => array(
-            'key' => 'field_65a52bf7f7e4d',
-            'label' => __('Minimum age to attend', 'api-event-manager'),
-            'name' => 'typicalAgeRangeStart',
-            'aria-label' => '',
-            'type' => 'range',
-            'instructions' => __('The optimal maximum age for this event.', 'api-event-manager'),
-            'required' => 0,
-            'conditional_logic' => 0,
-            'wrapper' => array(
-                'width' => '50',
-                'class' => '',
-                'id' => '',
-            ),
-            'is_publicly_hidden' => 0,
-            'is_privately_hidden' => 0,
-            'default_value' => 0,
-            'min' => '',
-            'max' => 119,
-            'step' => '',
-            'prepend' => '',
-            'append' => __('years', 'api-event-manager'),
-        ),
-        10 => array(
-            'key' => 'field_65a52c24f7e4e',
-            'label' => __('Maximum age to attend', 'api-event-manager'),
-            'name' => 'typicalAgeRangeEnd',
-            'aria-label' => '',
-            'type' => 'range',
-            'instructions' => __('The optimal maximum age for this event.', 'api-event-manager'),
-            'required' => 0,
-            'conditional_logic' => 0,
-            'wrapper' => array(
-                'width' => '50',
-                'class' => '',
-                'id' => '',
-            ),
-            'default_value' => 120,
-            'min' => 5,
-            'max' => 120,
-            'step' => '',
-            'prepend' => '',
-            'append' => __('years', 'api-event-manager'),
-        ),
-        11 => array(
             'key' => 'field_65a66d8cadeef',
             'label' => __('Occasions', 'api-event-manager'),
             'name' => 'occasions',
@@ -617,7 +578,7 @@ if (function_exists('acf_add_local_field_group')) {
                 ),
             ),
         ),
-        12 => array(
+        10 => array(
             'key' => 'field_6613fdbd6090e',
             'label' => __('Prices', 'api-event-manager'),
             'name' => 'pricesList',
@@ -694,6 +655,13 @@ if (function_exists('acf_add_local_field_group')) {
                 'value' => 'event',
             ),
         ),
+        1 => array(
+            0 => array(
+                'param' => 'af_form',
+                'operator' => '==',
+                'value' => 'form_661e607554317',
+            ),
+        ),
     ),
     'menu_order' => 0,
     'position' => 'acf_after_title',
@@ -715,5 +683,4 @@ if (function_exists('acf_add_local_field_group')) {
     'description' => '',
     'show_in_rest' => 0,
 ));
-
-}
+}
