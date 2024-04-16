@@ -9,6 +9,7 @@ use WP_REST_Response;
 use WP_Role;
 use WP_Screen;
 use WP_Term;
+use WP_User;
 
 class NativeWpService implements WPService
 {
@@ -295,5 +296,10 @@ class NativeWpService implements WPService
     public function getUsers(array $args): array
     {
         return get_users($args);
+    }
+
+    public function getCurrentUser(): WP_User
+    {
+        return wp_get_current_user();
     }
 }
