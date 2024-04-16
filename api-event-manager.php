@@ -230,7 +230,7 @@ $hooksRegistrar->register($frontendFormStyle);
  */
 $acfFieldContentModifierRegistrar = new \EventManager\AcfFieldContentModifiers\Registrar([
     new \EventManager\AcfFieldContentModifiers\FilterAcfAudienceSelectField('field_65a52a6374b0c', $wpService),
-    new \EventManager\AcfFieldContentModifiers\FilterAcfOrganizerSelectField('field_65a4f6af50302', $wpService)
+    new \EventManager\AcfFieldContentModifiers\FilterAcfOrganizerSelectField('field_65a4f6af50302', $wpService, $acfService)
 ], $wpService);
 
 $hooksRegistrar->register($acfFieldContentModifierRegistrar);
