@@ -3,7 +3,8 @@
     'color' => 'primary',
     'style' => 'filled',
     'type' => 'submit',
-    'icon' => 'edit_calendar',
-    'reversePositions' => true
+    'icon' => 'chevron_right',
+    'reversePositions' => false,
+    'classList' => $classList ?? []
 ])
 @endbutton

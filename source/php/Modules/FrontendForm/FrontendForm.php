@@ -29,6 +29,7 @@ class FrontendForm extends \Modularity\Module
 {
     public $slug     = 'event-form';
     public $supports = [];
+    public $hidden   = false;
 
     // The field groups that should be displayed in the form.
     private $fieldGroups = [
@@ -52,6 +53,12 @@ class FrontendForm extends \Modularity\Module
         $this->wpService = new NativeWpService(); // TODO: use custom modularity middleware.
 
         add_filter('query_vars',[$this, 'registerFormStepQueryVar']); // add from wpservice
+
+        //TODO: Resolve issue with modularity style/script not loading in drafts.
+        add_action('wp_enqueue_scripts', function() {
+            $this->wpService->enqueueStyle('event-manager-frontend-form');
+        });
+        
     }
 
     public function data(): array
@@ -64,16 +71,16 @@ class FrontendForm extends \Modularity\Module
             'type' => 'sucess'
         ]);
 
-        $htmlSubmitButton = $this->renderView('partials.submit', [
-            'text' => __('Create Event', 'api-event-manager')
-        ]);
-
         //Collect state data
         $currentStep        = $this->getCurrentFormStep($this->formStepKey); // eg: 1
+        $previousStep       = $this->getPreviousFormStep($this->formStepKey);
+        $nextStep           = $this->getNextFormStep($this->formStepKey);
         $currentStepKey     = $this->getFieldGroup($this->formStepKey); // eg: group_abc123
         $isValidStep        = $this->isValidStep($this->fieldGroups, $currentStep);
-
+        $isLastStep         = $this->isLastStep($currentStep, $this->fieldGroups);
+        $isFirstStep        = $currentStep === 1;
         $editMode           = $this->toggleEditMode($currentStep);
+
 
         //Show error if step is not valid
         if(!$isValidStep) {
@@ -93,14 +100,17 @@ class FrontendForm extends \Modularity\Module
             $data['steps'][$fieldGroup] = (object) [
                 'title' => $this->getStepTitle($fieldGroup),
                 'isCurrent' => ($fieldGroup === $currentStepKey),
-                'isPassed' => $this->isStepPassed($fieldGroup, $this->fieldGroups),
+                'isPassed' => $this->isStepPassed($currentStep, $fieldGroup, $this->fieldGroups),
             ];
         }
 
+        $htmlSubmitButton = $this->getButtons($isLastStep, $isFirstStep);
+
         //Get current step form
-        $data['form'] = (function () use ($htmlUpdatedMessage, $htmlSubmitButton, $currentStepKey, $editMode) {
+        $data['form'] = (function () use ($htmlUpdatedMessage, $htmlSubmitButton, $currentStepKey, $currentStep, $editMode) {
             acf_form([
                 'post_id'               => 'new_post',
+                'return'                => '%post_url%&step=' . ($currentStep + 1),
                 'post_title'            => ($editMode === 'update_post'),
                 'post_content'          => false,
                 'field_groups'          => [
@@ -154,7 +164,7 @@ class FrontendForm extends \Modularity\Module
 
     public function style(): void
     {
-        $this->wpService->enqueueStyle('event-manager-frontend-form');
+        //$this->wpService->enqueueStyle('event-manager-frontend-form');
     }
 
     /**
@@ -184,6 +194,33 @@ class FrontendForm extends \Modularity\Module
         }
 
         return false;
+    }
+
+    private function getButtons($isLastStep, $isFirstStep): string {
+        $navItems = [];
+        if($isLastStep) {
+            $navItems[] = $this->renderView('partials.previous', [
+                'text' => __('Previous', 'api-event-manager')
+            ]);
+            $navItems[] = $this->renderView('partials.submit', [
+                'text' => __('Submit Event', 'api-event-manager')
+            ]);
+        } elseif($isFirstStep) {
+            $navItems[] = $this->renderView('partials.next', [
+                'text' => __('Next', 'api-event-manager'),
+                'classList' => ['u-margin__left--auto']
+            ]);
+        } else {
+            $navItems[] = $this->renderView('partials.previous', [
+                'text' => __('Previous', 'api-event-manager')
+            ]);
+            $navItems[] = $this->renderView('partials.next', [
+                'text' => __('Next', 'api-event-manager')
+            ]);
+        }
+        return $this->renderView('partials.button-wrapper', [
+            'navItems' => $navItems
+        ]);
     }
 
     /**
@@ -230,10 +267,32 @@ class FrontendForm extends \Modularity\Module
      */
     private function getCurrentFormStep(string $stepkey): int {
         $step = get_query_var($stepkey, 1);
-        if(is_numeric($step)) {
+        if(is_numeric($step) && $step > 0) {
             return $step;
         }
         return 1;
+    }
+
+    /**
+     * Get the previous form step based on the given step key.
+     *
+     * @param string $stepkey The step key.
+     * @return int The previous form step.
+     */
+    private function getPreviousFormStep(string $stepkey): int
+    {
+        return $this->getCurrentFormStep($stepkey) - 1;
+    }
+
+    /**
+     * Get the next form step based on the given step key.
+     *
+     * @param string $stepkey The step key.
+     * @return int The next form step.
+     */
+    private function getNextFormStep(string $stepkey): int
+    {
+        return $this->getCurrentFormStep($stepkey) + 1;
     }
 
     /**
@@ -242,24 +301,60 @@ class FrontendForm extends \Modularity\Module
      * @param int $step The step value to determine the edit mode.
      * @return string The edit mode, either 'edit' or 'create'.
      */
-    private function toggleEditMode(int $step): string {
+    private function toggleEditMode(int $step): string
+    {
         return empty($step) ? 'update_post' : 'new_post';
     }
-
-    private function isLastStep($currentStep, $fieldGroups) {
-        return $currentStep === (count($fieldGroups) + 1);
+    
+    /**
+     * Checks if the current step is the last step in the form.
+     *
+     * @param int $currentStep The current step in the form.
+     * @param array $fieldGroups An array of field groups in the form.
+     * @return bool Returns true if the current step is the last step, false otherwise.
+     */
+    private function isLastStep($currentStep, $fieldGroups): bool
+    {
+        return $currentStep === count($fieldGroups);
     }
 
-    //Function that checks if this step is passed using array_search
-    private function isStepPassed($currentStep, $fieldGroups) {
-        return array_search($currentStep, $fieldGroups) !== false;
+    /**
+     * Checks if a step is passed based on the current step, current step key, and field groups.
+     *
+     * @param int $currentStep The current step number.
+     * @param string $currentStepKey The step key to check.
+     * @param array $fieldGroups The array of field groups.
+     * @return bool Returns true if the step is passed, false otherwise.
+     */
+    private function isStepPassed($currentStep, $currentStepKey, $fieldGroups): bool
+    {
+        if($currentStep <= array_search($currentStepKey, $fieldGroups)) {
+            return true;
+        }
+        return false;
     }
 
-    public function isCurrentStep($fieldGroup, $currentStepKey){
+    /**
+     * Checks if the given field group is the current step.
+     *
+     * @param mixed $fieldGroup The field group to check.
+     * @param mixed $currentStepKey The current step key.
+     * @return bool Returns true if the field group is the current step, false otherwise.
+     */
+    public function isCurrentStep($fieldGroup, $currentStepKey): bool 
+    {
         return ($fieldGroup === $currentStepKey); 
     }
 
-    public function isValidStep($fieldGroups, $currentStepKey){
+    /**
+     * Checks if the current step is valid based on the given field groups and current step key.
+     *
+     * @param array $fieldGroups An array of field groups.
+     * @param int $currentStepKey The current step key.
+     * @return bool Returns true if the current step is valid, false otherwise.
+     */
+    public function isValidStep($fieldGroups, $currentStepKey): bool
+    {
         return count($fieldGroups) >= $currentStepKey;
     }
 }
