@@ -14,7 +14,13 @@ class SetIsAccessibleForFree implements CommandInterface
 
     public function execute(): void
     {
-        $free = !isset($this->meta[self::META_KEY]) || empty($this->meta[self::META_KEY]);
-        $this->schema->isAccessibleForFree($free);
+        if (!isset($this->meta[self::META_KEY]) || empty($this->meta[self::META_KEY])) {
+            $this->schema->isAccessibleForFree(true);
+            return;
+        }
+
+        $listWithPricesHigherThanZero = array_filter($this->meta[self::META_KEY], fn($priceRow) => (int)$priceRow['price'] > 0);
+
+        $this->schema->isAccessibleForFree(empty($listWithPricesHigherThanZero));
     }
 }

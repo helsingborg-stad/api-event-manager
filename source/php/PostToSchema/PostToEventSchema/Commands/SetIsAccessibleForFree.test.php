@@ -21,16 +21,30 @@ class SetIsAccessibleForFreeTest extends TestCase
     }
 
     /**
-     * @testdox sets isAccessibleForFree to false if priceList is not empty
+     * @testdox sets isAccessibleForFree to true if no price is more than 0
      */
-    public function testExecuteWithPriceList()
+    public function testExecuteWithZeroPrice()
     {
-        $meta   = ['pricesList' => ['price']];
+        $meta   = ['pricesList' => [ ['priceLabel' => 'Standard Price', 'price' => '0'] ]];
         $schema = new \Spatie\SchemaOrg\Thing();
 
         $command = new SetIsAccessibleForFree($schema, $meta);
         $command->execute();
 
-        $this->assertEquals(false, $schema->toArray()['isAccessibleForFree']);
+        $this->assertTrue($schema->toArray()['isAccessibleForFree']);
+    }
+
+    /**
+     * @testdox sets isAccessibleForFree to false if priceList contains price greater than 0
+     */
+    public function testExecuteWithPriceList()
+    {
+        $meta   = ['pricesList' => [ ['priceLabel' => 'Standard Price', 'price' => '100'] ]];
+        $schema = new \Spatie\SchemaOrg\Thing();
+
+        $command = new SetIsAccessibleForFree($schema, $meta);
+        $command->execute();
+
+        $this->assertFalse($schema->toArray()['isAccessibleForFree']);
     }
 }
