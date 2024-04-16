@@ -19,7 +19,10 @@ class SetIsAccessibleForFree implements CommandInterface
             return;
         }
 
-        $listWithPricesHigherThanZero = array_filter($this->meta[self::META_KEY], fn($priceRow) => (int)$priceRow['price'] > 0);
+        $listWithPricesHigherThanZero = array_filter(
+            $this->meta[self::META_KEY],
+            fn($priceRow) => (int)$priceRow['price'] > 0
+        );
 
         $this->schema->isAccessibleForFree(empty($listWithPricesHigherThanZero));
     }
