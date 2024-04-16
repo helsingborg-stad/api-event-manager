@@ -31,7 +31,9 @@ class FrontendForm extends \Modularity\Module
 
     // The field groups that should be displayed in the form.
     private $fieldGroups = [
-      'group_65a115157a046'
+        'group_661e41bb1781f', // Test step 1
+        'group_661e425070deb', // Test step 2
+        'group_65a115157a046'
     ];
 
     private $blade = null;
