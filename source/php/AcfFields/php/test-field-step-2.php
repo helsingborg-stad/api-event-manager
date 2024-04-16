@@ -3,7 +3,7 @@
 if (function_exists('acf_add_local_field_group')) {
     acf_add_local_field_group(array(
     'key' => 'group_661e425070deb',
-    'title' => __('Step 2', 'api-event-manager'),
+    'title' => __('When and where?', 'api-event-manager'),
     'fields' => array(
         0 => array(
             'key' => 'field_661e425004872',
@@ -44,7 +44,7 @@
     'instruction_placement' => 'label',
     'hide_on_screen' => '',
     'active' => true,
-    'description' => '',
+    'description' => 'Give your guests the important details they need: when and where your event is happening.',
     'show_in_rest' => 0,
 ));
 }

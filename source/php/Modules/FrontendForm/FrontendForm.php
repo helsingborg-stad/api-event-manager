@@ -75,7 +75,9 @@ class FrontendForm extends \Modularity\Module
         $currentStep        = $this->getCurrentFormStep($this->formStepKey); // eg: 1
         $previousStep       = $this->getPreviousFormStep($this->formStepKey);
         $nextStep           = $this->getNextFormStep($this->formStepKey);
+        
         $currentStepKey     = $this->getFieldGroup($this->formStepKey); // eg: group_abc123
+        
         $isValidStep        = $this->isValidStep($this->fieldGroups, $currentStep);
         $isLastStep         = $this->isLastStep($currentStep, $this->fieldGroups);
         $isFirstStep        = $currentStep === 1;
@@ -99,18 +101,20 @@ class FrontendForm extends \Modularity\Module
         foreach($this->fieldGroups as $fieldGroup) {
             $data['steps'][$fieldGroup] = (object) [
                 'title' => $this->getStepTitle($fieldGroup),
+                'description' => $this->getStepDescription($fieldGroup),
                 'isCurrent' => ($fieldGroup === $currentStepKey),
-                'isPassed' => $this->isStepPassed($currentStep, $fieldGroup, $this->fieldGroups),
+                'isPassed' => $this->isStepPassed($previousStep, $fieldGroup, $this->fieldGroups),
+                'previousStep' => $previousStep,
             ];
         }
 
         $htmlSubmitButton = $this->getButtons($isLastStep, $isFirstStep);
 
         //Get current step form
-        $data['form'] = (function () use ($htmlUpdatedMessage, $htmlSubmitButton, $currentStepKey, $currentStep, $editMode) {
+        $data['form'] = (function () use ($htmlUpdatedMessage, $htmlSubmitButton, $currentStepKey, $nextStep, $editMode) {
             acf_form([
                 'post_id'               => 'new_post',
-                'return'                => '%post_url%&step=' . ($currentStep + 1),
+                'return'                => '%post_url%&step=' . $nextStep,
                 'post_title'            => ($editMode === 'update_post'),
                 'post_content'          => false,
                 'field_groups'          => [
@@ -151,6 +155,26 @@ class FrontendForm extends \Modularity\Module
         });
         return $stepTitle;
     }
+
+    /**
+     * Retrive the step description, based on the step key.
+     * If no title is found, the default title will be returned.
+     *
+     * @param string $stepKey The key of the step.
+     * @param string $stepTitle The default description of the step.
+     * 
+     * @return string The description of the step.
+     */
+    public function getStepDescription($stepKey, $stepDescription = ''): string {
+        $fieldGroups = acf_get_field_groups();
+        array_walk($fieldGroups, function($fieldGroup) use ($stepKey, &$stepDescription) {
+            if($fieldGroup['key'] === $stepKey) {
+                $stepDescription = $fieldGroup['description'];
+            }
+        });
+        return $stepDescription;
+    }
+
 
     public function template(): string
     {
@@ -266,7 +290,7 @@ class FrontendForm extends \Modularity\Module
      * @return int The current step of the form.
      */
     private function getCurrentFormStep(string $stepkey): int {
-        $step = get_query_var($stepkey, 1);
+        $step = get_query_var($stepkey, 1); //TODO: Use wp-service
         if(is_numeric($step) && $step > 0) {
             return $step;
         }
@@ -326,12 +350,12 @@ class FrontendForm extends \Modularity\Module
      * @param array $fieldGroups The array of field groups.
      * @return bool Returns true if the step is passed, false otherwise.
      */
-    private function isStepPassed($currentStep, $currentStepKey, $fieldGroups): bool
+    private function isStepPassed($previousStep, $currentStepKey, $fieldGroups): bool
     {
-        if($currentStep <= array_search($currentStepKey, $fieldGroups)) {
-            return true;
+        if($previousStep <= array_search($currentStepKey, $fieldGroups)) {
+            return false;
         }
-        return false;
+        return true;
     }
 
     /**
