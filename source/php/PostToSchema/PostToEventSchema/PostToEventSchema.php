@@ -43,6 +43,7 @@ class PostToEventSchema implements IPostToSchemaAdapter
         $commands[] = new Commands\SetAccessabilityInformation($this->event, $this->fields);
         $commands[] = new Commands\SetImage($this->event, $post->ID, $this->wpService);
         $commands[] = new Commands\SetIsAccessibleForFree($this->event, $this->fields);
+        $commands[] = new Commands\SetOffers($this->event, $this->fields);
         $commands[] = new Commands\SetLocation($this->event, $this->fields, $this->commandHelpers);
         $commands[] = new Commands\SetUrl($this->event, $this->fields);
         $commands[] = new Commands\SetOrganizer($this->event, $post->ID, $this->wpService, $this->acfService, $this->commandHelpers);
