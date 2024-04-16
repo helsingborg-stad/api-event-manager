@@ -9,6 +9,7 @@ use WP_REST_Response;
 use WP_Role;
 use WP_Screen;
 use WP_Term;
+use WP_User;
 
 class WpServiceLazyDecorator implements WPService
 {
@@ -287,6 +288,11 @@ class WpServiceLazyDecorator implements WPService
     }
 
     public function getUsers(array $args): array
+    {
+        return $this->inner->{__FUNCTION__}(...func_get_args());
+    }
+
+    public function getCurrentUser(): WP_User
     {
         return $this->inner->{__FUNCTION__}(...func_get_args());
     }

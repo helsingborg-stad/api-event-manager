@@ -47,6 +47,7 @@ interface WPService extends
     PluginsUrl,
     PluginBasename,
     AddRole,
-    GetUsers
+    GetUsers,
+    GetCurrentUser
 {
 }
