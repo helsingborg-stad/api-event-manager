@@ -13,7 +13,9 @@
 @endif
 
 @if($error === false)
-  @foreach ($steps as $groupId => $step)
+  @foreach ($steps as $stepKey => $step)
+
+
     @paper(['padding' => 4, 'classList' => ['u-margin__bottom--4']])
       <div class="u-display--flex u-justify-content--space-between">
         
@@ -23,11 +25,14 @@
               'variant' => 'h3',
               'classList' => []
           ])
+            <span class="c-typography__iteration"> 
+              {{ $step->step }}. 
+            </span>
             {{ $step->title }}
           @endtypography
         @endif
 
-        @if($step->isPassed)
+        @if($step->state->isPassed)
           @icon([
               'icon' => 'check',
               'size' => 'md',
@@ -36,6 +41,19 @@
           @endicon
         @endif
       </div>
+
+      @if($step->state->isPassed)
+        @button([
+            'href' => $step->url->edit ?? '#',
+            'text' => $step->url->text ?? 'Edit',
+            'color' => 'default',
+            'style' => 'filled',
+            'icon' => 'edit',
+            'reversePositions' => true,
+            'classList' => ['u-margin__bottom--4']
+        ])
+        @endbutton
+      @endif
 
       @if ($step->description)
         @typography([
@@ -47,7 +65,7 @@
         @endtypography
       @endif
 
-      @if($step->isCurrent)
+      @if($step->state->isCurrent)
         <div class="u-margin__top--4">
           {!! $form() !!}
         </div>
@@ -55,4 +73,13 @@
 
     @endpaper
   @endforeach
+
+  @typography([
+      'element' => 'p',
+      'variant' => 'meta',
+      'classList' => ['u-margin__top--4']
+  ])
+    {!! $disclaimer !!}
+  @endtypography
+
 @endif

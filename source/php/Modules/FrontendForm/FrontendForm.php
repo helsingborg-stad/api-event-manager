@@ -8,6 +8,8 @@
 
 namespace EventManager\Modules\FrontendForm;
 
+use EventManager\Modules\FrontendForm\FormStep;
+
 use ComponentLibrary\Init as ComponentLibraryInit;
 use EventManager\Services\WPService\EnqueueStyle;
 use EventManager\Services\WPService\WPServiceFactory;
@@ -18,6 +20,7 @@ use EventManager\Services\WPService\Implementations\NativeWpService;
 use PharIo\Manifest\Manifest;
 use Throwable;
 use function acf_get_field_groups;
+use function Patchwork\Utils\normalizePath;
 
 /**
  * @property string $description
@@ -38,7 +41,8 @@ class FrontendForm extends \Modularity\Module
         'group_65a115157a046'
     ];
 
-    private $formStepKey = 'step'; // The query parameter for the form steps.
+    private $formStepQueryParam = 'step'; // The query parameter for the form steps.
+    private $formIdQueryParam   = 'formid'; // The query parameter for the form id.
 
     private $blade = null;
 
@@ -53,6 +57,7 @@ class FrontendForm extends \Modularity\Module
         $this->wpService = new NativeWpService(); // TODO: use custom modularity middleware.
 
         add_filter('query_vars',[$this, 'registerFormStepQueryVar']); // add from wpservice
+        add_filter('query_vars',[$this, 'registerFormIdQueryVar']); // add from wpservice
 
         //TODO: Resolve issue with modularity style/script not loading in drafts.
         add_action('wp_enqueue_scripts', function() {
@@ -63,68 +68,60 @@ class FrontendForm extends \Modularity\Module
 
     public function data(): array
     {
-        $fields = $this->getFields(); //Needs to be called, otherwise a notice will be thrown.
+        //Needs to be called, otherwise a notice will be thrown.
+        $fields = $this->getFields(); 
 
-        $htmlUpdatedMessage = $this->renderView('partials.message', [
-            'text' => '%s',
-            'icon' => ['name' => 'info'],
-            'type' => 'sucess'
-        ]);
+        //Define form steps 
+        $steps = [];
+        foreach($this->fieldGroups as $index => $fieldGroup) {
+            $steps[$index + 1] = new FormStep(
+                $index + 1, 
+                $this->fieldGroups
+            );
+        }
 
-        //Collect state data
-        $currentStep        = $this->getCurrentFormStep($this->formStepKey); // eg: 1
-        $previousStep       = $this->getPreviousFormStep($this->formStepKey);
-        $nextStep           = $this->getNextFormStep($this->formStepKey);
-        
-        $currentStepKey     = $this->getFieldGroup($this->formStepKey); // eg: group_abc123
-        
-        $isValidStep        = $this->isValidStep($this->fieldGroups, $currentStep);
-        $isLastStep         = $this->isLastStep($currentStep, $this->fieldGroups);
-        $isFirstStep        = $currentStep === 1;
-        $editMode           = $this->toggleEditMode($currentStep);
+        //Set form state
+        $state = new FormState(
+            $steps, 
+            $this->formStepQueryParam
+        );
 
+        //Decorate step with state
+        foreach($steps as &$step) {
+            $step->state = new FormStepState(
+                $step, 
+                $state
+            );
+        }
 
-        //Show error if step is not valid
-        if(!$isValidStep) {
+        //Invalid step: Show error message
+        if(!$state->isValidStep) {
             return [
                 'error' => $this->renderView('partials.message', [
                     'text' => __('Whoops! It looks like we ran out of form.', 'api-event-manager'),
                     'icon' => ['name' => 'error'],
-                    'type' => 'sucess'
+                    'type' => 'warning'
                 ])
             ];
         } else {
             $data['error'] = false;
         }
 
-        //Create step objects
-        foreach($this->fieldGroups as $fieldGroup) {
-            $data['steps'][$fieldGroup] = (object) [
-                'title' => $this->getStepTitle($fieldGroup),
-                'description' => $this->getStepDescription($fieldGroup),
-                'isCurrent' => ($fieldGroup === $currentStepKey),
-                'isPassed' => $this->isStepPassed($previousStep, $fieldGroup, $this->fieldGroups),
-                'previousStep' => $previousStep,
-            ];
-        }
-
-        $htmlSubmitButton = $this->getButtons($isLastStep, $isFirstStep);
-
         //Get current step form
-        $data['form'] = (function () use ($htmlUpdatedMessage, $htmlSubmitButton, $currentStepKey, $nextStep, $editMode) {
+        $form = (function ($group) {
             acf_form([
-                'post_id'               => 'new_post',
-                'return'                => '%post_url%&step=' . $nextStep,
-                'post_title'            => ($editMode === 'update_post'),
+                'post_id'               => "",//($editMode == 'new_post') ? 'new_post' : false,
+                'return'                => "",//$navigation->next->url,
+                'post_title'            => "",//($editMode == 'new_post'),
                 'post_content'          => false,
                 'field_groups'          => [
-                    $currentStepKey
+                    $group
                 ],
                 'form_attributes' => ['class' => 'acf-form js-form-validation js-form-validation'],
                 'uploader'              => 'basic',
                 'updated_message'       => __("The event has been submitted for review. You will be notified when the event has been published.", 'acf'),
-                'html_updated_message'  => $htmlUpdatedMessage,
-                'html_submit_button'    => $htmlSubmitButton,
+                'html_updated_message'  => "", //$htmlUpdatedMessage,
+                'html_submit_button'    => "", //$htmlSubmitButton,
                 'new_post'              => [
                     'post_type'   => 'event',
                     'post_status' => 'draft'
@@ -134,47 +131,87 @@ class FrontendForm extends \Modularity\Module
             ]);
         });
 
-        return $data;
-    }
-
-    /**
-     * Retrive the step title, based on the step key.
-     * If no title is found, the default title will be returned.
-     *
-     * @param string $stepKey The key of the step.
-     * @param string $stepTitle The default title of the step.
-     * 
-     * @return string The title of the step.
-     */
-    public function getStepTitle($stepKey, $stepTitle = ''): string {
-        $fieldGroups = acf_get_field_groups();
-        array_walk($fieldGroups, function($fieldGroup) use ($stepKey, &$stepTitle) {
-            if($fieldGroup['key'] === $stepKey) {
-                $stepTitle = $fieldGroup['title'];
-            }
+        $lang = (object) [
+            'disclaimer' => __("By submitting this form, you're agreeing to our terms and conditions. You're also consenting to us processing your personal data in line with GDPR regulations, and confirming that you have full rights to use all provided content.", 'api-event-manager')
+        ];
+        
+        $form = (function() {
+            echo 'Hello world, i may be a form!';
         });
-        return $stepTitle;
+
+        //Not in use
+        $htmlUpdatedMessage = $this->renderView('partials.message', [
+            'text' => '%s',
+            'icon' => ['name' => 'info'],
+            'type' => 'sucess'
+        ]);
+
+        return [
+            'error' => false,
+            'steps' => $steps,
+            'state' => $state,
+            'form'  => $form,
+            'lang'  => $lang
+        ];
     }
 
-    /**
-     * Retrive the step description, based on the step key.
-     * If no title is found, the default title will be returned.
-     *
-     * @param string $stepKey The key of the step.
-     * @param string $stepTitle The default description of the step.
-     * 
-     * @return string The description of the step.
-     */
-    public function getStepDescription($stepKey, $stepDescription = ''): string {
-        $fieldGroups = acf_get_field_groups();
-        array_walk($fieldGroups, function($fieldGroup) use ($stepKey, &$stepDescription) {
-            if($fieldGroup['key'] === $stepKey) {
-                $stepDescription = $fieldGroup['description'];
-            }
-        });
-        return $stepDescription;
+    /*
+    private function getNavigation($context, $current): object
+    {
+        $navigation = [
+            'prev' => (object) [
+                'url' => $this->createReturnUrl(
+                    $this->getPreviousFormStep($context), 
+                    $this->getQueryParam($this->formIdQueryParam)
+                ),
+                'text' => __('Previous', 'api-event-manager')
+            ],
+            'edit' => (object) [
+                'url' => $this->createReturnUrl(
+                    $this->getCurrentFormStep($context), 
+                    $this->getQueryParam($this->formIdQueryParam)
+                ),
+                'text' => __('Edit', 'api-event-manager')
+            ],
+            'next' => (object) [
+                'url' => $this->createReturnUrl(
+                    $this->getNextFormStep($context), 
+                    $this->getQueryParam($this->formIdQueryParam)
+                ),
+                'text' => __('Next', 'api-event-manager')
+            ]
+        ];
+
+        if($current === 1) {
+            unset($navigation['prev']);
+        }
+
+        if($context < $current) {
+            unset($navigation['edit']);
+        }
+
+        return (object) $navigation;
     }
 
+
+
+    private function createReturnUrl($step, $formId): string
+    {
+        $urlParts = [
+            'formid' => $formId,
+            'step' => $step
+        ];
+        $urlParts    = array_filter($urlParts);
+        $queryString = http_build_query($urlParts);
+        return $queryString ? '?' . $queryString : '';
+    }
+
+    private function getQueryParam($key, $default = ""): string
+    {
+        return get_query_var($key, $default);
+    }
+
+    */ 
 
     public function template(): string
     {
@@ -184,6 +221,7 @@ class FrontendForm extends \Modularity\Module
     public function script(): void
     {
         acf_form_head();
+        acf_enqueue_uploader();
     }
 
     public function style(): void
@@ -209,12 +247,81 @@ class FrontendForm extends \Modularity\Module
         try {
             return $this->blade->makeView($view, $data, [], $this->templateDir)->render();
         } catch (Throwable $e) {
-            echo '<pre class="c-paper" style="max-height: 400px; overflow: auto;">';
-            echo '<h2>Could not find view</h2>';
-            echo '<strong>' . $e->getMessage() . '</strong>';
-            echo '<hr style="background: #000; outline: none; border:none; display: block; height: 1px;"/>';
-            echo $e->getTraceAsString();
-            echo '</pre>';
+            $sourceFileContentsAsArray = file($e->getFile()); 
+
+            printf('
+                <style>
+                    .error-table {
+                        font-family: sans-serif;
+                        width: calc(100%% - 32px);
+                        border-collapse: collapse;
+                        margin: 16px;
+                        background: #fff;
+                        box-shadow: 0 0 16px rgb(0,0,0,.25);
+                        border-radius: 4px;
+                        overflow: hidden;
+                        outline: 2px solid #f00;
+                        outline-offset: -2px;
+                        box-sizing: border-box;
+                    }
+
+                    .error-table pre {
+                        font-family: inherit;
+                        white-space: pre-wrap;
+                        margin: 0;
+                    }
+                    
+                    .error-table, 
+                    .error-table tr,
+                    .error-table td {
+                        border: 2px solid #f00;
+                        padding: 8px 16px;
+                    }
+                    .error-table td.stacktrace {
+                        padding: 16px;
+                    }
+                </style>
+
+                <table class="error-table">
+                    <tr>
+                        <td><strong>Error Message:</strong></td>
+                        <td>%s</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Error Line:</strong></td>
+                        <td>%s</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Error File:</strong></td>
+                        <td>%s</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Source code (line %s):</strong></td>
+                        <td>
+                            <pre>%s</pre>
+                        </td>
+                    </tr>
+                    <tr>
+                    <td><strong>Stacktrace:</strong></td>
+                        <td class="stacktrace">
+                            <pre>%s</pre>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>View paths:</strong></td>
+                        <td>%s</td>
+                    </tr>
+                </table>',
+                $e->getMessage(),
+                $e->getLine(),
+                $e->getFile(),
+                $e->getLine(),
+                htmlspecialchars(trim($sourceFileContentsAsArray[$e->getLine()-2])) . "<br/>" . 
+                "<mark>" . htmlspecialchars(trim($sourceFileContentsAsArray[$e->getLine()-1])) . "</mark><br/>" . 
+                htmlspecialchars(trim($sourceFileContentsAsArray[$e->getLine()])),
+                $e->getTraceAsString(),
+                implode(PHP_EOL, $this->viewPaths ?? [])
+            );
         }
 
         return false;
@@ -258,127 +365,24 @@ class FrontendForm extends \Modularity\Module
     public function registerFormStepQueryVar(array $registeredQueryVars): array {
         return $registeredQueryVars = array_merge(
             $registeredQueryVars,
-            [$this->formStepKey]
+            [$this->formStepQueryParam]
         );
     }
 
     /**
-     * Retrieves the field group for a given form step.
+     * Registers the form id query variable.
      *
-     * @param string $stepkey The key of the form step.
-     * @return string|bool The field group for the specified form step, or false if not found.
+     * This method takes an array of registered query variables and adds the form id key to it.
+     *
+     * @param array $registeredQueryVars The array of registered query variables.
+     * @return array The updated array of registered query variables.
      */
-    private function getFieldGroup(string $stepkey): string|bool {
-        $formStep = $this->getCurrentFormStep($stepkey);
-        $formStep = $formStep - 1;
-
-        if($formStep > count($this->fieldGroups) - 1) {
-            return false;
-        }
-
-        if(!isset($this->fieldGroups[$formStep])) {
-            return false;
-        }
-
-        return $this->fieldGroups[$formStep];    
+    public function registerFormIdQueryVar(array $registeredQueryVars): array {
+        return $registeredQueryVars = array_merge(
+            $registeredQueryVars,
+            [$this->formIdQueryParam]
+        );
     }
 
-    /**
-     * Retrieves the current step of the form based on the provided step key.
-     *
-     * @param string $stepkey The key used to retrieve the current step.
-     * @return int The current step of the form.
-     */
-    private function getCurrentFormStep(string $stepkey): int {
-        $step = get_query_var($stepkey, 1); //TODO: Use wp-service
-        if(is_numeric($step) && $step > 0) {
-            return $step;
-        }
-        return 1;
-    }
-
-    /**
-     * Get the previous form step based on the given step key.
-     *
-     * @param string $stepkey The step key.
-     * @return int The previous form step.
-     */
-    private function getPreviousFormStep(string $stepkey): int
-    {
-        return $this->getCurrentFormStep($stepkey) - 1;
-    }
-
-    /**
-     * Get the next form step based on the given step key.
-     *
-     * @param string $stepkey The step key.
-     * @return int The next form step.
-     */
-    private function getNextFormStep(string $stepkey): int
-    {
-        return $this->getCurrentFormStep($stepkey) + 1;
-    }
-
-    /**
-     * Toggles the edit mode based on the given step value.
-     *
-     * @param int $step The step value to determine the edit mode.
-     * @return string The edit mode, either 'edit' or 'create'.
-     */
-    private function toggleEditMode(int $step): string
-    {
-        return empty($step) ? 'update_post' : 'new_post';
-    }
-    
-    /**
-     * Checks if the current step is the last step in the form.
-     *
-     * @param int $currentStep The current step in the form.
-     * @param array $fieldGroups An array of field groups in the form.
-     * @return bool Returns true if the current step is the last step, false otherwise.
-     */
-    private function isLastStep($currentStep, $fieldGroups): bool
-    {
-        return $currentStep === count($fieldGroups);
-    }
-
-    /**
-     * Checks if a step is passed based on the current step, current step key, and field groups.
-     *
-     * @param int $currentStep The current step number.
-     * @param string $currentStepKey The step key to check.
-     * @param array $fieldGroups The array of field groups.
-     * @return bool Returns true if the step is passed, false otherwise.
-     */
-    private function isStepPassed($previousStep, $currentStepKey, $fieldGroups): bool
-    {
-        if($previousStep <= array_search($currentStepKey, $fieldGroups)) {
-            return false;
-        }
-        return true;
-    }
-
-    /**
-     * Checks if the given field group is the current step.
-     *
-     * @param mixed $fieldGroup The field group to check.
-     * @param mixed $currentStepKey The current step key.
-     * @return bool Returns true if the field group is the current step, false otherwise.
-     */
-    public function isCurrentStep($fieldGroup, $currentStepKey): bool 
-    {
-        return ($fieldGroup === $currentStepKey); 
-    }
-
-    /**
-     * Checks if the current step is valid based on the given field groups and current step key.
-     *
-     * @param array $fieldGroups An array of field groups.
-     * @param int $currentStepKey The current step key.
-     * @return bool Returns true if the current step is valid, false otherwise.
-     */
-    public function isValidStep($fieldGroups, $currentStepKey): bool
-    {
-        return count($fieldGroups) >= $currentStepKey;
-    }
 }
+

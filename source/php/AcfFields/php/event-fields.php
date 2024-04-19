@@ -11,7 +11,7 @@
             'name' => '_thumbnail_id',
             'aria-label' => '',
             'type' => 'image',
-            'instructions' => __('Enhance your event by including a high-resolution image. As the initial point of contact, the image plays a pivotal role in capturing users\' attention, making it essential for attracting attendees.', 'api-event-manager'),
+            'instructions' => __('Enhance your event by including a high-resolution image in <strong>JPG format</strong>. As the initial point of contact, the image plays a pivotal role in capturing users\' attention, making it essential for attracting attendees.', 'api-event-manager'),
             'required' => 1,
             'conditional_logic' => 0,
             'wrapper' => array(
@@ -29,7 +29,7 @@
             'max_width' => '',
             'max_height' => '',
             'max_size' => '',
-            'mime_types' => '',
+            'mime_types' => 'jpg, jpeg',
             'preview_size' => 'medium',
         ),
         1 => array(
@@ -194,7 +194,6 @@
             ),
             'is_publicly_hidden' => 0,
             'is_privately_hidden' => 0,
-            'hide_admin' => 0,
             'leaflet_map' => '{"lat":59.1083083,"lng":13.8208008,"zoom":6,"layers":["OpenStreetMap.Mapnik"],"markers":[]}',
         ),
         7 => array(
@@ -655,13 +654,6 @@
                 'value' => 'event',
             ),
         ),
-        1 => array(
-            0 => array(
-                'param' => 'af_form',
-                'operator' => '==',
-                'value' => 'form_661e607554317',
-            ),
-        ),
     ),
     'menu_order' => 0,
     'position' => 'acf_after_title',
@@ -680,7 +672,7 @@
         8 => 'send-trackbacks',
     ),
     'active' => true,
-    'description' => '',
+    'description' => 'We are nearly there! Just let us know some important last minute details, and you are ready to go!',
     'show_in_rest' => 0,
 ));
 }
