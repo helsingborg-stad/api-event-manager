@@ -14,8 +14,6 @@
 
 @if($error === false)
   @foreach ($steps as $stepKey => $step)
-
-
     @paper(['padding' => 4, 'classList' => ['u-margin__bottom--4']])
       <div class="u-display--flex u-justify-content--space-between">
         
@@ -67,7 +65,13 @@
 
       @if($step->state->isCurrent)
         <div class="u-margin__top--4">
-          {!! $form() !!}
+          {!! 
+            $form(
+              $step->group, 
+              $formSettings->postType, 
+              $formSettings->postStatus
+            ) 
+          !!}
         </div>
       @endif
 

@@ -19,16 +19,17 @@ class FormStep {
         }
     }
 
-    private function normalizeFieldGroupsIndex($fieldGroups): array
+    /**
+     * Normalize the field groups index
+     * This function makes the group array index start from 1, instead of 0.
+     * This will simplify getting data representing a step from the field groups array.
+     */
+    private function normalizeFieldGroupsIndex(array $fieldGroups): array
     {
-        if(!is_array($fieldGroups)) {
+        if(empty($fieldGroups)) {
             throw new \Exception('Field groups must be an not empty array.');
         }
-        $result = [];
-        foreach($fieldGroups as $index => $fieldGroup) {
-            $result[$index+1] = $fieldGroup;
-        }
-        return $result;
+        return array_filter(array_merge(array(0), $fieldGroups));
     }
 
     private function get(array $fieldGroups): array

@@ -71,6 +71,10 @@ class FrontendForm extends \Modularity\Module
         //Needs to be called, otherwise a notice will be thrown.
         $fields = $this->getFields(); 
 
+        // TODO: Make this a setting
+        $postType = "event"; 
+        $postStatus = "draft";
+
         //Define form steps 
         $steps = [];
         foreach($this->fieldGroups as $index => $fieldGroup) {
@@ -108,7 +112,7 @@ class FrontendForm extends \Modularity\Module
         }
 
         //Get current step form
-        $form = (function ($group) {
+        $form = (function ($group, $postType, $postStatus) {
             acf_form([
                 'post_id'               => "",//($editMode == 'new_post') ? 'new_post' : false,
                 'return'                => "",//$navigation->next->url,
@@ -123,8 +127,8 @@ class FrontendForm extends \Modularity\Module
                 'html_updated_message'  => "", //$htmlUpdatedMessage,
                 'html_submit_button'    => "", //$htmlSubmitButton,
                 'new_post'              => [
-                    'post_type'   => 'event',
-                    'post_status' => 'draft'
+                    'post_type'   => $postType,
+                    'post_status' => $postStatus
                 ],
                 'instruction_placement' => 'field',
                 'submit_value'          => __('Create Event', 'api-event-manager')
@@ -134,10 +138,6 @@ class FrontendForm extends \Modularity\Module
         $lang = (object) [
             'disclaimer' => __("By submitting this form, you're agreeing to our terms and conditions. You're also consenting to us processing your personal data in line with GDPR regulations, and confirming that you have full rights to use all provided content.", 'api-event-manager')
         ];
-        
-        $form = (function() {
-            echo 'Hello world, i may be a form!';
-        });
 
         //Not in use
         $htmlUpdatedMessage = $this->renderView('partials.message', [
@@ -151,6 +151,10 @@ class FrontendForm extends \Modularity\Module
             'steps' => $steps,
             'state' => $state,
             'form'  => $form,
+            'formSettings' => (object) [
+                'postType' => $postType,
+                'postStatus' => $postStatus
+            ],
             'lang'  => $lang
         ];
     }
