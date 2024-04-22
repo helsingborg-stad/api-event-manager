@@ -42,13 +42,14 @@
 
       @if($step->state->isPassed)
         @button([
-            'href' => $step->url->edit ?? '#',
-            'text' => $step->url->text ?? 'Edit',
+            'href' => $step->nav->current ?? '#',
+            'text' => $lang->edit,
             'color' => 'default',
             'style' => 'filled',
             'icon' => 'edit',
             'reversePositions' => true,
-            'classList' => ['u-margin__bottom--4']
+            'classList' => ['u-margin__bottom--4'],
+            'size' => 'sm'
         ])
         @endbutton
       @endif
@@ -83,7 +84,7 @@
       'variant' => 'meta',
       'classList' => ['u-margin__top--4']
   ])
-    {!! $disclaimer !!}
+    {!! $lang->disclaimer !!}
   @endtypography
 
 @endif

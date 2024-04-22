@@ -12,15 +12,8 @@ use EventManager\Modules\FrontendForm\FormStep;
 
 use ComponentLibrary\Init as ComponentLibraryInit;
 use EventManager\Services\WPService\EnqueueStyle;
-use EventManager\Services\WPService\WPServiceFactory;
-use EventManager\Resolvers\FileSystem\ManifestFilePathResolver;
-use EventManager\Resolvers\FileSystem\StrictFilePathResolver;
-use EventManager\Services\FileSystem\FileSystemFactory;
 use EventManager\Services\WPService\Implementations\NativeWpService;
-use PharIo\Manifest\Manifest;
 use Throwable;
-use function acf_get_field_groups;
-use function Patchwork\Utils\normalizePath;
 
 /**
  * @property string $description
@@ -63,7 +56,6 @@ class FrontendForm extends \Modularity\Module
         add_action('wp_enqueue_scripts', function() {
             $this->wpService->enqueueStyle('event-manager-frontend-form');
         });
-        
     }
 
     public function data(): array
@@ -85,21 +77,30 @@ class FrontendForm extends \Modularity\Module
         }
 
         //Set form state
-        $state = new FormState(
+        $formState = new FormState(
             $steps, 
             $this->formStepQueryParam
         );
 
-        //Decorate step with state
+        //Decorate step with state, and link
         foreach($steps as &$step) {
-            $step->state = new FormStepState(
+            $step->state = $stepState = new FormStepState(
                 $step, 
-                $state
+                $formState,
+                $steps
+            );
+
+            $step->nav = new FormStepNav(
+                $step, 
+                $stepState,
+                $steps
             );
         }
 
+        var_dump($steps);
+
         //Invalid step: Show error message
-        if(!$state->isValidStep) {
+        if(!$formState->isValidStep) {
             return [
                 'error' => $this->renderView('partials.message', [
                     'text' => __('Whoops! It looks like we ran out of form.', 'api-event-manager'),
@@ -112,7 +113,7 @@ class FrontendForm extends \Modularity\Module
         }
 
         //Get current step form
-        $form = (function ($group, $postType, $postStatus) {
+        $form = (function ($group, $postType, $postStatus, $navigation = null) {
             acf_form([
                 'post_id'               => "",//($editMode == 'new_post') ? 'new_post' : false,
                 'return'                => "",//$navigation->next->url,
@@ -136,7 +137,8 @@ class FrontendForm extends \Modularity\Module
         });
 
         $lang = (object) [
-            'disclaimer' => __("By submitting this form, you're agreeing to our terms and conditions. You're also consenting to us processing your personal data in line with GDPR regulations, and confirming that you have full rights to use all provided content.", 'api-event-manager')
+            'disclaimer' => __("By submitting this form, you're agreeing to our terms and conditions. You're also consenting to us processing your personal data in line with GDPR regulations, and confirming that you have full rights to use all provided content.", 'api-event-manager'),
+            'edit' => __('Edit', 'api-event-manager')
         ];
 
         //Not in use
@@ -149,7 +151,7 @@ class FrontendForm extends \Modularity\Module
         return [
             'error' => false,
             'steps' => $steps,
-            'state' => $state,
+            'state' => $formState,
             'form'  => $form,
             'formSettings' => (object) [
                 'postType' => $postType,
@@ -159,7 +161,6 @@ class FrontendForm extends \Modularity\Module
         ];
     }
 
-    /*
     private function getNavigation($context, $current): object
     {
         $navigation = [
@@ -185,19 +186,8 @@ class FrontendForm extends \Modularity\Module
                 'text' => __('Next', 'api-event-manager')
             ]
         ];
-
-        if($current === 1) {
-            unset($navigation['prev']);
-        }
-
-        if($context < $current) {
-            unset($navigation['edit']);
-        }
-
         return (object) $navigation;
     }
-
-
 
     private function createReturnUrl($step, $formId): string
     {
@@ -214,8 +204,6 @@ class FrontendForm extends \Modularity\Module
     {
         return get_query_var($key, $default);
     }
-
-    */ 
 
     public function template(): string
     {

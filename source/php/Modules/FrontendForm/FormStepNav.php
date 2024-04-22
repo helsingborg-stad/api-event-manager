@@ -1,36 +1,43 @@
 <?php 
 namespace EventManager\Modules\FrontendForm;
 
+use EventManager\Modules\FrontendForm\FormStepState;
+
 /* TODO: Make this gpt code work */
 class FormStepNav {
 
-    public string $previousStepLink;
-    public string $nextStepLink; 
+    public ?string $previous = null;
+    public ?string $current = null;
+    public ?string $next = null; 
 
-    public function __construct(FormStep $step, FormState $state)
+    public function __construct(FormStep $step, FormStepState $stepState, $steps)
     {
-      if(!is_a($step->state, 'FormStepState')) {
-        throw new \Exception('FormStep must have a FormStepState object.');
+        $this->previous = $this->getprevious($step, $stepState, $steps);
+        $this->current = $this->getcurrent($step, $stepState, $steps);
+        $this->next = $this->getnext($step, $stepState, $steps);
+    }
+
+    private function getprevious(FormStep $step, FormStepState $state, $steps): ?string
+    {
+      $previousStep = $state->previousStep($step, $steps);
+      if($previousStep) {
+        return $this->getStepLink($previousStep);
       }
-
-      $this->previousStepLink = $this->getPreviousStepLink($step, $state);
-      $this->nextStepLink = $this->getNextStepLink($step, $state);
+      return null; 
     }
 
-    private function getPreviousStepLink(FormStep $step, FormState $state): string
+    private function getnext(FormStep $step, FormStepState $state, $steps): ?string
     {
-        if($state->isFirstStep) {
-            return '';
-        }
-        return $this->getStepLink($state->previousStep);
+      $nextStep = $state->nextStep($step, $steps);
+      if($nextStep) {
+        return $this->getStepLink($nextStep);
+      }
+      return null;
     }
 
-    private function getNextStepLink(FormStep $step, FormState $state): string
+    private function getcurrent(FormStep $step, FormStepState $state, $steps): ?string
     {
-        if($state->isLastStep) {
-            return '';
-        }
-        return $this->getStepLink($state->nextStep);
+      return $this->getStepLink($step->step) ?? null;
     }
 
     private function getStepLink($step): string

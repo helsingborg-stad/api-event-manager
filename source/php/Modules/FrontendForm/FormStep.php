@@ -8,6 +8,7 @@ class FormStep {
     public string $description;
     public string $group;
     public object $state;
+    public object $nav;
 
     public function __construct(int $step, array $fieldGroups)
     {
