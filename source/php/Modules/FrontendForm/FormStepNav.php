@@ -12,9 +12,9 @@ class FormStepNav {
 
     public function __construct(FormStep $step, FormStepState $stepState, $steps)
     {
-        $this->previous = $this->getprevious($step, $stepState, $steps);
-        $this->current = $this->getcurrent($step, $stepState, $steps);
-        $this->next = $this->getnext($step, $stepState, $steps);
+      $this->previous = $this->getprevious($step, $stepState, $steps);
+      $this->current = $this->getcurrent($step, $stepState, $steps);
+      $this->next = $this->getnext($step, $stepState, $steps);
     }
 
     private function getprevious(FormStep $step, FormStepState $state, $steps): ?string
@@ -43,6 +43,18 @@ class FormStepNav {
     private function getStepLink($step): string
     {
         return add_query_arg('step', $step);
+    }
+
+    //* Todo remove/move */ 
+    private function createReturnUrl($step, $formId): string
+    {
+        $urlParts = [
+            'formid' => $formId,
+            'step' => $step
+        ];
+        $urlParts    = array_filter($urlParts);
+        $queryString = http_build_query($urlParts);
+        return $queryString ? '?' . $queryString : '';
     }
 }
 

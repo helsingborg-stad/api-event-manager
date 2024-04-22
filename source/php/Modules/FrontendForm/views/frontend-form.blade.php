@@ -68,9 +68,8 @@
         <div class="u-margin__top--4">
           {!! 
             $form(
-              $step->group, 
-              $formSettings->postType, 
-              $formSettings->postStatus
+              $step, 
+              $step
             ) 
           !!}
         </div>

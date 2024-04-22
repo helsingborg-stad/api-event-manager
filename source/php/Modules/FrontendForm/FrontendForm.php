@@ -37,6 +37,9 @@ class FrontendForm extends \Modularity\Module
     private $formStepQueryParam = 'step'; // The query parameter for the form steps.
     private $formIdQueryParam   = 'formid'; // The query parameter for the form id.
 
+    private $formPostType = 'event'; // The post type for the form.
+    private $formPostStatus = 'draft'; // The post status for the form.
+
     private $blade = null;
 
     private EnqueueStyle $wpService;
@@ -97,8 +100,6 @@ class FrontendForm extends \Modularity\Module
             );
         }
 
-        var_dump($steps);
-
         //Invalid step: Show error message
         if(!$formState->isValidStep) {
             return [
@@ -113,40 +114,46 @@ class FrontendForm extends \Modularity\Module
         }
 
         //Get current step form
-        $form = (function ($group, $postType, $postStatus, $navigation = null) {
+        $self = $this; //Avoids lexical scope issues
+        $form = (function ($step) use ($self) {
+
+            //Message when form is sent.
+            $htmlUpdatedMessage = $self->renderView('partials.message', [
+                'text' => '%s',
+                'icon' => ['name' => 'info'],
+                'type' => 'sucess'
+            ]);
+
+            $htmlSubmitButton = $self->renderView('partials.submit', [
+                'text' => __('Create Event', 'api-event-manager')
+            ]);
+
             acf_form([
                 'post_id'               => "",//($editMode == 'new_post') ? 'new_post' : false,
-                'return'                => "",//$navigation->next->url,
+                'return'                => $step->nav->next ?? false, // Add form result page here
                 'post_title'            => "",//($editMode == 'new_post'),
                 'post_content'          => false,
                 'field_groups'          => [
-                    $group
+                    $step->group
                 ],
                 'form_attributes' => ['class' => 'acf-form js-form-validation js-form-validation'],
                 'uploader'              => 'basic',
                 'updated_message'       => __("The event has been submitted for review. You will be notified when the event has been published.", 'acf'),
-                'html_updated_message'  => "", //$htmlUpdatedMessage,
-                'html_submit_button'    => "", //$htmlSubmitButton,
+                'html_updated_message'  => "", $htmlUpdatedMessage,
+                'html_submit_button'    => "", $htmlSubmitButton,
                 'new_post'              => [
-                    'post_type'   => $postType,
-                    'post_status' => $postStatus
+                    'post_type'   => $self->formPostType,
+                    'post_status' => $self->formPostStatus
                 ],
                 'instruction_placement' => 'field',
                 'submit_value'          => __('Create Event', 'api-event-manager')
             ]);
         });
-
+        
         $lang = (object) [
             'disclaimer' => __("By submitting this form, you're agreeing to our terms and conditions. You're also consenting to us processing your personal data in line with GDPR regulations, and confirming that you have full rights to use all provided content.", 'api-event-manager'),
             'edit' => __('Edit', 'api-event-manager')
         ];
-
-        //Not in use
-        $htmlUpdatedMessage = $this->renderView('partials.message', [
-            'text' => '%s',
-            'icon' => ['name' => 'info'],
-            'type' => 'sucess'
-        ]);
 
         return [
             'error' => false,
@@ -189,16 +196,7 @@ class FrontendForm extends \Modularity\Module
         return (object) $navigation;
     }
 
-    private function createReturnUrl($step, $formId): string
-    {
-        $urlParts = [
-            'formid' => $formId,
-            'step' => $step
-        ];
-        $urlParts    = array_filter($urlParts);
-        $queryString = http_build_query($urlParts);
-        return $queryString ? '?' . $queryString : '';
-    }
+    
 
     private function getQueryParam($key, $default = ""): string
     {
