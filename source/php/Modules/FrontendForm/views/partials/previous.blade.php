@@ -1,6 +1,6 @@
 @button([
-    'href' => '#backlink',
-    'text' => $text,
+    'href' => $href ?? '#',
+    'text' => $text ?? 'Previous',
     'color' => 'default',
     'style' => 'filled',
     'type' => '',

@@ -1,5 +1,5 @@
 @button([
-    'text' => $text,
+    'text' => $lang->next ?? 'Next',
     'color' => 'primary',
     'style' => 'filled',
     'type' => 'submit',

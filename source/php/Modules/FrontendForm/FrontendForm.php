@@ -124,9 +124,9 @@ class FrontendForm extends \Modularity\Module
                 'type' => 'sucess'
             ]);
 
-            $htmlSubmitButton = $self->renderView('partials.submit', [
-                'text' => __('Create Event', 'api-event-manager')
-            ]);
+            $htmlSubmitButton = $self->renderView(
+                'partials.button-wrapper', ['step' => $step]
+            );
 
             acf_form([
                 'post_id'               => "",//($editMode == 'new_post') ? 'new_post' : false,
@@ -139,8 +139,8 @@ class FrontendForm extends \Modularity\Module
                 'form_attributes' => ['class' => 'acf-form js-form-validation js-form-validation'],
                 'uploader'              => 'basic',
                 'updated_message'       => __("The event has been submitted for review. You will be notified when the event has been published.", 'acf'),
-                'html_updated_message'  => "", $htmlUpdatedMessage,
-                'html_submit_button'    => "", $htmlSubmitButton,
+                'html_updated_message'  => $htmlUpdatedMessage,
+                'html_submit_button'    => $htmlSubmitButton,
                 'new_post'              => [
                     'post_type'   => $self->formPostType,
                     'post_status' => $self->formPostStatus
@@ -152,7 +152,10 @@ class FrontendForm extends \Modularity\Module
         
         $lang = (object) [
             'disclaimer' => __("By submitting this form, you're agreeing to our terms and conditions. You're also consenting to us processing your personal data in line with GDPR regulations, and confirming that you have full rights to use all provided content.", 'api-event-manager'),
-            'edit' => __('Edit', 'api-event-manager')
+            'edit' => __('Edit', 'api-event-manager'),
+            'submit' => __('Submit', 'api-event-manager'),
+            'previous' => __('Previous', 'api-event-manager'),
+            'next' => __('Next', 'api-event-manager')
         ];
 
         return [

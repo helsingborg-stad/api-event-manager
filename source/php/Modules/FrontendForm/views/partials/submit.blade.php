@@ -1,9 +1,10 @@
 @button([
-    'text' => $text,
+    'text' => $lang->submit ?? 'Submit',
     'color' => 'primary',
     'style' => 'filled',
     'type' => 'submit',
-    'icon' => 'edit_calendar',
-    'reversePositions' => true
+    'icon' => 'calendar_clock',
+    'reversePositions' => true,
+    'classList' => $classList ?? []
 ])
 @endbutton
