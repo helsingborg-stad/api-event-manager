@@ -129,9 +129,9 @@ class FrontendForm extends \Modularity\Module
             );
 
             acf_form([
-                'post_id'               => "",//($editMode == 'new_post') ? 'new_post' : false,
+                'post_id'               => $step->state->isFirst ? 'new_post' : false,
                 'return'                => $step->nav->next ?? false, // Add form result page here
-                'post_title'            => "",//($editMode == 'new_post'),
+                'post_title'            => $step->state->isFirst ? true : false,
                 'post_content'          => false,
                 'field_groups'          => [
                     $step->group
