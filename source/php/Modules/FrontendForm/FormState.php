@@ -5,19 +5,15 @@ class FormState {
 
   public bool $isValidStep;
   public int $currentStep;
-  public bool $isFirstStep;
-  public bool $isLastStep;
   public ?int $nextStep;
   public ?int $previousStep;
 
   public function __construct(array $steps, string $queryParam = '')
   {
         $this->currentStep     = $this->getCurrentStep($queryParam);
-        $this->isFirstStep     = $this->isFirstStep();
-        $this->isLastStep      = $this->isLastStep($steps);
+     
         $this->nextStep        = $this->getNextStep($steps);
         $this->previousStep    = $this->getPreviousStep();
-
         $this->currentStep     = $this->getCurrentStep($queryParam);
         $this->isValidStep  = $this->isValidStep(
             $steps, 
