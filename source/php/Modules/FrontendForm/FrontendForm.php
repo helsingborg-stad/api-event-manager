@@ -96,7 +96,12 @@ class FrontendForm extends \Modularity\Module
             $step->nav = new FormStepNav(
                 $step, 
                 $stepState,
-                $steps
+                $steps,
+                get_permalink(),
+                [
+                    'formid' => get_query_var($this->formIdQueryParam, "%%postid%%"),
+                    'step' => null
+                ]
             );
         }
 
@@ -170,36 +175,6 @@ class FrontendForm extends \Modularity\Module
             'lang'  => $lang
         ];
     }
-
-    private function getNavigation($context, $current): object
-    {
-        $navigation = [
-            'prev' => (object) [
-                'url' => $this->createReturnUrl(
-                    $this->getPreviousFormStep($context), 
-                    $this->getQueryParam($this->formIdQueryParam)
-                ),
-                'text' => __('Previous', 'api-event-manager')
-            ],
-            'edit' => (object) [
-                'url' => $this->createReturnUrl(
-                    $this->getCurrentFormStep($context), 
-                    $this->getQueryParam($this->formIdQueryParam)
-                ),
-                'text' => __('Edit', 'api-event-manager')
-            ],
-            'next' => (object) [
-                'url' => $this->createReturnUrl(
-                    $this->getNextFormStep($context), 
-                    $this->getQueryParam($this->formIdQueryParam)
-                ),
-                'text' => __('Next', 'api-event-manager')
-            ]
-        ];
-        return (object) $navigation;
-    }
-
-    
 
     private function getQueryParam($key, $default = ""): string
     {
@@ -318,33 +293,6 @@ class FrontendForm extends \Modularity\Module
         }
 
         return false;
-    }
-
-    private function getButtons($isLastStep, $isFirstStep): string {
-        $navItems = [];
-        if($isLastStep) {
-            $navItems[] = $this->renderView('partials.previous', [
-                'text' => __('Previous', 'api-event-manager')
-            ]);
-            $navItems[] = $this->renderView('partials.submit', [
-                'text' => __('Submit Event', 'api-event-manager')
-            ]);
-        } elseif($isFirstStep) {
-            $navItems[] = $this->renderView('partials.next', [
-                'text' => __('Next', 'api-event-manager'),
-                'classList' => ['u-margin__left--auto']
-            ]);
-        } else {
-            $navItems[] = $this->renderView('partials.previous', [
-                'text' => __('Previous', 'api-event-manager')
-            ]);
-            $navItems[] = $this->renderView('partials.next', [
-                'text' => __('Next', 'api-event-manager')
-            ]);
-        }
-        return $this->renderView('partials.button-wrapper', [
-            'navItems' => $navItems
-        ]);
     }
 
     /**

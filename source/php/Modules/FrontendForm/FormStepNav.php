@@ -9,52 +9,45 @@ class FormStepNav {
     public ?string $previous = null;
     public ?string $current = null;
     public ?string $next = null; 
+    public array $queryVars = [];
 
-    public function __construct(FormStep $step, FormStepState $stepState, $steps)
+    public function __construct(FormStep $step, FormStepState $stepState, array $steps, string $baseUrl, array $queryVars)
     {
-      $this->previous = $this->getprevious($step, $stepState, $steps);
-      $this->current = $this->getcurrent($step, $stepState, $steps);
-      $this->next = $this->getnext($step, $stepState, $steps);
+      $this->previous = $this->getprevious($step, $stepState, $steps, $baseUrl, $queryVars);
+      $this->current = $this->getcurrent($step, $baseUrl, $queryVars);
+      $this->next = $this->getnext($step, $stepState, $steps, $baseUrl, $queryVars);
     }
 
-    private function getprevious(FormStep $step, FormStepState $state, $steps): ?string
+    private function getprevious(FormStep $step, FormStepState $state, array $steps, string $baseUrl, array $queryVars): ?string
     {
       $previousStep = $state->previousStep($step, $steps);
       if($previousStep) {
-        return $this->getStepLink($previousStep);
+        return $this->getStepLink($previousStep, $baseUrl, $queryVars);
       }
       return null; 
     }
 
-    private function getnext(FormStep $step, FormStepState $state, $steps): ?string
+    private function getnext(FormStep $step, FormStepState $state, $steps, string $baseUrl, array $queryVars): ?string
     {
       $nextStep = $state->nextStep($step, $steps);
       if($nextStep) {
-        return $this->getStepLink($nextStep);
+        return $this->getStepLink($nextStep, $baseUrl, $queryVars);
       }
       return null;
     }
 
-    private function getcurrent(FormStep $step, FormStepState $state, $steps): ?string
+    private function getcurrent(FormStep $step, string $baseUrl, array $queryVars): ?string
     {
-      return $this->getStepLink($step->step) ?? null;
+      return $this->getStepLink($step->step, $baseUrl, $queryVars) ?? null;
     }
 
-    private function getStepLink($step): string
+    private function getStepLink(int $step, string $baseUrl, array $queryVars): string
     {
-        return add_query_arg('step', $step);
-    }
-
-    //* Todo remove/move */ 
-    private function createReturnUrl($step, $formId): string
-    {
-        $urlParts = [
-            'formid' => $formId,
-            'step' => $step
-        ];
-        $urlParts    = array_filter($urlParts);
-        $queryString = http_build_query($urlParts);
-        return $queryString ? '?' . $queryString : '';
+      if(is_countable($queryVars) && count($queryVars) > 0) {
+        $queryVars['step'] = $step;
+        return $baseUrl . '?' . http_build_query($queryVars);
+      }
+      return $baseUrl;
     }
 }
 
