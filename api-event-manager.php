@@ -31,7 +31,7 @@ use EventManager\ApiResponseModifiers\EventResponseModifier;
 use EventManager\ContentExpirationManagement\ExpiredEvents;
 use EventManager\CronScheduler\CronScheduler;
 use EventManager\PostToSchema\PostToEventSchema\Commands\Helpers\CommandHelpers;
-use WpService\FileSystem\FileSystemFactory;
+use WpService\FileSystem\BaseFileSystem;
 use WpService\FileSystemResolvers\ManifestFilePathResolver;
 use WpService\FileSystemResolvers\UrlFilePathResolver;
 use WpService\Implementations\FilePathResolvingWpService;
@@ -62,7 +62,7 @@ $wpService             = new FilePathResolvingWpService(
     new NativeWpService(),
     new ManifestFilePathResolver(
         EVENT_MANAGER_PATH . "dist/manifest.json",
-        FileSystemFactory::create(),
+        new BaseFileSystem(),
         $manifestFileWpService,
         new UrlFilePathResolver($manifestFileWpService)
     )
