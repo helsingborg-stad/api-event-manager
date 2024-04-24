@@ -80,6 +80,28 @@
             'prepend' => '',
             'append' => '',
         ),
+        4 => array(
+            'key' => 'field_6628f2e0c4a53',
+            'label' => __('Verified', 'api-event-manager'),
+            'name' => 'verified',
+            'aria-label' => '',
+            'type' => 'true_false',
+            'instructions' => __('Determines if members of this organization are allowed to publish events without going through the review process.', 'api-event-manager'),
+            'required' => 0,
+            'conditional_logic' => 0,
+            'wrapper' => array(
+                'width' => '',
+                'class' => '',
+                'id' => '',
+            ),
+            'is_publicly_hidden' => 1,
+            'is_privately_hidden' => 0,
+            'message' => '',
+            'default_value' => 0,
+            'ui' => 0,
+            'ui_on_text' => '',
+            'ui_off_text' => '',
+        ),
     ),
     'location' => array(
         0 => array(
@@ -99,5 +121,10 @@
     'active' => true,
     'description' => '',
     'show_in_rest' => 0,
+    'acfe_display_title' => '',
+    'acfe_autosync' => '',
+    'acfe_form' => 0,
+    'acfe_meta' => '',
+    'acfe_note' => '',
 ));
 }

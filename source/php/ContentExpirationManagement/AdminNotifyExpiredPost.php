@@ -31,7 +31,7 @@ class AdminNotifyExpiredPost implements Hookable
     {
         $screen = $this->wpService->getCurrentScreen();
 
-        if ($screen->parent_base !== 'edit') {
+        if ($screen->base !== 'post') {
             return;
         }
 

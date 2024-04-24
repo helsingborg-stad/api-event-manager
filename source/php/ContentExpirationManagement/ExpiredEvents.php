@@ -31,10 +31,9 @@ class ExpiredEvents implements GetExpiredPostsInterface
     {
         $occasions = $this->acfService->getField('occasions', $postId);
 
-        if (empty($occasions)) {
+        if (empty($occasions) || !is_array($occasions)) {
             return false;
         }
-
 
         $dates = array_merge(
             array_column($occasions, 'date'),

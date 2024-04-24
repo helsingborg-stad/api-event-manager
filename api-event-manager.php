@@ -187,7 +187,15 @@ $hooksRegistrar->register($eventPostType);
 /**
  * User roles
  */
-$organizationMemberUserRole          = new \EventManager\User\Role('organization_member', 'Organization Member', ['edit_post', 'edit_others_posts']);
+$organizationMemberUserRole = new \EventManager\User\Role(
+    'organization_member',
+    'Organization Member',
+    [
+        'edit_post',
+        'edit_others_posts'
+    ]
+);
+
 $userRoleRegistrar                   = new \EventManager\User\RoleRegistrar([$organizationMemberUserRole], $wpService);
 $syncRoleCapabilitiesToExistingUsers = new \EventManager\User\SyncRoleCapabilitiesToExistingUsers([$organizationMemberUserRole], $wpService);
 
@@ -198,10 +206,13 @@ $hooksRegistrar->register($syncRoleCapabilitiesToExistingUsers);
 /**
  * User capabilities
  */
-$memberCanEditPostCallback = new \EventManager\User\Capabilities\UserCan\MemberUserCanEditPost($wpService, $acfService);
-$capabilityRegistrar       = new \EventManager\User\Capabilities\CapabilityRegistrar([
-    new \EventManager\User\Capabilities\CapabilityUsingCallback('edit_post', $memberCanEditPostCallback),
-    new \EventManager\User\Capabilities\CapabilityUsingCallback('edit_others_posts', $memberCanEditPostCallback)
+$memberCanEditPost                   = new \EventManager\User\Capabilities\UserCan\MemberUserCanEditPost($wpService, $acfService);
+$memberBelongsToVerifiedOrganization = new \EventManager\User\Capabilities\UserCan\MemberBelongsToVerifiedOrganization($acfService);
+
+$capabilityRegistrar = new \EventManager\User\Capabilities\CapabilityRegistrar([
+    new \EventManager\User\Capabilities\CapabilityUsingCallback('edit_post', $memberCanEditPost),
+    new \EventManager\User\Capabilities\CapabilityUsingCallback('edit_others_posts', $memberCanEditPost),
+    new \EventManager\User\Capabilities\CapabilityUsingCallback('publish_posts', $memberBelongsToVerifiedOrganization)
 ], $wpService);
 
 $hooksRegistrar->register($capabilityRegistrar);
