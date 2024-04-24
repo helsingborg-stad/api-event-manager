@@ -3,8 +3,8 @@
 namespace EventManager\Settings;
 
 use EventManager\Helper\Hookable;
-use EventManager\Services\AcfService\Functions\AddOptionsPage;
-use EventManager\Services\WPService\AddAction;
+use AcfService\Contracts\AddOptionsPage;
+use WpService\Contracts\AddAction;
 
 class AdminSettingsPage implements Hookable
 {

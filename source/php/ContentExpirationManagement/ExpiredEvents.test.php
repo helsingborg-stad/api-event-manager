@@ -2,8 +2,8 @@
 
 namespace EventManager\ContentExpirationManagement;
 
-use EventManager\Services\AcfService\Functions\GetField;
-use EventManager\Services\WPService\GetPosts;
+use AcfService\Contracts\GetField;
+use WpService\Contracts\GetPosts;
 use PHPUnit\Framework\TestCase;
 
 class ExpiredEventsTest extends TestCase

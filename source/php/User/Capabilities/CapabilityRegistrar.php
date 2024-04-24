@@ -3,7 +3,7 @@
 namespace EventManager\User\Capabilities;
 
 use EventManager\Helper\Hookable;
-use EventManager\Services\WPService\AddFilter;
+use WpService\Contracts\AddFilter;
 use WP_User;
 
 class CapabilityRegistrar implements Hookable

@@ -2,8 +2,8 @@
 
 namespace EventManager\ContentExpirationManagement;
 
-use EventManager\Services\AcfService\Functions\GetField;
-use EventManager\Services\WPService\GetPosts;
+use AcfService\Contracts\GetField;
+use WpService\Contracts\GetPosts;
 
 class ExpiredEvents implements GetExpiredPostsInterface
 {
@@ -31,10 +31,9 @@ class ExpiredEvents implements GetExpiredPostsInterface
     {
         $occasions = $this->acfService->getField('occasions', $postId);
 
-        if (empty($occasions)) {
+        if (empty($occasions) || !is_array($occasions)) {
             return false;
         }
-
 
         $dates = array_merge(
             array_column($occasions, 'date'),

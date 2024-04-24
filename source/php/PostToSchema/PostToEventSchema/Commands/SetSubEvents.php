@@ -3,8 +3,8 @@
 namespace EventManager\PostToSchema\PostToEventSchema\Commands;
 
 use EventManager\PostToSchema\IPostToSchemaAdapter;
-use EventManager\Services\AcfService\Functions\GetFields;
-use EventManager\Services\WPService\GetPosts;
+use AcfService\Contracts\GetFields;
+use WpService\Contracts\GetPosts;
 use Spatie\SchemaOrg\BaseType;
 
 class SetSubEvents implements CommandInterface

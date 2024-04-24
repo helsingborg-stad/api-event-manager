@@ -2,7 +2,7 @@
 
 namespace EventManager\PostToSchema\PostToEventSchema\Commands;
 
-use EventManager\Services\WPService\GetPostTerms;
+use WpService\Contracts\GetPostTerms;
 use PHPUnit\Framework\TestCase;
 use Spatie\SchemaOrg\BaseType;
 

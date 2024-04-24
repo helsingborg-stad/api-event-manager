@@ -2,7 +2,7 @@
 
 namespace EventManager\Tests\Taxonomies;
 
-use EventManager\Services\WPService\WPService;
+use WpService\WpService;
 use PHPUnit\Framework\MockObject\MockObject;
 use WP_Mock\Tools\TestCase;
 
@@ -11,7 +11,7 @@ class Keywords extends TestCase
     private function getMockedWpService(): WPService|MockObject
     {
         return $this
-            ->getMockBuilder('\EventManager\Services\WPService\WPService')
+            ->getMockBuilder(WpService::class)
             ->disableOriginalConstructor()
             ->getMock();
     }

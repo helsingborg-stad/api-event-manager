@@ -5,6 +5,7 @@ namespace EventManager\Tests\SetPostTermsFromContent;
 use EventManager\SetPostTermsFromContent\SetPostTermsFromContent;
 use Mockery;
 use WP_Mock\Tools\TestCase;
+use WpService\WpService;
 
 class SetPostTermsFromContentTest extends TestCase
 {
@@ -14,7 +15,7 @@ class SetPostTermsFromContentTest extends TestCase
     public function testCallbackForActionHookSavePostIsAdded()
     {
         $tagReader   = $this->createMock('EventManager\TagReader\TagReaderInterface');
-        $wpService   = $this->createMock('EventManager\Services\WPService\WPService');
+        $wpService   = $this->createMock(WpService::class);
         $sutInstance = new SetPostTermsFromContent('post', 'category', $tagReader, $wpService);
 
         $wpService->expects($this->once())->method('addAction')->with('save_post', [$sutInstance, 'setPostTermsFromContent']);
@@ -30,7 +31,7 @@ class SetPostTermsFromContentTest extends TestCase
         $postContent = 'content #tag1';
         $post        = $this->mockPost(['ID' => 1, 'post_content' => $postContent, 'post_type' => 'post']);
         $tagReader   = Mockery::mock('EventManager\TagReader\TagReaderInterface');
-        $wpService   = Mockery::mock('EventManager\Services\WPService\WPService');
+        $wpService   = Mockery::mock(WpService::class);
 
         $tagReader->shouldReceive('getTags')->once()->with($post->post_content)->andReturn(['tag1']);
         $wpService->shouldReceive('getPost')->once()->andReturn($post);
@@ -52,7 +53,7 @@ class SetPostTermsFromContentTest extends TestCase
         $postContent = 'content #tag1';
         $post        = $this->mockPost(['ID' => 1, 'post_content' => $postContent, 'post_type' => 'post']);
         $tagReader   = Mockery::mock('EventManager\TagReader\TagReaderInterface');
-        $wpService   = Mockery::mock('EventManager\Services\WPService\WPService');
+        $wpService   = Mockery::mock(WpService::class);
 
         $tagReader->shouldReceive('getTags')->once()->with($post->post_content)->andReturn(['tag1']);
         $wpService->shouldReceive('getPost')->once()->andReturn($post);
@@ -75,7 +76,7 @@ class SetPostTermsFromContentTest extends TestCase
         $postContent = 'content';
         $post        = $this->mockPost(['ID' => 1, 'post_content' => $postContent, 'post_type' => 'post']);
         $tagReader   = Mockery::mock('EventManager\TagReader\TagReaderInterface');
-        $wpService   = Mockery::mock('EventManager\Services\WPService\WPService');
+        $wpService   = Mockery::mock(WpService::class);
 
         $tagReader->shouldReceive('getTags')->once()->with($post->post_content)->andReturn([]);
         $wpService->shouldReceive('getPost')->once()->andReturn($post);

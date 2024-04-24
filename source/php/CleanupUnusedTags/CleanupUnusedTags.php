@@ -3,9 +3,9 @@
 namespace EventManager\CleanupUnusedTags;
 
 use EventManager\Helper\Hookable;
-use EventManager\Services\WPService\AddAction;
-use EventManager\Services\WPService\DeleteTerm;
-use EventManager\Services\WPService\GetTerms;
+use WpService\Contracts\AddAction;
+use WpService\Contracts\DeleteTerm;
+use WpService\Contracts\GetTerms;
 
 class CleanupUnusedTags implements Hookable
 {

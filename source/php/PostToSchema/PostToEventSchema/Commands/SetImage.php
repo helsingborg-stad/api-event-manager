@@ -2,7 +2,7 @@
 
 namespace EventManager\PostToSchema\PostToEventSchema\Commands;
 
-use EventManager\Services\WPService\GetThePostThumbnailUrl;
+use WpService\Contracts\GetThePostThumbnailUrl;
 use Spatie\SchemaOrg\BaseType;
 
 class SetImage implements CommandInterface

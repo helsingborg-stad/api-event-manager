@@ -4,7 +4,7 @@ namespace EventManager\ApiResponseModifiers;
 
 use EventManager\ApiResponseModifiers\EventResponseModifier;
 use EventManager\PostToSchema\IPostToSchemaAdapter;
-use EventManager\Services\WPService\RestEnsureResponse;
+use WpService\Contracts\RestEnsureResponse;
 use Mockery;
 use Spatie\SchemaOrg\BaseType;
 use WP_Error;

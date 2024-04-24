@@ -3,9 +3,9 @@
 namespace EventManager\PostTableColumns;
 
 use EventManager\Helper\Hookable;
-use EventManager\Services\WPService\AddAction;
-use EventManager\Services\WPService\AddFilter;
 use WP_Query;
+use WpService\Contracts\AddAction;
+use WpService\Contracts\AddFilter;
 
 class Manager implements ManagerInterface, Hookable
 {

@@ -2,7 +2,7 @@
 
 namespace EventManager\PostToSchema\PostToEventSchema\Commands;
 
-use EventManager\Services\WPService\GetTerm;
+use WpService\Contracts\GetTerm;
 use Spatie\SchemaOrg\BaseType;
 
 class SetAudience implements CommandInterface

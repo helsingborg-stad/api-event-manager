@@ -3,9 +3,9 @@
 namespace EventManager\CronScheduler;
 
 use EventManager\Helper\Hookable;
-use EventManager\Services\WPService\AddAction;
-use EventManager\Services\WPService\NextScheduled;
-use EventManager\Services\WPService\ScheduleEvent;
+use WpService\Contracts\AddAction;
+use WpService\Contracts\NextScheduled;
+use WpService\Contracts\ScheduleEvent;
 
 class CronScheduler implements Hookable
 {

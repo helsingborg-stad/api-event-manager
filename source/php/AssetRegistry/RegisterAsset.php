@@ -2,7 +2,7 @@
 
 namespace EventManager\AssetRegistry;
 
-use EventManager\Services\WPService\WPService;
+use WpService\WpService;
 use EventManager\Helper\Hookable;
 
 abstract class RegisterAsset implements Hookable
@@ -25,8 +25,8 @@ abstract class RegisterAsset implements Hookable
     private function getType($filename): string
     {
         $extension = pathinfo($filename, PATHINFO_EXTENSION);
-        if(in_array($extension, ["css", "js"])) {
-          return $extension;
+        if (in_array($extension, ["css", "js"])) {
+            return $extension;
         }
 
         throw new \Exception('Invalid type enqueued in Enqueue class. Must be either ".js" or ".css"');
@@ -34,26 +34,26 @@ abstract class RegisterAsset implements Hookable
 
     /**
      * Register the script or style
-     * 
+     *
      * @return void
      * @thows \Exception
      */
     public function register(): void
     {
-      $filename = $this->getFilename();
+        $filename = $this->getFilename();
 
-      if($this->getType($filename) === 'js') {
-        $this->wp->registerScript(
-            $this->getHandle(),
-            $this->getFilename()
-        );
-      }
-      
-      if($this->getType($filename) === 'css') {
-        $this->wp->registerStyle(
-            $this->getHandle(),
-            $this->getFilename()
-        );
-      }
+        if ($this->getType($filename) === 'js') {
+            $this->wp->registerScript(
+                $this->getHandle(),
+                $this->getFilename()
+            );
+        }
+
+        if ($this->getType($filename) === 'css') {
+            $this->wp->registerStyle(
+                $this->getHandle(),
+                $this->getFilename()
+            );
+        }
     }
 }

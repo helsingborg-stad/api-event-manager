@@ -3,10 +3,10 @@
 namespace EventManager\ContentExpirationManagement;
 
 use EventManager\Helper\Hookable;
-use EventManager\Services\WPService\AddAction;
-use EventManager\Services\WPService\AdminNotice;
-use EventManager\Services\WPService\GetCurrentScreen;
-use EventManager\Services\WPService\GetTheId;
+use WpService\Contracts\AddAction;
+use WpService\Contracts\AdminNotice;
+use WpService\Contracts\GetCurrentScreen;
+use WpService\Contracts\GetTheId;
 
 class AdminNotifyExpiredPost implements Hookable
 {
@@ -31,7 +31,7 @@ class AdminNotifyExpiredPost implements Hookable
     {
         $screen = $this->wpService->getCurrentScreen();
 
-        if ($screen->parent_base !== 'edit') {
+        if ($screen->base !== 'post') {
             return;
         }
 

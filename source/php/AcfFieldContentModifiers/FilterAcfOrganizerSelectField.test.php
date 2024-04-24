@@ -2,9 +2,9 @@
 
 namespace EventManager\AcfFieldContentModifiers;
 
-use EventManager\Services\AcfService\Functions\GetField;
-use EventManager\Services\WPService\GetCurrentUser;
-use EventManager\Services\WPService\GetTerms;
+use AcfService\Contracts\GetField;
+use WpService\Contracts\GetCurrentUser;
+use WpService\Contracts\GetTerms;
 use PHPUnit\Framework\TestCase;
 use WP_Error;
 use WP_User;

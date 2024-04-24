@@ -2,7 +2,7 @@
 
 namespace EventManager\Helper;
 
-use EventManager\Services\WPService\AddAction;
+use WpService\Contracts\AddAction;
 
 class LoadTextDomain implements Hookable
 {

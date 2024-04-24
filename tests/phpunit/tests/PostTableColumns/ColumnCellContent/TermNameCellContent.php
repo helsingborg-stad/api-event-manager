@@ -3,9 +3,9 @@
 namespace EventManager\Tests\PostTableColumns\ColumnCellContent;
 
 use EventManager\PostTableColumns\ColumnCellContent\TermNameCellContent;
-use EventManager\Services\WPService\GetEditTermLink;
-use EventManager\Services\WPService\GetPostTerms;
-use EventManager\Services\WPService\GetTheId;
+use WpService\Contracts\GetEditTermLink;
+use WpService\Contracts\GetPostTerms;
+use WpService\Contracts\GetTheId;
 use Mockery;
 use PHPUnit\Framework\TestCase;
 use WP_Error;

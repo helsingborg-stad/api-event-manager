@@ -11,8 +11,13 @@ namespace EventManager\Modules\FrontendForm;
 use EventManager\Modules\FrontendForm\FormStep;
 
 use ComponentLibrary\Init as ComponentLibraryInit;
-use EventManager\Services\WPService\EnqueueStyle;
-use EventManager\Services\WPService\Implementations\NativeWpService;
+use WpService\Contracts\EnqueueStyle;
+use WpService\Contracts\WPServiceFactory;
+use EventManager\Resolvers\FileSystem\ManifestFilePathResolver;
+use EventManager\Resolvers\FileSystem\StrictFilePathResolver;
+use EventManager\Services\FileSystem\FileSystemFactory;
+use WpService\Implementations\NativeWpService;
+use PharIo\Manifest\Manifest;
 use Throwable;
 
 /**

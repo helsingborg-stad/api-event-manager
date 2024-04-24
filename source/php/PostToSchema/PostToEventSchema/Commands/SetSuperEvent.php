@@ -3,7 +3,7 @@
 namespace EventManager\PostToSchema\PostToEventSchema\Commands;
 
 use EventManager\PostToSchema\IPostToSchemaAdapter;
-use EventManager\Services\WPService\GetPostParent;
+use WpService\Contracts\GetPostParent;
 use Spatie\SchemaOrg\BaseType;
 
 class SetSuperEvent implements CommandInterface

@@ -2,10 +2,10 @@
 
 namespace EventManager\ContentExpirationManagement;
 
-use EventManager\Services\WPService\AddAction;
-use EventManager\Services\WPService\AdminNotice;
-use EventManager\Services\WPService\GetCurrentScreen;
-use EventManager\Services\WPService\GetTheId;
+use WpService\Contracts\AddAction;
+use WpService\Contracts\AdminNotice;
+use WpService\Contracts\GetCurrentScreen;
+use WpService\Contracts\GetTheId;
 use Mockery;
 use PHPUnit\Framework\TestCase;
 use WP_Screen;
@@ -21,7 +21,7 @@ class AdminNotifyExpiredPostTest extends TestCase
         $wpService                   = $this->getWpService();
         $adminNotifyExpiredPosts     = new AdminNotifyExpiredPost($expired, $wpService);
         $screen                      = Mockery::mock(WP_Screen::class);
-        $screen->parent_base         = 'edit';
+        $screen->base                = 'post';
         $wpService->getCurrentScreen = $screen;
 
         ob_start();
@@ -40,7 +40,7 @@ class AdminNotifyExpiredPostTest extends TestCase
         $wpService                   = $this->getWpService();
         $adminNotifyExpiredPosts     = new AdminNotifyExpiredPost($expired, $wpService);
         $screen                      = Mockery::mock(WP_Screen::class);
-        $screen->parent_base         = 'edit';
+        $screen->base                = 'post';
         $wpService->getCurrentScreen = $screen;
 
         ob_start();
@@ -59,7 +59,7 @@ class AdminNotifyExpiredPostTest extends TestCase
         $wpService                   = $this->getWpService();
         $adminNotifyExpiredPosts     = new AdminNotifyExpiredPost($expired, $wpService);
         $screen                      = Mockery::mock(WP_Screen::class);
-        $screen->parent_base         = 'not-edit';
+        $screen->base                = 'foo';
         $wpService->getCurrentScreen = $screen;
 
         ob_start();

@@ -4,7 +4,7 @@ namespace EventManager\ApiResponseModifiers;
 
 use EventManager\Helper\Hookable;
 use EventManager\PostToSchema\IPostToSchemaAdapter;
-use EventManager\Services\WPService\RestEnsureResponse;
+use WpService\Contracts\RestEnsureResponse;
 use WP_Post;
 use WP_REST_Request;
 use WP_REST_Response;

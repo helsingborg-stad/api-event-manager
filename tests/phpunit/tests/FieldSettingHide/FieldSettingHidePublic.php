@@ -3,8 +3,8 @@
 namespace EventManager\Tests\FieldSettingHide;
 
 use EventManager\FieldSettingHidePublic;
-use EventManager\Services\WPService\WPService;
-use EventManager\Services\AcfService\AcfService;
+use WpService\WpService;
+use AcfService\AcfService;
 use Mockery;
 use WP_Mock;
 use WP_Mock\Tools\TestCase;
@@ -18,7 +18,7 @@ class FieldSettingHidePublicTest extends TestCase
 
     public function testIsPubliclyHiddenWhenUserIsVisitingFrontend()
     {
-        $field = [];
+        $field                       = [];
         $field['is_publicly_hidden'] = 1;
 
         $wpService = Mockery::mock(WPService::class);
@@ -35,7 +35,7 @@ class FieldSettingHidePublicTest extends TestCase
 
     public function testIsPubliclyHiddenWhenUserIsVisitingAdmin()
     {
-        $field = [];
+        $field                       = [];
         $field['is_publicly_hidden'] = 1;
 
         $wpService = Mockery::mock(WPService::class);
@@ -52,7 +52,7 @@ class FieldSettingHidePublicTest extends TestCase
 
     public function testIsNotPubliclyHiddenWhenUserIsVisitingFrontend()
     {
-        $field = [];
+        $field                       = [];
         $field['is_publicly_hidden'] = 0;
 
         $wpService = Mockery::mock(WPService::class);
@@ -69,7 +69,7 @@ class FieldSettingHidePublicTest extends TestCase
 
     public function testIsNotPubliclyHiddenWhenUserIsVisitingAdmin()
     {
-        $field = [];
+        $field                       = [];
         $field['is_publicly_hidden'] = 0;
 
         $wpService = Mockery::mock(WPService::class);
@@ -83,5 +83,4 @@ class FieldSettingHidePublicTest extends TestCase
 
         $this->assertEquals($field, $result);
     }
-
 }

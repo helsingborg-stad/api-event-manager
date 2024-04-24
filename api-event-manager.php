@@ -4,7 +4,7 @@
  * Plugin Name:       Event Manager
  * Plugin URI:        https://github.com/helsingborg-stad/api-event-manager
  * Description:       Creates a api that may be used to manage events
- * Version: 2.23.0
+ * Version: 3.1.0
  * Author:            Thor Brink, Sebastian Thulin @ Helsingborg Stad
  * Author URI:        https://github.com/helsingborg-stad
  * License:           MIT
@@ -13,6 +13,7 @@
  * Domain Path:       /languages
  */
 
+use AcfService\Implementations\NativeAcfService;
 use Composer\Installers\UserFrostingInstaller;
 use EventManager\CleanupUnusedTags\CleanupUnusedTags;
 use EventManager\HooksRegistrar\HooksRegistrar;
@@ -31,12 +32,12 @@ use EventManager\ApiResponseModifiers\EventResponseModifier;
 use EventManager\ContentExpirationManagement\ExpiredEvents;
 use EventManager\CronScheduler\CronScheduler;
 use EventManager\PostToSchema\PostToEventSchema\Commands\Helpers\CommandHelpers;
-use EventManager\Resolvers\FileSystem\ManifestFilePathResolver;
-use EventManager\Resolvers\FileSystem\UrlFilePathResolver;
-use EventManager\Services\FileSystem\FileSystemFactory;
-use EventManager\Services\WPService\Implementations\FilePathResolvingWpService;
-use EventManager\Services\WPService\Implementations\NativeWpService;
-use EventManager\Services\WPService\Implementations\WpServiceLazyDecorator;
+use WpService\FileSystem\BaseFileSystem;
+use WpService\FileSystemResolvers\ManifestFilePathResolver;
+use WpService\FileSystemResolvers\UrlFilePathResolver;
+use WpService\Implementations\FilePathResolvingWpService;
+use WpService\Implementations\NativeWpService;
+use WpService\Implementations\WpServiceLazyDecorator;
 
 // Protect against direct file access
 if (!defined('WPINC')) {
@@ -55,14 +56,14 @@ if (file_exists(EVENT_MANAGER_PATH . 'vendor/autoload.php')) {
 }
 
 $hooksRegistrar = new HooksRegistrar();
-$acfService     = AcfServiceFactory::create();
+$acfService     = new NativeAcfService();
 
 $manifestFileWpService = new WpServiceLazyDecorator();
 $wpService             = new FilePathResolvingWpService(
     new NativeWpService(),
     new ManifestFilePathResolver(
         EVENT_MANAGER_PATH . "dist/manifest.json",
-        FileSystemFactory::create(),
+        new BaseFileSystem(),
         $manifestFileWpService,
         new UrlFilePathResolver($manifestFileWpService)
     )
@@ -186,7 +187,15 @@ $hooksRegistrar->register($eventPostType);
 /**
  * User roles
  */
-$organizationMemberUserRole          = new \EventManager\User\Role('organization_member', 'Organization Member', ['edit_post', 'edit_others_posts']);
+$organizationMemberUserRole = new \EventManager\User\Role(
+    'organization_member',
+    'Organization Member',
+    [
+        'edit_post',
+        'edit_others_posts'
+    ]
+);
+
 $userRoleRegistrar                   = new \EventManager\User\RoleRegistrar([$organizationMemberUserRole], $wpService);
 $syncRoleCapabilitiesToExistingUsers = new \EventManager\User\SyncRoleCapabilitiesToExistingUsers([$organizationMemberUserRole], $wpService);
 
@@ -197,10 +206,13 @@ $hooksRegistrar->register($syncRoleCapabilitiesToExistingUsers);
 /**
  * User capabilities
  */
-$memberCanEditPostCallback = new \EventManager\User\Capabilities\UserCan\MemberUserCanEditPost($wpService, $acfService);
-$capabilityRegistrar       = new \EventManager\User\Capabilities\CapabilityRegistrar([
-    new \EventManager\User\Capabilities\CapabilityUsingCallback('edit_post', $memberCanEditPostCallback),
-    new \EventManager\User\Capabilities\CapabilityUsingCallback('edit_others_posts', $memberCanEditPostCallback)
+$memberCanEditPost                   = new \EventManager\User\Capabilities\UserCan\MemberUserCanEditPost($wpService, $acfService);
+$memberBelongsToVerifiedOrganization = new \EventManager\User\Capabilities\UserCan\MemberBelongsToVerifiedOrganization($acfService);
+
+$capabilityRegistrar = new \EventManager\User\Capabilities\CapabilityRegistrar([
+    new \EventManager\User\Capabilities\CapabilityUsingCallback('edit_post', $memberCanEditPost),
+    new \EventManager\User\Capabilities\CapabilityUsingCallback('edit_others_posts', $memberCanEditPost),
+    new \EventManager\User\Capabilities\CapabilityUsingCallback('publish_posts', $memberBelongsToVerifiedOrganization)
 ], $wpService);
 
 $hooksRegistrar->register($capabilityRegistrar);

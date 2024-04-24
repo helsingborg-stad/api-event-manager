@@ -5,8 +5,8 @@ namespace EventManager\Tests\PostTableColumns\ColumnSorters;
 use PHPUnit\Framework\TestCase;
 use EventManager\PostTableColumns\ColumnCellContent\NestedMetaStringCellContent;
 use EventManager\PostTableColumns\Helpers\GetNestedArrayStringValueRecursive;
-use EventManager\Services\WPService\GetPostMeta;
-use EventManager\Services\WPService\GetTheId;
+use WpService\Contracts\GetPostMeta;
+use WpService\Contracts\GetTheId;
 
 /**
  * @covers \EventManager\PostTableColumns\ColumnCellContent\NestedMetaStringCellContent
