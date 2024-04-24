@@ -3,7 +3,7 @@
 namespace EventManager\PostToSchema\PostToEventSchema\Commands;
 
 use EventManager\PostToSchema\PostToEventSchema\Commands\Helpers\MapOpenStreetMapDataToPlace;
-use EventManager\Services\AcfService\Functions\GetFields;
+use AcfService\Contracts\GetFields;
 use WpService\Contracts\GetPostTerms;
 use Spatie\SchemaOrg\BaseType;
 use WP_Error;

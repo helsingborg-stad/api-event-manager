@@ -4,7 +4,7 @@ namespace EventManager\Tests\FieldSettingHide;
 
 use EventManager\FieldSettingHidePrivate;
 use WpService\WpService;
-use EventManager\Services\AcfService\AcfService;
+use AcfService\AcfService;
 use Mockery;
 use WP_Mock;
 use WP_Mock\Tools\TestCase;

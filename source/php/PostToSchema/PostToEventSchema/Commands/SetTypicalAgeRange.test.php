@@ -2,7 +2,7 @@
 
 namespace EventManager\PostToSchema\PostToEventSchema\Commands;
 
-use EventManager\Services\AcfService\Functions\GetFields;
+use AcfService\Contracts\GetFields;
 use PHPUnit\Framework\TestCase;
 
 class SetTypicalAgeRangeTest extends TestCase
