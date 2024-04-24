@@ -21,7 +21,7 @@ class AdminNotifyExpiredPostTest extends TestCase
         $wpService                   = $this->getWpService();
         $adminNotifyExpiredPosts     = new AdminNotifyExpiredPost($expired, $wpService);
         $screen                      = Mockery::mock(WP_Screen::class);
-        $screen->parent_base         = 'edit';
+        $screen->base                = 'post';
         $wpService->getCurrentScreen = $screen;
 
         ob_start();
@@ -40,7 +40,7 @@ class AdminNotifyExpiredPostTest extends TestCase
         $wpService                   = $this->getWpService();
         $adminNotifyExpiredPosts     = new AdminNotifyExpiredPost($expired, $wpService);
         $screen                      = Mockery::mock(WP_Screen::class);
-        $screen->parent_base         = 'edit';
+        $screen->base                = 'post';
         $wpService->getCurrentScreen = $screen;
 
         ob_start();
@@ -59,7 +59,7 @@ class AdminNotifyExpiredPostTest extends TestCase
         $wpService                   = $this->getWpService();
         $adminNotifyExpiredPosts     = new AdminNotifyExpiredPost($expired, $wpService);
         $screen                      = Mockery::mock(WP_Screen::class);
-        $screen->parent_base         = 'not-edit';
+        $screen->base                = 'foo';
         $wpService->getCurrentScreen = $screen;
 
         ob_start();
