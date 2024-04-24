@@ -3,8 +3,8 @@
 namespace EventManager\PostTableColumns\ColumnCellContent;
 
 use EventManager\PostTableColumns\Helpers\GetNestedArrayStringValueRecursiveInterface;
-use EventManager\Services\WPService\GetPostMeta;
-use EventManager\Services\WPService\GetTheId;
+use WpService\Contracts\GetPostMeta;
+use WpService\Contracts\GetTheId;
 
 class NestedMetaStringCellContent implements ColumnCellContentInterface
 {

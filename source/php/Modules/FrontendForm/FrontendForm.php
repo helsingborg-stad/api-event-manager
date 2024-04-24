@@ -9,12 +9,12 @@
 namespace EventManager\Modules\FrontendForm;
 
 use ComponentLibrary\Init as ComponentLibraryInit;
-use EventManager\Services\WPService\EnqueueStyle;
-use EventManager\Services\WPService\WPServiceFactory;
+use WpService\Contracts\EnqueueStyle;
+use WpService\Contracts\WPServiceFactory;
 use EventManager\Resolvers\FileSystem\ManifestFilePathResolver;
 use EventManager\Resolvers\FileSystem\StrictFilePathResolver;
 use EventManager\Services\FileSystem\FileSystemFactory;
-use EventManager\Services\WPService\Implementations\NativeWpService;
+use WpService\Implementations\NativeWpService;
 use PharIo\Manifest\Manifest;
 use Throwable;
 
@@ -45,8 +45,6 @@ class FrontendForm extends \Modularity\Module
         $this->description  = __('Module for creating public event form', 'api-event-manager');
 
         $this->wpService = new NativeWpService(); // TODO: use custom modularity middleware.
-
-        
     }
 
     public function data(): array
@@ -71,7 +69,7 @@ class FrontendForm extends \Modularity\Module
             'post_title'            => true,
             'post_content'          => false,
             'field_groups'          => $this->fieldGroups,
-            'form_attributes' => ['class' => 'acf-form js-form-validation js-form-validation'],
+            'form_attributes'       => ['class' => 'acf-form js-form-validation js-form-validation'],
             'uploader'              => 'basic',
             'updated_message'       => __("The event has been submitted for review. You will be notified when the event has been published.", 'acf'),
             'html_updated_message'  => $htmlUpdatedMessage,
@@ -95,7 +93,6 @@ class FrontendForm extends \Modularity\Module
     public function script(): void
     {
         acf_form_head();
-        
     }
 
     public function style(): void

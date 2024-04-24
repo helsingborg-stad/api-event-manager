@@ -2,7 +2,7 @@
 
 namespace EventManager\Tests\Helper;
 
-use EventManager\Services\WPService\WPService;
+use WpService\WpService;
 use Mockery;
 use WP_Mock\Tools\TestCase;
 

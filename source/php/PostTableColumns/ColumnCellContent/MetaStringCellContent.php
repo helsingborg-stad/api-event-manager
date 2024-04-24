@@ -2,8 +2,8 @@
 
 namespace EventManager\PostTableColumns\ColumnCellContent;
 
-use EventManager\Services\WPService\GetPostMeta;
-use EventManager\Services\WPService\GetTheId;
+use WpService\Contracts\GetPostMeta;
+use WpService\Contracts\GetTheId;
 
 class MetaStringCellContent implements ColumnCellContentInterface
 {

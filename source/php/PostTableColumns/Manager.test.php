@@ -2,8 +2,8 @@
 
 namespace EventManager\PostTableColumns;
 
-use EventManager\Services\WPService\AddAction;
-use EventManager\Services\WPService\AddFilter;
+use WpService\Contracts\AddAction;
+use WpService\Contracts\AddFilter;
 use Mockery;
 use PHPUnit\Framework\TestCase;
 use WP_Query;

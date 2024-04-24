@@ -2,7 +2,7 @@
 
 namespace EventManager\ContentExpirationManagement;
 
-use EventManager\Services\WPService\DeletePost;
+use WpService\Contracts\DeletePost;
 use PHPUnit\Framework\TestCase;
 
 class DeleteExpiredPostsTest extends TestCase

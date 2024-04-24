@@ -2,9 +2,9 @@
 
 namespace EventManager\PostTableColumns\ColumnCellContent;
 
-use EventManager\Services\WPService\GetEditTermLink;
-use EventManager\Services\WPService\GetPostTerms;
-use EventManager\Services\WPService\GetTheId;
+use WpService\Contracts\GetEditTermLink;
+use WpService\Contracts\GetPostTerms;
+use WpService\Contracts\GetTheId;
 use WP_Error;
 use WP_Term;
 

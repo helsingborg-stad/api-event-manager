@@ -3,7 +3,7 @@
 namespace EventManager\ContentExpirationManagement;
 
 use EventManager\Helper\Hookable;
-use EventManager\Services\WPService\DeletePost;
+use WpService\Contracts\DeletePost;
 
 /**
  * Class DeleteExpiredPosts

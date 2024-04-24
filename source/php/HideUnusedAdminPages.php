@@ -3,7 +3,7 @@
 namespace EventManager;
 
 use EventManager\Helper\Hookable;
-use EventManager\Services\WPService\WPService;
+use WpService\WpService;
 
 class HideUnusedAdminPages implements Hookable
 {

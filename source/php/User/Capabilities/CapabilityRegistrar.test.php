@@ -2,7 +2,7 @@
 
 namespace EventManager\User\Capabilities;
 
-use EventManager\Services\WPService\AddFilter;
+use WpService\Contracts\AddFilter;
 use PHPUnit\Framework\TestCase;
 use WP_User;
 
