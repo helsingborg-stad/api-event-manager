@@ -3,8 +3,8 @@
 namespace EventManager\Tests\PostTableColumns\ColumnCellContent;
 
 use EventManager\PostTableColumns\ColumnCellContent\MetaStringCellContent;
-use EventManager\Services\WPService\GetPostMeta;
-use EventManager\Services\WPService\GetTheId;
+use WpService\Contracts\GetPostMeta;
+use WpService\Contracts\GetTheId;
 use PHPUnit\Framework\TestCase;
 
 class MetaStringCellContentTest extends TestCase

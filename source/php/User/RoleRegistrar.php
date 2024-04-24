@@ -3,8 +3,8 @@
 namespace EventManager\User;
 
 use EventManager\Helper\Hookable;
-use EventManager\Services\WPService\AddAction;
-use EventManager\Services\WPService\AddRole;
+use WpService\Contracts\AddAction;
+use WpService\Contracts\AddRole;
 
 class RoleRegistrar implements Hookable
 {

@@ -3,7 +3,7 @@
 namespace EventManager\User\Capabilities\UserCan;
 
 use EventManager\Services\AcfService\Functions\GetField;
-use EventManager\Services\WPService\GetPostTerms;
+use WpService\Contracts\GetPostTerms;
 
 class MemberUserCanEditPost implements UserCanInterface
 {

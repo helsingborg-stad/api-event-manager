@@ -31,12 +31,12 @@ use EventManager\ApiResponseModifiers\EventResponseModifier;
 use EventManager\ContentExpirationManagement\ExpiredEvents;
 use EventManager\CronScheduler\CronScheduler;
 use EventManager\PostToSchema\PostToEventSchema\Commands\Helpers\CommandHelpers;
-use EventManager\Resolvers\FileSystem\ManifestFilePathResolver;
-use EventManager\Resolvers\FileSystem\UrlFilePathResolver;
-use EventManager\Services\FileSystem\FileSystemFactory;
-use EventManager\Services\WPService\Implementations\FilePathResolvingWpService;
-use EventManager\Services\WPService\Implementations\NativeWpService;
-use EventManager\Services\WPService\Implementations\WpServiceLazyDecorator;
+use WpService\FileSystem\FileSystemFactory;
+use WpService\FileSystemResolvers\ManifestFilePathResolver;
+use WpService\FileSystemResolvers\UrlFilePathResolver;
+use WpService\Implementations\FilePathResolvingWpService;
+use WpService\Implementations\NativeWpService;
+use WpService\Implementations\WpServiceLazyDecorator;
 
 // Protect against direct file access
 if (!defined('WPINC')) {

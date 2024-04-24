@@ -4,7 +4,7 @@ namespace EventManager\AcfFieldContentModifiers;
 
 use EventManager\Helper\Hookable;
 use EventManager\AcfFieldContentModifiers\IAcfFieldContentModifier;
-use EventManager\Services\WPService\AddAction;
+use WpService\Contracts\AddAction;
 
 class Registrar implements Hookable
 {

@@ -3,7 +3,7 @@
 namespace EventManager\SetPostTermsFromContent;
 
 use EventManager\Helper\Hookable;
-use EventManager\Services\WPService\WPService;
+use WpService\WpService;
 use EventManager\TagReader\TagReaderInterface;
 
 class SetPostTermsFromContent implements Hookable

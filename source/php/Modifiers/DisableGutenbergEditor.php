@@ -3,7 +3,7 @@
 namespace EventManager\Modifiers;
 
 use EventManager\Helper\Hookable;
-use EventManager\Services\WPService\WPService;
+use WpService\WpService;
 
 class DisableGutenbergEditor implements Hookable
 {

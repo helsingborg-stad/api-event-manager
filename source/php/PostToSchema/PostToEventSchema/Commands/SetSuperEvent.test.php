@@ -3,7 +3,7 @@
 namespace EventManager\PostToSchema\PostToEventSchema\Commands;
 
 use EventManager\PostToSchema\IPostToSchemaAdapter;
-use EventManager\Services\WPService\GetPostParent;
+use WpService\Contracts\GetPostParent;
 use Mockery;
 use PHPUnit\Framework\TestCase;
 use Spatie\SchemaOrg\BaseType;

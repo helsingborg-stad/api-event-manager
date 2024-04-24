@@ -3,8 +3,8 @@
 namespace EventManager\PostTableColumns\ColumnSorters;
 
 use EventManager\PostTableColumns\Helpers\GetNestedArrayStringValueRecursiveInterface;
-use EventManager\Services\WPService\GetPostMeta;
-use EventManager\Services\WPService\GetPosts;
+use WpService\Contracts\GetPostMeta;
+use WpService\Contracts\GetPosts;
 use WP_Query;
 
 class NestedMetaStringSort implements ColumnSortInterface

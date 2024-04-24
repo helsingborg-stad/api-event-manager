@@ -3,7 +3,7 @@
 namespace EventManager\Tests\Helper;
 
 use EventManager\Helper\Taxonomy as HelperTaxonomy;
-use EventManager\Services\WPService\WPService;
+use WpService\WpService;
 use Mockery;
 use PHPUnit\Framework\TestCase;
 
@@ -14,7 +14,7 @@ class Taxonomy extends TestCase
      */
     public function testTaxonomyIsRegisteredWithSuppliedNameAndObjectType()
     {
-        $wpService = $this->createMock('EventManager\Services\WPService\WPService');
+        $wpService = $this->createMock(WpService::class);
         $taxonomy  = $this->getTaxonomyInstance($wpService);
 
         $wpService->expects($this->once())
@@ -29,7 +29,7 @@ class Taxonomy extends TestCase
      */
     public function testTaxonomyLabelsAreAutomaticallySetUpAndPassedToTheRegisterTaxonomyMethod()
     {
-        $wpService = $this->createMock('EventManager\Services\WPService\WPService');
+        $wpService = $this->createMock(WpService::class);
         $taxonomy  = $this->getTaxonomyInstance($wpService);
 
         $wpService->expects($this->once())

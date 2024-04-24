@@ -3,7 +3,7 @@
 namespace EventManager\Settings;
 
 use EventManager\Services\AcfService\Functions\AddOptionsPage;
-use EventManager\Services\WPService\AddAction;
+use WpService\Contracts\AddAction;
 use PHPUnit\Framework\TestCase;
 
 class AdminSettingsPageTest extends TestCase

@@ -2,7 +2,7 @@
 
 namespace EventManager\AcfFieldContentModifiers;
 
-use EventManager\Services\WPService\AddAction;
+use WpService\Contracts\AddAction;
 use PHPUnit\Framework\TestCase;
 
 class RegistrarTest extends TestCase

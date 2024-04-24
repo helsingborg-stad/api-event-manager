@@ -2,8 +2,8 @@
 
 namespace EventManager\User;
 
-use EventManager\Services\WPService\AddAction;
-use EventManager\Services\WPService\GetUsers;
+use WpService\Contracts\AddAction;
+use WpService\Contracts\GetUsers;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use stdClass;

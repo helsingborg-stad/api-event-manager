@@ -2,7 +2,7 @@
 
 namespace EventManager\PostToSchema\PostToEventSchema\Commands;
 
-use EventManager\Services\WPService\GetThePostThumbnailUrl;
+use WpService\Contracts\GetThePostThumbnailUrl;
 use PHPUnit\Framework\TestCase;
 use WP_Post;
 

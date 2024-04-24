@@ -7,11 +7,11 @@ use EventManager\PostToSchema\Mappers\IStringToSchemaMapper;
 use EventManager\PostToSchema\PostToEventSchema\Commands\Helpers\MapOpenStreetMapDataToPlace;
 use EventManager\Services\AcfService\Functions\GetField;
 use EventManager\Services\AcfService\Functions\GetFields;
-use EventManager\Services\WPService\GetPostParent;
-use EventManager\Services\WPService\GetPosts;
-use EventManager\Services\WPService\GetPostTerms;
-use EventManager\Services\WPService\GetTerm;
-use EventManager\Services\WPService\GetThePostThumbnailUrl;
+use WpService\Contracts\GetPostParent;
+use WpService\Contracts\GetPosts;
+use WpService\Contracts\GetPostTerms;
+use WpService\Contracts\GetTerm;
+use WpService\Contracts\GetThePostThumbnailUrl;
 use Spatie\SchemaOrg\BaseType;
 use WP_Post;
 

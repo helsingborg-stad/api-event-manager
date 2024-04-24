@@ -2,8 +2,8 @@
 
 namespace EventManager\User;
 
-use EventManager\Services\WPService\AddAction;
-use EventManager\Services\WPService\AddRole;
+use WpService\Contracts\AddAction;
+use WpService\Contracts\AddRole;
 use PHPUnit\Framework\TestCase;
 use WP_Role;
 

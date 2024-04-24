@@ -3,12 +3,14 @@
 namespace EventManager;
 
 use EventManager\Helper\Hookable;
-use EventManager\Services\WPService\WPService;
+use WpService\WpService;
 use EventManager\Services\AcfService\AcfService;
 
 class FieldSettingHidePrivate implements Hookable
 {
-    public function __construct(private WPService $wpService, private AcfService $acfService){}
+    public function __construct(private WPService $wpService, private AcfService $acfService)
+    {
+    }
 
     public function addHooks(): void
     {
@@ -16,8 +18,11 @@ class FieldSettingHidePrivate implements Hookable
         $this->wpService->addAction('acf/prepare_field', [$this, 'hideFieldFromBackendForms']);
     }
 
-    public function addPublicFieldOption($field) {
-        $this->acfService->renderFieldSetting($field, array(
+    public function addPublicFieldOption($field)
+    {
+        $this->acfService->renderFieldSetting(
+            $field,
+            array(
                 'label'        => __('Hide in backend forms', 'api-event-manager'),
                 'instructions' => 'Wheter to display this field in backend forms or not.',
                 'name'         => 'is_privately_hidden',
@@ -28,10 +33,11 @@ class FieldSettingHidePrivate implements Hookable
         );
     }
 
-    public function hideFieldFromBackendForms($field) {
+    public function hideFieldFromBackendForms($field)
+    {
 
         // Do not hide fields publicly
-        if(!$this->wpService->isAdmin()) {
+        if (!$this->wpService->isAdmin()) {
             return $field;
         }
 

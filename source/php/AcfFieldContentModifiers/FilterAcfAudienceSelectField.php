@@ -2,7 +2,7 @@
 
 namespace EventManager\AcfFieldContentModifiers;
 
-use EventManager\Services\WPService\GetTerms;
+use WpService\Contracts\GetTerms;
 
 class FilterAcfAudienceSelectField implements IAcfFieldContentModifier
 {

@@ -3,7 +3,7 @@
 namespace EventManager\ContentExpirationManagement;
 
 use EventManager\Services\AcfService\Functions\GetField;
-use EventManager\Services\WPService\GetPosts;
+use WpService\Contracts\GetPosts;
 
 class ExpiredEvents implements GetExpiredPostsInterface
 {

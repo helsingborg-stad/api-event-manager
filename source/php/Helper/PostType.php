@@ -2,7 +2,7 @@
 
 namespace EventManager\Helper;
 
-use EventManager\Services\WPService\WPService;
+use WpService\WpService;
 
 abstract class PostType implements Hookable
 {

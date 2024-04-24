@@ -3,8 +3,8 @@
 namespace EventManager\User;
 
 use EventManager\Helper\Hookable;
-use EventManager\Services\WPService\AddAction;
-use EventManager\Services\WPService\GetUsers;
+use WpService\Contracts\AddAction;
+use WpService\Contracts\GetUsers;
 
 /**
  * Synchronize role capabilities to existing users of that role.
