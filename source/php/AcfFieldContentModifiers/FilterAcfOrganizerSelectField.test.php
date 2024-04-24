@@ -2,7 +2,7 @@
 
 namespace EventManager\AcfFieldContentModifiers;
 
-use EventManager\Services\AcfService\Functions\GetField;
+use AcfService\Contracts\GetField;
 use WpService\Contracts\GetCurrentUser;
 use WpService\Contracts\GetTerms;
 use PHPUnit\Framework\TestCase;

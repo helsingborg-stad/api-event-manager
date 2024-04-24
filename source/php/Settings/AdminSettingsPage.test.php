@@ -2,7 +2,7 @@
 
 namespace EventManager\Settings;
 
-use EventManager\Services\AcfService\Functions\AddOptionsPage;
+use AcfService\Contracts\AddOptionsPage;
 use WpService\Contracts\AddAction;
 use PHPUnit\Framework\TestCase;
 

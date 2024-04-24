@@ -2,7 +2,7 @@
 
 namespace EventManager\User\Capabilities\UserCan;
 
-use EventManager\Services\AcfService\Functions\GetField;
+use AcfService\Contracts\GetField;
 use WpService\Contracts\GetPostTerms;
 use PHPUnit\Framework\TestCase;
 use WP_Error;

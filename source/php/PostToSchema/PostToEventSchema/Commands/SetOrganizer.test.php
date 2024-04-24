@@ -3,7 +3,7 @@
 namespace EventManager\PostToSchema\PostToEventSchema\Commands;
 
 use EventManager\PostToSchema\PostToEventSchema\Commands\Helpers\CommandHelpers;
-use EventManager\Services\AcfService\Functions\GetFields;
+use AcfService\Contracts\GetFields;
 use WpService\Contracts\GetPostTerms;
 use PHPUnit\Framework\TestCase;
 use Spatie\SchemaOrg\BaseType;

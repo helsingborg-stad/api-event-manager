@@ -13,6 +13,7 @@
  * Domain Path:       /languages
  */
 
+use AcfService\Implementations\NativeAcfService;
 use Composer\Installers\UserFrostingInstaller;
 use EventManager\CleanupUnusedTags\CleanupUnusedTags;
 use EventManager\HooksRegistrar\HooksRegistrar;
@@ -55,7 +56,7 @@ if (file_exists(EVENT_MANAGER_PATH . 'vendor/autoload.php')) {
 }
 
 $hooksRegistrar = new HooksRegistrar();
-$acfService     = AcfServiceFactory::create();
+$acfService     = new NativeAcfService();
 
 $manifestFileWpService = new WpServiceLazyDecorator();
 $wpService             = new FilePathResolvingWpService(
