@@ -33,7 +33,7 @@
                     "aria-label": "",
                     "type": "text",
                     "instructions": "By leaving this blank, the configuration of the fieldgroup will be used.",
-                    "required": 0,
+                    "required": 1,
                     "conditional_logic": 0,
                     "wrapper": {
                         "width": "",
@@ -54,7 +54,7 @@
                     "label": "From Step Content",
                     "name": "formStepContent",
                     "aria-label": "",
-                    "type": "textarea",
+                    "type": "wysiwyg",
                     "instructions": "By leaving this blank, the configuration of the fieldgroup will be used.",
                     "required": 0,
                     "conditional_logic": 0,
@@ -66,10 +66,10 @@
                     "is_publicly_hidden": 0,
                     "is_privately_hidden": 0,
                     "default_value": "",
-                    "maxlength": "",
-                    "rows": "",
-                    "placeholder": "",
-                    "new_lines": "",
+                    "tabs": "all",
+                    "toolbar": "basic",
+                    "media_upload": 0,
+                    "delay": 0,
                     "parent_repeater": "field_6627a5e312422"
                 },
                 {
@@ -88,7 +88,12 @@
                     },
                     "is_publicly_hidden": 0,
                     "is_privately_hidden": 0,
-                    "choices": [],
+                    "choices": {
+                        "group_6627a5e16d84f": "Event Form: Configure Multistep Form",
+                        "group_661e41bb1781f": "Events: Discover the Essentials of Your Event",
+                        "group_65a115157a046": "Events: Event Fields",
+                        "group_661e425070deb": "Events: When and where?"
+                    },
                     "default_value": false,
                     "return_format": "value",
                     "multiple": 0,

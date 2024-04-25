@@ -3,7 +3,7 @@
 if (function_exists('acf_add_local_field_group')) {
     acf_add_local_field_group(array(
     'key' => 'group_6627a5e16d84f',
-    'title' => __('Configure Multistep Form', 'api-event-manager'),
+    'title' => 'Configure Multistep Form',
     'fields' => array(
         0 => array(
             'key' => 'field_6627a5e312422',
@@ -36,7 +36,7 @@
                     'aria-label' => '',
                     'type' => 'text',
                     'instructions' => __('By leaving this blank, the configuration of the fieldgroup will be used.', 'api-event-manager'),
-                    'required' => 0,
+                    'required' => 1,
                     'conditional_logic' => 0,
                     'wrapper' => array(
                         'width' => '',
@@ -57,7 +57,7 @@
                     'label' => __('From Step Content', 'api-event-manager'),
                     'name' => 'formStepContent',
                     'aria-label' => '',
-                    'type' => 'textarea',
+                    'type' => 'wysiwyg',
                     'instructions' => __('By leaving this blank, the configuration of the fieldgroup will be used.', 'api-event-manager'),
                     'required' => 0,
                     'conditional_logic' => 0,
@@ -69,10 +69,10 @@
                     'is_publicly_hidden' => 0,
                     'is_privately_hidden' => 0,
                     'default_value' => '',
-                    'maxlength' => '',
-                    'rows' => '',
-                    'placeholder' => '',
-                    'new_lines' => '',
+                    'tabs' => 'all',
+                    'toolbar' => 'basic',
+                    'media_upload' => 0,
+                    'delay' => 0,
                     'parent_repeater' => 'field_6627a5e312422',
                 ),
                 2 => array(
@@ -92,6 +92,10 @@
                     'is_publicly_hidden' => 0,
                     'is_privately_hidden' => 0,
                     'choices' => array(
+                        'group_6627a5e16d84f' => __('Event Form: Configure Multistep Form', 'api-event-manager'),
+                        'group_661e41bb1781f' => __('Events: Discover the Essentials of Your Event', 'api-event-manager'),
+                        'group_65a115157a046' => __('Events: Event Fields', 'api-event-manager'),
+                        'group_661e425070deb' => __('Events: When and where?', 'api-event-manager'),
                     ),
                     'default_value' => false,
                     'return_format' => 'value',

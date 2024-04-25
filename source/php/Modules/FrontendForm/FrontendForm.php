@@ -59,6 +59,7 @@ class FrontendForm extends \Modularity\Module
 
         add_filter('query_vars',[$this, 'registerFormStepQueryVar']); // add from wpservice
         add_filter('query_vars',[$this, 'registerFormIdQueryVar']); // add from wpservice
+        add_filter('acf/load_field/name=formStepGroup', [$this, 'addOptionsToGroupSelect']); // add from wpservice
 
         //TODO: Resolve issue with modularity style/script not loading in drafts.
         add_action('wp_enqueue_scripts', function() {
@@ -66,10 +67,30 @@ class FrontendForm extends \Modularity\Module
         });
     }
 
+    private function defaultDataResponse(): array {
+        return [
+            'empty' => false,
+            'error' => false
+        ];
+    }
+
     public function data(): array
     {
         //Needs to be called, otherwise a notice will be thrown.
-        $fields = $this->getFields(); 
+        $fields = (object) $this->getFields(); 
+        
+        //Empty form. Show message.
+        if($fields->formSteps == false) {
+            return array_merge(
+                $this->defaultDataResponse(),
+                [
+                'empty' => $this->renderView('partials.message', [
+                    'text' => __('No steps defined. Please Add some steps, to enable this form functionality.', 'api-event-manager'),
+                    'icon' => ['name' => 'info'],
+                    'type' => 'info'
+                ])
+            ]);
+        }
 
         // TODO: Make this a setting
         $postType = "event"; 
@@ -77,10 +98,10 @@ class FrontendForm extends \Modularity\Module
 
         //Define form steps 
         $steps = [];
-        foreach($this->fieldGroups as $index => $fieldGroup) {
+        foreach($fields->formSteps as $index => $fieldGroup) {
             $steps[$index + 1] = new FormStep(
                 $index + 1, 
-                $this->fieldGroups
+                $fieldGroup
             );
         }
 
@@ -112,15 +133,15 @@ class FrontendForm extends \Modularity\Module
 
         //Invalid step: Show error message
         if(!$formState->isValidStep) {
-            return [
+            return array_merge(
+                $this->defaultDataResponse(),
+                [
                 'error' => $this->renderView('partials.message', [
                     'text' => __('Whoops! It looks like we ran out of form.', 'api-event-manager'),
                     'icon' => ['name' => 'error'],
                     'type' => 'warning'
                 ])
-            ];
-        } else {
-            $data['error'] = false;
+            ]);
         }
 
         //Get current step form
@@ -149,7 +170,7 @@ class FrontendForm extends \Modularity\Module
                 'form_attributes' => ['class' => 'acf-form js-form-validation js-form-validation'],
                 'uploader'              => 'basic',
                 'updated_message'       => __("The event has been submitted for review. You will be notified when the event has been published.", 'acf'),
-                'html_updated_message'  => "",
+                'html_updated_message'  => $htmlUpdatedMessage,
                 'html_submit_button'    => $htmlSubmitButton,
                 'new_post'              => [
                     'post_type'   => $self->formPostType,
@@ -168,17 +189,20 @@ class FrontendForm extends \Modularity\Module
             'next' => __('Next', 'api-event-manager')
         ];
 
-        return [
-            'error' => false,
-            'steps' => $steps,
-            'state' => $formState,
-            'form'  => $form,
-            'formSettings' => (object) [
-                'postType' => $postType,
-                'postStatus' => $postStatus
-            ],
-            'lang'  => $lang
-        ];
+        return array_merge(
+            $this->defaultDataResponse(),
+            [
+                'error' => false,
+                'steps' => $steps,
+                'state' => $formState,
+                'form'  => $form,
+                'formSettings' => (object) [
+                    'postType' => $postType,
+                    'postStatus' => $postStatus
+                ],
+                'lang'  => $lang
+            ]
+        );
     }
 
     private function getQueryParam($key, $default = ""): string
@@ -256,5 +280,29 @@ class FrontendForm extends \Modularity\Module
         );
     }
 
+    public function addOptionsToGroupSelect( $field ) {
+        $field['choices'] = array();
+
+        $groups = acf_get_field_groups();
+
+        $groups = array_filter($groups, function($item) {
+            return isset($item['location'][0][0]['param']) && $item['location'][0][0]['param'] === 'post_type';
+        });
+
+
+        $createSelectItemTitle = function ($name, $postTypeName) {
+
+            $postTypeName = get_post_type_object($postTypeName);
+
+            return (!empty($postTypeName->label) ? "$postTypeName->label: " : "") . $name;
+        };
+
+        if(is_array($groups) && !empty($groups)) {
+            foreach($groups as $group) {
+                $field['choices'][$group['key']] = $createSelectItemTitle($group['title'], $group['location'][0][0]['value']); 
+            }
+        }
+        return $field;
+    }
 }
 

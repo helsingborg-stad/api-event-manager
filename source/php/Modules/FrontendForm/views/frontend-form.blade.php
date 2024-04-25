@@ -8,11 +8,16 @@
   @endtypography
 @endif
 
-@if($error != false)
+@if($empty !== false)
+  {!! $empty !!}
+@elseif($error !== false)
   {!! $error !!}
 @endif
 
-@if($error === false)
+@if($error === false && $empty === false)
+
+  <!-- Progress bar -->
+
   @foreach ($steps as $stepKey => $step)
     @paper(['padding' => 4, 'classList' => ['u-margin__bottom--4']])
       <div class="u-display--flex u-justify-content--space-between">
@@ -60,7 +65,7 @@
             'variant' => 'body',
             'classList' => ['u-margin--0']
         ])
-          {{ $step->description }}
+          {!! $step->description !!}
         @endtypography
       @endif
 
