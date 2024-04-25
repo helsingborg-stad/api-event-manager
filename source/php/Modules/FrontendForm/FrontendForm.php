@@ -104,7 +104,7 @@ class FrontendForm extends \Modularity\Module
                 $steps,
                 get_permalink(),
                 [
-                    'formid' => get_query_var($this->formIdQueryParam, "%%postid%%"),
+                    'formid' => get_query_var($this->formIdQueryParam, "%post_id%"),
                     'step' => null
                 ]
             );
@@ -149,7 +149,7 @@ class FrontendForm extends \Modularity\Module
                 'form_attributes' => ['class' => 'acf-form js-form-validation js-form-validation'],
                 'uploader'              => 'basic',
                 'updated_message'       => __("The event has been submitted for review. You will be notified when the event has been published.", 'acf'),
-                'html_updated_message'  => $htmlUpdatedMessage,
+                'html_updated_message'  => "",
                 'html_submit_button'    => $htmlSubmitButton,
                 'new_post'              => [
                     'post_type'   => $self->formPostType,

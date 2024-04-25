@@ -41,11 +41,25 @@ class FormStepNav {
       return $this->getStepLink($step->step, $baseUrl, $queryVars) ?? null;
     }
 
+    /**
+     * Get the step link. Purposly handles query vars without 
+     * http_build_query due to bad handling in acf of % in strings. 
+     * 
+     * @param int $step
+     * @param string $baseUrl
+     * @param array $queryVars
+     * @return string
+     */
     private function getStepLink(int $step, string $baseUrl, array $queryVars): string
     {
       if(is_countable($queryVars) && count($queryVars) > 0) {
         $queryVars['step'] = $step;
-        return $baseUrl . '?' . http_build_query($queryVars);
+        $baseUrl = $baseUrl . '?' . (function() use ($queryVars) {
+          foreach($queryVars as $param => $value) {
+            $paramsJoined[] = "$param=$value";
+          }
+          return implode('&', $paramsJoined);
+        })();
       }
       return $baseUrl;
     }

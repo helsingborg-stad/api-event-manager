@@ -1,5 +1,5 @@
 @button([
-    'href' => $href ?? '#',
+    'href' => $href ?? '',
     'text' => $text ?? 'Previous',
     'color' => 'default',
     'style' => 'filled',
