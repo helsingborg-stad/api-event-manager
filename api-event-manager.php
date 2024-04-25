@@ -14,7 +14,6 @@
  */
 
 use AcfService\Implementations\NativeAcfService;
-use Composer\Installers\UserFrostingInstaller;
 use EventManager\CleanupUnusedTags\CleanupUnusedTags;
 use EventManager\HooksRegistrar\HooksRegistrar;
 use EventManager\PostTableColumns\Column as PostTableColumn;
@@ -25,7 +24,6 @@ use EventManager\PostTableColumns\ColumnSorters\NestedMetaStringSort;
 use EventManager\PostTableColumns\Helpers\GetNestedArrayStringValueRecursive;
 use EventManager\PostToSchema\Mappers\StringToEventSchemaMapper;
 use EventManager\PostToSchema\PostToEventSchema\PostToEventSchema;
-use EventManager\Services\AcfService\AcfServiceFactory;
 use EventManager\SetPostTermsFromContent\SetPostTermsFromContent;
 use EventManager\TagReader\TagReader;
 use EventManager\ApiResponseModifiers\EventResponseModifier;
@@ -187,20 +185,13 @@ $hooksRegistrar->register($eventPostType);
 /**
  * User roles
  */
-$organizationMemberUserRole = new \EventManager\User\Role(
-    'organization_member',
-    'Organization Member',
-    [
-        'edit_post',
-        'edit_others_posts'
-    ]
-);
+$userRoles = [
+    new \EventManager\User\Role('organization_administrator', 'Organization Administrator'),
+    new \EventManager\User\Role('organization_member', 'Organization Member'),
+    new \EventManager\User\Role('pending_organization_member', 'Pending Organization Member'),
+];
 
-$userRoleRegistrar                   = new \EventManager\User\RoleRegistrar([$organizationMemberUserRole], $wpService);
-$syncRoleCapabilitiesToExistingUsers = new \EventManager\User\SyncRoleCapabilitiesToExistingUsers([$organizationMemberUserRole], $wpService);
-
-$hooksRegistrar->register($userRoleRegistrar);
-$hooksRegistrar->register($syncRoleCapabilitiesToExistingUsers);
+$hooksRegistrar->register(new \EventManager\User\RoleRegistrar($userRoles, $wpService));
 
 
 /**
