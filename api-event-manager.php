@@ -206,13 +206,11 @@ $hooksRegistrar->register($syncRoleCapabilitiesToExistingUsers);
 /**
  * User capabilities
  */
-$memberCanEditPost                   = new \EventManager\User\Capabilities\UserCan\MemberUserCanEditPost($wpService, $acfService);
-$memberBelongsToVerifiedOrganization = new \EventManager\User\Capabilities\UserCan\MemberBelongsToVerifiedOrganization($acfService);
+$memberCanEditPost = new \EventManager\User\Capabilities\UserCan\MemberUserCanEditPost($wpService, $acfService);
 
 $capabilityRegistrar = new \EventManager\User\Capabilities\CapabilityRegistrar([
     new \EventManager\User\Capabilities\CapabilityUsingCallback('edit_post', $memberCanEditPost),
     new \EventManager\User\Capabilities\CapabilityUsingCallback('edit_others_posts', $memberCanEditPost),
-    new \EventManager\User\Capabilities\CapabilityUsingCallback('publish_posts', $memberBelongsToVerifiedOrganization)
 ], $wpService);
 
 $hooksRegistrar->register($capabilityRegistrar);
