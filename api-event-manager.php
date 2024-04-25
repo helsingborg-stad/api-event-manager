@@ -199,6 +199,7 @@ $hooksRegistrar->register(new \EventManager\User\RoleRegistrar($userRoles, $wpSe
 
 $capabilities = [
     new \EventManager\User\UserHasCap\Implementations\UserCanEditEvents(),
+    new \EventManager\User\UserHasCap\Implementations\UserCanEditEvent($wpService, $acfService),
 ];
 
 $hooksRegistrar->register(new \EventManager\User\UserHasCap\Registrar($capabilities, $wpService));
