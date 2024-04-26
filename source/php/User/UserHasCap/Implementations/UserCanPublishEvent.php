@@ -17,15 +17,17 @@ class UserCanPublishEvent implements UserHasCapInterface
             return $allcaps;
         }
 
-        if (
-            in_array('administrator', $user->roles) ||
-            in_array('organization_administrator', $user->roles) ||
-            in_array('organization_member', $user->roles)
-        ) {
+        if ($this->userHasAppropriateRole($user)) {
             $allcaps['publish_events'] = true;
             return $allcaps;
         }
 
         return $allcaps;
+    }
+
+    private function userHasAppropriateRole(WP_User $user): bool
+    {
+        $allowedRoles = ['administrator', 'organization_administrator', 'organization_member'];
+        return !empty(array_intersect($allowedRoles, $user->roles));
     }
 }
