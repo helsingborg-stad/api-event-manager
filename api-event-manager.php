@@ -200,6 +200,7 @@ $hooksRegistrar->register(new \EventManager\User\RoleRegistrar($userRoles, $wpSe
 $capabilities = [
     new \EventManager\User\UserHasCap\Implementations\UserCanEditEvents(),
     new \EventManager\User\UserHasCap\Implementations\UserCanEditEvent($wpService, $acfService),
+    new \EventManager\User\UserHasCap\Implementations\UserCanEditOthersEvents(),
     new \EventManager\User\UserHasCap\Implementations\UserCanPublishEvent($wpService, $acfService),
 ];
 
@@ -239,7 +240,7 @@ $hooksRegistrar->register($acfFieldContentModifierRegistrar);
  * Acf save post actions
  */
 $acfSavepostRegistrar = new \EventManager\AcfSavepostActions\Registrar([
-    // new \EventManager\AcfSavepostActions\SetPostTermsFromField('organization', 'organization', $wpService, $acfService),
+    new \EventManager\AcfSavepostActions\SetPostTermsFromField('organization', 'organization', $wpService, $acfService),
     new \EventManager\AcfSavepostActions\SetPostTermsFromField('audience', 'audience', $wpService, $acfService),
 ], $wpService);
 
