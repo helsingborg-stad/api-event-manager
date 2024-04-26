@@ -196,13 +196,14 @@ $hooksRegistrar->register(new \EventManager\User\RoleRegistrar($userRoles, $wpSe
 /**
  * User capabilities
  */
+$postBelongsToSameOrganizationAsUser = new \EventManager\User\UserHasCap\Implementations\Helpers\PostBelongsToSameOrganizationAsUser($wpService, $acfService);
 
 $capabilities = [
     new \EventManager\User\UserHasCap\Implementations\UserCanEditEvents(),
-    new \EventManager\User\UserHasCap\Implementations\UserCanEditEvent($wpService, $acfService),
+    new \EventManager\User\UserHasCap\Implementations\UserCanEditEvent($postBelongsToSameOrganizationAsUser, $wpService),
     new \EventManager\User\UserHasCap\Implementations\UserCanEditOthersEvents(),
-    new \EventManager\User\UserHasCap\Implementations\UserCanPublishEvent($wpService, $acfService),
-    new \EventManager\User\UserHasCap\Implementations\UserCanDeleteEvent($wpService, $acfService),
+    new \EventManager\User\UserHasCap\Implementations\UserCanPublishEvent(),
+    new \EventManager\User\UserHasCap\Implementations\UserCanDeleteEvent($postBelongsToSameOrganizationAsUser),
 ];
 
 $hooksRegistrar->register(new \EventManager\User\UserHasCap\Registrar($capabilities, $wpService));

@@ -2,15 +2,12 @@
 
 namespace EventManager\User\UserHasCap\Implementations;
 
-use AcfService\Contracts\GetField;
 use EventManager\User\UserHasCap\UserHasCapInterface;
 use WP_User;
-use WpService\Contracts\GetPost;
-use WpService\Contracts\GetPostTerms;
 
 class UserCanPublishEvent implements UserHasCapInterface
 {
-    public function __construct(private GetPostTerms&GetPost $wpService, private GetField $acfService)
+    public function __construct()
     {
     }
 
