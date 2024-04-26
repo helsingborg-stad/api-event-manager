@@ -255,3 +255,21 @@ $fieldSettingHidePublic = new \EventManager\FieldSettingHidePublic($wpService, $
 $fieldSettingHidePublic->addHooks();
 $fieldSettingHidePrivate = new \EventManager\FieldSettingHidePrivate($wpService, $acfService);
 $fieldSettingHidePrivate->addHooks();
+
+/**
+ * Pre get post modifiers
+ */
+$hooksRegistrar->register(
+    new \EventManager\PreGetPostModifiers\LimitEventTableResultsByUserRole($wpService, $acfService)
+);
+
+/**
+ * Post table filters
+ */
+$eventPostStatusFilter = new \EventManager\PostTableFilters\EventPostStatusFilter($wpService);
+$eventPostStatusFilter->hideViewsFromEventTable(); // Hide views from table to avoid confusion.
+$postTableFiltersRegistrar = new \EventManager\PostTableFilters\Registrar([
+    $eventPostStatusFilter
+], $wpService);
+
+$hooksRegistrar->register($postTableFiltersRegistrar);
