@@ -1,6 +1,6 @@
 <?php
 
-namespace EventManager\AcfSavepostActions;
+namespace EventManager\AcfSavePostActions;
 
 use WpService\Contracts\AddAction;
 use PHPUnit\Framework\TestCase;

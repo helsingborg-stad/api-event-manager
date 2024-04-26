@@ -1,6 +1,6 @@
 <?php
 
-namespace EventManager\AcfSavepostActions;
+namespace EventManager\AcfSavePostActions;
 
 interface IAcfSavePostAction
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace EventManager\AcfSavepostActions;
+namespace EventManager\AcfSavePostActions;
 
 use EventManager\Helper\Hookable;
 use WpService\Contracts\AddAction;

@@ -1,6 +1,6 @@
 <?php
 
-namespace EventManager\AcfSavepostActions;
+namespace EventManager\AcfSavePostActions;
 
 use AcfService\Contracts\GetField;
 use WpService\Contracts\SetPostTerms;
