@@ -241,9 +241,9 @@ $hooksRegistrar->register($acfFieldContentModifierRegistrar);
 /**
  * Acf save post actions
  */
-$acfSavepostRegistrar = new \EventManager\AcfSavepostActions\Registrar([
-    new \EventManager\AcfSavepostActions\SetPostTermsFromField('organization', 'organization', $wpService, $acfService),
-    new \EventManager\AcfSavepostActions\SetPostTermsFromField('audience', 'audience', $wpService, $acfService),
+$acfSavepostRegistrar = new \EventManager\AcfSavePostActions\Registrar([
+    new \EventManager\AcfSavePostActions\SetPostTermsFromField('organization', 'organization', $wpService, $acfService),
+    new \EventManager\AcfSavePostActions\SetPostTermsFromField('audience', 'audience', $wpService, $acfService),
 ], $wpService);
 
 $hooksRegistrar->register($acfSavepostRegistrar);
