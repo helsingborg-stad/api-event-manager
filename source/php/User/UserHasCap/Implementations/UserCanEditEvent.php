@@ -20,11 +20,19 @@ class UserCanEditEvent implements UserHasCapInterface
             return $allcaps;
         }
 
+
+        if (get_post_status($args[2]) === 'auto-draft') {
+            // If the post is an auto-draft, the user can edit it
+            $allcaps['edit_event'] = true;
+            return $allcaps;
+        }
+
         if (in_array('administrator', $user->roles)) {
             // If the user is an admin, they can edit any event
             $allcaps['edit_event'] = true;
             return $allcaps;
         }
+
 
         if (in_array('organization_administrator', $user->roles) || in_array('organization_member', $user->roles)) {
             // If the user is an organization admin or member, they can only edit events that belong to their organization
@@ -33,6 +41,7 @@ class UserCanEditEvent implements UserHasCapInterface
                 return $allcaps;
             }
         }
+
 
         if (in_array('pending_organization_member', $user->roles)) {
             // If the user is a pending member, they can only edit their own events that are pending
