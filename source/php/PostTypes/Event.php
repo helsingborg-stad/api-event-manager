@@ -23,6 +23,7 @@ class Event extends PostType
             'rest_controller_class' => \EventManager\RestControllers\EventController::class,
             'supports'              => [ 'title', 'editor', 'excerpt', 'thumbnail', 'revisions', 'page-attributes' ],
             'taxonomies'            => [ 'audience-type' ],
+            'capability_type'       => ['event', 'events'],
         ];
     }
 

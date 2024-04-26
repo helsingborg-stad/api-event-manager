@@ -193,18 +193,20 @@ $userRoles = [
 
 $hooksRegistrar->register(new \EventManager\User\RoleRegistrar($userRoles, $wpService));
 
-
 /**
  * User capabilities
  */
-$memberCanEditPost = new \EventManager\User\Capabilities\UserCan\MemberUserCanEditPost($wpService, $acfService);
+$postBelongsToSameOrganizationAsUser = new \EventManager\User\UserHasCap\Implementations\Helpers\PostBelongsToSameOrganizationAsUser($wpService, $acfService);
 
-$capabilityRegistrar = new \EventManager\User\Capabilities\CapabilityRegistrar([
-    new \EventManager\User\Capabilities\CapabilityUsingCallback('edit_post', $memberCanEditPost),
-    new \EventManager\User\Capabilities\CapabilityUsingCallback('edit_others_posts', $memberCanEditPost),
-], $wpService);
+$capabilities = [
+    new \EventManager\User\UserHasCap\Implementations\UserCanEditEvents(),
+    new \EventManager\User\UserHasCap\Implementations\UserCanEditEvent($postBelongsToSameOrganizationAsUser, $wpService),
+    new \EventManager\User\UserHasCap\Implementations\UserCanEditOthersEvents(),
+    new \EventManager\User\UserHasCap\Implementations\UserCanPublishEvent(),
+    new \EventManager\User\UserHasCap\Implementations\UserCanDeleteEvent($postBelongsToSameOrganizationAsUser),
+];
 
-$hooksRegistrar->register($capabilityRegistrar);
+$hooksRegistrar->register(new \EventManager\User\UserHasCap\Registrar($capabilities, $wpService));
 
 /**
  * Taxonomies
@@ -235,6 +237,16 @@ $acfFieldContentModifierRegistrar = new \EventManager\AcfFieldContentModifiers\R
 ], $wpService);
 
 $hooksRegistrar->register($acfFieldContentModifierRegistrar);
+
+/**
+ * Acf save post actions
+ */
+$acfSavepostRegistrar = new \EventManager\AcfSavePostActions\Registrar([
+    new \EventManager\AcfSavePostActions\SetPostTermsFromField('organization', 'organization', $wpService, $acfService),
+    new \EventManager\AcfSavePostActions\SetPostTermsFromField('audience', 'audience', $wpService, $acfService),
+], $wpService);
+
+$hooksRegistrar->register($acfSavepostRegistrar);
 
 /**
  * Field setting hide public
