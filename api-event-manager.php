@@ -202,6 +202,7 @@ $capabilities = [
     new \EventManager\User\UserHasCap\Implementations\UserCanEditEvent($wpService, $acfService),
     new \EventManager\User\UserHasCap\Implementations\UserCanEditOthersEvents(),
     new \EventManager\User\UserHasCap\Implementations\UserCanPublishEvent($wpService, $acfService),
+    new \EventManager\User\UserHasCap\Implementations\UserCanDeleteEvent($wpService, $acfService),
 ];
 
 $hooksRegistrar->register(new \EventManager\User\UserHasCap\Registrar($capabilities, $wpService));
