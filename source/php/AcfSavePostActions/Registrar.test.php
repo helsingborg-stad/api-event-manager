@@ -25,7 +25,7 @@ class RegistrarTest extends TestCase
     private function getSavepostAction(): IAcfSavePostAction
     {
         return new class implements IAcfSavePostAction {
-            public function savePost(int $postId): void
+            public function savePost(int|string $postId): void
             {
                 echo "savePost called with postId: {$postId}";
             }

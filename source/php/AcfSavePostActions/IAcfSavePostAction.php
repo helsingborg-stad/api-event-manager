@@ -4,5 +4,5 @@ namespace EventManager\AcfSavePostActions;
 
 interface IAcfSavePostAction
 {
-    public function savePost(int $postId): void;
+    public function savePost(int|string $postId): void;
 }

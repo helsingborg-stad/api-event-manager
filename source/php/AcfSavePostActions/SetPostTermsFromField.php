@@ -15,8 +15,12 @@ class SetPostTermsFromField implements IAcfSavePostAction
     ) {
     }
 
-    public function savePost(int $postId): void
+    public function savePost(int|string $postId): void
     {
+        if (!is_int($postId)) {
+            return;
+        }
+
         $terms = $this->acfService->getField($this->fieldName, $postId);
         $terms = $this->sanitizeTerms($terms);
 
