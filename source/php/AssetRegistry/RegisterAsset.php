@@ -2,24 +2,23 @@
 
 namespace EventManager\AssetRegistry;
 
-use WpService\WpService;
 use EventManager\HooksRegistrar\Hookable;
+use WpService\Contracts\AddAction;
+use WpService\Contracts\RegisterScript;
+use WpService\Contracts\RegisterStyle;
 
 abstract class RegisterAsset implements Hookable
 {
     abstract public function getFilename(): string;
     abstract public function getHandle(): string;
 
-    private WPService $wp;
-
-    public function __construct(WPService $wpService)
+    public function __construct(private AddAction&RegisterScript&RegisterStyle $wpService)
     {
-        $this->wp = $wpService;
     }
 
     public function addHooks(): void
     {
-        $this->wp->addAction('wp_enqueue_scripts', [$this, 'register']);
+        $this->wpService->addAction('wp_enqueue_scripts', [$this, 'register']);
     }
 
     private function getType($filename): string
@@ -43,14 +42,14 @@ abstract class RegisterAsset implements Hookable
         $filename = $this->getFilename();
 
         if ($this->getType($filename) === 'js') {
-            $this->wp->registerScript(
+            $this->wpService->registerScript(
                 $this->getHandle(),
                 $this->getFilename()
             );
         }
 
         if ($this->getType($filename) === 'css') {
-            $this->wp->registerStyle(
+            $this->wpService->registerStyle(
                 $this->getHandle(),
                 $this->getFilename()
             );

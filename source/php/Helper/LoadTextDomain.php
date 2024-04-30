@@ -4,10 +4,11 @@ namespace EventManager\Helper;
 
 use EventManager\HooksRegistrar\Hookable;
 use WpService\Contracts\AddAction;
+use WpService\Contracts\LoadPluginTextDomain;
 
 class LoadTextDomain implements Hookable
 {
-    public function __construct(private AddAction $wpService)
+    public function __construct(private AddAction&LoadPluginTextDomain $wpService)
     {
     }
 

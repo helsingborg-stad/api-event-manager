@@ -3,7 +3,8 @@
 namespace EventManager\Taxonomies;
 
 use EventManager\HooksRegistrar\Hookable;
-use WpService\WpService;
+use WpService\Contracts\AddAction;
+use WpService\Contracts\RegisterTaxonomy;
 
 abstract class Taxonomy implements Hookable
 {
@@ -12,16 +13,14 @@ abstract class Taxonomy implements Hookable
     abstract public function getArgs(): array;
     abstract public function getLabelSingular(): string;
     abstract public function getLabelPlural(): string;
-    private WPService $wp;
 
-    public function __construct(WPService $wpService)
+    public function __construct(private AddAction&RegisterTaxonomy $wpService)
     {
-        $this->wp = $wpService;
     }
 
     public function addHooks(): void
     {
-        $this->wp->addAction('init', [$this, 'register']);
+        $this->wpService->addAction('init', [$this, 'register']);
     }
 
     public function register(): void
@@ -30,7 +29,7 @@ abstract class Taxonomy implements Hookable
             'labels' => $this->getLabels(),
         ]);
 
-        $this->wp->registerTaxonomy($this->getName(), $this->getObjectType(), $args);
+        $this->wpService->registerTaxonomy($this->getName(), $this->getObjectType(), $args);
     }
 
     private function getLabels()

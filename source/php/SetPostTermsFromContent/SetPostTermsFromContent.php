@@ -3,18 +3,22 @@
 namespace EventManager\SetPostTermsFromContent;
 
 use EventManager\HooksRegistrar\Hookable;
-use WpService\WpService;
 use EventManager\TagReader\TagReaderInterface;
+use WpService\Contracts\AddAction;
+use WpService\Contracts\ApplyFilters;
+use WpService\Contracts\GetPost;
+use WpService\Contracts\InsertTerm;
+use WpService\Contracts\SetPostTerms;
+use WpService\Contracts\TermExists;
 
 class SetPostTermsFromContent implements Hookable
 {
-    private TagReaderInterface $tagReader;
-    private WPService $wpService;
-    private string $postType;
-    private string $taxonomy;
-
-    public function __construct(string $postType, string $taxonomy, TagReaderInterface $tagReader, WPService $wpService)
-    {
+    public function __construct(
+        private string $postType,
+        private string $taxonomy,
+        private TagReaderInterface $tagReader,
+        private AddAction&GetPost&ApplyFilters&SetPostTerms&TermExists&InsertTerm $wpService
+    ) {
         $this->tagReader = $tagReader;
         $this->wpService = $wpService;
         $this->postType  = $postType;

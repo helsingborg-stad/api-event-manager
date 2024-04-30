@@ -3,11 +3,11 @@
 namespace EventManager\Helper;
 
 use EventManager\HooksRegistrar\Hookable;
-use WpService\WpService;
+use WpService\Contracts\AddAction;
 
 class RegisterAcfExportManager implements Hookable
 {
-    public function __construct(private WPService $wpService)
+    public function __construct(private AddAction $wpService)
     {
     }
 

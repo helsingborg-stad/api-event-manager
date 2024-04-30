@@ -3,11 +3,11 @@
 namespace EventManager\Modifiers;
 
 use EventManager\HooksRegistrar\Hookable;
-use WpService\WpService;
+use WpService\Contracts\AddFilter;
 
 class DisableGutenbergEditor implements Hookable
 {
-    public function __construct(private WPService $wpService)
+    public function __construct(private AddFilter $wpService)
     {
     }
 

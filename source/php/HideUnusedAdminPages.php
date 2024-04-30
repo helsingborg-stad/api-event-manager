@@ -3,13 +3,13 @@
 namespace EventManager;
 
 use EventManager\HooksRegistrar\Hookable;
-use WpService\WpService;
+use WpService\Contracts\AddAction;
+use WpService\Contracts\GetEnvironmentType;
+use WpService\Contracts\RemoveMenuPage;
 
 class HideUnusedAdminPages implements Hookable
 {
-    private WPService $wpService;
-
-    public function __construct(WPService $wpService)
+    public function __construct(private AddAction&GetEnvironmentType&RemoveMenuPage $wpService)
     {
         $this->wpService = $wpService;
     }
