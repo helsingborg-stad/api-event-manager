@@ -20,12 +20,11 @@ class PostBelongsToSameOrganizationAsUser implements IPostBelongsToSameOrganizat
             return false;
         }
 
-        foreach ($postTerms as $postTerm) {
-            if (in_array($postTerm->term_id, $userOrganizationTermIds)) {
-                return true;
-            }
-        }
+        $matches = array_intersect(
+            array_map(fn($term) => $term->term_id, $postTerms),
+            $userOrganizationTermIds
+        );
 
-        return false;
+        return !empty($matches);
     }
 }
