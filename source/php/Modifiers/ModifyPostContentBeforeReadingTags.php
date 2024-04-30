@@ -2,7 +2,7 @@
 
 namespace EventManager\Modifiers;
 
-use EventManager\Helper\Hookable;
+use EventManager\HooksRegistrar\Hookable;
 use WpService\WpService;
 
 class ModifyPostContentBeforeReadingTags implements Hookable

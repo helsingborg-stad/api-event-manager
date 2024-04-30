@@ -2,7 +2,7 @@
 
 namespace EventManager\PreGetUsersModifiers;
 
-use EventManager\Helper\Hookable;
+use EventManager\HooksRegistrar\Hookable;
 use WP_User_Query;
 
 interface IPreGetUsersModifier extends Hookable

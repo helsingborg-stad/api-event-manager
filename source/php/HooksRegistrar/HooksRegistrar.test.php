@@ -2,7 +2,7 @@
 
 namespace EventManager\HooksRegistrar;
 
-use EventManager\Helper\Hookable;
+use EventManager\HooksRegistrar\Hookable;
 use WP_Mock\Tools\TestCase;
 
 class HooksRegistrarTest extends TestCase

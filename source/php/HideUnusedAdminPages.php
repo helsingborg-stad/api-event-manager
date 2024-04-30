@@ -2,7 +2,7 @@
 
 namespace EventManager;
 
-use EventManager\Helper\Hookable;
+use EventManager\HooksRegistrar\Hookable;
 use WpService\WpService;
 
 class HideUnusedAdminPages implements Hookable

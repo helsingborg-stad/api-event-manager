@@ -3,7 +3,7 @@
 namespace EventManager;
 
 use AcfService\Contracts\RenderFieldSetting;
-use EventManager\Helper\Hookable;
+use EventManager\HooksRegistrar\Hookable;
 use WpService\WpService;
 
 class FieldSettingHidePrivate implements Hookable

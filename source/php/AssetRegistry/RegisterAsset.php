@@ -3,7 +3,7 @@
 namespace EventManager\AssetRegistry;
 
 use WpService\WpService;
-use EventManager\Helper\Hookable;
+use EventManager\HooksRegistrar\Hookable;
 
 abstract class RegisterAsset implements Hookable
 {

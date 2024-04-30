@@ -2,7 +2,7 @@
 
 namespace EventManager\SetPostTermsFromContent;
 
-use EventManager\Helper\Hookable;
+use EventManager\HooksRegistrar\Hookable;
 use WpService\WpService;
 use EventManager\TagReader\TagReaderInterface;
 

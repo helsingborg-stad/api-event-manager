@@ -2,6 +2,7 @@
 
 namespace EventManager\Helper;
 
+use EventManager\HooksRegistrar\Hookable;
 use WpService\Contracts\AddAction;
 
 class LoadTextDomain implements Hookable
