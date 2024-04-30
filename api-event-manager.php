@@ -198,6 +198,7 @@ $hooksRegistrar->register(new \EventManager\User\RoleRegistrar($userRoles, $wpSe
  */
 $postBelongsToSameOrganizationAsUser = new \EventManager\User\UserHasCap\Implementations\Helpers\PostBelongsToSameOrganizationAsUser($wpService, $acfService);
 $usersBelongsToSameOrganization      = new \EventManager\User\UserHasCap\Implementations\Helpers\UsersBelongsToSameOrganization($acfService);
+$userBelongsToOrganization           = new \EventManager\User\UserHasCap\Implementations\Helpers\UserBelongsToOrganization($acfService);
 
 $capabilities = [
     new \EventManager\User\UserHasCap\Implementations\EditEvents(),
@@ -213,6 +214,9 @@ $capabilities = [
     new \EventManager\User\UserHasCap\Implementations\PromoteUser($usersBelongsToSameOrganization),
     new \EventManager\User\UserHasCap\Implementations\PromoteUserToRole(),
     new \EventManager\User\UserHasCap\Implementations\CreateUsers(),
+    new \EventManager\User\UserHasCap\Implementations\ManageOrganizations(),
+    new \EventManager\User\UserHasCap\Implementations\EditOrganizations(),
+    new \EventManager\User\UserHasCap\Implementations\EditOrganization($userBelongsToOrganization),
 ];
 
 $hooksRegistrar->register(new \EventManager\User\UserHasCap\Registrar($capabilities, $wpService));
