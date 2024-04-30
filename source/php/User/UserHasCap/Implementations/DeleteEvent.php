@@ -6,7 +6,7 @@ use EventManager\User\UserHasCap\Implementations\Helpers\IPostBelongsToSameOrgan
 use EventManager\User\UserHasCap\UserHasCapInterface;
 use WP_User;
 
-class UserCanDeleteEvent implements UserHasCapInterface
+class DeleteEvent implements UserHasCapInterface
 {
     public function __construct(private IPostBelongsToSameOrganizationAsUser $postBelongsToSameOrganizationAsUser)
     {
@@ -24,7 +24,12 @@ class UserCanDeleteEvent implements UserHasCapInterface
         }
 
         if (in_array('organization_administrator', $user->roles) || in_array('organization_member', $user->roles)) {
-            if ($this->postBelongsToSameOrganizationAsUser->postBelongsToSameOrganizationTermAsUser($user->ID, $args[2])) {
+            if (
+                $this->postBelongsToSameOrganizationAsUser->postBelongsToSameOrganizationTermAsUser(
+                    $user->ID,
+                    $args[2]
+                )
+            ) {
                 $allcaps['delete_event'] = true;
                 return $allcaps;
             }

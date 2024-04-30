@@ -56,7 +56,9 @@ class NestedMetaStringSort implements ColumnSortInterface
 
         foreach ($postIds as $postId) {
             $metaValueArray                         = $this->wpService->getPostMeta($postId, $metaKey, true);
-            $innerMetaValue                         = $this->getNestedArrayStringValueRecursive->getNestedArrayStringValueRecursive($columnIdentifiers, $metaValueArray);
+            $innerMetaValue                         = $this
+                ->getNestedArrayStringValueRecursive
+                ->getNestedArrayStringValueRecursive($columnIdentifiers, $metaValueArray);
             $postIdsMappedToInnerMetaValue[$postId] = $innerMetaValue;
         }
 

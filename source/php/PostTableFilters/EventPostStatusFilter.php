@@ -32,7 +32,8 @@ class EventPostStatusFilter implements IPostTableFilter
         echo '<option value="any" ' . ($selectedValue === 'any' ? 'selected' : '') . '>Any status</option>';
 
         foreach ($statuses as $status => $label) {
-            echo '<option value="' . $status . '" ' . ($selectedValue === $status ? 'selected' : '') . '>' . $label . '</option>';
+            echo '<option value="' . $status . '" ' . ($selectedValue === $status ? 'selected' : '') . '>'
+                . $label . '</option>';
         }
 
         echo '</select>';

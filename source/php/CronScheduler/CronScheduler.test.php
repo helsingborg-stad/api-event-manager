@@ -93,8 +93,12 @@ class CronSchedulerTest extends TestCase
             public $scheduledEvents         = [];
             public int|false $nextScheduled = 0;
 
-            public function addAction(string $tag, callable $function_to_add, int $priority = 10, int $accepted_args = 1): bool
-            {
+            public function addAction(
+                string $tag,
+                callable $function_to_add,
+                int $priority = 10,
+                int $accepted_args = 1
+            ): bool {
                 return true;
             }
 
@@ -103,8 +107,13 @@ class CronSchedulerTest extends TestCase
                 return $this->nextScheduled;
             }
 
-            public function scheduleEvent(int $timestamp, string $recurrence, string $hook, array $args = [], bool $wpError = false): bool|WP_Error
-            {
+            public function scheduleEvent(
+                int $timestamp,
+                string $recurrence,
+                string $hook,
+                array $args = [],
+                bool $wpError = false
+            ): bool|WP_Error {
                 $this->scheduledEvents[] = [
                     'timestamp'  => $timestamp,
                     'recurrence' => $recurrence,

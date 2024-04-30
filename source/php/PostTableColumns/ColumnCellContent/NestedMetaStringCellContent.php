@@ -35,7 +35,9 @@ class NestedMetaStringCellContent implements ColumnCellContentInterface
         }
 
         array_shift($cellIdentifiers);
-        $cellContent = $this->getNestedArrayStringValueRecursive->getNestedArrayStringValueRecursive($cellIdentifiers, $metaValueArray);
+        $cellContent = $this
+            ->getNestedArrayStringValueRecursive
+            ->getNestedArrayStringValueRecursive($cellIdentifiers, $metaValueArray);
         return $this->sanitizeCellContent($cellContent);
     }
 

@@ -28,7 +28,8 @@ class SetOrganizer implements CommandInterface
         }
 
         $organizationTerm = $organizationTerms[0];
-        $termFields       = $this->acfService->getFields($organizationTerm->taxonomy . '_' . $organizationTerm->term_id) ?: [];
+        $termFields       = $this->acfService
+            ->getFields($organizationTerm->taxonomy . '_' . $organizationTerm->term_id) ?: [];
 
         $organization = new \Spatie\SchemaOrg\Organization();
         $organization->name($organizationTerm->name);

@@ -7,7 +7,7 @@ use EventManager\User\UserHasCap\UserHasCapInterface;
 use WP_User;
 use WpService\Contracts\GetPost;
 
-class UserCanEditEvent implements UserHasCapInterface
+class EditEvent implements UserHasCapInterface
 {
     public function __construct(
         private IPostBelongsToSameOrganizationAsUser $postBelongsToSameOrganizationAsUser,
@@ -34,8 +34,12 @@ class UserCanEditEvent implements UserHasCapInterface
         }
 
         if (in_array('organization_administrator', $user->roles) || in_array('organization_member', $user->roles)) {
-            // If the user is an organization admin or member, they can only edit events that belong to their organization
-            if ($this->postBelongsToSameOrganizationAsUser->postBelongsToSameOrganizationTermAsUser($user->ID, $args[2])) {
+            if (
+                $this->postBelongsToSameOrganizationAsUser->postBelongsToSameOrganizationTermAsUser(
+                    $user->ID,
+                    $args[2]
+                )
+            ) {
                 $allcaps['edit_event'] = true;
                 return $allcaps;
             }
