@@ -2,7 +2,7 @@
 
 namespace EventManager\AcfFieldContentModifiers;
 
-use EventManager\Helper\Hookable;
+use EventManager\HooksRegistrar\Hookable;
 use EventManager\AcfFieldContentModifiers\IAcfFieldContentModifier;
 use WpService\Contracts\AddAction;
 

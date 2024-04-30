@@ -3,12 +3,12 @@
 namespace EventManager;
 
 use AcfService\Contracts\RenderFieldSetting;
-use EventManager\Helper\Hookable;
-use WpService\WpService;
+use EventManager\HooksRegistrar\Hookable;
+use WpService\Contracts\AddAction;
 
 class FieldSettingHidePrivate implements Hookable
 {
-    public function __construct(private WPService $wpService, private RenderFieldSetting $acfService)
+    public function __construct(private AddAction $wpService, private RenderFieldSetting $acfService)
     {
     }
 

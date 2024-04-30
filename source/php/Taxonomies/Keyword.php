@@ -2,8 +2,6 @@
 
 namespace EventManager\Taxonomies;
 
-use EventManager\Helper\Taxonomy;
-
 class Keyword extends Taxonomy
 {
     public function getName(): string

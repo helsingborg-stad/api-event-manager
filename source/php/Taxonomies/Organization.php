@@ -2,8 +2,6 @@
 
 namespace EventManager\Taxonomies;
 
-use EventManager\Helper\Taxonomy;
-
 class Organization extends Taxonomy
 {
     public function getName(): string

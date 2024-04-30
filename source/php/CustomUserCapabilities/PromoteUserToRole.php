@@ -2,7 +2,7 @@
 
 namespace EventManager\CustomUserCapabilities;
 
-use EventManager\Helper\Hookable;
+use EventManager\HooksRegistrar\Hookable;
 use WpService\Contracts\AddFilter;
 use WpService\Contracts\ApplyFilters;
 use WpService\Contracts\GetCurrentUser;

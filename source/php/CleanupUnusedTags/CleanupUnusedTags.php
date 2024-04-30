@@ -2,7 +2,7 @@
 
 namespace EventManager\CleanupUnusedTags;
 
-use EventManager\Helper\Hookable;
+use EventManager\HooksRegistrar\Hookable;
 use WpService\Contracts\AddAction;
 use WpService\Contracts\DeleteTerm;
 use WpService\Contracts\GetTerms;

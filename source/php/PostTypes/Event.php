@@ -2,7 +2,6 @@
 
 namespace EventManager\PostTypes;
 
-use EventManager\Helper\PostType;
 use EventManager\PostTypes\Icons\Icon;
 
 class Event extends PostType

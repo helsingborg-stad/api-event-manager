@@ -2,12 +2,12 @@
 
 namespace EventManager\Modifiers;
 
-use EventManager\Helper\Hookable;
-use WpService\WpService;
+use EventManager\HooksRegistrar\Hookable;
+use WpService\Contracts\AddFilter;
 
 class DisableGutenbergEditor implements Hookable
 {
-    public function __construct(private WPService $wpService)
+    public function __construct(private AddFilter $wpService)
     {
     }
 

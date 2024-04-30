@@ -2,7 +2,7 @@
 
 namespace EventManager\PreGetPostModifiers;
 
-use EventManager\Helper\Hookable;
+use EventManager\HooksRegistrar\Hookable;
 use WP_Query;
 
 interface IPreGetPostModifier extends Hookable

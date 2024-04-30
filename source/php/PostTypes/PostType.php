@@ -1,8 +1,10 @@
 <?php
 
-namespace EventManager\Helper;
+namespace EventManager\PostTypes;
 
-use WpService\WpService;
+use EventManager\HooksRegistrar\Hookable;
+use WpService\Contracts\AddAction;
+use WpService\Contracts\RegisterPostType;
 
 abstract class PostType implements Hookable
 {
@@ -10,16 +12,14 @@ abstract class PostType implements Hookable
     abstract public function getArgs(): array;
     abstract public function getLabelSingular(): string;
     abstract public function getLabelPlural(): string;
-    private WPService $wp;
 
-    public function __construct(WPService $wpService)
+    public function __construct(private AddAction&RegisterPostType $wpService)
     {
-        $this->wp = $wpService;
     }
 
     public function addHooks(): void
     {
-        $this->wp->addAction('init', [$this, 'register']);
+        $this->wpService->addAction('init', [$this, 'register']);
     }
 
     public function register(): void
@@ -28,7 +28,7 @@ abstract class PostType implements Hookable
             'labels' => $this->getLabels(),
         ]);
 
-        $this->wp->registerPostType($this->getName(), $args);
+        $this->wpService->registerPostType($this->getName(), $args);
     }
 
     private function getLabels()

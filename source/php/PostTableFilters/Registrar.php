@@ -2,7 +2,7 @@
 
 namespace EventManager\PostTableFilters;
 
-use EventManager\Helper\Hookable;
+use EventManager\HooksRegistrar\Hookable;
 use WpService\Contracts\AddAction;
 
 class Registrar implements Hookable

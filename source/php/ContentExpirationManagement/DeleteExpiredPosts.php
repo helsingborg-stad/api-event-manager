@@ -2,7 +2,7 @@
 
 namespace EventManager\ContentExpirationManagement;
 
-use EventManager\Helper\Hookable;
+use EventManager\HooksRegistrar\Hookable;
 use WpService\Contracts\DeletePost;
 
 /**

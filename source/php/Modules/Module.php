@@ -1,7 +1,8 @@
 <?php
 
-namespace EventManager\Helper;
+namespace EventManager\Modules;
 
+use EventManager\HooksRegistrar\Hookable;
 use WpService\WpService;
 
 abstract class Module implements Hookable

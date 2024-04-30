@@ -2,12 +2,11 @@
 
 namespace EventManager\Tests\Helper;
 
-use EventManager\Helper\Taxonomy as HelperTaxonomy;
+use EventManager\Taxonomies\Taxonomy;
 use WpService\WpService;
-use Mockery;
 use PHPUnit\Framework\TestCase;
 
-class Taxonomy extends TestCase
+class TaxonomyTest extends TestCase
 {
     /**
      * @testdox taxonomy is registered with supplied name and object type.
@@ -41,7 +40,7 @@ class Taxonomy extends TestCase
 
     private function getTaxonomyInstance(WPService $wpService)
     {
-        return new class ($wpService) extends HelperTaxonomy {
+        return new class ($wpService) extends Taxonomy {
             public function getName(): string
             {
                 return 'test_taxonomy';

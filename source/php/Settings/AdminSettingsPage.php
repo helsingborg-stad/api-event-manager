@@ -2,7 +2,7 @@
 
 namespace EventManager\Settings;
 
-use EventManager\Helper\Hookable;
+use EventManager\HooksRegistrar\Hookable;
 use AcfService\Contracts\AddOptionsPage;
 use WpService\Contracts\AddAction;
 

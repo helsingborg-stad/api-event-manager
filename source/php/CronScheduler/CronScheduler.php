@@ -2,7 +2,7 @@
 
 namespace EventManager\CronScheduler;
 
-use EventManager\Helper\Hookable;
+use EventManager\HooksRegistrar\Hookable;
 use WpService\Contracts\AddAction;
 use WpService\Contracts\NextScheduled;
 use WpService\Contracts\ScheduleEvent;
