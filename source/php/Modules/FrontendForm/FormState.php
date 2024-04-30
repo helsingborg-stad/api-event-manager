@@ -7,6 +7,7 @@ class FormState {
   public int $currentStep;
   public ?int $nextStep;
   public ?int $previousStep;
+  public int $totalSteps;
 
   public function __construct(array $steps, string $queryParam = '')
   {
@@ -15,10 +16,11 @@ class FormState {
         $this->nextStep        = $this->getNextStep($steps);
         $this->previousStep    = $this->getPreviousStep();
         $this->currentStep     = $this->getCurrentStep($queryParam);
-        $this->isValidStep  = $this->isValidStep(
+        $this->isValidStep     = $this->isValidStep(
             $steps, 
             $this->currentStep
         );
+        $this->totalSteps = count($steps);
   }
 
   private function isFirstStep(): bool

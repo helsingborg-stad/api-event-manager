@@ -187,7 +187,10 @@ class FrontendForm extends \Modularity\Module
             'edit' => __('Edit', 'api-event-manager'),
             'submit' => __('Submit', 'api-event-manager'),
             'previous' => __('Previous', 'api-event-manager'),
-            'next' => __('Next', 'api-event-manager')
+            'next' => __('Next', 'api-event-manager'),
+            'of' => __('of', 'api-event-manager'),
+            'step' => __('Step', 'api-event-manager'),
+            'completed' => __('Completed', 'api-event-manager'),
         ];
     }
 

@@ -12,7 +12,7 @@ class FormStep {
 
     public function __construct(int $step, array $acfFieldGroup)
     {
-        $this->step   = $step;
+        $this->step         = $step;
         $this->title        = $acfFieldGroup['formStepTitle'] ?? '';
         $this->description  = $acfFieldGroup['formStepContent'] ?? '';
         $this->group        = $acfFieldGroup['formStepGroup'] ?? '';
