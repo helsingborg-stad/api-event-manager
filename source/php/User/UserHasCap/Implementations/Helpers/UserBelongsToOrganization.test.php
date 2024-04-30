@@ -20,8 +20,12 @@ class UserBelongsToOrganizationTest extends TestCase
     private function getAcfService(): GetField
     {
         return new class implements GetField {
-            public function getField(string $selector, int|false|string $postId = false, bool $formatValue = true, bool $escapeHtml = false)
-            {
+            public function getField(
+                string $selector,
+                int|false|string $postId = false,
+                bool $formatValue = true,
+                bool $escapeHtml = false
+            ) {
                 return [
                     'user_1' => ['organizations' => [1]]
                 ][$postId][$selector] ?? false;
