@@ -87,8 +87,12 @@ class SetPostTermsFromFieldTest extends TestCase
             public function __construct(private array $data)
             {
             }
-            public function getField(string $selector, int|false|string $postId = false, bool $formatValue = true, bool $escapeHtml = false)
-            {
+            public function getField(
+                string $selector,
+                int|false|string $postId = false,
+                bool $formatValue = true,
+                bool $escapeHtml = false
+            ) {
                 return $this->data['getField'];
             }
         };

@@ -24,7 +24,12 @@ class DeleteEvent implements UserHasCapInterface
         }
 
         if (in_array('organization_administrator', $user->roles) || in_array('organization_member', $user->roles)) {
-            if ($this->postBelongsToSameOrganizationAsUser->postBelongsToSameOrganizationTermAsUser($user->ID, $args[2])) {
+            if (
+                $this->postBelongsToSameOrganizationAsUser->postBelongsToSameOrganizationTermAsUser(
+                    $user->ID,
+                    $args[2]
+                )
+            ) {
                 $allcaps['delete_event'] = true;
                 return $allcaps;
             }

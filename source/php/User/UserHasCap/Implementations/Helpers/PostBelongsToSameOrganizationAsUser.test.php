@@ -10,9 +10,9 @@ use WpService\Contracts\GetPostTerms;
 class PostBelongsToSameOrganizationAsUserTest extends TestCase
 {
     /**
-     * @testdox postBelongsToSameOrganizationTermAsUser() returns true if the post belongs to the same organization as the user
+    * @testdox postBelongsToSameOrganizationTermAsUser() returns true if the post belongs to the same organization
      */
-    public function testPostBelongsToSameOrganizationTermAsUserReturnsTrueIfThePostBelongsToTheSameOrganizationAsTheUser()
+    public function testPostBelongsToSameOrgReturnsTrueIfPostBelongsToSameOrgAsUser()
     {
         $userId = 1;
         $postId = 1;
@@ -22,23 +22,26 @@ class PostBelongsToSameOrganizationAsUserTest extends TestCase
             $this->getAcfService()
         );
 
-        $this->assertTrue($postBelongsToSameOrganizationAsUser->postBelongsToSameOrganizationTermAsUser($userId, $postId));
+        $result = $postBelongsToSameOrganizationAsUser->postBelongsToSameOrganizationTermAsUser($userId, $postId);
+
+        $this ->assertTrue($result);
     }
 
     /**
-     * @testdox postBelongsToSameOrganizationTermAsUser() returns false if the post does not belong to the same organization as the user
+     * @testdox postBelongsToSameOrganizationTermAsUser() returns false when post doesn't belong to users organization
      */
-    public function testPostBelongsToSameOrganizationTermAsUserReturnsFalseIfThePostDoesNotBelongToTheSameOrganizationAsTheUser()
+    public function testPostBelongsToSameOrgReturnsFalseIfPostDoesNotBelongToSameOrgAsUser()
     {
-        $userId = 2;
-        $postId = 1;
-
+        $userId                              = 2;
+        $postId                              = 1;
         $postBelongsToSameOrganizationAsUser = new PostBelongsToSameOrganizationAsUser(
             $this->getWpService(),
             $this->getAcfService()
         );
 
-        $this->assertFalse($postBelongsToSameOrganizationAsUser->postBelongsToSameOrganizationTermAsUser($userId, $postId));
+        $result = $postBelongsToSameOrganizationAsUser->postBelongsToSameOrganizationTermAsUser($userId, $postId);
+
+        $this->assertFalse($result);
     }
 
     private function getWpService(): GetPostTerms
@@ -59,8 +62,12 @@ class PostBelongsToSameOrganizationAsUserTest extends TestCase
     private function getAcfService(): GetField
     {
         return new class implements GetField {
-            public function getField(string $selector, int|false|string $postId = false, bool $formatValue = true, bool $escapeHtml = false)
-            {
+            public function getField(
+                string $selector,
+                int|false|string $postId = false,
+                bool $formatValue = true,
+                bool $escapeHtml = false
+            ) {
                 return [
                     'organizations' => ['user_1' => ['1']],
                 ][$selector][$postId] ?? false;

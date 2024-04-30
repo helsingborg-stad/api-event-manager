@@ -46,7 +46,13 @@ class PostToEventSchema implements IPostToSchemaAdapter
         $commands[] = new Commands\SetOffers($this->event, $this->fields);
         $commands[] = new Commands\SetLocation($this->event, $this->fields, $this->commandHelpers);
         $commands[] = new Commands\SetUrl($this->event, $this->fields);
-        $commands[] = new Commands\SetOrganizer($this->event, $post->ID, $this->wpService, $this->acfService, $this->commandHelpers);
+        $commands[] = new Commands\SetOrganizer(
+            $this->event,
+            $post->ID,
+            $this->wpService,
+            $this->acfService,
+            $this->commandHelpers
+        );
         $commands[] = new Commands\SetAudience($this->event, $this->fields, $this->wpService);
         $commands[] = new Commands\SetTypicalAgeRange($this->event, $this->acfService);
         $commands[] = new Commands\SetKeywords($this->event, $post->ID, $this->wpService);

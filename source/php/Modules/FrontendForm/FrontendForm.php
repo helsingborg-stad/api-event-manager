@@ -61,9 +61,13 @@ class FrontendForm extends \Modularity\Module
         'text' => __('Create Event', 'api-event-manager')
         ]);
 
-      // Return the data
+        $updatedMessage = __(
+            "The event has been submitted for review. You will be notified when the event has been published."
+        );
+
+        // Return the data
         return [
-        'form' => function () use ($htmlUpdatedMessage, $htmlSubmitButton) {
+        'form' => function () use ($htmlUpdatedMessage, $htmlSubmitButton, $updatedMessage) {
             acf_form([
             'post_id'               => 'new_post',
             'post_title'            => true,
@@ -71,7 +75,7 @@ class FrontendForm extends \Modularity\Module
             'field_groups'          => $this->fieldGroups,
             'form_attributes'       => ['class' => 'acf-form js-form-validation js-form-validation'],
             'uploader'              => 'basic',
-            'updated_message'       => __("The event has been submitted for review. You will be notified when the event has been published.", 'acf'),
+            'updated_message'       => $updatedMessage,
             'html_updated_message'  => $htmlUpdatedMessage,
             'html_submit_button'    => $htmlSubmitButton,
             'new_post'              => [

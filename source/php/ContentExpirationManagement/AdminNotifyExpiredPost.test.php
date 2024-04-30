@@ -100,8 +100,12 @@ class AdminNotifyExpiredPostTest extends TestCase
                 echo $message;
             }
 
-            public function addAction(string $tag, callable $function_to_add, int $priority = 10, int $accepted_args = 1): bool
-            {
+            public function addAction(
+                string $tag,
+                callable $function_to_add,
+                int $priority = 10,
+                int $accepted_args = 1
+            ): bool {
                 return true;
             }
         };
