@@ -6,14 +6,14 @@ use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use WP_User;
 
-class UserCanEditEventsTest extends TestCase
+class EditEventsTest extends TestCase
 {
     /**
      * @testdox userHasCap() should allow given roles to edit events
      */
     public function testUserHasCapShouldAllowGivenRolesToEditEvents()
     {
-        $userCanEditEvents = new UserCanEditEvents();
+        $userCanEditEvents = new EditEvents();
         $allcaps           = ['edit_events' => false];
         $user              = $this->getUser();
 
@@ -35,7 +35,7 @@ class UserCanEditEventsTest extends TestCase
      */
     public function testUserHasCapShouldReturnTheAllcapsArrayUnchangedIfTheFirstArgumentIsNotEditEvents()
     {
-        $userCanEditEvents = new UserCanEditEvents();
+        $userCanEditEvents = new EditEvents();
         $allcaps           = ['edit_events' => false];
 
         $result = $userCanEditEvents->userHasCap($allcaps, [], [], $this->createStub(WP_User::class));

@@ -6,7 +6,7 @@ use EventManager\User\UserHasCap\UserHasCapInterface;
 use PHPUnit\Framework\TestCase;
 use WP_User;
 
-class UserCanPublishEventTest extends TestCase
+class PublishEventTest extends TestCase
 {
     /**
      * @testdox userHasCap() should allow given roles to publish events
@@ -14,7 +14,7 @@ class UserCanPublishEventTest extends TestCase
      */
     public function testUserHasCapShouldAllowGivenRolesToPublishEvents($role)
     {
-        $userCanPublishEvent = new UserCanPublishEvent();
+        $userCanPublishEvent = new PublishEvent();
         $allcaps             = ['publish_events' => false];
         $user                = $this->getUser();
         $user->roles         = [$role];
@@ -38,7 +38,7 @@ class UserCanPublishEventTest extends TestCase
      */
     public function testUserHasCapShouldNotAllowPendingOrganizationMemberToPublishEvents()
     {
-        $userCanPublishEvent = new UserCanPublishEvent();
+        $userCanPublishEvent = new PublishEvent();
         $allcaps             = ['publish_events' => false];
         $user                = $this->getUser();
         $user->roles         = ['pending_organization_member'];

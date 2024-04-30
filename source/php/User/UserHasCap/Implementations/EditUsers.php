@@ -5,7 +5,7 @@ namespace EventManager\User\UserHasCap\Implementations;
 use EventManager\User\UserHasCap\UserHasCapInterface;
 use WP_User;
 
-class UserCanListUsers implements UserHasCapInterface
+class EditUsers implements UserHasCapInterface
 {
     public function __construct()
     {
@@ -13,12 +13,12 @@ class UserCanListUsers implements UserHasCapInterface
 
     public function userHasCap(array $allcaps, array $caps, array $args, WP_User $user): array
     {
-        if (!isset($args[0]) || $args[0] !== 'list_users') {
+        if (!isset($args[0]) || $args[0] !== 'edit_users') {
             return $allcaps;
         }
 
         if ($this->userHasMatchingRole($user)) {
-            $allcaps['list_users'] = true;
+            $allcaps['edit_users'] = true;
         }
 
         return $allcaps;

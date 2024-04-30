@@ -200,19 +200,19 @@ $postBelongsToSameOrganizationAsUser = new \EventManager\User\UserHasCap\Impleme
 $usersBelongsToSameOrganization      = new \EventManager\User\UserHasCap\Implementations\Helpers\UsersBelongsToSameOrganization($acfService);
 
 $capabilities = [
-    new \EventManager\User\UserHasCap\Implementations\UserCanEditEvents(),
-    new \EventManager\User\UserHasCap\Implementations\UserCanEditEvent($postBelongsToSameOrganizationAsUser, $wpService),
-    new \EventManager\User\UserHasCap\Implementations\UserCanEditOthersEvents(),
-    new \EventManager\User\UserHasCap\Implementations\UserCanPublishEvent(),
-    new \EventManager\User\UserHasCap\Implementations\UserCanDeleteEvent($postBelongsToSameOrganizationAsUser),
-    new \EventManager\User\UserHasCap\Implementations\UserCanListUsers(),
-    new \EventManager\User\UserHasCap\Implementations\UserCanEditUsers(),
-    new \EventManager\User\UserHasCap\Implementations\UserCanEditUser(),
-    new \EventManager\User\UserHasCap\Implementations\UserCanDeleteUser($usersBelongsToSameOrganization),
-    new \EventManager\User\UserHasCap\Implementations\UserCanPromoteUsers(),
-    new \EventManager\User\UserHasCap\Implementations\UserCanPromoteUser($usersBelongsToSameOrganization),
-    new \EventManager\User\UserHasCap\Implementations\UserCanPromoteUserToRole(),
-    new \EventManager\User\UserHasCap\Implementations\UserCanCreateUsers(),
+    new \EventManager\User\UserHasCap\Implementations\EditEvents(),
+    new \EventManager\User\UserHasCap\Implementations\EditEvent($postBelongsToSameOrganizationAsUser, $wpService),
+    new \EventManager\User\UserHasCap\Implementations\EditOthersEvents(),
+    new \EventManager\User\UserHasCap\Implementations\PublishEvent(),
+    new \EventManager\User\UserHasCap\Implementations\DeleteEvent($postBelongsToSameOrganizationAsUser),
+    new \EventManager\User\UserHasCap\Implementations\ListUsers(),
+    new \EventManager\User\UserHasCap\Implementations\EditUsers(),
+    new \EventManager\User\UserHasCap\Implementations\EditUser(),
+    new \EventManager\User\UserHasCap\Implementations\DeleteUser($usersBelongsToSameOrganization),
+    new \EventManager\User\UserHasCap\Implementations\PromoteUsers(),
+    new \EventManager\User\UserHasCap\Implementations\PromoteUser($usersBelongsToSameOrganization),
+    new \EventManager\User\UserHasCap\Implementations\PromoteUserToRole(),
+    new \EventManager\User\UserHasCap\Implementations\CreateUsers(),
 ];
 
 $hooksRegistrar->register(new \EventManager\User\UserHasCap\Registrar($capabilities, $wpService));
@@ -220,7 +220,7 @@ $hooksRegistrar->register(new \EventManager\User\UserHasCap\Registrar($capabilit
 /**
  * Custom User capabilities
  */
-$hooksRegistrar->register(new \EventManager\AddPromoteUserToRoleCapability\AddPromoteUserToRoleCapability($wpService));
+$hooksRegistrar->register(new \EventManager\CustomUserCapabilities\PromoteUserToRole($wpService));
 
 /**
  * Taxonomies

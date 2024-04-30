@@ -5,7 +5,7 @@ namespace EventManager\User\UserHasCap\Implementations;
 use EventManager\User\UserHasCap\UserHasCapInterface;
 use WP_User;
 
-class UserCanEditUser implements UserHasCapInterface
+class EditUser implements UserHasCapInterface
 {
     public function __construct()
     {

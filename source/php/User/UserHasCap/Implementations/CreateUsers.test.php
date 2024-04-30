@@ -2,9 +2,11 @@
 
 namespace EventManager\User\UserHasCap\Implementations;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use WP_User;
 
-class UserCanCreateUsersTest extends TestCase
+class CreateUsersTest extends TestCase
 {
     /**
      * @testdox userHasCap() returns $allcaps with 'create_users' set to true if the user has an allowed role
@@ -12,21 +14,15 @@ class UserCanCreateUsersTest extends TestCase
      */
     public function testUserHasCapReturnsSameAllcapsArrayWhenRequestedCapabilityIsNotCreateUsers($hasCap): void
     {
-        // Create a mock of the WP_User class
-        $userMock = $this->getMockBuilder(\WP_User::class)->addMethods(['has_cap'])->getMock();
-
+        $userMock = $this->getUserMock();
         $userMock
             ->method('has_cap')
             ->withConsecutive(['administrator'], ['organization_administrator'])
             ->willReturnOnConsecutiveCalls($hasCap[0], $hasCap[1]);
+        $userCanCreateUsers = new CreateUsers();
 
-        // Create an instance of the class under test
-        $userCanCreateUsers = new UserCanCreateUsers();
-
-        // Call the method under test
         $result = $userCanCreateUsers->userHasCap([], [], ['create_users', 1], $userMock);
 
-        // Assert the expected result
         $this->assertEquals(['create_users' => true], $result);
     }
 
@@ -35,17 +31,17 @@ class UserCanCreateUsersTest extends TestCase
      */
     public function testUserHasCapReturnsUnchangedAllcapsArrayWhenRequestedCapabilityIsNotCreateUsers(): void
     {
-        // Create a mock of the WP_User class
-        $userMock = $this->getMockBuilder(\WP_User::class)->getMock();
+        $userMock           = $this->getUserMock();
+        $userCanCreateUsers = new CreateUsers();
 
-        // Create an instance of the class under test
-        $userCanCreateUsers = new UserCanCreateUsers();
-
-        // Call the method under test
         $result = $userCanCreateUsers->userHasCap([], [], ['not_create_users', 1], $userMock);
 
-        // Assert the expected result
         $this->assertEquals([], $result);
+    }
+
+    private function getUserMock(): WP_User|MockObject
+    {
+        return $userMock = $this->getMockBuilder(\WP_User::class)->addMethods(['has_cap'])->getMock();
     }
 
     public function hasCapProvider(): array

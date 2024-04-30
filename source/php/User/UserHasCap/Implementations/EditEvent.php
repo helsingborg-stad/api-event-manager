@@ -7,7 +7,7 @@ use EventManager\User\UserHasCap\UserHasCapInterface;
 use WP_User;
 use WpService\Contracts\GetPost;
 
-class UserCanEditEvent implements UserHasCapInterface
+class EditEvent implements UserHasCapInterface
 {
     public function __construct(
         private IPostBelongsToSameOrganizationAsUser $postBelongsToSameOrganizationAsUser,

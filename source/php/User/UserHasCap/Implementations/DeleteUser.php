@@ -7,7 +7,7 @@ use EventManager\User\UserHasCap\Implementations\Helpers\IUsersBelongsToSameOrga
 use EventManager\User\UserHasCap\UserHasCapInterface;
 use WP_User;
 
-class UserCanDeleteUser implements UserHasCapInterface
+class DeleteUser implements UserHasCapInterface
 {
     public function __construct(private IUsersBelongsToSameOrganization $usersBelongsToSameOrganization)
     {

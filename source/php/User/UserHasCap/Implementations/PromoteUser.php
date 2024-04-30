@@ -6,7 +6,7 @@ use EventManager\User\UserHasCap\Implementations\Helpers\IUsersBelongsToSameOrga
 use EventManager\User\UserHasCap\UserHasCapInterface;
 use WP_User;
 
-class UserCanPromoteUser implements UserHasCapInterface
+class PromoteUser implements UserHasCapInterface
 {
     public function __construct(private IUsersBelongsToSameOrganization $usersBelongsToSameOrganization)
     {

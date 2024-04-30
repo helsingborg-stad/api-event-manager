@@ -6,7 +6,7 @@ use EventManager\User\UserHasCap\Implementations\Helpers\IPostBelongsToSameOrgan
 use EventManager\User\UserHasCap\UserHasCapInterface;
 use WP_User;
 
-class UserCanDeleteEvent implements UserHasCapInterface
+class DeleteEvent implements UserHasCapInterface
 {
     public function __construct(private IPostBelongsToSameOrganizationAsUser $postBelongsToSameOrganizationAsUser)
     {

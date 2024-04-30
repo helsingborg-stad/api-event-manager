@@ -5,7 +5,7 @@ namespace EventManager\User\UserHasCap\Implementations;
 use EventManager\User\UserHasCap\UserHasCapInterface;
 use WP_User;
 
-class UserCanEditEvents implements UserHasCapInterface
+class EditEvents implements UserHasCapInterface
 {
     private array $allowedRoles = [
         'organization_administrator',

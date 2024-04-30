@@ -5,7 +5,7 @@ namespace EventManager\User\UserHasCap\Implementations;
 use EventManager\User\UserHasCap\UserHasCapInterface;
 use WP_User;
 
-class UserCanPromoteUsers implements UserHasCapInterface
+class PromoteUsers implements UserHasCapInterface
 {
     public function __construct()
     {

@@ -1,13 +1,13 @@
 <?php
 
-namespace EventManager\AddPromoteUserToRoleCapability;
+namespace EventManager\CustomUserCapabilities;
 
 use EventManager\Helper\Hookable;
 use WpService\Contracts\AddFilter;
 use WpService\Contracts\ApplyFilters;
 use WpService\Contracts\GetCurrentUser;
 
-class AddPromoteUserToRoleCapability implements Hookable
+class PromoteUserToRole implements Hookable
 {
     public function __construct(private AddFilter&ApplyFilters&GetCurrentUser $wpService)
     {
