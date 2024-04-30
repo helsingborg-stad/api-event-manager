@@ -17,7 +17,7 @@ class PostTypeTest extends TestCase
 
         $mockWPService = Mockery::mock(WPService::class);
         $mockWPService->shouldReceive('registerPostType')->once()->with($postTypeName, Mockery::any());
-        $mockPostType = $this->getMockForAbstractClass('EventManager\Helper\PostType', [$mockWPService]);
+        $mockPostType = $this->getMockForAbstractClass(\EventManager\PostTypes\PostType::class, [$mockWPService]);
         $mockPostType->expects($this->once())->method('getName')->willReturn($postTypeName);
 
         $mockPostType->register();
@@ -40,7 +40,7 @@ class PostTypeTest extends TestCase
                 $args['labels']['name'] === 'Foos' &&
                 $args['labels']['singular_name'] === 'Foo'),
         );
-        $mockPostType = $this->getMockForAbstractClass('EventManager\Helper\PostType', [$mockWPService]);
+        $mockPostType = $this->getMockForAbstractClass(\EventManager\PostTypes\PostType::class, [$mockWPService]);
         $mockPostType->expects($this->once())->method('getLabelSingular')->willReturn($labelSingular);
         $mockPostType->expects($this->once())->method('getLabelPlural')->willReturn($labelPlural);
 
@@ -53,7 +53,7 @@ class PostTypeTest extends TestCase
 
         $mockWPService = Mockery::mock(WPService::class);
         $mockWPService->shouldReceive('registerPostType')->once()->with(Mockery::any(), Mockery::on(fn ($args) => $args['foo'] === 'bar'));
-        $mockPostType = $this->getMockForAbstractClass('EventManager\Helper\PostType', [$mockWPService]);
+        $mockPostType = $this->getMockForAbstractClass(\EventManager\PostTypes\PostType::class, [$mockWPService]);
         $mockPostType->expects($this->once())->method('getArgs')->willReturn($args);
 
         $mockPostType->register();

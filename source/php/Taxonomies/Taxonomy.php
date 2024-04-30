@@ -1,6 +1,6 @@
 <?php
 
-namespace EventManager\Helper;
+namespace EventManager\Taxonomies;
 
 use EventManager\HooksRegistrar\Hookable;
 use WpService\WpService;
