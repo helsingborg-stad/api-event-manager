@@ -21,7 +21,13 @@ class Organization extends Taxonomy
             'public'       => true,
             'hierarchical' => true,
             'show_ui'      => true,
-            'meta_box_cb'  => false
+            'meta_box_cb'  => false,
+            'capabilities' => [
+                'manage_terms' => 'manage_organizations',
+                'edit_terms'   => 'edit_organizations',
+                'delete_terms' => 'delete_organizations',
+                'assign_terms' => 'assign_organizations',
+            ],
         );
     }
 

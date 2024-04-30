@@ -6,10 +6,11 @@ use EventManager\HooksRegistrar\Hookable;
 use WpService\Contracts\AddAction;
 use WpService\Contracts\GetEnvironmentType;
 use WpService\Contracts\RemoveMenuPage;
+use WpService\Contracts\RemoveSubMenuPage;
 
 class HideUnusedAdminPages implements Hookable
 {
-    public function __construct(private AddAction&GetEnvironmentType&RemoveMenuPage $wpService)
+    public function __construct(private AddAction&GetEnvironmentType&RemoveMenuPage&RemoveSubMenuPage $wpService)
     {
         $this->wpService = $wpService;
     }
