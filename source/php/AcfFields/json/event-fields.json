@@ -8,7 +8,7 @@
             "name": "_thumbnail_id",
             "aria-label": "",
             "type": "image",
-            "instructions": "Enhance your event by including a high-resolution image. As the initial point of contact, the image plays a pivotal role in capturing users' attention, making it essential for attracting attendees.",
+            "instructions": "Enhance your event by including a high-resolution image in <strong>JPG format<\/strong>. As the initial point of contact, the image plays a pivotal role in capturing users' attention, making it essential for attracting attendees.",
             "required": 1,
             "conditional_logic": 0,
             "wrapper": {
@@ -26,7 +26,7 @@
             "max_width": "",
             "max_height": "",
             "max_size": "",
-            "mime_types": "",
+            "mime_types": "jpg, jpeg",
             "preview_size": "medium"
         },
         {
@@ -208,6 +208,8 @@
                 "id": ""
             },
             "choices": {
+                "374": "Organization A",
+                "375": "Organization B"
             },
             "default_value": false,
             "return_format": "value",
@@ -232,6 +234,10 @@
                 "id": ""
             },
             "choices": {
+                "370": "Audience A",
+                "371": "Audience B",
+                "372": "Audience C",
+                "373": "Audience D"
             },
             "default_value": false,
             "return_format": "value",
@@ -240,50 +246,6 @@
             "ui": 0,
             "ajax": 0,
             "placeholder": ""
-        },
-        {
-            "key": "field_65a52bf7f7e4d",
-            "label": "Minimum age to attend",
-            "name": "typicalAgeRangeStart",
-            "aria-label": "",
-            "type": "range",
-            "instructions": "The optimal maximum age for this event.",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "50",
-                "class": "",
-                "id": ""
-            },
-            "is_publicly_hidden": 0,
-            "is_privately_hidden": 0,
-            "default_value": 0,
-            "min": "",
-            "max": 119,
-            "step": "",
-            "prepend": "",
-            "append": "years"
-        },
-        {
-            "key": "field_65a52c24f7e4e",
-            "label": "Maximum age to attend",
-            "name": "typicalAgeRangeEnd",
-            "aria-label": "",
-            "type": "range",
-            "instructions": "The optimal maximum age for this event.",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "50",
-                "class": "",
-                "id": ""
-            },
-            "default_value": 120,
-            "min": 5,
-            "max": 120,
-            "step": "",
-            "prepend": "",
-            "append": "years"
         },
         {
             "key": "field_65a66d8cadeef",
@@ -706,7 +668,7 @@
         "send-trackbacks"
     ],
     "active": true,
-    "description": "",
+    "description": "We are nearly there! Just let us know some important last minute details, and you are ready to go!",
     "show_in_rest": 0
 }]
-
+

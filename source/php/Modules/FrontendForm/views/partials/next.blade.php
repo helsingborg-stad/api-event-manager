@@ -1,10 +1,10 @@
 @button([
-    'text' => $lang->submit ?? 'Submit',
+    'text' => $lang->next ?? 'Next',
     'color' => 'primary',
     'style' => 'filled',
     'type' => 'submit',
-    'icon' => 'calendar_clock',
-    'reversePositions' => true,
+    'icon' => 'chevron_right',
+    'reversePositions' => false,
     'classList' => $classList ?? []
 ])
 @endbutton

@@ -1,0 +1,286 @@
+[{
+    "key": "group_6627a5e16d84f",
+    "title": "Configure Multistep Form",
+    "fields": [
+        {
+            "key": "field_662a51f8a599e",
+            "label": "Form Steps",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "is_publicly_hidden": 0,
+            "is_privately_hidden": 0,
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_6627a5e312422",
+            "label": "Add Form Step",
+            "name": "formSteps",
+            "aria-label": "",
+            "type": "repeater",
+            "instructions": "Add the steps that should be displayed in this form.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "is_publicly_hidden": 0,
+            "is_privately_hidden": 0,
+            "layout": "row",
+            "pagination": 0,
+            "min": 0,
+            "max": 0,
+            "collapsed": "field_6627a6b312423",
+            "button_label": "Add Step",
+            "rows_per_page": 20,
+            "sub_fields": [
+                {
+                    "key": "field_6627a6b312423",
+                    "label": "Form Step Title",
+                    "name": "formStepTitle",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "By leaving this blank, the configuration of the fieldgroup will be used.",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "is_publicly_hidden": 0,
+                    "is_privately_hidden": 0,
+                    "default_value": "",
+                    "maxlength": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "parent_repeater": "field_6627a5e312422"
+                },
+                {
+                    "key": "field_6627a6e112424",
+                    "label": "From Step Content",
+                    "name": "formStepContent",
+                    "aria-label": "",
+                    "type": "wysiwyg",
+                    "instructions": "By leaving this blank, the configuration of the fieldgroup will be used.",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "is_publicly_hidden": 0,
+                    "is_privately_hidden": 0,
+                    "default_value": "",
+                    "tabs": "all",
+                    "toolbar": "basic",
+                    "media_upload": 0,
+                    "delay": 0,
+                    "parent_repeater": "field_6627a5e312422"
+                },
+                {
+                    "key": "field_6627a6f212425",
+                    "label": "Form Step Group",
+                    "name": "formStepGroup",
+                    "aria-label": "",
+                    "type": "select",
+                    "instructions": "",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "is_publicly_hidden": 0,
+                    "is_privately_hidden": 0,
+                    "choices": {
+                        "group_6627a5e16d84f": "Event Form: Configure Multistep Form",
+                        "group_661e41bb1781f": "Events: Discover the Essentials of Your Event",
+                        "group_65a115157a046": "Events: Event Fields",
+                        "group_661e425070deb": "Events: When and where?"
+                    },
+                    "default_value": false,
+                    "return_format": "value",
+                    "multiple": 0,
+                    "allow_null": 0,
+                    "ui": 0,
+                    "ajax": 0,
+                    "placeholder": "",
+                    "parent_repeater": "field_6627a5e312422"
+                }
+            ]
+        },
+        {
+            "key": "field_662a5218a599f",
+            "label": "Submission Configuration",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "is_publicly_hidden": 0,
+            "is_privately_hidden": 0,
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_6627a79912426",
+            "label": "Select Post Type",
+            "name": "saveToPostType",
+            "aria-label": "",
+            "type": "posttype_select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "is_publicly_hidden": 0,
+            "is_privately_hidden": 0,
+            "default_value": "",
+            "allow_null": 0,
+            "multiple": 0,
+            "placeholder": "",
+            "disabled": 0,
+            "readonly": 0
+        },
+        {
+            "key": "field_662a4f4d25fe6",
+            "label": "Select Post Status",
+            "name": "saveToPostTypeStatus",
+            "aria-label": "",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "is_publicly_hidden": 0,
+            "is_privately_hidden": 0,
+            "choices": {
+                "draft": "Draft",
+                "pending": "Pending Review",
+                "private": "Private",
+                "publish": "Published"
+            },
+            "default_value": "draft",
+            "return_format": "value",
+            "multiple": 0,
+            "allow_null": 0,
+            "ui": 0,
+            "ajax": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_662a5230a59a0",
+            "label": "Form Completion",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "is_publicly_hidden": 0,
+            "is_privately_hidden": 0,
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_662a6546a687a",
+            "label": "Security",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "is_publicly_hidden": 0,
+            "is_privately_hidden": 0,
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_662a6557a687b",
+            "label": "Public Access",
+            "name": "isPublicForm",
+            "aria-label": "",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "is_publicly_hidden": 0,
+            "is_privately_hidden": 0,
+            "message": "This form may be used by unauthenticated visitors",
+            "default_value": 1,
+            "ui": 0,
+            "ui_on_text": "",
+            "ui_off_text": ""
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "mod-event-form"
+            }
+        ],
+        [
+            {
+                "param": "block",
+                "operator": "==",
+                "value": "acf\/event-form"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0
+}]
+

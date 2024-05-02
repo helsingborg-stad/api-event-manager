@@ -479,3 +479,12 @@
   
 }
 
+.c-icon--emblem {
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  display: block;
+  filter: var(--drop-shadow-2, drop-shadow(0 calc(6px* var(--drop-shadow-amount, 1)) calc(8px* var(--drop-shadow-amount, 1)) var(--drop-shadow-color, rgba(0, 0, 0, .3))));
+  padding: calc(var(--base, 8px) * .5);
+  height: calc(var(--base, 8px) * 4);
+  text-align: center;
+}

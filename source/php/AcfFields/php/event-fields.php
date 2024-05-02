@@ -1,9 +1,7 @@
 <?php 
 
-
-if (function_exists('acf_add_local_field_group')) {
-
-    acf_add_local_field_group(array(
+if (function_exists('acf_add_local_field_group')) {
+    acf_add_local_field_group(array(
     'key' => 'group_65a115157a046',
     'title' => __('Event Fields', 'api-event-manager'),
     'fields' => array(
@@ -13,7 +11,7 @@ if (function_exists('acf_add_local_field_group')) {
             'name' => '_thumbnail_id',
             'aria-label' => '',
             'type' => 'image',
-            'instructions' => __('Enhance your event by including a high-resolution image. As the initial point of contact, the image plays a pivotal role in capturing users\' attention, making it essential for attracting attendees.', 'api-event-manager'),
+            'instructions' => __('Enhance your event by including a high-resolution image in <strong>JPG format</strong>. As the initial point of contact, the image plays a pivotal role in capturing users\' attention, making it essential for attracting attendees.', 'api-event-manager'),
             'required' => 1,
             'conditional_logic' => 0,
             'wrapper' => array(
@@ -31,7 +29,7 @@ if (function_exists('acf_add_local_field_group')) {
             'max_width' => '',
             'max_height' => '',
             'max_size' => '',
-            'mime_types' => '',
+            'mime_types' => 'jpg, jpeg',
             'preview_size' => 'medium',
         ),
         1 => array(
@@ -213,6 +211,8 @@ if (function_exists('acf_add_local_field_group')) {
                 'id' => '',
             ),
             'choices' => array(
+                374 => __('Organization A', 'api-event-manager'),
+                375 => __('Organization B', 'api-event-manager'),
             ),
             'default_value' => false,
             'return_format' => 'value',
@@ -237,6 +237,10 @@ if (function_exists('acf_add_local_field_group')) {
                 'id' => '',
             ),
             'choices' => array(
+                370 => __('Audience A', 'api-event-manager'),
+                371 => __('Audience B', 'api-event-manager'),
+                372 => __('Audience C', 'api-event-manager'),
+                373 => __('Audience D', 'api-event-manager'),
             ),
             'default_value' => false,
             'return_format' => 'value',
@@ -247,50 +251,6 @@ if (function_exists('acf_add_local_field_group')) {
             'placeholder' => '',
         ),
         9 => array(
-            'key' => 'field_65a52bf7f7e4d',
-            'label' => __('Minimum age to attend', 'api-event-manager'),
-            'name' => 'typicalAgeRangeStart',
-            'aria-label' => '',
-            'type' => 'range',
-            'instructions' => __('The optimal maximum age for this event.', 'api-event-manager'),
-            'required' => 0,
-            'conditional_logic' => 0,
-            'wrapper' => array(
-                'width' => '50',
-                'class' => '',
-                'id' => '',
-            ),
-            'is_publicly_hidden' => 0,
-            'is_privately_hidden' => 0,
-            'default_value' => 0,
-            'min' => '',
-            'max' => 119,
-            'step' => '',
-            'prepend' => '',
-            'append' => __('years', 'api-event-manager'),
-        ),
-        10 => array(
-            'key' => 'field_65a52c24f7e4e',
-            'label' => __('Maximum age to attend', 'api-event-manager'),
-            'name' => 'typicalAgeRangeEnd',
-            'aria-label' => '',
-            'type' => 'range',
-            'instructions' => __('The optimal maximum age for this event.', 'api-event-manager'),
-            'required' => 0,
-            'conditional_logic' => 0,
-            'wrapper' => array(
-                'width' => '50',
-                'class' => '',
-                'id' => '',
-            ),
-            'default_value' => 120,
-            'min' => 5,
-            'max' => 120,
-            'step' => '',
-            'prepend' => '',
-            'append' => __('years', 'api-event-manager'),
-        ),
-        11 => array(
             'key' => 'field_65a66d8cadeef',
             'label' => __('Occasions', 'api-event-manager'),
             'name' => 'occasions',
@@ -617,7 +577,7 @@ if (function_exists('acf_add_local_field_group')) {
                 ),
             ),
         ),
-        12 => array(
+        10 => array(
             'key' => 'field_6613fdbd6090e',
             'label' => __('Prices', 'api-event-manager'),
             'name' => 'pricesList',
@@ -712,8 +672,7 @@ if (function_exists('acf_add_local_field_group')) {
         8 => 'send-trackbacks',
     ),
     'active' => true,
-    'description' => '',
+    'description' => 'We are nearly there! Just let us know some important last minute details, and you are ready to go!',
     'show_in_rest' => 0,
 ));
-
-}
+}
