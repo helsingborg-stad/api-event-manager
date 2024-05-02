@@ -2,7 +2,7 @@
 
 namespace EventManager\ApiResponseModifiers;
 
-use EventManager\Helper\Hookable;
+use EventManager\HooksRegistrar\Hookable;
 use EventManager\PostToSchema\IPostToSchemaAdapter;
 use WpService\Contracts\RestEnsureResponse;
 use WP_Post;

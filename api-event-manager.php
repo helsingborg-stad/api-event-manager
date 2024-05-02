@@ -4,7 +4,7 @@
  * Plugin Name:       Event Manager
  * Plugin URI:        https://github.com/helsingborg-stad/api-event-manager
  * Description:       Creates a api that may be used to manage events
- * Version: 3.1.0
+ * Version: 3.6.0
  * Author:            Thor Brink, Sebastian Thulin @ Helsingborg Stad
  * Author URI:        https://github.com/helsingborg-stad
  * License:           MIT
@@ -14,7 +14,6 @@
  */
 
 use AcfService\Implementations\NativeAcfService;
-use Composer\Installers\UserFrostingInstaller;
 use EventManager\CleanupUnusedTags\CleanupUnusedTags;
 use EventManager\HooksRegistrar\HooksRegistrar;
 use EventManager\PostTableColumns\Column as PostTableColumn;
@@ -25,7 +24,6 @@ use EventManager\PostTableColumns\ColumnSorters\NestedMetaStringSort;
 use EventManager\PostTableColumns\Helpers\GetNestedArrayStringValueRecursive;
 use EventManager\PostToSchema\Mappers\StringToEventSchemaMapper;
 use EventManager\PostToSchema\PostToEventSchema\PostToEventSchema;
-use EventManager\Services\AcfService\AcfServiceFactory;
 use EventManager\SetPostTermsFromContent\SetPostTermsFromContent;
 use EventManager\TagReader\TagReader;
 use EventManager\ApiResponseModifiers\EventResponseModifier;
@@ -187,35 +185,46 @@ $hooksRegistrar->register($eventPostType);
 /**
  * User roles
  */
-$organizationMemberUserRole = new \EventManager\User\Role(
-    'organization_member',
-    'Organization Member',
-    [
-        'edit_post',
-        'edit_others_posts'
-    ]
-);
+$userRoles = [
+    new \EventManager\User\Role('organization_administrator', 'Organization Administrator', ['read']),
+    new \EventManager\User\Role('organization_member', 'Organization Member', ['read']),
+    new \EventManager\User\Role('pending_organization_member', 'Pending Organization Member', ['read']),
+];
 
-$userRoleRegistrar                   = new \EventManager\User\RoleRegistrar([$organizationMemberUserRole], $wpService);
-$syncRoleCapabilitiesToExistingUsers = new \EventManager\User\SyncRoleCapabilitiesToExistingUsers([$organizationMemberUserRole], $wpService);
-
-$hooksRegistrar->register($userRoleRegistrar);
-$hooksRegistrar->register($syncRoleCapabilitiesToExistingUsers);
-
+$hooksRegistrar->register(new \EventManager\User\RoleRegistrar($userRoles, $wpService));
 
 /**
  * User capabilities
  */
-$memberCanEditPost                   = new \EventManager\User\Capabilities\UserCan\MemberUserCanEditPost($wpService, $acfService);
-$memberBelongsToVerifiedOrganization = new \EventManager\User\Capabilities\UserCan\MemberBelongsToVerifiedOrganization($acfService);
+$postBelongsToSameOrganizationAsUser = new \EventManager\User\UserHasCap\Implementations\Helpers\PostBelongsToSameOrganizationAsUser($wpService, $acfService);
+$usersBelongsToSameOrganization      = new \EventManager\User\UserHasCap\Implementations\Helpers\UsersBelongsToSameOrganization($acfService);
+$userBelongsToOrganization           = new \EventManager\User\UserHasCap\Implementations\Helpers\UserBelongsToOrganization($acfService);
 
-$capabilityRegistrar = new \EventManager\User\Capabilities\CapabilityRegistrar([
-    new \EventManager\User\Capabilities\CapabilityUsingCallback('edit_post', $memberCanEditPost),
-    new \EventManager\User\Capabilities\CapabilityUsingCallback('edit_others_posts', $memberCanEditPost),
-    new \EventManager\User\Capabilities\CapabilityUsingCallback('publish_posts', $memberBelongsToVerifiedOrganization)
-], $wpService);
+$capabilities = [
+    new \EventManager\User\UserHasCap\Implementations\EditEvents(),
+    new \EventManager\User\UserHasCap\Implementations\EditEvent($postBelongsToSameOrganizationAsUser, $wpService),
+    new \EventManager\User\UserHasCap\Implementations\EditOthersEvents(),
+    new \EventManager\User\UserHasCap\Implementations\PublishEvent(),
+    new \EventManager\User\UserHasCap\Implementations\DeleteEvent($postBelongsToSameOrganizationAsUser),
+    new \EventManager\User\UserHasCap\Implementations\ListUsers(),
+    new \EventManager\User\UserHasCap\Implementations\EditUsers(),
+    new \EventManager\User\UserHasCap\Implementations\EditUser(),
+    new \EventManager\User\UserHasCap\Implementations\DeleteUser($usersBelongsToSameOrganization),
+    new \EventManager\User\UserHasCap\Implementations\PromoteUsers(),
+    new \EventManager\User\UserHasCap\Implementations\PromoteUser($usersBelongsToSameOrganization),
+    new \EventManager\User\UserHasCap\Implementations\PromoteUserToRole(),
+    new \EventManager\User\UserHasCap\Implementations\CreateUsers(),
+    new \EventManager\User\UserHasCap\Implementations\ManageOrganizations(),
+    new \EventManager\User\UserHasCap\Implementations\EditOrganizations(),
+    new \EventManager\User\UserHasCap\Implementations\EditOrganization($userBelongsToOrganization),
+];
 
-$hooksRegistrar->register($capabilityRegistrar);
+$hooksRegistrar->register(new \EventManager\User\UserHasCap\Registrar($capabilities, $wpService));
+
+/**
+ * Custom User capabilities
+ */
+$hooksRegistrar->register(new \EventManager\CustomUserCapabilities\PromoteUserToRole($wpService));
 
 /**
  * Taxonomies
@@ -248,9 +257,44 @@ $acfFieldContentModifierRegistrar = new \EventManager\AcfFieldContentModifiers\R
 $hooksRegistrar->register($acfFieldContentModifierRegistrar);
 
 /**
+ * Acf save post actions
+ */
+$acfSavepostRegistrar = new \EventManager\AcfSavePostActions\Registrar([
+    new \EventManager\AcfSavePostActions\SetPostTermsFromField('organization', 'organization', $wpService, $acfService),
+    new \EventManager\AcfSavePostActions\SetPostTermsFromField('audience', 'audience', $wpService, $acfService),
+], $wpService);
+
+$hooksRegistrar->register($acfSavepostRegistrar);
+
+/**
  * Field setting hide public
  */
 $fieldSettingHidePublic = new \EventManager\FieldSettingHidePublic($wpService, $acfService);
 $fieldSettingHidePublic->addHooks();
 $fieldSettingHidePrivate = new \EventManager\FieldSettingHidePrivate($wpService, $acfService);
 $fieldSettingHidePrivate->addHooks();
+
+/**
+ * Pre get post modifiers
+ */
+$hooksRegistrar->register(
+    new \EventManager\PreGetPostModifiers\LimitEventTableResultsByUserRole($wpService, $acfService)
+);
+
+/**
+ * Pre get users modifiers
+ */
+$hooksRegistrar->register(
+    new \EventManager\PreGetUsersModifiers\ListOnlyUsersFromSameOrganization($wpService, $acfService)
+);
+
+/**
+ * Post table filters
+ */
+$eventPostStatusFilter = new \EventManager\PostTableFilters\EventPostStatusFilter($wpService);
+$eventPostStatusFilter->hideViewsFromEventTable(); // Hide views from table to avoid confusion.
+$postTableFiltersRegistrar = new \EventManager\PostTableFilters\Registrar([
+    $eventPostStatusFilter
+], $wpService);
+
+$hooksRegistrar->register($postTableFiltersRegistrar);

@@ -9,7 +9,7 @@ use PHPUnit\Framework\TestCase;
 class AdminSettingsPageTest extends TestCase
 {
     /**
-     * @testdox registerSettingsPage() should call AddOptionsPage::addOptionsPage() with menu_slug 'event-manager-settings' and administrator capabilities
+     * @testdox registerSettingsPage() calls AddOptionsPage::addOptionsPage() with expected arguments.
      */
     public function testMenuSlug(): void
     {
@@ -26,8 +26,12 @@ class AdminSettingsPageTest extends TestCase
     private function getWPService(): AddAction
     {
         return new class implements AddAction {
-            public function addAction(string $tag, callable $function_to_add, int $priority = 10, int $accepted_args = 1): bool
-            {
+            public function addAction(
+                string $tag,
+                callable $function_to_add,
+                int $priority = 10,
+                int $accepted_args = 1
+            ): bool {
                 return true;
             }
         };

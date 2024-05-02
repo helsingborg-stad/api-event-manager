@@ -2,7 +2,7 @@
 
 namespace EventManager\Modules\FrontendForm;
 
-use EventManager\Helper\Module;
+use EventManager\Modules\Module;
 
 class Register extends Module
 {

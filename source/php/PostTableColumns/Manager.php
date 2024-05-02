@@ -2,7 +2,7 @@
 
 namespace EventManager\PostTableColumns;
 
-use EventManager\Helper\Hookable;
+use EventManager\HooksRegistrar\Hookable;
 use WP_Query;
 use WpService\Contracts\AddAction;
 use WpService\Contracts\AddFilter;
