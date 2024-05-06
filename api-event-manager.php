@@ -298,3 +298,12 @@ $postTableFiltersRegistrar = new \EventManager\PostTableFilters\Registrar([
 ], $wpService);
 
 $hooksRegistrar->register($postTableFiltersRegistrar);
+
+/**
+ * Notifications
+ */
+$emailNotificationSender               = new \EventManager\NotificationServices\EmailNotificationService($wpService);
+$userAddedToOrganizationEvent          = new \EventManager\Notifications\Events\UserAddedToOrganization($wpService);
+$memberAddedToOrganizationNotification = new \EventManager\Notifications\MemberAddedToOrganization($emailNotificationSender, $wpService);
+$hooksRegistrar->register($userAddedToOrganizationEvent);
+$hooksRegistrar->register($memberAddedToOrganizationNotification);
