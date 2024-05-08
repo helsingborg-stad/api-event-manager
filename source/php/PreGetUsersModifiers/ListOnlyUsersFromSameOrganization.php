@@ -23,7 +23,7 @@ class ListOnlyUsersFromSameOrganization implements IPreGetUsersModifier
     {
         if ($this->shouldModify($this->wpService->getCurrentUser())) {
             $currentUser   = $this->wpService->getCurrentUser();
-            $organizations = $this->acfService->getField('organizations', 'user_' . $currentUser->ID);
+            $organizations = $this->acfService->getField('organizations', 'user_' . $currentUser->ID) ?? [];
             $metaQueries   = array_map(fn($organization) => [
                 'key'     => 'organizations',
                 'value'   => '"' . $organization . '"',
