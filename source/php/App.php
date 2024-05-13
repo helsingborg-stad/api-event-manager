@@ -16,7 +16,6 @@ use EventManager\SetPostTermsFromContent\SetPostTermsFromContent;
 use EventManager\TagReader\TagReader;
 use EventManager\ApiResponseModifiers\EventResponseModifier;
 use EventManager\ContentExpirationManagement\ExpiredEvents;
-use EventManager\CronScheduler\CronScheduler;
 use EventManager\CronScheduler\CronSchedulerInterface;
 use EventManager\PostToSchema\PostToEventSchema\Commands\Helpers\CommandHelpers;
 use EventManager\HooksRegistrar\HooksRegistrarInterface;
