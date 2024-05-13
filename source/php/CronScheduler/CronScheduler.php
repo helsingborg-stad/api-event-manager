@@ -7,8 +7,11 @@ use WpService\Contracts\AddAction;
 use WpService\Contracts\NextScheduled;
 use WpService\Contracts\ScheduleEvent;
 
-class CronScheduler implements Hookable
+class CronScheduler implements CronSchedulerInterface, Hookable
 {
+    /**
+     * @var CronEventInterface[]
+     */
     public $cronEvents = [];
 
     public function __construct(private AddAction&NextScheduled&ScheduleEvent $wpService)
