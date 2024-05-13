@@ -8,7 +8,7 @@ use WpService\Contracts\LoadPluginTextDomain;
 
 class LoadTextDomain implements Hookable
 {
-    public function __construct(private AddAction&LoadPluginTextDomain $wpService)
+    public function __construct(private string $textDomain, private AddAction&LoadPluginTextDomain $wpService)
     {
     }
 
@@ -19,6 +19,6 @@ class LoadTextDomain implements Hookable
 
     public function loadTextDomain(): void
     {
-        $this->wpService->loadPluginTextDomain('api-event-manager', false, EVENT_MANAGER_PATH . 'languages/');
+        $this->wpService->loadPluginTextDomain($this->textDomain, false, EVENT_MANAGER_PATH . 'languages/');
     }
 }

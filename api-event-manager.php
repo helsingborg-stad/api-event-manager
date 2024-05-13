@@ -36,6 +36,7 @@ use WpService\FileSystemResolvers\UrlFilePathResolver;
 use WpService\Implementations\FilePathResolvingWpService;
 use WpService\Implementations\NativeWpService;
 use WpService\Implementations\WpServiceLazyDecorator;
+use WpService\Implementations\WpServiceWithTextDomain;
 
 // Protect against direct file access
 if (!defined('WPINC')) {
@@ -53,27 +54,30 @@ if (file_exists(EVENT_MANAGER_PATH . 'vendor/autoload.php')) {
     require EVENT_MANAGER_PATH . '/vendor/autoload.php';
 }
 
+$textDomain = 'api-event-manager';
+
 $hooksRegistrar = new HooksRegistrar();
-$acfService     = new NativeAcfService();
 
-$manifestFileWpService = new WpServiceLazyDecorator();
-$wpService             = new FilePathResolvingWpService(
-    new NativeWpService(),
-    new ManifestFilePathResolver(
-        EVENT_MANAGER_PATH . "dist/manifest.json",
-        new BaseFileSystem(),
-        $manifestFileWpService,
-        new UrlFilePathResolver($manifestFileWpService)
-    )
-);
+/**
+ * AcfService
+ */
+$acfService = new NativeAcfService();
 
-$manifestFileWpService->setInner($wpService);
+/**
+ * WpService
+ */
+$manifestFileWpService    = new WpServiceLazyDecorator();
+$urlFilePathResolver      = new UrlFilePathResolver($manifestFileWpService);
+$baseFileSystem           = new BaseFileSystem();
+$manifestFilePathResolver = new ManifestFilePathResolver(EVENT_MANAGER_PATH . "dist/manifest.json", $baseFileSystem, $manifestFileWpService, $urlFilePathResolver);
+$wpService                = new FilePathResolvingWpService(new NativeWpService(), $manifestFilePathResolver);
+
+$manifestFileWpService->setInner(new WpServiceWithTextDomain($wpService, $textDomain));
 
 /**
  * Load text domain
  */
-$loadTextDomain = new \EventManager\Helper\LoadTextDomain($wpService);
-
+$loadTextDomain = new \EventManager\Helper\LoadTextDomain($textDomain, $wpService);
 $hooksRegistrar->register($loadTextDomain);
 
 /**
@@ -302,8 +306,11 @@ $hooksRegistrar->register($postTableFiltersRegistrar);
 /**
  * Notifications
  */
-$emailNotificationSender               = new \EventManager\NotificationServices\EmailNotificationService($wpService);
 $userAddedToOrganizationEvent          = new \EventManager\Notifications\Events\UserAddedToOrganization($wpService);
+$emailNotificationSender               = new \EventManager\NotificationServices\EmailNotificationService($wpService);
 $memberAddedToOrganizationNotification = new \EventManager\Notifications\MemberAddedToOrganization($emailNotificationSender, $wpService);
+$pendingEventCreatedNotification       = new \EventManager\Notifications\PendingEventCreated($emailNotificationSender, $wpService);
+
 $hooksRegistrar->register($userAddedToOrganizationEvent);
 $hooksRegistrar->register($memberAddedToOrganizationNotification);
+$hooksRegistrar->register($pendingEventCreatedNotification);
