@@ -48,7 +48,7 @@ class EditEvent implements UserHasCapInterface
         if (in_array('pending_organization_member', $user->roles)) {
             // If the user is a pending member, they can only edit their own events that are pending
             $post = $this->wpService->getPost($args[2]);
-            if ($post->post_author == $user->ID && $post->post_status === 'pending') {
+            if ((int)$post->post_author == $user->ID && in_array($post->post_status, ['pending', 'draft'])) {
                 $allcaps['edit_event'] = true;
                 return $allcaps;
             }
