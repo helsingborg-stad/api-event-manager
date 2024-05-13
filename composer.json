@@ -69,6 +69,5 @@
             "wikimedia/composer-merge-plugin": true
         }
     },
-    "version": "3.7.1"
+    "version": "3.8.0"
 }
-
