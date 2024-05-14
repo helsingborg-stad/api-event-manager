@@ -5,6 +5,8 @@
     'type' => 'submit',
     'icon' => 'calendar_clock',
     'reversePositions' => true,
-    'classList' => $classList ?? []
+    'classList' => $classList ?? [
+        'u-width--100',
+    ]
 ])
 @endbutton

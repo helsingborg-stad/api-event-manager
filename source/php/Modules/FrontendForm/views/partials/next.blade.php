@@ -5,6 +5,8 @@
     'type' => 'submit',
     'icon' => 'chevron_right',
     'reversePositions' => false,
-    'classList' => $classList ?? []
+    'classList' => $classList ?? [
+        'u-width--100',
+    ]
 ])
 @endbutton
