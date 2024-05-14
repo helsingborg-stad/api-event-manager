@@ -17,6 +17,13 @@
 @if($error === false && $empty === false)
 
   <!-- Progress bar -->
+  @progressBar([
+    'value' => $state->percentageCompleted,
+    'classList' => [
+      'u-margin__bottom--4'
+    ],
+  ])
+  @endprogressBar
 
   @foreach ($steps as $stepKey => $step)
     @paper(['padding' => 4, 'classList' => ['u-margin__bottom--4']])
