@@ -1,5 +1,7 @@
 <?php
 
+//phpcs:disable Generic.Files.LineLength.TooLong
+
 namespace EventManager;
 
 use AcfService\AcfService;
