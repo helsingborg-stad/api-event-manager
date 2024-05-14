@@ -6,6 +6,7 @@ class FormStepState
 {
     public bool $isPassed;
     public bool $isCurrent;
+    public bool $isFuture;
     public ?int $nextStep;
     public ?int $previousStep;
     public bool $isLast;
@@ -15,6 +16,7 @@ class FormStepState
     {
         $this->isPassed  = $this->isPassed($step, $state);
         $this->isCurrent = $this->isCurrent($step, $state);
+        $this->isFuture  = (!$this->isPassed && !$this->isCurrent);
         $this->nextStep  = $this->nextStep($step, $steps);
         $this->isLast    = $this->isLast($step, $steps);
         $this->isFirst   = $this->isFirst($step);

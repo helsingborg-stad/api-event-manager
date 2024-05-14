@@ -26,13 +26,20 @@
   @endprogressBar
 
   @foreach ($steps as $stepKey => $step)
-    @paper(['padding' => 4, 'classList' => ['u-margin__bottom--4']])
+    @paper([
+      'padding' => 4, 
+      'classList' => [
+        'u-margin__bottom--4', 
+        $step->state->isFuture ? 'u-disabled' : '',
+      ],
+      'id' => 'formstep' . $step->step,
+    ])
       
     
       <div class="u-display--flex u-align-content--center">
         <div class="u-flex-grow--1">
         @if($step->state->isPassed)
-          <div class="u-display--inline-flex u-color__bg--default u-rounded u-padding__y--05 u-padding__left--1 u-padding__right--2 u-margin__bottom--1">
+          <div class="u-display--inline-flex u-color__text--lightest u-color__bg--success u-padding__y--05 u-padding__left--1 u-padding__right--2 u-margin__bottom--1 u-rounded--full">
             @icon([
                 'icon' => 'check',
                 'size' => 'md'

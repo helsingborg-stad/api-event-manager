@@ -25,14 +25,16 @@ class FormState
         $this->totalSteps          = count($steps);
         $this->percentageCompleted = $this->calculatePercentageCompleted(
             $steps,
-            $this->currentStep
+            $this->previousStep
         );
     }
 
-    private function calculatePercentageCompleted(array $steps, int $currentStep): int
+    private function calculatePercentageCompleted(array $steps, ?int $currentStep): int
     {
-        $percentage = ($currentStep / count($steps)) * 100;
-        return round($percentage);
+        if ($currentStep === null) {
+            return 0;
+        }
+        return round(($currentStep / count($steps)) * 100);
     }
 
     private function isFirstStep(): bool

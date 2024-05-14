@@ -32,6 +32,13 @@ class RegisterAcfExportManager implements Hookable
             'test-field-step-1'   => 'group_661e41bb1781f',
             'test-field-step-2'   => 'group_661e425070deb',
             'multistep-form'      => 'group_6627a5e16d84f',
+
+            'form-contact'        => 'group_66436b29cfb4f',
+            'form-description'    => 'group_66436bf782af1',
+            'form-time-location'  => 'group_66436f8222b3f',
+            'form-audicence'      => 'group_66436fb1b4f7f',
+            'form-category'       => 'group_66436fdd0f112',
+            'form-price-booking'  => 'group_66436ffb2f075',
         ));
 
         $acfExportManager->import();

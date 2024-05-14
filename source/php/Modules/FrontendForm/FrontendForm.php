@@ -264,7 +264,11 @@ class FrontendForm extends \Modularity\Module
 
         $htmlSubmitButton = $self->renderView(
             'partials.button-wrapper',
-            ['step' => $step]
+            [
+                'step' => $step,
+                'lang' => $self->getLang()
+            ]
+
         );
 
         $this->acfService->form([
