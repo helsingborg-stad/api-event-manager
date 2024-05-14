@@ -2,7 +2,6 @@
 
 namespace EventManager\User\UserHasCap\Implementations;
 
-use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use WP_User;
 
@@ -15,19 +14,12 @@ class EditEventsTest extends TestCase
     {
         $userCanEditEvents = new EditEvents();
         $allcaps           = ['edit_events' => false];
-        $user              = $this->getUser();
+        $user              = $this->createMock(WP_User::class);
+        $user->method('has_cap')->willReturn(true);
 
         $result = $userCanEditEvents->userHasCap($allcaps, [], ['edit_events'], $user);
 
         $this->assertEquals(['edit_events' => true], $result);
-    }
-
-    private function getUser(): WP_User|MockObject
-    {
-        $user = $this->getMockBuilder(WP_User::class)->addMethods(['has_cap'])->getMock();
-        $user->method('has_cap')->willReturn(true);
-
-        return $user;
     }
 
     /**
@@ -38,7 +30,7 @@ class EditEventsTest extends TestCase
         $userCanEditEvents = new EditEvents();
         $allcaps           = ['edit_events' => false];
 
-        $result = $userCanEditEvents->userHasCap($allcaps, [], [], $this->createStub(WP_User::class));
+        $result = $userCanEditEvents->userHasCap($allcaps, [], [], $this->createMock(WP_User::class));
 
         $this->assertEquals($allcaps, $result);
     }

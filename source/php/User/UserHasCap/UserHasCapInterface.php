@@ -20,6 +20,7 @@ interface UserHasCapInterface
      *     @type mixed  ...$2 Optional second and further parameters, typically object ID.
      * }
      * @param WP_User  $user    The user object.
+     * @return bool[] Filtered array of key/value pairs where keys represent a capability name.
      */
     public function userHasCap(array $allcaps, array $caps, array $args, WP_User $user): array;
 }

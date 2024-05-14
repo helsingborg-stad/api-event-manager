@@ -2,7 +2,6 @@
 
 namespace EventManager\User\UserHasCap\Implementations;
 
-use EventManager\User\UserHasCap\UserHasCapInterface;
 use PHPUnit\Framework\TestCase;
 use WP_User;
 
@@ -10,26 +9,26 @@ class PublishEventTest extends TestCase
 {
     /**
      * @testdox userHasCap() should allow given roles to publish events
-     * @dataProvider userRoleDataProvider
+     * @dataProvider userRoleCapsDataProvider
      */
-    public function testUserHasCapShouldAllowGivenRolesToPublishEvents($role)
+    public function testUserHasCapShouldAllowGivenRolesToPublishEvents($roles)
     {
         $userCanPublishEvent = new PublishEvent();
         $allcaps             = ['publish_events' => false];
-        $user                = $this->getUser();
-        $user->roles         = [$role];
+        $user                = $this->createMock('WP_User');
+        $user->roles         = $roles;
 
         $result = $userCanPublishEvent->userHasCap($allcaps, [], ['publish_events'], $user);
 
         $this->assertEquals(['publish_events' => true], $result);
     }
 
-    public function userRoleDataProvider(): array
+    public function userRoleCapsDataProvider(): array
     {
         return [
-            ['administrator'],
-            ['organization_administrator'],
-            ['organization_member'],
+            [['administrator']],
+            [['organization_administrator']],
+            [['organization_member']],
         ];
     }
 
@@ -40,18 +39,11 @@ class PublishEventTest extends TestCase
     {
         $userCanPublishEvent = new PublishEvent();
         $allcaps             = ['publish_events' => false];
-        $user                = $this->getUser();
+        $user                = $this->createMock('WP_User');
         $user->roles         = ['pending_organization_member'];
 
         $result = $userCanPublishEvent->userHasCap($allcaps, [], ['publish_events'], $user);
 
         $this->assertEquals(['publish_events' => false], $result);
-    }
-
-    private function getUser(): WP_User
-    {
-        $user = new WP_User();
-
-        return $user;
     }
 }

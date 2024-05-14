@@ -8,17 +8,18 @@
 
 namespace EventManager\Modules\FrontendForm;
 
+use AcfService\Contracts\EnqueueUploader;
+use AcfService\Contracts\Form;
+use AcfService\Contracts\FormHead;
+use AcfService\Contracts\GetFieldGroups;
+use AcfService\Implementations\NativeAcfService;
 use EventManager\Modules\FrontendForm\FormStep;
 
 use ComponentLibrary\Init as ComponentLibraryInit;
 use WpService\Contracts\EnqueueStyle;
-use WpService\Contracts\WPServiceFactory;
-use EventManager\Resolvers\FileSystem\ManifestFilePathResolver;
-use EventManager\Resolvers\FileSystem\StrictFilePathResolver;
-use EventManager\Services\FileSystem\FileSystemFactory;
 use WpService\Implementations\NativeWpService;
-use PharIo\Manifest\Manifest;
 use Throwable;
+use WpService\Contracts\__;
 
 /**
  * @property string $description
@@ -35,103 +36,110 @@ class FrontendForm extends \Modularity\Module
     private $formStepQueryParam = 'step'; // The query parameter for the form steps.
     private $formIdQueryParam   = 'formid'; // The query parameter for the form id.
 
-    private $formPostType = null; // The post type for the form.
+    private $formPostType   = null; // The post type for the form.
     private $formPostStatus = null; // The post status for the form.
 
     private $blade = null;
 
-    private EnqueueStyle $wpService;
+    private EnqueueStyle&__ $wpService;
+    private FormHead&EnqueueUploader&Form&GetFieldGroups $acfService;
 
     public function init(): void
     {
-        $this->nameSingular = __('Event Form', 'api-event-manager');
-        $this->namePlural   = __('Event Forms', 'api-event-manager');
-        $this->description  = __('Module for creating public event form', 'api-event-manager');
+        $this->wpService  = new NativeWpService(); // TODO: use custom modularity middleware.
+        $this->acfService = new NativeAcfService(); // TODO: use custom modularity middleware.
 
-        $this->wpService = new NativeWpService(); // TODO: use custom modularity middleware.
+        $this->nameSingular = $this->wpService->__('Event Form');
+        $this->namePlural   = $this->wpService->__('Event Forms');
+        $this->description  = $this->wpService->__('Module for creating public event form');
 
-        add_filter('query_vars',[$this, 'registerFormStepQueryVar']); // add from wpservice
-        add_filter('query_vars',[$this, 'registerFormIdQueryVar']); // add from wpservice
+        add_filter('query_vars', [$this, 'registerFormStepQueryVar']); // add from wpservice
+        add_filter('query_vars', [$this, 'registerFormIdQueryVar']); // add from wpservice
         add_filter('acf/load_field/name=formStepGroup', [$this, 'addOptionsToGroupSelect']); // add from wpservice
     }
 
     public function data(): array
     {
         //Needs to be called, otherwise a notice will be thrown.
-        $fields = (object) $this->getFields(); 
-        
+        $fields = (object) $this->getFields();
+
         //Empty form. Show message.
-        if($fields->formSteps == false) {
+        if ($fields->formSteps == false) {
             return array_merge(
                 $this->defaultDataResponse(),
                 [
                 'empty' => $this->renderView('partials.message', [
-                    'text' => __('No steps defined. Please Add some steps, to enable this form functionality.', 'api-event-manager'),
+                    'text' => $this->wpService->__(
+                        'No steps defined. Please Add some steps, to enable this form functionality.'
+                    ),
                     'icon' => ['name' => 'info'],
                     'type' => 'info'
                 ])
-            ]);
+                ]
+            );
         }
 
         //Protected form. Show message.
-        if($fields->isPublicForm == false && !$this->hasAccess()) {
+        if ($fields->isPublicForm == false && !$this->hasAccess()) {
             return array_merge(
                 $this->defaultDataResponse(),
                 [
                 'empty' => $this->renderView('partials.message', [
-                    'text' => __('This form is protected, please log in.', 'api-event-manager'),
+                    'text' => $this->wpService->__('This form is protected, please log in.'),
                     'icon' => ['name' => 'info'],
                     'type' => 'info'
                 ])
-            ]);
+                ]
+            );
         }
 
-        //Define form steps 
+        //Define form steps
         $steps = [];
-        foreach($fields->formSteps as $index => $fieldGroup) {
+        foreach ($fields->formSteps as $index => $fieldGroup) {
             $steps[$index + 1] = new FormStep(
-                $index + 1, 
+                $index + 1,
                 $fieldGroup
             );
         }
 
         //Set form state
         $formState = new FormState(
-            $steps, 
+            $steps,
             $this->formStepQueryParam
         );
 
         //Decorate step with state, and link
-        foreach($steps as &$step) {
+        foreach ($steps as &$step) {
             $step->state = $stepState = new FormStepState(
-                $step, 
+                $step,
                 $formState,
                 $steps
             );
 
             $step->nav = new FormStepNav(
-                $step, 
+                $step,
                 $stepState,
                 $steps,
                 get_permalink(),
                 [
                     'formid' => get_query_var($this->formIdQueryParam, "%post_id%"),
-                    'step' => null
+                    'step'   => null
                 ]
             );
         }
 
         //Invalid step: Show error message
-        if(!$formState->isValidStep) {
+        if (!$formState->isValidStep) {
             return array_merge(
                 $this->defaultDataResponse(),
                 [
                 'error' => $this->renderView('partials.message', [
-                    'text' => __('Whoops! It looks like we ran out of form.', 'api-event-manager'),
+                    'text' => $this->wpService->__('Whoops! It looks like we ran out of form.'),
                     'icon' => ['name' => 'error'],
                     'type' => 'warning'
                 ])
-            ]);
+                ]
+            );
         }
 
         //Get current step form
@@ -143,25 +151,26 @@ class FrontendForm extends \Modularity\Module
         return array_merge(
             $this->defaultDataResponse(),
             [
-                'error' => false,
-                'steps' => $steps,
-                'state' => $formState,
-                'form'  => $form,
+                'error'        => false,
+                'steps'        => $steps,
+                'state'        => $formState,
+                'form'         => $form,
                 'formSettings' => (object) [
-                    'postType'      => $fields->saveToPostType ?? "post",
-                    'postStatus'    => $fields->saveToPostTypeStatus ?? "draft"
+                    'postType'   => $fields->saveToPostType ?? "post",
+                    'postStatus' => $fields->saveToPostTypeStatus ?? "draft"
                 ],
-                'lang'  => $this->getLang()
+                'lang'         => $this->getLang()
             ]
         );
     }
 
     /**
      * Retrives default values for keys used in the form display.
-     * 
+     *
      * @return array The default keys and values.
      */
-    private function defaultDataResponse(): array {
+    private function defaultDataResponse(): array
+    {
         return [
             'empty' => false,
             'error' => false
@@ -178,19 +187,28 @@ class FrontendForm extends \Modularity\Module
 
     /**
      * Retrives varous text strings for the form.
-     * 
+     *
      * @return object The (translated) text strings.
      */
-    private function getLang(): object {
+    private function getLang(): object
+    {
+        $disclaimer = $this->wpService->__(
+            <<<EOD
+            By submitting this form, you're agreeing to our terms and conditions. 
+            You're also consenting to us processing your personal data in line with GDPR regulations, 
+            and confirming that you have full rights to use all provided content.
+            EOD
+        );
+
         return (object) [
-            'disclaimer' => __("By submitting this form, you're agreeing to our terms and conditions. You're also consenting to us processing your personal data in line with GDPR regulations, and confirming that you have full rights to use all provided content.", 'api-event-manager'),
-            'edit' => __('Edit', 'api-event-manager'),
-            'submit' => __('Submit', 'api-event-manager'),
-            'previous' => __('Previous', 'api-event-manager'),
-            'next' => __('Save and go to next step', 'api-event-manager'),
-            'of' => __('of', 'api-event-manager'),
-            'step' => __('Step', 'api-event-manager'),
-            'completed' => __('Completed', 'api-event-manager'),
+            'disclaimer' => $disclaimer,
+            'edit'       => $this->wpService->__('Edit'),
+            'submit'     => $this->wpService->__('Submit'),
+            'previous'   => $this->wpService->__('Previous'),
+            'next'       => $this->wpService->__('Save and go to next step', 'api-event-manager'),
+            'of'         => $this->wpService->__('of'),
+            'step'       => $this->wpService->__('Step'),
+            'completed'  => $this->wpService->__('Completed')
         ];
     }
 
@@ -206,15 +224,15 @@ class FrontendForm extends \Modularity\Module
 
     public function script(): void
     {
-        acf_form_head();
-        acf_enqueue_uploader();
+        $this->acfService->formHead();
+        $this->acfService->enqueueUploader();
     }
 
     public function style(): void
     {
         $this->wpService->enqueueStyle('event-manager-frontend-form');
     }
-    
+
     /**
      * Retrieves the form ID or "new_post".
      *
@@ -235,7 +253,8 @@ class FrontendForm extends \Modularity\Module
      *
      * @return int The form step.
      */
-    public function getForm($step, $self): void {
+    public function getForm($step, $self): void
+    {
         //Message when form is sent.
         $htmlUpdatedMessage = $self->renderView('partials.message', [
             'text' => '%s',
@@ -244,10 +263,11 @@ class FrontendForm extends \Modularity\Module
         ]);
 
         $htmlSubmitButton = $self->renderView(
-            'partials.button-wrapper', ['step' => $step]
+            'partials.button-wrapper',
+            ['step' => $step]
         );
 
-        acf_form([
+        $this->acfService->form([
             'post_id'               => $this->getFormId(),
             'return'                => $step->nav->next ?? false, // Add form result page here
             'post_title'            => $step->state->isFirst ? true : false,
@@ -255,9 +275,11 @@ class FrontendForm extends \Modularity\Module
             'field_groups'          => [
                 $step->group
             ],
-            'form_attributes' => ['class' => 'acf-form js-form-validation js-form-validation'],
+            'form_attributes'       => ['class' => 'acf-form js-form-validation js-form-validation'],
             'uploader'              => 'basic',
-            'updated_message'       => __("The event has been submitted for review. You will be notified when the event has been published.", 'acf'),
+            'updated_message'       => $this->wpService->__(
+                "The event has been submitted for review. You will be notified when the event has been published."
+            ),
             'html_updated_message'  => $htmlUpdatedMessage,
             'html_submit_button'    => $htmlSubmitButton,
             'new_post'              => [
@@ -265,7 +287,7 @@ class FrontendForm extends \Modularity\Module
                 'post_status' => $self->formPostStatus
             ],
             'instruction_placement' => 'field',
-            'submit_value'          => __('Create Event', 'api-event-manager')
+            'submit_value'          => $this->wpService->__('Create Event')
         ]);
     }
 
@@ -301,7 +323,8 @@ class FrontendForm extends \Modularity\Module
      * @param array $registeredQueryVars The array of registered query variables.
      * @return array The updated array of registered query variables.
      */
-    public function registerFormStepQueryVar(array $registeredQueryVars): array {
+    public function registerFormStepQueryVar(array $registeredQueryVars): array
+    {
         return $registeredQueryVars = array_merge(
             $registeredQueryVars,
             [$this->formStepQueryParam]
@@ -316,7 +339,8 @@ class FrontendForm extends \Modularity\Module
      * @param array $registeredQueryVars The array of registered query variables.
      * @return array The updated array of registered query variables.
      */
-    public function registerFormIdQueryVar(array $registeredQueryVars): array {
+    public function registerFormIdQueryVar(array $registeredQueryVars): array
+    {
         return $registeredQueryVars = array_merge(
             $registeredQueryVars,
             [$this->formIdQueryParam]
@@ -331,12 +355,13 @@ class FrontendForm extends \Modularity\Module
      * @param array $field The field to add the field groups to.
      * @return array The updated field.
      */
-    public function addOptionsToGroupSelect( $field ) {
+    public function addOptionsToGroupSelect($field)
+    {
         $field['choices'] = array();
 
         // Get all field groups, filter out all that are connected to a post type.
-        $groups = acf_get_field_groups();
-        $groups = array_filter($groups, function($item) {
+        $groups = $this->acfService->getFieldGroups();
+        $groups = array_filter($groups, function ($item) {
             return isset($item['location'][0][0]['param']) && $item['location'][0][0]['param'] === 'post_type';
         });
 
@@ -347,12 +372,14 @@ class FrontendForm extends \Modularity\Module
         };
 
         // Add groups to the select field
-        if(is_array($groups) && !empty($groups)) {
-            foreach($groups as $group) {
-                $field['choices'][$group['key']] = $createSelectItemTitle($group['title'], $group['location'][0][0]['value']); 
+        if (is_array($groups) && !empty($groups)) {
+            foreach ($groups as $group) {
+                $field['choices'][$group['key']] = $createSelectItemTitle(
+                    $group['title'],
+                    $group['location'][0][0]['value']
+                );
             }
         }
         return $field;
     }
 }
-

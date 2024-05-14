@@ -65,7 +65,7 @@ class FilterAcfOrganizerSelectFieldTest extends TestCase
 
     private function getFakeWpService(array $db = []): GetTerms&GetCurrentUser
     {
-        $currentUser     = $this->getMockBuilder('WP_User')->getMock();
+        $currentUser     = $this->createMock(WP_User::class);
         $currentUser->ID = 1;
 
         return new class ($currentUser, $db) implements GetTerms, GetCurrentUser {
