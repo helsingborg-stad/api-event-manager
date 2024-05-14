@@ -13,7 +13,7 @@ class PostBelongsToSameOrganizationAsUser implements IPostBelongsToSameOrganizat
 
     public function postBelongsToSameOrganizationTermAsUser(int $userId, int $postId): bool
     {
-        $postTerms               = $this->wpService->getPostTerms($postId, 'organization') ?? [];
+        $postTerms               = $this->wpService->getPostTerms($postId, 'organization') ?: [];
         $userOrganizationTermIds = $this->acfService->getField('organizations', "user_{$userId}") ?? [];
 
         if (empty($postTerms) || empty($userOrganizationTermIds)) {

@@ -40,7 +40,7 @@ class ExpiredEvents implements GetExpiredPostsInterface
             array_column($occasions, 'untilDate')
         );
 
-        if (empty($dates)) {
+        if (sizeof($dates) === 0) {
             return false;
         }
 

@@ -5,18 +5,19 @@ namespace EventManager\PreGetPostModifiers;
 use AcfService\Contracts\GetField;
 use WP_Query;
 use WP_User;
+use WpService\Contracts\AddAction;
 use WpService\Contracts\GetCurrentUser;
 use WpService\Contracts\IsAdmin;
 
 class LimitEventTableResultsByUserRole implements IPreGetPostModifier
 {
-    public function __construct(private GetCurrentUser&IsAdmin $wpService, private GetField $acfService)
+    public function __construct(private GetCurrentUser&IsAdmin&AddAction $wpService, private GetField $acfService)
     {
     }
 
     public function addHooks(): void
     {
-        add_action('pre_get_posts', [$this, 'modify']);
+        $this->wpService->addAction('pre_get_posts', [$this, 'modify']);
     }
 
     public function modify(WP_Query $query): WP_Query

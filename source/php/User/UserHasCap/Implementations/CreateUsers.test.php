@@ -2,7 +2,6 @@
 
 namespace EventManager\User\UserHasCap\Implementations;
 
-use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use WP_User;
 
@@ -14,14 +13,14 @@ class CreateUsersTest extends TestCase
      */
     public function testUserHasCapReturnsSameAllcapsArrayWhenRequestedCapabilityIsNotCreateUsers($hasCap): void
     {
-        $userMock = $this->getUserMock();
-        $userMock
+        $user = $this->createMock(WP_User::class);
+        $user
             ->method('has_cap')
             ->withConsecutive(['administrator'], ['organization_administrator'])
             ->willReturnOnConsecutiveCalls($hasCap[0], $hasCap[1]);
         $userCanCreateUsers = new CreateUsers();
 
-        $result = $userCanCreateUsers->userHasCap([], [], ['create_users', 1], $userMock);
+        $result = $userCanCreateUsers->userHasCap([], [], ['create_users', 1], $user);
 
         $this->assertEquals(['create_users' => true], $result);
     }
@@ -31,17 +30,12 @@ class CreateUsersTest extends TestCase
      */
     public function testUserHasCapReturnsUnchangedAllcapsArrayWhenRequestedCapabilityIsNotCreateUsers(): void
     {
-        $userMock           = $this->getUserMock();
+        $user               = $this->createMock(WP_User::class);
         $userCanCreateUsers = new CreateUsers();
 
-        $result = $userCanCreateUsers->userHasCap([], [], ['not_create_users', 1], $userMock);
+        $result = $userCanCreateUsers->userHasCap([], [], ['not_create_users', 1], $user);
 
         $this->assertEquals([], $result);
-    }
-
-    private function getUserMock(): WP_User|MockObject
-    {
-        return $userMock = $this->getMockBuilder(\WP_User::class)->addMethods(['has_cap'])->getMock();
     }
 
     public function hasCapProvider(): array

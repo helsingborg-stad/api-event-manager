@@ -18,9 +18,11 @@ class RegisterAcfExportManager implements Hookable
 
     public function registerAcfExportManager(): void
     {
+        $path = defined('EVENT_MANAGER_PATH') ? constant('EVENT_MANAGER_PATH') . 'source/php/AcfFields/' : '';
+
         $acfExportManager = new \AcfExportManager\AcfExportManager();
         $acfExportManager->setTextdomain('api-event-manager');
-        $acfExportManager->setExportFolder(EVENT_MANAGER_PATH . 'source/php/AcfFields/');
+        $acfExportManager->setExportFolder($path);
         $acfExportManager->autoExport(array(
             'event-fields'        => 'group_65a115157a046',
             'organization-fields' => 'group_65a4f5a847d62',

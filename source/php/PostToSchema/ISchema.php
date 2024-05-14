@@ -2,8 +2,10 @@
 
 namespace EventManager\PostToSchema;
 
-use Spatie\SchemaOrg\BaseType;
+use ArrayAccess;
+use JsonSerializable;
+use Spatie\SchemaOrg\Type;
 
-interface ISchema extends BaseType
+interface ISchema extends Type, ArrayAccess, JsonSerializable
 {
 }
