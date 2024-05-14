@@ -1,5 +1,7 @@
 <?php
 
+//phpcs:disable Generic.Files.LineLength.TooLong
+
 namespace EventManager;
 
 use AcfService\AcfService;
@@ -67,7 +69,7 @@ class App
 
     public function setPostTermsFromPostContent(): void
     {
-        $tagReader               = new TagReader($this->wpService);
+        $tagReader               = new TagReader();
         $modifyPostcontentBefore = new \EventManager\Modifiers\ModifyPostContentBeforeReadingTags($this->wpService);
         $setPostTermsFromContent = new SetPostTermsFromContent('event', 'keyword', $tagReader, $this->wpService);
 
@@ -102,7 +104,7 @@ class App
          * Table Columns
          */
         $organizationCellContent =  new TermNameCellContent('organization', $this->wpService);
-        $organizationCellSort    = new MetaStringSort('organization', $this->wpService);
+        $organizationCellSort    = new MetaStringSort('organization');
         $organizationColumn      = new PostTableColumn(__('Organizer', 'api-event-manager'), 'organization', $organizationCellContent, $organizationCellSort);
         $locationCellContent     =  new NestedMetaStringCellContent('location.address', $this->wpService, new GetNestedArrayStringValueRecursive());
         $locationCellSort        = new NestedMetaStringSort('location.address', $this->wpService, new GetNestedArrayStringValueRecursive());
@@ -144,7 +146,7 @@ class App
 
     public function setupPostTypes(): void
     {
-        $eventPostType = new \EventManager\PostTypes\Event($this->wpService, $this->acfService);
+        $eventPostType = new \EventManager\PostTypes\Event($this->wpService);
         $this->hooksRegistrar->register($eventPostType);
     }
 
@@ -197,7 +199,7 @@ class App
 
     public function setupFrontendForm(): void
     {
-        $frontendForm      = new \EventManager\Modules\FrontendForm\Register($this->wpService, $this->acfService);
+        $frontendForm      = new \EventManager\Modules\FrontendForm\Register($this->wpService);
         $frontendFormStyle = new \EventManager\AssetRegistry\FrontEndFormStyle($this->wpService);
         $this->hooksRegistrar->register($frontendForm);
         $this->hooksRegistrar->register($frontendFormStyle);

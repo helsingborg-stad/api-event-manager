@@ -19,6 +19,7 @@ class LoadTextDomain implements Hookable
 
     public function loadTextDomain(): void
     {
-        $this->wpService->loadPluginTextDomain($this->textDomain, false, EVENT_MANAGER_PATH . 'languages/');
+        $relativeTo = defined('EVENT_MANAGER_PATH') ? constant('EVENT_MANAGER_PATH') . 'languages/' : '';
+        $this->wpService->loadPluginTextDomain($this->textDomain, false, $relativeTo);
     }
 }

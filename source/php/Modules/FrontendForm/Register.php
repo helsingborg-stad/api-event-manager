@@ -13,6 +13,10 @@ class Register extends Module
 
     public function getModulePath(): string
     {
-        return EVENT_MANAGER_PATH . 'source/php/Modules/FrontendForm/';
+        if (!defined('EVENT_MANAGER_PATH')) {
+            return '';
+        }
+
+        return constant('EVENT_MANAGER_PATH') . 'source/php/Modules/FrontendForm/';
     }
 }
