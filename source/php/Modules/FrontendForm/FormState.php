@@ -8,6 +8,7 @@ class FormState {
   public ?int $nextStep;
   public ?int $previousStep;
   public int $totalSteps;
+  public int $percentageCompleted;
 
   public function __construct(array $steps, string $queryParam = '')
   {
@@ -21,6 +22,16 @@ class FormState {
             $this->currentStep
         );
         $this->totalSteps = count($steps);
+        $this->percentageCompleted = $this->calculatePercentageCompleted(
+            $steps, 
+            $this->currentStep
+        );
+  }
+
+  private function calculatePercentageCompleted(array $steps, int $currentStep): int
+  {
+      $percentage = ($currentStep / count($steps)) * 100;
+      return round($percentage);
   }
 
   private function isFirstStep(): bool
