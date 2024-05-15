@@ -22,7 +22,7 @@ class LimitEventTableResultsByUserRole implements IPreGetPostModifier
 
     public function modify(WP_Query $query): WP_Query
     {
-        if ($this->shouldModify($query, $this->wpService->getCurrentUser())) {
+        if ($this->shouldModify($query)) {
             // Get users organization
             $currentUser   = $this->wpService->getCurrentUser();
             $organizations = $this->acfService->getField('organizations', 'user_' . $currentUser->ID);
@@ -38,12 +38,12 @@ class LimitEventTableResultsByUserRole implements IPreGetPostModifier
         return $query;
     }
 
-    private function shouldModify(WP_Query $query, WP_User $user): bool
+    private function shouldModify(WP_Query $query): bool
     {
         return
+            $this->wpService->isAdmin() &&
             $query->get('post_type') === 'event' &&
             $query->is_main_query() &&
-            $this->wpService->isAdmin() &&
-            $user->has_cap('administrator') !== true;
+            $this->wpService->getCurrentUser()->has_cap('administrator') !== true;
     }
 }
