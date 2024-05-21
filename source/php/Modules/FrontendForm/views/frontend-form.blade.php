@@ -100,11 +100,33 @@
             @endbutton
           </div>
         @endif
-
-        
       </div>
     @endpaper
   @endforeach
+
+  @if($review)
+    @paper(['padding' => 4, 'classList' => ['u-margin__bottom--4']])
+      @if ($review->title)
+        @typography([
+          'element' => 'h5',
+          'variant' => 'h3',
+          'classList' => ['u-margin--0']
+        ])
+          {{ $review->title }}
+        @endtypography
+
+        @if ($review->description)
+          @typography([
+            'element' => 'p',
+            'variant' => 'body',
+            'classList' => ['u-margin--0']
+          ])
+            {!! $review->description !!}
+          @endtypography
+        @endif
+      @endif
+    @endpaper
+  @endif
 
   @typography([
       'element' => 'p',
