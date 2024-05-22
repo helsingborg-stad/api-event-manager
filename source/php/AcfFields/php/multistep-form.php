@@ -151,11 +151,11 @@
             'name' => 'saveToPostType',
             'aria-label' => '',
             'type' => 'posttype_select',
-            'instructions' => '',
+            'instructions' => __('The post type that the user should be able to add to or modify.', 'api-event-manager'),
             'required' => 0,
             'conditional_logic' => 0,
             'wrapper' => array(
-                'width' => '33',
+                'width' => '',
                 'class' => '',
                 'id' => '',
             ),
@@ -178,7 +178,7 @@
             'required' => 0,
             'conditional_logic' => 0,
             'wrapper' => array(
-                'width' => '33',
+                'width' => '50',
                 'class' => '',
                 'id' => '',
             ),
@@ -210,7 +210,7 @@
             'required' => 1,
             'conditional_logic' => 0,
             'wrapper' => array(
-                'width' => '',
+                'width' => '50',
                 'class' => '',
                 'id' => '',
             ),
