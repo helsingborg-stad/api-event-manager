@@ -118,6 +118,29 @@
                     "allow_custom": 0,
                     "search_placeholder": "",
                     "parent_repeater": "field_6627a5e312422"
+                },
+                {
+                    "key": "field_664dea524e1e2",
+                    "label": "Display Post title",
+                    "name": "formStepIncludesPostTitle",
+                    "aria-label": "",
+                    "type": "true_false",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "is_publicly_hidden": 0,
+                    "is_privately_hidden": 0,
+                    "message": "If this step should include a field for the posts title",
+                    "default_value": 0,
+                    "ui": 0,
+                    "ui_on_text": "",
+                    "ui_off_text": "",
+                    "parent_repeater": "field_6627a5e312422"
                 }
             ],
             "acfe_repeater_stylised_button": 0
