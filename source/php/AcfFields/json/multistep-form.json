@@ -107,12 +107,7 @@
                     },
                     "is_publicly_hidden": 0,
                     "is_privately_hidden": 0,
-                    "choices": {
-                        "group_6627a5e16d84f": "Event Form: Configure Multistep Form",
-                        "group_661e41bb1781f": "Events: Discover the Essentials of Your Event",
-                        "group_65a115157a046": "Events: Event Fields",
-                        "group_661e425070deb": "Events: When and where?"
-                    },
+                    "choices": [],
                     "default_value": false,
                     "return_format": "value",
                     "multiple": 0,
@@ -120,9 +115,12 @@
                     "ui": 0,
                     "ajax": 0,
                     "placeholder": "",
+                    "allow_custom": 0,
+                    "search_placeholder": "",
                     "parent_repeater": "field_6627a5e312422"
                 }
-            ]
+            ],
+            "acfe_repeater_stylised_button": 0
         },
         {
             "key": "field_662a5218a599f",
@@ -153,7 +151,7 @@
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
-                "width": "50",
+                "width": "33",
                 "class": "",
                 "id": ""
             },
@@ -168,15 +166,15 @@
         },
         {
             "key": "field_662a4f4d25fe6",
-            "label": "Select Post Status",
+            "label": "In Progress Post Status",
             "name": "saveToPostTypeStatus",
             "aria-label": "",
             "type": "select",
-            "instructions": "",
+            "instructions": "The post status to use when a form hasen't been reviewed by the user.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
-                "width": "50",
+                "width": "33",
                 "class": "",
                 "id": ""
             },
@@ -194,7 +192,41 @@
             "allow_null": 0,
             "ui": 0,
             "ajax": 0,
-            "placeholder": ""
+            "placeholder": "",
+            "allow_custom": 0,
+            "search_placeholder": ""
+        },
+        {
+            "key": "field_664cac4d3a132",
+            "label": "Reviewed Post Status",
+            "name": "reviewedPostTypeStatus",
+            "aria-label": "",
+            "type": "select",
+            "instructions": "The post status to use when a form have been reviewed by the user.",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "is_publicly_hidden": 0,
+            "is_privately_hidden": 0,
+            "choices": {
+                "draft": "Draft",
+                "pending": "Pending Review",
+                "private": "Private",
+                "publish": "Published"
+            },
+            "default_value": false,
+            "return_format": "value",
+            "multiple": 0,
+            "allow_null": 0,
+            "ui": 0,
+            "ajax": 0,
+            "placeholder": "",
+            "allow_custom": 0,
+            "search_placeholder": ""
         },
         {
             "key": "field_662a5230a59a0",
@@ -281,6 +313,11 @@
     "hide_on_screen": "",
     "active": true,
     "description": "",
-    "show_in_rest": 0
+    "show_in_rest": 0,
+    "acfe_display_title": "",
+    "acfe_autosync": "",
+    "acfe_form": 0,
+    "acfe_meta": "",
+    "acfe_note": ""
 }]
 

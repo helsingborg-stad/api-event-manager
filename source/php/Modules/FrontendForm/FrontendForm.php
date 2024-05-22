@@ -58,6 +58,14 @@ class FrontendForm extends \Modularity\Module
         add_filter('acf/load_field/name=formStepGroup', [$this, 'addOptionsToGroupSelect']); // add from wpservice
     }
 
+    private function preventFilteringWhenInEditMode() {
+        global $post;
+        if (is_a($post, 'WP_Post') && in_array(get_post_type($post), array('acf-field', 'acf-field-group'))) {
+            return true;
+        }
+        return false;
+    }
+
     public function data(): array
     {
         //Needs to be called, otherwise a notice will be thrown.
@@ -357,6 +365,10 @@ class FrontendForm extends \Modularity\Module
      */
     public function addOptionsToGroupSelect($field)
     {
+        if($this->preventFilteringWhenInEditMode() === true) {
+            return $field;
+        }
+
         $field['choices'] = array();
 
         // Get all field groups, filter out all that are connected to a post type.

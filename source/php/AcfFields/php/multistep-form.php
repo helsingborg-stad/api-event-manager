@@ -3,7 +3,7 @@
 if (function_exists('acf_add_local_field_group')) {
     acf_add_local_field_group(array(
     'key' => 'group_6627a5e16d84f',
-    'title' => 'Configure Multistep Form',
+    'title' => __('Configure Multistep Form', 'api-event-manager'),
     'fields' => array(
         0 => array(
             'key' => 'field_662a51f8a599e',
@@ -111,10 +111,6 @@
                     'is_publicly_hidden' => 0,
                     'is_privately_hidden' => 0,
                     'choices' => array(
-                        'group_6627a5e16d84f' => __('Event Form: Configure Multistep Form', 'api-event-manager'),
-                        'group_661e41bb1781f' => __('Events: Discover the Essentials of Your Event', 'api-event-manager'),
-                        'group_65a115157a046' => __('Events: Event Fields', 'api-event-manager'),
-                        'group_661e425070deb' => __('Events: When and where?', 'api-event-manager'),
                     ),
                     'default_value' => false,
                     'return_format' => 'value',
@@ -123,9 +119,12 @@
                     'ui' => 0,
                     'ajax' => 0,
                     'placeholder' => '',
+                    'allow_custom' => 0,
+                    'search_placeholder' => '',
                     'parent_repeater' => 'field_6627a5e312422',
                 ),
             ),
+            'acfe_repeater_stylised_button' => 0,
         ),
         2 => array(
             'key' => 'field_662a5218a599f',
@@ -156,7 +155,7 @@
             'required' => 0,
             'conditional_logic' => 0,
             'wrapper' => array(
-                'width' => '50',
+                'width' => '33',
                 'class' => '',
                 'id' => '',
             ),
@@ -171,15 +170,15 @@
         ),
         4 => array(
             'key' => 'field_662a4f4d25fe6',
-            'label' => __('Select Post Status', 'api-event-manager'),
+            'label' => __('In Progress Post Status', 'api-event-manager'),
             'name' => 'saveToPostTypeStatus',
             'aria-label' => '',
             'type' => 'select',
-            'instructions' => '',
+            'instructions' => __('The post status to use when a form hasen\'t been reviewed by the user.', 'api-event-manager'),
             'required' => 0,
             'conditional_logic' => 0,
             'wrapper' => array(
-                'width' => '50',
+                'width' => '33',
                 'class' => '',
                 'id' => '',
             ),
@@ -198,8 +197,42 @@
             'ui' => 0,
             'ajax' => 0,
             'placeholder' => '',
+            'allow_custom' => 0,
+            'search_placeholder' => '',
         ),
         5 => array(
+            'key' => 'field_664cac4d3a132',
+            'label' => __('Reviewed Post Status', 'api-event-manager'),
+            'name' => 'reviewedPostTypeStatus',
+            'aria-label' => '',
+            'type' => 'select',
+            'instructions' => __('The post status to use when a form have been reviewed by the user.', 'api-event-manager'),
+            'required' => 1,
+            'conditional_logic' => 0,
+            'wrapper' => array(
+                'width' => '',
+                'class' => '',
+                'id' => '',
+            ),
+            'is_publicly_hidden' => 0,
+            'is_privately_hidden' => 0,
+            'choices' => array(
+                'draft' => __('Draft', 'api-event-manager'),
+                'pending' => __('Pending Review', 'api-event-manager'),
+                'private' => __('Private', 'api-event-manager'),
+                'publish' => __('Published', 'api-event-manager'),
+            ),
+            'default_value' => false,
+            'return_format' => 'value',
+            'multiple' => 0,
+            'allow_null' => 0,
+            'ui' => 0,
+            'ajax' => 0,
+            'placeholder' => '',
+            'allow_custom' => 0,
+            'search_placeholder' => '',
+        ),
+        6 => array(
             'key' => 'field_662a5230a59a0',
             'label' => __('Form Completion', 'api-event-manager'),
             'name' => '',
@@ -218,7 +251,7 @@
             'placement' => 'top',
             'endpoint' => 0,
         ),
-        6 => array(
+        7 => array(
             'key' => 'field_662a6546a687a',
             'label' => __('Security', 'api-event-manager'),
             'name' => '',
@@ -237,7 +270,7 @@
             'placement' => 'top',
             'endpoint' => 0,
         ),
-        7 => array(
+        8 => array(
             'key' => 'field_662a6557a687b',
             'label' => __('Public Access', 'api-event-manager'),
             'name' => 'isPublicForm',
@@ -285,5 +318,10 @@
     'active' => true,
     'description' => '',
     'show_in_rest' => 0,
+    'acfe_display_title' => '',
+    'acfe_autosync' => '',
+    'acfe_form' => 0,
+    'acfe_meta' => '',
+    'acfe_note' => '',
 ));
 }
