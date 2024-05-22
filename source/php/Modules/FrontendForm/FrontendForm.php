@@ -167,6 +167,11 @@ class FrontendForm extends \Modularity\Module
                     'postType'   => $fields->saveToPostType ?? "post",
                     'postStatus' => $fields->saveToPostTypeStatus ?? "draft"
                 ],
+                'summary' => (object) [
+                    'isEnabled' => $fields->hasSummaryStep ?? false,
+                    'title'     => $fields->summaryTitle,
+                    'lead'      => $fields->summaryLead
+                ],
                 'lang'         => $this->getLang()
             ]
         );
