@@ -283,7 +283,7 @@ class FrontendForm extends \Modularity\Module
         $this->acfService->form([
             'post_id'               => $this->getFormId(),
             'return'                => $step->nav->next ?? false, // Add form result page here
-            'post_title'            => $step->state->isFirst ? true : false,
+            'post_title'            => $step->properties->includePostTitle,
             'post_content'          => false,
             'field_groups'          => [
                 $step->group
