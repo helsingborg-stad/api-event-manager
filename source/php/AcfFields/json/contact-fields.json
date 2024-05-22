@@ -1,11 +1,11 @@
 [{
-    "key": "group_661e41bb1781f",
-    "title": "Discover the Essentials of Your Event",
+    "key": "group_66436b29cfb4f",
+    "title": "Contact",
     "fields": [
         {
-            "key": "field_661e41bdd59fa",
-            "label": "A field in step 1",
-            "name": "a_field_in_step_1",
+            "key": "field_66436b2bde5b2",
+            "label": "",
+            "name": "",
             "aria-label": "",
             "type": "text",
             "instructions": "",
@@ -37,11 +37,16 @@
     "menu_order": 0,
     "position": "normal",
     "style": "default",
-    "label_placement": "top",
+    "label_placement": "left",
     "instruction_placement": "label",
     "hide_on_screen": "",
     "active": true,
-    "description": "Explore the essential details of your event, featuring a captivating cover image and a clearly defined title.",
-    "show_in_rest": 0
+    "description": "",
+    "show_in_rest": 0,
+    "acfe_display_title": "",
+    "acfe_autosync": "",
+    "acfe_form": 0,
+    "acfe_meta": "",
+    "acfe_note": ""
 }]
 

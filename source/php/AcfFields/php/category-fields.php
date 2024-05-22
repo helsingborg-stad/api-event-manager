@@ -2,11 +2,11 @@
 
 if (function_exists('acf_add_local_field_group')) {
     acf_add_local_field_group(array(
-    'key' => 'group_66436fb1b4f7f',
-    'title' => __('Audience', 'api-event-manager'),
+    'key' => 'group_66436fdd0f112',
+    'title' => __('Category', 'api-event-manager'),
     'fields' => array(
         0 => array(
-            'key' => 'field_66436fb3152fc',
+            'key' => 'field_66436fde617eb',
             'label' => '',
             'name' => '',
             'aria-label' => '',

@@ -2,13 +2,13 @@
 
 if (function_exists('acf_add_local_field_group')) {
     acf_add_local_field_group(array(
-    'key' => 'group_661e425070deb',
-    'title' => __('When and where?', 'api-event-manager'),
+    'key' => 'group_66436ffb2f075',
+    'title' => __('Price', 'api-event-manager'),
     'fields' => array(
         0 => array(
-            'key' => 'field_661e425004872',
-            'label' => __('A field in step 2', 'api-event-manager'),
-            'name' => 'a_field_in_step_2',
+            'key' => 'field_66436ffc85f30',
+            'label' => '',
+            'name' => '',
             'aria-label' => '',
             'type' => 'text',
             'instructions' => '',
@@ -40,11 +40,16 @@
     'menu_order' => 0,
     'position' => 'normal',
     'style' => 'default',
-    'label_placement' => 'top',
+    'label_placement' => 'left',
     'instruction_placement' => 'label',
     'hide_on_screen' => '',
     'active' => true,
-    'description' => 'Give your guests the important details they need: when and where your event is happening.',
+    'description' => '',
     'show_in_rest' => 0,
+    'acfe_display_title' => '',
+    'acfe_autosync' => '',
+    'acfe_form' => 0,
+    'acfe_meta' => '',
+    'acfe_note' => '',
 ));
 }

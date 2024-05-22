@@ -2,13 +2,13 @@
 
 if (function_exists('acf_add_local_field_group')) {
     acf_add_local_field_group(array(
-    'key' => 'group_661e41bb1781f',
-    'title' => __('Discover the Essentials of Your Event', 'api-event-manager'),
+    'key' => 'group_66436bf782af1',
+    'title' => __('Description', 'api-event-manager'),
     'fields' => array(
         0 => array(
-            'key' => 'field_661e41bdd59fa',
-            'label' => __('A field in step 1', 'api-event-manager'),
-            'name' => 'a_field_in_step_1',
+            'key' => 'field_66436bf9b42a8',
+            'label' => '',
+            'name' => '',
             'aria-label' => '',
             'type' => 'text',
             'instructions' => '',
@@ -40,11 +40,16 @@
     'menu_order' => 0,
     'position' => 'normal',
     'style' => 'default',
-    'label_placement' => 'top',
+    'label_placement' => 'left',
     'instruction_placement' => 'label',
     'hide_on_screen' => '',
     'active' => true,
-    'description' => 'Explore the essential details of your event, featuring a captivating cover image and a clearly defined title.',
+    'description' => '',
     'show_in_rest' => 0,
+    'acfe_display_title' => '',
+    'acfe_autosync' => '',
+    'acfe_form' => 0,
+    'acfe_meta' => '',
+    'acfe_note' => '',
 ));
 }

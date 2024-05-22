@@ -2,13 +2,13 @@
 
 if (function_exists('acf_add_local_field_group')) {
     acf_add_local_field_group(array(
-    'key' => 'group_66436fb1b4f7f',
-    'title' => __('Audience', 'api-event-manager'),
+    'key' => 'group_661e425070deb',
+    'title' => __('When and where?', 'api-event-manager'),
     'fields' => array(
         0 => array(
-            'key' => 'field_66436fb3152fc',
-            'label' => '',
-            'name' => '',
+            'key' => 'field_661e425004872',
+            'label' => __('A field in step 2', 'api-event-manager'),
+            'name' => 'a_field_in_step_2',
             'aria-label' => '',
             'type' => 'text',
             'instructions' => '',
@@ -40,11 +40,11 @@
     'menu_order' => 0,
     'position' => 'normal',
     'style' => 'default',
-    'label_placement' => 'left',
+    'label_placement' => 'top',
     'instruction_placement' => 'label',
     'hide_on_screen' => '',
     'active' => true,
-    'description' => '',
+    'description' => 'Give your guests the important details they need: when and where your event is happening.',
     'show_in_rest' => 0,
     'acfe_display_title' => '',
     'acfe_autosync' => '',
