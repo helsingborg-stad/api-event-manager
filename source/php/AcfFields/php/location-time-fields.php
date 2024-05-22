@@ -3,7 +3,7 @@
 if (function_exists('acf_add_local_field_group')) {
     acf_add_local_field_group(array(
     'key' => 'group_661e425070deb',
-    'title' => __('When and where?', 'api-event-manager'),
+    'title' => __('Time &amp; Location', 'api-event-manager'),
     'fields' => array(
         0 => array(
             'key' => 'field_661e425004872',
