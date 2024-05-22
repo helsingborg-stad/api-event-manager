@@ -3,11 +3,11 @@
     "title": "Contact",
     "fields": [
         {
-            "key": "field_66436b2bde5b2",
-            "label": "",
-            "name": "",
+            "key": "field_65a4f6af50302",
+            "label": "Organizer",
+            "name": "organization",
             "aria-label": "",
-            "type": "text",
+            "type": "select",
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -16,13 +16,19 @@
                 "class": "",
                 "id": ""
             },
-            "is_publicly_hidden": 0,
-            "is_privately_hidden": 0,
-            "default_value": "",
-            "maxlength": "",
+            "choices": {
+                "374": "Organization A",
+                "375": "Organization B"
+            },
+            "default_value": false,
+            "return_format": "value",
+            "multiple": 0,
+            "allow_null": 0,
+            "ui": 0,
+            "ajax": 0,
             "placeholder": "",
-            "prepend": "",
-            "append": ""
+            "allow_custom": 0,
+            "search_placeholder": ""
         }
     ],
     "location": [

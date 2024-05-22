@@ -3,12 +3,12 @@
     "title": "Price",
     "fields": [
         {
-            "key": "field_66436ffc85f30",
-            "label": "",
-            "name": "",
+            "key": "field_6613fdbd6090e",
+            "label": "Prices",
+            "name": "pricesList",
             "aria-label": "",
-            "type": "text",
-            "instructions": "",
+            "type": "repeater",
+            "instructions": "You have the option to offer multiple pricing tiers to accommodate attendees of different age groups. By not adding any ticket variations, your event will show up as free of charge.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -16,13 +16,60 @@
                 "class": "",
                 "id": ""
             },
-            "is_publicly_hidden": 0,
-            "is_privately_hidden": 0,
-            "default_value": "",
-            "maxlength": "",
-            "placeholder": "",
-            "prepend": "",
-            "append": ""
+            "layout": "block",
+            "pagination": 0,
+            "min": 0,
+            "max": 0,
+            "collapsed": "",
+            "button_label": "<span class=\"c-icon c-icon--material material-symbols-outlined material-symbols-outlined--filled c-icon--size-md\" material-symbol=\"arrow_right_alt\" role=\"img\" aria-label=\"Icon: Undefined\" alt=\"Icon: Repeat\" data-nosnippet=\"\" translate=\"no\" aria-hidden=\"true\">add<\/span> Add Ticket \/ Variation",
+            "rows_per_page": 20,
+            "acfe_repeater_stylised_button": 0,
+            "sub_fields": [
+                {
+                    "key": "field_6613fdcc6090f",
+                    "label": "Price Label",
+                    "name": "priceLabel",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "50",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "Standard Ticket",
+                    "maxlength": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "parent_repeater": "field_6613fdbd6090e"
+                },
+                {
+                    "key": "field_6613fdea60910",
+                    "label": "Price",
+                    "name": "price",
+                    "aria-label": "",
+                    "type": "number",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "50",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": 100,
+                    "min": "",
+                    "max": "",
+                    "placeholder": "",
+                    "step": "",
+                    "prepend": "",
+                    "append": "$",
+                    "parent_repeater": "field_6613fdbd6090e"
+                }
+            ]
         }
     ],
     "location": [

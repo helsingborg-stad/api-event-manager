@@ -3,11 +3,11 @@
     "title": "Audience",
     "fields": [
         {
-            "key": "field_66436fb3152fc",
-            "label": "",
-            "name": "",
+            "key": "field_65a52a6374b0c",
+            "label": "Audience",
+            "name": "audience",
             "aria-label": "",
-            "type": "text",
+            "type": "select",
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -16,13 +16,21 @@
                 "class": "",
                 "id": ""
             },
-            "is_publicly_hidden": 0,
-            "is_privately_hidden": 0,
-            "default_value": "",
-            "maxlength": "",
+            "choices": {
+                "370": "Audience A",
+                "371": "Audience B",
+                "372": "Audience C",
+                "373": "Audience D"
+            },
+            "default_value": false,
+            "return_format": "value",
+            "multiple": 0,
+            "allow_null": 0,
+            "ui": 0,
+            "ajax": 0,
             "placeholder": "",
-            "prepend": "",
-            "append": ""
+            "allow_custom": 0,
+            "search_placeholder": ""
         }
     ],
     "location": [

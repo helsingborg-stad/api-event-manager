@@ -3,12 +3,12 @@
     "title": "Category",
     "fields": [
         {
-            "key": "field_66436fde617eb",
-            "label": "",
-            "name": "",
+            "key": "field_65fd4c7a55b91",
+            "label": "Event Type",
+            "name": "type",
             "aria-label": "",
-            "type": "text",
-            "instructions": "",
+            "type": "select",
+            "instructions": "What category do you feel accurately reflects your event's purpose? This gives a brief overview of the event's content. If you're unsure, you can opt for the generic label 'event'.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -16,13 +16,39 @@
                 "class": "",
                 "id": ""
             },
-            "is_publicly_hidden": 0,
-            "is_privately_hidden": 0,
-            "default_value": "",
-            "maxlength": "",
+            "choices": {
+                "Event": "Event",
+                "BusinessEvent": "Business Event",
+                "ChildrensEvent": "Childrens Event",
+                "ComedyEvent": "Comedy Event",
+                "CourseInstance": "CourseInstance",
+                "DanceEvent": "Dance Event",
+                "DeliveryEvent": "Delivery Event",
+                "EducationEvent": "Education Event",
+                "EventSeries": "Event Series",
+                "ExhibitionEvent": "Exhibition Event",
+                "Festival": "Festival",
+                "FoodEvent": "Food Event",
+                "Hackathon": "Hackathon",
+                "LiteraryEvent": "Literary Event",
+                "MusicEvent": "Music Event",
+                "PublicationEvent": "Publication Event",
+                "SaleEvent": "Sale Event",
+                "ScreeningEvent": "Screening Event",
+                "SocialEvent": "Social Event",
+                "SportsEvent": "Sports Event",
+                "TheaterEvent": "Theater Event",
+                "VisualArtsEvent": "VisualArts Event"
+            },
+            "default_value": "Event",
+            "return_format": "value",
+            "multiple": 0,
+            "allow_null": 0,
+            "ui": 0,
+            "ajax": 0,
             "placeholder": "",
-            "prepend": "",
-            "append": ""
+            "allow_custom": 0,
+            "search_placeholder": ""
         }
     ],
     "location": [
