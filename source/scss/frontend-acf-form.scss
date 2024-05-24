@@ -43,7 +43,7 @@
 #acf-form.acf-form .acf-fields {
 
   display: flex;
-  gap: calc(var(--base, 8px) * var(--o-grid-gap, 4) * 2) calc(var(--base, 8px) * var(--o-grid-gap, 4));
+  gap: calc(var(--base, 8px) * 3);
   flex-wrap: wrap;
 
   &::after {
