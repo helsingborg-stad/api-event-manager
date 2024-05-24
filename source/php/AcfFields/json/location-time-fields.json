@@ -357,13 +357,43 @@
             "layout": "horizontal"
         },
         {
+            "key": "field_665095ca3b9a4",
+            "label": "Location name",
+            "name": "location_name",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "You may set a name of this location, to better describe it.",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_665089e28932a",
+                        "operator": "==",
+                        "value": "physical"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "is_publicly_hidden": 0,
+            "is_privately_hidden": 0,
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
             "center_lat": 53.55064,
             "center_lng": 10.00065,
             "zoom": 12,
             "height": 400,
             "return_format": "leaflet",
             "allow_map_layers": 1,
-            "max_markers": "",
+            "max_markers": 1,
             "layers": [
                 "OpenStreetMap.Mapnik"
             ],
@@ -373,7 +403,7 @@
             "aria-label": "",
             "type": "open_street_map",
             "instructions": "",
-            "required": 0,
+            "required": 1,
             "conditional_logic": [
                 [
                     {
@@ -418,6 +448,68 @@
             "is_privately_hidden": 0,
             "default_value": "",
             "placeholder": ""
+        },
+        {
+            "key": "field_665099c9a92cc",
+            "label": "Travel information",
+            "name": "travel",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "Add information about how participants may get to your event.",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_665089e28932a",
+                        "operator": "==",
+                        "value": "physical"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "is_publicly_hidden": 0,
+            "is_privately_hidden": 0,
+            "default_value": "",
+            "acfe_textarea_code": 0,
+            "maxlength": "",
+            "rows": "",
+            "placeholder": "",
+            "new_lines": ""
+        },
+        {
+            "key": "field_66509a45a92cd",
+            "label": "Connect information",
+            "name": "connect",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "Give your attendees information about how to connect to your meeting.",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_665089e28932a",
+                        "operator": "==",
+                        "value": "virtual"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "is_publicly_hidden": 0,
+            "is_privately_hidden": 0,
+            "default_value": "",
+            "acfe_textarea_code": 0,
+            "maxlength": "",
+            "rows": "",
+            "placeholder": "",
+            "new_lines": ""
         }
     ],
     "location": [

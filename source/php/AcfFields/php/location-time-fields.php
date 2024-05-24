@@ -361,13 +361,43 @@
             'layout' => 'horizontal',
         ),
         2 => array(
+            'key' => 'field_665095ca3b9a4',
+            'label' => __('Location name', 'api-event-manager'),
+            'name' => 'location_name',
+            'aria-label' => '',
+            'type' => 'text',
+            'instructions' => __('You may set a name of this location, to better describe it.', 'api-event-manager'),
+            'required' => 0,
+            'conditional_logic' => array(
+                0 => array(
+                    0 => array(
+                        'field' => 'field_665089e28932a',
+                        'operator' => '==',
+                        'value' => 'physical',
+                    ),
+                ),
+            ),
+            'wrapper' => array(
+                'width' => '',
+                'class' => '',
+                'id' => '',
+            ),
+            'is_publicly_hidden' => 0,
+            'is_privately_hidden' => 0,
+            'default_value' => '',
+            'maxlength' => '',
+            'placeholder' => '',
+            'prepend' => '',
+            'append' => '',
+        ),
+        3 => array(
             'center_lat' => 53.55064,
             'center_lng' => 10.00065,
             'zoom' => 12,
             'height' => 400,
             'return_format' => 'leaflet',
             'allow_map_layers' => 1,
-            'max_markers' => '',
+            'max_markers' => 1,
             'layers' => array(
                 0 => 'OpenStreetMap.Mapnik',
             ),
@@ -377,7 +407,7 @@
             'aria-label' => '',
             'type' => 'open_street_map',
             'instructions' => '',
-            'required' => 0,
+            'required' => 1,
             'conditional_logic' => array(
                 0 => array(
                     0 => array(
@@ -396,7 +426,7 @@
             'is_privately_hidden' => 0,
             'leaflet_map' => '{"lat":53.55064,"lng":10.00065,"zoom":12,"layers":["OpenStreetMap.Mapnik"],"markers":[]}',
         ),
-        3 => array(
+        4 => array(
             'key' => 'field_66508a5b8932b',
             'label' => __('Meeting Link', 'api-event-manager'),
             'name' => 'meeting_link',
@@ -422,6 +452,68 @@
             'is_privately_hidden' => 0,
             'default_value' => '',
             'placeholder' => '',
+        ),
+        5 => array(
+            'key' => 'field_665099c9a92cc',
+            'label' => __('Travel information', 'api-event-manager'),
+            'name' => 'travel',
+            'aria-label' => '',
+            'type' => 'textarea',
+            'instructions' => __('Add information about how participants may get to your event.', 'api-event-manager'),
+            'required' => 0,
+            'conditional_logic' => array(
+                0 => array(
+                    0 => array(
+                        'field' => 'field_665089e28932a',
+                        'operator' => '==',
+                        'value' => 'physical',
+                    ),
+                ),
+            ),
+            'wrapper' => array(
+                'width' => '',
+                'class' => '',
+                'id' => '',
+            ),
+            'is_publicly_hidden' => 0,
+            'is_privately_hidden' => 0,
+            'default_value' => '',
+            'acfe_textarea_code' => 0,
+            'maxlength' => '',
+            'rows' => '',
+            'placeholder' => '',
+            'new_lines' => '',
+        ),
+        6 => array(
+            'key' => 'field_66509a45a92cd',
+            'label' => __('Connect information', 'api-event-manager'),
+            'name' => 'connect',
+            'aria-label' => '',
+            'type' => 'textarea',
+            'instructions' => __('Give your attendees information about how to connect to your meeting.', 'api-event-manager'),
+            'required' => 0,
+            'conditional_logic' => array(
+                0 => array(
+                    0 => array(
+                        'field' => 'field_665089e28932a',
+                        'operator' => '==',
+                        'value' => 'virtual',
+                    ),
+                ),
+            ),
+            'wrapper' => array(
+                'width' => '',
+                'class' => '',
+                'id' => '',
+            ),
+            'is_publicly_hidden' => 0,
+            'is_privately_hidden' => 0,
+            'default_value' => '',
+            'acfe_textarea_code' => 0,
+            'maxlength' => '',
+            'rows' => '',
+            'placeholder' => '',
+            'new_lines' => '',
         ),
     ),
     'location' => array(
