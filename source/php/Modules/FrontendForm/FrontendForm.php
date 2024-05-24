@@ -277,7 +277,7 @@ class FrontendForm extends \Modularity\Module
 
         $htmlSubmitButton = $self->renderView(
             'partials.button-wrapper',
-            ['step' => $step]
+            ['step' => $step, 'lang' => $self->getLang()]
         );
 
         $this->acfService->form([
@@ -299,7 +299,7 @@ class FrontendForm extends \Modularity\Module
                 'post_type'   => $self->formPostType,
                 'post_status' => $self->formPostStatus
             ],
-            'instruction_placement' => 'field',
+            'instruction_placement' => 'label',
             'submit_value'          => $this->wpService->__('Create Event')
         ]);
     }
