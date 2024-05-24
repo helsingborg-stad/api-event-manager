@@ -96,6 +96,8 @@
     font-size: var(--c-field-helper-font-size, var(--font-size-caption, .875rem));
     font-weight: var(--font-family-base, "Roboto", "sans-serif");
     margin: 0;
+    padding: 0 0 calc(var(--base, 8px) * 2) 0;
+    max-width: 650px;
   }
 
   .acf-field .acf-input {
