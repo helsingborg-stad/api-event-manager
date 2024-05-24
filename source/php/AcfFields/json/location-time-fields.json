@@ -3,34 +3,6 @@
     "title": "Time &amp; Location",
     "fields": [
         {
-            "center_lat": 53.55064,
-            "center_lng": 10.00065,
-            "zoom": 12,
-            "height": 400,
-            "return_format": "leaflet",
-            "allow_map_layers": 1,
-            "max_markers": "",
-            "layers": [
-                "OpenStreetMap.Mapnik"
-            ],
-            "key": "field_65a245c3a4062",
-            "label": "Location",
-            "name": "location",
-            "aria-label": "",
-            "type": "open_street_map",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "is_publicly_hidden": 0,
-            "is_privately_hidden": 0,
-            "leaflet_map": "{\"lat\":53.55064,\"lng\":10.00065,\"zoom\":12,\"layers\":[\"OpenStreetMap.Mapnik\"],\"markers\":[]}"
-        },
-        {
             "key": "field_65a66d8cadeef",
             "label": "Occasions",
             "name": "occasions",
@@ -358,6 +330,94 @@
                     "parent_repeater": "field_65a66d8cadeef"
                 }
             ]
+        },
+        {
+            "key": "field_665089e28932a",
+            "label": "Physical or virtual event?",
+            "name": "physical_virtual",
+            "aria-label": "",
+            "type": "button_group",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "is_publicly_hidden": 0,
+            "is_privately_hidden": 0,
+            "choices": {
+                "physical": "Physical",
+                "virtual": "Virtual"
+            },
+            "default_value": "physical",
+            "return_format": "value",
+            "allow_null": 0,
+            "layout": "horizontal"
+        },
+        {
+            "center_lat": 53.55064,
+            "center_lng": 10.00065,
+            "zoom": 12,
+            "height": 400,
+            "return_format": "leaflet",
+            "allow_map_layers": 1,
+            "max_markers": "",
+            "layers": [
+                "OpenStreetMap.Mapnik"
+            ],
+            "key": "field_65a245c3a4062",
+            "label": "Location",
+            "name": "location",
+            "aria-label": "",
+            "type": "open_street_map",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_665089e28932a",
+                        "operator": "==",
+                        "value": "physical"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "is_publicly_hidden": 0,
+            "is_privately_hidden": 0,
+            "leaflet_map": "{\"lat\":53.55064,\"lng\":10.00065,\"zoom\":12,\"layers\":[\"OpenStreetMap.Mapnik\"],\"markers\":[]}"
+        },
+        {
+            "key": "field_66508a5b8932b",
+            "label": "Meeting Link",
+            "name": "meeting_link",
+            "aria-label": "",
+            "type": "url",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_665089e28932a",
+                        "operator": "==",
+                        "value": "virtual"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "is_publicly_hidden": 0,
+            "is_privately_hidden": 0,
+            "default_value": "",
+            "placeholder": ""
         }
     ],
     "location": [
