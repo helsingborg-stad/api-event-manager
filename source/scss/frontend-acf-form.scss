@@ -40,6 +40,14 @@
   }
 }
 
+
+@mixin reset-field-styles {
+  border-radius: 0;
+  border: none; 
+  padding: 0;
+  background: none;
+}
+
 #acf-form.acf-form .acf-fields {
 
   display: flex;
@@ -298,6 +306,37 @@
     left: 0;
     background-color: rgba(0, 0, 0, .5);
     transition: 100ms all;
+  }
+
+  /* Checkbox list */ 
+
+  .acf-checkbox-list.acf-hl {
+    @include reset-field-styles();
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+
+    &:before {
+      display: none;
+    }
+
+    label {
+      @include button-styles();
+    }
+
+    label.selected {
+      text-decoration: underline;
+    }
+
+    label input {
+      display: none;
+    }
+  }
+
+  .acf-checkbox-list.acf-bl {
+    @include reset-field-styles();
+    display: flex;
+    flex-direction: column;
   }
 
   /* Repeater */ 

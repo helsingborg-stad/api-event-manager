@@ -155,6 +155,7 @@ class App
         $this->hooksRegistrar->register(new \EventManager\Taxonomies\Audience($this->wpService));
         $this->hooksRegistrar->register(new \EventManager\Taxonomies\Organization($this->wpService));
         $this->hooksRegistrar->register(new \EventManager\Taxonomies\Keyword($this->wpService));
+        $this->hooksRegistrar->register(new \EventManager\Taxonomies\Accessibility($this->wpService));
     }
 
     public function setupUserRoles(): void
