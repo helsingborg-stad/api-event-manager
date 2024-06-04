@@ -337,6 +337,32 @@
     @include reset-field-styles();
     display: flex;
     flex-direction: column;
+    gap: 8px;
+
+    label {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+    }
+
+    label:before {
+      content: "";
+      display: block;
+      width: 2em;
+      height: 2em;
+      border: var(--c-select-border-width,var(--border-width-input,1px)) solid var(--c-select-border-color,#cacaca);  
+      transition: all 100ms;
+    }
+
+    label input {
+      display: none;
+    }
+
+    label.selected::before {
+      background-color: var(--color-primary, #007bff);
+    }
   }
 
   /* Repeater */ 
