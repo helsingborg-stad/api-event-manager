@@ -2,11 +2,11 @@
 
 namespace EventManager\Taxonomies;
 
-class Accessibility extends Taxonomy
+class CognitiveAccessibility extends Taxonomy
 {
     public function getName(): string
     {
-        return 'accessibility';
+        return 'cognitive-accessibility';
     }
 
     public function getObjectType(): string
@@ -27,11 +27,11 @@ class Accessibility extends Taxonomy
 
     public function getLabelSingular(): string
     {
-        return 'Accessibility';
+        return 'Cognitive Accessibility';
     }
 
     public function getLabelPlural(): string
     {
-        return 'Accessibility';
+        return 'Cognitive Accessibilities';
     }
 }

@@ -86,8 +86,8 @@
         },
         {
             "key": "field_6650a92febecf",
-            "label": "Accessibility",
-            "name": "accessibility",
+            "label": "Cognitive Accessibility",
+            "name": "cognitive_accessibility",
             "aria-label": "",
             "type": "acfe_taxonomy_terms",
             "instructions": "",
@@ -101,11 +101,85 @@
             "is_publicly_hidden": 0,
             "is_privately_hidden": 0,
             "taxonomy": [
-                "accessibility"
+                "cognitive-accessibility"
             ],
-            "allow_terms": [
-                "399_childs"
+            "allow_terms": "",
+            "allow_level": "",
+            "field_type": "checkbox",
+            "default_value": [],
+            "return_format": "id",
+            "layout": "vertical",
+            "toggle": 0,
+            "save_terms": 1,
+            "load_terms": 1,
+            "choices": [],
+            "ui": 0,
+            "multiple": 0,
+            "allow_null": 0,
+            "ajax": 0,
+            "placeholder": "",
+            "search_placeholder": "",
+            "allow_custom": 0,
+            "other_choice": 0
+        },
+        {
+            "key": "field_66604749d8dfa",
+            "label": "Physical Accessibility",
+            "name": "physical_accessibility",
+            "aria-label": "",
+            "type": "acfe_taxonomy_terms",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "is_publicly_hidden": 0,
+            "is_privately_hidden": 0,
+            "taxonomy": [
+                "physical-accessibility"
             ],
+            "allow_terms": "",
+            "allow_level": "",
+            "field_type": "checkbox",
+            "default_value": [],
+            "return_format": "id",
+            "layout": "vertical",
+            "toggle": 0,
+            "save_terms": 1,
+            "load_terms": 1,
+            "choices": [],
+            "ui": 0,
+            "multiple": 0,
+            "allow_null": 0,
+            "ajax": 0,
+            "placeholder": "",
+            "search_placeholder": "",
+            "allow_custom": 0,
+            "other_choice": 0
+        },
+        {
+            "key": "field_66604764d8dfb",
+            "label": "Amenities",
+            "name": "amenities",
+            "aria-label": "",
+            "type": "acfe_taxonomy_terms",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "is_publicly_hidden": 0,
+            "is_privately_hidden": 0,
+            "taxonomy": [
+                "amenities"
+            ],
+            "allow_terms": "",
             "allow_level": "",
             "field_type": "checkbox",
             "default_value": [],
