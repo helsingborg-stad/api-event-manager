@@ -50,9 +50,9 @@
             "is_privately_hidden": 0,
             "message": "",
             "default_value": 0,
-            "ui": 0,
             "ui_on_text": "",
-            "ui_off_text": ""
+            "ui_off_text": "",
+            "ui": 1
         },
         {
             "key": "field_6650a5e41d934",
@@ -103,7 +103,9 @@
             "taxonomy": [
                 "accessibility"
             ],
-            "allow_terms": "",
+            "allow_terms": [
+                "399_childs"
+            ],
             "allow_level": "",
             "field_type": "checkbox",
             "default_value": [],

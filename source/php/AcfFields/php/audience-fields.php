@@ -54,9 +54,9 @@
             'is_privately_hidden' => 0,
             'message' => '',
             'default_value' => 0,
-            'ui' => 0,
             'ui_on_text' => '',
             'ui_off_text' => '',
+            'ui' => 1,
         ),
         2 => array(
             'key' => 'field_6650a5e41d934',
@@ -107,7 +107,9 @@
             'taxonomy' => array(
                 0 => 'accessibility',
             ),
-            'allow_terms' => '',
+            'allow_terms' => array(
+                0 => '399_childs',
+            ),
             'allow_level' => '',
             'field_type' => 'checkbox',
             'default_value' => array(

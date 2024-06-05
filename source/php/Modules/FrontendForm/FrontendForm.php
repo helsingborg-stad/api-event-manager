@@ -56,9 +56,10 @@ class FrontendForm extends \Modularity\Module
         add_filter('query_vars', [$this, 'registerFormStepQueryVar']); // add from wpservice
         add_filter('query_vars', [$this, 'registerFormIdQueryVar']); // add from wpservice
         add_filter('acf/load_field/name=formStepGroup', [$this, 'addOptionsToGroupSelect']); // add from wpservice
+
     }
 
-    private function preventFilteringWhenInEditMode() {
+    private function isInEditMode() {
         global $post;
         if (is_a($post, 'WP_Post') && in_array(get_post_type($post), array('acf-field', 'acf-field-group'))) {
             return true;
@@ -285,7 +286,7 @@ class FrontendForm extends \Modularity\Module
             'return'                => $step->nav->next ?? false, // Add form result page here
             'post_title'            => $step->properties->includePostTitle,
             'post_content'          => false,
-            'field_groups'          => [
+            'field_groups'          => is_array($step->group) ? $step->group :  [
                 $step->group
             ],
             'form_attributes'       => ['class' => 'acf-form js-form-validation js-form-validation'],
@@ -370,7 +371,7 @@ class FrontendForm extends \Modularity\Module
      */
     public function addOptionsToGroupSelect($field)
     {
-        if($this->preventFilteringWhenInEditMode() === true) {
+        if($this->isInEditMode() === true) {
             return $field;
         }
 
