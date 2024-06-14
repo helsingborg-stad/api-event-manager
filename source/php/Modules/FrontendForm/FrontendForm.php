@@ -16,6 +16,7 @@ use AcfService\Implementations\NativeAcfService;
 use EventManager\Modules\FrontendForm\FormStep;
 
 use ComponentLibrary\Init as ComponentLibraryInit;
+use PHP_CodeSniffer\Tokenizers\PHP;
 use WpService\Contracts\EnqueueStyle;
 use WpService\Implementations\NativeWpService;
 use Throwable;
@@ -33,11 +34,12 @@ class FrontendForm extends \Modularity\Module
     public $supports = [];
     public $hidden   = false;
 
-    private $formStepQueryParam = 'step'; // The query parameter for the form steps.
-    private $formIdQueryParam   = 'formid'; // The query parameter for the form id.
+    private $formStepQueryParam     = 'step'; // The query parameter for the form steps.
+    private $formIdQueryParam       = 'formid'; // The query parameter for the form id.
+    private $formTokenQueryParam    = 'token';  // The query parameter for the form token.
 
-    private $formPostType   = null; // The post type for the form.
-    private $formPostStatus = null; // The post status for the form.
+    private $formPostType   = null; // The post type for the form (set by config).
+    private $formPostStatus = null; // The post status for the form (set by config).
 
     private $blade = null;
 
@@ -59,7 +61,12 @@ class FrontendForm extends \Modularity\Module
 
     }
 
-    private function isInEditMode() {
+    /**
+     * Check if the acf-field confuguration is currently being edited.
+     * @return bool
+     */
+    private function isInEditMode(): bool 
+    {
         global $post;
         if (is_a($post, 'WP_Post') && in_array(get_post_type($post), array('acf-field', 'acf-field-group'))) {
             return true;
@@ -258,6 +265,58 @@ class FrontendForm extends \Modularity\Module
     private function getFormId(): string
     {
         return $this->getQueryParam($this->formIdQueryParam, 'new_post');
+    }
+
+    /**
+     * Retrieves the form edit token.
+     *
+     * This method returns the form edit token by retrieving the value of the specified query parameter.
+     *
+     * @return string The form edit token.
+     */
+    private function getFormEditToken(): string
+    {
+        return $this->getQueryParam('token', '');
+    }
+
+    /**
+     * Retrieves the stored form edit token.
+     *
+     * This method returns the stored form edit token by retrieving the value of the specified query parameter.
+     *
+     * @param int $postId The post ID.
+     * @return string The stored form edit token.
+     */
+    private function getStoredFromEditToken($postId): string
+    {
+        return get_post_meta($postId, 'form_edit_token', true);
+    }
+
+    /**
+     * Generates a form edit token.
+     *
+     * This method generates a form edit token by hashing the post ID, the current time and a random number.
+     *
+     * @param int $postId The post ID.
+     * @return string The form edit token.
+     */
+    private function generateFromEditToken($postId): string
+    {
+        return md5($postId . time() . rand(0, PHP_INT_MAX));
+    }
+
+    /**
+     * Validates the form edit token.
+     *
+     * This method validates the form edit token by comparing it to the stored form edit token.
+     *
+     * @param int $postId The post ID.
+     * @param string $token The form edit token.
+     * @return bool True if the form edit token is valid, false otherwise.
+     */
+    private function validateFormEditToken($postId, $token): bool
+    {
+        return $this->getStoredFromEditToken($postId) === $token;
     }
 
     /**

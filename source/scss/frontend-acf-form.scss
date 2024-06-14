@@ -1,3 +1,7 @@
+@view-transition {
+  navigation: auto;
+}
+
 @mixin field-styles {
   border-radius: calc(var(--base, 8px)* var(--c-field-border-radius, .25));
   border: var(--c-field-border-width,var(--border-width-input,1px)) solid var(--c-field-border-color,#cacaca);
@@ -40,12 +44,15 @@
   }
 }
 
-
 @mixin reset-field-styles {
   border-radius: 0;
   border: none; 
   padding: 0;
   background: none;
+}
+
+html {
+  scroll-behavior: initial !important; /* Remove when a partial refresh can be made */ 
 }
 
 #acf-form.acf-form .acf-fields {
@@ -310,11 +317,16 @@
 
   /* Checkbox list */ 
 
-  .acf-checkbox-list.acf-hl {
+  .acf-checkbox-list.acf-hl,
+  .acf-radio-list.acf-hl {
     @include reset-field-styles();
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
+
+    li {
+      margin-right: 0;
+    }
 
     &:before {
       display: none;
@@ -333,7 +345,8 @@
     }
   }
 
-  .acf-checkbox-list.acf-bl {
+  .acf-checkbox-list.acf-bl,
+  .acf-radio-list.acf-bl {
     @include reset-field-styles();
     display: flex;
     flex-direction: column;
@@ -365,6 +378,10 @@
     }
   }
 
+  .acf-radio-list.acf-bl label:before {
+    border-radius: 50%;
+  }
+
   /* Repeater */ 
   .acf-repeater {
     margin-bottom: calc(var(--base, 8px));
@@ -375,8 +392,9 @@
     }
 
     .acf-fields {
-      padding: calc(var(--base, 8px)* 2) !important;
-      border-left: none;
+      padding: 0;
+      border: none !important;
+      gap: calc(var(--base, 8px)* 2); 
     }
 
     /* Add new button etc */
@@ -395,6 +413,11 @@
 
     /* Row actions */
     .acf-row-handle {
+
+      &.remove {
+        border: none !important;
+        background: none !important;
+      }
 
       &.remove .acf-icon {
         display: block;
@@ -417,6 +440,10 @@
         &.-plus {
           display: none !important; /* Todo: Should we have this? */
         }
+    }
+
+    &.order {
+      display: none !important;
     }
   }
 }

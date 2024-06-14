@@ -72,6 +72,7 @@ class FormStepNav
                 return implode('&', $paramsJoined);
             })();
         }
-        return $baseUrl;
+
+        return $baseUrl . '#frmstp' . $step;
     }
 }

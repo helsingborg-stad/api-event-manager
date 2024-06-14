@@ -26,7 +26,7 @@
   @endprogressBar
 
   @foreach ($steps as $stepKey => $step)
-    @paper(['padding' => 4, 'classList' => ['u-margin__bottom--4']])
+    @paper(['id' => 'frmstp' . $step->step, 'padding' => 4, 'classList' => ['u-margin__bottom--4']])
       
     
       <div class="u-display--flex u-align-content--center">
