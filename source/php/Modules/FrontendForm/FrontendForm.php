@@ -60,6 +60,7 @@ class FrontendForm extends \Modularity\Module
         add_filter('query_vars', [$this, 'registerFormIdQueryVar']); // add from wpservice
         add_filter('acf/load_field/name=formStepGroup', [$this, 'addOptionsToGroupSelect']); // add from wpservice
 
+        add_action('“save_post_'. "post", [$this, 'saveFormEditToken'], 10, 3); // TODO: GET KEY FROM CONFIG
     }
 
     /**
@@ -77,8 +78,6 @@ class FrontendForm extends \Modularity\Module
 
     public function data(): array
     {
-
-
         //Needs to be called, otherwise a notice will be thrown.
         $fields = (object) $this->getFields();
 
@@ -104,9 +103,25 @@ class FrontendForm extends \Modularity\Module
                 $this->defaultDataResponse(),
                 [
                 'empty' => $this->renderView('partials.message', [
+                    'title' => $this->wpService->__('Access denied'),
                     'text' => $this->wpService->__('This form is protected, please log in.'),
                     'icon' => ['name' => 'info'],
-                    'type' => 'info'
+                    'type' => 'warning'
+                ])
+                ]
+            );
+        }
+
+        //If we consider this form to need a tokenized request, and the token is missing, show message.
+        if(!$this->needsTokenizedRequest() && !$this->hasTokenizedAccess()) {
+            return array_merge(
+                $this->defaultDataResponse(),
+                [
+                'empty' => $this->renderView('partials.message', [
+                    'title' => $this->wpService->__('Access denied'),
+                    'text' => $this->wpService->__('Please use the edit link in the mail we sent you when you first created the post.'),
+                    'icon' => ['name' => 'info'],
+                    'type' => 'warning'
                 ])
                 ]
             );
@@ -187,6 +202,49 @@ class FrontendForm extends \Modularity\Module
             ]
         );
     }
+
+    /* SECURITY */
+
+    public function needsTokenizedRequest(): bool
+    {
+        return !$this->getQueryParam($this->formIdQueryParam, false) !== false;
+    }
+
+    public function hasTokenizedAccess(): bool
+    {
+        return !$this->validateFormEditToken(
+            $this->getQueryParam($this->formIdQueryParam),
+            $this->getFormEditToken()
+        );
+    }
+
+    public function validateFormEditToken($postId, $token): bool
+    {
+        return $this->getStoredFromEditToken($postId) === $token;
+    }
+
+    public function generateFromEditToken($postId): string
+    {
+        return hash_hmac(
+            'sha256', 
+            $postId . microtime(true) . bin2hex(random_bytes(16)), 
+            (defined('AUTH_KEY') ? AUTH_KEY : '')
+        );
+    }
+
+    public function saveFormEditToken($postId, $post, $update): bool
+    {
+        if(get_post_meta($postId, 'form_edit_token', true) === "") {
+            return (bool) update_post_meta(
+                $postId, 
+                'form_edit_token', 
+                $this->generateFromEditToken($postId)
+            );
+        }
+        return false;
+    }
+
+    /* END SECURITY */
 
     /**
      * Retrives default values for keys used in the form display.
@@ -293,33 +351,6 @@ class FrontendForm extends \Modularity\Module
     private function getStoredFromEditToken($postId): string
     {
         return get_post_meta($postId, 'form_edit_token', true);
-    }
-
-    /**
-     * Generates a form edit token.
-     *
-     * This method generates a form edit token by hashing the post ID, the current time and a random number.
-     *
-     * @param int $postId The post ID.
-     * @return string The form edit token.
-     */
-    private function generateFromEditToken($postId): string
-    {
-        return md5($postId . time() . rand(0, PHP_INT_MAX));
-    }
-
-    /**
-     * Validates the form edit token.
-     *
-     * This method validates the form edit token by comparing it to the stored form edit token.
-     *
-     * @param int $postId The post ID.
-     * @param string $token The form edit token.
-     * @return bool True if the form edit token is valid, false otherwise.
-     */
-    private function validateFormEditToken($postId, $token): bool
-    {
-        return $this->getStoredFromEditToken($postId) === $token;
     }
 
     /**

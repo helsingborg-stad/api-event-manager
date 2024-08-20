@@ -1,6 +1,7 @@
 @notice([
     'type' => $type ?? 'success',
     'message' => (object) [
+        'title' => $title ?? '',
         'text' => $text ?? ''
     ],
     'icon' => $icon ?? [

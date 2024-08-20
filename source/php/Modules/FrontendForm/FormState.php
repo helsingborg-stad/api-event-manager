@@ -10,6 +10,8 @@ class FormState
     public ?int $previousStep;
     public int $totalSteps;
     public int $percentageCompleted;
+    public bool $hasStoredData;
+    public bool $isCompleted;
 
     public function __construct(array $steps, string $queryParam = '')
     {
@@ -27,6 +29,8 @@ class FormState
             $steps,
             $this->currentStep
         );
+        $this->hasStoredData      = $this->hasStoredData();
+        $this->isCompleted        = $this->isCompleted($steps);
     }
 
     private function calculatePercentageCompleted(array $steps, int $currentStep): int
@@ -81,5 +85,15 @@ class FormState
             return true;
         }
         return false;
+    }
+
+    private function hasStoredData(): bool
+    {
+        return false;
+    }
+
+    private function isCompleted(array $steps): bool
+    {
+        return true;
     }
 }

@@ -12,6 +12,15 @@ class FormStepNav
     public ?string $next     = null;
     public array $queryVars  = [];
 
+    /**
+     * Construct the FormStepNav object.
+     *
+     * @param FormStep $step
+     * @param FormStepState $stepState
+     * @param array $steps
+     * @param string $baseUrl
+     * @param array $queryVars
+     */
     public function __construct(
         FormStep $step,
         FormStepState $stepState,
@@ -24,6 +33,16 @@ class FormStepNav
         $this->next     = $this->getnext($step, $stepState, $steps, $baseUrl, $queryVars);
     }
 
+    /**
+     * Get the previous step link.
+     *
+     * @param FormStep $step
+     * @param FormStepState $state
+     * @param array $steps
+     * @param string $baseUrl
+     * @param array $queryVars
+     * @return string|null
+     */
     private function getprevious(
         FormStep $step,
         FormStepState $state,
@@ -38,6 +57,16 @@ class FormStepNav
         return null;
     }
 
+    /**
+     * Get the next step link.
+     *
+     * @param FormStep $step
+     * @param FormStepState $state
+     * @param array $steps
+     * @param string $baseUrl
+     * @param array $queryVars
+     * @return string|null
+     */
     private function getnext(FormStep $step, FormStepState $state, $steps, string $baseUrl, array $queryVars): ?string
     {
         $nextStep = $state->nextStep($step, $steps);
@@ -47,6 +76,14 @@ class FormStepNav
         return null;
     }
 
+    /**
+     * Get the current step link.
+     *
+     * @param FormStep $step
+     * @param string $baseUrl
+     * @param array $queryVars
+     * @return string|null
+     */
     private function getcurrent(FormStep $step, string $baseUrl, array $queryVars): ?string
     {
         return $this->getStepLink($step->step, $baseUrl, $queryVars) ?? null;
