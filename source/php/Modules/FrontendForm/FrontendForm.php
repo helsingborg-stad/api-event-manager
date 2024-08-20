@@ -33,6 +33,7 @@ class FrontendForm extends \Modularity\Module
     public $slug     = 'event-form';
     public $supports = [];
     public $hidden   = false;
+    public $cacheTtl = 0;
 
     private $formStepQueryParam     = 'step'; // The query parameter for the form steps.
     private $formIdQueryParam       = 'formid'; // The query parameter for the form id.
@@ -76,6 +77,8 @@ class FrontendForm extends \Modularity\Module
 
     public function data(): array
     {
+
+
         //Needs to be called, otherwise a notice will be thrown.
         $fields = (object) $this->getFields();
 
