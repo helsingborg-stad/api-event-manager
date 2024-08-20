@@ -60,7 +60,7 @@ class FrontendForm extends \Modularity\Module
         add_filter('query_vars', [$this, 'registerFormIdQueryVar']); // add from wpservice
         add_filter('acf/load_field/name=formStepGroup', [$this, 'addOptionsToGroupSelect']); // add from wpservice
 
-        add_action('“save_post_'. "post", [$this, 'saveFormEditToken'], 10, 3); // TODO: GET KEY FROM CONFIG
+        add_action('save_post_'. "post", [$this, 'saveFormEditToken'], 10, 3); // TODO: GET KEY FROM CONFIG
     }
 
     /**
@@ -98,13 +98,13 @@ class FrontendForm extends \Modularity\Module
         }
 
         //Protected form. Show message.
-        if ($fields->isPublicForm == false && !$this->hasAccess()) {
+        if ($fields->isPublicForm == false && !$this->isUserLoggedIn()) {
             return array_merge(
                 $this->defaultDataResponse(),
                 [
                 'empty' => $this->renderView('partials.message', [
                     'title' => $this->wpService->__('Access denied'),
-                    'text' => $this->wpService->__('This form is protected, please log in.'),
+                    'text' => $this->wpService->__('This form is protected. Please log in to access it.'),
                     'icon' => ['name' => 'info'],
                     'type' => 'warning'
                 ])
@@ -119,7 +119,7 @@ class FrontendForm extends \Modularity\Module
                 [
                 'empty' => $this->renderView('partials.message', [
                     'title' => $this->wpService->__('Access denied'),
-                    'text' => $this->wpService->__('Please use the edit link in the mail we sent you when you first created the post.'),
+                    'text' => $this->wpService->__('Please use the edit link in the e-mail we sent you when you first created the post.'),
                     'icon' => ['name' => 'info'],
                     'type' => 'warning'
                 ])
@@ -262,7 +262,7 @@ class FrontendForm extends \Modularity\Module
     /**
      * Check if the current user is logged in.
      */
-    public function hasAccess(): bool
+    public function isUserLoggedIn(): bool
     {
         return is_user_logged_in();
     }
