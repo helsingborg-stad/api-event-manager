@@ -22,13 +22,19 @@
     'classList' => [
       'u-margin__bottom--4'
     ],
+    'attributeList' => [
+      'view-transition-name' => 'form-progress-bar'
+    ]
   ])
   @endprogressBar
 
   @foreach ($steps as $stepKey => $step)
-    @paper(['id' => 'frmstp' . $step->step, 'padding' => 4, 'classList' => ['u-margin__bottom--4']])
-      
-    
+    @paper([
+      'id' => 'form-step-' . $step->step, 
+      'padding' => 4, 
+      'classList' => ['u-margin__bottom--4'], 
+      'attributeList' => ['view-transition-name' => 'form-step-' . $step->step]
+    ])
       <div class="u-display--flex u-align-content--center">
         <div class="u-flex-grow--1">
         @if($step->state->isPassed)
@@ -53,7 +59,8 @@
             'variant' => 'meta',
             'classList' => [
               'c-typography__iteration'
-            ]
+          ],
+          'attributeList' => ['view-transition-name' => 'form-step-stepdata-' . $step->step]
         ])
           {{ $lang->step }} {{ $step->step }} {{ $lang->of }} {{ $state->totalSteps }}
         @endtypography
@@ -62,7 +69,8 @@
           @typography([
             'element' => 'h5',
             'variant' => 'h3',
-            'classList' => ['u-margin--0']
+            'classList' => ['u-margin--0'],
+            'attributeList' => ['view-transition-name' => 'form-step-title-' . $step->step]
           ])
             {{ $step->title }}
           @endtypography
