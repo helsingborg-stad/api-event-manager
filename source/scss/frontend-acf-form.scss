@@ -1,7 +1,3 @@
-@view-transition {
-  navigation: auto;
-}
-
 @mixin field-styles {
   border-radius: calc(var(--base, 8px)* var(--c-field-border-radius, .25));
   border: var(--c-field-border-width,var(--border-width-input,1px)) solid var(--c-field-border-color,#cacaca);
