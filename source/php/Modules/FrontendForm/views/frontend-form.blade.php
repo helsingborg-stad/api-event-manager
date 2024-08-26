@@ -76,21 +76,23 @@
           @endtypography
         @endif
 
-        @if ($step->description && $step->state->isCurrent)
-          @typography([
-            'element' => 'p',
-            'variant' => 'body',
-            'classList' => ['u-margin--0']
-          ])
-            {!! $step->description !!}
-          @endtypography
-        @endif
+        <div class="form-step-content" view-transition-name="form-step-content">
+          @if ($step->description && $step->state->isCurrent)
+            @typography([
+              'element' => 'p',
+              'variant' => 'body',
+              'classList' => ['u-margin--0']
+            ])
+              {!! $step->description !!}
+            @endtypography
+          @endif
 
-        @if($step->state->isCurrent)
-          <div class="u-margin__top--4">
-            {!! $form($step) !!}
-          </div>
-        @endif
+          @if($step->state->isCurrent)
+            <div class="u-margin__top--4">
+              {!! $form($step) !!}
+            </div>
+          @endif
+        </div>
       </div>
 
         @if($step->state->isPassed)
