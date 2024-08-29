@@ -10,7 +10,6 @@ namespace EventManager\Modules\FrontendForm;
 
 use EventManager\Modules\FrontendForm\FormStep;
 use ComponentLibrary\Init as ComponentLibraryInit;
-use PHP_CodeSniffer\Tokenizers\PHP;
 use Throwable;
 
 use AcfService\Contracts\EnqueueUploader;
@@ -177,7 +176,11 @@ class FrontendForm extends \Modularity\Module
                         $this->formIdQueryParam, 
                         "%post_id%"
                     ),
-                    'step'   => null
+                    'step'   => null,
+                    'token'  => $this->wpService->getQueryVar(
+                        $this->formTokenQueryParam, 
+                        null
+                    )
                 ]
             );
         }
@@ -433,7 +436,7 @@ class FrontendForm extends \Modularity\Module
     }
 
     /**
-     * Registers multiple query variables for the form.
+     * Registers multiple query variables for the form in order to be able to access them in get_query_var.
      *
      * This method takes an array of registered query variables and adds
      * the form step, form ID, and form token keys to it.

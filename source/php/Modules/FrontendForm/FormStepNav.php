@@ -4,13 +4,11 @@ namespace EventManager\Modules\FrontendForm;
 
 use EventManager\Modules\FrontendForm\FormStepState;
 
-/* TODO: Make this gpt code work */
 class FormStepNav
 {
     public ?string $previous = null;
     public ?string $current  = null;
     public ?string $next     = null;
-    public array $queryVars  = [];
 
     /**
      * Construct the FormStepNav object.
