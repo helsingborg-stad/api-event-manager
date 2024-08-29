@@ -8,19 +8,30 @@
 
 namespace EventManager\Modules\FrontendForm;
 
+use EventManager\Modules\FrontendForm\FormStep;
+use ComponentLibrary\Init as ComponentLibraryInit;
+use PHP_CodeSniffer\Tokenizers\PHP;
+use Throwable;
+
 use AcfService\Contracts\EnqueueUploader;
 use AcfService\Contracts\Form;
 use AcfService\Contracts\FormHead;
 use AcfService\Contracts\GetFieldGroups;
 use AcfService\Implementations\NativeAcfService;
-use EventManager\Modules\FrontendForm\FormStep;
 
-use ComponentLibrary\Init as ComponentLibraryInit;
-use PHP_CodeSniffer\Tokenizers\PHP;
 use WpService\Contracts\EnqueueStyle;
 use WpService\Implementations\NativeWpService;
-use Throwable;
 use WpService\Contracts\__;
+use WpService\Contracts\AddFilter;
+use WpService\Contracts\AddAction;
+use WpService\Contracts\IsUserLoggedIn;
+use WpService\Contracts\GetQueryVar;
+use WpService\Contracts\GetPostType;
+use WpService\Contracts\GetPostTypeObject;
+use WpService\Contracts\GetPermalink;
+use WpService\Contracts\GetPostMeta;
+use WpService\Contracts\UpdatePostMeta;
+use WpService\Implementations\WpServiceWithTypecastedReturns;
 
 /**
  * @property string $description
@@ -44,23 +55,22 @@ class FrontendForm extends \Modularity\Module
 
     private $blade = null;
 
-    private EnqueueStyle&__ $wpService;
+    private EnqueueStyle &__&IsUserLoggedIn&AddFilter&AddAction&GetQueryVar&GetPostType&GetPostTypeObject&GetPermalink&GetPostMeta&UpdatePostMeta $wpService;
     private FormHead&EnqueueUploader&Form&GetFieldGroups $acfService;
 
     public function init(): void
     {
-        $this->wpService  = new NativeWpService(); // TODO: use custom modularity middleware.
-        $this->acfService = new NativeAcfService(); // TODO: use custom modularity middleware.
+        $this->wpService  = new WpServiceWithTypecastedReturns(new NativeWpService());
+        $this->acfService = new NativeAcfService();
 
         $this->nameSingular = $this->wpService->__('Event Form');
         $this->namePlural   = $this->wpService->__('Event Forms');
         $this->description  = $this->wpService->__('Module for creating public event form');
 
-        add_filter('query_vars', [$this, 'registerFormStepQueryVar']); // add from wpservice
-        add_filter('query_vars', [$this, 'registerFormIdQueryVar']); // add from wpservice
-        add_filter('acf/load_field/name=formStepGroup', [$this, 'addOptionsToGroupSelect']); // add from wpservice
+        $this->wpService->addFilter('query_vars', [$this, 'registerFormQueryVars']);
+        $this->wpService->addFilter('acf/load_field/name=formStepGroup', [$this, 'addOptionsToGroupSelect']);
 
-        add_action('save_post_'. "post", [$this, 'saveFormEditToken'], 10, 3); // TODO: GET KEY FROM CONFIG
+        $this->wpService->addAction('save_post_'. "post", [$this, 'saveFormEditToken'], 10, 3);
     }
 
     /**
@@ -70,12 +80,19 @@ class FrontendForm extends \Modularity\Module
     private function isInEditMode(): bool 
     {
         global $post;
-        if (is_a($post, 'WP_Post') && in_array(get_post_type($post), array('acf-field', 'acf-field-group'))) {
+        if (is_a($post, 'WP_Post') && in_array($this->wpService->getPostType($post), array('acf-field', 'acf-field-group'))) {
             return true;
         }
         return false;
     }
 
+    /**
+     * Retrieves the form data.
+     * 
+     * This method retrieves the form data by checking if the form is empty, protected, or needs a tokenized request.
+     * 
+     * @return array The form data.
+     */
     public function data(): array
     {
         //Needs to be called, otherwise a notice will be thrown.
@@ -98,7 +115,7 @@ class FrontendForm extends \Modularity\Module
         }
 
         //Protected form. Show message.
-        if ($fields->isPublicForm == false && !$this->isUserLoggedIn()) {
+        if ($fields->isPublicForm == false && !$this->wpService->isUserLoggedIn()) {
             return array_merge(
                 $this->defaultDataResponse(),
                 [
@@ -113,7 +130,7 @@ class FrontendForm extends \Modularity\Module
         }
 
         //If we consider this form to need a tokenized request, and the token is missing, show message.
-        if(!$this->needsTokenizedRequest() && !$this->hasTokenizedAccess()) {
+        if($this->needsTokenizedRequest() && !$this->hasTokenizedAccess()) {
             return array_merge(
                 $this->defaultDataResponse(),
                 [
@@ -154,9 +171,12 @@ class FrontendForm extends \Modularity\Module
                 $step,
                 $stepState,
                 $steps,
-                get_permalink(),
+                $this->wpService->getPermalink(),
                 [
-                    'formid' => get_query_var($this->formIdQueryParam, "%post_id%"),
+                    'formid' => $this->wpService->getQueryVar(
+                        $this->formIdQueryParam, 
+                        "%post_id%"
+                    ),
                     'step'   => null
                 ]
             );
@@ -207,19 +227,25 @@ class FrontendForm extends \Modularity\Module
 
     public function needsTokenizedRequest(): bool
     {
-        return !$this->getQueryParam($this->formIdQueryParam, false) !== false;
+        if($this->getQueryVar($this->formIdQueryParam, false)) {
+            return true;
+        }
+        return false;
     }
 
     public function hasTokenizedAccess(): bool
     {
-        return !$this->validateFormEditToken(
-            $this->getQueryParam($this->formIdQueryParam),
-            $this->getFormEditToken()
+        return $this->isValidFormEditToken(
+            $this->getQueryVar($this->formIdQueryParam, null),
+            $this->getQueryVar($this->formTokenQueryParam, null)
         );
     }
 
-    public function validateFormEditToken($postId, $token): bool
+    public function isValidFormEditToken(?int $postId, ?string $token): bool
     {
+        if(is_null($token)) {
+            return false;
+        }
         return $this->getStoredFromEditToken($postId) === $token;
     }
 
@@ -234,8 +260,8 @@ class FrontendForm extends \Modularity\Module
 
     public function saveFormEditToken($postId, $post, $update): bool
     {
-        if(get_post_meta($postId, 'form_edit_token', true) === "") {
-            return (bool) update_post_meta(
+        if($this->wpService->getPostMeta($postId, 'form_edit_token', true) === "") {
+            return (bool) $this->wpService->updatePostMeta(
                 $postId, 
                 'form_edit_token', 
                 $this->generateFromEditToken($postId)
@@ -257,14 +283,6 @@ class FrontendForm extends \Modularity\Module
             'empty' => false,
             'error' => false
         ];
-    }
-
-    /**
-     * Check if the current user is logged in.
-     */
-    public function isUserLoggedIn(): bool
-    {
-        return is_user_logged_in();
     }
 
     /**
@@ -294,9 +312,11 @@ class FrontendForm extends \Modularity\Module
         ];
     }
 
-    private function getQueryParam($key, $default = ""): string
+    private function getQueryVar($key, $default = ""): string|int|null
     {
-        return get_query_var($key, $default);
+        $x = $this->wpService->getQueryVar($key, $default); 
+        var_dump($x);
+        return $x;
     }
 
     public function template(): string
@@ -321,23 +341,11 @@ class FrontendForm extends \Modularity\Module
      * This method returns the form ID by retrieving the value of the specified query parameter.
      * If the query parameter is not set, the method will return a string representing create_new_post.
      *
-     * @return string The form ID. Or "new_post" if the query parameter is not set.
+     * @return string|int The form ID. Or "new_post" if the query parameter is not set.
      */
-    private function getFormId(): string
+    private function getFormId(): string|int
     {
-        return $this->getQueryParam($this->formIdQueryParam, 'new_post');
-    }
-
-    /**
-     * Retrieves the form edit token.
-     *
-     * This method returns the form edit token by retrieving the value of the specified query parameter.
-     *
-     * @return string The form edit token.
-     */
-    private function getFormEditToken(): string
-    {
-        return $this->getQueryParam('token', '');
+        return $this->getQueryVar($this->formIdQueryParam, 'new_post');
     }
 
     /**
@@ -350,7 +358,11 @@ class FrontendForm extends \Modularity\Module
      */
     private function getStoredFromEditToken($postId): string
     {
-        return get_post_meta($postId, 'form_edit_token', true);
+        return $this->wpService->getPostMeta(
+            $postId, 
+            'form_edit_token', 
+            true
+        );
     }
 
     /**
@@ -423,34 +435,23 @@ class FrontendForm extends \Modularity\Module
     }
 
     /**
-     * Registers the form step query variable.
+     * Registers multiple query variables for the form.
      *
-     * This method takes an array of registered query variables and adds the form step key to it.
-     *
-     * @param array $registeredQueryVars The array of registered query variables.
-     * @return array The updated array of registered query variables.
-     */
-    public function registerFormStepQueryVar(array $registeredQueryVars): array
-    {
-        return $registeredQueryVars = array_merge(
-            $registeredQueryVars,
-            [$this->formStepQueryParam]
-        );
-    }
-
-    /**
-     * Registers the form id query variable.
-     *
-     * This method takes an array of registered query variables and adds the form id key to it.
+     * This method takes an array of registered query variables and adds
+     * the form step, form ID, and form token keys to it.
      *
      * @param array $registeredQueryVars The array of registered query variables.
      * @return array The updated array of registered query variables.
      */
-    public function registerFormIdQueryVar(array $registeredQueryVars): array
+    public function registerFormQueryVars(array $registeredQueryVars): array
     {
-        return $registeredQueryVars = array_merge(
+        return array_merge(
             $registeredQueryVars,
-            [$this->formIdQueryParam]
+            [
+                $this->formStepQueryParam,
+                $this->formIdQueryParam,
+                $this->formTokenQueryParam
+            ]
         );
     }
 
@@ -476,19 +477,13 @@ class FrontendForm extends \Modularity\Module
             return isset($item['location'][0][0]['param']) && $item['location'][0][0]['param'] === 'post_type';
         });
 
-        // Create a select item title
-        $createSelectItemTitle = function ($name, $postTypeName) {
-            $postTypeName = get_post_type_object($postTypeName);
-            return (!empty($postTypeName->label) ? "$postTypeName->label: " : "") . $name;
-        };
-
         // Add groups to the select field
         if (is_array($groups) && !empty($groups)) {
             foreach ($groups as $group) {
-                $field['choices'][$group['key']] = $createSelectItemTitle(
-                    $group['title'],
-                    $group['location'][0][0]['value']
-                );
+                $field['choices'][$group['key']] = function ($name, $postTypeName) {
+                    $postTypeName = $this->wpService->getPostTypeObject($postTypeName);
+                    return (!empty($postTypeName->label) ? "$postTypeName->label: " : "") . $name;
+                };
             }
         }
         return $field;
