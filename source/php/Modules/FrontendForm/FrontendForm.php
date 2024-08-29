@@ -263,10 +263,12 @@ class FrontendForm extends \Modularity\Module
 
     public function saveFormEditToken($postId, $post, $update): bool
     {
-        if($this->wpService->getPostMeta($postId, 'form_edit_token', true) === "") {
+        $formEditTokenKey = 'form_edit_token';
+
+        if($this->wpService->getPostMeta($postId, $formEditTokenKey, true) === "") {
             return (bool) $this->wpService->updatePostMeta(
                 $postId, 
-                'form_edit_token', 
+                $formEditTokenKey, 
                 $this->generateFromEditToken($postId)
             );
         }
