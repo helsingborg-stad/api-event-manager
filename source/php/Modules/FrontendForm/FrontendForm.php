@@ -314,9 +314,7 @@ class FrontendForm extends \Modularity\Module
 
     private function getQueryVar($key, $default = ""): string|int|null
     {
-        $x = $this->wpService->getQueryVar($key, $default); 
-        var_dump($x);
-        return $x;
+        return $this->wpService->getQueryVar($key, $default); 
     }
 
     public function template(): string
