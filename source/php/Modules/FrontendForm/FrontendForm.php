@@ -291,19 +291,6 @@ class FrontendForm extends \Modularity\Module
     }
 
     /**
-     * Retrieves the form ID or "new_post".
-     *
-     * This method returns the form ID by retrieving the value of the specified query parameter.
-     * If the query parameter is not set, the method will return a string representing create_new_post.
-     *
-     * @return string|int The form ID. Or "new_post" if the query parameter is not set.
-     */
-    private function getFormId(): string|int
-    {
-        return $this->wpService->getQueryVar($this->formIdQueryParam, 'new_post');
-    }
-
-    /**
      * Retrieves the form step.
      *
      * This method returns the form step by retrieving the value of the specified query parameter.
@@ -325,7 +312,7 @@ class FrontendForm extends \Modularity\Module
         );
 
         $this->acfService->form([
-            'post_id'               => $this->getFormId(),
+            'post_id'               => $this->wpService->getQueryVar($this->formIdQueryParam, 'new_post'),
             'return'                => $step->nav->next ?? false, // Add form result page here
             'post_title'            => $step->properties->includePostTitle,
             'post_content'          => false,
