@@ -2,10 +2,11 @@
 
 namespace EventManager\Modules\FrontendForm;
 
+use WpService\Contracts\GetQueryVar;
+
 class FormState
 {
     public bool $isValidStep;
-    public int $currentStep;
     public ?int $nextStep;
     public ?int $previousStep;
     public int $totalSteps;
@@ -13,13 +14,10 @@ class FormState
     public bool $hasStoredData;
     public bool $isCompleted;
 
-    public function __construct(array $steps, string $queryParam = '')
+    public function __construct(array $steps, public int $currentStep)
     {
-        $this->currentStep = $this->getCurrentStep($queryParam);
-
         $this->nextStep            = $this->getNextStep($steps);
         $this->previousStep        = $this->getPreviousStep();
-        $this->currentStep         = $this->getCurrentStep($queryParam);
         $this->isValidStep         = $this->isValidStep(
             $steps,
             $this->currentStep
@@ -65,18 +63,9 @@ class FormState
         return $this->currentStep - 1;
     }
 
-    public function isCurrentStep($step, $queryParam): bool
+    public function isCurrentStep($step,): bool
     {
-        return $this->getCurrentStep($queryParam) === $step;
-    }
-
-    private function getCurrentStep(string $queryParam): int
-    {
-        $step = get_query_var($queryParam, 1); //todo: wpservice
-        if (is_numeric($step) && $step > 0) {
-            return $step;
-        }
-        return 1;
+        return $this->currentStep === $step;
     }
 
     private function isValidStep(array $steps, int $step): bool

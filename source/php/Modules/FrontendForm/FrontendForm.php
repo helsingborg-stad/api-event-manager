@@ -155,7 +155,7 @@ class FrontendForm extends \Modularity\Module
         //Set form state
         $formState = new FormState(
             $steps,
-            $this->formStepQueryParam
+            $this->getQueryVar($this->formStepQueryParam, 1)
         );
 
         //Decorate step with state, and link
