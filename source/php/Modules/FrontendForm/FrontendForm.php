@@ -49,6 +49,8 @@ class FrontendForm extends \Modularity\Module
     private $formIdQueryParam       = 'formid'; // The query parameter for the form id.
     private $formTokenQueryParam    = 'token';  // The query parameter for the form token.
 
+    private $formSecurity = null; // The form security service.
+
     private $formPostType   = null; // The post type for the form (set by config).
     private $formPostStatus = null; // The post status for the form (set by config).
 
@@ -59,8 +61,13 @@ class FrontendForm extends \Modularity\Module
 
     public function init(): void
     {
-        $this->wpService  = new WpServiceWithTypecastedReturns(new NativeWpService());
-        $this->acfService = new NativeAcfService();
+        $this->wpService    = new WpServiceWithTypecastedReturns(new NativeWpService());
+        $this->acfService   = new NativeAcfService();
+        $this->formSecurity = new FormSecurity(
+            $this->wpService,
+            $this->formIdQueryParam, 
+            $this->formTokenQueryParam
+        );
 
         $this->nameSingular = $this->wpService->__('Event Form');
         $this->namePlural   = $this->wpService->__('Event Forms');
@@ -69,7 +76,8 @@ class FrontendForm extends \Modularity\Module
         $this->wpService->addFilter('query_vars', [$this, 'registerFormQueryVars']);
         $this->wpService->addFilter('acf/load_field/name=formStepGroup', [$this, 'addOptionsToGroupSelect']);
 
-        $this->wpService->addAction('save_post_'. "post", [$this, 'saveFormEditToken'], 10, 3);
+        //TODO: Maybe move to form secority. Needs implement Hookable interface? 
+        $this->wpService->addAction('save_post_'. "post", [$this->formSecurity, 'saveFormEditToken'], 10, 3);
     }
 
     /**
@@ -129,7 +137,7 @@ class FrontendForm extends \Modularity\Module
         }
 
         //If we consider this form to need a tokenized request, and the token is missing, show message.
-        if($this->needsTokenizedRequest() && !$this->hasTokenizedAccess()) {
+        if($this->formSecurity->needsTokenizedRequest() && !$this->formSecurity->hasTokenizedAccess()) {
             return array_merge(
                 $this->defaultDataResponse(),
                 [
@@ -226,57 +234,6 @@ class FrontendForm extends \Modularity\Module
         );
     }
 
-    /* SECURITY */
-
-    public function needsTokenizedRequest(): bool
-    {
-        if($this->getQueryVar($this->formIdQueryParam, false)) {
-            return true;
-        }
-        return false;
-    }
-
-    public function hasTokenizedAccess(): bool
-    {
-        return $this->isValidFormEditToken(
-            $this->getQueryVar($this->formIdQueryParam, null),
-            $this->getQueryVar($this->formTokenQueryParam, null)
-        );
-    }
-
-    public function isValidFormEditToken(?int $postId, ?string $token): bool
-    {
-        if(is_null($token)) {
-            return false;
-        }
-        return $this->getStoredFromEditToken($postId) === $token;
-    }
-
-    public function generateFromEditToken($postId): string
-    {
-        return hash_hmac(
-            'sha256', 
-            $postId . microtime(true) . bin2hex(random_bytes(16)), 
-            (defined('AUTH_KEY') ? AUTH_KEY : '')
-        );
-    }
-
-    public function saveFormEditToken($postId, $post, $update): bool
-    {
-        $formEditTokenKey = 'form_edit_token';
-
-        if($this->wpService->getPostMeta($postId, $formEditTokenKey, true) === "") {
-            return (bool) $this->wpService->updatePostMeta(
-                $postId, 
-                $formEditTokenKey, 
-                $this->generateFromEditToken($postId)
-            );
-        }
-        return false;
-    }
-
-    /* END SECURITY */
-
     /**
      * Retrives default values for keys used in the form display.
      *
@@ -349,23 +306,6 @@ class FrontendForm extends \Modularity\Module
     private function getFormId(): string|int
     {
         return $this->getQueryVar($this->formIdQueryParam, 'new_post');
-    }
-
-    /**
-     * Retrieves the stored form edit token.
-     *
-     * This method returns the stored form edit token by retrieving the value of the specified query parameter.
-     *
-     * @param int $postId The post ID.
-     * @return string The stored form edit token.
-     */
-    private function getStoredFromEditToken($postId): string
-    {
-        return $this->wpService->getPostMeta(
-            $postId, 
-            'form_edit_token', 
-            true
-        );
     }
 
     /**
