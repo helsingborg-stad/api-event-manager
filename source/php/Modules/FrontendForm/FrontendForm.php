@@ -50,6 +50,7 @@ class FrontendForm extends \Modularity\Module
     private $formTokenQueryParam    = 'token';  // The query parameter for the form token.
 
     private $formSecurity = null; // The form security service.
+    private $formAdmin    = null; // The form admin service.
 
     private $formPostType   = null; // The post type for the form (set by config).
     private $formPostStatus = null; // The post status for the form (set by config).
@@ -68,29 +69,23 @@ class FrontendForm extends \Modularity\Module
             $this->formIdQueryParam, 
             $this->formTokenQueryParam
         );
+        $this->formAdmin = new FormAdmin(
+            $this->wpService,
+            $this->acfService,
+            'formStepGroup'
+        );
 
         $this->nameSingular = $this->wpService->__('Event Form');
         $this->namePlural   = $this->wpService->__('Event Forms');
         $this->description  = $this->wpService->__('Module for creating public event form');
 
         $this->wpService->addFilter('query_vars', [$this, 'registerFormQueryVars']);
-        $this->wpService->addFilter('acf/load_field/name=formStepGroup', [$this, 'addOptionsToGroupSelect']);
 
-        //TODO: Maybe move to form secority. Needs implement Hookable interface? 
-        $this->wpService->addAction('save_post_'. "post", [$this->formSecurity, 'saveFormEditToken'], 10, 3);
-    }
-
-    /**
-     * Check if the acf-field confuguration is currently being edited.
-     * @return bool
-     */
-    private function isInEditMode(): bool 
-    {
-        global $post;
-        if (is_a($post, 'WP_Post') && in_array($this->wpService->getPostType($post), array('acf-field', 'acf-field-group'))) {
-            return true;
-        }
-        return false;
+        //TODO: Maybe move to form security. Needs implement Hookable interface? 
+        $this->wpService->addAction(
+            'save_post_'. "post", 
+            [$this->formSecurity, 'saveFormEditToken'],
+        10, 3);
     }
 
     /**
@@ -236,6 +231,7 @@ class FrontendForm extends \Modularity\Module
 
     /**
      * Retrives default values for keys used in the form display.
+     * This prevents notices when the keys are not set.
      *
      * @return array The default keys and values.
      */
@@ -279,12 +275,26 @@ class FrontendForm extends \Modularity\Module
         return 'frontend-form.blade.php';
     }
 
+    /**
+     * Enqueues the form scripts.
+     * 
+     * This method enqueues the form scripts.
+     * 
+     * @return void
+     */
     public function script(): void
     {
         $this->acfService->formHead();
         $this->acfService->enqueueUploader();
     }
 
+    /**
+     * Enqueues the form styles.
+     * 
+     * This method enqueues the form styles.
+     * 
+     * @return void
+     */
     public function style(): void
     {
         $this->wpService->enqueueStyle('event-manager-frontend-form');
@@ -378,39 +388,5 @@ class FrontendForm extends \Modularity\Module
                 $this->formTokenQueryParam
             ]
         );
-    }
-
-    /**
-     * Adds the field groups to the select field.
-     *
-     * This method takes a field and adds the field groups to the select field.
-     *
-     * @param array $field The field to add the field groups to.
-     * @return array The updated field.
-     */
-    public function addOptionsToGroupSelect($field)
-    {
-        if($this->isInEditMode() === true) {
-            return $field;
-        }
-
-        $field['choices'] = array();
-
-        // Get all field groups, filter out all that are connected to a post type.
-        $groups = $this->acfService->getFieldGroups();
-        $groups = array_filter($groups, function ($item) {
-            return isset($item['location'][0][0]['param']) && $item['location'][0][0]['param'] === 'post_type';
-        });
-
-        // Add groups to the select field
-        if (is_array($groups) && !empty($groups)) {
-            foreach ($groups as $group) {
-                $field['choices'][$group['key']] = function ($name, $postTypeName) {
-                    $postTypeName = $this->wpService->getPostTypeObject($postTypeName);
-                    return (!empty($postTypeName->label) ? "$postTypeName->label: " : "") . $name;
-                };
-            }
-        }
-        return $field;
     }
 }
