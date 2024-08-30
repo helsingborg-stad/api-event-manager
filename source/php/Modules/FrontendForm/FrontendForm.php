@@ -163,7 +163,7 @@ class FrontendForm extends \Modularity\Module
         //Set form state
         $formState = new FormState(
             $steps,
-            $this->getQueryVar($this->formStepQueryParam, 1)
+            $this->wpService->getQueryVar($this->formStepQueryParam, 1)
         );
 
         //Decorate step with state, and link
@@ -274,11 +274,6 @@ class FrontendForm extends \Modularity\Module
         ];
     }
 
-    private function getQueryVar($key, $default = ""): string|int|null
-    {
-        return $this->wpService->getQueryVar($key, $default); 
-    }
-
     public function template(): string
     {
         return 'frontend-form.blade.php';
@@ -305,7 +300,7 @@ class FrontendForm extends \Modularity\Module
      */
     private function getFormId(): string|int
     {
-        return $this->getQueryVar($this->formIdQueryParam, 'new_post');
+        return $this->wpService->getQueryVar($this->formIdQueryParam, 'new_post');
     }
 
     /**
