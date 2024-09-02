@@ -80,12 +80,6 @@ class FrontendForm extends \Modularity\Module
         $this->description  = $this->wpService->__('Module for creating public event form');
 
         $this->wpService->addFilter('query_vars', [$this, 'registerFormQueryVars']);
-
-        //TODO: Maybe move to form security. Needs implement Hookable interface? 
-        $this->wpService->addAction(
-            'save_post_'. "post", 
-            [$this->formSecurity, 'saveFormEditToken'],
-        10, 3);
     }
 
     /**

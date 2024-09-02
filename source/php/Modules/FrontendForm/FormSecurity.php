@@ -12,7 +12,12 @@ class FormSecurity
         private GetQueryVar&GetPostMeta&UpdatePostMeta $wpService, 
         private string $formIdQueryParam, 
         private string $formTokenQueryParam
-    ){}
+    ){
+        $this->wpService->addAction(
+            "acf/submit_form", 
+            [$this, 'hijackSaveFormRedirect'],
+        10, 3);
+    }
 
     /**
      * Checks if the request needs a tokenized request.
@@ -121,18 +126,29 @@ class FormSecurity
         );
     }
 
+    /**
+     * Hijacks the save form redirect.
+     * Partially stolen from ACF. 
+     * https://github.com/AdvancedCustomFields/acf/blob/ac35ec186010b74ade15df9c86c3b4578d3acb36/includes/forms/form-front.php#L562
+     * 
+     * This method hijacks the save form redirect by redirecting the user to the specified URL.
+     * 
+     * @param array $form The form data.
+     * @param int $post_id The post ID.
+     * 
+     * @return void
+     */
     public function hijackSaveFormRedirect($form, $post_id)
     {
-        $token = $this->generateFromEditToken($post_id);
-        $this->saveFormEditToken($post_id, $token); 
-        
-        // vars
-        $return = acf_maybe_get( $form, 'return', '' );
+        //Redirect to the specified URL
+        if ($return = acf_maybe_get($form, 'return', false)) {
 
-        // redirect
-        if ( $return ) {
+            $token = $this->generateFromEditToken($post_id);
 
-            // update %placeholders%
+            //Save token
+            $this->saveFormEditToken($post_id, $token); 
+
+            //Update %placeholders% 
             $return = str_replace( '%post_id%', $post_id, $return );
             $return = str_replace( '%post_url%', get_permalink( $post_id ), $return );
 
@@ -142,7 +158,7 @@ class FormSecurity
             ), $return );
 
             // redirect
-            wp_redirect( $return );
+            wp_redirect($return);
             exit;
         }
     }
