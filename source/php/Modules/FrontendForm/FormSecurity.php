@@ -91,15 +91,14 @@ class FormSecurity
      * 
      * @return bool True if the form edit token was saved, false otherwise.
      */
-    public function saveFormEditToken($postId, $post, $update): bool
+    public function saveFormEditToken($postId, $token): bool
     {
         $formEditTokenKey = 'form_edit_token';
-
         if($this->wpService->getPostMeta($postId, $formEditTokenKey, true) === "") {
             return (bool) $this->wpService->updatePostMeta(
                 $postId, 
                 $formEditTokenKey, 
-                $this->generateFromEditToken($postId)
+                $token
             );
         }
         return false;
@@ -120,5 +119,31 @@ class FormSecurity
             'form_edit_token', 
             true
         );
+    }
+
+    public function hijackSaveFormRedirect($form, $post_id)
+    {
+        $token = $this->generateFromEditToken($post_id);
+        $this->saveFormEditToken($post_id, $token); 
+        
+        // vars
+        $return = acf_maybe_get( $form, 'return', '' );
+
+        // redirect
+        if ( $return ) {
+
+            // update %placeholders%
+            $return = str_replace( '%post_id%', $post_id, $return );
+            $return = str_replace( '%post_url%', get_permalink( $post_id ), $return );
+
+            //Add token to url 
+            $return = add_query_arg( array(
+                $this->formTokenQueryParam => $token 
+            ), $return );
+
+            // redirect
+            wp_redirect( $return );
+            exit;
+        }
     }
 }
