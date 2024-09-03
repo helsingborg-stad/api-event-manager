@@ -27,8 +27,8 @@ class FormState
             $steps,
             $this->currentStep
         );
-        $this->hasStoredData      = $this->hasStoredData();
-        $this->isCompleted        = $this->isCompleted($steps);
+        $this->hasStoredData       = $this->hasStoredData();
+        $this->isCompleted         = $this->isCompleted($steps);
     }
 
     private function calculatePercentageCompleted(array $steps, int $currentStep): int

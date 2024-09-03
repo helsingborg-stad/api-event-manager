@@ -45,9 +45,9 @@ class FrontendForm extends \Modularity\Module
     public $hidden   = false;
     public $cacheTtl = 0;
 
-    private $formStepQueryParam     = 'step'; // The query parameter for the form steps.
-    private $formIdQueryParam       = 'formid'; // The query parameter for the form id.
-    private $formTokenQueryParam    = 'token';  // The query parameter for the form token.
+    private $formStepQueryParam  = 'step'; // The query parameter for the form steps.
+    private $formIdQueryParam    = 'formid'; // The query parameter for the form id.
+    private $formTokenQueryParam = 'token';  // The query parameter for the form token.
 
     private $formSecurity = null; // The form security service.
     private $formAdmin    = null; // The form admin service.
@@ -66,10 +66,10 @@ class FrontendForm extends \Modularity\Module
         $this->acfService   = new NativeAcfService();
         $this->formSecurity = new FormSecurity(
             $this->wpService,
-            $this->formIdQueryParam, 
+            $this->formIdQueryParam,
             $this->formTokenQueryParam
         );
-        $this->formAdmin = new FormAdmin(
+        $this->formAdmin    = new FormAdmin(
             $this->wpService,
             $this->acfService,
             'formStepGroup'
@@ -84,9 +84,9 @@ class FrontendForm extends \Modularity\Module
 
     /**
      * Retrieves the form data.
-     * 
+     *
      * This method retrieves the form data by checking if the form is empty, protected, or needs a tokenized request.
-     * 
+     *
      * @return array The form data.
      */
     public function data(): array
@@ -117,24 +117,24 @@ class FrontendForm extends \Modularity\Module
                 [
                 'empty' => $this->renderView('partials.message', [
                     'title' => $this->wpService->__('Access denied'),
-                    'text' => $this->wpService->__('This form is protected. Please log in to access it.'),
-                    'icon' => ['name' => 'info'],
-                    'type' => 'warning'
+                    'text'  => $this->wpService->__('This form is protected. Please log in to access it.'),
+                    'icon'  => ['name' => 'info'],
+                    'type'  => 'warning'
                 ])
                 ]
             );
         }
 
         //If we consider this form to need a tokenized request, and the token is missing, show message.
-        if($this->formSecurity->needsTokenizedRequest() && !$this->formSecurity->hasTokenizedAccess()) {
+        if ($this->formSecurity->needsTokenizedRequest() && !$this->formSecurity->hasTokenizedAccess()) {
             return array_merge(
                 $this->defaultDataResponse(),
                 [
                 'empty' => $this->renderView('partials.message', [
                     'title' => $this->wpService->__('Access denied'),
-                    'text' => $this->wpService->__('Please use the edit link in the e-mail we sent you when you first created the post.'),
-                    'icon' => ['name' => 'info'],
-                    'type' => 'warning'
+                    'text'  => $this->wpService->__('Please use the edit link in the e-mail we sent you when you first created the post.'),
+                    'icon'  => ['name' => 'info'],
+                    'type'  => 'warning'
                 ])
                 ]
             );
@@ -170,12 +170,12 @@ class FrontendForm extends \Modularity\Module
                 $this->wpService->getPermalink(),
                 [
                     'formid' => $this->wpService->getQueryVar(
-                        $this->formIdQueryParam, 
+                        $this->formIdQueryParam,
                         "%post_id%"
                     ),
                     'step'   => null,
                     'token'  => $this->wpService->getQueryVar(
-                        $this->formTokenQueryParam, 
+                        $this->formTokenQueryParam,
                         null
                     )
                 ]
@@ -213,7 +213,7 @@ class FrontendForm extends \Modularity\Module
                     'postType'   => $fields->saveToPostType ?? "post",
                     'postStatus' => $fields->saveToPostTypeStatus ?? "draft"
                 ],
-                'summary' => (object) [
+                'summary'      => (object) [
                     'isEnabled' => $fields->hasSummaryStep ?? false,
                     'title'     => $fields->summaryTitle,
                     'lead'      => $fields->summaryLead
@@ -271,15 +271,15 @@ class FrontendForm extends \Modularity\Module
 
     /**
      * Enqueues the form scripts.
-     * 
+     *
      * This method enqueues the form scripts.
-     * 
+     *
      * @return void
      */
     public function script(): void
     {
-        // Do not init if token is missing or invalid when required. 
-        if($this->formSecurity->needsTokenizedRequest() && !$this->formSecurity->hasTokenizedAccess()) {
+        // Do not init if token is missing or invalid when required.
+        if ($this->formSecurity->needsTokenizedRequest() && !$this->formSecurity->hasTokenizedAccess()) {
             return;
         }
         $this->acfService->formHead();
@@ -288,9 +288,9 @@ class FrontendForm extends \Modularity\Module
 
     /**
      * Enqueues the form styles.
-     * 
+     *
      * This method enqueues the form styles.
-     * 
+     *
      * @return void
      */
     public function style(): void

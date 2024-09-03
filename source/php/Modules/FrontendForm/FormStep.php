@@ -21,7 +21,7 @@ class FormStep
 
         //Set properties
         $this->addProperty(
-            'includePostTitle', 
+            'includePostTitle',
             $acfFieldGroup['formStepIncludesPostTitle'] ?? false
         );
     }
