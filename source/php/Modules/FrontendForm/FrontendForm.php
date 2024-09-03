@@ -238,6 +238,11 @@ class FrontendForm extends \Modularity\Module
      */
     public function script(): void
     {
+        //Do not init if module is not active on page.
+        if (!$this->hasModule()) {
+            return;
+        }
+
         // Do not init if token is missing or invalid when required.
         if ($this->formSecurity->needsTokenizedRequest() && !$this->formSecurity->hasTokenizedAccess()) {
             return;
