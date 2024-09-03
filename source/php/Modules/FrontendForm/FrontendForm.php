@@ -278,7 +278,11 @@ class FrontendForm extends \Modularity\Module
      */
     public function script(): void
     {
-        $this->acfService->formHead(); //TODO: Do not init if token is missing. 
+        // Do not init if token is missing or invalid when required. 
+        if($this->formSecurity->needsTokenizedRequest() && !$this->formSecurity->hasTokenizedAccess()) {
+            return;
+        }
+        $this->acfService->formHead();
         $this->acfService->enqueueUploader();
     }
 
