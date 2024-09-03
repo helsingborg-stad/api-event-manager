@@ -158,8 +158,8 @@ class FrontendForm extends \Modularity\Module
 
         //Get current step form
         $self = $this; //Avoids lexical scope issues
-        $form = (function ($step) use ($self) {
-            $self->getForm($step, $self);
+        $form = (function ($step) use ($self, $fields) {
+            $self->getForm($step, $self, $fields);
         });
 
         return array_merge(
@@ -270,7 +270,7 @@ class FrontendForm extends \Modularity\Module
      *
      * @return int The form step.
      */
-    public function getForm($step, $self): void
+    public function getForm($step, $self, $fields): void
     {
         //Message when form is sent.
         $htmlUpdatedMessage = $self->renderView('partials.message', [
@@ -300,8 +300,8 @@ class FrontendForm extends \Modularity\Module
             'html_updated_message'  => $htmlUpdatedMessage,
             'html_submit_button'    => $htmlSubmitButton,
             'new_post'              => [
-                'post_type'   => $self->formPostType,
-                'post_status' => $self->formPostStatus
+                'post_type'   => $fields->saveToPostType ?? "post",
+                'post_status' => $fields->saveToPostTypeStatus ?? "draft"
             ],
             'instruction_placement' => 'label',
             'submit_value'          => $this->wpService->__('Create Event')
