@@ -8,6 +8,8 @@ use WpService\Contracts\UpdatePostMeta;
 
 class FormSecurity
 {
+    private $formEditTokenKey = 'form_edit_token';
+
     public function __construct(
         private GetQueryVar&GetPostMeta&UpdatePostMeta $wpService, 
         private string $formIdQueryParam, 
@@ -98,11 +100,10 @@ class FormSecurity
      */
     public function saveFormEditToken($postId, $token): ?bool
     {
-        $formEditTokenKey = 'form_edit_token';
-        if($this->wpService->getPostMeta($postId, $formEditTokenKey, true) === "") {
+        if($this->wpService->getPostMeta($postId, $this->formEditTokenKey, true) === "") {
             return (bool) $this->wpService->updatePostMeta(
                 $postId, 
-                $formEditTokenKey, 
+                $this->formEditTokenKey, 
                 $token
             );
         }
@@ -121,7 +122,7 @@ class FormSecurity
     {
         return $this->wpService->getPostMeta(
             $postId, 
-            'form_edit_token', 
+            $this->formEditTokenKey, 
             true
         );
     }
