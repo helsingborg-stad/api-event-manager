@@ -105,7 +105,7 @@ class FormSecurity
         if(is_null($this->getStoredFromEditToken($postId))) {
             $postUpdateResult = $this->wpService->updatePost(
                 [   
-                    'ID' => $postId,
+                    'ID' => $postId, 
                     'post_password' => $token
                 ]
             );
@@ -159,7 +159,7 @@ class FormSecurity
 
             if ($savedFormEditToken === true) {
                 //Remove %placeholders%
-                $return = str_replace('%postId%', $postId, $return);
+                $return = str_replace('%post_id%', $postId, $return);
                 $return = str_replace('%post_url%', get_permalink($postId), $return);
 
                 //Add token to url
