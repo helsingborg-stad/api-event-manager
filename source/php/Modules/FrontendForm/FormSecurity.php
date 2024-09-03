@@ -92,7 +92,7 @@ class FormSecurity
     /**
      * Saves the form edit token.
      *
-     * This method saves the form edit token by updating the post meta.
+     * This method saves the form edit token as a post password.
      *
      * @param int $postId The post ID.
      * @param mixed $post The post object.
@@ -102,11 +102,14 @@ class FormSecurity
      */
     public function saveFormEditToken($postId, $token): ?bool
     {
-        if($this->getStoredFromEditToken($postId) === $token) {
+        if(is_null($this->getStoredFromEditToken($postId))) {
             $postUpdateResult = $this->wpService->updatePost(
-                $postId, 
-                ['post_password' => $token]
+                [   
+                    'ID' => $postId,
+                    'post_password' => $token
+                ]
             );
+
             if($this->wpService->isWpError($postUpdateResult)) {
                 return false;
             }
@@ -125,7 +128,7 @@ class FormSecurity
      */
     private function getStoredFromEditToken($postId): ?string
     {
-        return $this->wpService->getPost($postId)->post_password ?? null; 
+        return $this->wpService->getPost($postId)->post_password ?: null; 
     }
 
     /**
@@ -144,10 +147,15 @@ class FormSecurity
     {
         //Redirect to the specified URL
         if ($return = acf_maybe_get($form, 'return', false)) {
+
+            //New token
             $token = $this->generateFromEditToken($postId);
 
             //Save token, if already exists false is returned
-            $savedFormEditToken = $this->saveFormEditToken($postId, $token);
+            $savedFormEditToken = $this->saveFormEditToken(
+                $postId,
+                $token
+            );
 
             if ($savedFormEditToken === true) {
                 //Remove %placeholders%
