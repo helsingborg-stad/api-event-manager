@@ -47,9 +47,20 @@ class FormSecurity
      */
     public function hasTokenizedAccess(): bool
     {
+        $postId = $this->wpService->getQueryVar($this->formIdQueryParam, null); 
+        $token  = $this->wpService->getQueryVar($this->formTokenQueryParam, null);
+
+        if(!is_numeric($postId)) {
+            return false;
+        }
+
+        if(!is_string($token)) {
+            return false;
+        }
+
         return $this->isValidFormEditToken(
-            $this->wpService->getQueryVar($this->formIdQueryParam, null),
-            $this->wpService->getQueryVar($this->formTokenQueryParam, null)
+            $postId,
+            $token
         );
     }
 
