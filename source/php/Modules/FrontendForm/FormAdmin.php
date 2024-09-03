@@ -14,7 +14,7 @@ class FormAdmin
         private GetFieldGroups $acfService,
         private string $fieldKey
     ) {
-        $this->wpService->addFilter('acf/load_field/name=' . $fieldKey, [$this, 'addOptionsToGroupSelect']);
+      $this->wpService->addFilter('acf/load_field/name=' . $fieldKey, [$this, 'addOptionsToGroupSelect']);
     }
 
   /**
@@ -27,28 +27,39 @@ class FormAdmin
    */
     public function addOptionsToGroupSelect($field)
     {
-      if ($this->isInEditMode() === true) {
-        return $field;
-      }
-
-      $field['choices'] = array();
-
-      // Get all field groups, filter out all that are connected to a post type.
-      $groups = $this->acfService->getFieldGroups();
-      $groups = array_filter($groups, function ($item) {
-        return isset($item['location'][0][0]['param']) && $item['location'][0][0]['param'] === 'post_type';
-      });
-
-      // Add groups to the select field
-      if (is_array($groups) && !empty($groups)) {
-        foreach ($groups as $group) {
-          $field['choices'][$group['key']] = (string) function ($name, $postTypeName) {
-            $postTypeName = $this->wpService->getPostTypeObject($postTypeName);
-            return (!empty($postTypeName->label) ? "$postTypeName->label: " : "") . $name;
-          };
+        if ($this->isInEditMode() === true) {
+            return $field;
         }
-      }
-      return $field;
+    
+        $field['choices'] = array();
+    
+        // Get all field groups, filter out all that are connected to a post type.
+        $groups = $this->acfService->getFieldGroups();
+        $groups = array_filter($groups, function ($item) {
+            return isset($item['location'][0][0]['param']) && $item['location'][0][0]['param'] === 'post_type';
+        });
+    
+        // Define a function to get the post type label.
+        $postTypeLabel = function ($name, $postTypeName) {
+            $postTypeObject = $this->wpService->getPostTypeObject($postTypeName);
+            return (!empty($postTypeObject->label) ? "{$postTypeObject->label}: " : "") . $name;
+        }; 
+    
+        // Add groups to the select field
+        if (!empty($groups)) {
+            foreach ($groups as $group) {
+                $groupTitle = $group['title'] ?? 'Unnamed Group'; // Use a default title if not set
+                $postType = $group['location'][0][0]['value'] ?? '';
+    
+                // Call the closure with the group's title and post type name
+                $field['choices'][$group['key']] = $postTypeLabel($groupTitle, $postType);
+            }
+        }
+
+        //Order by value 
+        asort($field['choices']);
+    
+        return $field;
     }
 
   /**
