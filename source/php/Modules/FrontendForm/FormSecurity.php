@@ -3,17 +3,17 @@
 namespace EventManager\Modules\FrontendForm;
 
 use WpService\Contracts\GetQueryVar;
-use WpService\Contracts\GetPostMeta;
-use WpService\Contracts\UpdatePostMeta;
+use WpService\Contracts\GetPost;
+use WpService\Contracts\AddAction;
+use WpService\Contracts\IsWPError;
+use WpService\Contracts\UpdatePost;
 
 class FormSecurity
 {
-    private $formEditTokenKey = 'form_edit_token';
-
     public function __construct(
-        private GetQueryVar&GetPostMeta&UpdatePostMeta $wpService,
+        private GetQueryVar&GetPost&AddAction&UpdatePost&IsWPError $wpService,
         private string $formIdQueryParam,
-        private string $formTokenQueryParam
+        private string $formTokenQueryParam     
     ) {
         $this->wpService->addAction(
             "acf/submit_form",
@@ -98,16 +98,19 @@ class FormSecurity
      * @param mixed $post The post object.
      * @param bool $update Whether this is an existing post being updated.
      *
-     * @return bool True if the form edit token was saved, null if the token already exists.
+     * @return bool True if the form edit token was saved, false on failure, null if the token already exists.
      */
     public function saveFormEditToken($postId, $token): ?bool
     {
-        if ($this->wpService->getPostMeta($postId, $this->formEditTokenKey, true) === "") {
-            return (bool) $this->wpService->updatePostMeta(
-                $postId,
-                $this->formEditTokenKey,
-                $token
+        if($this->getStoredFromEditToken($postId) === $token) {
+            $postUpdateResult = $this->wpService->updatePost(
+                $postId, 
+                ['post_password' => $token]
             );
+            if($this->wpService->isWpError($postUpdateResult)) {
+                return false;
+            }
+            return true;
         }
         return null;
     }
@@ -120,13 +123,9 @@ class FormSecurity
      * @param int $postId The post ID.
      * @return string The stored form edit token.
      */
-    private function getStoredFromEditToken($postId): string
+    private function getStoredFromEditToken($postId): ?string
     {
-        return $this->wpService->getPostMeta(
-            $postId,
-            $this->formEditTokenKey,
-            true
-        );
+        return $this->wpService->getPost($postId)->post_password ?? null; 
     }
 
     /**
@@ -150,7 +149,7 @@ class FormSecurity
             //Save token, if already exists false is returned
             $savedFormEditToken = $this->saveFormEditToken($post_id, $token);
 
-            if ($savedFormEditToken !== null) {
+            if ($savedFormEditToken === true) {
                 //Remove %placeholders%
                 $return = str_replace('%post_id%', $post_id, $return);
                 $return = str_replace('%post_url%', get_permalink($post_id), $return);
