@@ -108,6 +108,6 @@ class FormStepNav
             })();
         }
 
-        return $baseUrl . '#frmstp' . $step;
+        return $baseUrl . '#form-step-' . $step;
     }
 }

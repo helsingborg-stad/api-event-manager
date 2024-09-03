@@ -50,10 +50,6 @@ class FrontendForm extends \Modularity\Module
     private $formTokenQueryParam = 'token';  // The query parameter for the form token.
 
     private $formSecurity = null; // The form security service.
-    private $formAdmin    = null; // The form admin service.
-
-    private $formPostType   = null; // The post type for the form (set by config).
-    private $formPostStatus = null; // The post status for the form (set by config).
 
     private $blade = null;
 
@@ -64,21 +60,23 @@ class FrontendForm extends \Modularity\Module
     {
         $this->wpService    = new WpServiceWithTypecastedReturns(new NativeWpService());
         $this->acfService   = new NativeAcfService();
+
+        //Manages form security
         $this->formSecurity = new FormSecurity(
             $this->wpService,
             $this->formIdQueryParam,
             $this->formTokenQueryParam
         );
-        $this->formAdmin    = new FormAdmin(
-            $this->wpService,
-            $this->acfService,
-            'formStepGroup'
-        );
 
+        //Form admin service
+        new FormAdmin($this->wpService, $this->acfService, 'formStepGroup');
+
+        //Set module properties
         $this->nameSingular = $this->wpService->__('Event Form');
         $this->namePlural   = $this->wpService->__('Event Forms');
         $this->description  = $this->wpService->__('Module for creating public event form');
 
+        //Add query vars that should be allowed in context.
         $this->wpService->addFilter('query_vars', [$this, 'registerFormQueryVars']);
     }
 
@@ -94,50 +92,12 @@ class FrontendForm extends \Modularity\Module
         //Needs to be called, otherwise a notice will be thrown.
         $fields = (object) $this->getFields();
 
-        //Empty form. Show message.
-        if ($fields->formSteps == false) {
-            return array_merge(
-                $this->defaultDataResponse(),
-                [
-                'empty' => $this->renderView('partials.message', [
-                    'text' => $this->wpService->__(
-                        'No steps defined. Please Add some steps, to enable this form functionality.'
-                    ),
-                    'icon' => ['name' => 'info'],
-                    'type' => 'info'
-                ])
-                ]
-            );
-        }
-
-        //Protected form. Show message.
-        if ($fields->isPublicForm == false && !$this->wpService->isUserLoggedIn()) {
-            return array_merge(
-                $this->defaultDataResponse(),
-                [
-                'empty' => $this->renderView('partials.message', [
-                    'title' => $this->wpService->__('Access denied'),
-                    'text'  => $this->wpService->__('This form is protected. Please log in to access it.'),
-                    'icon'  => ['name' => 'info'],
-                    'type'  => 'warning'
-                ])
-                ]
-            );
-        }
-
-        //If we consider this form to need a tokenized request, and the token is missing, show message.
-        if ($this->formSecurity->needsTokenizedRequest() && !$this->formSecurity->hasTokenizedAccess()) {
-            return array_merge(
-                $this->defaultDataResponse(),
-                [
-                'empty' => $this->renderView('partials.message', [
-                    'title' => $this->wpService->__('Access denied'),
-                    'text'  => $this->wpService->__('Please use the edit link in the e-mail we sent you when you first created the post.'),
-                    'icon'  => ['name' => 'info'],
-                    'type'  => 'warning'
-                ])
-                ]
-            );
+        //If any of these conditions are met, return the error message: 
+        //Empty form:           Show error message, 
+        //Protected form:       Show error message,
+        //Tokenized request:    Show error message.
+        if($basicFormStateValidation = $this->basicFormStateValidation($fields)) {
+            return $basicFormStateValidation;
         }
 
         //Define form steps
@@ -386,5 +346,64 @@ class FrontendForm extends \Modularity\Module
                 $this->formTokenQueryParam
             ]
         );
+    }
+
+    /**
+     * Validates the basic form state.
+     *
+     * This method validates the basic form state by checking if the form is empty, protected, or needs a tokenized request.
+     *
+     * @param object $fields The form fields.
+     * @return array|null The error object, or null if the form state is valid.
+     */
+    private function basicFormStateValidation(object $fields): ?array {
+
+        //Empty form. Show message.
+        if ($fields->formSteps == false) {
+            return array_merge(
+                $this->defaultDataResponse(),
+                [
+                'empty' => $this->renderView('partials.message', [
+                    'text' => $this->wpService->__(
+                        'No steps defined. Please Add some steps, to enable this form functionality.'
+                    ),
+                    'icon' => ['name' => 'info'],
+                    'type' => 'info'
+                ])
+                ]
+            );
+        }
+
+        //Protected form. Show message.
+        if ($fields->isPublicForm == false && !$this->wpService->isUserLoggedIn()) {
+            return array_merge(
+                $this->defaultDataResponse(),
+                [
+                'empty' => $this->renderView('partials.message', [
+                    'title' => $this->wpService->__('Access denied'),
+                    'text'  => $this->wpService->__('This form is protected. Please log in to access it.'),
+                    'icon'  => ['name' => 'info'],
+                    'type'  => 'warning'
+                ])
+                ]
+            );
+        }
+
+        //If we consider this form to need a tokenized request, and the token is missing, show message.
+        if ($this->formSecurity->needsTokenizedRequest() && !$this->formSecurity->hasTokenizedAccess()) {
+            return array_merge(
+                $this->defaultDataResponse(),
+                [
+                'empty' => $this->renderView('partials.message', [
+                    'title' => $this->wpService->__('Access denied'),
+                    'text'  => $this->wpService->__('Please use the edit link in the e-mail we sent you when you first created the post.'),
+                    'icon'  => ['name' => 'info'],
+                    'type'  => 'warning'
+                ])
+                ]
+            );
+        }
+
+        return null;
     }
 }
