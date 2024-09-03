@@ -85,19 +85,25 @@ class FormSecurity
     /**
      * Generates a form edit token.
      *
-     * This method generates a form edit token by hashing the post ID, the current time, and a random string.
+     * This method generates a form edit token by hashing the post ID, a random string, and the AUTH_KEY.
      *
      * @param int $postId The post ID.
+     * @param int $length The length of the form edit token.
      *
      * @return string The generated form edit token.
      */
-    public function generateFromEditToken($postId): string
+    public function generateFromEditToken(int $postId, int $length = 16): string
     {
-        return hash_hmac(
-            'sha256',
-            $postId . microtime(true) . bin2hex(random_bytes(16)),
-            (defined('AUTH_KEY') ? AUTH_KEY : '')
+        $hash = hash_hmac(
+            'sha256', random_bytes($length),
+            (defined('AUTH_KEY') ? AUTH_KEY : '') . $postId,
+            true
         );
+
+        $base64Hash     = base64_encode($hash);
+        $urlSafeToken   = strtr(rtrim($base64Hash, '='), '+/', '-_');
+
+        return substr($urlSafeToken, 0, $length);
     }
 
     /**
