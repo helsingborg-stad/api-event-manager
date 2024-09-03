@@ -27,28 +27,28 @@ class FormAdmin
    */
     public function addOptionsToGroupSelect($field)
     {
-        if ($this->isInEditMode() === true) {
-            return $field;
-        }
+      if ($this->isInEditMode() === true) {
+        return $field;
+      }
 
-        $field['choices'] = array();
+      $field['choices'] = array();
 
       // Get all field groups, filter out all that are connected to a post type.
-        $groups = $this->acfService->getFieldGroups();
-        $groups = array_filter($groups, function ($item) {
-            return isset($item['location'][0][0]['param']) && $item['location'][0][0]['param'] === 'post_type';
-        });
+      $groups = $this->acfService->getFieldGroups();
+      $groups = array_filter($groups, function ($item) {
+        return isset($item['location'][0][0]['param']) && $item['location'][0][0]['param'] === 'post_type';
+      });
 
       // Add groups to the select field
-        if (is_array($groups) && !empty($groups)) {
-            foreach ($groups as $group) {
-                $field['choices'][$group['key']] = function ($name, $postTypeName) {
-                    $postTypeName = $this->wpService->getPostTypeObject($postTypeName);
-                    return (!empty($postTypeName->label) ? "$postTypeName->label: " : "") . $name;
-                };
-            }
+      if (is_array($groups) && !empty($groups)) {
+        foreach ($groups as $group) {
+          $field['choices'][$group['key']] = (string) function ($name, $postTypeName) {
+            $postTypeName = $this->wpService->getPostTypeObject($postTypeName);
+            return (!empty($postTypeName->label) ? "$postTypeName->label: " : "") . $name;
+          };
         }
-        return $field;
+      }
+      return $field;
     }
 
   /**
@@ -57,10 +57,10 @@ class FormAdmin
    */
     private function isInEditMode(): bool
     {
-        global $post;
-        if (is_a($post, 'WP_Post') && in_array($this->wpService->getPostType($post), array('acf-field', 'acf-field-group'))) {
-            return true;
-        }
-        return false;
+      global $post;
+      if (is_a($post, 'WP_Post') && in_array($this->wpService->getPostType($post), array('acf-field', 'acf-field-group'))) {
+        return true;
+      }
+      return false;
     }
 }
