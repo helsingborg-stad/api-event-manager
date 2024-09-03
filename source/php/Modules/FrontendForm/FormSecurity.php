@@ -94,9 +94,9 @@ class FormSecurity
      * @param mixed $post The post object.
      * @param bool $update Whether this is an existing post being updated.
      * 
-     * @return bool True if the form edit token was saved, false otherwise.
+     * @return bool True if the form edit token was saved, null if the token already exists.
      */
-    public function saveFormEditToken($postId, $token): bool
+    public function saveFormEditToken($postId, $token): ?bool
     {
         $formEditTokenKey = 'form_edit_token';
         if($this->wpService->getPostMeta($postId, $formEditTokenKey, true) === "") {
@@ -106,7 +106,7 @@ class FormSecurity
                 $token
             );
         }
-        return false;
+        return null;
     }
 
     /**
@@ -145,21 +145,23 @@ class FormSecurity
 
             $token = $this->generateFromEditToken($post_id);
 
-            //Save token
-            $this->saveFormEditToken($post_id, $token); 
+            //Save token, if already exists false is returned
+            $savedFormEditToken = $this->saveFormEditToken($post_id, $token); 
 
-            //Update %placeholders% 
-            $return = str_replace( '%post_id%', $post_id, $return );
-            $return = str_replace( '%post_url%', get_permalink( $post_id ), $return );
+            if($savedFormEditToken !== null) {
+                //Remove %placeholders% 
+                $return = str_replace( '%post_id%', $post_id, $return );
+                $return = str_replace( '%post_url%', get_permalink( $post_id ), $return );
 
-            //Add token to url 
-            $return = add_query_arg( array(
-                $this->formTokenQueryParam => $token 
-            ), $return );
+                //Add token to url 
+                $return = add_query_arg( array(
+                    $this->formTokenQueryParam => $token 
+                ), $return );
 
-            // redirect
-            wp_redirect($return);
-            exit;
+                // redirect
+                wp_redirect($return);
+                exit;
+            }
         }
     }
 }
