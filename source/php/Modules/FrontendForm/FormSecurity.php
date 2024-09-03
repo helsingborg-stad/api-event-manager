@@ -136,23 +136,23 @@ class FormSecurity
      * This method hijacks the save form redirect by redirecting the user to the specified URL.
      *
      * @param array $form The form data.
-     * @param int $post_id The post ID.
+     * @param int $postId The post ID.
      *
      * @return void
      */
-    public function hijackSaveFormRedirect($form, $post_id)
+    public function hijackSaveFormRedirect($form, $postId)
     {
         //Redirect to the specified URL
         if ($return = acf_maybe_get($form, 'return', false)) {
-            $token = $this->generateFromEditToken($post_id);
+            $token = $this->generateFromEditToken($postId);
 
             //Save token, if already exists false is returned
-            $savedFormEditToken = $this->saveFormEditToken($post_id, $token);
+            $savedFormEditToken = $this->saveFormEditToken($postId, $token);
 
             if ($savedFormEditToken === true) {
                 //Remove %placeholders%
-                $return = str_replace('%post_id%', $post_id, $return);
-                $return = str_replace('%post_url%', get_permalink($post_id), $return);
+                $return = str_replace('%postId%', $postId, $return);
+                $return = str_replace('%post_url%', get_permalink($postId), $return);
 
                 //Add token to url
                 $return = add_query_arg(array(
