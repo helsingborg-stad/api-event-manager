@@ -69,7 +69,8 @@ class FrontendForm extends \Modularity\Module
         );
 
         //Form admin service
-        new FormAdmin($this->wpService, $this->acfService, 'formStepGroup');
+        $formAdmin = new FormAdmin($this->wpService, $this->acfService, 'formStepGroup');
+        $formAdmin->addHooks();
 
         //Set module properties
         $this->nameSingular = $this->wpService->__('Event Form');
