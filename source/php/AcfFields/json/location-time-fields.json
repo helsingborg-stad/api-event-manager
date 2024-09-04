@@ -1,0 +1,376 @@
+[{
+    "key": "group_661e425070deb",
+    "title": "Time &amp; Location",
+    "fields": [
+        {
+            "key": "field_66607d700a6bc",
+            "label": "Date",
+            "name": "date",
+            "aria-label": "",
+            "type": "date_picker",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "is_publicly_hidden": 0,
+            "is_privately_hidden": 0,
+            "display_format": "l j F Y",
+            "return_format": "d\/m\/Y",
+            "first_day": 1
+        },
+        {
+            "key": "field_66607ee1da07a",
+            "label": "Start Time",
+            "name": "timeFrom",
+            "aria-label": "",
+            "type": "time_picker",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "is_publicly_hidden": 0,
+            "is_privately_hidden": 0,
+            "display_format": "H:i",
+            "return_format": "g:i a"
+        },
+        {
+            "key": "field_66607f20da07b",
+            "label": "End Time",
+            "name": "timeEnd",
+            "aria-label": "",
+            "type": "time_picker",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "is_publicly_hidden": 0,
+            "is_privately_hidden": 0,
+            "display_format": "H:i",
+            "return_format": "g:i a"
+        },
+        {
+            "key": "field_66607f508fc9b",
+            "label": "Recurring event",
+            "name": "recurringEvent",
+            "aria-label": "",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "is_publicly_hidden": 0,
+            "is_privately_hidden": 0,
+            "message": "I want to add multiple occurances for this event.",
+            "default_value": 0,
+            "ui": 0,
+            "ui_on_text": "",
+            "ui_off_text": ""
+        },
+        {
+            "key": "field_65a66d8cadeef",
+            "label": "Occasions",
+            "name": "occasions",
+            "aria-label": "",
+            "type": "repeater",
+            "instructions": "When is the event scheduled to take place? You have the option to establish a recurring schedule or specify up to 10 distinct dates and times.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "layout": "block",
+            "pagination": 0,
+            "min": 1,
+            "max": 10,
+            "collapsed": "",
+            "button_label": "<span class=\"c-icon c-icon--material material-symbols-outlined material-symbols-outlined--filled c-icon--size-md\" material-symbol=\"arrow_right_alt\" role=\"img\" aria-label=\"Icon: Undefined\" alt=\"Icon: Repeat\" data-nosnippet=\"\" translate=\"no\" aria-hidden=\"true\">add<\/span> Add occation",
+            "rows_per_page": 20,
+            "acfe_repeater_stylised_button": 0,
+            "sub_fields": [
+                {
+                    "key": "field_65a681f9a99e9",
+                    "label": "Date",
+                    "name": "date",
+                    "aria-label": "",
+                    "type": "date_picker",
+                    "instructions": "",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "50",
+                        "class": "",
+                        "id": ""
+                    },
+                    "is_publicly_hidden": 0,
+                    "is_privately_hidden": 0,
+                    "display_format": "l j F Y",
+                    "return_format": "Y-m-d",
+                    "first_day": 1,
+                    "parent_repeater": "field_65a66d8cadeef"
+                },
+                {
+                    "key": "field_65a68507a99eb",
+                    "label": "Start time",
+                    "name": "startTime",
+                    "aria-label": "",
+                    "type": "time_picker",
+                    "instructions": "",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "25",
+                        "class": "",
+                        "id": ""
+                    },
+                    "is_publicly_hidden": 0,
+                    "is_privately_hidden": 0,
+                    "display_format": "H:i",
+                    "return_format": "H:i",
+                    "parent_repeater": "field_65a66d8cadeef"
+                },
+                {
+                    "key": "field_65a6852da99ec",
+                    "label": "End time",
+                    "name": "endTime",
+                    "aria-label": "",
+                    "type": "time_picker",
+                    "instructions": "",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "25",
+                        "class": "",
+                        "id": ""
+                    },
+                    "is_publicly_hidden": 0,
+                    "is_privately_hidden": 0,
+                    "display_format": "H:i",
+                    "return_format": "H:i",
+                    "parent_repeater": "field_65a66d8cadeef"
+                }
+            ]
+        },
+        {
+            "key": "field_665089e28932a",
+            "label": "Physical or virtual event?",
+            "name": "physical_virtual",
+            "aria-label": "",
+            "type": "button_group",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "is_publicly_hidden": 0,
+            "is_privately_hidden": 0,
+            "choices": {
+                "physical": "Physical",
+                "virtual": "Virtual"
+            },
+            "default_value": "physical",
+            "return_format": "value",
+            "allow_null": 0,
+            "layout": "horizontal"
+        },
+        {
+            "key": "field_665095ca3b9a4",
+            "label": "Location name",
+            "name": "location_name",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "You may set a name of this location, to better describe it.",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_665089e28932a",
+                        "operator": "==",
+                        "value": "physical"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "is_publicly_hidden": 0,
+            "is_privately_hidden": 0,
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "center_lat": 53.55064,
+            "center_lng": 10.00065,
+            "zoom": 12,
+            "height": 400,
+            "return_format": "leaflet",
+            "allow_map_layers": 1,
+            "max_markers": 1,
+            "layers": [
+                "OpenStreetMap.Mapnik"
+            ],
+            "key": "field_65a245c3a4062",
+            "label": "Location",
+            "name": "location",
+            "aria-label": "",
+            "type": "open_street_map",
+            "instructions": "",
+            "required": 1,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_665089e28932a",
+                        "operator": "==",
+                        "value": "physical"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "is_publicly_hidden": 0,
+            "is_privately_hidden": 0,
+            "leaflet_map": "{\"lat\":53.55064,\"lng\":10.00065,\"zoom\":12,\"layers\":[\"OpenStreetMap.Mapnik\"],\"markers\":[]}"
+        },
+        {
+            "key": "field_66508a5b8932b",
+            "label": "Meeting Link",
+            "name": "meeting_link",
+            "aria-label": "",
+            "type": "url",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_665089e28932a",
+                        "operator": "==",
+                        "value": "virtual"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "is_publicly_hidden": 0,
+            "is_privately_hidden": 0,
+            "default_value": "",
+            "placeholder": ""
+        },
+        {
+            "key": "field_665099c9a92cc",
+            "label": "Travel information",
+            "name": "travel",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "Add information about how participants may get to your event.",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_665089e28932a",
+                        "operator": "==",
+                        "value": "physical"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "is_publicly_hidden": 0,
+            "is_privately_hidden": 0,
+            "default_value": "",
+            "acfe_textarea_code": 0,
+            "maxlength": "",
+            "rows": "",
+            "placeholder": "",
+            "new_lines": ""
+        },
+        {
+            "key": "field_66509a45a92cd",
+            "label": "Connect information",
+            "name": "connect",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "Give your attendees information about how to connect to your meeting.",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_665089e28932a",
+                        "operator": "==",
+                        "value": "virtual"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "is_publicly_hidden": 0,
+            "is_privately_hidden": 0,
+            "default_value": "",
+            "acfe_textarea_code": 0,
+            "maxlength": "",
+            "rows": "",
+            "placeholder": "",
+            "new_lines": ""
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "event"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "Give your guests the important details they need: when and where your event is happening.",
+    "show_in_rest": 0,
+    "acfe_display_title": "",
+    "acfe_autosync": "",
+    "acfe_form": 0,
+    "acfe_meta": "",
+    "acfe_note": ""
+}]
+

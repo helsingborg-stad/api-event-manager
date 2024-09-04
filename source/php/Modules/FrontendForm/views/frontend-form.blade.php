@@ -22,13 +22,19 @@
     'classList' => [
       'u-margin__bottom--4'
     ],
+    'attributeList' => [
+      'view-transition-name' => 'form-progress-bar'
+    ]
   ])
   @endprogressBar
 
   @foreach ($steps as $stepKey => $step)
-    @paper(['padding' => 4, 'classList' => ['u-margin__bottom--4']])
-      
-    
+    @paper([
+      'id' => 'form-step-' . $step->step, 
+      'padding' => 4, 
+      'classList' => ['u-margin__bottom--4'], 
+      'attributeList' => ['view-transition-name' => 'form-step-' . $step->step]
+    ])
       <div class="u-display--flex u-align-content--center">
         <div class="u-flex-grow--1">
         @if($step->state->isPassed)
@@ -53,7 +59,8 @@
             'variant' => 'meta',
             'classList' => [
               'c-typography__iteration'
-            ]
+          ],
+          'attributeList' => ['view-transition-name' => 'form-step-stepdata-' . $step->step]
         ])
           {{ $lang->step }} {{ $step->step }} {{ $lang->of }} {{ $state->totalSteps }}
         @endtypography
@@ -62,27 +69,30 @@
           @typography([
             'element' => 'h5',
             'variant' => 'h3',
-            'classList' => ['u-margin--0']
+            'classList' => ['u-margin--0'],
+            'attributeList' => ['view-transition-name' => 'form-step-title-' . $step->step]
           ])
             {{ $step->title }}
           @endtypography
         @endif
 
-        @if ($step->description && $step->state->isCurrent)
-          @typography([
-            'element' => 'p',
-            'variant' => 'body',
-            'classList' => ['u-margin--0']
-          ])
-            {!! $step->description !!}
-          @endtypography
-        @endif
+        <div class="form-step-content" view-transition-name="form-step-content">
+          @if ($step->description && $step->state->isCurrent)
+            @typography([
+              'element' => 'p',
+              'variant' => 'body',
+              'classList' => ['u-margin--0']
+            ])
+              {!! $step->description !!}
+            @endtypography
+          @endif
 
-        @if($step->state->isCurrent)
-          <div class="u-margin__top--4">
-            {!! $form($step) !!}
-          </div>
-        @endif
+          @if($step->state->isCurrent)
+            <div class="u-margin__top--4">
+              {!! $form($step) !!}
+            </div>
+          @endif
+        </div>
       </div>
 
         @if($step->state->isPassed)
@@ -100,11 +110,33 @@
             @endbutton
           </div>
         @endif
-
-        
       </div>
     @endpaper
   @endforeach
+
+  @if($summary->isEnabled)
+    @paper(['padding' => 4, 'classList' => ['u-margin__bottom--4']])
+      @if ($summary->title)
+        @typography([
+          'element' => 'h5',
+          'variant' => 'h3',
+          'classList' => ['u-margin--0']
+        ])
+          {{ $summary->title }}
+        @endtypography
+
+        @if ($summary->lead)
+          @typography([
+            'element' => 'p',
+            'variant' => 'body',
+            'classList' => ['u-margin--0']
+          ])
+            {!! $summary->lead !!}
+          @endtypography
+        @endif
+      @endif
+    @endpaper
+  @endif
 
   @typography([
       'element' => 'p',

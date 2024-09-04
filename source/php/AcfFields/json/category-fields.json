@@ -1,0 +1,77 @@
+[{
+    "key": "group_66436fdd0f112",
+    "title": "Category",
+    "fields": [
+        {
+            "key": "field_65fd4c7a55b91",
+            "label": "Event Type",
+            "name": "type",
+            "aria-label": "",
+            "type": "radio",
+            "instructions": "What category do you feel accurately reflects your event's purpose? This gives a brief overview of the event's content. If you're unsure, you can opt for the generic label 'event'.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "is_publicly_hidden": 0,
+            "is_privately_hidden": 0,
+            "choices": {
+                "Event": "Event",
+                "BusinessEvent": "Business Event",
+                "ChildrensEvent": "Childrens Event",
+                "ComedyEvent": "Comedy Event",
+                "CourseInstance": "CourseInstance",
+                "DanceEvent": "Dance Event",
+                "DeliveryEvent": "Delivery Event",
+                "EducationEvent": "Education Event",
+                "EventSeries": "Event Series",
+                "ExhibitionEvent": "Exhibition Event",
+                "Festival": "Festival",
+                "FoodEvent": "Food Event",
+                "Hackathon": "Hackathon",
+                "LiteraryEvent": "Literary Event",
+                "MusicEvent": "Music Event",
+                "PublicationEvent": "Publication Event",
+                "SaleEvent": "Sale Event",
+                "ScreeningEvent": "Screening Event",
+                "SocialEvent": "Social Event",
+                "SportsEvent": "Sports Event",
+                "TheaterEvent": "Theater Event",
+                "VisualArtsEvent": "VisualArts Event"
+            },
+            "default_value": "Event",
+            "return_format": "value",
+            "allow_null": 0,
+            "other_choice": 0,
+            "layout": "horizontal",
+            "save_other_choice": 0
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "event"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "left",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "acfe_display_title": "",
+    "acfe_autosync": "",
+    "acfe_form": 0,
+    "acfe_meta": "",
+    "acfe_note": ""
+}]
+

@@ -4,14 +4,21 @@ namespace EventManager\Modules\FrontendForm;
 
 use EventManager\Modules\FrontendForm\FormStepState;
 
-/* TODO: Make this gpt code work */
 class FormStepNav
 {
     public ?string $previous = null;
     public ?string $current  = null;
     public ?string $next     = null;
-    public array $queryVars  = [];
 
+    /**
+     * Construct the FormStepNav object.
+     *
+     * @param FormStep $step
+     * @param FormStepState $stepState
+     * @param array $steps
+     * @param string $baseUrl
+     * @param array $queryVars
+     */
     public function __construct(
         FormStep $step,
         FormStepState $stepState,
@@ -19,12 +26,22 @@ class FormStepNav
         string $baseUrl,
         array $queryVars
     ) {
-        $this->previous = $this->getprevious($step, $stepState, $steps, $baseUrl, $queryVars);
-        $this->current  = $this->getcurrent($step, $baseUrl, $queryVars);
-        $this->next     = $this->getnext($step, $stepState, $steps, $baseUrl, $queryVars);
+        $this->previous = $this->getPrevious($step, $stepState, $steps, $baseUrl, $queryVars);
+        $this->current  = $this->getCurrent($step, $baseUrl, $queryVars);
+        $this->next     = $this->getNext($step, $stepState, $steps, $baseUrl, $queryVars);
     }
 
-    private function getprevious(
+    /**
+     * Get the previous step link.
+     *
+     * @param FormStep $step
+     * @param FormStepState $state
+     * @param array $steps
+     * @param string $baseUrl
+     * @param array $queryVars
+     * @return string|null
+     */
+    private function getPrevious(
         FormStep $step,
         FormStepState $state,
         array $steps,
@@ -38,7 +55,17 @@ class FormStepNav
         return null;
     }
 
-    private function getnext(FormStep $step, FormStepState $state, $steps, string $baseUrl, array $queryVars): ?string
+    /**
+     * Get the next step link.
+     *
+     * @param FormStep $step
+     * @param FormStepState $state
+     * @param array $steps
+     * @param string $baseUrl
+     * @param array $queryVars
+     * @return string|null
+     */
+    private function getNext(FormStep $step, FormStepState $state, $steps, string $baseUrl, array $queryVars): ?string
     {
         $nextStep = $state->nextStep($step, $steps);
         if ($nextStep) {
@@ -47,7 +74,15 @@ class FormStepNav
         return null;
     }
 
-    private function getcurrent(FormStep $step, string $baseUrl, array $queryVars): ?string
+    /**
+     * Get the current step link.
+     *
+     * @param FormStep $step
+     * @param string $baseUrl
+     * @param array $queryVars
+     * @return string|null
+     */
+    private function getCurrent(FormStep $step, string $baseUrl, array $queryVars): ?string
     {
         return $this->getStepLink($step->step, $baseUrl, $queryVars) ?? null;
     }
@@ -72,6 +107,7 @@ class FormStepNav
                 return implode('&', $paramsJoined);
             })();
         }
-        return $baseUrl;
+
+        return $baseUrl . '#form-step-' . $step;
     }
 }

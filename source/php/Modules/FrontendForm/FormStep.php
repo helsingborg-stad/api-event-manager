@@ -7,7 +7,8 @@ class FormStep
     public int $step;
     public string $title;
     public string $description;
-    public string $group;
+    public array $group;
+    public object $properties;
     public object $state;
     public object $nav;
 
@@ -16,6 +17,20 @@ class FormStep
         $this->step        = $step;
         $this->title       = $acfFieldGroup['formStepTitle'] ?? '';
         $this->description = $acfFieldGroup['formStepContent'] ?? '';
-        $this->group       = $acfFieldGroup['formStepGroup'] ?? '';
+        $this->group       = $acfFieldGroup['formStepGroup'] ?? [];
+
+        //Set properties
+        $this->addProperty(
+            'includePostTitle',
+            $acfFieldGroup['formStepIncludesPostTitle'] ?? false
+        );
+    }
+
+    private function addProperty(string $name, $value): void
+    {
+        if (!isset($this->properties)) {
+            $this->properties = new \stdClass();
+        }
+        $this->properties->$name = $value;
     }
 }

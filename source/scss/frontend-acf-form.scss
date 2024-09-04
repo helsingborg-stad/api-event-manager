@@ -40,10 +40,21 @@
   }
 }
 
+@mixin reset-field-styles {
+  border-radius: 0;
+  border: none; 
+  padding: 0;
+  background: none;
+}
+
+html {
+  scroll-behavior: initial !important; /* Remove when a partial refresh can be made */ 
+}
+
 #acf-form.acf-form .acf-fields {
 
   display: flex;
-  gap: calc(var(--base, 8px) * var(--o-grid-gap, 4) * 2) calc(var(--base, 8px) * var(--o-grid-gap, 4));
+  gap: calc(var(--base, 8px) * 3);
   flex-wrap: wrap;
 
   &::after {
@@ -96,6 +107,8 @@
     font-size: var(--c-field-helper-font-size, var(--font-size-caption, .875rem));
     font-weight: var(--font-family-base, "Roboto", "sans-serif");
     margin: 0;
+    padding: 0 0 calc(var(--base, 8px) * 2) 0;
+    max-width: 650px;
   }
 
   .acf-field .acf-input {
@@ -270,6 +283,101 @@
     margin-top: 0.25rem;
   }
 
+  /* Button toggle */ 
+
+  .acf-button-group label,
+  .acf-button-group label.selected {
+    @include button-styles();
+  }
+
+  .acf-button-group label:last-child {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+
+  .acf-button-group label:first-child {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  .acf-button-group label.selected::before {
+    position: absolute;
+    content: "";
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, .5);
+    transition: 100ms all;
+  }
+
+  /* Checkbox list */ 
+
+  .acf-checkbox-list.acf-hl,
+  .acf-radio-list.acf-hl {
+    @include reset-field-styles();
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+
+    li {
+      margin-right: 0;
+    }
+
+    &:before {
+      display: none;
+    }
+
+    label {
+      @include button-styles();
+    }
+
+    label.selected {
+      text-decoration: underline;
+    }
+
+    label input {
+      display: none;
+    }
+  }
+
+  .acf-checkbox-list.acf-bl,
+  .acf-radio-list.acf-bl {
+    @include reset-field-styles();
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    label {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+    }
+
+    label:before {
+      content: "";
+      display: block;
+      width: 2em;
+      height: 2em;
+      border: var(--c-select-border-width,var(--border-width-input,1px)) solid var(--c-select-border-color,#cacaca);  
+      transition: all 100ms;
+    }
+
+    label input {
+      display: none;
+    }
+
+    label.selected::before {
+      background-color: var(--color-primary, #007bff);
+    }
+  }
+
+  .acf-radio-list.acf-bl label:before {
+    border-radius: 50%;
+  }
+
   /* Repeater */ 
   .acf-repeater {
     margin-bottom: calc(var(--base, 8px));
@@ -280,8 +388,9 @@
     }
 
     .acf-fields {
-      padding: calc(var(--base, 8px)* 2) !important;
-      border-left: none;
+      padding: 0;
+      border: none !important;
+      gap: calc(var(--base, 8px)* 2); 
     }
 
     /* Add new button etc */
@@ -300,6 +409,11 @@
 
     /* Row actions */
     .acf-row-handle {
+
+      &.remove {
+        border: none !important;
+        background: none !important;
+      }
 
       &.remove .acf-icon {
         display: block;
@@ -322,6 +436,10 @@
         &.-plus {
           display: none !important; /* Todo: Should we have this? */
         }
+    }
+
+    &.order {
+      display: none !important;
     }
   }
 }

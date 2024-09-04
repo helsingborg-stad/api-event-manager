@@ -1,30 +1,26 @@
 [{
-    "key": "group_65a115157a046",
-    "title": "General",
+    "key": "group_66436b29cfb4f",
+    "title": "Contact",
     "fields": [
         {
-            "key": "field_65a5319a9d01d",
-            "label": "Status",
-            "name": "eventStatus",
+            "key": "field_65a4f6af50302",
+            "label": "Organizer",
+            "name": "organization",
             "aria-label": "",
             "type": "select",
             "instructions": "",
-            "required": 1,
+            "required": 0,
             "conditional_logic": 0,
             "wrapper": {
                 "width": "",
                 "class": "",
                 "id": ""
             },
-            "is_publicly_hidden": 1,
-            "is_privately_hidden": 0,
             "choices": {
-                "https:\/\/schema.org\/EventScheduled": "Schemalagt",
-                "https:\/\/schema.org\/EventRescheduled": "Omplanerat",
-                "https:\/\/schema.org\/EventCancelled": "Inst\u00e4llt",
-                "https:\/\/schema.org\/EventPostponed": "Framskjutet"
+                "374": "Organization A",
+                "375": "Organization B"
             },
-            "default_value": "https:\/\/schema.org\/EventScheduled",
+            "default_value": false,
             "return_format": "value",
             "multiple": 0,
             "allow_null": 0,
@@ -45,23 +41,13 @@
         ]
     ],
     "menu_order": 0,
-    "position": "acf_after_title",
+    "position": "normal",
     "style": "default",
     "label_placement": "left",
     "instruction_placement": "label",
-    "hide_on_screen": [
-        "permalink",
-        "the_content",
-        "excerpt",
-        "discussion",
-        "comments",
-        "format",
-        "categories",
-        "tags",
-        "send-trackbacks"
-    ],
+    "hide_on_screen": "",
     "active": true,
-    "description": "We are nearly there! Just let us know some important last minute details, and you are ready to go!",
+    "description": "",
     "show_in_rest": 0,
     "acfe_display_title": "",
     "acfe_autosync": "",

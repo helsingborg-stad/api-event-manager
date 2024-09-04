@@ -8,18 +8,29 @@
 
 namespace EventManager\Modules\FrontendForm;
 
+use EventManager\Modules\FrontendForm\FormStep;
+use ComponentLibrary\Init as ComponentLibraryInit;
+use Throwable;
+
 use AcfService\Contracts\EnqueueUploader;
 use AcfService\Contracts\Form;
 use AcfService\Contracts\FormHead;
 use AcfService\Contracts\GetFieldGroups;
 use AcfService\Implementations\NativeAcfService;
-use EventManager\Modules\FrontendForm\FormStep;
 
-use ComponentLibrary\Init as ComponentLibraryInit;
 use WpService\Contracts\EnqueueStyle;
 use WpService\Implementations\NativeWpService;
-use Throwable;
 use WpService\Contracts\__;
+use WpService\Contracts\AddFilter;
+use WpService\Contracts\AddAction;
+use WpService\Contracts\IsUserLoggedIn;
+use WpService\Contracts\GetQueryVar;
+use WpService\Contracts\GetPostType;
+use WpService\Contracts\GetPostTypeObject;
+use WpService\Contracts\GetPermalink;
+use WpService\Contracts\GetPostMeta;
+use WpService\Contracts\UpdatePostMeta;
+use WpService\Implementations\WpServiceWithTypecastedReturns;
 
 /**
  * @property string $description
@@ -32,65 +43,62 @@ class FrontendForm extends \Modularity\Module
     public $slug     = 'event-form';
     public $supports = [];
     public $hidden   = false;
+    public $cacheTtl = 0;
 
-    private $formStepQueryParam = 'step'; // The query parameter for the form steps.
-    private $formIdQueryParam   = 'formid'; // The query parameter for the form id.
+    private $formStepQueryParam  = 'step'; // The query parameter for the form steps.
+    private $formIdQueryParam    = 'formid'; // The query parameter for the form id.
+    private $formTokenQueryParam = 'token';  // The query parameter for the form token.
 
-    private $formPostType   = null; // The post type for the form.
-    private $formPostStatus = null; // The post status for the form.
+    private $formSecurity = null; // The form security service.
 
     private $blade = null;
 
-    private EnqueueStyle&__ $wpService;
+    private EnqueueStyle &__&IsUserLoggedIn&AddFilter&AddAction&GetQueryVar&GetPostType&GetPostTypeObject&GetPermalink&GetPostMeta&UpdatePostMeta $wpService;
     private FormHead&EnqueueUploader&Form&GetFieldGroups $acfService;
 
     public function init(): void
     {
-        $this->wpService  = new NativeWpService(); // TODO: use custom modularity middleware.
-        $this->acfService = new NativeAcfService(); // TODO: use custom modularity middleware.
+        $this->wpService    = new WpServiceWithTypecastedReturns(new NativeWpService());
+        $this->acfService   = new NativeAcfService();
 
+        //Manages form security
+        $this->formSecurity = new FormSecurity(
+            $this->wpService,
+            $this->formIdQueryParam,
+            $this->formTokenQueryParam
+        );
+
+        //Form admin service
+        $formAdmin = new FormAdmin($this->wpService, $this->acfService, 'formStepGroup');
+        $formAdmin->addHooks();
+
+        //Set module properties
         $this->nameSingular = $this->wpService->__('Event Form');
         $this->namePlural   = $this->wpService->__('Event Forms');
         $this->description  = $this->wpService->__('Module for creating public event form');
 
-        add_filter('query_vars', [$this, 'registerFormStepQueryVar']); // add from wpservice
-        add_filter('query_vars', [$this, 'registerFormIdQueryVar']); // add from wpservice
-        add_filter('acf/load_field/name=formStepGroup', [$this, 'addOptionsToGroupSelect']); // add from wpservice
+        //Add query vars that should be allowed in context.
+        $this->wpService->addFilter('query_vars', [$this, 'registerFormQueryVars']);
     }
 
+    /**
+     * Retrieves the form data.
+     *
+     * This method retrieves the form data by checking if the form is empty, protected, or needs a tokenized request.
+     *
+     * @return array The form data.
+     */
     public function data(): array
     {
         //Needs to be called, otherwise a notice will be thrown.
         $fields = (object) $this->getFields();
 
-        //Empty form. Show message.
-        if ($fields->formSteps == false) {
-            return array_merge(
-                $this->defaultDataResponse(),
-                [
-                'empty' => $this->renderView('partials.message', [
-                    'text' => $this->wpService->__(
-                        'No steps defined. Please Add some steps, to enable this form functionality.'
-                    ),
-                    'icon' => ['name' => 'info'],
-                    'type' => 'info'
-                ])
-                ]
-            );
-        }
-
-        //Protected form. Show message.
-        if ($fields->isPublicForm == false && !$this->hasAccess()) {
-            return array_merge(
-                $this->defaultDataResponse(),
-                [
-                'empty' => $this->renderView('partials.message', [
-                    'text' => $this->wpService->__('This form is protected, please log in.'),
-                    'icon' => ['name' => 'info'],
-                    'type' => 'info'
-                ])
-                ]
-            );
+        //If any of these conditions are met, return the error message: 
+        //Empty form:           Show error message, 
+        //Protected form:       Show error message,
+        //Tokenized request:    Show error message.
+        if($basicFormStateValidation = $this->basicFormStateValidation($fields)) {
+            return $basicFormStateValidation;
         }
 
         //Define form steps
@@ -105,7 +113,7 @@ class FrontendForm extends \Modularity\Module
         //Set form state
         $formState = new FormState(
             $steps,
-            $this->formStepQueryParam
+            $this->wpService->getQueryVar($this->formStepQueryParam, 1)
         );
 
         //Decorate step with state, and link
@@ -120,10 +128,17 @@ class FrontendForm extends \Modularity\Module
                 $step,
                 $stepState,
                 $steps,
-                get_permalink(),
+                $this->wpService->getPermalink(),
                 [
-                    'formid' => get_query_var($this->formIdQueryParam, "%post_id%"),
-                    'step'   => null
+                    'formid' => $this->wpService->getQueryVar(
+                        $this->formIdQueryParam,
+                        "%post_id%"
+                    ),
+                    'step'   => null,
+                    'token'  => $this->wpService->getQueryVar(
+                        $this->formTokenQueryParam,
+                        null
+                    )
                 ]
             );
         }
@@ -144,8 +159,8 @@ class FrontendForm extends \Modularity\Module
 
         //Get current step form
         $self = $this; //Avoids lexical scope issues
-        $form = (function ($step) use ($self) {
-            $self->getForm($step, $self);
+        $form = (function ($step) use ($self, $fields) {
+            $self->getForm($step, $self, $fields);
         });
 
         return array_merge(
@@ -159,6 +174,11 @@ class FrontendForm extends \Modularity\Module
                     'postType'   => $fields->saveToPostType ?? "post",
                     'postStatus' => $fields->saveToPostTypeStatus ?? "draft"
                 ],
+                'summary'      => (object) [
+                    'isEnabled' => $fields->hasSummaryStep ?? false,
+                    'title'     => $fields->summaryTitle,
+                    'lead'      => $fields->summaryLead
+                ],
                 'lang'         => $this->getLang()
             ]
         );
@@ -166,6 +186,7 @@ class FrontendForm extends \Modularity\Module
 
     /**
      * Retrives default values for keys used in the form display.
+     * This prevents notices when the keys are not set.
      *
      * @return array The default keys and values.
      */
@@ -175,14 +196,6 @@ class FrontendForm extends \Modularity\Module
             'empty' => false,
             'error' => false
         ];
-    }
-
-    /**
-     * Check if the current user is logged in.
-     */
-    public function hasAccess(): bool
-    {
-        return is_user_logged_in();
     }
 
     /**
@@ -212,38 +225,43 @@ class FrontendForm extends \Modularity\Module
         ];
     }
 
-    private function getQueryParam($key, $default = ""): string
-    {
-        return get_query_var($key, $default);
-    }
-
     public function template(): string
     {
         return 'frontend-form.blade.php';
     }
 
+    /**
+     * Enqueues the form scripts.
+     *
+     * This method enqueues the form scripts.
+     *
+     * @return void
+     */
     public function script(): void
     {
+        //Do not init if module is not active on page.
+        if (!$this->hasModule()) {
+            return;
+        }
+
+        // Do not init if token is missing or invalid when required.
+        if ($this->formSecurity->needsTokenizedRequest() && !$this->formSecurity->hasTokenizedAccess()) {
+            return;
+        }
         $this->acfService->formHead();
         $this->acfService->enqueueUploader();
     }
 
+    /**
+     * Enqueues the form styles.
+     *
+     * This method enqueues the form styles.
+     *
+     * @return void
+     */
     public function style(): void
     {
         $this->wpService->enqueueStyle('event-manager-frontend-form');
-    }
-
-    /**
-     * Retrieves the form ID or "new_post".
-     *
-     * This method returns the form ID by retrieving the value of the specified query parameter.
-     * If the query parameter is not set, the method will return a string representing create_new_post.
-     *
-     * @return string The form ID. Or "new_post" if the query parameter is not set.
-     */
-    private function getFormId(): string
-    {
-        return $this->getQueryParam($this->formIdQueryParam, 'new_post');
     }
 
     /**
@@ -253,7 +271,7 @@ class FrontendForm extends \Modularity\Module
      *
      * @return int The form step.
      */
-    public function getForm($step, $self): void
+    public function getForm($step, $self, $fields): void
     {
         //Message when form is sent.
         $htmlUpdatedMessage = $self->renderView('partials.message', [
@@ -264,15 +282,15 @@ class FrontendForm extends \Modularity\Module
 
         $htmlSubmitButton = $self->renderView(
             'partials.button-wrapper',
-            ['step' => $step]
+            ['step' => $step, 'lang' => $self->getLang()]
         );
 
         $this->acfService->form([
-            'post_id'               => $this->getFormId(),
+            'post_id'               => $this->wpService->getQueryVar($this->formIdQueryParam, 'new_post'),
             'return'                => $step->nav->next ?? false, // Add form result page here
-            'post_title'            => $step->state->isFirst ? true : false,
+            'post_title'            => $step->properties->includePostTitle,
             'post_content'          => false,
-            'field_groups'          => [
+            'field_groups'          => is_array($step->group) ? $step->group :  [
                 $step->group
             ],
             'form_attributes'       => ['class' => 'acf-form js-form-validation js-form-validation'],
@@ -283,10 +301,10 @@ class FrontendForm extends \Modularity\Module
             'html_updated_message'  => $htmlUpdatedMessage,
             'html_submit_button'    => $htmlSubmitButton,
             'new_post'              => [
-                'post_type'   => $self->formPostType,
-                'post_status' => $self->formPostStatus
+                'post_type'   => $fields->saveToPostType ?? "post",
+                'post_status' => $fields->saveToPostTypeStatus ?? "draft"
             ],
-            'instruction_placement' => 'field',
+            'instruction_placement' => 'label',
             'submit_value'          => $this->wpService->__('Create Event')
         ]);
     }
@@ -316,70 +334,82 @@ class FrontendForm extends \Modularity\Module
     }
 
     /**
-     * Registers the form step query variable.
+     * Registers multiple query variables for the form in order to be able to access them in get_query_var.
      *
-     * This method takes an array of registered query variables and adds the form step key to it.
-     *
-     * @param array $registeredQueryVars The array of registered query variables.
-     * @return array The updated array of registered query variables.
-     */
-    public function registerFormStepQueryVar(array $registeredQueryVars): array
-    {
-        return $registeredQueryVars = array_merge(
-            $registeredQueryVars,
-            [$this->formStepQueryParam]
-        );
-    }
-
-    /**
-     * Registers the form id query variable.
-     *
-     * This method takes an array of registered query variables and adds the form id key to it.
+     * This method takes an array of registered query variables and adds
+     * the form step, form ID, and form token keys to it.
      *
      * @param array $registeredQueryVars The array of registered query variables.
      * @return array The updated array of registered query variables.
      */
-    public function registerFormIdQueryVar(array $registeredQueryVars): array
+    public function registerFormQueryVars(array $registeredQueryVars): array
     {
-        return $registeredQueryVars = array_merge(
+        return array_merge(
             $registeredQueryVars,
-            [$this->formIdQueryParam]
+            [
+                $this->formStepQueryParam,
+                $this->formIdQueryParam,
+                $this->formTokenQueryParam
+            ]
         );
     }
 
     /**
-     * Adds the field groups to the select field.
+     * Validates the basic form state.
      *
-     * This method takes a field and adds the field groups to the select field.
+     * This method validates the basic form state by checking if the form is empty, protected, or needs a tokenized request.
      *
-     * @param array $field The field to add the field groups to.
-     * @return array The updated field.
+     * @param object $fields The form fields.
+     * @return array|null The error object, or null if the form state is valid.
      */
-    public function addOptionsToGroupSelect($field)
-    {
-        $field['choices'] = array();
+    private function basicFormStateValidation(object $fields): ?array {
 
-        // Get all field groups, filter out all that are connected to a post type.
-        $groups = $this->acfService->getFieldGroups();
-        $groups = array_filter($groups, function ($item) {
-            return isset($item['location'][0][0]['param']) && $item['location'][0][0]['param'] === 'post_type';
-        });
-
-        // Create a select item title
-        $createSelectItemTitle = function ($name, $postTypeName) {
-            $postTypeName = get_post_type_object($postTypeName);
-            return (!empty($postTypeName->label) ? "$postTypeName->label: " : "") . $name;
-        };
-
-        // Add groups to the select field
-        if (is_array($groups) && !empty($groups)) {
-            foreach ($groups as $group) {
-                $field['choices'][$group['key']] = $createSelectItemTitle(
-                    $group['title'],
-                    $group['location'][0][0]['value']
-                );
-            }
+        //Empty form. Show message.
+        if ($fields->formSteps == false) {
+            return array_merge(
+                $this->defaultDataResponse(),
+                [
+                'empty' => $this->renderView('partials.message', [
+                    'text' => $this->wpService->__(
+                        'No steps defined. Please Add some steps, to enable this form functionality.'
+                    ),
+                    'icon' => ['name' => 'info'],
+                    'type' => 'info'
+                ])
+                ]
+            );
         }
-        return $field;
+
+        //Protected form. Show message.
+        if ($fields->isPublicForm == false && !$this->wpService->isUserLoggedIn()) {
+            return array_merge(
+                $this->defaultDataResponse(),
+                [
+                'empty' => $this->renderView('partials.message', [
+                    'title' => $this->wpService->__('Access denied'),
+                    'text'  => $this->wpService->__('This form is protected. Please log in to access it.'),
+                    'icon'  => ['name' => 'info'],
+                    'type'  => 'warning'
+                ])
+                ]
+            );
+        }
+
+        //If we consider this form to need a tokenized request, and the token is missing, show message.
+        if ($this->formSecurity->needsTokenizedRequest() && !$this->formSecurity->hasTokenizedAccess()) {
+            return array_merge(
+                $this->defaultDataResponse(),
+                [
+                'empty' => $this->renderView('partials.message', [
+                    'title' => $this->wpService->__('Access denied'),
+                    'text'  => $this->wpService->__('Please use the edit link in the e-mail we sent you when you first created the post.'),
+                    'icon'  => ['name' => 'info'],
+                    'type'  => 'warning'
+                ])
+                ]
+            );
+        }
+
+        return null;
     }
 }
