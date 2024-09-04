@@ -26,9 +26,9 @@ class FormStepNav
         string $baseUrl,
         array $queryVars
     ) {
-        $this->previous = $this->getprevious($step, $stepState, $steps, $baseUrl, $queryVars);
-        $this->current  = $this->getcurrent($step, $baseUrl, $queryVars);
-        $this->next     = $this->getnext($step, $stepState, $steps, $baseUrl, $queryVars);
+        $this->previous = $this->getPrevious($step, $stepState, $steps, $baseUrl, $queryVars);
+        $this->current  = $this->getCurrent($step, $baseUrl, $queryVars);
+        $this->next     = $this->getNext($step, $stepState, $steps, $baseUrl, $queryVars);
     }
 
     /**
@@ -41,7 +41,7 @@ class FormStepNav
      * @param array $queryVars
      * @return string|null
      */
-    private function getprevious(
+    private function getPrevious(
         FormStep $step,
         FormStepState $state,
         array $steps,
@@ -65,7 +65,7 @@ class FormStepNav
      * @param array $queryVars
      * @return string|null
      */
-    private function getnext(FormStep $step, FormStepState $state, $steps, string $baseUrl, array $queryVars): ?string
+    private function getNext(FormStep $step, FormStepState $state, $steps, string $baseUrl, array $queryVars): ?string
     {
         $nextStep = $state->nextStep($step, $steps);
         if ($nextStep) {
@@ -82,7 +82,7 @@ class FormStepNav
      * @param array $queryVars
      * @return string|null
      */
-    private function getcurrent(FormStep $step, string $baseUrl, array $queryVars): ?string
+    private function getCurrent(FormStep $step, string $baseUrl, array $queryVars): ?string
     {
         return $this->getStepLink($step->step, $baseUrl, $queryVars) ?? null;
     }
