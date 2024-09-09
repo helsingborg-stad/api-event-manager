@@ -49,7 +49,7 @@
         "helsingborg-stad/acf-export-manager": ">=1.0.0",
         "spatie/schema-org": "^3.14",
         "helsingborg-stad/wpservice": "^1.12",
-        "helsingborg-stad/acfservice": "dev-main"
+        "helsingborg-stad/acfservice": "0.*"
     },
     "require-dev": {
         "codedungeon/phpunit-result-printer": "^0.32.0",
