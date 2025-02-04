@@ -1,226 +1,227 @@
-[{
-    "key": "group_66436fb1b4f7f",
-    "title": "Audience",
-    "fields": [
-        {
-            "key": "field_65a52a6374b0c",
-            "label": "Audience",
-            "name": "audience",
-            "aria-label": "",
-            "type": "checkbox",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "is_publicly_hidden": 0,
-            "is_privately_hidden": 0,
-            "choices": {
-                "370": "Audience A",
-                "371": "Audience B",
-                "372": "Audience C",
-                "373": "Audience D"
-            },
-            "default_value": [],
-            "return_format": "value",
-            "allow_custom": 0,
-            "layout": "horizontal",
-            "toggle": 0,
-            "save_custom": 0,
-            "custom_choice_button_text": "Add new choice"
-        },
-        {
-            "key": "field_6650a5cb1d933",
-            "label": "Age restriction",
-            "name": "age_restriction",
-            "aria-label": "",
-            "type": "true_false",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "is_publicly_hidden": 0,
-            "is_privately_hidden": 0,
-            "message": "",
-            "default_value": 0,
-            "ui_on_text": "",
-            "ui_off_text": "",
-            "ui": 1
-        },
-        {
-            "key": "field_6650a5e41d934",
-            "label": "Age Restriction Info",
-            "name": "age_restriction_info",
-            "aria-label": "",
-            "type": "text",
-            "instructions": "",
-            "required": 1,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_6650a5cb1d933",
-                        "operator": "==",
-                        "value": "1"
-                    }
-                ]
-            ],
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "is_publicly_hidden": 0,
-            "is_privately_hidden": 0,
-            "default_value": "",
-            "maxlength": 250,
-            "placeholder": "",
-            "prepend": "",
-            "append": ""
-        },
-        {
-            "key": "field_6650a92febecf",
-            "label": "Cognitive Accessibility",
-            "name": "cognitive_accessibility",
-            "aria-label": "",
-            "type": "acfe_taxonomy_terms",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "is_publicly_hidden": 0,
-            "is_privately_hidden": 0,
-            "taxonomy": [
-                "cognitive-accessibility"
-            ],
-            "allow_terms": "",
-            "allow_level": "",
-            "field_type": "checkbox",
-            "default_value": [],
-            "return_format": "id",
-            "layout": "vertical",
-            "toggle": 0,
-            "save_terms": 1,
-            "load_terms": 1,
-            "choices": [],
-            "ui": 0,
-            "multiple": 0,
-            "allow_null": 0,
-            "ajax": 0,
-            "placeholder": "",
-            "search_placeholder": "",
-            "allow_custom": 0,
-            "other_choice": 0
-        },
-        {
-            "key": "field_66604749d8dfa",
-            "label": "Physical Accessibility",
-            "name": "physical_accessibility",
-            "aria-label": "",
-            "type": "acfe_taxonomy_terms",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "is_publicly_hidden": 0,
-            "is_privately_hidden": 0,
-            "taxonomy": [
-                "physical-accessibility"
-            ],
-            "allow_terms": "",
-            "allow_level": "",
-            "field_type": "checkbox",
-            "default_value": [],
-            "return_format": "id",
-            "layout": "vertical",
-            "toggle": 0,
-            "save_terms": 1,
-            "load_terms": 1,
-            "choices": [],
-            "ui": 0,
-            "multiple": 0,
-            "allow_null": 0,
-            "ajax": 0,
-            "placeholder": "",
-            "search_placeholder": "",
-            "allow_custom": 0,
-            "other_choice": 0
-        },
-        {
-            "key": "field_66604764d8dfb",
-            "label": "Amenities",
-            "name": "amenities",
-            "aria-label": "",
-            "type": "acfe_taxonomy_terms",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "is_publicly_hidden": 0,
-            "is_privately_hidden": 0,
-            "taxonomy": [
-                "amenities"
-            ],
-            "allow_terms": "",
-            "allow_level": "",
-            "field_type": "checkbox",
-            "default_value": [],
-            "return_format": "id",
-            "layout": "vertical",
-            "toggle": 0,
-            "save_terms": 1,
-            "load_terms": 1,
-            "choices": [],
-            "ui": 0,
-            "multiple": 0,
-            "allow_null": 0,
-            "ajax": 0,
-            "placeholder": "",
-            "search_placeholder": "",
-            "allow_custom": 0,
-            "other_choice": 0
-        }
-    ],
-    "location": [
-        [
+[
+    {
+        "key": "group_66436fb1b4f7f",
+        "title": "Audience",
+        "fields": [
             {
-                "param": "post_type",
-                "operator": "==",
-                "value": "event"
+                "key": "field_65a52a6374b0c",
+                "label": "Audience",
+                "name": "audience",
+                "aria-label": "",
+                "type": "checkbox",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "is_publicly_hidden": 0,
+                "is_privately_hidden": 0,
+                "choices": {
+                    "370": "Audience A",
+                    "371": "Audience B",
+                    "372": "Audience C",
+                    "373": "Audience D"
+                },
+                "default_value": [],
+                "return_format": "value",
+                "allow_custom": 0,
+                "layout": "horizontal",
+                "toggle": 0,
+                "save_custom": 0,
+                "custom_choice_button_text": "Add new choice"
+            },
+            {
+                "key": "field_6650a5cb1d933",
+                "label": "Age restriction",
+                "name": "age_restriction",
+                "aria-label": "",
+                "type": "true_false",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "is_publicly_hidden": 0,
+                "is_privately_hidden": 0,
+                "message": "",
+                "default_value": 0,
+                "ui_on_text": "",
+                "ui_off_text": "",
+                "ui": 1
+            },
+            {
+                "key": "field_6650a5e41d934",
+                "label": "Age Restriction Info",
+                "name": "age_restriction_info",
+                "aria-label": "",
+                "type": "text",
+                "instructions": "",
+                "required": 1,
+                "conditional_logic": [
+                    [
+                        {
+                            "field": "field_6650a5cb1d933",
+                            "operator": "==",
+                            "value": "1"
+                        }
+                    ]
+                ],
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "is_publicly_hidden": 0,
+                "is_privately_hidden": 0,
+                "default_value": "",
+                "maxlength": 250,
+                "placeholder": "",
+                "prepend": "",
+                "append": ""
+            },
+            {
+                "key": "field_6650a92febecf",
+                "label": "Cognitive Accessibility",
+                "name": "cognitive_accessibility",
+                "aria-label": "",
+                "type": "acfe_taxonomy_terms",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "is_publicly_hidden": 0,
+                "is_privately_hidden": 0,
+                "taxonomy": [
+                    "cognitive-accessibility"
+                ],
+                "allow_terms": "",
+                "allow_level": "",
+                "field_type": "checkbox",
+                "default_value": [],
+                "return_format": "id",
+                "layout": "vertical",
+                "toggle": 0,
+                "save_terms": 1,
+                "load_terms": 1,
+                "choices": [],
+                "ui": 0,
+                "multiple": 0,
+                "allow_null": 0,
+                "ajax": 0,
+                "placeholder": "",
+                "search_placeholder": "",
+                "allow_custom": 0,
+                "other_choice": 0
+            },
+            {
+                "key": "field_66604749d8dfa",
+                "label": "Physical Accessibility",
+                "name": "physical_accessibility",
+                "aria-label": "",
+                "type": "acfe_taxonomy_terms",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "is_publicly_hidden": 0,
+                "is_privately_hidden": 0,
+                "taxonomy": [
+                    "physical-accessibility"
+                ],
+                "allow_terms": "",
+                "allow_level": "",
+                "field_type": "checkbox",
+                "default_value": [],
+                "return_format": "id",
+                "layout": "vertical",
+                "toggle": 0,
+                "save_terms": 1,
+                "load_terms": 1,
+                "choices": [],
+                "ui": 0,
+                "multiple": 0,
+                "allow_null": 0,
+                "ajax": 0,
+                "placeholder": "",
+                "search_placeholder": "",
+                "allow_custom": 0,
+                "other_choice": 0
+            },
+            {
+                "key": "field_66604764d8dfb",
+                "label": "Amenities",
+                "name": "amenities",
+                "aria-label": "",
+                "type": "acfe_taxonomy_terms",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "is_publicly_hidden": 0,
+                "is_privately_hidden": 0,
+                "taxonomy": [
+                    "amenities"
+                ],
+                "allow_terms": "",
+                "allow_level": "",
+                "field_type": "checkbox",
+                "default_value": [],
+                "return_format": "id",
+                "layout": "vertical",
+                "toggle": 0,
+                "save_terms": 1,
+                "load_terms": 1,
+                "choices": [],
+                "ui": 0,
+                "multiple": 0,
+                "allow_null": 0,
+                "ajax": 0,
+                "placeholder": "",
+                "search_placeholder": "",
+                "allow_custom": 0,
+                "other_choice": 0
             }
-        ]
-    ],
-    "menu_order": 0,
-    "position": "normal",
-    "style": "default",
-    "label_placement": "left",
-    "instruction_placement": "label",
-    "hide_on_screen": "",
-    "active": true,
-    "description": "",
-    "show_in_rest": 0,
-    "acfe_display_title": "",
-    "acfe_autosync": "",
-    "acfe_form": 0,
-    "acfe_meta": "",
-    "acfe_note": ""
-}]
-
+        ],
+        "location": [
+            [
+                {
+                    "param": "post_type",
+                    "operator": "==",
+                    "value": "event"
+                }
+            ]
+        ],
+        "menu_order": 0,
+        "position": "normal",
+        "style": "default",
+        "label_placement": "left",
+        "instruction_placement": "label",
+        "hide_on_screen": "",
+        "active": true,
+        "description": "",
+        "show_in_rest": 1,
+        "acfe_display_title": "",
+        "acfe_autosync": "",
+        "acfe_form": 0,
+        "acfe_meta": "",
+        "acfe_note": ""
+    }
+]

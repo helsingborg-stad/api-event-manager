@@ -369,7 +369,7 @@
     'hide_on_screen' => '',
     'active' => true,
     'description' => 'Give your guests the important details they need: when and where your event is happening.',
-    'show_in_rest' => 0,
+    'show_in_rest' => 1,
     'acfe_display_title' => '',
     'acfe_autosync' => '',
     'acfe_form' => 0,
