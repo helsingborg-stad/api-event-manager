@@ -1,7 +1,9 @@
 <?php 
 
-if (function_exists('acf_add_local_field_group')) {
-    acf_add_local_field_group(array(
+
+if (function_exists('acf_add_local_field_group')) {
+
+    acf_add_local_field_group(array(
     'key' => 'group_6627a5e16d84f',
     'title' => __('Configure Multistep Form', 'api-event-manager'),
     'fields' => array(
@@ -430,4 +432,5 @@
     'acfe_meta' => '',
     'acfe_note' => '',
 ));
-}
+
+}

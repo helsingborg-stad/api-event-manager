@@ -1,7 +1,9 @@
 <?php 
 
-if (function_exists('acf_add_local_field_group')) {
-    acf_add_local_field_group(array(
+
+if (function_exists('acf_add_local_field_group')) {
+
+    acf_add_local_field_group(array(
     'key' => 'group_65a115157a046',
     'title' => __('General', 'api-event-manager'),
     'fields' => array(
@@ -63,13 +65,14 @@
         7 => 'tags',
         8 => 'send-trackbacks',
     ),
-    'active' => true,
+    'show_in_rest' => 1,
     'description' => 'We are nearly there! Just let us know some important last minute details, and you are ready to go!',
-    'show_in_rest' => 0,
+    'show_in_rest' => 1,
     'acfe_display_title' => '',
     'acfe_autosync' => '',
     'acfe_form' => 0,
     'acfe_meta' => '',
     'acfe_note' => '',
 ));
-}
+
+}

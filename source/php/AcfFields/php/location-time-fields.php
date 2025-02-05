@@ -6,86 +6,6 @@
     'title' => __('Time &amp; Location', 'api-event-manager'),
     'fields' => array(
         0 => array(
-            'key' => 'field_66607d700a6bc',
-            'label' => __('Date', 'api-event-manager'),
-            'name' => 'date',
-            'aria-label' => '',
-            'type' => 'date_picker',
-            'instructions' => '',
-            'required' => 0,
-            'conditional_logic' => 0,
-            'wrapper' => array(
-                'width' => '',
-                'class' => '',
-                'id' => '',
-            ),
-            'is_publicly_hidden' => 0,
-            'is_privately_hidden' => 0,
-            'display_format' => 'l j F Y',
-            'return_format' => 'd/m/Y',
-            'first_day' => 1,
-        ),
-        1 => array(
-            'key' => 'field_66607ee1da07a',
-            'label' => __('Start Time', 'api-event-manager'),
-            'name' => 'timeFrom',
-            'aria-label' => '',
-            'type' => 'time_picker',
-            'instructions' => '',
-            'required' => 0,
-            'conditional_logic' => 0,
-            'wrapper' => array(
-                'width' => '50',
-                'class' => '',
-                'id' => '',
-            ),
-            'is_publicly_hidden' => 0,
-            'is_privately_hidden' => 0,
-            'display_format' => 'H:i',
-            'return_format' => 'g:i a',
-        ),
-        2 => array(
-            'key' => 'field_66607f20da07b',
-            'label' => __('End Time', 'api-event-manager'),
-            'name' => 'timeEnd',
-            'aria-label' => '',
-            'type' => 'time_picker',
-            'instructions' => '',
-            'required' => 0,
-            'conditional_logic' => 0,
-            'wrapper' => array(
-                'width' => '50',
-                'class' => '',
-                'id' => '',
-            ),
-            'is_publicly_hidden' => 0,
-            'is_privately_hidden' => 0,
-            'display_format' => 'H:i',
-            'return_format' => 'g:i a',
-        ),
-        3 => array(
-            'key' => 'field_66607f508fc9b',
-            'label' => __('Recurring event', 'api-event-manager'),
-            'name' => 'recurringEvent',
-            'aria-label' => '',
-            'type' => 'true_false',
-            'instructions' => '',
-            'required' => 0,
-            'conditional_logic' => 0,
-            'wrapper' => array(
-                'width' => '',
-                'class' => '',
-                'id' => '',
-            ),
-            'is_publicly_hidden' => 0,
-            'is_privately_hidden' => 0,
-            'message' => __('I want to add multiple occurances for this event.', 'api-event-manager'),
-            'default_value' => 0,
-            'ui' => 0,
-            'ui_on_text' => '',
-            'ui_off_text' => '',
-        ),
-        4 => array(
             'key' => 'field_65a66d8cadeef',
             'label' => __('Occasions', 'api-event-manager'),
             'name' => 'occasions',
@@ -171,7 +91,7 @@
                 ),
             ),
         ),
-        5 => array(
+        1 => array(
             'key' => 'field_665089e28932a',
             'label' => __('Physical or virtual event?', 'api-event-manager'),
             'name' => 'physical_virtual',
@@ -196,7 +116,7 @@
             'allow_null' => 0,
             'layout' => 'horizontal',
         ),
-        6 => array(
+        2 => array(
             'key' => 'field_665095ca3b9a4',
             'label' => __('Location name', 'api-event-manager'),
             'name' => 'location_name',
@@ -226,7 +146,7 @@
             'prepend' => '',
             'append' => '',
         ),
-        7 => array(
+        3 => array(
             'center_lat' => 53.55064,
             'center_lng' => 10.00065,
             'zoom' => 12,
@@ -262,7 +182,7 @@
             'is_privately_hidden' => 0,
             'leaflet_map' => '{"lat":53.55064,"lng":10.00065,"zoom":12,"layers":["OpenStreetMap.Mapnik"],"markers":[]}',
         ),
-        8 => array(
+        4 => array(
             'key' => 'field_66508a5b8932b',
             'label' => __('Meeting Link', 'api-event-manager'),
             'name' => 'meeting_link',
@@ -289,7 +209,7 @@
             'default_value' => '',
             'placeholder' => '',
         ),
-        9 => array(
+        5 => array(
             'key' => 'field_665099c9a92cc',
             'label' => __('Travel information', 'api-event-manager'),
             'name' => 'travel',
@@ -320,7 +240,7 @@
             'placeholder' => '',
             'new_lines' => '',
         ),
-        10 => array(
+        6 => array(
             'key' => 'field_66509a45a92cd',
             'label' => __('Connect information', 'api-event-manager'),
             'name' => 'connect',
@@ -369,7 +289,7 @@
     'hide_on_screen' => '',
     'active' => true,
     'description' => 'Give your guests the important details they need: when and where your event is happening.',
-    'show_in_rest' => 0,
+    'show_in_rest' => 1,
     'acfe_display_title' => '',
     'acfe_autosync' => '',
     'acfe_form' => 0,
