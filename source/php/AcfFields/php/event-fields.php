@@ -67,7 +67,7 @@ if (function_exists('acf_add_local_field_group')) {
     ),
     'show_in_rest' => 1,
     'description' => 'We are nearly there! Just let us know some important last minute details, and you are ready to go!',
-    'show_in_rest' => 0,
+    'show_in_rest' => 1,
     'acfe_display_title' => '',
     'acfe_autosync' => '',
     'acfe_form' => 0,
