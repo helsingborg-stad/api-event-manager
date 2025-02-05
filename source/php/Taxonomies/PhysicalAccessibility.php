@@ -21,7 +21,8 @@ class PhysicalAccessibility extends Taxonomy
             'public'       => true,
             'hierarchical' => true,
             'show_ui'      => true,
-            'meta_box_cb'  => false
+            'meta_box_cb'  => false,
+            'show_in_rest' => true,
         );
     }
 
