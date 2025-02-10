@@ -45,7 +45,8 @@ class EventCategories
             'show_tagcloud'         => true,
             'show_ui'               => true,
             'query_var'             => true,
-            'rewrite'               => true
+            'rewrite'               => true,
+            'show_in_rest'          => true
         );
 
         register_taxonomy('event_categories', array('event'), $args);
