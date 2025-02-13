@@ -262,7 +262,7 @@ class FrontendForm extends \Modularity\Module
      */
     public function style(): void
     {
-        $this->wpService->enqueueStyle('event-manager-frontend-form');
+        $this->wpService->wpEnqueueStyle('event-manager-frontend-form');
     }
 
     /**
