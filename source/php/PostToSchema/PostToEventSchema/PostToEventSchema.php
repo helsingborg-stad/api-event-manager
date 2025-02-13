@@ -9,7 +9,7 @@ use AcfService\Contracts\GetField;
 use AcfService\Contracts\GetFields;
 use WpService\Contracts\GetPostParent;
 use WpService\Contracts\GetPosts;
-use WpService\Contracts\GetPostTerms;
+use WpService\Contracts\WpGetPostTerms;
 use WpService\Contracts\GetTerm;
 use WpService\Contracts\GetThePostThumbnailUrl;
 use Spatie\SchemaOrg\BaseType;
@@ -22,7 +22,7 @@ class PostToEventSchema implements IPostToSchemaAdapter
 
     public function __construct(
         protected IStringToSchemaMapper $stringToSchemaMapper,
-        protected GetThePostThumbnailUrl&GetPostTerms&GetTerm&GetPosts&GetPostParent $wpService,
+        protected GetThePostThumbnailUrl&WpGetPostTerms&GetTerm&GetPosts&GetPostParent $wpService,
         protected GetField&GetFields $acfService,
         protected MapOpenStreetMapDataToPlace $commandHelpers,
         protected bool $allowSubAndSuperEvents = true,

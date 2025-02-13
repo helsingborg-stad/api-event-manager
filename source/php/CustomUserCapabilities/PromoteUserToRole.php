@@ -5,11 +5,11 @@ namespace EventManager\CustomUserCapabilities;
 use EventManager\HooksRegistrar\Hookable;
 use WpService\Contracts\AddFilter;
 use WpService\Contracts\ApplyFilters;
-use WpService\Contracts\GetCurrentUser;
+use WpService\Contracts\WpGetCurrentUser;
 
 class PromoteUserToRole implements Hookable
 {
-    public function __construct(private AddFilter&ApplyFilters&GetCurrentUser $wpService)
+    public function __construct(private AddFilter&ApplyFilters&WpGetCurrentUser $wpService)
     {
     }
 
@@ -20,7 +20,7 @@ class PromoteUserToRole implements Hookable
 
     public function restrictEditableRoles(array $roles): array
     {
-        $currentUser = $this->wpService->getCurrentUser();
+        $currentUser = $this->wpService->WpGetCurrentUser();
 
         return array_filter($roles, function ($role) use ($currentUser) {
             return $currentUser->has_cap("promote_user_to_role", $role);

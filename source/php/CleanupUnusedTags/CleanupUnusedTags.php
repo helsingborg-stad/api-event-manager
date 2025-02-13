@@ -4,12 +4,12 @@ namespace EventManager\CleanupUnusedTags;
 
 use EventManager\HooksRegistrar\Hookable;
 use WpService\Contracts\AddAction;
-use WpService\Contracts\DeleteTerm;
+use WpService\Contracts\WpDeleteTerm;
 use WpService\Contracts\GetTerms;
 
 class CleanupUnusedTags implements Hookable
 {
-    public function __construct(private string $taxonomy, private GetTerms&DeleteTerm&AddAction $wpService)
+    public function __construct(private string $taxonomy, private GetTerms&WpDeleteTerm&AddAction $wpService)
     {
     }
 
@@ -24,7 +24,7 @@ class CleanupUnusedTags implements Hookable
 
         foreach ($terms as $term) {
             if ($term->count === 0) {
-                $this->wpService->deleteTerm($term->term_id, $this->taxonomy);
+                $this->wpService->wpDeleteTerm($term->term_id, $this->taxonomy);
             }
         }
     }

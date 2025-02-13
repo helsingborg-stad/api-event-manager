@@ -7,8 +7,8 @@ use EventManager\TagReader\TagReaderInterface;
 use WpService\Contracts\AddAction;
 use WpService\Contracts\ApplyFilters;
 use WpService\Contracts\GetPost;
-use WpService\Contracts\InsertTerm;
-use WpService\Contracts\SetPostTerms;
+use WpService\Contracts\WpInsertTerm;
+use WpService\Contracts\WpSetPostTerms;
 use WpService\Contracts\TermExists;
 
 class SetPostTermsFromContent implements Hookable
@@ -17,7 +17,7 @@ class SetPostTermsFromContent implements Hookable
         private string $postType,
         private string $taxonomy,
         private TagReaderInterface $tagReader,
-        private AddAction&GetPost&ApplyFilters&SetPostTerms&TermExists&InsertTerm $wpService
+        private AddAction&GetPost&ApplyFilters&WpSetPostTerms&TermExists&WpInsertTerm $wpService
     ) {
         $this->tagReader = $tagReader;
         $this->wpService = $wpService;
@@ -44,7 +44,7 @@ class SetPostTermsFromContent implements Hookable
 
         $this->ensureFoundTagsExist($tagNames);
 
-        $this->wpService->setPostTerms($postId, $tagNames, $this->taxonomy, false);
+        $this->wpService->wpSetPostTerms($postId, $tagNames, $this->taxonomy, false);
     }
 
     private function ensureFoundTagsExist(array $tagNames): void
@@ -52,7 +52,7 @@ class SetPostTermsFromContent implements Hookable
         foreach ($tagNames as $tagName) {
             // If the tag does not exist, create it
             if (!$this->wpService->termExists($tagName, $this->taxonomy)) {
-                $this->wpService->insertTerm($tagName, $this->taxonomy);
+                $this->wpService->wpInsertTerm($tagName, $this->taxonomy);
             }
         }
     }

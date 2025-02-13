@@ -6,12 +6,12 @@ use WpService\Contracts\GetQueryVar;
 use WpService\Contracts\GetPost;
 use WpService\Contracts\AddAction;
 use WpService\Contracts\IsWPError;
-use WpService\Contracts\UpdatePost;
+use WpService\Contracts\WpUpdatePost;
 
 class FormSecurity
 {
     public function __construct(
-        private GetQueryVar&GetPost&AddAction&UpdatePost&IsWPError $wpService,
+        private GetQueryVar&GetPost&AddAction&WpUpdatePost&IsWPError $wpService,
         private string $formIdQueryParam,
         private string $formTokenQueryParam     
     ) {
@@ -120,7 +120,7 @@ class FormSecurity
     public function saveFormEditToken($postId, $token): ?bool
     {
         if(is_null($this->getStoredFromEditToken($postId))) {
-            $postUpdateResult = $this->wpService->updatePost(
+            $postUpdateResult = $this->wpService->wpUpdatePost(
                 [   
                     'ID' => $postId, 
                     'post_password' => $token

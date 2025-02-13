@@ -3,7 +3,7 @@
 namespace EventManager\NotificationServices;
 
 use WpService\Contracts\GetUsers;
-use WpService\Contracts\Mail;
+use WpService\Contracts\WpMail;
 
 class EmailNotificationService implements NotificationService
 {
@@ -11,7 +11,7 @@ class EmailNotificationService implements NotificationService
     private string $subject;
     private string $message;
 
-    public function __construct(private Mail&GetUsers $wpService)
+    public function __construct(private WpMail&GetUsers $wpService)
     {
     }
 
@@ -47,7 +47,7 @@ class EmailNotificationService implements NotificationService
     public function send(): void
     {
         if (!empty($this->recipientEmails)) {
-            $this->wpService->mail($this->recipientEmails, $this->subject, $this->message);
+            $this->wpService->wpMail($this->recipientEmails, $this->subject, $this->message);
         }
     }
 }

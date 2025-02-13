@@ -3,14 +3,14 @@
 namespace EventManager\AcfSavePostActions;
 
 use AcfService\Contracts\GetField;
-use WpService\Contracts\SetPostTerms;
+use WpService\Contracts\WpSetPostTerms;
 
 class SetPostTermsFromField implements IAcfSavePostAction
 {
     public function __construct(
         private string $fieldName,
         private string $taxonomy,
-        private SetPostTerms $wpService,
+        private WpSetPostTerms $wpService,
         private GetField $acfService
     ) {
     }
@@ -24,7 +24,7 @@ class SetPostTermsFromField implements IAcfSavePostAction
         $terms = $this->acfService->getField($this->fieldName, $postId);
         $terms = $this->sanitizeTerms($terms);
 
-        $this->wpService->setPostTerms($postId, $terms, $this->taxonomy);
+        $this->wpService->wpSetPostTerms($postId, $terms, $this->taxonomy);
     }
 
     private function sanitizeTerms(mixed $terms): array

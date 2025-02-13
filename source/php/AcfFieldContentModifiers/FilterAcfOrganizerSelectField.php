@@ -3,7 +3,7 @@
 namespace EventManager\AcfFieldContentModifiers;
 
 use AcfService\Contracts\GetField;
-use WpService\Contracts\GetCurrentUser;
+use WpService\Contracts\WpGetCurrentUser;
 use WpService\Contracts\GetTerms;
 
 class FilterAcfOrganizerSelectField implements IAcfFieldContentModifier
@@ -13,7 +13,7 @@ class FilterAcfOrganizerSelectField implements IAcfFieldContentModifier
 
     public function __construct(
         private string $fieldKey,
-        private GetTerms&GetCurrentUser $wpService,
+        private GetTerms&WpGetCurrentUser $wpService,
         private GetField $acfService
     ) {
     }
@@ -43,7 +43,7 @@ class FilterAcfOrganizerSelectField implements IAcfFieldContentModifier
 
     public function getUserOrganizations(): array
     {
-        $user          = $this->wpService->getCurrentUser();
+        $user          = $this->wpService->wpGetCurrentUser();
         $organizations = $this->acfService->getField(self::USER_META_KEY, "user_{$user->ID}");
 
         return is_array($organizations) ? $organizations : [];
