@@ -3,21 +3,21 @@
 namespace EventManager\PostTableColumns\ColumnCellContent;
 
 use WpService\Contracts\GetEditTermLink;
-use WpService\Contracts\GetPostTerms;
+use WpService\Contracts\WpGetPostTerms;
 use WpService\Contracts\GetTheId;
 use WP_Error;
 use WP_Term;
 
 class TermNameCellContent implements ColumnCellContentInterface
 {
-    public function __construct(private string $taxonomy, private GetTheId&GetPostTerms&GetEditTermLink $wpService)
+    public function __construct(private string $taxonomy, private GetTheId&WpGetPostTerms&GetEditTermLink $wpService)
     {
     }
 
     public function getCellContent(): string
     {
         $postId = $this->wpService->getTheId();
-        $terms  = $this->wpService->getPostTerms($postId, $this->taxonomy);
+        $terms  = $this->wpService->wpGetPostTerms($postId, $this->taxonomy);
         return $this->formatOutput($terms);
     }
 

@@ -6,12 +6,12 @@ use AcfService\Contracts\GetField;
 use WP_Query;
 use WP_User;
 use WpService\Contracts\AddAction;
-use WpService\Contracts\GetCurrentUser;
+use WpService\Contracts\WpGetCurrentUser;
 use WpService\Contracts\IsAdmin;
 
 class LimitEventTableResultsByUserRole implements IPreGetPostModifier
 {
-    public function __construct(private GetCurrentUser&IsAdmin&AddAction $wpService, private GetField $acfService)
+    public function __construct(private WpGetCurrentUser&IsAdmin&AddAction $wpService, private GetField $acfService)
     {
     }
 
@@ -24,7 +24,7 @@ class LimitEventTableResultsByUserRole implements IPreGetPostModifier
     {
         if ($this->shouldModify($query)) {
             // Get users organization
-            $currentUser   = $this->wpService->getCurrentUser();
+            $currentUser   = $this->wpService->wpGetCurrentUser();
             $organizations = $this->acfService->getField('organizations', 'user_' . $currentUser->ID);
             $query->set('tax_query', [
                 [
@@ -44,6 +44,6 @@ class LimitEventTableResultsByUserRole implements IPreGetPostModifier
             $this->wpService->isAdmin() &&
             $query->get('post_type') === 'event' &&
             $query->is_main_query() &&
-            $this->wpService->getCurrentUser()->has_cap('administrator') !== true;
+            $this->wpService->wpGetCurrentUser()->has_cap('administrator') !== true;
     }
 }

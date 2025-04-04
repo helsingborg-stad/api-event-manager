@@ -22,6 +22,7 @@ class Organization extends Taxonomy
             'hierarchical' => true,
             'show_ui'      => true,
             'meta_box_cb'  => false,
+            'show_in_rest' => true,
             'capabilities' => [
                 'manage_terms' => 'manage_organizations',
                 'edit_terms'   => 'edit_organizations',

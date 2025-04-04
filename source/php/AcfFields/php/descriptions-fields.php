@@ -1,7 +1,9 @@
 <?php 
 
-if (function_exists('acf_add_local_field_group')) {
-    acf_add_local_field_group(array(
+
+if (function_exists('acf_add_local_field_group')) {
+
+    acf_add_local_field_group(array(
     'key' => 'group_66436bf782af1',
     'title' => __('Description', 'api-event-manager'),
     'fields' => array(
@@ -45,7 +47,7 @@ Please note that images with recognizable people are not accepted and will be re
                 'id' => '',
             ),
             'is_publicly_hidden' => 0,
-            'is_privately_hidden' => 1,
+            'is_privately_hidden' => 0,
             'uploader' => '',
             'return_format' => 'array',
             'acfe_thumbnail' => 1,
@@ -75,13 +77,14 @@ Please note that images with recognizable people are not accepted and will be re
     'label_placement' => 'left',
     'instruction_placement' => 'label',
     'hide_on_screen' => '',
-    'active' => true,
+    'show_in_rest' => 1,
     'description' => '',
-    'show_in_rest' => 0,
+    'show_in_rest' => 1,
     'acfe_display_title' => '',
     'acfe_autosync' => '',
     'acfe_form' => 0,
     'acfe_meta' => '',
     'acfe_note' => '',
 ));
-}
+
+}

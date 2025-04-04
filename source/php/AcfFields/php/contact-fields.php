@@ -1,7 +1,9 @@
 <?php 
 
-if (function_exists('acf_add_local_field_group')) {
-    acf_add_local_field_group(array(
+
+if (function_exists('acf_add_local_field_group')) {
+
+    acf_add_local_field_group(array(
     'key' => 'group_66436b29cfb4f',
     'title' => __('Contact', 'api-event-manager'),
     'fields' => array(
@@ -49,7 +51,7 @@
     'label_placement' => 'left',
     'instruction_placement' => 'label',
     'hide_on_screen' => '',
-    'active' => true,
+    'show_in_rest' => 1,
     'description' => '',
     'show_in_rest' => 0,
     'acfe_display_title' => '',
@@ -58,4 +60,5 @@
     'acfe_meta' => '',
     'acfe_note' => '',
 ));
-}
+
+}

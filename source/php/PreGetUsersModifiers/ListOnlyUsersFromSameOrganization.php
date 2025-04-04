@@ -5,12 +5,12 @@ namespace EventManager\PreGetUsersModifiers;
 use AcfService\Contracts\GetField;
 use WP_User;
 use WP_User_Query;
-use WpService\Contracts\GetCurrentUser;
+use WpService\Contracts\WpGetCurrentUser;
 use WpService\Contracts\IsAdmin;
 
 class ListOnlyUsersFromSameOrganization implements IPreGetUsersModifier
 {
-    public function __construct(private GetCurrentUser&IsAdmin $wpService, private GetField $acfService)
+    public function __construct(private WpGetCurrentUser&IsAdmin $wpService, private GetField $acfService)
     {
     }
 
@@ -21,8 +21,8 @@ class ListOnlyUsersFromSameOrganization implements IPreGetUsersModifier
 
     public function modify(WP_User_Query $query): WP_User_Query
     {
-        if ($this->shouldModify($this->wpService->getCurrentUser())) {
-            $currentUser   = $this->wpService->getCurrentUser();
+        if ($this->shouldModify($this->wpService->wpGetCurrentUser())) {
+            $currentUser   = $this->wpService->wpGetCurrentUser();
             $organizations = $this->acfService->getField('organizations', 'user_' . $currentUser->ID) ?? [];
             $metaQueries   = array_map(fn($organization) => [
                 'key'     => 'organizations',

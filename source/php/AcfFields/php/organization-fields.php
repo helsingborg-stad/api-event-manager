@@ -1,7 +1,9 @@
 <?php 
 
-if (function_exists('acf_add_local_field_group')) {
-    acf_add_local_field_group(array(
+
+if (function_exists('acf_add_local_field_group')) {
+
+    acf_add_local_field_group(array(
     'key' => 'group_65a4f5a847d62',
     'title' => __('Organization Fields', 'api-event-manager'),
     'fields' => array(
@@ -96,13 +98,14 @@
     'label_placement' => 'top',
     'instruction_placement' => 'label',
     'hide_on_screen' => '',
-    'active' => true,
+    'show_in_rest' => 1,
     'description' => '',
-    'show_in_rest' => 0,
+    'show_in_rest' => 1,
     'acfe_display_title' => '',
     'acfe_autosync' => '',
     'acfe_form' => 0,
     'acfe_meta' => '',
     'acfe_note' => '',
 ));
-}
+
+}

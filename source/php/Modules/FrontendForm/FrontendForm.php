@@ -18,7 +18,7 @@ use AcfService\Contracts\FormHead;
 use AcfService\Contracts\GetFieldGroups;
 use AcfService\Implementations\NativeAcfService;
 
-use WpService\Contracts\EnqueueStyle;
+use WpService\Contracts\WpEnqueueStyle;
 use WpService\Implementations\NativeWpService;
 use WpService\Contracts\__;
 use WpService\Contracts\AddFilter;
@@ -31,6 +31,7 @@ use WpService\Contracts\GetPermalink;
 use WpService\Contracts\GetPostMeta;
 use WpService\Contracts\UpdatePostMeta;
 use WpService\Implementations\WpServiceWithTypecastedReturns;
+use AcfService\AcfService;
 
 /**
  * @property string $description
@@ -53,7 +54,7 @@ class FrontendForm extends \Modularity\Module
 
     private $blade = null;
 
-    private EnqueueStyle &__&IsUserLoggedIn&AddFilter&AddAction&GetQueryVar&GetPostType&GetPostTypeObject&GetPermalink&GetPostMeta&UpdatePostMeta $wpService;
+    private WpEnqueueStyle&__&IsUserLoggedIn&AddFilter&AddAction&GetQueryVar&GetPostType&GetPostTypeObject&GetPermalink&GetPostMeta&UpdatePostMeta $wpService;
     private FormHead&EnqueueUploader&Form&GetFieldGroups $acfService;
 
     public function init(): void
@@ -261,7 +262,7 @@ class FrontendForm extends \Modularity\Module
      */
     public function style(): void
     {
-        $this->wpService->enqueueStyle('event-manager-frontend-form');
+        $this->wpService->wpEnqueueStyle('event-manager-frontend-form');
     }
 
     /**

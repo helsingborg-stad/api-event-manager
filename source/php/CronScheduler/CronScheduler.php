@@ -4,8 +4,8 @@ namespace EventManager\CronScheduler;
 
 use EventManager\HooksRegistrar\Hookable;
 use WpService\Contracts\AddAction;
-use WpService\Contracts\NextScheduled;
-use WpService\Contracts\ScheduleEvent;
+use WpService\Contracts\WpNextScheduled;
+use WpService\Contracts\WpScheduleEvent;
 
 class CronScheduler implements CronSchedulerInterface, Hookable
 {
@@ -14,7 +14,7 @@ class CronScheduler implements CronSchedulerInterface, Hookable
      */
     public $cronEvents = [];
 
-    public function __construct(private AddAction&NextScheduled&ScheduleEvent $wpService)
+    public function __construct(private AddAction&WpNextScheduled&WpScheduleEvent $wpService)
     {
     }
 
@@ -39,11 +39,11 @@ class CronScheduler implements CronSchedulerInterface, Hookable
     public function registerEvents(): void
     {
         foreach ($this->cronEvents as $cronEvent) {
-            if ($this->wpService->nextScheduled($cronEvent->getHook())) {
+            if ($this->wpService->WpNextScheduled($cronEvent->getHook())) {
                 continue;
             }
 
-            $this->wpService->scheduleEvent(time(), $cronEvent->getRecurrence(), $cronEvent->getHook());
+            $this->wpService->WpScheduleEvent(time(), $cronEvent->getRecurrence(), $cronEvent->getHook());
         }
     }
 }

@@ -4,13 +4,13 @@ namespace EventManager;
 
 use EventManager\HooksRegistrar\Hookable;
 use WpService\Contracts\AddAction;
-use WpService\Contracts\GetEnvironmentType;
+use WpService\Contracts\WpGetEnvironmentType;
 use WpService\Contracts\RemoveMenuPage;
 use WpService\Contracts\RemoveSubMenuPage;
 
 class HideUnusedAdminPages implements Hookable
 {
-    public function __construct(private AddAction&GetEnvironmentType&RemoveMenuPage&RemoveSubMenuPage $wpService)
+    public function __construct(private AddAction&WpGetEnvironmentType&RemoveMenuPage&RemoveSubMenuPage $wpService)
     {
         $this->wpService = $wpService;
     }
@@ -23,7 +23,7 @@ class HideUnusedAdminPages implements Hookable
     public function hideUnusedAdminPages()
     {
         //Do not hide admin pages on local environment
-        if ($this->wpService->getEnvironmentType() === 'local') {
+        if ($this->wpService->WpGetEnvironmentType() === 'local') {
             return;
         }
 
