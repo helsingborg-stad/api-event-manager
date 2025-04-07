@@ -1,9 +1,7 @@
 <?php 
 
-
-if (function_exists('acf_add_local_field_group')) {
-
-    acf_add_local_field_group(array(
+if (function_exists('acf_add_local_field_group')) {
+    acf_add_local_field_group(array(
     'key' => 'group_66436fb1b4f7f',
     'title' => __('Audience', 'api-event-manager'),
     'fields' => array(
@@ -30,9 +28,11 @@ if (function_exists('acf_add_local_field_group')) {
                 373 => __('Audience D', 'api-event-manager'),
             ),
             'default_value' => array(
+                0 => 370,
             ),
             'return_format' => 'value',
             'allow_custom' => 0,
+            'allow_in_bindings' => 1,
             'layout' => 'horizontal',
             'toggle' => 0,
             'save_custom' => 0,
@@ -66,7 +66,7 @@ if (function_exists('acf_add_local_field_group')) {
             'name' => 'age_restriction_info',
             'aria-label' => '',
             'type' => 'text',
-            'instructions' => '',
+            'instructions' => __('Test', 'api-event-manager'),
             'required' => 1,
             'conditional_logic' => array(
                 0 => array(
@@ -86,16 +86,17 @@ if (function_exists('acf_add_local_field_group')) {
             'is_privately_hidden' => 0,
             'default_value' => '',
             'maxlength' => 250,
+            'allow_in_bindings' => 1,
             'placeholder' => '',
             'prepend' => '',
             'append' => '',
         ),
         3 => array(
-            'key' => 'field_6650a92febecf',
+            'key' => 'field_67f39a0c089d3',
             'label' => __('Cognitive Accessibility', 'api-event-manager'),
             'name' => 'cognitive_accessibility',
             'aria-label' => '',
-            'type' => 'acfe_taxonomy_terms',
+            'type' => 'taxonomy',
             'instructions' => '',
             'required' => 0,
             'conditional_logic' => 0,
@@ -106,36 +107,28 @@ if (function_exists('acf_add_local_field_group')) {
             ),
             'is_publicly_hidden' => 0,
             'is_privately_hidden' => 0,
-            'taxonomy' => array(
-                0 => 'cognitive-accessibility',
-            ),
-            'allow_terms' => '',
-            'allow_level' => '',
-            'field_type' => 'checkbox',
-            'default_value' => array(
-            ),
-            'return_format' => 'id',
-            'layout' => 'vertical',
-            'toggle' => 0,
+            'taxonomy' => 'cognitive-accessibility',
+            'add_term' => 0,
             'save_terms' => 1,
             'load_terms' => 1,
-            'choices' => array(
+            'return_format' => 'id',
+            'field_type' => 'checkbox',
+            'acfe_bidirectional' => array(
+                'acfe_bidirectional_enabled' => '0',
             ),
-            'ui' => 0,
+            'allow_in_bindings' => 0,
+            'bidirectional' => 0,
             'multiple' => 0,
             'allow_null' => 0,
-            'ajax' => 0,
-            'placeholder' => '',
-            'search_placeholder' => '',
-            'allow_custom' => 0,
-            'other_choice' => 0,
+            'bidirectional_target' => array(
+            ),
         ),
         4 => array(
-            'key' => 'field_66604749d8dfa',
+            'key' => 'field_67f39e25355c7',
             'label' => __('Physical Accessibility', 'api-event-manager'),
             'name' => 'physical_accessibility',
             'aria-label' => '',
-            'type' => 'acfe_taxonomy_terms',
+            'type' => 'taxonomy',
             'instructions' => '',
             'required' => 0,
             'conditional_logic' => 0,
@@ -146,36 +139,28 @@ if (function_exists('acf_add_local_field_group')) {
             ),
             'is_publicly_hidden' => 0,
             'is_privately_hidden' => 0,
-            'taxonomy' => array(
-                0 => 'physical-accessibility',
-            ),
-            'allow_terms' => '',
-            'allow_level' => '',
-            'field_type' => 'checkbox',
-            'default_value' => array(
-            ),
-            'return_format' => 'id',
-            'layout' => 'vertical',
-            'toggle' => 0,
+            'taxonomy' => 'physical-accessibility',
+            'add_term' => 0,
             'save_terms' => 1,
             'load_terms' => 1,
-            'choices' => array(
+            'return_format' => 'id',
+            'field_type' => 'checkbox',
+            'acfe_bidirectional' => array(
+                'acfe_bidirectional_enabled' => '0',
             ),
-            'ui' => 0,
+            'allow_in_bindings' => 0,
+            'bidirectional' => 0,
             'multiple' => 0,
             'allow_null' => 0,
-            'ajax' => 0,
-            'placeholder' => '',
-            'search_placeholder' => '',
-            'allow_custom' => 0,
-            'other_choice' => 0,
+            'bidirectional_target' => array(
+            ),
         ),
         5 => array(
-            'key' => 'field_66604764d8dfb',
+            'key' => 'field_67f39e62355c8',
             'label' => __('Amenities', 'api-event-manager'),
             'name' => 'amenities',
             'aria-label' => '',
-            'type' => 'acfe_taxonomy_terms',
+            'type' => 'taxonomy',
             'instructions' => '',
             'required' => 0,
             'conditional_logic' => 0,
@@ -186,29 +171,21 @@ if (function_exists('acf_add_local_field_group')) {
             ),
             'is_publicly_hidden' => 0,
             'is_privately_hidden' => 0,
-            'taxonomy' => array(
-                0 => 'amenities',
-            ),
-            'allow_terms' => '',
-            'allow_level' => '',
-            'field_type' => 'checkbox',
-            'default_value' => array(
-            ),
-            'return_format' => 'id',
-            'layout' => 'vertical',
-            'toggle' => 0,
+            'taxonomy' => 'category',
+            'add_term' => 0,
             'save_terms' => 1,
             'load_terms' => 1,
-            'choices' => array(
+            'return_format' => 'id',
+            'field_type' => 'checkbox',
+            'acfe_bidirectional' => array(
+                'acfe_bidirectional_enabled' => '0',
             ),
-            'ui' => 0,
+            'allow_in_bindings' => 0,
+            'bidirectional' => 0,
             'multiple' => 0,
             'allow_null' => 0,
-            'ajax' => 0,
-            'placeholder' => '',
-            'search_placeholder' => '',
-            'allow_custom' => 0,
-            'other_choice' => 0,
+            'bidirectional_target' => array(
+            ),
         ),
     ),
     'location' => array(
@@ -235,5 +212,4 @@ if (function_exists('acf_add_local_field_group')) {
     'acfe_meta' => '',
     'acfe_note' => '',
 ));
-
-}
+}

@@ -32,6 +32,8 @@ use WpService\Contracts\GetPostMeta;
 use WpService\Contracts\UpdatePostMeta;
 use WpService\Implementations\WpServiceWithTypecastedReturns;
 use AcfService\AcfService;
+use AcfService\Contracts\AcfGetFields;
+use EventManager\Modules\FrontendForm\FormatSteps;
 
 /**
  * @property string $description
@@ -55,12 +57,15 @@ class FrontendForm extends \Modularity\Module
     private $blade = null;
 
     private WpEnqueueStyle&__&IsUserLoggedIn&AddFilter&AddAction&GetQueryVar&GetPostType&GetPostTypeObject&GetPermalink&GetPostMeta&UpdatePostMeta $wpService;
-    private FormHead&EnqueueUploader&Form&GetFieldGroups $acfService;
+    private AcfService $acfService;
+
+    private FormatSteps $formatSteps;
 
     public function init(): void
     {
         $this->wpService    = new WpServiceWithTypecastedReturns(new NativeWpService());
         $this->acfService   = new NativeAcfService();
+        $this->formatSteps  = new FormatSteps($this->acfService);
 
         //Manages form security
         $this->formSecurity = new FormSecurity(
@@ -92,97 +97,12 @@ class FrontendForm extends \Modularity\Module
     public function data(): array
     {
         //Needs to be called, otherwise a notice will be thrown.
+        $data   = [];
         $fields = (object) $this->getFields();
 
-        //If any of these conditions are met, return the error message: 
-        //Empty form:           Show error message, 
-        //Protected form:       Show error message,
-        //Tokenized request:    Show error message.
-        if($basicFormStateValidation = $this->basicFormStateValidation($fields)) {
-            return $basicFormStateValidation;
-        }
-
-        //Define form steps
-        $steps = [];
-        foreach ($fields->formSteps as $index => $fieldGroup) {
-            $steps[$index + 1] = new FormStep(
-                $index + 1,
-                $fieldGroup
-            );
-        }
-
-        //Set form state
-        $formState = new FormState(
-            $steps,
-            $this->wpService->getQueryVar($this->formStepQueryParam, 1)
-        );
-
-        //Decorate step with state, and link
-        foreach ($steps as &$step) {
-            $step->state = $stepState = new FormStepState(
-                $step,
-                $formState,
-                $steps
-            );
-
-            $step->nav = new FormStepNav(
-                $step,
-                $stepState,
-                $steps,
-                $this->wpService->getPermalink(),
-                [
-                    'formid' => $this->wpService->getQueryVar(
-                        $this->formIdQueryParam,
-                        "%post_id%"
-                    ),
-                    'step'   => null,
-                    'token'  => $this->wpService->getQueryVar(
-                        $this->formTokenQueryParam,
-                        null
-                    )
-                ]
-            );
-        }
-
-        //Invalid step: Show error message
-        if (!$formState->isValidStep) {
-            return array_merge(
-                $this->defaultDataResponse(),
-                [
-                'error' => $this->renderView('partials.message', [
-                    'text' => $this->wpService->__('Whoops! It looks like we ran out of form.'),
-                    'icon' => ['name' => 'error'],
-                    'type' => 'warning'
-                ])
-                ]
-            );
-        }
-
-        //Get current step form
-        $self = $this; //Avoids lexical scope issues
-        $form = (function ($step) use ($self, $fields) {
-            $self->getForm($step, $self, $fields);
-        });
-
-        return array_merge(
-            $this->defaultDataResponse(),
-            [
-                'error'        => false,
-                'steps'        => $steps,
-                'state'        => $formState,
-                'form'         => $form,
-                'formSettings' => (object) [
-                    'postType'   => $fields->saveToPostType ?? "post",
-                    'postStatus' => $fields->saveToPostTypeStatus ?? "draft"
-                ],
-                'summary'      => (object) [
-                    'isEnabled' => $fields->hasSummaryStep ?? false,
-                    'title'     => $fields->summaryTitle,
-                    'lead'      => $fields->summaryLead
-                ],
-                'lang'         => $this->getLang()
-            ]
-        );
+        $data['steps'] = $this->formatSteps->formatSteps($fields->formSteps ?? []);
+        echo '<pre>' . print_r( $data, true ) . '</pre>';die;
+        return $data;
     }
 
     /**
@@ -286,7 +206,7 @@ class FrontendForm extends \Modularity\Module
             ['step' => $step, 'lang' => $self->getLang()]
         );
 
-        $this->acfService->form([
+        $form = $this->acfService->form([
             'post_id'               => $this->wpService->getQueryVar($this->formIdQueryParam, 'new_post'),
             'return'                => $step->nav->next ?? false, // Add form result page here
             'post_title'            => $step->properties->includePostTitle,
