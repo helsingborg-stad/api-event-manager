@@ -101,7 +101,7 @@ class FrontendForm extends \Modularity\Module
         $fields = (object) $this->getFields();
 
         $data['steps'] = $this->formatSteps->formatSteps($fields->formSteps ?? []);
-        echo '<pre>' . print_r( $data, true ) . '</pre>';die;
+
         return $data;
     }
 

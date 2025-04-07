@@ -25,7 +25,8 @@
                 "373": "Audience D"
             },
             "default_value": [
-                370
+                "370,",
+                371
             ],
             "return_format": "value",
             "allow_custom": 0,

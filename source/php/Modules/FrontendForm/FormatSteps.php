@@ -61,7 +61,7 @@ class FormatSteps {
             case 'button_group':
                 return $this->mapButtonGroup($field);
             case 'open_street_map':
-                return;
+                return ['type' => 'null'];
             case 'url':
                 return $this->mapUrl($field);
             case 'textarea':
@@ -234,8 +234,19 @@ class FormatSteps {
     private function mapCheckbox(array $field): array
     {
         $mapped = $this->mapBasic($field, 'checkbox');
-        $mapped['choices'] = $field['choices'] ?? [];
-        $mapped['checked'] = $field['default_value'] ?? [];
+        $choices = [];
+        foreach ($field['choices'] as $key => $value) {
+            $choices[$key] = [
+                'type' => $mapped['type'],
+                'label' => $value,
+                'required' => $mapped['required'] ?? false,
+                'name' => $field['name'],
+                'value' => $key,
+                'checked' => in_array($key, ($field['default_value'] ?? [])),
+            ];
+        }
+        
+        $mapped['choices'] = $choices;
 
         return $mapped;
     }
@@ -247,7 +258,6 @@ class FormatSteps {
         $mapped['options']     = $field['choices'] ?? [];
         $mapped['preselected'] = $field['default_value'] ?? null;
         $mapped['placeholder'] = $field['placeholder'] ?? '';
-        $mapped['helperText']  = $mapped['description'] ?? '';
         $mapped['multiple']    = $field['multiple'] ?? false;
 
         return $mapped;

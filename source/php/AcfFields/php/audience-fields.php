@@ -28,7 +28,8 @@
                 373 => __('Audience D', 'api-event-manager'),
             ),
             'default_value' => array(
-                0 => 370,
+                0 => __('370,', 'api-event-manager'),
+                1 => 371,
             ),
             'return_format' => 'value',
             'allow_custom' => 0,
