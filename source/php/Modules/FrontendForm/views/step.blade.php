@@ -8,6 +8,7 @@
         @endtypography
     @endif
     @foreach($step['fields'] as $field)
-        @includeIf('fields.' . $field['type'], ['field' => $field])
+        @includeIf('fields.' . $field['view'], ['field' => $field])
+        @dump($field['view'])
     @endforeach
 @endif

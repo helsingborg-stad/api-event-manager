@@ -61,7 +61,7 @@ class FormatSteps {
             case 'button_group':
                 return $this->mapButtonGroup($field);
             case 'open_street_map':
-                return ['type' => 'null'];
+                return ['type' => 'null', 'view' => 'null'];
             case 'url':
                 return $this->mapUrl($field);
             case 'textarea':
@@ -75,6 +75,9 @@ class FormatSteps {
             
         }
 
+        // TODO: Conditionals
+        // TODO: Repeater
+        // TODO: OSM Field
         // TODO: Location field google maps/osm?
         echo '<pre>' . print_r( $field, true ) . '</pre>';die;
     }
@@ -83,6 +86,7 @@ class FormatSteps {
     {
         return [
             'type'        => $type,
+            'view'        => $type,
             'label'       => $field['label'],
             'name'        => $field['name'],
             'required'    => $field['required'] ?? false,
@@ -92,12 +96,12 @@ class FormatSteps {
 
     private function mapImage(array $field): array
     {
+        // TODO: imageinput component missing description
         $mapped = $this->mapBasic($field, 'image');
         $mapped['multiple']    = $field['multiple'] ?? false;
         $mapped['maxFileSize'] = $field['max_size'] ?? 0;
         $mapped['maxHeight']   = $field['max_height'] ?? 0;
         $mapped['maxWidth']    = $field['max_width'] ?? 0;
-        $mapped['helperText']  = $mapped['description'] ?? '';
 
         return $mapped;
     }
@@ -114,15 +118,6 @@ class FormatSteps {
         return $mapped;
     }
 
-    private function mapRadio(array $field): array
-    {
-        $mapped = $this->mapBasic($field, 'radio');
-        $mapped['choices'] = $field['choices'] ?? [];
-        $mapped['checked'] = $field['default_value'] ?? [];
-
-        return $mapped;
-    }
-
     private function mapTextarea(array $field)
     {
         // TODO: Max words (maxlength)?
@@ -130,6 +125,7 @@ class FormatSteps {
         $mapped['placeholder'] = $field['placeholder'] ?? '';
         $mapped['value']       = $field['default_value'] ?? '';
         $mapped['rows']        = $field['rows'] ?? 5;
+        $mapped['multiline']   = true;
 
         return $mapped;
     }
@@ -148,12 +144,21 @@ class FormatSteps {
     private function mapButtonGroup(array $field): array
     {
         $mapped = $this->mapBasic($field, 'buttonGroup');
+        $mapped['type'] = 'radio';
 
-        $mapped['options']     = $field['choices'] ?? [];
-        $mapped['preselected'] = $field['default_value'] ?? null;
-        $mapped['placeholder'] = $field['placeholder'] ?? '';
-        
-        return $mapped;
+        $mapped['choices'] = [];
+        foreach ($field['choices'] as $key => $value) {
+            $mapped['choices'][$key] = [
+                'type' => $mapped['type'],
+                'label' => $value,
+                'required' => $mapped['required'] ?? false,
+                'name' => $field['name'],
+                'value' => $key,
+                'checked' => ($field['default_value'] ?? '') === $key,
+            ];
+        }
+
+        return $mapped; 
     }
 
     private function mapTimePicker(array $field): array
@@ -200,13 +205,10 @@ class FormatSteps {
     {
         $mapped = $this->mapBasic($field, 'taxonomy');
 
-        // TODO: Should we add description to select component (select)?
-        $mapped['options'] = $field['choices'] ?? [];
-        $mapped['view']    = $field['field_type'] ?? 'checkbox';
-        $mapped['terms']   = $this->getTermsFromTaxonomy($field['taxonomy'] ?? '');
-        $mapped['preselected'] = $field['default_value'] ?? null;
-        $mapped['placeholder'] = $field['placeholder'] ?? '';
-   
+        // TODO: Should we add description to select/checkbox component?
+        $mapped['type']        = $field['field_type'] ?? 'checkbox';
+        $mapped['terms'] = $this->structureTerms($mapped, $this->getTermsFromTaxonomy($field));
+
         return $mapped;
     }
 
@@ -216,8 +218,9 @@ class FormatSteps {
         
         // TODO: Add maxLength to component (field)?
         // 'maxlength'     => $field['maxlength'] ?? '',
-        $mapped['placeholder'] = $field['placeholder'] ?? '';
-        $mapped['value']       = $field['default_value'] ?? '';
+        $mapped['placeholder']                         = $field['placeholder'] ?? '';
+        $mapped['value']                               = $field['default_value'] ?? '';
+        $mapped['moveAttributesListToFieldAttributes'] = false;
 
         return $mapped;
     }
@@ -226,7 +229,8 @@ class FormatSteps {
     {
         $mapped = $this->mapBasic($field, 'trueFalse');
 
-        $mapped['checked'] = $field['default_value'] ?? false;
+        $mapped['checked'] = !empty($field['default_value']) ? true : false;
+        $mapped['type']    = 'checkbox';
 
         return $mapped;
     }
@@ -234,9 +238,9 @@ class FormatSteps {
     private function mapCheckbox(array $field): array
     {
         $mapped = $this->mapBasic($field, 'checkbox');
-        $choices = [];
+        $mapped['choices'] = [];
         foreach ($field['choices'] as $key => $value) {
-            $choices[$key] = [
+            $mapped['choices'][$key] = [
                 'type' => $mapped['type'],
                 'label' => $value,
                 'required' => $mapped['required'] ?? false,
@@ -245,8 +249,24 @@ class FormatSteps {
                 'checked' => in_array($key, ($field['default_value'] ?? [])),
             ];
         }
-        
-        $mapped['choices'] = $choices;
+
+        return $mapped;
+    }
+
+    private function mapRadio(array $field): array
+    {
+        $mapped = $this->mapBasic($field, 'radio');
+        $mapped['choices'] = [];
+        foreach ($field['choices'] as $key => $value) {
+            $mapped['choices'][$key] = [
+                'type' => $mapped['type'],
+                'label' => $value,
+                'required' => $mapped['required'] ?? false,
+                'name' => $field['name'],
+                'value' => $key,
+                'checked' => ($field['default_value'] ?? '') === $key,
+            ];
+        }
 
         return $mapped;
     }
@@ -263,10 +283,30 @@ class FormatSteps {
         return $mapped;
     }
 
-    private function getTermsFromTaxonomy(string $slug): array
+    private function structureTerms(array $mapped, array $terms): array
     {
+        // TODO: Needs to be compatible with select, radio and checkbox (multiselect for select/checkbox/radio)
+        $structured = [];
+        foreach ($terms as $term) {
+            $structured[$term->term_id] = [
+                'name' => $mapped['name'],
+                'type' => $mapped['type'],
+                'label' => $term->name,
+                'required' => !empty($mapped['required']) ? true : false,
+            ];
+        }
+
+        return $structured;
+    }
+
+    private function getTermsFromTaxonomy(array $field): array
+    {
+        if (empty($field['taxonomy'])) {
+            return [];
+        }
+
         $terms = get_terms([
-            'taxonomy'   => $slug,
+            'taxonomy'   => $field['taxonomy'],
             'hide_empty' => false,
         ]);
 
@@ -274,12 +314,6 @@ class FormatSteps {
             return [];
         }
 
-        return array_map(function ($term) {
-            return [
-                'id'    => $term->term_id,
-                'label' => $term->name,
-                'value' => $term->slug,
-            ];
-        }, $terms);
+        return $terms;
     }
 }

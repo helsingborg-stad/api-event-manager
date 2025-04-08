@@ -1,0 +1,2 @@
+@imageinput($field)
+@endimageinput
