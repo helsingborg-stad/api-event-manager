@@ -1,4 +1,4 @@
-<div>
+@element([])
     @option($field)
     @endoption
-</div>
+@endelement
