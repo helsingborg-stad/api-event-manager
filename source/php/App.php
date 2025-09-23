@@ -158,6 +158,7 @@ class App
         $this->hooksRegistrar->register(new \EventManager\Taxonomies\CognitiveAccessibility($this->wpService));
         $this->hooksRegistrar->register(new \EventManager\Taxonomies\PhysicalAccessibility($this->wpService));
         $this->hooksRegistrar->register(new \EventManager\Taxonomies\Amenities($this->wpService));
+        $this->hooksRegistrar->register(new \EventManager\Taxonomies\Category($this->wpService));
     }
 
     public function setupUserRoles(): void
