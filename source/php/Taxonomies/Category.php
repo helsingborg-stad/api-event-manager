@@ -2,6 +2,8 @@
 
 namespace EventManager\Taxonomies;
 
+use WpService\Contracts\__;
+
 class Category extends Taxonomy
 {
     public function getName(): string
@@ -21,17 +23,23 @@ class Category extends Taxonomy
             'public'       => true,
             'hierarchical' => false,
             'show_ui'      => true,
-            'meta_box_cb'  => false
+            'meta_box_cb'  => false,
+            'capabilities' => [
+                'manage_terms' => 'administrator',
+                'edit_terms'   => 'administrator',
+                'delete_terms' => 'administrator',
+                'assign_terms' => 'assign_event_terms',
+            ],
         );
     }
 
     public function getLabelSingular(): string
     {
-        return 'Category';
+        return $this->wpService->__('Category', 'api-event-manager');
     }
 
     public function getLabelPlural(): string
     {
-        return 'Categories';
+        return $this->wpService->__('Categories', 'api-event-manager');
     }
 }

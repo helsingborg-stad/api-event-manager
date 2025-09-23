@@ -155,9 +155,7 @@ class App
         $this->hooksRegistrar->register(new \EventManager\Taxonomies\Audience($this->wpService));
         $this->hooksRegistrar->register(new \EventManager\Taxonomies\Organization($this->wpService));
         $this->hooksRegistrar->register(new \EventManager\Taxonomies\Keyword($this->wpService));
-        $this->hooksRegistrar->register(new \EventManager\Taxonomies\CognitiveAccessibility($this->wpService));
-        $this->hooksRegistrar->register(new \EventManager\Taxonomies\PhysicalAccessibility($this->wpService));
-        $this->hooksRegistrar->register(new \EventManager\Taxonomies\Amenities($this->wpService));
+        $this->hooksRegistrar->register(new \EventManager\Taxonomies\Accessibility($this->wpService));
         $this->hooksRegistrar->register(new \EventManager\Taxonomies\Category($this->wpService));
     }
 

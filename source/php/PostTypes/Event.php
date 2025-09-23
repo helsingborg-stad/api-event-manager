@@ -28,11 +28,11 @@ class Event extends PostType
 
     public function getLabelSingular(): string
     {
-        return 'Event';
+        return $this->wpService->__('Event', 'api-event-manager');
     }
 
     public function getLabelPlural(): string
     {
-        return 'Events';
+        return $this->wpService->__('Events', 'api-event-manager');
     }
 }

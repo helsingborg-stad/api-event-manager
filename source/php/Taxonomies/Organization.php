@@ -34,11 +34,11 @@ class Organization extends Taxonomy
 
     public function getLabelSingular(): string
     {
-        return 'Organization';
+        return $this->wpService->__('Organization', 'api-event-manager');
     }
 
     public function getLabelPlural(): string
     {
-        return 'Organizations';
+        return $this->wpService->__('Organizations', 'api-event-manager');
     }
 }
