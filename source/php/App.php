@@ -219,10 +219,7 @@ class App
 
     public function setupAcfSavePostActions(): void
     {
-        $acfSavepostRegistrar = new \EventManager\AcfSavePostActions\Registrar([
-            new \EventManager\AcfSavePostActions\SetPostTermsFromField('organization', 'organization', $this->wpService, $this->acfService),
-            new \EventManager\AcfSavePostActions\SetPostTermsFromField('audience', 'audience', $this->wpService, $this->acfService),
-        ], $this->wpService);
+        $acfSavepostRegistrar = new \EventManager\AcfSavePostActions\Registrar([], $this->wpService);
 
         $this->hooksRegistrar->register($acfSavepostRegistrar);
     }

@@ -1,85 +1,9 @@
 [{
-    "key": "group_65a115157a046",
-    "title": "Event Fields",
+    "key": "group_68d28f0c82ff4",
+    "title": "Time & Place",
     "fields": [
         {
-            "key": "field_65a115151a872",
-            "label": "Description",
-            "name": "description",
-            "aria-label": "",
-            "type": "textarea",
-            "instructions": "Provide essential information about your event, including featured speakers or performers, activities, and any other pertinent details.",
-            "required": 1,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "is_publicly_hidden": 0,
-            "is_privately_hidden": 0,
-            "default_value": "",
-            "maxlength": "",
-            "allow_in_bindings": 1,
-            "rows": 12,
-            "placeholder": "",
-            "new_lines": ""
-        },
-        {
-            "key": "field_65a6206610d45",
-            "label": "Excerpt",
-            "name": "excerpt",
-            "aria-label": "",
-            "type": "textarea",
-            "instructions": "Enter a brief, enticing description of your event. Make it irresistible - an event not to be missed!",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "is_publicly_hidden": 0,
-            "is_privately_hidden": 0,
-            "default_value": "",
-            "maxlength": "",
-            "allow_in_bindings": 1,
-            "rows": "",
-            "placeholder": "",
-            "new_lines": ""
-        },
-        {
-            "key": "field_66106dc161830",
-            "label": "Images",
-            "name": "images",
-            "aria-label": "",
-            "type": "gallery",
-            "instructions": "Make your event stand out by uploading high-resolution images in <strong>JPG format<\/strong>. Your event image is often the first thing attendees notice, so choose visuals that capture attention and spark interest. Images will appear in the order they are uploaded.",
-            "required": 1,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "is_publicly_hidden": 0,
-            "is_privately_hidden": 0,
-            "return_format": "id",
-            "library": "all",
-            "min": "",
-            "max": "",
-            "min_width": "",
-            "min_height": "",
-            "min_size": "",
-            "max_width": "",
-            "max_height": "",
-            "max_size": "",
-            "mime_types": "jpg,jpeg",
-            "insert": "append",
-            "preview_size": "medium"
-        },
-        {
-            "key": "field_65a66d8cadeef",
+            "key": "field_68d28f0c845d0",
             "label": "Occasions",
             "name": "occasions",
             "aria-label": "",
@@ -103,7 +27,7 @@
             "rows_per_page": 20,
             "sub_fields": [
                 {
-                    "key": "field_65a6809ba99e7",
+                    "key": "field_68d28f0c8845b",
                     "label": "Repeat",
                     "name": "repeat",
                     "aria-label": "",
@@ -128,12 +52,12 @@
                     "ui": 0,
                     "ajax": 0,
                     "placeholder": "",
-                    "parent_repeater": "field_65a66d8cadeef",
+                    "parent_repeater": "field_68d28f0c845d0",
                     "create_options": 0,
                     "save_options": 0
                 },
                 {
-                    "key": "field_65a686d8af87f",
+                    "key": "field_68d28f0c887c5",
                     "label": "Every",
                     "name": "weeksInterval",
                     "aria-label": "",
@@ -143,7 +67,7 @@
                     "conditional_logic": [
                         [
                             {
-                                "field": "field_65a6809ba99e7",
+                                "field": "field_68d28f0c8845b",
                                 "operator": "==",
                                 "value": "byWeek"
                             }
@@ -161,10 +85,10 @@
                     "step": "",
                     "prepend": "",
                     "append": "week\/weeks",
-                    "parent_repeater": "field_65a66d8cadeef"
+                    "parent_repeater": "field_68d28f0c845d0"
                 },
                 {
-                    "key": "field_65a6886e30f9d",
+                    "key": "field_68d28f0c88c7c",
                     "label": "Every",
                     "name": "monthsInterval",
                     "aria-label": "",
@@ -174,7 +98,7 @@
                     "conditional_logic": [
                         [
                             {
-                                "field": "field_65a6809ba99e7",
+                                "field": "field_68d28f0c8845b",
                                 "operator": "==",
                                 "value": "byMonth"
                             }
@@ -192,10 +116,10 @@
                     "step": "",
                     "prepend": "",
                     "append": "week\/weeks",
-                    "parent_repeater": "field_65a66d8cadeef"
+                    "parent_repeater": "field_68d28f0c845d0"
                 },
                 {
-                    "key": "field_65a68707af880",
+                    "key": "field_68d28f0c88f84",
                     "label": "Day",
                     "name": "weekDays",
                     "aria-label": "",
@@ -205,7 +129,7 @@
                     "conditional_logic": [
                         [
                             {
-                                "field": "field_65a6809ba99e7",
+                                "field": "field_68d28f0c8845b",
                                 "operator": "==",
                                 "value": "byWeek"
                             }
@@ -232,10 +156,10 @@
                     "toggle": 0,
                     "save_custom": 0,
                     "custom_choice_button_text": "L\u00e4gg till nytt val",
-                    "parent_repeater": "field_65a66d8cadeef"
+                    "parent_repeater": "field_68d28f0c845d0"
                 },
                 {
-                    "key": "field_65a689f5a4918",
+                    "key": "field_68d28f0c89453",
                     "label": "Day",
                     "name": "monthDay",
                     "aria-label": "",
@@ -245,7 +169,7 @@
                     "conditional_logic": [
                         [
                             {
-                                "field": "field_65a6809ba99e7",
+                                "field": "field_68d28f0c8845b",
                                 "operator": "==",
                                 "value": "byMonth"
                             }
@@ -273,12 +197,12 @@
                     "placeholder": "",
                     "allow_custom": 0,
                     "search_placeholder": "",
-                    "parent_repeater": "field_65a66d8cadeef",
+                    "parent_repeater": "field_68d28f0c845d0",
                     "create_options": 0,
                     "save_options": 0
                 },
                 {
-                    "key": "field_65a68a6ea4919",
+                    "key": "field_68d28f0c897e3",
                     "label": "By number",
                     "name": "monthDayNumber",
                     "aria-label": "",
@@ -288,7 +212,7 @@
                     "conditional_logic": [
                         [
                             {
-                                "field": "field_65a689f5a4918",
+                                "field": "field_68d28f0c89453",
                                 "operator": "==",
                                 "value": "day"
                             }
@@ -306,10 +230,10 @@
                     "step": "",
                     "prepend": "",
                     "append": "",
-                    "parent_repeater": "field_65a66d8cadeef"
+                    "parent_repeater": "field_68d28f0c845d0"
                 },
                 {
-                    "key": "field_65a681f9a99e9",
+                    "key": "field_68d28f0c89b49",
                     "label": "Date",
                     "name": "date",
                     "aria-label": "",
@@ -325,11 +249,11 @@
                     "display_format": "Y-m-d",
                     "return_format": "Y-m-d",
                     "first_day": 1,
-                    "parent_repeater": "field_65a66d8cadeef",
+                    "parent_repeater": "field_68d28f0c845d0",
                     "default_to_current_date": 0
                 },
                 {
-                    "key": "field_6602d3163612a",
+                    "key": "field_68d28f0c8a008",
                     "label": "Until Date",
                     "name": "untilDate",
                     "aria-label": "",
@@ -339,7 +263,7 @@
                     "conditional_logic": [
                         [
                             {
-                                "field": "field_65a6809ba99e7",
+                                "field": "field_68d28f0c8845b",
                                 "operator": "!=",
                                 "value": "no"
                             }
@@ -353,11 +277,11 @@
                     "display_format": "Y-m-d",
                     "return_format": "Y-m-d",
                     "first_day": 1,
-                    "parent_repeater": "field_65a66d8cadeef",
+                    "parent_repeater": "field_68d28f0c845d0",
                     "default_to_current_date": 0
                 },
                 {
-                    "key": "field_65a68507a99eb",
+                    "key": "field_68d28f0c8a391",
                     "label": "Start time",
                     "name": "startTime",
                     "aria-label": "",
@@ -372,10 +296,10 @@
                     },
                     "display_format": "H:i:s",
                     "return_format": "H:i:s",
-                    "parent_repeater": "field_65a66d8cadeef"
+                    "parent_repeater": "field_68d28f0c845d0"
                 },
                 {
-                    "key": "field_65a6852da99ec",
+                    "key": "field_68d28f0c8a6ff",
                     "label": "End time",
                     "name": "endTime",
                     "aria-label": "",
@@ -390,10 +314,10 @@
                     },
                     "display_format": "H:i:s",
                     "return_format": "H:i:s",
-                    "parent_repeater": "field_65a66d8cadeef"
+                    "parent_repeater": "field_68d28f0c845d0"
                 },
                 {
-                    "key": "field_65b89293153f9",
+                    "key": "field_68d28f0c8abbe",
                     "label": "Booking page URL",
                     "name": "url",
                     "aria-label": "",
@@ -408,12 +332,12 @@
                     },
                     "default_value": "",
                     "placeholder": "",
-                    "parent_repeater": "field_65a66d8cadeef"
+                    "parent_repeater": "field_68d28f0c845d0"
                 }
             ]
         },
         {
-            "key": "field_6613fdbd6090e",
+            "key": "field_68d28f0c8493c",
             "label": "Prices",
             "name": "pricesList",
             "aria-label": "",
@@ -437,7 +361,7 @@
             "rows_per_page": 20,
             "sub_fields": [
                 {
-                    "key": "field_6613fdcc6090f",
+                    "key": "field_68d28f0c8f518",
                     "label": "Price Label",
                     "name": "priceLabel",
                     "aria-label": "",
@@ -455,10 +379,10 @@
                     "placeholder": "",
                     "prepend": "",
                     "append": "",
-                    "parent_repeater": "field_6613fdbd6090e"
+                    "parent_repeater": "field_68d28f0c8493c"
                 },
                 {
-                    "key": "field_6613fdea60910",
+                    "key": "field_68d28f0c8f9e1",
                     "label": "Price",
                     "name": "price",
                     "aria-label": "",
@@ -478,12 +402,12 @@
                     "step": "",
                     "prepend": "",
                     "append": "$",
-                    "parent_repeater": "field_6613fdbd6090e"
+                    "parent_repeater": "field_68d28f0c8493c"
                 }
             ]
         },
         {
-            "key": "field_68d23a1f00235",
+            "key": "field_68d28f0c84e03",
             "label": "Location name",
             "name": "locationName",
             "aria-label": "",
@@ -516,7 +440,7 @@
             "layers": [
                 "OpenStreetMap.Mapnik"
             ],
-            "key": "field_65a245c3a4062",
+            "key": "field_68d28f0c851a1",
             "label": "Location address",
             "name": "locationAddress",
             "aria-label": "",
@@ -533,151 +457,6 @@
             "is_privately_hidden": 0,
             "allow_in_bindings": 1,
             "leaflet_map": "{\"lat\":59.1083083,\"lng\":13.8208008,\"zoom\":6,\"layers\":[\"OpenStreetMap.Mapnik\"],\"markers\":[]}"
-        },
-        {
-            "key": "field_65a4f6af50302",
-            "label": "Organizer",
-            "name": "organization",
-            "aria-label": "",
-            "type": "taxonomy",
-            "instructions": "",
-            "required": 1,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "is_publicly_hidden": 0,
-            "is_privately_hidden": 0,
-            "taxonomy": "organization",
-            "add_term": 0,
-            "save_terms": 1,
-            "load_terms": 1,
-            "return_format": "object",
-            "field_type": "multi_select",
-            "allow_null": 0,
-            "allow_in_bindings": 0,
-            "bidirectional": 0,
-            "multiple": 0,
-            "bidirectional_target": []
-        },
-        {
-            "key": "field_65a5319a9d01d",
-            "label": "Status",
-            "name": "eventStatus",
-            "aria-label": "",
-            "type": "select",
-            "instructions": "",
-            "required": 1,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "is_publicly_hidden": 1,
-            "is_privately_hidden": 0,
-            "choices": {
-                "https:\/\/schema.org\/EventScheduled": "Scheduled",
-                "https:\/\/schema.org\/EventRescheduled": "Rescheduled",
-                "https:\/\/schema.org\/EventCancelled": "Cancelled",
-                "https:\/\/schema.org\/EventPostponed": "Postponed"
-            },
-            "default_value": "https:\/\/schema.org\/EventScheduled",
-            "return_format": "value",
-            "multiple": 0,
-            "allow_null": 0,
-            "allow_in_bindings": 1,
-            "ui": 0,
-            "ajax": 0,
-            "placeholder": "",
-            "create_options": 0,
-            "save_options": 0
-        },
-        {
-            "key": "field_65fd4c7a55b91",
-            "label": "Category",
-            "name": "category",
-            "aria-label": "",
-            "type": "taxonomy",
-            "instructions": "What category do you feel accurately reflects your event's purpose? This gives a brief overview of the event's content.",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "is_publicly_hidden": 0,
-            "is_privately_hidden": 0,
-            "taxonomy": "category",
-            "add_term": 0,
-            "save_terms": 1,
-            "load_terms": 1,
-            "return_format": "object",
-            "field_type": "select",
-            "allow_null": 1,
-            "allow_in_bindings": 0,
-            "bidirectional": 0,
-            "multiple": 0,
-            "bidirectional_target": []
-        },
-        {
-            "key": "field_65a52a6374b0c",
-            "label": "Audience",
-            "name": "audience",
-            "aria-label": "",
-            "type": "taxonomy",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "is_publicly_hidden": 0,
-            "is_privately_hidden": 0,
-            "taxonomy": "audience",
-            "add_term": 0,
-            "save_terms": 1,
-            "load_terms": 1,
-            "return_format": "object",
-            "field_type": "checkbox",
-            "allow_in_bindings": 0,
-            "bidirectional": 0,
-            "multiple": 0,
-            "allow_null": 0,
-            "bidirectional_target": []
-        },
-        {
-            "key": "field_65f14f7826756",
-            "label": "Accessibility",
-            "name": "accessibility",
-            "aria-label": "",
-            "type": "taxonomy",
-            "instructions": "Choose the accessibility features that will be available to attendees at this event.",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "is_publicly_hidden": 0,
-            "is_privately_hidden": 0,
-            "taxonomy": "accessibility",
-            "add_term": 0,
-            "save_terms": 1,
-            "load_terms": 1,
-            "return_format": "object",
-            "field_type": "multi_select",
-            "allow_null": 1,
-            "allow_in_bindings": 0,
-            "bidirectional": 0,
-            "multiple": 0,
-            "bidirectional_target": []
         }
     ],
     "location": [
@@ -689,7 +468,7 @@
             }
         ]
     ],
-    "menu_order": 0,
+    "menu_order": 3,
     "position": "acf_after_title",
     "style": "default",
     "label_placement": "left",
@@ -709,7 +488,7 @@
         "send-trackbacks"
     ],
     "active": true,
-    "description": "We are nearly there! Just let us know some important last minute details, and you are ready to go!",
-    "show_in_rest": 0
+    "description": "",
+    "show_in_rest": 1
 }]
 

@@ -115,7 +115,7 @@ if (!isset($table_prefix)) {
  * @link https://wordpress.org/documentation/article/debugging-in-wordpress/
  */
 if (!defined('WP_DEBUG')) {
-    define('WP_DEBUG', true);
+    define('WP_DEBUG', false);
 }
 
 /* Add any custom values between this line and the "stop editing" line. */
