@@ -2,14 +2,14 @@
 # This file is distributed under the MIT.
 msgid ""
 msgstr ""
-"Project-Id-Version: Event Manager 3.10.5\n"
+"Project-Id-Version: Event Manager 3.11.2\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/api-event-manager\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-09-23T13:05:50+00:00\n"
+"POT-Creation-Date: 2025-09-25T11:35:49+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: api-event-manager\n"
@@ -58,7 +58,7 @@ msgid "Audience"
 msgstr ""
 
 #: source/php/AcfFields/php/event-audience-category.php:70
-#: source/php/Taxonomies/Accessibility.php:37
+#: source/php/Taxonomies/Accessibility.php:36
 msgid "Accessibility"
 msgstr ""
 
@@ -67,17 +67,63 @@ msgid "Choose the accessibility features that will be available to attendees at 
 msgstr ""
 
 #: source/php/AcfFields/php/event-organizer-fields.php:8
-#: source/php/AcfFields/php/event-organizer-fields.php:12
-#: source/php/App.php:108
+#: source/php/AcfFields/php/event-organizer-fields.php:35
+#: source/php/App.php:95
 msgid "Organizer"
+msgstr ""
+
+#: source/php/AcfFields/php/event-organizer-fields.php:12
+msgid "Submit new organization"
+msgstr ""
+
+#: source/php/AcfFields/php/event-organizer-fields.php:29
+msgid "Yes"
+msgstr ""
+
+#: source/php/AcfFields/php/event-organizer-fields.php:30
+msgid "Select from existing"
+msgstr ""
+
+#: source/php/AcfFields/php/event-organizer-fields.php:72
+#: source/php/AcfFields/php/event-presentation-fields.php:12
+msgid "Name"
+msgstr ""
+
+#: source/php/AcfFields/php/event-organizer-fields.php:76
+msgid "Name of the organization"
+msgstr ""
+
+#: source/php/AcfFields/php/event-organizer-fields.php:103
+#: source/php/AcfFields/php/organization-fields.php:91
+msgid "Contact"
+msgstr ""
+
+#: source/php/AcfFields/php/event-organizer-fields.php:107
+msgid "Supply the name(first and last) of the organizations contact person"
+msgstr ""
+
+#: source/php/AcfFields/php/event-organizer-fields.php:134
+#: source/php/AcfFields/php/organization-fields.php:52
+msgid "Email"
+msgstr ""
+
+#: source/php/AcfFields/php/event-organizer-fields.php:164
+#: source/php/AcfFields/php/organization-fields.php:71
+msgid "Telephone"
+msgstr ""
+
+#: source/php/AcfFields/php/event-organizer-fields.php:195
+#: source/php/AcfFields/php/organization-fields.php:12
+msgid "Address"
+msgstr ""
+
+#: source/php/AcfFields/php/event-organizer-fields.php:226
+#: source/php/AcfFields/php/organization-fields.php:35
+msgid "Url"
 msgstr ""
 
 #: source/php/AcfFields/php/event-presentation-fields.php:8
 msgid "Presentation"
-msgstr ""
-
-#: source/php/AcfFields/php/event-presentation-fields.php:12
-msgid "Name"
 msgstr ""
 
 #: source/php/AcfFields/php/event-presentation-fields.php:35
@@ -268,22 +314,6 @@ msgstr ""
 msgid "Organization Fields"
 msgstr ""
 
-#: source/php/AcfFields/php/organization-fields.php:12
-msgid "Address"
-msgstr ""
-
-#: source/php/AcfFields/php/organization-fields.php:31
-msgid "Url"
-msgstr ""
-
-#: source/php/AcfFields/php/organization-fields.php:48
-msgid "Email"
-msgstr ""
-
-#: source/php/AcfFields/php/organization-fields.php:67
-msgid "Telephone"
-msgstr ""
-
 #: source/php/AcfFields/php/plugin-settings.php:8
 msgid "Plugin Settings"
 msgstr ""
@@ -349,7 +379,7 @@ msgid "Event Manager - User fields"
 msgstr ""
 
 #: source/php/AcfFields/php/user-fields.php:12
-#: source/php/Taxonomies/Organization.php:42
+#: source/php/Taxonomies/Organization.php:41
 msgid "Organizations"
 msgstr ""
 
@@ -357,7 +387,7 @@ msgstr ""
 msgid "Determines which organization(s) this user is allowed to create events for. Also restricts the user from viewing, editing and deleting events belonging to any other organizer than the ones selected here."
 msgstr ""
 
-#: source/php/App.php:111
+#: source/php/App.php:98
 msgid "Location"
 msgstr ""
 
@@ -367,10 +397,6 @@ msgstr ""
 
 #: source/php/FieldSettingHidePublic.php:27
 msgid "Hide in frontend forms"
-msgstr ""
-
-#: source/php/Modules/FrontendForm/FrontendForm.php:222
-msgid "Save and go to next step"
 msgstr ""
 
 #: source/php/PostTypes/Event.php:30
@@ -431,7 +457,7 @@ msgstr ""
 msgid "Parent %s:"
 msgstr ""
 
-#: source/php/Taxonomies/Accessibility.php:42
+#: source/php/Taxonomies/Accessibility.php:41
 msgid "Accessibilities"
 msgstr ""
 
@@ -451,7 +477,7 @@ msgstr ""
 msgid "Keywords"
 msgstr ""
 
-#: source/php/Taxonomies/Organization.php:37
+#: source/php/Taxonomies/Organization.php:36
 msgid "Organization"
 msgstr ""
 

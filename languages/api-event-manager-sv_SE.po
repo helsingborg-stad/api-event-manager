@@ -48,13 +48,13 @@ msgstr "Ange en kort, lockande beskrivning av ditt evenemang. Gör det oemotstå
 msgid "Provide essential information about your event, including featured speakers or performers, activities, and any other pertinent details."
 msgstr "Ge viktig information om ditt evenemang, inklusive utvalda talare eller artister, aktiviteter och andra relevanta detaljer."
 
-#: source/php/App.php:111
+#: source/php/App.php:98
 msgid "Location"
 msgstr "Plats"
 
 #: source/php/AcfFields/php/event-organizer-fields.php:8
-#: source/php/AcfFields/php/event-organizer-fields.php:12
-#: source/php/App.php:108
+#: source/php/AcfFields/php/event-organizer-fields.php:35
+#: source/php/App.php:95
 msgid "Organizer"
 msgstr "Arrangör"
 
@@ -207,19 +207,23 @@ msgstr "SEK"
 msgid "Organization Fields"
 msgstr "Organisationsfält"
 
+#: source/php/AcfFields/php/event-organizer-fields.php:195
 #: source/php/AcfFields/php/organization-fields.php:12
 msgid "Address"
 msgstr "Adress"
 
-#: source/php/AcfFields/php/organization-fields.php:31
+#: source/php/AcfFields/php/event-organizer-fields.php:226
+#: source/php/AcfFields/php/organization-fields.php:35
 msgid "Url"
 msgstr "Webbadress"
 
-#: source/php/AcfFields/php/organization-fields.php:48
+#: source/php/AcfFields/php/event-organizer-fields.php:134
+#: source/php/AcfFields/php/organization-fields.php:52
 msgid "Email"
 msgstr "E-post"
 
-#: source/php/AcfFields/php/organization-fields.php:67
+#: source/php/AcfFields/php/event-organizer-fields.php:164
+#: source/php/AcfFields/php/organization-fields.php:71
 msgid "Telephone"
 msgstr "Telefon"
 
@@ -288,7 +292,7 @@ msgid "Event Manager - User fields"
 msgstr "Eventhanterare - Användarfält"
 
 #: source/php/AcfFields/php/user-fields.php:12
-#: source/php/Taxonomies/Organization.php:42
+#: source/php/Taxonomies/Organization.php:41
 msgid "Organizations"
 msgstr "Organisationer"
 
@@ -303,10 +307,6 @@ msgstr "Dölj i backend-formulär"
 #: source/php/FieldSettingHidePublic.php:27
 msgid "Hide in frontend forms"
 msgstr "Dölj i frontend-formulär"
-
-#: source/php/Modules/FrontendForm/FrontendForm.php:222
-msgid "Save and go to next step"
-msgstr "Spara och gå till nästa steg"
 
 #: source/php/Taxonomies/Audience.php:41
 msgid "Audiences"
@@ -329,7 +329,7 @@ msgstr "Nyckelord"
 msgid "Keywords"
 msgstr "Nyckelord"
 
-#: source/php/Taxonomies/Organization.php:37
+#: source/php/Taxonomies/Organization.php:36
 msgid "Organization"
 msgstr "Organisation"
 
@@ -408,11 +408,11 @@ msgid "What category do you feel accurately reflects your event's purpose? This 
 msgstr "Vilken kategori anser du återspeglar ditt evenemangs syfte? Detta ger en kort översikt över evenemangets innehåll."
 
 #: source/php/AcfFields/php/event-audience-category.php:70
-#: source/php/Taxonomies/Accessibility.php:37
+#: source/php/Taxonomies/Accessibility.php:36
 msgid "Accessibility"
 msgstr "Tillgänglighetanpassning"
 
-#: source/php/Taxonomies/Accessibility.php:42
+#: source/php/Taxonomies/Accessibility.php:41
 msgid "Accessibilities"
 msgstr "Tillgänglighetsanpassningar"
 
@@ -480,6 +480,7 @@ msgstr "Målgrupp & Kategori"
 msgid "Presentation"
 msgstr "Presentation"
 
+#: source/php/AcfFields/php/event-organizer-fields.php:72
 #: source/php/AcfFields/php/event-presentation-fields.php:12
 msgid "Name"
 msgstr "Namn"
@@ -491,3 +492,28 @@ msgstr "Tid & Plats"
 #: source/php/AcfFields/php/event-presentation-fields.php:85
 msgid "Make your event stand out by uploading high-resolution images. Your event image is often the first thing attendees notice, so choose visuals that capture attention and spark interest. Images will appear in the order they are uploaded."
 msgstr "Få ditt evenemang att sticka ut genom att ladda upp högupplösta bilder. Din evenemangsbild är ofta det första deltagarna lägger märke till, så välj visuella element som fångar uppmärksamhet och väcker intresse. Bilder kommer att visas i den ordning de laddas upp."
+
+#: source/php/AcfFields/php/event-organizer-fields.php:12
+msgid "Submit new organization"
+msgstr "Skicka in ny organisation"
+
+#: source/php/AcfFields/php/event-organizer-fields.php:29
+msgid "Yes"
+msgstr "Ja"
+
+#: source/php/AcfFields/php/event-organizer-fields.php:30
+msgid "Select from existing"
+msgstr "Välj från befintliga"
+
+#: source/php/AcfFields/php/event-organizer-fields.php:76
+msgid "Name of the organization"
+msgstr "Organisationsnamn"
+
+#: source/php/AcfFields/php/event-organizer-fields.php:103
+#: source/php/AcfFields/php/organization-fields.php:91
+msgid "Contact"
+msgstr "Kontakt"
+
+#: source/php/AcfFields/php/event-organizer-fields.php:107
+msgid "Supply the name(first and last) of the organizations contact person"
+msgstr "Ange namnet (för- och efternamn) på organisationens kontaktperson"
