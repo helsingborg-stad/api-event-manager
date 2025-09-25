@@ -9,10 +9,7 @@ use EventManager\AcfSavePostActions\CreateNewOrganizerFromEventSubmit\CreateNewO
 use EventManager\AcfSavePostActions\CreateNewOrganizerFromEventSubmit\OrganizerData\ICreateOrganizerDataFromSubmittedFields;
 use EventManager\AcfSavePostActions\CreateNewOrganizerFromEventSubmit\OrganizerData\IOrganizerData;
 use EventManager\AcfSavePostActions\CreateNewOrganizerFromEventSubmit\OrganizerData\OrganizerData;
-use EventManager\AcfSavePostActions\IAcfSavePostAction;
 use PHPUnit\Framework\TestCase;
-use WP_Error;
-use WpService\Contracts\WpSetObjectTerms;
 use WpService\Implementations\FakeWpService;
 use WpService\WpService;
 
