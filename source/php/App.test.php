@@ -5,6 +5,7 @@ namespace EventManager;
 use AcfService\AcfService;
 use EventManager\CronScheduler\CronSchedulerInterface;
 use EventManager\HooksRegistrar\HooksRegistrarInterface;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use WpService\WpService;
 
@@ -44,7 +45,7 @@ class AppTest extends TestCase
     {
         $app = new App(
             'textdomain',
-            $this->createMock(WpService::class),
+            $this->getWpService(),
             $this->createMock(AcfService::class),
             $this->createMock(HooksRegistrarInterface::class),
             $this->createMock(CronSchedulerInterface::class)
@@ -59,5 +60,13 @@ class AppTest extends TestCase
         }
 
         $this->assertTrue(true);
+    }
+
+    private function getWpService(): WpService|MockObject
+    {
+        $mock = $this->createMock(WpService::class);
+        $mock->method('__')->willReturnArgument(0);
+
+        return $mock;
     }
 }
