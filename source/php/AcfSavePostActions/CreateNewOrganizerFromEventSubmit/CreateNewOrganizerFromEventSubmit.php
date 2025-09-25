@@ -2,20 +2,35 @@
 
 namespace EventManager\AcfSavePostActions\CreateNewOrganizerFromEventSubmit;
 
-use AcfService\Contracts\GetFields;
+use AcfService\AcfService;
 use EventManager\AcfSavePostActions\IAcfSavePostAction;
-use WpService\Contracts\WpSetObjectTerms;
+use WpService\WpService;
 
 class CreateNewOrganizerFromEventSubmit implements IAcfSavePostAction
 {
     public function __construct(
-        private WpSetObjectTerms $wpService,
-        private GetFields $acfService,
+        private WpService $wpService,
+        private AcfService $acfService,
         private string $taxonomy,
-        private ClearFieldsFromPost\IClearFieldsFromPost $clearFieldsFromPost,
-        private CreateNewOrganizationTerm\ICreateNewOrganizationTerm $createNewOrganizationTerm,
-        private OrganizerData\ICreateOrganizerDataFromSubmittedFields $organizerDataFactory
+        private ?ClearFieldsFromPost\IClearFieldsFromPost $clearFieldsFromPost = null,
+        private ?CreateNewOrganizationTerm\ICreateNewOrganizationTerm $createNewOrganizationTerm = null,
+        private ?OrganizerData\ICreateOrganizerDataFromSubmittedFields $organizerDataFactory = null
     ) {
+        if (is_null($this->organizerDataFactory)) {
+            $this->organizerDataFactory = new OrganizerData\CreateOrganizerDataFromSubmittedFields();
+        }
+
+        if (is_null($this->createNewOrganizationTerm)) {
+            $this->createNewOrganizationTerm = new CreateNewOrganizationTerm\CreateNewOrganizationTerm(
+                $this->taxonomy,
+                $this->wpService,
+                $this->acfService
+            );
+        }
+
+        if (is_null($this->clearFieldsFromPost)) {
+            $this->clearFieldsFromPost = new ClearFieldsFromPost\ClearFieldsFromPost($this->acfService);
+        }
     }
 
     public function savePost(int|string $postId): void

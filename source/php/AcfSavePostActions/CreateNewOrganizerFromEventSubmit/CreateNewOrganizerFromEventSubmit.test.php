@@ -3,6 +3,7 @@
 namespace EventManager\AcfSavePostActions\CreateNewOrganizerFromEventSubmit;
 
 use AcfService\Contracts\GetFields;
+use AcfService\Implementations\FakeAcfService;
 use EventManager\AcfSavePostActions\CreateNewOrganizerFromEventSubmit\ClearFieldsFromPost\IClearFieldsFromPost;
 use EventManager\AcfSavePostActions\CreateNewOrganizerFromEventSubmit\CreateNewOrganizationTerm\ICreateNewOrganizationTerm;
 use EventManager\AcfSavePostActions\CreateNewOrganizerFromEventSubmit\OrganizerData\ICreateOrganizerDataFromSubmittedFields;
@@ -12,6 +13,8 @@ use EventManager\AcfSavePostActions\IAcfSavePostAction;
 use PHPUnit\Framework\TestCase;
 use WP_Error;
 use WpService\Contracts\WpSetObjectTerms;
+use WpService\Implementations\FakeWpService;
+use WpService\WpService;
 
 class CreateNewOrganizerFromEventSubmitTest extends TestCase
 {
@@ -53,9 +56,8 @@ class CreateNewOrganizerFromEventSubmitTest extends TestCase
         );
 
         $instance->savePost(123);
-
-        $this->assertCount(1, $wpService->calls);
-        $this->assertContains([123, 456, 'organizer', false], $wpService->calls);
+        $this->assertCount(1, $wpService->methodCalls['wpSetObjectTerms']);
+        $this->assertContains([123, 456, 'organizer'], $wpService->methodCalls['wpSetObjectTerms']);
     }
 
     /**
@@ -90,19 +92,14 @@ class CreateNewOrganizerFromEventSubmitTest extends TestCase
 
         $instance->savePost(123);
 
-        $this->assertCount(0, $wpService->calls);
+        $this->assertArrayNotHasKey('wpSetObjectTerms', $wpService->methodCalls);
     }
 
-    private function getWpService(): WpSetObjectTerms
+    private function getWpService(): WpService
     {
-        return $wpService = new class implements WpSetObjectTerms {
-            public array $calls = [];
-            public function wpSetObjectTerms(int $objectId, string|int|array $terms, string $taxonomy, bool $append = false): array|WP_Error
-            {
-                $this->calls[] = [$objectId, $terms, $taxonomy, $append];
-                return [];
-            }
-        };
+        return new FakeWpService([
+            'wpSetObjectTerms' => []
+        ]);
     }
 
     private function getClearFields(): IClearFieldsFromPost
@@ -116,11 +113,8 @@ class CreateNewOrganizerFromEventSubmitTest extends TestCase
 
     private function getAcfsService(): GetFields
     {
-        return new class implements GetFields {
-            public function getFields(mixed $postId = false, bool $formatValue = true, bool $escapeHtml = false): array|false
-            {
-                return [];
-            }
-        };
+        return new FakeAcfService([
+            'getFields' => []
+        ]);
     }
 }
