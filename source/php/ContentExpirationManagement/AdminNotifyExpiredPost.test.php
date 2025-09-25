@@ -5,7 +5,7 @@ namespace EventManager\ContentExpirationManagement;
 use WpService\Contracts\AddAction;
 use WpService\Contracts\AdminNotice;
 use WpService\Contracts\GetCurrentScreen;
-use WpService\Contracts\GetTheId;
+use WpService\Contracts\GetTheID;
 use Mockery;
 use PHPUnit\Framework\TestCase;
 use WP_Screen;
@@ -45,7 +45,7 @@ class AdminNotifyExpiredPostTest extends TestCase
         $wpService->getCurrentScreen = $screen;
 
         ob_start();
-        $wpService->getTheId = 2;
+        $wpService->getTheID = 2;
         $adminNotifyExpiredPosts->notify();
 
         $this->assertEmpty(ob_get_clean());
@@ -64,7 +64,7 @@ class AdminNotifyExpiredPostTest extends TestCase
         $wpService->getCurrentScreen = $screen;
 
         ob_start();
-        $wpService->getTheId = 1;
+        $wpService->getTheID = 1;
         $adminNotifyExpiredPosts->notify();
 
         $this->assertEmpty(ob_get_clean());
@@ -80,10 +80,10 @@ class AdminNotifyExpiredPostTest extends TestCase
         };
     }
 
-    private function getWpService(): GetCurrentScreen&WpAdminNotice&GetTheId&AddAction
+    private function getWpService(): GetCurrentScreen&WpAdminNotice&GetTheID&AddAction
     {
         return new class implements GetCurrentScreen, WpAdminNotice, GetTheId, AddAction {
-            public $getTheId         = 1;
+            public $getTheID         = 1;
             public $getCurrentScreen = null;
 
             public function getCurrentScreen(): ?WP_Screen
@@ -91,9 +91,9 @@ class AdminNotifyExpiredPostTest extends TestCase
                 return $this->getCurrentScreen;
             }
 
-            public function getTheId(): int
+            public function GetTheID(): int
             {
-                return $this->getTheId;
+                return $this->getTheID;
             }
 
             public function wpAdminNotice(string $message, array $args = []): void

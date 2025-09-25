@@ -6,7 +6,7 @@ use PHPUnit\Framework\TestCase;
 use EventManager\PostTableColumns\ColumnCellContent\NestedMetaStringCellContent;
 use EventManager\PostTableColumns\Helpers\GetNestedArrayStringValueRecursive;
 use WpService\Contracts\GetPostMeta;
-use WpService\Contracts\GetTheId;
+use WpService\Contracts\GetTheID;
 
 /**
  * @covers \EventManager\PostTableColumns\ColumnCellContent\NestedMetaStringCellContent
@@ -43,14 +43,14 @@ class NestedMetaStringCellContentTest extends TestCase
         $this->assertEquals('', $cellContent);
     }
 
-    private function getWpService($postId = 1, $meta = []): GetTheId&GetPostMeta
+    private function getWpService($postId = 1, $meta = []): GetTheID&GetPostMeta
     {
-        return new class ($postId, $meta) implements GetTheId, GetPostMeta {
+        return new class ($postId, $meta) implements GetTheID, GetPostMeta {
             public function __construct(private int $postId, private array $meta)
             {
             }
 
-            public function getTheId(): int
+            public function getTheID(): int
             {
                 return $this->postId;
             }
