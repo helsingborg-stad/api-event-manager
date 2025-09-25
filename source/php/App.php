@@ -90,19 +90,16 @@ class App
         /**
          * Table Columns
          */
-        add_action('init', function () {
-            $organizationCellContent =  new TermNameCellContent('organization', $this->wpService);
-            $organizationCellSort    = new MetaStringSort('organization');
-            $organizationColumn      = new PostTableColumn(__('Organizer', 'api-event-manager'), 'organization', $organizationCellContent, $organizationCellSort);
-            $locationCellContent     =  new NestedMetaStringCellContent('location.address', $this->wpService, new GetNestedArrayStringValueRecursive());
-            $locationCellSort        = new NestedMetaStringSort('location.address', $this->wpService, new GetNestedArrayStringValueRecursive());
-            $locationColumn          = new PostTableColumn(__('Location', 'api-event-manager'), 'location.address', $locationCellContent, $locationCellSort);
-            $postTableColumnsManager = new \EventManager\PostTableColumns\Manager(['event'], $this->wpService);
-            $postTableColumnsManager->register($organizationColumn);
-            $postTableColumnsManager->register($locationColumn);
-            $this->hooksRegistrar->register($postTableColumnsManager);
-        });
-
+        $organizationCellContent =  new TermNameCellContent('organization', $this->wpService);
+        $organizationCellSort    = new MetaStringSort('organization');
+        $organizationColumn      = new PostTableColumn(__('Organizer', 'api-event-manager'), 'organization', $organizationCellContent, $organizationCellSort);
+        $locationCellContent     =  new NestedMetaStringCellContent('location.address', $this->wpService, new GetNestedArrayStringValueRecursive());
+        $locationCellSort        = new NestedMetaStringSort('location.address', $this->wpService, new GetNestedArrayStringValueRecursive());
+        $locationColumn          = new PostTableColumn(__('Location', 'api-event-manager'), 'location.address', $locationCellContent, $locationCellSort);
+        $postTableColumnsManager = new \EventManager\PostTableColumns\Manager(['event'], $this->wpService);
+        $postTableColumnsManager->register($organizationColumn);
+        $postTableColumnsManager->register($locationColumn);
+        $this->hooksRegistrar->register($postTableColumnsManager);
 
         /**
          * Table Content
