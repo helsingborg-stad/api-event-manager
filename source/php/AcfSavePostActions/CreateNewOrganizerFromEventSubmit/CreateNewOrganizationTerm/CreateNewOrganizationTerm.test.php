@@ -88,12 +88,12 @@ class CreateNewOrganizationTermTest extends TestCase
             {
                 return new class extends \WP_Error
                 {
-                    public function get_error_code()
+                    public function get_error_code() // phpcs:ignore PSR1.Methods.CamelCapsMethodName.NotCamelCaps
                     {
                         return 'term_exists';
                     }
 
-                    public function get_error_data($code = '')
+                    public function get_error_data($code = '') // phpcs:ignore PSR1.Methods.CamelCapsMethodName.NotCamelCaps
                     {
                         return 321;
                     }
@@ -116,7 +116,7 @@ class CreateNewOrganizationTermTest extends TestCase
             {
                 return new class extends \WP_Error
                 {
-                    public function get_error_code()
+                    public function get_error_code() // phpcs:ignore PSR1.Methods.CamelCapsMethodName.NotCamelCaps
                     {
                         return 'unhandled_error';
                     }

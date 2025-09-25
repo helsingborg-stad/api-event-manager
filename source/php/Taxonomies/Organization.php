@@ -17,7 +17,6 @@ class Organization extends Taxonomy
     public function getArgs(): array
     {
         return array(
-            'show_in_rest' => false,
             'public'       => true,
             'hierarchical' => true,
             'show_ui'      => true,

@@ -215,7 +215,7 @@ class App
                 'organization',
                 new AcfSavePostActions\CreateNewOrganizerFromEventSubmit\ClearFieldsFromPost\ClearFieldsFromPost($this->acfService),
                 new AcfSavePostActions\CreateNewOrganizerFromEventSubmit\CreateNewOrganizationTerm\CreateNewOrganizationTerm('organization', $this->wpService, $this->acfService),
-                new AcfSavePostActions\CreateNewOrganizerFromEventSubmit\OrganizerData\CreateOrganizerDataFromSubmittedFields($this->acfService)
+                new AcfSavePostActions\CreateNewOrganizerFromEventSubmit\OrganizerData\CreateOrganizerDataFromSubmittedFields()
             )
         ], $this->wpService);
 

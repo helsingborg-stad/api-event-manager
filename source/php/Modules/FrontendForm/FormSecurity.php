@@ -5,15 +5,15 @@ namespace EventManager\Modules\FrontendForm;
 use WpService\Contracts\GetQueryVar;
 use WpService\Contracts\GetPost;
 use WpService\Contracts\AddAction;
-use WpService\Contracts\IsWPError;
+use WpService\Contracts\IsWpError;
 use WpService\Contracts\WpUpdatePost;
 
 class FormSecurity
 {
     public function __construct(
-        private GetQueryVar&GetPost&AddAction&WpUpdatePost&IsWPError $wpService,
+        private GetQueryVar&GetPost&AddAction&WpUpdatePost&IsWpError $wpService,
         private string $formIdQueryParam,
-        private string $formTokenQueryParam     
+        private string $formTokenQueryParam
     ) {
         $this->wpService->addAction(
             "acf/submit_form",
@@ -47,14 +47,14 @@ class FormSecurity
      */
     public function hasTokenizedAccess(): bool
     {
-        $postId = $this->wpService->getQueryVar($this->formIdQueryParam, null); 
+        $postId = $this->wpService->getQueryVar($this->formIdQueryParam, null);
         $token  = $this->wpService->getQueryVar($this->formTokenQueryParam, null);
 
-        if(!is_numeric($postId)) {
+        if (!is_numeric($postId)) {
             return false;
         }
 
-        if(!is_string($token)) {
+        if (!is_string($token)) {
             return false;
         }
 
@@ -95,13 +95,14 @@ class FormSecurity
     public function generateFromEditToken(int $postId, int $length = 16): string
     {
         $hash = hash_hmac(
-            'sha256', random_bytes($length),
+            'sha256',
+            random_bytes($length),
             (defined('AUTH_KEY') ? AUTH_KEY : '') . $postId,
             true
         );
 
-        $base64Hash     = base64_encode($hash);
-        $urlSafeToken   = strtr(rtrim($base64Hash, '='), '+/', '-_');
+        $base64Hash   = base64_encode($hash);
+        $urlSafeToken = strtr(rtrim($base64Hash, '='), '+/', '-_');
 
         return substr($urlSafeToken, 0, $length);
     }
@@ -119,15 +120,15 @@ class FormSecurity
      */
     public function saveFormEditToken($postId, $token): ?bool
     {
-        if(is_null($this->getStoredFromEditToken($postId))) {
+        if (is_null($this->getStoredFromEditToken($postId))) {
             $postUpdateResult = $this->wpService->wpUpdatePost(
-                [   
-                    'ID' => $postId, 
+                [
+                    'ID'            => $postId,
                     'post_password' => $token
                 ]
             );
 
-            if($this->wpService->isWpError($postUpdateResult)) {
+            if ($this->wpService->isWpError($postUpdateResult)) {
                 return false;
             }
             return true;
@@ -145,7 +146,7 @@ class FormSecurity
      */
     private function getStoredFromEditToken($postId): ?string
     {
-        return $this->wpService->getPost($postId)->post_password ?: null; 
+        return $this->wpService->getPost($postId)->post_password ?: null;
     }
 
     /**
@@ -163,8 +164,7 @@ class FormSecurity
     public function hijackSaveFormRedirect($form, $postId)
     {
         //Redirect to the specified URL
-        if ($return = acf_maybe_get($form, 'return', false)) {
-
+        if ($return = isset($form[ 'return' ]) ? $form[ 'return' ] : false) {
             //New token
             $token = $this->generateFromEditToken($postId);
 

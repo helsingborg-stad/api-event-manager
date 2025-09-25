@@ -26,7 +26,8 @@
 				"xdebug.php-debug",
 				"ms-azuretools.vscode-docker",
 				"ritwickdey.liveserver",
-				"valeryanm.vscode-phpsab"
+				"valeryanm.vscode-phpsab",
+				"SanderRonde.phpstan-vscode"
 			],
 			"settings": {
 				"intelephense.environment.includePaths": [

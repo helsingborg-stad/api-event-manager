@@ -10,7 +10,7 @@
         "minimal": "./vendor/bin/phpunit",
         "php:lint": "./vendor/bin/phpcs -s",
         "php:fix": "./vendor/bin/phpcbf",
-        "php:analyze": "vendor/bin/phpstan analyse -c phpstan.neon",
+        "php:analyze": "vendor/bin/phpstan analyse -c phpstan.neon --memory-limit=512M",
         "i18n:make-pot": "wp i18n make-pot ./ ./languages/api-event-manager.pot --slug=api-event-manager",
         "i18n:update-po": "wp i18n update-po ./languages/api-event-manager.pot ./languages/api-event-manager-sv_SE.po",
         "i18n:make-mo": "wp i18n make-mo ./languages/api-event-manager-sv_SE.po ./languages/api-event-manager-sv_SE.mo"

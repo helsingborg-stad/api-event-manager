@@ -3,19 +3,19 @@
 namespace EventManager\PostTableColumns\ColumnCellContent;
 
 use WpService\Contracts\GetPostMeta;
-use WpService\Contracts\GetTheId;
+use WpService\Contracts\GetTheID;
 
 class MetaStringCellContent implements ColumnCellContentInterface
 {
     public function __construct(
         private string $metaKey,
-        private GetTheId&GetPostMeta $wpService
+        private GetTheID&GetPostMeta $wpService
     ) {
     }
 
     public function getCellContent(): string
     {
-        $postId = $this->wpService->getTheId();
+        $postId = $this->wpService->getTheID();
         $value  = $this->wpService->getPostMeta($postId, $this->metaKey, true);
         return $this->sanitizeValue($value);
     }

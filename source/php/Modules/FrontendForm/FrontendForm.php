@@ -59,8 +59,8 @@ class FrontendForm extends \Modularity\Module
 
     public function init(): void
     {
-        $this->wpService    = new WpServiceWithTypecastedReturns(new NativeWpService());
-        $this->acfService   = new NativeAcfService();
+        $this->wpService  = new WpServiceWithTypecastedReturns(new NativeWpService());
+        $this->acfService = new NativeAcfService();
 
         //Manages form security
         $this->formSecurity = new FormSecurity(
@@ -94,11 +94,11 @@ class FrontendForm extends \Modularity\Module
         //Needs to be called, otherwise a notice will be thrown.
         $fields = (object) $this->getFields();
 
-        //If any of these conditions are met, return the error message: 
-        //Empty form:           Show error message, 
+        //If any of these conditions are met, return the error message:
+        //Empty form:           Show error message,
         //Protected form:       Show error message,
         //Tokenized request:    Show error message.
-        if($basicFormStateValidation = $this->basicFormStateValidation($fields)) {
+        if ($basicFormStateValidation = $this->basicFormStateValidation($fields)) {
             return $basicFormStateValidation;
         }
 
@@ -321,6 +321,7 @@ class FrontendForm extends \Modularity\Module
     {
         if (is_null($this->blade)) {
             $this->blade = (
+            /** @phpstan-ignore class.notFound */
             new ComponentLibraryInit([])
             )->getEngine();
         }
@@ -363,7 +364,8 @@ class FrontendForm extends \Modularity\Module
      * @param object $fields The form fields.
      * @return array|null The error object, or null if the form state is valid.
      */
-    private function basicFormStateValidation(object $fields): ?array {
+    private function basicFormStateValidation(object $fields): ?array
+    {
 
         //Empty form. Show message.
         if ($fields->formSteps == false) {
