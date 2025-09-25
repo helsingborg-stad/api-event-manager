@@ -31,6 +31,9 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-composer-
 
+    - name: Remove .devcontainer folder, (containing composer.local.json)
+      run: rm -rf .devcontainer
+
     - name: Remove installer paths
       run: composer config --unset extra.installer-paths
       

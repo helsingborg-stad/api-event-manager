@@ -91,7 +91,7 @@ class AdminNotifyExpiredPostTest extends TestCase
                 return $this->getCurrentScreen;
             }
 
-            public function GetTheID(): int
+            public function GetTheID(): int // phpcs:ignore PSR1.Methods.CamelCapsMethodName.NotCamelCaps
             {
                 return $this->getTheID;
             }
