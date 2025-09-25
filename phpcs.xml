@@ -6,8 +6,11 @@
     <exclude-pattern type="relative">AcfFields/*</exclude-pattern>
     <exclude-pattern type="relative">**/*.blade.php</exclude-pattern>
     
-    <rule ref="PSR12"/>
+    <rule ref="PSR12"></rule>
     <rule ref="Generic.Formatting.MultipleStatementAlignment"/>
     <rule ref="WordPress.Arrays.MultipleStatementAlignment"/>
+    <rule ref="Generic.Files.LineLength.TooLong">
+        <exclude-pattern type="relative">./*</exclude-pattern>
+    </rule>
     
 </ruleset>

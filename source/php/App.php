@@ -12,14 +12,10 @@ use EventManager\PostTableColumns\ColumnCellContent\TermNameCellContent;
 use EventManager\PostTableColumns\ColumnSorters\MetaStringSort;
 use EventManager\PostTableColumns\ColumnSorters\NestedMetaStringSort;
 use EventManager\PostTableColumns\Helpers\GetNestedArrayStringValueRecursive;
-use EventManager\PostToSchema\Mappers\StringToEventSchemaMapper;
-use EventManager\PostToSchema\PostToEventSchema\PostToEventSchema;
 use EventManager\SetPostTermsFromContent\SetPostTermsFromContent;
 use EventManager\TagReader\TagReader;
-use EventManager\ApiResponseModifiers\EventResponseModifier;
 use EventManager\ContentExpirationManagement\ExpiredEvents;
 use EventManager\CronScheduler\CronSchedulerInterface;
-use EventManager\PostToSchema\PostToEventSchema\Commands\Helpers\CommandHelpers;
 use EventManager\HooksRegistrar\HooksRegistrarInterface;
 use WpService\WpService;
 
@@ -50,15 +46,6 @@ class App
     {
         $adminSettingsPage = new \EventManager\Settings\AdminSettingsPage($this->wpService, $this->acfService);
         $this->hooksRegistrar->register($adminSettingsPage);
-    }
-
-    public function convertRestApiPostsToSchemaObjects(): void
-    {
-        $stringToEventSchemaMapper         = new StringToEventSchemaMapper();
-        $postToSchemaAdapterCommandHelpers = new CommandHelpers();
-        $postToSchemaAdapter               = new PostToEventSchema($stringToEventSchemaMapper, $this->wpService, $this->acfService, $postToSchemaAdapterCommandHelpers);
-        $eventResponseModifier             = new EventResponseModifier($postToSchemaAdapter, $this->wpService);
-        $this->hooksRegistrar->register($eventResponseModifier);
     }
 
     public function setupCleanupUnusedTags(): void
@@ -103,16 +90,18 @@ class App
         /**
          * Table Columns
          */
-        $organizationCellContent =  new TermNameCellContent('organization', $this->wpService);
-        $organizationCellSort    = new MetaStringSort('organization');
-        $organizationColumn      = new PostTableColumn(__('Organizer', 'api-event-manager'), 'organization', $organizationCellContent, $organizationCellSort);
-        $locationCellContent     =  new NestedMetaStringCellContent('location.address', $this->wpService, new GetNestedArrayStringValueRecursive());
-        $locationCellSort        = new NestedMetaStringSort('location.address', $this->wpService, new GetNestedArrayStringValueRecursive());
-        $locationColumn          = new PostTableColumn(__('Location', 'api-event-manager'), 'location.address', $locationCellContent, $locationCellSort);
-        $postTableColumnsManager = new \EventManager\PostTableColumns\Manager(['event'], $this->wpService);
-        $postTableColumnsManager->register($organizationColumn);
-        $postTableColumnsManager->register($locationColumn);
-        $this->hooksRegistrar->register($postTableColumnsManager);
+        add_action('init', function () {
+            $organizationCellContent =  new TermNameCellContent('organization', $this->wpService);
+            $organizationCellSort    = new MetaStringSort('organization');
+            $organizationColumn      = new PostTableColumn(__('Organizer', 'api-event-manager'), 'organization', $organizationCellContent, $organizationCellSort);
+            $locationCellContent     =  new NestedMetaStringCellContent('location.address', $this->wpService, new GetNestedArrayStringValueRecursive());
+            $locationCellSort        = new NestedMetaStringSort('location.address', $this->wpService, new GetNestedArrayStringValueRecursive());
+            $locationColumn          = new PostTableColumn(__('Location', 'api-event-manager'), 'location.address', $locationCellContent, $locationCellSort);
+            $postTableColumnsManager = new \EventManager\PostTableColumns\Manager(['event'], $this->wpService);
+            $postTableColumnsManager->register($organizationColumn);
+            $postTableColumnsManager->register($locationColumn);
+            $this->hooksRegistrar->register($postTableColumnsManager);
+        });
 
 
         /**
@@ -155,9 +144,8 @@ class App
         $this->hooksRegistrar->register(new \EventManager\Taxonomies\Audience($this->wpService));
         $this->hooksRegistrar->register(new \EventManager\Taxonomies\Organization($this->wpService));
         $this->hooksRegistrar->register(new \EventManager\Taxonomies\Keyword($this->wpService));
-        $this->hooksRegistrar->register(new \EventManager\Taxonomies\CognitiveAccessibility($this->wpService));
-        $this->hooksRegistrar->register(new \EventManager\Taxonomies\PhysicalAccessibility($this->wpService));
-        $this->hooksRegistrar->register(new \EventManager\Taxonomies\Amenities($this->wpService));
+        $this->hooksRegistrar->register(new \EventManager\Taxonomies\Accessibility($this->wpService));
+        $this->hooksRegistrar->register(new \EventManager\Taxonomies\Category($this->wpService));
     }
 
     public function setupUserRoles(): void
@@ -200,14 +188,6 @@ class App
         $this->hooksRegistrar->register(new \EventManager\CustomUserCapabilities\PromoteUserToRole($this->wpService));
     }
 
-    public function setupFrontendForm(): void
-    {
-        $frontendForm      = new \EventManager\Modules\FrontendForm\Register($this->wpService);
-        $frontendFormStyle = new \EventManager\AssetRegistry\FrontEndFormStyle($this->wpService);
-        $this->hooksRegistrar->register($frontendForm);
-        $this->hooksRegistrar->register($frontendFormStyle);
-    }
-
     public function setupAcfFieldContentModifiers(): void
     {
         $acfFieldContentModifierRegistrar = new \EventManager\AcfFieldContentModifiers\Registrar([
@@ -220,9 +200,12 @@ class App
 
     public function setupAcfSavePostActions(): void
     {
-        $acfSavepostRegistrar = new \EventManager\AcfSavePostActions\Registrar([
-            new \EventManager\AcfSavePostActions\SetPostTermsFromField('organization', 'organization', $this->wpService, $this->acfService),
-            new \EventManager\AcfSavePostActions\SetPostTermsFromField('audience', 'audience', $this->wpService, $this->acfService),
+        $acfSavepostRegistrar = new AcfSavePostActions\Registrar([
+            new AcfSavePostActions\CreateNewOrganizerFromEventSubmit\CreateNewOrganizerFromEventSubmit(
+                $this->wpService,
+                $this->acfService,
+                'organization'
+            )
         ], $this->wpService);
 
         $this->hooksRegistrar->register($acfSavepostRegistrar);

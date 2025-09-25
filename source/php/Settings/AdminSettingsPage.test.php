@@ -26,12 +26,8 @@ class AdminSettingsPageTest extends TestCase
     private function getWPService(): AddAction
     {
         return new class implements AddAction {
-            public function addAction(
-                string $tag,
-                callable $function_to_add,
-                int $priority = 10,
-                int $accepted_args = 1
-            ): bool {
+            public function addAction(string $hookName, callable $callback, int $priority = 10, int $acceptedArgs = 1): true
+            {
                 return true;
             }
         };

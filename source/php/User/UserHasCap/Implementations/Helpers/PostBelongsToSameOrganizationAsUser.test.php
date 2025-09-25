@@ -5,7 +5,7 @@ namespace EventManager\User\UserHasCap\Implementations\Helpers;
 use AcfService\Contracts\GetField;
 use PHPUnit\Framework\TestCase;
 use WP_Error;
-use WpService\Contracts\GetPostTerms;
+use WpService\Contracts\WpGetPostTerms;
 
 class PostBelongsToSameOrganizationAsUserTest extends TestCase
 {
@@ -44,17 +44,14 @@ class PostBelongsToSameOrganizationAsUserTest extends TestCase
         $this->assertFalse($result);
     }
 
-    private function getWpService(): GetPostTerms
+    private function getWpService(): WpGetPostTerms
     {
-        return new class implements GetPostTerms {
-            public function getPostTerms(
-                int $post_id,
-                string|array $taxonomy = 'post_tag',
-                array $args = array()
-            ): array|WP_Error {
+        return new class implements WpGetPostTerms {
+            public function wpGetPostTerms(int $postId = 0, string|array $taxonomy = 'post_tag', array $args = []): array|WP_Error
+            {
                 return [
                     1 => ['organization' => [(object) ['term_id' => 1]]],
-                ][$post_id][$taxonomy] ?? [];
+                ][$postId][$taxonomy] ?? [];
             }
         };
     }

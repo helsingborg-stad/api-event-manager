@@ -62,7 +62,8 @@ $removables = [
     './source/js/',
     'LICENSE',
     'babel.config.js',
-    'yarn.lock'
+    'yarn.lock',
+    '.devcontainer'
 ];
 
 $dirName = basename(dirname(__FILE__));

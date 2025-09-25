@@ -48,12 +48,8 @@ class UserAddedToOrganizationTest extends TestCase
             {
             }
 
-            public function addFilter(
-                string $tag,
-                callable $functionToAdd,
-                int $priority = 10,
-                int $acceptedArgs = 1
-            ): bool {
+            public function addFilter(string $hookName, callable $callback, int $priority = 10, int $acceptedArgs = 1): true
+            {
                 return true;
             }
 
@@ -62,7 +58,7 @@ class UserAddedToOrganizationTest extends TestCase
                 $this->doActionCalls[] = [$hookName, ...$arg];
             }
 
-            public function getUserMeta(int $userId, string $key, bool $single = false): mixed
+            public function getUserMeta(int $userId, string $key = '', bool $single = false): mixed
             {
                 return $this->data['getUserMeta'] ?? null;
             }

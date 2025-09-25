@@ -4,7 +4,7 @@ namespace EventManager\Tests\PostTableColumns\ColumnCellContent;
 
 use EventManager\PostTableColumns\ColumnCellContent\MetaStringCellContent;
 use WpService\Contracts\GetPostMeta;
-use WpService\Contracts\GetTheId;
+use WpService\Contracts\GetTheID;
 use PHPUnit\Framework\TestCase;
 
 class MetaStringCellContentTest extends TestCase
@@ -48,14 +48,14 @@ class MetaStringCellContentTest extends TestCase
         $this->assertEquals('', $cellContent);
     }
 
-    private function getWpService($postId = 1, $meta = []): GetPostMeta|GetTheId
+    private function getWpService($postId = 1, $meta = []): GetPostMeta|GetTheID
     {
-        return new class ($postId, $meta) implements GetPostMeta, GetTheId {
+        return new class ($postId, $meta) implements GetPostMeta, GetTheID {
             public function __construct(private int $postId, private array $meta)
             {
             }
 
-            public function getTheId(): int|false
+            public function getTheID(): int|false
             {
                 return $this->postId;
             }

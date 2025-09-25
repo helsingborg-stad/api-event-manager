@@ -7,6 +7,7 @@ use WpService\Contracts\DeleteTerm;
 use WpService\Contracts\GetTerms;
 use PHPUnit\Framework\TestCase;
 use WP_Error;
+use WpService\Contracts\WpDeleteTerm;
 
 class CleanupUnusedTagsTest extends TestCase
 {
@@ -24,17 +25,13 @@ class CleanupUnusedTagsTest extends TestCase
         $this->assertEquals([1, 'category', []], $wpService->deleteTermCalls[0]);
     }
 
-    private function getWPService(): GetTerms&DeleteTerm&AddAction
+    private function getWPService(): GetTerms&WpDeleteTerm&AddAction
     {
-        return new class implements GetTerms, DeleteTerm, AddAction {
+        return new class implements GetTerms, WpDeleteTerm, AddAction {
             public array $deleteTermCalls = [];
 
-            public function addAction(
-                string $tag,
-                callable $function_to_add,
-                int $priority = 10,
-                int $accepted_args = 1
-            ): bool {
+            public function addAction(string $hookName, callable $callback, int $priority = 10, int $acceptedArgs = 1): true
+            {
                 return true;
             }
 
@@ -46,7 +43,7 @@ class CleanupUnusedTagsTest extends TestCase
                 return [$term];
             }
 
-            public function deleteTerm(int $term, string $taxonomy, array|string $args = array()): bool|int|WP_Error
+            public function wpDeleteTerm(int $term, string $taxonomy, array|string $args = []): bool|int|WP_Error
             {
                 $this->deleteTermCalls[] = [$term, $taxonomy, $args];
                 return true;

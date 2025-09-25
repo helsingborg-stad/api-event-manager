@@ -6,11 +6,11 @@ use EventManager\HooksRegistrar\Hookable;
 use WpService\Contracts\AddAction;
 use WpService\Contracts\WpGetEnvironmentType;
 use WpService\Contracts\RemoveMenuPage;
-use WpService\Contracts\RemoveSubMenuPage;
+use WpService\Contracts\RemoveSubmenuPage;
 
 class HideUnusedAdminPages implements Hookable
 {
-    public function __construct(private AddAction&WpGetEnvironmentType&RemoveMenuPage&RemoveSubMenuPage $wpService)
+    public function __construct(private AddAction&WpGetEnvironmentType&RemoveMenuPage&RemoveSubmenuPage $wpService)
     {
         $this->wpService = $wpService;
     }
@@ -35,8 +35,8 @@ class HideUnusedAdminPages implements Hookable
         $this->wpService->removeMenuPage('themes.php');
         $this->wpService->removeMenuPage('index.php');
 
-        $this->wpService->removeSubMenuPage('options-general.php', 'options-discussion.php');
-        $this->wpService->removeSubMenuPage('options-general.php', 'options-writing.php');
-        $this->wpService->removeSubMenuPage('options-general.php', 'options-privacy.php');
+        $this->wpService->removeSubmenuPage('options-general.php', 'options-discussion.php');
+        $this->wpService->removeSubmenuPage('options-general.php', 'options-writing.php');
+        $this->wpService->removeSubmenuPage('options-general.php', 'options-privacy.php');
     }
 }

@@ -2,8 +2,7 @@
 
 namespace EventManager\ContentExpirationManagement;
 
-use EventManager\HooksRegistrar\Hookable;
-use WpService\Contracts\DeletePost;
+use WpService\Contracts\WpDeletePost;
 
 /**
  * Class DeleteExpiredPosts
@@ -16,9 +15,9 @@ class DeleteExpiredPosts
      * Constructor.
      *
      * @param GetExpiredPostsInterface[] $expired An array of expired posts.
-     * @param DeletePost $wpService The WPService instance used for deleting posts.
+     * @param WpDeletePost $wpService The WPService instance used for deleting posts.
      */
-    public function __construct(private array $expired, private DeletePost $wpService)
+    public function __construct(private array $expired, private WpDeletePost $wpService)
     {
     }
 
@@ -35,7 +34,7 @@ class DeleteExpiredPosts
         $expiredPostIds = $this->getExpiredPostIds();
 
         foreach ($expiredPostIds as $postId) {
-            $this->wpService->deletePost($postId, true);
+            $this->wpService->wpDeletePost($postId, true);
         }
     }
 

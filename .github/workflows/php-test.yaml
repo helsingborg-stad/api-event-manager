@@ -17,7 +17,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php-versions: ['8.1', '8.2', '8.3']
+        php-versions: ['8.2', '8.3']
 
     steps:
     - uses: actions/checkout@v2
@@ -41,6 +41,9 @@ jobs:
 
     - name: Remove installer paths
       run: composer config --unset extra.installer-paths
+
+    - name: Remove .devcontainer folder, (containing composer.local.json)
+      run: rm -rf .devcontainer
 
     - name: Install dependencies
       run: composer install --prefer-dist

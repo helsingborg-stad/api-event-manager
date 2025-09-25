@@ -33,6 +33,9 @@ jobs:
 
     - name: Remove installer paths
       run: composer config --unset extra.installer-paths
+
+    - name: Remove .devcontainer folder, (containing composer.local.json)
+      run: rm -rf .devcontainer
       
     - name: Install dependencies
       run: composer install --prefer-dist

@@ -3,11 +3,11 @@
 namespace EventManager\AcfFieldContentModifiers;
 
 use AcfService\Contracts\GetField;
-use WpService\Contracts\GetCurrentUser;
 use WpService\Contracts\GetTerms;
 use PHPUnit\Framework\TestCase;
 use WP_Error;
 use WP_User;
+use WpService\Contracts\WpGetCurrentUser;
 
 class FilterAcfOrganizerSelectFieldTest extends TestCase
 {
@@ -63,12 +63,12 @@ class FilterAcfOrganizerSelectFieldTest extends TestCase
         $this->assertEquals('id=>name', $wpService->getTermsCalls[0]['fields']);
     }
 
-    private function getFakeWpService(array $db = []): GetTerms&GetCurrentUser
+    private function getFakeWpService(array $db = []): GetTerms|WpGetCurrentUser
     {
         $currentUser     = $this->createMock(WP_User::class);
         $currentUser->ID = 1;
 
-        return new class ($currentUser, $db) implements GetTerms, GetCurrentUser {
+        return new class ($currentUser, $db) implements GetTerms, WpGetCurrentUser {
             public array $getTermsCalls = [];
 
             public function __construct(private WP_User $currentUser, private array $db)
@@ -85,7 +85,7 @@ class FilterAcfOrganizerSelectFieldTest extends TestCase
                 return $this->db['getTerms'][$args['taxonomy']] ?? [];
             }
 
-            public function getCurrentUser(): WP_User
+            public function wpGetCurrentUser(): WP_User
             {
                 return $this->currentUser;
             }

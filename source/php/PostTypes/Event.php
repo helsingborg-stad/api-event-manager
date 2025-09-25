@@ -20,19 +20,18 @@ class Event extends PostType
             'menu_icon'             => (new Icon('Event'))->getIcon(),
             'rest_base'             => 'events',
             'rest_controller_class' => \EventManager\RestControllers\EventController::class,
-            'supports'              => [ 'title', 'editor', 'excerpt', 'thumbnail', 'revisions', 'page-attributes' ],
-            'taxonomies'            => [ 'audience-type' ],
+            'supports'              => [ 'revisions' ],
             'capability_type'       => ['event', 'events'],
         ];
     }
 
     public function getLabelSingular(): string
     {
-        return 'Event';
+        return $this->wpService->__('Event', 'api-event-manager');
     }
 
     public function getLabelPlural(): string
     {
-        return 'Events';
+        return $this->wpService->__('Events', 'api-event-manager');
     }
 }

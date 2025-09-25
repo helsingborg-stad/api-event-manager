@@ -17,7 +17,6 @@
         }
     },
     "require": {
-        "helsingborg-stad/modularity": "^6.2.2",
         "wpengine/advanced-custom-fields-pro": "^6.0.7",
         "wpackagist-plugin/acf-openstreetmap-field":"1.5.6"
     }
