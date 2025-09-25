@@ -35,13 +35,9 @@ class RegistrarTest extends TestCase
     {
         return new class implements AddFilter {
             public array $invoked = [];
-            public function addFilter(
-                string $tag,
-                callable $function_to_add,
-                int $priority = 10,
-                int $accepted_args = 1
-            ): bool {
-                $this->invoked[] = [$tag, $function_to_add, $priority, $accepted_args];
+            public function addFilter(string $hookName, callable $callback, int $priority = 10, int $acceptedArgs = 1): true
+            {
+                $this->invoked[] = [$hookName, $callback, $priority, $acceptedArgs];
                 return true;
             }
         };

@@ -9,6 +9,7 @@ use WpService\Contracts\GetTheId;
 use Mockery;
 use PHPUnit\Framework\TestCase;
 use WP_Screen;
+use WpService\Contracts\WpAdminNotice;
 
 class AdminNotifyExpiredPostTest extends TestCase
 {
@@ -20,7 +21,7 @@ class AdminNotifyExpiredPostTest extends TestCase
         $expired                     = [ $this->getExpiredPosts() ];
         $wpService                   = $this->getWpService();
         $adminNotifyExpiredPosts     = new AdminNotifyExpiredPost($expired, $wpService);
-        $screen                      = Mockery::mock(WP_Screen::class);
+        $screen                      = new WP_Screen();
         $screen->base                = 'post';
         $wpService->getCurrentScreen = $screen;
 
@@ -39,7 +40,7 @@ class AdminNotifyExpiredPostTest extends TestCase
         $expired                     = [ $this->getExpiredPosts() ];
         $wpService                   = $this->getWpService();
         $adminNotifyExpiredPosts     = new AdminNotifyExpiredPost($expired, $wpService);
-        $screen                      = Mockery::mock(WP_Screen::class);
+        $screen                      = new WP_Screen();
         $screen->base                = 'post';
         $wpService->getCurrentScreen = $screen;
 
@@ -58,7 +59,7 @@ class AdminNotifyExpiredPostTest extends TestCase
         $expired                     = [ $this->getExpiredPosts() ];
         $wpService                   = $this->getWpService();
         $adminNotifyExpiredPosts     = new AdminNotifyExpiredPost($expired, $wpService);
-        $screen                      = Mockery::mock(WP_Screen::class);
+        $screen                      = new WP_Screen();
         $screen->base                = 'foo';
         $wpService->getCurrentScreen = $screen;
 
@@ -79,9 +80,9 @@ class AdminNotifyExpiredPostTest extends TestCase
         };
     }
 
-    private function getWpService(): GetCurrentScreen&AdminNotice&GetTheId&AddAction
+    private function getWpService(): GetCurrentScreen&WpAdminNotice&GetTheId&AddAction
     {
-        return new class implements GetCurrentScreen, AdminNotice, GetTheId, AddAction {
+        return new class implements GetCurrentScreen, WpAdminNotice, GetTheId, AddAction {
             public $getTheId         = 1;
             public $getCurrentScreen = null;
 
@@ -95,17 +96,13 @@ class AdminNotifyExpiredPostTest extends TestCase
                 return $this->getTheId;
             }
 
-            public function adminNotice(string $message, array $args): void
+            public function wpAdminNotice(string $message, array $args = []): void
             {
                 echo $message;
             }
 
-            public function addAction(
-                string $tag,
-                callable $function_to_add,
-                int $priority = 10,
-                int $accepted_args = 1
-            ): bool {
+            public function addAction(string $hookName, callable $callback, int $priority = 10, int $acceptedArgs = 1): true
+            {
                 return true;
             }
         };

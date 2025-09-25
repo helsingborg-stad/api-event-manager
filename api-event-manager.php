@@ -17,13 +17,7 @@ use AcfService\Implementations\NativeAcfService;
 use EventManager\HooksRegistrar\HooksRegistrar;
 use EventManager\App;
 use EventManager\CronScheduler\CronScheduler;
-use WpService\FileSystem\BaseFileSystem;
-use WpService\FileSystemResolvers\ManifestFilePathResolver;
-use WpService\FileSystemResolvers\UrlFilePathResolver;
-use WpService\Implementations\FilePathResolvingWpService;
 use WpService\Implementations\NativeWpService;
-use WpService\Implementations\WpServiceLazyDecorator;
-use WpService\Implementations\WpServiceWithTextDomain;
 
 // Protect against direct file access
 if (!defined('WPINC')) {
@@ -41,15 +35,10 @@ if (file_exists(EVENT_MANAGER_PATH . 'vendor/autoload.php')) {
     require EVENT_MANAGER_PATH . '/vendor/autoload.php';
 }
 
-$textDomain               = 'api-event-manager';
-$hooksRegistrar           = new HooksRegistrar();
-$acfService               = new NativeAcfService();
-$manifestFileWpService    = new WpServiceLazyDecorator();
-$urlFilePathResolver      = new UrlFilePathResolver($manifestFileWpService);
-$baseFileSystem           = new BaseFileSystem();
-$manifestFilePathResolver = new ManifestFilePathResolver(EVENT_MANAGER_PATH . "dist/manifest.json", $baseFileSystem, $manifestFileWpService, $urlFilePathResolver);
-$wpService                = new FilePathResolvingWpService(new NativeWpService(), $manifestFilePathResolver);
-$manifestFileWpService->setInner(new WpServiceWithTextDomain($wpService, $textDomain));
+$textDomain     = 'api-event-manager';
+$hooksRegistrar = new HooksRegistrar();
+$acfService     = new NativeAcfService();
+$wpService      = new NativeWpService();
 
 $cronScheduler = new CronScheduler($wpService);
 $hooksRegistrar->register($cronScheduler);
@@ -65,7 +54,6 @@ $app = new App(
 $app->loadPluginTextDomain();
 $app->setupAcfExportManager();
 $app->setupPluginSettingsPage();
-$app->convertRestApiPostsToSchemaObjects();
 $app->setupCleanupUnusedTags();
 $app->setPostTermsFromPostContent();
 $app->cleanUpExpiredEvents();

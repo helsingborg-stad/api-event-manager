@@ -99,7 +99,7 @@
         3 => array(
             'key' => 'field_68d29cad9a1f1',
             'label' => __('Contact', 'api-event-manager'),
-            'name' => 'contact',
+            'name' => 'organizerContact',
             'aria-label' => '',
             'type' => 'text',
             'instructions' => __('Supply the name(first and last) of the organizations contact person', 'api-event-manager'),
@@ -130,7 +130,7 @@
         4 => array(
             'key' => 'field_68d29d47a0b16',
             'label' => __('Email', 'api-event-manager'),
-            'name' => 'email',
+            'name' => 'organizerEmail',
             'aria-label' => '',
             'type' => 'email',
             'instructions' => '',
@@ -160,7 +160,7 @@
         5 => array(
             'key' => 'field_68d29d56a0b17',
             'label' => __('Telephone', 'api-event-manager'),
-            'name' => 'telephone',
+            'name' => 'organizerTelephone',
             'aria-label' => '',
             'type' => 'text',
             'instructions' => '',
@@ -191,7 +191,38 @@
         6 => array(
             'key' => 'field_68d29d6aa0b18',
             'label' => __('Address', 'api-event-manager'),
-            'name' => 'address',
+            'name' => 'organizerAddress',
+            'aria-label' => '',
+            'type' => 'text',
+            'instructions' => '',
+            'required' => 1,
+            'conditional_logic' => array(
+                0 => array(
+                    0 => array(
+                        'field' => 'field_68d29c329a1ee',
+                        'operator' => '==',
+                        'value' => '1',
+                    ),
+                ),
+            ),
+            'wrapper' => array(
+                'width' => '',
+                'class' => '',
+                'id' => '',
+            ),
+            'is_publicly_hidden' => 0,
+            'is_privately_hidden' => 0,
+            'default_value' => '',
+            'maxlength' => '',
+            'allow_in_bindings' => 0,
+            'placeholder' => '',
+            'prepend' => '',
+            'append' => '',
+        ),
+        7 => array(
+            'key' => 'field_68d385ffc8950',
+            'label' => __('Url', 'api-event-manager'),
+            'name' => 'organizerUrl',
             'aria-label' => '',
             'type' => 'text',
             'instructions' => '',

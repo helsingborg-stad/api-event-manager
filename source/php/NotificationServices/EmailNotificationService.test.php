@@ -5,6 +5,7 @@ namespace EventManager\NotificationServices;
 use PHPUnit\Framework\TestCase;
 use WpService\Contracts\GetUsers;
 use WpService\Contracts\Mail;
+use WpService\Contracts\WpMail;
 
 class EmailNotificationServiceTest extends TestCase
 {
@@ -39,23 +40,17 @@ class EmailNotificationServiceTest extends TestCase
         $this->assertEquals('message', $wpService->calls['mail'][0][2]);
     }
 
-    private function getWpService(array $data = []): Mail&GetUsers
+    private function getWpService(array $data = []): WpMail&GetUsers
     {
-        return new class ($data) implements Mail, GetUsers {
+        return new class ($data) implements WpMail, GetUsers {
             public array $calls = [];
 
             public function __construct(private array $data)
             {
             }
 
-            public function mail(
-                string|array $to,
-                string $subject,
-                string $message,
-                string|array $headers = '',
-                string|array $attachments = array()
-            ): bool {
-
+            public function wpMail(string|array $to, string $subject, string $message, string|array $headers = '', string|array $attachments = []): bool
+            {
                 if (!isset($this->calls['mail'])) {
                     $this->calls['mail'] = [];
                 }
@@ -64,7 +59,7 @@ class EmailNotificationServiceTest extends TestCase
                 return true;
             }
 
-            public function getUsers(array $args): array
+            public function getUsers(array $args = []): array
             {
                 return $this->data['getUsers'] ?? [];
             }

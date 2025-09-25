@@ -28,16 +28,12 @@ class RoleRegistrarTest extends TestCase
         return new class implements AddRole, AddAction {
             public array $registeredRoles = [];
 
-            public function addAction(
-                string $tag,
-                callable $function_to_add,
-                int $priority = 10,
-                int $accepted_args = 1
-            ): bool {
+            public function addAction(string $hookName, callable $callback, int $priority = 10, int $acceptedArgs = 1): true
+            {
                 return true;
             }
 
-            public function addRole(string $role, string $displayName, array $capabilities): ?WP_Role
+            public function addRole(string $role, string $displayName, array $capabilities = []): mixed
             {
                 $this->registeredRoles[] = [$role, $displayName, $capabilities];
                 return null;

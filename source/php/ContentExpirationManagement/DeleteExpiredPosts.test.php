@@ -4,6 +4,8 @@ namespace EventManager\ContentExpirationManagement;
 
 use WpService\Contracts\DeletePost;
 use PHPUnit\Framework\TestCase;
+use WP_Post;
+use WpService\Contracts\WpDeletePost;
 
 class DeleteExpiredPostsTest extends TestCase
 {
@@ -49,12 +51,13 @@ class DeleteExpiredPostsTest extends TestCase
         };
     }
 
-    private function getWPService(): DeletePost
+    private function getWPService(): WpDeletePost
     {
-        return new class implements DeletePost {
-            public function deletePost(int $postId, bool $forceDelete): void
+        return new class implements WpDeletePost {
+            public function wpDeletePost(int $postId = 0, bool $forceDelete = false): WP_Post|false|null
             {
                 echo "Deleted post $postId";
+                return new WP_Post([]);
             }
         };
     }

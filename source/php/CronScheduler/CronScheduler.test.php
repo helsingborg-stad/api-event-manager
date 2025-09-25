@@ -7,6 +7,8 @@ use WpService\Contracts\NextScheduled;
 use WpService\Contracts\ScheduleEvent;
 use PHPUnit\Framework\TestCase;
 use WP_Error;
+use WpService\Contracts\WpNextScheduled;
+use WpService\Contracts\WpScheduleEvent;
 
 class CronSchedulerTest extends TestCase
 {
@@ -87,33 +89,24 @@ class CronSchedulerTest extends TestCase
         };
     }
 
-    private function getWPService(): AddAction&NextScheduled&ScheduleEvent
+    private function getWPService(): AddAction&WpNextScheduled&WpScheduleEvent
     {
-        return new class implements AddAction, NextScheduled, ScheduleEvent {
+        return new class implements AddAction, WpNextScheduled, WpScheduleEvent {
             public $scheduledEvents         = [];
             public int|false $nextScheduled = 0;
 
-            public function addAction(
-                string $tag,
-                callable $function_to_add,
-                int $priority = 10,
-                int $accepted_args = 1
-            ): bool {
+            public function addAction(string $hookName, callable $callback, int $priority = 10, int $acceptedArgs = 1): true
+            {
                 return true;
             }
 
-            public function nextScheduled(string $hook, array $args = []): int|false
+            public function wpNextScheduled(string $hook, array $args = []): int|false
             {
                 return $this->nextScheduled;
             }
 
-            public function scheduleEvent(
-                int $timestamp,
-                string $recurrence,
-                string $hook,
-                array $args = [],
-                bool $wpError = false
-            ): bool|WP_Error {
+            public function wpScheduleEvent(int $timestamp, string $recurrence, string $hook, array $args = [], bool $wpError = false): bool|WP_Error
+            {
                 $this->scheduledEvents[] = [
                     'timestamp'  => $timestamp,
                     'recurrence' => $recurrence,

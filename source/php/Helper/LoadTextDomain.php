@@ -14,7 +14,7 @@ class LoadTextDomain implements Hookable
 
     public function addHooks(): void
     {
-        $this->wpService->addAction('plugins_loaded', array($this, 'loadTextDomain'));
+        $this->wpService->addAction('init', array($this, 'loadTextDomain'));
     }
 
     public function loadTextDomain(): void

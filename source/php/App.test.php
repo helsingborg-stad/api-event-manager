@@ -10,6 +10,17 @@ use WpService\WpService;
 
 class AppTest extends TestCase
 {
+    protected function setUp(): void
+    {
+        if (!defined('OBJECT')) {
+            define('OBJECT', 'object');
+        }
+
+        if (!defined('ARRAY_A')) {
+            define('ARRAY_A', 'array');
+        }
+    }
+
     /**
      * @testdox does not crash on instantiation
      */

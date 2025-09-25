@@ -4,9 +4,9 @@ namespace EventManager\ContentExpirationManagement;
 
 use EventManager\HooksRegistrar\Hookable;
 use WpService\Contracts\AddAction;
-use WpService\Contracts\AdminNotice;
 use WpService\Contracts\GetCurrentScreen;
 use WpService\Contracts\GetTheId;
+use WpService\Contracts\WpAdminNotice;
 
 class AdminNotifyExpiredPost implements Hookable
 {
@@ -14,11 +14,11 @@ class AdminNotifyExpiredPost implements Hookable
      * Constructor.
      *
      * @param GetExpiredPostsInterface[] $expired An array of expired posts.
-     * @param GetCurrentScreen&AdminNotice&GetTheId&AddAction $wpService The WPService instance.
+     * @param GetCurrentScreen&WpAdminNotice&GetTheId&AddAction $wpService The WPService instance.
      */
     public function __construct(
         private array $expired,
-        private GetCurrentScreen&AdminNotice&GetTheId&AddAction $wpService
+        private GetCurrentScreen&WpAdminNotice&GetTheId&AddAction $wpService
     ) {
     }
 
@@ -40,7 +40,7 @@ class AdminNotifyExpiredPost implements Hookable
 
         if (in_array($currentId, $posts)) {
             $message = 'This event has passed and is marked for deletion.';
-            $this->wpService->adminNotice($message, array( 'type' => 'warning' ));
+            $this->wpService->wpAdminNotice($message, array( 'type' => 'warning' ));
         }
     }
 

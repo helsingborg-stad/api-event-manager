@@ -1,9 +1,7 @@
 <?php 
 
-
-if (function_exists('acf_add_local_field_group')) {
-
-    acf_add_local_field_group(array(
+if (function_exists('acf_add_local_field_group')) {
+    acf_add_local_field_group(array(
     'key' => 'group_65a4f5a847d62',
     'title' => __('Organization Fields', 'api-event-manager'),
     'fields' => array(
@@ -12,7 +10,7 @@ if (function_exists('acf_add_local_field_group')) {
             'label' => __('Address', 'api-event-manager'),
             'name' => 'address',
             'aria-label' => '',
-            'type' => 'google_map',
+            'type' => 'text',
             'instructions' => '',
             'required' => 0,
             'conditional_logic' => 0,
@@ -21,10 +19,14 @@ if (function_exists('acf_add_local_field_group')) {
                 'class' => '',
                 'id' => '',
             ),
-            'center_lat' => '',
-            'center_lng' => '',
-            'zoom' => '',
-            'height' => '',
+            'is_publicly_hidden' => 0,
+            'is_privately_hidden' => 0,
+            'default_value' => '',
+            'maxlength' => '',
+            'allow_in_bindings' => 0,
+            'placeholder' => '',
+            'prepend' => '',
+            'append' => '',
         ),
         1 => array(
             'key' => 'field_65a4f5c8f4b19',
@@ -82,6 +84,29 @@ if (function_exists('acf_add_local_field_group')) {
             'prepend' => '',
             'append' => '',
         ),
+        4 => array(
+            'key' => 'field_68d3859e14680',
+            'label' => __('Contact', 'api-event-manager'),
+            'name' => 'contact',
+            'aria-label' => '',
+            'type' => 'text',
+            'instructions' => '',
+            'required' => 0,
+            'conditional_logic' => 0,
+            'wrapper' => array(
+                'width' => '',
+                'class' => '',
+                'id' => '',
+            ),
+            'is_publicly_hidden' => 0,
+            'is_privately_hidden' => 0,
+            'default_value' => '',
+            'maxlength' => '',
+            'allow_in_bindings' => 0,
+            'placeholder' => '',
+            'prepend' => '',
+            'append' => '',
+        ),
     ),
     'location' => array(
         0 => array(
@@ -98,14 +123,8 @@ if (function_exists('acf_add_local_field_group')) {
     'label_placement' => 'top',
     'instruction_placement' => 'label',
     'hide_on_screen' => '',
-    'show_in_rest' => 1,
+    'active' => true,
     'description' => '',
     'show_in_rest' => 1,
-    'acfe_display_title' => '',
-    'acfe_autosync' => '',
-    'acfe_form' => 0,
-    'acfe_meta' => '',
-    'acfe_note' => '',
 ));
-
-}
+}

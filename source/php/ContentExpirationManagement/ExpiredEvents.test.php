@@ -56,7 +56,7 @@ class ExpiredEventsTest extends TestCase
     private function getWpService(): GetPosts
     {
         return new class implements GetPosts {
-            public function getPosts(array $args): array
+            public function getPosts(?array $args = null): array
             {
                 return [1];
             }

@@ -95,7 +95,7 @@
         {
             "key": "field_68d29cad9a1f1",
             "label": "Contact",
-            "name": "contact",
+            "name": "organizerContact",
             "aria-label": "",
             "type": "text",
             "instructions": "Supply the name(first and last) of the organizations contact person",
@@ -126,7 +126,7 @@
         {
             "key": "field_68d29d47a0b16",
             "label": "Email",
-            "name": "email",
+            "name": "organizerEmail",
             "aria-label": "",
             "type": "email",
             "instructions": "",
@@ -156,7 +156,7 @@
         {
             "key": "field_68d29d56a0b17",
             "label": "Telephone",
-            "name": "telephone",
+            "name": "organizerTelephone",
             "aria-label": "",
             "type": "text",
             "instructions": "",
@@ -187,7 +187,38 @@
         {
             "key": "field_68d29d6aa0b18",
             "label": "Address",
-            "name": "address",
+            "name": "organizerAddress",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 1,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_68d29c329a1ee",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "is_publicly_hidden": 0,
+            "is_privately_hidden": 0,
+            "default_value": "",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_68d385ffc8950",
+            "label": "Url",
+            "name": "organizerUrl",
             "aria-label": "",
             "type": "text",
             "instructions": "",

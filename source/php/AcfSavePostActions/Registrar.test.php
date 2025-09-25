@@ -39,13 +39,9 @@ class RegistrarTest extends TestCase
             {
             }
 
-            public function addAction(
-                string $tag,
-                callable $function_to_add,
-                int $priority = 10,
-                int $accepted_args = 1
-            ): bool {
-                $function_to_add(123);
+            public function addAction(string $hookName, callable $callback, int $priority = 10, int $acceptedArgs = 1): true
+            {
+                $callback(123);
                 return true;
             }
         };
