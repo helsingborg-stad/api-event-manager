@@ -41,6 +41,10 @@ if (file_exists('package-lock.json') && !file_exists('gulp.js')) {
 }
 
 // Files and directories not suitable for prod to be removed.
+$removablesBeforeBuildCommands = [
+    '.devcontainer'
+];
+
 $removables = [
     '.git',
     '.gitignore',
@@ -62,11 +66,20 @@ $removables = [
     './source/js/',
     'LICENSE',
     'babel.config.js',
-    'yarn.lock',
-    '.devcontainer'
+    'yarn.lock'
 ];
 
 $dirName = basename(dirname(__FILE__));
+
+// Remove files and directories if '--cleanup' argument is supplied to save local developers from disasters.
+if (is_array($argv) && in_array('--cleanup', $argv)) {
+    foreach ($removablesBeforeBuildCommands as $removable) {
+        if (file_exists($removable)) {
+            print "Removing $removable from $dirName\n";
+            shell_exec("rm -rf $removable");
+        }
+    }
+}
 
 // Run all build commands.
 $output   = '';
@@ -81,6 +94,7 @@ foreach ($buildCommands as $buildCommand) {
         exit($exitCode);
     }
 }
+
 
 // Remove files and directories if '--cleanup' argument is supplied to save local developers from disasters.
 if (is_array($argv) && in_array('--cleanup', $argv)) {
