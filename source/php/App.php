@@ -188,14 +188,6 @@ class App
         $this->hooksRegistrar->register(new \EventManager\CustomUserCapabilities\PromoteUserToRole($this->wpService));
     }
 
-    public function setupFrontendForm(): void
-    {
-        $frontendForm      = new \EventManager\Modules\FrontendForm\Register($this->wpService);
-        $frontendFormStyle = new \EventManager\AssetRegistry\FrontEndFormStyle($this->wpService);
-        $this->hooksRegistrar->register($frontendForm);
-        $this->hooksRegistrar->register($frontendFormStyle);
-    }
-
     public function setupAcfFieldContentModifiers(): void
     {
         $acfFieldContentModifierRegistrar = new \EventManager\AcfFieldContentModifiers\Registrar([

@@ -63,7 +63,6 @@ $app->setupPostTypes();
 $app->setupTaxonomies();
 $app->setupUserRoles();
 $app->setupUserCapabilities();
-$app->setupFrontendForm();
 $app->setupAcfFieldContentModifiers();
 $app->setupAcfSavePostActions();
 $app->setupFeatureToShowOrHideAcfFieldsOnFrontendAndInAdmin();
