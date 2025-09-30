@@ -7,9 +7,9 @@
             "label": "Attendance mode",
             "name": "attendancemode",
             "aria-label": "",
-            "type": "select",
+            "type": "button_group",
             "instructions": "",
-            "required": 1,
+            "required": 0,
             "conditional_logic": 0,
             "wrapper": {
                 "width": "",
@@ -24,14 +24,9 @@
             },
             "default_value": "offline",
             "return_format": "value",
-            "multiple": 0,
             "allow_null": 0,
             "allow_in_bindings": 0,
-            "ui": 0,
-            "ajax": 0,
-            "placeholder": "",
-            "create_options": 0,
-            "save_options": 0
+            "layout": "horizontal"
         },
         {
             "key": "field_68d28f0c845d0",
@@ -62,30 +57,28 @@
                     "label": "Repeat",
                     "name": "repeat",
                     "aria-label": "",
-                    "type": "select",
+                    "type": "button_group",
                     "instructions": "",
-                    "required": 0,
+                    "required": 1,
                     "conditional_logic": 0,
                     "wrapper": {
                         "width": "",
                         "class": "",
                         "id": ""
                     },
+                    "is_publicly_hidden": 0,
+                    "is_privately_hidden": 0,
                     "choices": {
                         "no": "No",
                         "byWeek": "Weekly occasion",
                         "byMonth": "Monthly occasion"
                     },
-                    "default_value": false,
+                    "default_value": "no",
                     "return_format": "value",
-                    "multiple": 0,
                     "allow_null": 0,
-                    "ui": 0,
-                    "ajax": 0,
-                    "placeholder": "",
-                    "parent_repeater": "field_68d28f0c845d0",
-                    "create_options": 0,
-                    "save_options": 0
+                    "allow_in_bindings": 0,
+                    "layout": "horizontal",
+                    "parent_repeater": "field_68d28f0c845d0"
                 },
                 {
                     "key": "field_68d28f0c887c5",
