@@ -20,6 +20,6 @@ class ModifyPostContentBeforeReadingTags implements Hookable
 
     public function modifyPostContentBeforeReadingTags(int $postId, string $content): string
     {
-        return $this->wpService->getPostMeta($postId, 'about', true) ?? '';
+        return $this->wpService->getPostMeta($postId, 'description', true) ?? '';
     }
 }
