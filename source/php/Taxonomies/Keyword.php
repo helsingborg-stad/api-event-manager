@@ -17,12 +17,13 @@ class Keyword extends Taxonomy
     public function getArgs(): array
     {
         return array(
-            'show_in_rest' => false,
-            'public'       => true,
-            'hierarchical' => false,
-            'show_ui'      => true,
-            'meta_box_cb'  => false,
-            'capabilities' => [
+            'show_in_rest'      => false,
+            'public'            => true,
+            'hierarchical'      => false,
+            'show_ui'           => true,
+            'show_admin_column' => true,
+            'meta_box_cb'       => false,
+            'capabilities'      => [
                 'manage_terms' => 'administrator',
                 'edit_terms'   => 'administrator',
                 'delete_terms' => 'administrator',
