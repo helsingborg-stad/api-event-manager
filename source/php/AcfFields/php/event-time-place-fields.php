@@ -473,23 +473,13 @@
             'append' => '',
         ),
         4 => array(
-            'center_lat' => 59.1083083,
-            'center_lng' => 13.8208008,
-            'zoom' => 6,
-            'height' => 400,
-            'return_format' => 'raw',
-            'allow_map_layers' => 0,
-            'max_markers' => 1,
-            'layers' => array(
-                0 => 'OpenStreetMap.Mapnik',
-            ),
             'key' => 'field_68d28f0c851a1',
             'label' => __('Location address', 'api-event-manager'),
             'name' => 'locationAddress',
             'aria-label' => '',
-            'type' => 'open_street_map',
+            'type' => 'google_map',
             'instructions' => '',
-            'required' => 1,
+            'required' => 0,
             'conditional_logic' => array(
                 0 => array(
                     0 => array(
@@ -506,8 +496,11 @@
             ),
             'is_publicly_hidden' => 0,
             'is_privately_hidden' => 0,
-            'allow_in_bindings' => 1,
-            'leaflet_map' => '{"lat":59.1083083,"lng":13.8208008,"zoom":6,"layers":["OpenStreetMap.Mapnik"],"markers":[]}',
+            'center_lat' => '56.0467',
+            'center_lng' => '12.6944',
+            'zoom' => '',
+            'height' => '',
+            'allow_in_bindings' => 0,
         ),
         5 => array(
             'key' => 'field_68dba07119269',
