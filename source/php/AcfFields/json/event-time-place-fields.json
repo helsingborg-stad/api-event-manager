@@ -140,13 +140,16 @@
                         "class": "",
                         "id": ""
                     },
+                    "is_publicly_hidden": 0,
+                    "is_privately_hidden": 0,
                     "default_value": 1,
                     "min": 1,
                     "max": "",
+                    "allow_in_bindings": 1,
                     "placeholder": "",
                     "step": "",
                     "prepend": "",
-                    "append": "week\/weeks",
+                    "append": "month\/months",
                     "parent_repeater": "field_68d28f0c845d0"
                 },
                 {
