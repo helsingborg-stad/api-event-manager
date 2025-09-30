@@ -3,6 +3,37 @@
     "title": "Time & Place",
     "fields": [
         {
+            "key": "field_68db9ef4c9d5d",
+            "label": "Attendance mode",
+            "name": "attendancemode",
+            "aria-label": "",
+            "type": "select",
+            "instructions": "",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "is_publicly_hidden": 0,
+            "is_privately_hidden": 0,
+            "choices": {
+                "offline": "Offline",
+                "online": "Online"
+            },
+            "default_value": "offline",
+            "return_format": "value",
+            "multiple": 0,
+            "allow_null": 0,
+            "allow_in_bindings": 0,
+            "ui": 0,
+            "ajax": 0,
+            "placeholder": "",
+            "create_options": 0,
+            "save_options": 0
+        },
+        {
             "key": "field_68d28f0c845d0",
             "label": "Occasions",
             "name": "occasions",
@@ -414,7 +445,15 @@
             "type": "text",
             "instructions": "",
             "required": 0,
-            "conditional_logic": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_68db9ef4c9d5d",
+                        "operator": "==",
+                        "value": "offline"
+                    }
+                ]
+            ],
             "wrapper": {
                 "width": "",
                 "class": "",
@@ -447,7 +486,15 @@
             "type": "open_street_map",
             "instructions": "",
             "required": 1,
-            "conditional_logic": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_68db9ef4c9d5d",
+                        "operator": "==",
+                        "value": "offline"
+                    }
+                ]
+            ],
             "wrapper": {
                 "width": "",
                 "class": "",
@@ -457,6 +504,34 @@
             "is_privately_hidden": 0,
             "allow_in_bindings": 1,
             "leaflet_map": "{\"lat\":59.1083083,\"lng\":13.8208008,\"zoom\":6,\"layers\":[\"OpenStreetMap.Mapnik\"],\"markers\":[]}"
+        },
+        {
+            "key": "field_68dba07119269",
+            "label": "Online attendence url",
+            "name": "onlineAttendenceUrl",
+            "aria-label": "",
+            "type": "url",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_68db9ef4c9d5d",
+                        "operator": "==",
+                        "value": "online"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "is_publicly_hidden": 0,
+            "is_privately_hidden": 0,
+            "default_value": "",
+            "allow_in_bindings": 0,
+            "placeholder": ""
         }
     ],
     "location": [

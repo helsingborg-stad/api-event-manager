@@ -6,6 +6,37 @@
     'title' => __('Time & Place', 'api-event-manager'),
     'fields' => array(
         0 => array(
+            'key' => 'field_68db9ef4c9d5d',
+            'label' => __('Attendance mode', 'api-event-manager'),
+            'name' => 'attendancemode',
+            'aria-label' => '',
+            'type' => 'select',
+            'instructions' => '',
+            'required' => 1,
+            'conditional_logic' => 0,
+            'wrapper' => array(
+                'width' => '',
+                'class' => '',
+                'id' => '',
+            ),
+            'is_publicly_hidden' => 0,
+            'is_privately_hidden' => 0,
+            'choices' => array(
+                'offline' => __('Offline', 'api-event-manager'),
+                'online' => __('Online', 'api-event-manager'),
+            ),
+            'default_value' => __('offline', 'api-event-manager'),
+            'return_format' => 'value',
+            'multiple' => 0,
+            'allow_null' => 0,
+            'allow_in_bindings' => 0,
+            'ui' => 0,
+            'ajax' => 0,
+            'placeholder' => '',
+            'create_options' => 0,
+            'save_options' => 0,
+        ),
+        1 => array(
             'key' => 'field_68d28f0c845d0',
             'label' => __('Occasions', 'api-event-manager'),
             'name' => 'occasions',
@@ -340,7 +371,7 @@
                 ),
             ),
         ),
-        1 => array(
+        2 => array(
             'key' => 'field_68d28f0c8493c',
             'label' => __('Prices', 'api-event-manager'),
             'name' => 'pricesList',
@@ -410,7 +441,7 @@
                 ),
             ),
         ),
-        2 => array(
+        3 => array(
             'key' => 'field_68d28f0c84e03',
             'label' => __('Location name', 'api-event-manager'),
             'name' => 'locationName',
@@ -418,7 +449,15 @@
             'type' => 'text',
             'instructions' => '',
             'required' => 0,
-            'conditional_logic' => 0,
+            'conditional_logic' => array(
+                0 => array(
+                    0 => array(
+                        'field' => 'field_68db9ef4c9d5d',
+                        'operator' => '==',
+                        'value' => 'offline',
+                    ),
+                ),
+            ),
             'wrapper' => array(
                 'width' => '',
                 'class' => '',
@@ -433,7 +472,7 @@
             'prepend' => '',
             'append' => '',
         ),
-        3 => array(
+        4 => array(
             'center_lat' => 59.1083083,
             'center_lng' => 13.8208008,
             'zoom' => 6,
@@ -451,7 +490,15 @@
             'type' => 'open_street_map',
             'instructions' => '',
             'required' => 1,
-            'conditional_logic' => 0,
+            'conditional_logic' => array(
+                0 => array(
+                    0 => array(
+                        'field' => 'field_68db9ef4c9d5d',
+                        'operator' => '==',
+                        'value' => 'offline',
+                    ),
+                ),
+            ),
             'wrapper' => array(
                 'width' => '',
                 'class' => '',
@@ -461,6 +508,34 @@
             'is_privately_hidden' => 0,
             'allow_in_bindings' => 1,
             'leaflet_map' => '{"lat":59.1083083,"lng":13.8208008,"zoom":6,"layers":["OpenStreetMap.Mapnik"],"markers":[]}',
+        ),
+        5 => array(
+            'key' => 'field_68dba07119269',
+            'label' => __('Online attendence url', 'api-event-manager'),
+            'name' => 'onlineAttendenceUrl',
+            'aria-label' => '',
+            'type' => 'url',
+            'instructions' => '',
+            'required' => 0,
+            'conditional_logic' => array(
+                0 => array(
+                    0 => array(
+                        'field' => 'field_68db9ef4c9d5d',
+                        'operator' => '==',
+                        'value' => 'online',
+                    ),
+                ),
+            ),
+            'wrapper' => array(
+                'width' => '',
+                'class' => '',
+                'id' => '',
+            ),
+            'is_publicly_hidden' => 0,
+            'is_privately_hidden' => 0,
+            'default_value' => '',
+            'allow_in_bindings' => 0,
+            'placeholder' => '',
         ),
     ),
     'location' => array(

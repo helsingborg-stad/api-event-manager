@@ -3,34 +3,6 @@
     "title": "Audience & Category",
     "fields": [
         {
-            "key": "field_68d28f55f2378",
-            "label": "Category",
-            "name": "category",
-            "aria-label": "",
-            "type": "taxonomy",
-            "instructions": "What category do you feel accurately reflects your event's purpose? This gives a brief overview of the event's content.",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "is_publicly_hidden": 0,
-            "is_privately_hidden": 0,
-            "taxonomy": "category",
-            "add_term": 0,
-            "save_terms": 1,
-            "load_terms": 1,
-            "return_format": "object",
-            "field_type": "select",
-            "allow_null": 1,
-            "allow_in_bindings": 0,
-            "bidirectional": 0,
-            "multiple": 0,
-            "bidirectional_target": []
-        },
-        {
             "key": "field_68d28f55f277e",
             "label": "Audience",
             "name": "audience",
@@ -56,6 +28,34 @@
             "bidirectional": 0,
             "multiple": 0,
             "allow_null": 0,
+            "bidirectional_target": []
+        },
+        {
+            "key": "field_68d28f55f2378",
+            "label": "Category",
+            "name": "category",
+            "aria-label": "",
+            "type": "taxonomy",
+            "instructions": "What category do you feel accurately reflects your event's purpose? This gives a brief overview of the event's content.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "is_publicly_hidden": 0,
+            "is_privately_hidden": 0,
+            "taxonomy": "category",
+            "add_term": 0,
+            "save_terms": 1,
+            "load_terms": 1,
+            "return_format": "object",
+            "field_type": "select",
+            "allow_null": 1,
+            "allow_in_bindings": 0,
+            "bidirectional": 0,
+            "multiple": 0,
             "bidirectional_target": []
         },
         {
