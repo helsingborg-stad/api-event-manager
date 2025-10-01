@@ -63,142 +63,142 @@ msgstr "Arrangör"
 msgid "Audience"
 msgstr "Målgrupp"
 
-#: source/php/AcfFields/php/event-time-place-fields.php:43
+#: source/php/AcfFields/php/event-time-place-fields.php:38
 msgid "Occasions"
 msgstr "Tillfällen"
 
-#: source/php/AcfFields/php/event-time-place-fields.php:47
+#: source/php/AcfFields/php/event-time-place-fields.php:42
 msgid "When is the event scheduled to take place? You have the option to establish a recurring schedule or specify up to 10 distinct dates and times."
 msgstr "När är evenemanget planerat att äga rum? Du har möjlighet att etablera ett återkommande schema eller specificera upp till 10 olika datum och tider."
 
-#: source/php/AcfFields/php/event-time-place-fields.php:67
+#: source/php/AcfFields/php/event-time-place-fields.php:62
 msgid "Repeat"
 msgstr "Upprepa"
 
-#: source/php/AcfFields/php/event-time-place-fields.php:80
+#: source/php/AcfFields/php/event-time-place-fields.php:77
 msgid "No"
 msgstr "Nej"
 
-#: source/php/AcfFields/php/event-time-place-fields.php:81
+#: source/php/AcfFields/php/event-time-place-fields.php:78
 msgid "Weekly occasion"
 msgstr "Veckotillfälle"
 
-#: source/php/AcfFields/php/event-time-place-fields.php:82
+#: source/php/AcfFields/php/event-time-place-fields.php:79
 msgid "Monthly occasion"
 msgstr "Månatligt tillfälle"
 
-#: source/php/AcfFields/php/event-time-place-fields.php:97
-#: source/php/AcfFields/php/event-time-place-fields.php:128
+#: source/php/AcfFields/php/event-time-place-fields.php:90
+#: source/php/AcfFields/php/event-time-place-fields.php:121
 msgid "Every"
 msgstr "Varje"
 
-#: source/php/AcfFields/php/event-time-place-fields.php:123
+#: source/php/AcfFields/php/event-time-place-fields.php:116
 msgid "week/weeks"
 msgstr "vecka/veckor"
 
-#: source/php/AcfFields/php/event-time-place-fields.php:162
-#: source/php/AcfFields/php/event-time-place-fields.php:203
-#: source/php/AcfFields/php/event-time-place-fields.php:224
+#: source/php/AcfFields/php/event-time-place-fields.php:155
+#: source/php/AcfFields/php/event-time-place-fields.php:196
+#: source/php/AcfFields/php/event-time-place-fields.php:217
 msgid "Day"
 msgstr "Dag"
 
-#: source/php/AcfFields/php/event-time-place-fields.php:183
+#: source/php/AcfFields/php/event-time-place-fields.php:176
 msgid "Mon"
 msgstr "Mån"
 
-#: source/php/AcfFields/php/event-time-place-fields.php:184
+#: source/php/AcfFields/php/event-time-place-fields.php:177
 msgid "Tue"
 msgstr "Tis"
 
-#: source/php/AcfFields/php/event-time-place-fields.php:185
+#: source/php/AcfFields/php/event-time-place-fields.php:178
 msgid "Wed"
 msgstr "Ons"
 
-#: source/php/AcfFields/php/event-time-place-fields.php:186
+#: source/php/AcfFields/php/event-time-place-fields.php:179
 msgid "Thu"
 msgstr "Tor"
 
-#: source/php/AcfFields/php/event-time-place-fields.php:187
+#: source/php/AcfFields/php/event-time-place-fields.php:180
 msgid "Fri"
 msgstr "Fre"
 
-#: source/php/AcfFields/php/event-time-place-fields.php:188
+#: source/php/AcfFields/php/event-time-place-fields.php:181
 msgid "Sat"
 msgstr "Lör"
 
-#: source/php/AcfFields/php/event-time-place-fields.php:189
+#: source/php/AcfFields/php/event-time-place-fields.php:182
 msgid "Sun"
 msgstr "Sön"
 
-#: source/php/AcfFields/php/event-time-place-fields.php:225
+#: source/php/AcfFields/php/event-time-place-fields.php:218
 msgid "First"
 msgstr "Första"
 
-#: source/php/AcfFields/php/event-time-place-fields.php:226
+#: source/php/AcfFields/php/event-time-place-fields.php:219
 msgid "Second"
 msgstr "Andra"
 
-#: source/php/AcfFields/php/event-time-place-fields.php:227
+#: source/php/AcfFields/php/event-time-place-fields.php:220
 msgid "Third"
 msgstr "Tredje"
 
-#: source/php/AcfFields/php/event-time-place-fields.php:228
+#: source/php/AcfFields/php/event-time-place-fields.php:221
 msgid "Fourth"
 msgstr "Fjärde"
 
-#: source/php/AcfFields/php/event-time-place-fields.php:229
+#: source/php/AcfFields/php/event-time-place-fields.php:222
 msgid "Last"
 msgstr "Sista"
 
-#: source/php/AcfFields/php/event-time-place-fields.php:231
+#: source/php/AcfFields/php/event-time-place-fields.php:224
 msgid "day"
 msgstr "dag"
 
-#: source/php/AcfFields/php/event-time-place-fields.php:246
+#: source/php/AcfFields/php/event-time-place-fields.php:239
 msgid "By number"
 msgstr "Efter nummer"
 
-#: source/php/AcfFields/php/event-time-place-fields.php:277
+#: source/php/AcfFields/php/event-time-place-fields.php:270
 msgid "Date"
 msgstr "Datum"
 
-#: source/php/AcfFields/php/event-time-place-fields.php:297
+#: source/php/AcfFields/php/event-time-place-fields.php:290
 msgid "Until Date"
 msgstr "Till datum"
 
-#: source/php/AcfFields/php/event-time-place-fields.php:325
+#: source/php/AcfFields/php/event-time-place-fields.php:318
 msgid "Start time"
 msgstr "Starttid"
 
-#: source/php/AcfFields/php/event-time-place-fields.php:343
+#: source/php/AcfFields/php/event-time-place-fields.php:336
 msgid "End time"
 msgstr "Sluttid"
 
-#: source/php/AcfFields/php/event-time-place-fields.php:361
+#: source/php/AcfFields/php/event-time-place-fields.php:354
 msgid "Booking page URL"
 msgstr "Adress till bokningssida"
 
-#: source/php/AcfFields/php/event-time-place-fields.php:381
+#: source/php/AcfFields/php/event-time-place-fields.php:448
 msgid "Prices"
 msgstr "Priser"
 
-#: source/php/AcfFields/php/event-time-place-fields.php:385
+#: source/php/AcfFields/php/event-time-place-fields.php:452
 msgid "You have the option to offer multiple pricing tiers to accommodate attendees of different age groups. By not adding any ticket variations, your event will show up as free of charge."
 msgstr "Du har möjlighet att erbjuda flera priskategorier för att tillgodose deltagare i olika åldersgrupper. Genom att inte lägga till några biljettvarianter kommer ditt evenemang att visas som kostnadsfritt."
 
-#: source/php/AcfFields/php/event-time-place-fields.php:405
+#: source/php/AcfFields/php/event-time-place-fields.php:472
 msgid "Price Label"
 msgstr "Etikett för pris"
 
-#: source/php/AcfFields/php/event-time-place-fields.php:417
+#: source/php/AcfFields/php/event-time-place-fields.php:484
 msgid "Standard Ticket"
 msgstr "Standardbiljett"
 
-#: source/php/AcfFields/php/event-time-place-fields.php:426
+#: source/php/AcfFields/php/event-time-place-fields.php:493
 msgid "Price"
 msgstr "Pris"
 
-#: source/php/AcfFields/php/event-time-place-fields.php:444
+#: source/php/AcfFields/php/event-time-place-fields.php:511
 msgid "$"
 msgstr "SEK"
 
@@ -447,23 +447,24 @@ msgstr "Evenemang"
 msgid "Events"
 msgstr "Evenemang"
 
-#: source/php/AcfFields/php/event-time-place-fields.php:451
+#: source/php/AcfFields/php/event-time-place-fields.php:518
 msgid "Location name"
 msgstr "Platsens namn"
 
-#: source/php/AcfFields/php/event-time-place-fields.php:482
+#: source/php/AcfFields/php/event-time-place-fields.php:549
 msgid "Location address"
 msgstr "Platsens adress"
 
-#: source/php/AcfFields/php/event-time-place-fields.php:62
+#: source/php/AcfFields/php/event-time-place-fields.php:57
 msgid "Add occation"
 msgstr "Lägg till tillfälle"
 
-#: source/php/AcfFields/php/event-time-place-fields.php:400
+#: source/php/AcfFields/php/event-time-place-fields.php:467
 msgid "Add Ticket / Variation"
 msgstr "Lägg till biljett / variant"
 
 #: source/php/AcfFields/php/event-presentation-fields.php:35
+#: source/php/AcfFields/php/event-time-place-fields.php:372
 msgid "Description"
 msgstr "Beskrivning"
 
@@ -533,10 +534,42 @@ msgstr "Online"
 msgid "offline"
 msgstr "offline"
 
-#: source/php/AcfFields/php/event-time-place-fields.php:512
+#: source/php/AcfFields/php/event-time-place-fields.php:579
 msgid "Online attendence url"
 msgstr "Online deltagande-URL"
 
-#: source/php/AcfFields/php/event-time-place-fields.php:157
+#: source/php/AcfFields/php/event-time-place-fields.php:150
 msgid "month/months"
 msgstr "månad/månader"
+
+#: source/php/AcfFields/php/event-time-place-fields.php:81
+msgid "no"
+msgstr "nej"
+
+#: source/php/AcfFields/php/event-time-place-fields.php:376
+msgid "Specific information about this occasion"
+msgstr "Specifik information om detta tillfälle"
+
+#: source/php/AcfFields/php/event-time-place-fields.php:404
+msgid "Status"
+msgstr "Status"
+
+#: source/php/AcfFields/php/event-time-place-fields.php:427
+msgid "Scheduled"
+msgstr "Planerad"
+
+#: source/php/AcfFields/php/event-time-place-fields.php:428
+msgid "Rescheduled"
+msgstr "Omplanerad"
+
+#: source/php/AcfFields/php/event-time-place-fields.php:429
+msgid "Postponed"
+msgstr "Framflyttad"
+
+#: source/php/AcfFields/php/event-time-place-fields.php:430
+msgid "Cancelled"
+msgstr "Inställd"
+
+#: source/php/AcfFields/php/event-time-place-fields.php:432
+msgid "https://schema.org/EventScheduled"
+msgstr ""
