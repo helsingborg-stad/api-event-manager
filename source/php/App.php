@@ -125,9 +125,7 @@ class App
     public function disableGutenbergEditor(): void
     {
         $disableGutenbergEditor = new \EventManager\Modifiers\DisableGutenbergEditor($this->wpService);
-        $hideUnusedAdminPages   = new \EventManager\HideUnusedAdminPages($this->wpService);
         $this->hooksRegistrar->register($disableGutenbergEditor);
-        $this->hooksRegistrar->register($hideUnusedAdminPages);
     }
 
     public function setupPostTypes(): void
