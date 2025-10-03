@@ -70,8 +70,7 @@
                     "is_privately_hidden": 0,
                     "choices": {
                         "no": "No",
-                        "byWeek": "Weekly occasion",
-                        "byMonth": "Monthly occasion"
+                        "byWeek": "Weekly occasion"
                     },
                     "default_value": "no",
                     "return_format": "value",
@@ -112,40 +111,6 @@
                     "parent_repeater": "field_68d28f0c845d0"
                 },
                 {
-                    "key": "field_68d28f0c88c7c",
-                    "label": "Every",
-                    "name": "monthsInterval",
-                    "aria-label": "",
-                    "type": "number",
-                    "instructions": "",
-                    "required": 1,
-                    "conditional_logic": [
-                        [
-                            {
-                                "field": "field_68d28f0c8845b",
-                                "operator": "==",
-                                "value": "byMonth"
-                            }
-                        ]
-                    ],
-                    "wrapper": {
-                        "width": "25",
-                        "class": "",
-                        "id": ""
-                    },
-                    "is_publicly_hidden": 0,
-                    "is_privately_hidden": 0,
-                    "default_value": 1,
-                    "min": 1,
-                    "max": "",
-                    "allow_in_bindings": 1,
-                    "placeholder": "",
-                    "step": "",
-                    "prepend": "",
-                    "append": "month\/months",
-                    "parent_repeater": "field_68d28f0c845d0"
-                },
-                {
                     "key": "field_68d28f0c88f84",
                     "label": "Day",
                     "name": "weekDays",
@@ -183,80 +148,6 @@
                     "toggle": 0,
                     "save_custom": 0,
                     "custom_choice_button_text": "L\u00e4gg till nytt val",
-                    "parent_repeater": "field_68d28f0c845d0"
-                },
-                {
-                    "key": "field_68d28f0c89453",
-                    "label": "Day",
-                    "name": "monthDay",
-                    "aria-label": "",
-                    "type": "select",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": [
-                        [
-                            {
-                                "field": "field_68d28f0c8845b",
-                                "operator": "==",
-                                "value": "byMonth"
-                            }
-                        ]
-                    ],
-                    "wrapper": {
-                        "width": "25",
-                        "class": "",
-                        "id": ""
-                    },
-                    "choices": {
-                        "day": "Day",
-                        "first": "First",
-                        "second": "Second",
-                        "third": "Third",
-                        "fourth": "Fourth",
-                        "last": "Last"
-                    },
-                    "default_value": "day",
-                    "return_format": "value",
-                    "multiple": 0,
-                    "allow_null": 0,
-                    "ui": 0,
-                    "ajax": 0,
-                    "placeholder": "",
-                    "allow_custom": 0,
-                    "search_placeholder": "",
-                    "parent_repeater": "field_68d28f0c845d0",
-                    "create_options": 0,
-                    "save_options": 0
-                },
-                {
-                    "key": "field_68d28f0c897e3",
-                    "label": "By number",
-                    "name": "monthDayNumber",
-                    "aria-label": "",
-                    "type": "number",
-                    "instructions": "",
-                    "required": 1,
-                    "conditional_logic": [
-                        [
-                            {
-                                "field": "field_68d28f0c89453",
-                                "operator": "==",
-                                "value": "day"
-                            }
-                        ]
-                    ],
-                    "wrapper": {
-                        "width": "25",
-                        "class": "",
-                        "id": ""
-                    },
-                    "default_value": 1,
-                    "min": 1,
-                    "max": 31,
-                    "placeholder": "",
-                    "step": "",
-                    "prepend": "",
-                    "append": "",
                     "parent_repeater": "field_68d28f0c845d0"
                 },
                 {

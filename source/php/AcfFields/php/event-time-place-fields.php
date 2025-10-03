@@ -74,7 +74,6 @@
                     'choices' => array(
                         'no' => __('No', 'api-event-manager'),
                         'byWeek' => __('Weekly occasion', 'api-event-manager'),
-                        'byMonth' => __('Monthly occasion', 'api-event-manager'),
                     ),
                     'default_value' => __('no', 'api-event-manager'),
                     'return_format' => 'value',
@@ -115,40 +114,6 @@
                     'parent_repeater' => 'field_68d28f0c845d0',
                 ),
                 2 => array(
-                    'key' => 'field_68d28f0c88c7c',
-                    'label' => __('Every', 'api-event-manager'),
-                    'name' => 'monthsInterval',
-                    'aria-label' => '',
-                    'type' => 'number',
-                    'instructions' => '',
-                    'required' => 1,
-                    'conditional_logic' => array(
-                        0 => array(
-                            0 => array(
-                                'field' => 'field_68d28f0c8845b',
-                                'operator' => '==',
-                                'value' => 'byMonth',
-                            ),
-                        ),
-                    ),
-                    'wrapper' => array(
-                        'width' => '25',
-                        'class' => '',
-                        'id' => '',
-                    ),
-                    'is_publicly_hidden' => 0,
-                    'is_privately_hidden' => 0,
-                    'default_value' => 1,
-                    'min' => 1,
-                    'max' => '',
-                    'allow_in_bindings' => 1,
-                    'placeholder' => '',
-                    'step' => '',
-                    'prepend' => '',
-                    'append' => __('month/months', 'api-event-manager'),
-                    'parent_repeater' => 'field_68d28f0c845d0',
-                ),
-                3 => array(
                     'key' => 'field_68d28f0c88f84',
                     'label' => __('Day', 'api-event-manager'),
                     'name' => 'weekDays',
@@ -189,81 +154,7 @@
                     'custom_choice_button_text' => 'Lägg till nytt val',
                     'parent_repeater' => 'field_68d28f0c845d0',
                 ),
-                4 => array(
-                    'key' => 'field_68d28f0c89453',
-                    'label' => __('Day', 'api-event-manager'),
-                    'name' => 'monthDay',
-                    'aria-label' => '',
-                    'type' => 'select',
-                    'instructions' => '',
-                    'required' => 0,
-                    'conditional_logic' => array(
-                        0 => array(
-                            0 => array(
-                                'field' => 'field_68d28f0c8845b',
-                                'operator' => '==',
-                                'value' => 'byMonth',
-                            ),
-                        ),
-                    ),
-                    'wrapper' => array(
-                        'width' => '25',
-                        'class' => '',
-                        'id' => '',
-                    ),
-                    'choices' => array(
-                        'day' => __('Day', 'api-event-manager'),
-                        'first' => __('First', 'api-event-manager'),
-                        'second' => __('Second', 'api-event-manager'),
-                        'third' => __('Third', 'api-event-manager'),
-                        'fourth' => __('Fourth', 'api-event-manager'),
-                        'last' => __('Last', 'api-event-manager'),
-                    ),
-                    'default_value' => __('day', 'api-event-manager'),
-                    'return_format' => 'value',
-                    'multiple' => 0,
-                    'allow_null' => 0,
-                    'ui' => 0,
-                    'ajax' => 0,
-                    'placeholder' => '',
-                    'allow_custom' => 0,
-                    'search_placeholder' => '',
-                    'parent_repeater' => 'field_68d28f0c845d0',
-                    'create_options' => 0,
-                    'save_options' => 0,
-                ),
-                5 => array(
-                    'key' => 'field_68d28f0c897e3',
-                    'label' => __('By number', 'api-event-manager'),
-                    'name' => 'monthDayNumber',
-                    'aria-label' => '',
-                    'type' => 'number',
-                    'instructions' => '',
-                    'required' => 1,
-                    'conditional_logic' => array(
-                        0 => array(
-                            0 => array(
-                                'field' => 'field_68d28f0c89453',
-                                'operator' => '==',
-                                'value' => 'day',
-                            ),
-                        ),
-                    ),
-                    'wrapper' => array(
-                        'width' => '25',
-                        'class' => '',
-                        'id' => '',
-                    ),
-                    'default_value' => 1,
-                    'min' => 1,
-                    'max' => 31,
-                    'placeholder' => '',
-                    'step' => '',
-                    'prepend' => '',
-                    'append' => '',
-                    'parent_repeater' => 'field_68d28f0c845d0',
-                ),
-                6 => array(
+                3 => array(
                     'key' => 'field_68d28f0c89b49',
                     'label' => __('Date', 'api-event-manager'),
                     'name' => 'date',
@@ -283,7 +174,7 @@
                     'parent_repeater' => 'field_68d28f0c845d0',
                     'default_to_current_date' => 0,
                 ),
-                7 => array(
+                4 => array(
                     'key' => 'field_68d28f0c8a008',
                     'label' => __('Until Date', 'api-event-manager'),
                     'name' => 'untilDate',
@@ -311,7 +202,7 @@
                     'parent_repeater' => 'field_68d28f0c845d0',
                     'default_to_current_date' => 0,
                 ),
-                8 => array(
+                5 => array(
                     'key' => 'field_68d28f0c8a391',
                     'label' => __('Start time', 'api-event-manager'),
                     'name' => 'startTime',
@@ -329,7 +220,7 @@
                     'return_format' => 'H:i:s',
                     'parent_repeater' => 'field_68d28f0c845d0',
                 ),
-                9 => array(
+                6 => array(
                     'key' => 'field_68d28f0c8a6ff',
                     'label' => __('End time', 'api-event-manager'),
                     'name' => 'endTime',
@@ -347,7 +238,7 @@
                     'return_format' => 'H:i:s',
                     'parent_repeater' => 'field_68d28f0c845d0',
                 ),
-                10 => array(
+                7 => array(
                     'key' => 'field_68d28f0c8abbe',
                     'label' => __('Booking page URL', 'api-event-manager'),
                     'name' => 'url',
@@ -365,7 +256,7 @@
                     'placeholder' => '',
                     'parent_repeater' => 'field_68d28f0c845d0',
                 ),
-                11 => array(
+                8 => array(
                     'key' => 'field_68dd084d90dc7',
                     'label' => __('Description', 'api-event-manager'),
                     'name' => 'description',
@@ -397,7 +288,7 @@
                     'delay' => 1,
                     'parent_repeater' => 'field_68d28f0c845d0',
                 ),
-                12 => array(
+                9 => array(
                     'key' => 'field_68dd08ad90dc8',
                     'label' => __('Status', 'api-event-manager'),
                     'name' => 'status',

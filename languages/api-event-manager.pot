@@ -2,14 +2,14 @@
 # This file is distributed under the MIT.
 msgid ""
 msgstr ""
-"Project-Id-Version: Event Manager 3.11.12\n"
+"Project-Id-Version: Event Manager 3.12.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/api-event-manager\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-10-01T10:59:20+00:00\n"
+"POT-Creation-Date: 2025-10-03T07:40:05+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: api-event-manager\n"
@@ -127,7 +127,7 @@ msgid "Presentation"
 msgstr ""
 
 #: source/php/AcfFields/php/event-presentation-fields.php:35
-#: source/php/AcfFields/php/event-time-place-fields.php:372
+#: source/php/AcfFields/php/event-time-place-fields.php:263
 msgid "Description"
 msgstr ""
 
@@ -195,174 +195,135 @@ msgstr ""
 msgid "Weekly occasion"
 msgstr ""
 
-#: source/php/AcfFields/php/event-time-place-fields.php:79
-msgid "Monthly occasion"
-msgstr ""
-
-#: source/php/AcfFields/php/event-time-place-fields.php:81
+#: source/php/AcfFields/php/event-time-place-fields.php:80
 msgid "no"
 msgstr ""
 
-#: source/php/AcfFields/php/event-time-place-fields.php:90
-#: source/php/AcfFields/php/event-time-place-fields.php:121
+#: source/php/AcfFields/php/event-time-place-fields.php:89
 msgid "Every"
 msgstr ""
 
-#: source/php/AcfFields/php/event-time-place-fields.php:116
+#: source/php/AcfFields/php/event-time-place-fields.php:115
 msgid "week/weeks"
 msgstr ""
 
-#: source/php/AcfFields/php/event-time-place-fields.php:150
-msgid "month/months"
-msgstr ""
-
-#: source/php/AcfFields/php/event-time-place-fields.php:155
-#: source/php/AcfFields/php/event-time-place-fields.php:196
-#: source/php/AcfFields/php/event-time-place-fields.php:217
+#: source/php/AcfFields/php/event-time-place-fields.php:120
 msgid "Day"
 msgstr ""
 
-#: source/php/AcfFields/php/event-time-place-fields.php:176
+#: source/php/AcfFields/php/event-time-place-fields.php:141
 msgid "Mon"
 msgstr ""
 
-#: source/php/AcfFields/php/event-time-place-fields.php:177
+#: source/php/AcfFields/php/event-time-place-fields.php:142
 msgid "Tue"
 msgstr ""
 
-#: source/php/AcfFields/php/event-time-place-fields.php:178
+#: source/php/AcfFields/php/event-time-place-fields.php:143
 msgid "Wed"
 msgstr ""
 
-#: source/php/AcfFields/php/event-time-place-fields.php:179
+#: source/php/AcfFields/php/event-time-place-fields.php:144
 msgid "Thu"
 msgstr ""
 
-#: source/php/AcfFields/php/event-time-place-fields.php:180
+#: source/php/AcfFields/php/event-time-place-fields.php:145
 msgid "Fri"
 msgstr ""
 
-#: source/php/AcfFields/php/event-time-place-fields.php:181
+#: source/php/AcfFields/php/event-time-place-fields.php:146
 msgid "Sat"
 msgstr ""
 
-#: source/php/AcfFields/php/event-time-place-fields.php:182
+#: source/php/AcfFields/php/event-time-place-fields.php:147
 msgid "Sun"
 msgstr ""
 
-#: source/php/AcfFields/php/event-time-place-fields.php:218
-msgid "First"
-msgstr ""
-
-#: source/php/AcfFields/php/event-time-place-fields.php:219
-msgid "Second"
-msgstr ""
-
-#: source/php/AcfFields/php/event-time-place-fields.php:220
-msgid "Third"
-msgstr ""
-
-#: source/php/AcfFields/php/event-time-place-fields.php:221
-msgid "Fourth"
-msgstr ""
-
-#: source/php/AcfFields/php/event-time-place-fields.php:222
-msgid "Last"
-msgstr ""
-
-#: source/php/AcfFields/php/event-time-place-fields.php:224
-msgid "day"
-msgstr ""
-
-#: source/php/AcfFields/php/event-time-place-fields.php:239
-msgid "By number"
-msgstr ""
-
-#: source/php/AcfFields/php/event-time-place-fields.php:270
+#: source/php/AcfFields/php/event-time-place-fields.php:161
 msgid "Date"
 msgstr ""
 
-#: source/php/AcfFields/php/event-time-place-fields.php:290
+#: source/php/AcfFields/php/event-time-place-fields.php:181
 msgid "Until Date"
 msgstr ""
 
-#: source/php/AcfFields/php/event-time-place-fields.php:318
+#: source/php/AcfFields/php/event-time-place-fields.php:209
 msgid "Start time"
 msgstr ""
 
-#: source/php/AcfFields/php/event-time-place-fields.php:336
+#: source/php/AcfFields/php/event-time-place-fields.php:227
 msgid "End time"
 msgstr ""
 
-#: source/php/AcfFields/php/event-time-place-fields.php:354
+#: source/php/AcfFields/php/event-time-place-fields.php:245
 msgid "Booking page URL"
 msgstr ""
 
-#: source/php/AcfFields/php/event-time-place-fields.php:376
+#: source/php/AcfFields/php/event-time-place-fields.php:267
 msgid "Specific information about this occasion"
 msgstr ""
 
-#: source/php/AcfFields/php/event-time-place-fields.php:404
+#: source/php/AcfFields/php/event-time-place-fields.php:295
 msgid "Status"
 msgstr ""
 
-#: source/php/AcfFields/php/event-time-place-fields.php:427
+#: source/php/AcfFields/php/event-time-place-fields.php:318
 msgid "Scheduled"
 msgstr ""
 
-#: source/php/AcfFields/php/event-time-place-fields.php:428
+#: source/php/AcfFields/php/event-time-place-fields.php:319
 msgid "Rescheduled"
 msgstr ""
 
-#: source/php/AcfFields/php/event-time-place-fields.php:429
+#: source/php/AcfFields/php/event-time-place-fields.php:320
 msgid "Postponed"
 msgstr ""
 
-#: source/php/AcfFields/php/event-time-place-fields.php:430
+#: source/php/AcfFields/php/event-time-place-fields.php:321
 msgid "Cancelled"
 msgstr ""
 
-#: source/php/AcfFields/php/event-time-place-fields.php:432
+#: source/php/AcfFields/php/event-time-place-fields.php:323
 msgid "https://schema.org/EventScheduled"
 msgstr ""
 
-#: source/php/AcfFields/php/event-time-place-fields.php:448
+#: source/php/AcfFields/php/event-time-place-fields.php:339
 msgid "Prices"
 msgstr ""
 
-#: source/php/AcfFields/php/event-time-place-fields.php:452
+#: source/php/AcfFields/php/event-time-place-fields.php:343
 msgid "You have the option to offer multiple pricing tiers to accommodate attendees of different age groups. By not adding any ticket variations, your event will show up as free of charge."
 msgstr ""
 
-#: source/php/AcfFields/php/event-time-place-fields.php:467
+#: source/php/AcfFields/php/event-time-place-fields.php:358
 msgid "Add Ticket / Variation"
 msgstr ""
 
-#: source/php/AcfFields/php/event-time-place-fields.php:472
+#: source/php/AcfFields/php/event-time-place-fields.php:363
 msgid "Price Label"
 msgstr ""
 
-#: source/php/AcfFields/php/event-time-place-fields.php:484
+#: source/php/AcfFields/php/event-time-place-fields.php:375
 msgid "Standard Ticket"
 msgstr ""
 
-#: source/php/AcfFields/php/event-time-place-fields.php:493
+#: source/php/AcfFields/php/event-time-place-fields.php:384
 msgid "Price"
 msgstr ""
 
-#: source/php/AcfFields/php/event-time-place-fields.php:511
+#: source/php/AcfFields/php/event-time-place-fields.php:402
 msgid "$"
 msgstr ""
 
-#: source/php/AcfFields/php/event-time-place-fields.php:518
+#: source/php/AcfFields/php/event-time-place-fields.php:409
 msgid "Location name"
 msgstr ""
 
-#: source/php/AcfFields/php/event-time-place-fields.php:549
+#: source/php/AcfFields/php/event-time-place-fields.php:440
 msgid "Location address"
 msgstr ""
 
-#: source/php/AcfFields/php/event-time-place-fields.php:579
+#: source/php/AcfFields/php/event-time-place-fields.php:470
 msgid "Online attendence url"
 msgstr ""
 
