@@ -1,0 +1,23 @@
+{
+    "repositories": [
+        {
+            "type":"composer",
+            "url":"https://connect.advancedcustomfields.com"
+        },
+        {
+            "type": "composer",
+            "url": "https://wpackagist.org"
+        }
+    ],
+    "extra": {
+        "installer-paths": {
+            "/var/www/html/wp-content/mu-plugins/{$name}/": ["type:wordpress-muplugin"],
+            "/var/www/html/wp-content/plugins/{$name}/": ["type:wordpress-plugin"],
+            "/var/www/html/wp-content/themes/{$name}/": ["type:wordpress-theme"]
+        }
+    },
+    "require": {
+        "wpengine/advanced-custom-fields-pro": "^6.0.7",
+        "wpackagist-plugin/acf-openstreetmap-field":"1.5.6"
+    }
+}

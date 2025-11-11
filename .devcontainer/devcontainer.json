@@ -1,0 +1,98 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/php-mariadb
+{
+	"name": "PHP & MySQL",
+	"dockerComposeFile": "./docker-compose.yml",
+	"service": "app",
+	"workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+	"forwardPorts": [
+		80,
+		3306
+	],
+	"portsAttributes": {
+		"80": {
+			"label": "WordPress"
+		},
+		"3306": {
+			"label": "Database"
+		}
+	},
+	"remoteEnv": {
+		"XDEBUG_MODE": "debug"
+	},
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"xdebug.php-debug",
+				"ms-azuretools.vscode-docker",
+				"ritwickdey.liveserver",
+				"valeryanm.vscode-phpsab",
+				"SanderRonde.phpstan-vscode"
+			],
+			"settings": {
+				"intelephense.environment.includePaths": [
+					"/var/www/html/wp-includes",
+					"/var/www/html/wp-admin",
+					"/var/www/html/wp-admin/wp-content/plugins",
+					"/tmp/wordpress-tests-lib"
+				],
+				"intelephense.environment.phpVersion": "8.2",
+				"php.validate.run": "onSave",
+				"phpsab.fixerEnable": true,
+				"phpsab.snifferShowSources": true,
+				"phpsab.executablePathCS": "./vendor/bin/phpcs",
+				"editor.formatOnSave": true,
+				"phpsab.allowedAutoRulesets": [
+					"phpcs.xml"
+				],
+				"editor.defaultFormatter": "valeryanm.vscode-phpsab",
+				"[php]": {
+					"editor.defaultFormatter": "valeryanm.vscode-phpsab"
+				}
+			}
+		},
+		"codespaces": {
+			"extensions": [
+				"xdebug.php-debug",
+				"ms-azuretools.vscode-docker",
+				"ritwickdey.liveserver",
+				"valeryanm.vscode-phpsab"
+			],
+			"settings": {
+				"intelephense.environment.includePaths": [
+					"/var/www/html/wp-includes",
+					"/var/www/html/wp-admin",
+					"/tmp/wordpress-tests-lib"
+				],
+				"intelephense.environment.phpVersion": "8.2",
+				"php.validate.run": "onSave",
+				"phpsab.fixerEnable": true,
+				"phpsab.snifferShowSources": true,
+				"phpsab.executablePathCS": "./vendor/bin/phpcs",
+				"phpsab.allowedAutoRulesets": [
+					"phpcs.xml"
+				],
+				"editor.defaultFormatter": "valeryanm.vscode-phpsab",
+				"[php]": {
+					"editor.defaultFormatter": "valeryanm.vscode-phpsab"
+				}
+			}
+		}
+	},
+	"features": {
+		"ghcr.io/devcontainers/features/node:1": {
+			"nodeGypDependencies": true,
+			"version": "16"
+		}
+	},
+	"postCreateCommand": {
+		"symlink-plugin": "ln -s \"$(pwd)\" \"/var/www/html/wp-content/plugins/$(basename \"$PWD\")\"",
+		"symlink-wp-config-local": "ln -s \"$(pwd)/.devcontainer/wp-config-local.php\" /var/www/html/wp-config-local.php",
+		"symlink-wp-config": "ln -s \"$(pwd)/.devcontainer/wp-config.php\" /var/www/html/wp-config.php",
+		"set-apache-servername": "sudo sh -c 'echo \"ServerName localhost\" | tee -a /etc/apache2/apache2.conf'",
+		"copy-composer-local": "cp \"$(pwd)/.devcontainer/composer.local.json\" \"$(pwd)/composer.local.json\"",
+		"start-apache": "apache2ctl start"
+	},
+	"waitFor": "postCreateCommand",
+	"remoteUser": "vscode"
+}
