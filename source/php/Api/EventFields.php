@@ -536,7 +536,7 @@ class EventFields extends Fields
     }
 
     /**
-     * Get complete list of event occasions
+     * Get filtered list of event occasions (only upcoming)
      *
      * @param array           $object     Details of current post.
      * @param string          $field_name Name of field.
@@ -544,7 +544,34 @@ class EventFields extends Fields
      *
      * @return array
      */
-    public function getCompleteOccasions($object, $field_name, $request)
+    public function getFilteredOccasions($object, $field_name, $request) {
+        return $this->getCompleteOccasions($object, $field_name, $request, true);
+    }
+
+    /**
+     * Get unfiltered list of event occasions (all occasions)
+     *
+     * @param array           $object     Details of current post.
+     * @param string          $field_name Name of field.
+     * @param WP_REST_Request $request    Current request
+     *
+     * @return array
+     */
+    public function getUnfilteredOccasions($object, $field_name, $request) {
+        return $this->getCompleteOccasions($object, $field_name, $request, false);
+    }
+
+    /**
+     * Get complete list of event occasions
+     *
+     * @param array           $object     Details of current post.
+     * @param string          $field_name Name of field.
+     * @param WP_REST_Request $request    Current request
+     * @param bool            $filtered   Filtered results only contain upcoming occasions, unfiltered contain all occasions.
+     *
+     * @return array
+     */
+    public function getCompleteOccasions($object, $field_name, $request, $filtered = true)
     {
         global $wpdb;
         $db_occasions = $wpdb->prefix . "occasions";
@@ -555,7 +582,10 @@ class EventFields extends Fields
         $data = array();
 
         // Get upcoming occasions
-        $timestamp = strtotime("midnight now") - 1;
+        $timestamp = $filtered 
+            ? strtotime("midnight now") - 1 
+            : 0;
+            
         $query = "
         SELECT * FROM {$db_occasions}
         WHERE event = {$id}
@@ -853,7 +883,22 @@ class EventFields extends Fields
             $this->postType,
             'occasions',
             array(
-                'get_callback' => array($this, 'getCompleteOccasions'),
+                'get_callback' => array($this, 'getFilteredOccasions'),
+                'update_callback' => array($this, 'acfUpdateCallBack'),
+                'schema' => array(
+                    'description' => 'Field containing array with all upcoming event occasions.',
+                    'type' => 'object',
+                    'context' => array('view', 'edit'),
+                ),
+            )
+        );
+
+        // Unfiltered list with occasions
+        register_rest_field(
+            $this->postType,
+            'all_occasions',
+            array(
+                'get_callback' => array($this, 'getUnfilteredOccasions'),
                 'update_callback' => array($this, 'acfUpdateCallBack'),
                 'schema' => array(
                     'description' => 'Field containing array with all event occasions.',
