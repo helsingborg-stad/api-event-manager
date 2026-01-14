@@ -20,7 +20,7 @@ class Event extends PostType
             'menu_icon'             => (new Icon('Event'))->getIcon(),
             'rest_base'             => 'events',
             'rest_controller_class' => \EventManager\RestControllers\EventController::class,
-            'supports'              => [ 'revisions' ],
+            'supports'              => ['title', 'editor', 'revisions'],
             'capability_type'       => ['event', 'events'],
         ];
     }
