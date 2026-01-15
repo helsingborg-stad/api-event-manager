@@ -35,6 +35,10 @@ class CreateNewOrganizerFromEventSubmit implements IAcfSavePostAction
 
     public function savePost(int|string $postId): void
     {
+        if ($this->wpService->getPostStatus($postId) !== 'publish') {
+            return;
+        }
+
         $organizerData = $this->organizerDataFactory->tryCreate($this->acfService->getFields($postId));
 
         if (!is_null($organizerData)) {
