@@ -7,7 +7,7 @@
             "label": "Organizations",
             "name": "organizations",
             "aria-label": "",
-            "type": "acfe_taxonomy_terms",
+            "type": "taxonomy",
             "instructions": "Determines which organization(s) this user is allowed to create events for. Also restricts the user from viewing, editing and deleting events belonging to any other organizer than the ones selected here.",
             "required": 0,
             "conditional_logic": 0,
@@ -16,27 +16,19 @@
                 "class": "",
                 "id": ""
             },
-            "taxonomy": [
-                "organization"
-            ],
-            "allow_terms": "",
-            "allow_level": "",
-            "field_type": "select",
-            "default_value": [],
-            "return_format": "id",
-            "ui": 1,
-            "allow_null": 1,
-            "placeholder": "",
-            "multiple": 1,
-            "ajax": 0,
+            "is_publicly_hidden": 0,
+            "is_privately_hidden": 0,
+            "taxonomy": "organization",
+            "add_term": 0,
             "save_terms": 0,
             "load_terms": 0,
-            "choices": [],
-            "search_placeholder": "",
-            "layout": "",
-            "toggle": 0,
-            "allow_custom": 0,
-            "other_choice": 0
+            "return_format": "id",
+            "field_type": "multi_select",
+            "allow_null": 0,
+            "allow_in_bindings": 0,
+            "bidirectional": 0,
+            "multiple": 0,
+            "bidirectional_target": []
         }
     ],
     "location": [
@@ -57,10 +49,8 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "acfe_display_title": "",
-    "acfe_autosync": "",
-    "acfe_form": 0,
-    "acfe_meta": "",
-    "acfe_note": ""
+    "display_title": "",
+    "allow_ai_access": false,
+    "ai_description": ""
 }]
-
+

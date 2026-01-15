@@ -1,9 +1,7 @@
 <?php 
 
-
-if (function_exists('acf_add_local_field_group')) {
-
-    acf_add_local_field_group(array(
+if (function_exists('acf_add_local_field_group')) {
+    acf_add_local_field_group(array(
     'key' => 'group_660d1667d32a0',
     'title' => __('Event Manager - User fields', 'api-event-manager'),
     'fields' => array(
@@ -12,7 +10,7 @@ if (function_exists('acf_add_local_field_group')) {
             'label' => __('Organizations', 'api-event-manager'),
             'name' => 'organizations',
             'aria-label' => '',
-            'type' => 'acfe_taxonomy_terms',
+            'type' => 'taxonomy',
             'instructions' => __('Determines which organization(s) this user is allowed to create events for. Also restricts the user from viewing, editing and deleting events belonging to any other organizer than the ones selected here.', 'api-event-manager'),
             'required' => 0,
             'conditional_logic' => 0,
@@ -21,29 +19,20 @@ if (function_exists('acf_add_local_field_group')) {
                 'class' => '',
                 'id' => '',
             ),
-            'taxonomy' => array(
-                0 => 'organization',
-            ),
-            'allow_terms' => '',
-            'allow_level' => '',
-            'field_type' => 'select',
-            'default_value' => array(
-            ),
-            'return_format' => 'id',
-            'ui' => 1,
-            'allow_null' => 1,
-            'placeholder' => '',
-            'multiple' => 1,
-            'ajax' => 0,
+            'is_publicly_hidden' => 0,
+            'is_privately_hidden' => 0,
+            'taxonomy' => 'organization',
+            'add_term' => 0,
             'save_terms' => 0,
             'load_terms' => 0,
-            'choices' => array(
+            'return_format' => 'id',
+            'field_type' => 'multi_select',
+            'allow_null' => 0,
+            'allow_in_bindings' => 0,
+            'bidirectional' => 0,
+            'multiple' => 0,
+            'bidirectional_target' => array(
             ),
-            'search_placeholder' => '',
-            'layout' => '',
-            'toggle' => 0,
-            'allow_custom' => 0,
-            'other_choice' => 0,
         ),
     ),
     'location' => array(
@@ -64,11 +53,8 @@ if (function_exists('acf_add_local_field_group')) {
     'active' => true,
     'description' => '',
     'show_in_rest' => 0,
-    'acfe_display_title' => '',
-    'acfe_autosync' => '',
-    'acfe_form' => 0,
-    'acfe_meta' => '',
-    'acfe_note' => '',
+    'display_title' => '',
+    'allow_ai_access' => false,
+    'ai_description' => '',
 ));
-
-}
+}
