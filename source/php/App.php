@@ -156,6 +156,9 @@ class App
 
     public function setupUserCapabilities(): void
     {
+        // Override Municipio admin restriction
+        $this->hooksRegistrar->register(new \EventManager\User\OverrideMunicipioUserAdminRestriction($this->wpService));
+
         $postBelongsToSameOrganizationAsUser = new \EventManager\User\UserHasCap\Implementations\Helpers\PostBelongsToSameOrganizationAsUser($this->wpService, $this->acfService);
         $usersBelongsToSameOrganization      = new \EventManager\User\UserHasCap\Implementations\Helpers\UsersBelongsToSameOrganization($this->acfService);
         $userBelongsToOrganization           = new \EventManager\User\UserHasCap\Implementations\Helpers\UserBelongsToOrganization($this->acfService);
