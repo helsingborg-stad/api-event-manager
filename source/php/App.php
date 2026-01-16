@@ -146,9 +146,9 @@ class App
     public function setupUserRoles(): void
     {
         $userRoles = [
-            new \EventManager\User\Role('organization_administrator', 'Organization Administrator', ['read']),
-            new \EventManager\User\Role('organization_member', 'Organization Member', ['read']),
-            new \EventManager\User\Role('pending_organization_member', 'Pending Organization Member', ['read']),
+            new \EventManager\User\Role('organization_administrator', 'Organization Administrator', ['read', 'upload_files']),
+            new \EventManager\User\Role('organization_member', 'Organization Member', ['read', 'upload_files']),
+            new \EventManager\User\Role('pending_organization_member', 'Pending Organization Member', ['read', 'upload_files']),
         ];
 
         $this->hooksRegistrar->register(new \EventManager\User\RoleRegistrar($userRoles, $this->wpService));
@@ -156,6 +156,9 @@ class App
 
     public function setupUserCapabilities(): void
     {
+        // Override Municipio admin restriction
+        $this->hooksRegistrar->register(new \EventManager\User\OverrideMunicipioUserAdminRestriction($this->wpService));
+
         $postBelongsToSameOrganizationAsUser = new \EventManager\User\UserHasCap\Implementations\Helpers\PostBelongsToSameOrganizationAsUser($this->wpService, $this->acfService);
         $usersBelongsToSameOrganization      = new \EventManager\User\UserHasCap\Implementations\Helpers\UsersBelongsToSameOrganization($this->acfService);
         $userBelongsToOrganization           = new \EventManager\User\UserHasCap\Implementations\Helpers\UserBelongsToOrganization($this->acfService);
@@ -187,10 +190,15 @@ class App
     {
         $acfFieldContentModifierRegistrar = new \EventManager\AcfFieldContentModifiers\Registrar([
             new \EventManager\AcfFieldContentModifiers\FilterAcfAudienceSelectField('field_65a52a6374b0c', $this->wpService),
-            new \EventManager\AcfFieldContentModifiers\FilterAcfOrganizerSelectField('field_65a4f6af50302', $this->wpService, $this->acfService)
         ], $this->wpService);
 
         $this->hooksRegistrar->register($acfFieldContentModifierRegistrar);
+
+        $filterAcfOrganizerSelectInPostForm = new \EventManager\AcfFieldContentModifiers\FilterAcfOrganizerSelectField('field_68d28e231ee5d', $this->wpService, $this->acfService);
+        $filterAcfOrganizerSelectInUserForm = new \EventManager\AcfFieldContentModifiers\FilterAcfOrganizerSelectField('field_660d16683130c', $this->wpService, $this->acfService);
+
+        $this->hooksRegistrar->register($filterAcfOrganizerSelectInPostForm);
+        $this->hooksRegistrar->register($filterAcfOrganizerSelectInUserForm);
     }
 
     public function setupAcfSavePostActions(): void
