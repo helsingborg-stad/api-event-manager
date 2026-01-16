@@ -3,42 +3,39 @@
 namespace EventManager\AcfFieldContentModifiers;
 
 use AcfService\Contracts\GetField;
+use EventManager\HooksRegistrar\Hookable;
+use WpService\Contracts\AddFilter;
 use WpService\Contracts\WpGetCurrentUser;
-use WpService\Contracts\GetTerms;
 
-class FilterAcfOrganizerSelectField implements IAcfFieldContentModifier
+class FilterAcfOrganizerSelectField implements Hookable
 {
-    private const TAXONOMY      = 'organization';
     private const USER_META_KEY = 'organizations';
 
     public function __construct(
         private string $fieldKey,
-        private GetTerms&WpGetCurrentUser $wpService,
+        private WpGetCurrentUser&AddFilter $wpService,
         private GetField $acfService
     ) {
     }
 
-    public function getFieldKey(): string
+    public function addHooks(): void
     {
-        return $this->fieldKey;
+        $this->wpService->addFilter('acf/fields/taxonomy/query', [$this, 'modifyFieldOptions'], 10, 2);
     }
 
-    public function modifyFieldContent(array $field): array
+    public function modifyFieldOptions(array $args, array $field): array
     {
-        $userOrganizations = $this->getUserOrganizations();
-
-        $terms = $this->wpService->getTerms([
-            'taxonomy'   => self::TAXONOMY,
-            'hide_empty' => false,
-            'fields'     => 'id=>name',
-            'include'    => $userOrganizations
-        ]);
-
-        if (is_array($terms) && !empty($terms)) {
-            $field['choices'] = $terms;
+        if ($field['key'] !== $this->fieldKey) {
+            return $args;
         }
 
-        return $field;
+        $userOrganizations = $this->getUserOrganizations();
+
+        if (count($userOrganizations) > 0) {
+            $args['include'] = $userOrganizations;
+        }
+
+        return $args;
     }
 
     public function getUserOrganizations(): array

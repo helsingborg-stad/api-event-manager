@@ -42,8 +42,8 @@ class RoleRegistrarTest extends TestCase
 
             public function getRole(string $role): ?WP_Role
             {
-                if(isset($this->registeredRoles[$role])) {
-                    $wpRole = new WP_Role(...$this->registeredRoles[$role]);
+                if (isset($this->registeredRoles[$role])) {
+                    $wpRole               = new WP_Role(...$this->registeredRoles[$role]);
                     $wpRole->capabilities = $this->registeredRoles[$role][2];
                     return $wpRole;
                 }

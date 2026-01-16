@@ -20,7 +20,7 @@ class CleanupUnusedTags implements Hookable
 
     public function cleanupUnusedTags(): void
     {
-        $terms = $this->wpService->getTerms([$this->taxonomy, 'hide_empty' => false]);
+        $terms = $this->wpService->getTerms(['taxonomy' => $this->taxonomy, 'hide_empty' => false]);
 
         foreach ($terms as $term) {
             if ($term->count === 0) {

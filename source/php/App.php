@@ -190,10 +190,15 @@ class App
     {
         $acfFieldContentModifierRegistrar = new \EventManager\AcfFieldContentModifiers\Registrar([
             new \EventManager\AcfFieldContentModifiers\FilterAcfAudienceSelectField('field_65a52a6374b0c', $this->wpService),
-            new \EventManager\AcfFieldContentModifiers\FilterAcfOrganizerSelectField('field_65a4f6af50302', $this->wpService, $this->acfService)
         ], $this->wpService);
 
         $this->hooksRegistrar->register($acfFieldContentModifierRegistrar);
+
+        $filterAcfOrganizerSelectInPostForm = new \EventManager\AcfFieldContentModifiers\FilterAcfOrganizerSelectField('field_68d28e231ee5d', $this->wpService, $this->acfService);
+        $filterAcfOrganizerSelectInUserForm = new \EventManager\AcfFieldContentModifiers\FilterAcfOrganizerSelectField('field_660d16683130c', $this->wpService, $this->acfService);
+
+        $this->hooksRegistrar->register($filterAcfOrganizerSelectInPostForm);
+        $this->hooksRegistrar->register($filterAcfOrganizerSelectInUserForm);
     }
 
     public function setupAcfSavePostActions(): void

@@ -5,7 +5,8 @@ namespace EventManager\User;
 use EventManager\HooksRegistrar\Hookable;
 use WpService\Contracts\AddFilter;
 
-class OverrideMunicipioUserAdminRestriction implements Hookable {
+class OverrideMunicipioUserAdminRestriction implements Hookable
+{
     public function __construct(private AddFilter $wpService)
     {
     }

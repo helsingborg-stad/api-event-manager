@@ -3,91 +3,69 @@
 namespace EventManager\AcfFieldContentModifiers;
 
 use AcfService\Contracts\GetField;
-use WpService\Contracts\GetTerms;
 use PHPUnit\Framework\TestCase;
-use WP_Error;
 use WP_User;
+use WpService\Contracts\AddFilter;
 use WpService\Contracts\WpGetCurrentUser;
 
 class FilterAcfOrganizerSelectFieldTest extends TestCase
 {
     /**
-    * @testdox modifyFieldContent() returns field with choices set to user's organizations if user has organizations
+    * @testdox modifyFieldOptions() returns field with choices set to user's organizations if user has organizations
     */
-    public function testModifyFieldContentReturnsFieldWithChoicesSetToUserOrganizationsIfUserHasOrganizations()
+    public function testmodifyFieldOptionsReturnsFieldWithChoicesSetToUserOrganizationsIfUserHasOrganizations()
     {
         // Arrange
-        $wpServiceDb = [ 'getTerms' => ['organization' => [1 => [1 => 'The users organization']]] ];
-        $wpService   = $this->getFakeWpService($wpServiceDb);
-        $acfService  = $this->getFakeAcfService([ 'getField' => ['organizations' => ['user_1' => [1]]] ]);
-        $sut         = new FilterAcfOrganizerSelectField('field_65a4f6af50302', $wpService, $acfService);
+        $fieldKey   = 'field_65a4f6af50302';
+        $wpService  = $this->getFakeWpService();
+        $acfService = $this->getFakeAcfService([ 'getField' => ['organizations' => ['user_1' => [1]]] ]);
+        $sut        = new FilterAcfOrganizerSelectField($fieldKey, $wpService, $acfService);
 
         // Act
-        $field = $sut->modifyFieldContent([]);
+        $field = $sut->modifyFieldOptions([], ['key' => $fieldKey]);
 
         // Assert
-        $this->assertEquals(['choices' => [1 => 'The users organization']], $field);
+        $this->assertEquals(['include' => [1]], $field);
     }
 
     /**
-    * @testdox modifyFieldContent() returns field with choices set to all terms if user does not belong to organizations
+    * @testdox modifyFieldOptions() returns field with choices set to all terms if user does not belong to organizations
      */
-    public function testModifyFieldContentReturnsFieldWithChoicesSetToAllTermsIfUserDoesNotBelongToOrganizations()
+    public function testmodifyFieldOptionsReturnsFieldWithChoicesSetToAllTermsIfUserDoesNotBelongToOrganizations()
     {
         // Arrange
-        $wpService  = $this->getFakeWpService([ 'getTerms' => ['organization' => [1 => 'Organization 1']] ]);
-        $acfService = $this->getFakeAcfService([ 'getField' => ['organizations' => ['user_1' => []]] ]);
-        $sut        = new FilterAcfOrganizerSelectField('field_65a4f6af50302', $wpService, $acfService);
+        $fieldKey   = 'field_65a4f6af50302';
+        $wpService  = $this->getFakeWpService();
+        $acfService = $this->getFakeAcfService([ 'getField' => ['organizations' => ['user_1' => [1]]] ]);
+        $sut        = new FilterAcfOrganizerSelectField($fieldKey, $wpService, $acfService);
 
         // Act
-        $field = $sut->modifyFieldContent([]);
+        $args = $sut->modifyFieldOptions([], ['key' => $fieldKey]);
 
         // Assert
-        $this->assertEquals(['choices' => [1 => 'Organization 1']], $field);
+        $this->assertEquals(['include' => [1]], $args);
     }
 
-    /**
-     * @testdox modifyFieldContent() calls getTerms with fields set to id=>name
-     */
-    public function testModifyFieldContentCallsGetTermsWithFieldsSetToIdName()
-    {
-        // Arrange
-        $wpService  = $this->getFakeWpService([ 'getTerms' => []]);
-        $acfService = $this->getFakeAcfService([ 'getField' => []]);
-        $sut        = new FilterAcfOrganizerSelectField('field_65a4f6af50302', $wpService, $acfService);
-
-        // Act
-        $sut->modifyFieldContent([]);
-
-        // Assert
-        $this->assertEquals('id=>name', $wpService->getTermsCalls[0]['fields']);
-    }
-
-    private function getFakeWpService(array $db = []): GetTerms|WpGetCurrentUser
+    private function getFakeWpService(array $db = []): WpGetCurrentUser&AddFilter
     {
         $currentUser     = $this->createMock(WP_User::class);
         $currentUser->ID = 1;
 
-        return new class ($currentUser, $db) implements GetTerms, WpGetCurrentUser {
+        return new class ($currentUser, $db) implements WpGetCurrentUser, AddFilter {
             public array $getTermsCalls = [];
 
             public function __construct(private WP_User $currentUser, private array $db)
             {
             }
 
-            public function getTerms(array|string $args = array(), array|string $deprecated = ""): array|string|WP_Error
-            {
-                $this->getTermsCalls[] = $args;
-                if (!empty($args['include'])) {
-                    return $this->db['getTerms'][$args['taxonomy']][$args['include'][0]] ?? [];
-                }
-
-                return $this->db['getTerms'][$args['taxonomy']] ?? [];
-            }
-
             public function wpGetCurrentUser(): WP_User
             {
                 return $this->currentUser;
+            }
+
+            public function addFilter(string $hookName, callable $callback, int $priority = 10, int $acceptedArgs = 1): true
+            {
+                return true;
             }
         };
     }

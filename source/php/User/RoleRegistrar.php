@@ -29,16 +29,15 @@ class RoleRegistrar implements Hookable
         foreach ($this->roles as $role) {
             $wpRole = $this->wpService->addRole($role->getRole(), $role->getName(), $role->getCapabilities());
 
-            if(!is_null($wpRole) ) {
+            if (!is_null($wpRole)) {
                 continue;
             }
 
             // Role already exists, ensure that caopabilities are up to date
             $wpRole = $this->wpService->getRole($role->getRole());
-            
+
             foreach ($role->getCapabilities() as $capability) {
-                
-                if($wpRole->has_cap($capability)) {
+                if ($wpRole->has_cap($capability)) {
                     continue;
                 }
 
@@ -49,7 +48,6 @@ class RoleRegistrar implements Hookable
             $existingCapabilities = $wpRole->capabilities;
 
             foreach ($existingCapabilities as $capability) {
-
                 if (!in_array($capability, $role->getCapabilities())) {
                     $wpRole->remove_cap($capability);
                 }
