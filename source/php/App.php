@@ -146,9 +146,9 @@ class App
     public function setupUserRoles(): void
     {
         $userRoles = [
-            new \EventManager\User\Role('organization_administrator', 'Organization Administrator', ['read']),
-            new \EventManager\User\Role('organization_member', 'Organization Member', ['read']),
-            new \EventManager\User\Role('pending_organization_member', 'Pending Organization Member', ['read']),
+            new \EventManager\User\Role('organization_administrator', 'Organization Administrator', ['read', 'upload_files']),
+            new \EventManager\User\Role('organization_member', 'Organization Member', ['read', 'upload_files']),
+            new \EventManager\User\Role('pending_organization_member', 'Pending Organization Member', ['read', 'upload_files']),
         ];
 
         $this->hooksRegistrar->register(new \EventManager\User\RoleRegistrar($userRoles, $this->wpService));
