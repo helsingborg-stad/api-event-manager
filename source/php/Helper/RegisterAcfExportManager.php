@@ -26,7 +26,8 @@ class RegisterAcfExportManager implements Hookable
         $acfExportManager->autoExport(array(
             'event-organizer-fields'    => 'group_68d28e231bbaa',
             'event-presentation-fields' => 'group_68d28e8bc6408',
-            'event-time-place-fields'   => 'group_68d28f0c82ff4',
+            'event-time-fields'         => 'group_68d28f0c82ff4',
+            'event-place-fields'        => 'group_696e24e564997',
             'event-audience-category'   => 'group_68d28f55ef8cf',
             'organization-fields'       => 'group_65a4f5a847d62',
             'plugin-settings'           => 'group_660cec468b833',
