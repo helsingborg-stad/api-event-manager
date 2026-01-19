@@ -26,11 +26,11 @@
             'save_terms' => 1,
             'load_terms' => 1,
             'return_format' => 'object',
-            'field_type' => 'checkbox',
+            'field_type' => 'multi_select',
+            'allow_null' => 0,
             'allow_in_bindings' => 0,
             'bidirectional' => 0,
             'multiple' => 0,
-            'allow_null' => 0,
             'bidirectional_target' => array(
             ),
         ),
@@ -55,7 +55,7 @@
             'save_terms' => 1,
             'load_terms' => 1,
             'return_format' => 'object',
-            'field_type' => 'select',
+            'field_type' => 'multi_select',
             'allow_null' => 1,
             'allow_in_bindings' => 0,
             'bidirectional' => 0,
@@ -124,5 +124,8 @@
     'active' => true,
     'description' => '',
     'show_in_rest' => 1,
+    'display_title' => '',
+    'allow_ai_access' => false,
+    'ai_description' => '',
 ));
 }
