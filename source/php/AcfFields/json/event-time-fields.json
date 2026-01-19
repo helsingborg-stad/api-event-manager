@@ -1,33 +1,7 @@
 [{
     "key": "group_68d28f0c82ff4",
-    "title": "Time & Place",
+    "title": "Time",
     "fields": [
-        {
-            "key": "field_68db9ef4c9d5d",
-            "label": "Attendance mode",
-            "name": "attendancemode",
-            "aria-label": "",
-            "type": "button_group",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "is_publicly_hidden": 0,
-            "is_privately_hidden": 0,
-            "choices": {
-                "offline": "Offline",
-                "online": "Online"
-            },
-            "default_value": "offline",
-            "return_format": "value",
-            "allow_null": 0,
-            "allow_in_bindings": 0,
-            "layout": "horizontal"
-        },
         {
             "key": "field_68d28f0c845d0",
             "label": "Occasions",
@@ -327,165 +301,6 @@
                     "parent_repeater": "field_68d28f0c845d0"
                 }
             ]
-        },
-        {
-            "key": "field_68d28f0c8493c",
-            "label": "Prices",
-            "name": "pricesList",
-            "aria-label": "",
-            "type": "repeater",
-            "instructions": "You have the option to offer multiple pricing tiers to accommodate attendees of different age groups. By not adding any ticket variations, your event will show up as free of charge.",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "is_publicly_hidden": 0,
-            "is_privately_hidden": 0,
-            "layout": "block",
-            "pagination": 0,
-            "min": 0,
-            "max": 0,
-            "collapsed": "",
-            "button_label": "Add Ticket \/ Variation",
-            "rows_per_page": 20,
-            "sub_fields": [
-                {
-                    "key": "field_68d28f0c8f518",
-                    "label": "Price Label",
-                    "name": "priceLabel",
-                    "aria-label": "",
-                    "type": "text",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "50",
-                        "class": "",
-                        "id": ""
-                    },
-                    "default_value": "Standard Ticket",
-                    "maxlength": "",
-                    "placeholder": "",
-                    "prepend": "",
-                    "append": "",
-                    "parent_repeater": "field_68d28f0c8493c"
-                },
-                {
-                    "key": "field_68d28f0c8f9e1",
-                    "label": "Price",
-                    "name": "price",
-                    "aria-label": "",
-                    "type": "number",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "50",
-                        "class": "",
-                        "id": ""
-                    },
-                    "default_value": 100,
-                    "min": "",
-                    "max": "",
-                    "placeholder": "",
-                    "step": "",
-                    "prepend": "",
-                    "append": "$",
-                    "parent_repeater": "field_68d28f0c8493c"
-                }
-            ]
-        },
-        {
-            "key": "field_68d28f0c84e03",
-            "label": "Location name",
-            "name": "locationName",
-            "aria-label": "",
-            "type": "text",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_68db9ef4c9d5d",
-                        "operator": "==",
-                        "value": "offline"
-                    }
-                ]
-            ],
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "is_publicly_hidden": 0,
-            "is_privately_hidden": 0,
-            "default_value": "",
-            "maxlength": "",
-            "allow_in_bindings": 0,
-            "placeholder": "",
-            "prepend": "",
-            "append": ""
-        },
-        {
-            "key": "field_68d28f0c851a1",
-            "label": "Location address",
-            "name": "locationAddress",
-            "aria-label": "",
-            "type": "google_map",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_68db9ef4c9d5d",
-                        "operator": "==",
-                        "value": "offline"
-                    }
-                ]
-            ],
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "is_publicly_hidden": 0,
-            "is_privately_hidden": 0,
-            "center_lat": "56.0467",
-            "center_lng": "12.6944",
-            "zoom": "",
-            "height": "",
-            "allow_in_bindings": 0
-        },
-        {
-            "key": "field_68dba07119269",
-            "label": "Online attendence url",
-            "name": "onlineAttendenceUrl",
-            "aria-label": "",
-            "type": "url",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_68db9ef4c9d5d",
-                        "operator": "==",
-                        "value": "online"
-                    }
-                ]
-            ],
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "is_publicly_hidden": 0,
-            "is_privately_hidden": 0,
-            "default_value": "",
-            "allow_in_bindings": 0,
-            "placeholder": ""
         }
     ],
     "location": [
@@ -518,6 +333,9 @@
     ],
     "active": true,
     "description": "",
-    "show_in_rest": 1
+    "show_in_rest": 1,
+    "display_title": "",
+    "allow_ai_access": false,
+    "ai_description": ""
 }]
 
