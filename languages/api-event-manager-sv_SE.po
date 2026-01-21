@@ -135,27 +135,28 @@ msgstr "Sluttid"
 msgid "Booking page URL"
 msgstr "Adress till bokningssida"
 
-#: source/php/AcfFields/php/event-place-fields.php:38
+#: source/php/AcfFields/php/event-prices-fields.php:8
+#: source/php/AcfFields/php/event-prices-fields.php:12
 msgid "Prices"
 msgstr "Priser"
 
-#: source/php/AcfFields/php/event-place-fields.php:42
+#: source/php/AcfFields/php/event-prices-fields.php:16
 msgid "You have the option to offer multiple pricing tiers to accommodate attendees of different age groups. By not adding any ticket variations, your event will show up as free of charge."
 msgstr "Du har möjlighet att erbjuda flera priskategorier för att tillgodose deltagare i olika åldersgrupper. Genom att inte lägga till några biljettvarianter kommer ditt evenemang att visas som kostnadsfritt."
 
-#: source/php/AcfFields/php/event-place-fields.php:62
+#: source/php/AcfFields/php/event-prices-fields.php:36
 msgid "Price Label"
 msgstr "Etikett för pris"
 
-#: source/php/AcfFields/php/event-place-fields.php:74
+#: source/php/AcfFields/php/event-prices-fields.php:48
 msgid "Standard Ticket"
 msgstr "Standardbiljett"
 
-#: source/php/AcfFields/php/event-place-fields.php:83
+#: source/php/AcfFields/php/event-prices-fields.php:57
 msgid "Price"
 msgstr "Pris"
 
-#: source/php/AcfFields/php/event-place-fields.php:101
+#: source/php/AcfFields/php/event-prices-fields.php:75
 msgid "$"
 msgstr "SEK"
 
@@ -404,11 +405,11 @@ msgstr "Evenemang"
 msgid "Events"
 msgstr "Evenemang"
 
-#: source/php/AcfFields/php/event-place-fields.php:108
+#: source/php/AcfFields/php/event-place-fields.php:38
 msgid "Location name"
 msgstr "Platsens namn"
 
-#: source/php/AcfFields/php/event-place-fields.php:139
+#: source/php/AcfFields/php/event-place-fields.php:69
 msgid "Location address"
 msgstr "Platsens adress"
 
@@ -416,11 +417,11 @@ msgstr "Platsens adress"
 msgid "Add occation"
 msgstr "Lägg till tillfälle"
 
-#: source/php/AcfFields/php/event-place-fields.php:57
+#: source/php/AcfFields/php/event-prices-fields.php:31
 msgid "Add Ticket / Variation"
 msgstr "Lägg till biljett / variant"
 
-#: source/php/AcfFields/php/event-time-fields.php:269
+#: source/php/AcfFields/php/event-time-fields.php:237
 msgid "Description"
 msgstr "Beskrivning"
 
@@ -481,7 +482,7 @@ msgstr "Online"
 msgid "offline"
 msgstr "offline"
 
-#: source/php/AcfFields/php/event-place-fields.php:169
+#: source/php/AcfFields/php/event-place-fields.php:99
 msgid "Online attendence url"
 msgstr "Online deltagande-URL"
 
@@ -489,31 +490,31 @@ msgstr "Online deltagande-URL"
 msgid "no"
 msgstr "nej"
 
-#: source/php/AcfFields/php/event-time-fields.php:273
+#: source/php/AcfFields/php/event-time-fields.php:241
 msgid "Specific information about this occasion"
 msgstr "Specifik information om detta tillfälle"
 
-#: source/php/AcfFields/php/event-time-fields.php:301
+#: source/php/AcfFields/php/event-time-fields.php:269
 msgid "Status"
 msgstr "Status"
 
-#: source/php/AcfFields/php/event-time-fields.php:324
+#: source/php/AcfFields/php/event-time-fields.php:292
 msgid "Scheduled"
 msgstr "Planerad"
 
-#: source/php/AcfFields/php/event-time-fields.php:325
+#: source/php/AcfFields/php/event-time-fields.php:293
 msgid "Rescheduled"
 msgstr "Omplanerad"
 
-#: source/php/AcfFields/php/event-time-fields.php:326
+#: source/php/AcfFields/php/event-time-fields.php:294
 msgid "Postponed"
 msgstr "Framflyttad"
 
-#: source/php/AcfFields/php/event-time-fields.php:327
+#: source/php/AcfFields/php/event-time-fields.php:295
 msgid "Cancelled"
 msgstr "Inställd"
 
-#: source/php/AcfFields/php/event-time-fields.php:329
+#: source/php/AcfFields/php/event-time-fields.php:297
 msgid "https://schema.org/EventScheduled"
 msgstr ""
 
@@ -524,19 +525,3 @@ msgstr "Plats"
 #: source/php/AcfFields/php/event-time-fields.php:8
 msgid "Time"
 msgstr "Tid"
-
-#: source/php/AcfFields/php/event-time-fields.php:237
-msgid "Availablility for booking/purchase"
-msgstr "Tillgänglighet för bokning/köp"
-
-#: source/php/AcfFields/php/event-time-fields.php:252
-msgid "Available for booking/purchase"
-msgstr "Tillgänglig för bokning/köp"
-
-#: source/php/AcfFields/php/event-time-fields.php:253
-msgid "Sold out"
-msgstr "Slutsålt"
-
-#: source/php/AcfFields/php/event-time-fields.php:255
-msgid "inStock"
-msgstr ""
