@@ -3,6 +3,9 @@
 namespace EventManager\AcfSavePostActions\CreateNewOrganizerFromEventSubmit\OrganizerData;
 
 use PHPUnit\Framework\TestCase;
+use WpService\Contracts\EscUrlRaw;
+use WpService\Contracts\SanitizeEmail;
+use WpService\Contracts\SanitizeTextField;
 
 class CreateOrganizerDataFromSubmittedFieldsTest extends TestCase
 {
@@ -11,7 +14,7 @@ class CreateOrganizerDataFromSubmittedFieldsTest extends TestCase
      */
     public function testValidFieldsCreateOrganizerData(): void
     {
-        $instance      = new CreateOrganizerDataFromSubmittedFields();
+        $instance      = new CreateOrganizerDataFromSubmittedFields($this->createWpService());
         $organizerData = $instance->tryCreate($this->getValidFields());
 
         $this->assertInstanceOf(OrganizerData::class, $organizerData);
@@ -23,7 +26,7 @@ class CreateOrganizerDataFromSubmittedFieldsTest extends TestCase
      */
     public function testInvalidFieldsDoNotCreateOrganizerData(array $fields): void
     {
-        $instance      = new CreateOrganizerDataFromSubmittedFields();
+        $instance      = new CreateOrganizerDataFromSubmittedFields($this->createWpService());
         $organizerData = $instance->tryCreate($fields);
 
         $this->assertNull($organizerData);
@@ -53,5 +56,24 @@ class CreateOrganizerDataFromSubmittedFieldsTest extends TestCase
             'organizerAddress'      => '123 Test St, Test City, TX 12345',
             'organizerUrl'          => 'https://example.com'
         ];
+    }
+
+    private function createWpService(): SanitizeTextField|SanitizeEmail|EscUrlRaw {
+        return new class implements SanitizeTextField, SanitizeEmail, EscUrlRaw {
+            public function sanitizeTextField(string $text): string
+            {
+                return trim($text);
+            }
+
+            public function sanitizeEmail(string $email): string
+            {
+                return filter_var($email, FILTER_SANITIZE_EMAIL);
+            }
+
+            public function escUrlRaw(string $url, ?array $protocols = null): string
+            {
+                return filter_var($url, FILTER_SANITIZE_URL);
+            }
+        };
     }
 }

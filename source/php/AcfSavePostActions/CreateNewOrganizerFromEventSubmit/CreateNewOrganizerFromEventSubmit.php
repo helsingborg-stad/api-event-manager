@@ -17,7 +17,7 @@ class CreateNewOrganizerFromEventSubmit implements IAcfSavePostAction
         private ?OrganizerData\ICreateOrganizerDataFromSubmittedFields $organizerDataFactory = null
     ) {
         if (is_null($this->organizerDataFactory)) {
-            $this->organizerDataFactory = new OrganizerData\CreateOrganizerDataFromSubmittedFields();
+            $this->organizerDataFactory = new OrganizerData\CreateOrganizerDataFromSubmittedFields($this->wpService);
         }
 
         if (is_null($this->createNewOrganizationTerm)) {
