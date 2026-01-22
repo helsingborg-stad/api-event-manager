@@ -10,40 +10,47 @@ use WpService\Contracts\__;
 use WpService\Contracts\AddAction;
 use WpService\Contracts\RegisterPostType;
 
-class PostTypeTest extends TestCase {
+class PostTypeTest extends TestCase
+{
     /**
      * @testdox registers posttype on init hook
      */
-    public function test_registers_posttype_on_init_hook(): void {
+    public function testRegistersPosttypeOnInitHook(): void
+    {
         $wpService = static::createWpService();
-        $postType = new class($wpService) extends PostType {
-            public function getName(): string {
+        $postType  = new class ($wpService) extends PostType {
+            public function getName(): string
+            {
                 return 'test_post_type';
             }
 
-            public function getArgs(): array {
+            public function getArgs(): array
+            {
                 return ['public' => true];
             }
 
-            public function getLabelSingular(): string {
+            public function getLabelSingular(): string
+            {
                 return 'Test Post';
             }
 
-            public function getLabelPlural(): string {
+            public function getLabelPlural(): string
+            {
                 return 'Test Posts';
             }
         };
-        
+
         $postType->addHooks();
         $wpService->addedActions['init'][0][1]();
 
-        // Check that post type was registered 
+        // Check that post type was registered
         static::assertArrayHasKey('test_post_type', $wpService->registeredPostTypes);
     }
 
-    private static function createWpService(): AddAction|RegisterPostType|__ {
+    private static function createWpService(): AddAction|RegisterPostType|__
+    {
         return new class implements AddAction, RegisterPostType, __ {
-            public array $addedActions = [];
+            public array $addedActions        = [];
             public array $registeredPostTypes = [];
             public function addAction(string $hookName, callable $callback, int $priority = 10, int $acceptedArgs = 1): true
             {
@@ -56,7 +63,7 @@ class PostTypeTest extends TestCase {
                 $this->registeredPostTypes[$postType] = $args;
                 return new \WP_Post_Type([]);
             }
-            
+
             public function __(string $text, string $domain = 'default'): string
             {
                 return $text;

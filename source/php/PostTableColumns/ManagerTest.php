@@ -6,22 +6,25 @@ use PHPUnit\Framework\TestCase;
 use WpService\Contracts\AddAction;
 use WpService\Contracts\AddFilter;
 
-class ManagerTest extends TestCase {
+class ManagerTest extends TestCase
+{
     /**
      * @testdox can be instantiated
      */
-    public function testCanBeInstantiated(): void {
+    public function testCanBeInstantiated(): void
+    {
         $wpService = $this->createWpService();
-        $manager = new Manager(['post'], $wpService);
+        $manager   = new Manager(['post'], $wpService);
         $this->assertInstanceOf(Manager::class, $manager);
     }
 
     /**
      * @testdox getColumns returns registered columns
      */
-    public function testGetColumnsReturnsRegisteredColumns(): void {
+    public function testGetColumnsReturnsRegisteredColumns(): void
+    {
         $wpService = $this->createWpService();
-        $manager = new Manager(['post'], $wpService);
+        $manager   = new Manager(['post'], $wpService);
 
         $mockColumn = $this->createMock(ColumnInterface::class);
         $manager->register($mockColumn);
@@ -34,11 +37,12 @@ class ManagerTest extends TestCase {
     /**
      * @testdox addHooks registers the appropriate hooks
      */
-    public function testAddHooksRegistersAppropriateHooks(): void {
+    public function testAddHooksRegistersAppropriateHooks(): void
+    {
         $wpService = static::createWpService();
-        $manager = new Manager(['post'], $wpService);
+        $manager   = new Manager(['post'], $wpService);
         $manager->addHooks();
-        
+
         $this->assertCount(2, $wpService->addedFilters);
         $this->assertCount(2, $wpService->addedActions);
 
@@ -51,9 +55,10 @@ class ManagerTest extends TestCase {
     /**
      * @testdox addColumnsToTable adds registered columns to the table columns array
      */
-    public function testAddColumnsToTableAddsRegisteredColumns(): void {
+    public function testAddColumnsToTableAddsRegisteredColumns(): void
+    {
         $wpService = $this->createWpService();
-        $manager = new Manager(['post'], $wpService);
+        $manager   = new Manager(['post'], $wpService);
 
         $mockColumn = $this->createMock(ColumnInterface::class);
         $mockColumn->method('getIdentifier')->willReturn('custom_column');
@@ -71,9 +76,10 @@ class ManagerTest extends TestCase {
     /**
      * @testdox addSortableColumns adds sortable columns to the sortable columns array
      */
-    public function testAddSortableColumnsAddsSortableColumns(): void {
+    public function testAddSortableColumnsAddsSortableColumns(): void
+    {
         $wpService = $this->createWpService();
-        $manager = new Manager(['post'], $wpService);
+        $manager   = new Manager(['post'], $wpService);
 
         $sortableColumn = $this->createMock(ColumnInterface::class);
         $sortableColumn->method('getIdentifier')->willReturn('sortable_column');
@@ -96,9 +102,10 @@ class ManagerTest extends TestCase {
     /**
      * @testdox populateTableCells outputs the correct cell content for the given column
      */
-    public function testPopulateTableCellsOutputsCorrectCellContent(): void {
+    public function testPopulateTableCellsOutputsCorrectCellContent(): void
+    {
         $wpService = $this->createWpService();
-        $manager = new Manager(['post'], $wpService);
+        $manager   = new Manager(['post'], $wpService);
 
         $mockColumn = $this->createMock(ColumnInterface::class);
         $mockColumn->method('getIdentifier')->willReturn('custom_column');
@@ -114,7 +121,8 @@ class ManagerTest extends TestCase {
         $this->assertEquals('Cell Content', $output);
     }
 
-    private static function createWpService(): AddAction&AddFilter {
+    private static function createWpService(): AddAction&AddFilter
+    {
         return new class implements AddAction, AddFilter {
             public array $addedActions = [];
             public array $addedFilters = [];

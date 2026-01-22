@@ -10,12 +10,13 @@ use WpService\Contracts\__;
 use WpService\Contracts\AddAction;
 use WpService\Contracts\RegisterPostType;
 
-class EventTest extends TestCase {
-
+class EventTest extends TestCase
+{
     /**
      * @testdox It should return the correct post type name
      */
-    public function testGetName() {
+    public function testGetName()
+    {
         $eventPostType = new Event(static::createWpService());
         static::assertSame('event', $eventPostType->getName());
     }
@@ -23,9 +24,10 @@ class EventTest extends TestCase {
     /**
      * @testdox post type is available in REST API
      */
-    public function testGetArgs() {
+    public function testGetArgs()
+    {
         $eventPostType = new Event(static::createWpService());
-        $args = $eventPostType->getArgs();
+        $args          = $eventPostType->getArgs();
 
         static::assertArrayHasKey('show_in_rest', $args);
         static::assertTrue($args['show_in_rest']);
@@ -34,7 +36,8 @@ class EventTest extends TestCase {
     /**
      * @testdox It returns the correct singular label
      */
-    public function testGetLabelSingular() {
+    public function testGetLabelSingular()
+    {
         $eventPostType = new Event(static::createWpService());
         static::assertSame('Event', $eventPostType->getLabelSingular());
     }
@@ -42,12 +45,14 @@ class EventTest extends TestCase {
     /**
      * @testdox It returns the correct plural label
      */
-    public function testGetLabelPlural() {
+    public function testGetLabelPlural()
+    {
         $eventPostType = new Event(static::createWpService());
         static::assertSame('Events', $eventPostType->getLabelPlural());
     }
 
-    private static function createWpService(): AddAction|RegisterPostType|__ {
+    private static function createWpService(): AddAction|RegisterPostType|__
+    {
         return new class implements AddAction, RegisterPostType, __ {
             public function addAction(string $hookName, callable $callback, int $priority = 10, int $acceptedArgs = 1): true
             {
