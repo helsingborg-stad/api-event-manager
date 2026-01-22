@@ -1,0 +1,8 @@
+paths:
+  - .
+paths-ignore:
+  - vendor
+  - node_modules
+  - tests
+  - .devcontainer
+  - .vscode
