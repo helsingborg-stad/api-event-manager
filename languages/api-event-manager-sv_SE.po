@@ -73,7 +73,7 @@ msgstr "Nej"
 
 #: source/php/AcfFields/php/event-time-fields.php:52
 msgid "Weekly occasion"
-msgstr "Veckotillfälle"
+msgstr "Veckovis"
 
 #: source/php/AcfFields/php/event-time-fields.php:63
 msgid "Every"
