@@ -3,6 +3,8 @@
 namespace EventManager\NotificationServices;
 
 use WpService\Contracts\GetUsers;
+use WpService\Contracts\SanitizeTextField;
+use WpService\Contracts\WpKsesPost;
 use WpService\Contracts\WpMail;
 
 class EmailNotificationService implements NotificationService
@@ -11,7 +13,7 @@ class EmailNotificationService implements NotificationService
     private string $subject;
     private string $message;
 
-    public function __construct(private WpMail&GetUsers $wpService)
+    public function __construct(private WpMail&GetUsers&SanitizeTextField&WpKsesPost $wpService)
     {
     }
 
@@ -36,12 +38,12 @@ class EmailNotificationService implements NotificationService
 
     public function setSubject(string $subject): void
     {
-        $this->subject = $subject;
+        $this->subject = $this->wpService->sanitizeTextField($subject);
     }
 
     public function setMessage(string $message): void
     {
-        $this->message = $message;
+        $this->message = $this->wpService->wpKsesPost($message);
     }
 
     public function send(): void
