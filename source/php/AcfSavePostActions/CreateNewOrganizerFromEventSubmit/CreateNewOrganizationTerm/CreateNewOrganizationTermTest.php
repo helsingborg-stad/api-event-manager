@@ -6,12 +6,13 @@ use AcfService\Contracts\UpdateField;
 use EventManager\AcfSavePostActions\CreateNewOrganizerFromEventSubmit\OrganizerData\OrganizerData;
 use PHPUnit\Framework\TestCase;
 use WP_Error;
+use WpService\Contracts\__;
 use WpService\Contracts\EscUrlRaw;
 use WpService\Contracts\SanitizeEmail;
 use WpService\Contracts\SanitizeTextField;
 use WpService\Contracts\WpInsertTerm;
 
-class FakeWpService implements WpInsertTerm, SanitizeTextField, SanitizeEmail, EscUrlRaw
+class FakeWpService implements WpInsertTerm, SanitizeTextField, SanitizeEmail, EscUrlRaw, __
 {
     public function wpInsertTerm(string $term, string $taxonomy, array|string $args = []): array|WP_Error
     {
@@ -31,6 +32,11 @@ class FakeWpService implements WpInsertTerm, SanitizeTextField, SanitizeEmail, E
     public function escUrlRaw(string $url, ?array $protocols = null): string
     {
         return $url;
+    }
+
+    public function __(string $text, string $domain = 'default'): string
+    {
+        return $text;
     }
 }
 

@@ -4,6 +4,7 @@ namespace EventManager\AcfSavePostActions\CreateNewOrganizerFromEventSubmit\Crea
 
 use AcfService\Contracts\UpdateField;
 use EventManager\AcfSavePostActions\CreateNewOrganizerFromEventSubmit\OrganizerData\IOrganizerData;
+use WpService\Contracts\__;
 use WpService\Contracts\EscUrlRaw;
 use WpService\Contracts\SanitizeEmail;
 use WpService\Contracts\SanitizeTextField;
@@ -13,7 +14,7 @@ class CreateNewOrganizationTerm implements ICreateNewOrganizationTerm
 {
     public function __construct(
         private string $taxonomy,
-        private WpInsertTerm&SanitizeTextField&SanitizeEmail&EscUrlRaw $wpService,
+        private WpInsertTerm&SanitizeTextField&SanitizeEmail&EscUrlRaw&__ $wpService,
         private UpdateField $acfService
     ) {
     }
@@ -33,7 +34,13 @@ class CreateNewOrganizationTerm implements ICreateNewOrganizationTerm
                 return $term->get_error_data();
             }
 
-            throw new \RuntimeException($term->get_error_message());
+            // Log detailed error server-side
+            error_log('Organization term creation failed: ' . $term->get_error_message());
+
+            throw new \RuntimeException($this->wpService->__(
+                'Failed to create organizer term: %s',
+                'api-event-manager'
+            ));
         }
 
         $identifier = $this->taxonomy . '_' . $term['term_id'];
