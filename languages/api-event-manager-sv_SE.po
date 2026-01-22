@@ -487,7 +487,7 @@ msgstr "Online deltagande-URL"
 
 #: source/php/AcfFields/php/event-time-fields.php:54
 msgid "no"
-msgstr "nej"
+msgstr ""
 
 #: source/php/AcfFields/php/event-time-fields.php:273
 msgid "Specific information about this occasion"
