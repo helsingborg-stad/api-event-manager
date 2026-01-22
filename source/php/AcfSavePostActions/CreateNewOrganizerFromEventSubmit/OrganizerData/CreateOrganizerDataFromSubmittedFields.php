@@ -19,12 +19,12 @@ class CreateOrganizerDataFromSubmittedFields implements ICreateOrganizerDataFrom
         }
 
         // Sanitize all fields
-        $name = isset($fields['organizerName']) ? $this->wpService->sanitizeTextField($fields['organizerName']) : '';
-        $email = isset($fields['organizerEmail']) ? $this->wpService->sanitizeEmail($fields['organizerEmail']) : '';
-        $contact = isset($fields['organizerContact']) ? $this->wpService->sanitizeTextField($fields['organizerContact']) : '';
+        $name      = isset($fields['organizerName']) ? $this->wpService->sanitizeTextField($fields['organizerName']) : '';
+        $email     = isset($fields['organizerEmail']) ? $this->wpService->sanitizeEmail($fields['organizerEmail']) : '';
+        $contact   = isset($fields['organizerContact']) ? $this->wpService->sanitizeTextField($fields['organizerContact']) : '';
         $telephone = isset($fields['organizerTelephone']) ? $this->wpService->sanitizeTextField($fields['organizerTelephone']) : '';
-        $address = isset($fields['organizerAddress']) ? $this->wpService->sanitizeTextField($fields['organizerAddress']) : '';
-        $url = isset($fields['organizerUrl']) ? $this->wpService->escUrlRaw($fields['organizerUrl']) : '';
+        $address   = isset($fields['organizerAddress']) ? $this->wpService->sanitizeTextField($fields['organizerAddress']) : '';
+        $url       = isset($fields['organizerUrl']) ? $this->wpService->escUrlRaw($fields['organizerUrl']) : '';
 
         return new OrganizerData(
             name: $name,

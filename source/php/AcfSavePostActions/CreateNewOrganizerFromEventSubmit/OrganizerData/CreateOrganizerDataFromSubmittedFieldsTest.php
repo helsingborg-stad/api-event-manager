@@ -58,7 +58,8 @@ class CreateOrganizerDataFromSubmittedFieldsTest extends TestCase
         ];
     }
 
-    private function createWpService(): SanitizeTextField|SanitizeEmail|EscUrlRaw {
+    private function createWpService(): SanitizeTextField|SanitizeEmail|EscUrlRaw
+    {
         return new class implements SanitizeTextField, SanitizeEmail, EscUrlRaw {
             public function sanitizeTextField(string $text): string
             {

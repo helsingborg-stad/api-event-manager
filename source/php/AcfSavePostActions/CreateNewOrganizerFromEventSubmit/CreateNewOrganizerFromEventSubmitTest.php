@@ -139,7 +139,7 @@ class CreateNewOrganizerFromEventSubmitTest extends TestCase
         return new FakeWpService(array_merge([
             'wpSetObjectTerms' => [],
             'getPostStatus'    => 'publish',
-            'currentUserCan'  => true,
+            'currentUserCan'   => true,
         ], $returnValues));
     }
 

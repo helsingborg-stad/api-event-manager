@@ -69,7 +69,7 @@ class EmailNotificationServiceTest extends TestCase
             {
                 return $str;
             }
-            
+
             public function wpKsesPost(string $data): string
             {
                 return $data;

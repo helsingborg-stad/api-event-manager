@@ -44,8 +44,8 @@ class NestedMetaStringCellContent implements ColumnCellContentInterface
 
     private function sanitizeCellContent($cellContent): string
     {
-        return is_string($cellContent) || is_numeric($cellContent) 
-            ? $this->wpService->escHtml((string)$cellContent) 
+        return is_string($cellContent) || is_numeric($cellContent)
+            ? $this->wpService->escHtml((string)$cellContent)
             : '';
     }
 }

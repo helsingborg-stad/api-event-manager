@@ -21,13 +21,13 @@ class CreateNewOrganizationTerm implements ICreateNewOrganizationTerm
 
     public function createTerm(IOrganizerData $organizerData): int
     {
-        $name = $this->wpService->sanitizeTextField($organizerData->getName());
-        $email = $this->wpService->sanitizeEmail($organizerData->getEmail());
-        $contact = $this->wpService->sanitizeTextField($organizerData->getContact());
+        $name      = $this->wpService->sanitizeTextField($organizerData->getName());
+        $email     = $this->wpService->sanitizeEmail($organizerData->getEmail());
+        $contact   = $this->wpService->sanitizeTextField($organizerData->getContact());
         $telephone = $this->wpService->sanitizeTextField($organizerData->getTelephone());
-        $address = $this->wpService->sanitizeTextField($organizerData->getAddress());
-        $url = $this->wpService->escUrlRaw($organizerData->getUrl());
-        $term = $this->wpService->wpInsertTerm($name, $this->taxonomy);
+        $address   = $this->wpService->sanitizeTextField($organizerData->getAddress());
+        $url       = $this->wpService->escUrlRaw($organizerData->getUrl());
+        $term      = $this->wpService->wpInsertTerm($name, $this->taxonomy);
 
         if (is_a($term, \WP_Error::class)) {
             if ($term->get_error_code() === 'term_exists') {

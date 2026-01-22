@@ -35,7 +35,7 @@ class CreateNewOrganizerFromEventSubmit implements IAcfSavePostAction
 
     public function savePost(int|string $postId): void
     {
-        if(!$this->shouldCreateOrganizer($postId)) {
+        if (!$this->shouldCreateOrganizer($postId)) {
             return;
         }
 

@@ -12,6 +12,7 @@ use WpService\Contracts\SanitizeEmail;
 use WpService\Contracts\SanitizeTextField;
 use WpService\Contracts\WpInsertTerm;
 
+// phpcs:disable PSR1.Classes.ClassDeclaration
 class FakeWpService implements WpInsertTerm, SanitizeTextField, SanitizeEmail, EscUrlRaw, __
 {
     public function wpInsertTerm(string $term, string $taxonomy, array|string $args = []): array|WP_Error
