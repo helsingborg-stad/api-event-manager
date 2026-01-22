@@ -6,7 +6,40 @@ use AcfService\Contracts\UpdateField;
 use EventManager\AcfSavePostActions\CreateNewOrganizerFromEventSubmit\OrganizerData\OrganizerData;
 use PHPUnit\Framework\TestCase;
 use WP_Error;
+use WpService\Contracts\__;
+use WpService\Contracts\EscUrlRaw;
+use WpService\Contracts\SanitizeEmail;
+use WpService\Contracts\SanitizeTextField;
 use WpService\Contracts\WpInsertTerm;
+
+// phpcs:disable PSR1.Classes.ClassDeclaration
+class FakeWpService implements WpInsertTerm, SanitizeTextField, SanitizeEmail, EscUrlRaw, __
+{
+    public function wpInsertTerm(string $term, string $taxonomy, array|string $args = []): array|WP_Error
+    {
+        return [];
+    }
+
+    public function sanitizeTextField(string $str): string
+    {
+        return $str;
+    }
+
+    public function sanitizeEmail(string $email): string
+    {
+        return $email;
+    }
+
+    public function escUrlRaw(string $url, ?array $protocols = null): string
+    {
+        return $url;
+    }
+
+    public function __(string $text, string $domain = 'default'): string
+    {
+        return $text;
+    }
+}
 
 /**
  * @covers \EventManager\AcfSavePostActions\CreateNewOrganizerFromEventSubmit\CreateNewOrganizationTerm\CreateNewOrganizationTerm
@@ -18,7 +51,7 @@ class CreateNewOrganizationTermTest extends TestCase
      */
     public function testClassCanBeInstantiated(): void
     {
-        $wpService = new class implements WpInsertTerm {
+        $wpService = new class extends FakeWpService {
             public function wpInsertTerm(string $term, string $taxonomy, array|string $args = []): array|WP_Error
             {
                 return [];
@@ -36,7 +69,7 @@ class CreateNewOrganizationTermTest extends TestCase
      */
     public function testInsertsNewTermWithNameFromOrganizationData(): void
     {
-        $wpService = new class implements WpInsertTerm {
+        $wpService = new class extends FakeWpService {
             public $calls = [];
             public function wpInsertTerm(string $term, string $taxonomy, array|string $args = []): array|WP_Error
             {
@@ -57,7 +90,7 @@ class CreateNewOrganizationTermTest extends TestCase
      */
     public function testSetsAcfFieldsOnCreatedTerm(): void
     {
-        $wpService = new class implements WpInsertTerm {
+        $wpService = new class extends FakeWpService {
             public $calls = [];
             public function wpInsertTerm(string $term, string $taxonomy, array|string $args = []): array|WP_Error
             {
@@ -83,7 +116,7 @@ class CreateNewOrganizationTermTest extends TestCase
      */
     public function testReturnsIdOfExistingTermIfItAlreadyExists(): void
     {
-        $wpService = new class implements WpInsertTerm {
+        $wpService = new class extends FakeWpService {
             public function wpInsertTerm(string $term, string $taxonomy, array|string $args = []): array|WP_Error
             {
                 return new class extends \WP_Error
@@ -111,7 +144,7 @@ class CreateNewOrganizationTermTest extends TestCase
      */
     public function testThrowsRuntimeExceptionIfTermCreationFails(): void
     {
-        $wpService = new class implements WpInsertTerm {
+        $wpService = new class extends FakeWpService {
             public function wpInsertTerm(string $term, string $taxonomy, array|string $args = []): array|WP_Error
             {
                 return new class extends \WP_Error

@@ -6,6 +6,7 @@ use EventManager\PostTableColumns\ColumnCellContent\MetaStringCellContent;
 use WpService\Contracts\GetPostMeta;
 use WpService\Contracts\GetTheID;
 use PHPUnit\Framework\TestCase;
+use WpService\Contracts\EscHtml;
 
 class MetaStringCellContentTest extends TestCase
 {
@@ -48,9 +49,21 @@ class MetaStringCellContentTest extends TestCase
         $this->assertEquals('', $cellContent);
     }
 
-    private function getWpService($postId = 1, $meta = []): GetPostMeta|GetTheID
+    /**
+     * @testdox getCellContent() returns value with HTML escaped
+     */
+    public function testGetCellContentEscapesHtml() {
+        $wpService             = $this->getWpService(1, [1 => ['foo' => '<script>alert("xss")</script>']]);
+        $metaStringCellContent = new MetaStringCellContent('foo', $wpService);
+
+        $cellContent = $metaStringCellContent->getCellContent();
+
+        $this->assertEquals('&lt;script&gt;alert(&quot;xss&quot;)&lt;/script&gt;', $cellContent);
+    }
+
+    private function getWpService($postId = 1, $meta = []): GetPostMeta|GetTheID|EscHtml
     {
-        return new class ($postId, $meta) implements GetPostMeta, GetTheID {
+        return new class ($postId, $meta) implements GetPostMeta, GetTheID, EscHtml {
             public function __construct(private int $postId, private array $meta)
             {
             }
@@ -63,6 +76,12 @@ class MetaStringCellContentTest extends TestCase
             public function getPostMeta($postId, $key = '', $single = false): mixed
             {
                 return $this->meta[$postId][$key] ?? '';
+            }
+
+            public function escHtml(string $text): string
+            {
+                $text = htmlspecialchars($text, ENT_QUOTES, 'UTF-8');
+                return $text;
             }
         };
     }

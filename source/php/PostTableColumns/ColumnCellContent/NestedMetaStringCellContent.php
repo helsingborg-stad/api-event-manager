@@ -3,6 +3,7 @@
 namespace EventManager\PostTableColumns\ColumnCellContent;
 
 use EventManager\PostTableColumns\Helpers\GetNestedArrayStringValueRecursiveInterface;
+use WpService\Contracts\EscHtml;
 use WpService\Contracts\GetPostMeta;
 use WpService\Contracts\GetTheID;
 
@@ -14,11 +15,11 @@ class NestedMetaStringCellContent implements ColumnCellContentInterface
      * Represents the cell content for a nested meta string column in a post table.
      *
      * @param string $nestedMetaKeys Eg. 'foo.bar.baz' to retrieve $meta[1]['foo']['bar']['baz']
-     * @param GetTheID&GetPostMeta $wpService
+     * @param GetTheID&GetPostMeta&EscHtml $wpService
      */
     public function __construct(
         private string $nestedMetaKeys,
-        private GetTheID&GetPostMeta $wpService,
+        private GetTheID&GetPostMeta&EscHtml $wpService,
         private GetNestedArrayStringValueRecursiveInterface $getNestedArrayStringValueRecursive
     ) {
     }
@@ -43,6 +44,8 @@ class NestedMetaStringCellContent implements ColumnCellContentInterface
 
     private function sanitizeCellContent($cellContent): string
     {
-        return is_string($cellContent) || is_numeric($cellContent) ? (string)$cellContent : '';
+        return is_string($cellContent) || is_numeric($cellContent)
+            ? $this->wpService->escHtml((string)$cellContent)
+            : '';
     }
 }

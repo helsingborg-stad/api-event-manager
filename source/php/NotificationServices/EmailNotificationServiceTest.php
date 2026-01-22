@@ -4,7 +4,8 @@ namespace EventManager\NotificationServices;
 
 use PHPUnit\Framework\TestCase;
 use WpService\Contracts\GetUsers;
-use WpService\Contracts\Mail;
+use WpService\Contracts\SanitizeTextField;
+use WpService\Contracts\WpKsesPost;
 use WpService\Contracts\WpMail;
 
 class EmailNotificationServiceTest extends TestCase
@@ -40,9 +41,9 @@ class EmailNotificationServiceTest extends TestCase
         $this->assertEquals('message', $wpService->calls['mail'][0][2]);
     }
 
-    private function getWpService(array $data = []): WpMail&GetUsers
+    private function getWpService(array $data = []): WpMail&GetUsers&SanitizeTextField&WpKsesPost
     {
-        return new class ($data) implements WpMail, GetUsers {
+        return new class ($data) implements WpMail, GetUsers, SanitizeTextField, WpKsesPost {
             public array $calls = [];
 
             public function __construct(private array $data)
@@ -62,6 +63,16 @@ class EmailNotificationServiceTest extends TestCase
             public function getUsers(array $args = []): array
             {
                 return $this->data['getUsers'] ?? [];
+            }
+
+            public function sanitizeTextField(string $str): string
+            {
+                return $str;
+            }
+
+            public function wpKsesPost(string $data): string
+            {
+                return $data;
             }
         };
     }

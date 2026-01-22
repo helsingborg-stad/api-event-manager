@@ -2,6 +2,7 @@
 
 namespace EventManager\PostTableColumns\ColumnCellContent;
 
+use WpService\Contracts\EscHtml;
 use WpService\Contracts\GetPostMeta;
 use WpService\Contracts\GetTheID;
 
@@ -9,7 +10,7 @@ class MetaStringCellContent implements ColumnCellContentInterface
 {
     public function __construct(
         private string $metaKey,
-        private GetTheID&GetPostMeta $wpService
+        private GetTheID&GetPostMeta&EscHtml $wpService
     ) {
     }
 
@@ -26,6 +27,6 @@ class MetaStringCellContent implements ColumnCellContentInterface
             return '';
         }
 
-        return (string) $value;
+        return $this->wpService->escHtml((string)$value);
     }
 }
