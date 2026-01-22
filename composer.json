@@ -6,7 +6,7 @@
     "scripts": {
         "test": "XDEBUG_MODE=off ./vendor/bin/phpunit --testdox --no-coverage",
         "test:debug": "XDEBUG_MODE=debug ./vendor/bin/phpunit --testdox --no-coverage",
-        "coverage": "XDEBUG_MODE=coverage ./vendor/bin/phpunit --testdox",
+        "test:coverage": "XDEBUG_MODE=coverage ./vendor/bin/phpunit --testdox",
         "minimal": "./vendor/bin/phpunit",
         "php:lint": "./vendor/bin/phpcs -s",
         "php:fix": "./vendor/bin/phpcbf",
