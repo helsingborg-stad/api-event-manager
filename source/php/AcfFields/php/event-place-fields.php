@@ -69,7 +69,7 @@
             'aria-label' => '',
             'type' => 'google_map',
             'instructions' => '',
-            'required' => 0,
+            'required' => 1,
             'conditional_logic' => array(
                 0 => array(
                     0 => array(
@@ -153,7 +153,5 @@
     'description' => '',
     'show_in_rest' => 1,
     'display_title' => '',
-    'allow_ai_access' => false,
-    'ai_description' => '',
 ));
 }
