@@ -57,11 +57,9 @@ class App
     public function setPostTermsFromPostContent(): void
     {
         $tagReader               = new TagReader();
-        $modifyPostcontentBefore = new \EventManager\Modifiers\ModifyPostContentBeforeReadingTags($this->wpService);
         $setPostTermsFromContent = new SetPostTermsFromContent('event', 'keyword', $tagReader, $this->wpService);
 
         $this->hooksRegistrar->register($setPostTermsFromContent);
-        $this->hooksRegistrar->register($modifyPostcontentBefore);
     }
 
     public function cleanUpExpiredEvents(): void

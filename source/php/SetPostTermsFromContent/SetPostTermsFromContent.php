@@ -38,9 +38,7 @@ class SetPostTermsFromContent implements Hookable
             return;
         }
 
-        $filterTag = 'EventManager\SetPostTermsFromContent\PostContent';
-        $content   = $this->wpService->applyFilters($filterTag, $postId, $post->post_content);
-        $tagNames  = $this->tagReader->getTags($content);
+        $tagNames = $this->tagReader->getTags($post->post_content);
 
         $this->ensureFoundTagsExist($tagNames);
 
