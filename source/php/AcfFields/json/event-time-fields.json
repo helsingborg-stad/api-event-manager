@@ -227,38 +227,6 @@
                     "parent_repeater": "field_68d28f0c845d0"
                 },
                 {
-                    "key": "field_696e34e23d687",
-                    "label": "Availablility for booking\/purchase",
-                    "name": "availability",
-                    "aria-label": "",
-                    "type": "select",
-                    "instructions": "",
-                    "required": 0,
-                    "conditional_logic": 0,
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "is_publicly_hidden": 0,
-                    "is_privately_hidden": 0,
-                    "choices": {
-                        "inStock": "Available for booking\/purchase",
-                        "soldOut": "Sold out"
-                    },
-                    "default_value": "inStock",
-                    "return_format": "value",
-                    "multiple": 0,
-                    "allow_null": 0,
-                    "allow_in_bindings": 0,
-                    "ui": 0,
-                    "ajax": 0,
-                    "placeholder": "",
-                    "create_options": 0,
-                    "save_options": 0,
-                    "parent_repeater": "field_68d28f0c845d0"
-                },
-                {
                     "key": "field_68dd084d90dc7",
                     "label": "Description",
                     "name": "description",
@@ -288,48 +256,6 @@
                     "toolbar": "basic",
                     "media_upload": 0,
                     "delay": 1,
-                    "parent_repeater": "field_68d28f0c845d0"
-                },
-                {
-                    "key": "field_68dd08ad90dc8",
-                    "label": "Status",
-                    "name": "status",
-                    "aria-label": "",
-                    "type": "select",
-                    "instructions": "",
-                    "required": 1,
-                    "conditional_logic": [
-                        [
-                            {
-                                "field": "field_68d28f0c8845b",
-                                "operator": "==",
-                                "value": "no"
-                            }
-                        ]
-                    ],
-                    "wrapper": {
-                        "width": "",
-                        "class": "",
-                        "id": ""
-                    },
-                    "is_publicly_hidden": 0,
-                    "is_privately_hidden": 0,
-                    "choices": {
-                        "https:\/\/schema.org\/EventScheduled": "Scheduled",
-                        "https:\/\/schema.org\/EventRescheduled": "Rescheduled",
-                        "https:\/\/schema.org\/EventPostponed": "Postponed",
-                        "https:\/\/schema.org\/EventCancelled": "Cancelled"
-                    },
-                    "default_value": "https:\/\/schema.org\/EventScheduled",
-                    "return_format": "value",
-                    "multiple": 0,
-                    "allow_null": 0,
-                    "allow_in_bindings": 0,
-                    "ui": 0,
-                    "ajax": 0,
-                    "placeholder": "",
-                    "create_options": 0,
-                    "save_options": 0,
                     "parent_repeater": "field_68d28f0c845d0"
                 }
             ]
