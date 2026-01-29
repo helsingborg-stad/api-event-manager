@@ -17,7 +17,7 @@ class Keyword extends Taxonomy
     public function getArgs(): array
     {
         return array(
-            'show_in_rest'      => false,
+            'show_in_rest'      => true,
             'public'            => true,
             'hierarchical'      => false,
             'show_ui'           => true,
