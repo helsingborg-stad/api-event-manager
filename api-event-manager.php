@@ -4,7 +4,7 @@
  * Plugin Name:       Event Manager
  * Plugin URI:        https://github.com/helsingborg-stad/api-event-manager
  * Description:       Creates a api that may be used to manage events
- * Version: 3.12.16
+ * Version: 3.12.17
  * Author:            Thor Brink, Sebastian Thulin @ Helsingborg Stad
  * Author URI:        https://github.com/helsingborg-stad
  * License:           MIT
