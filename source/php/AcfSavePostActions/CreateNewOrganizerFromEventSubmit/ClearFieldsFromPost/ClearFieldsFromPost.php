@@ -21,12 +21,7 @@ class ClearFieldsFromPost implements IClearFieldsFromPost
     {
         return [
             'submitNewOrganization',
-            'organizerName',
-            'organizerEmail',
-            'organizerContact',
-            'organizerTelephone',
-            'organizerAddress',
-            'organizerUrl',
+            'newOrganizers'
         ];
     }
 }

@@ -42,13 +42,8 @@ class ClearFieldsFromPostTest extends TestCase
         $instance = new ClearFieldsFromPost($acfService);
         $instance->clearFields(123);
 
-        $this->assertCount(7, $acfService->calls);
+        $this->assertCount(2, $acfService->calls);
         $this->assertContains(['submitNewOrganization', 123], $acfService->calls);
-        $this->assertContains(['organizerName', 123], $acfService->calls);
-        $this->assertContains(['organizerEmail', 123], $acfService->calls);
-        $this->assertContains(['organizerContact', 123], $acfService->calls);
-        $this->assertContains(['organizerUrl', 123], $acfService->calls);
-        $this->assertContains(['organizerAddress', 123], $acfService->calls);
-        $this->assertContains(['organizerTelephone', 123], $acfService->calls);
+        $this->assertContains(['newOrganizers', 123], $acfService->calls);
     }
 }

@@ -30,16 +30,16 @@ class CreateNewOrganizerFromEventSubmitTest extends TestCase
             }
         };
         $organizerDataFactory      = new class implements ICreateOrganizerDataFromSubmittedFields {
-            public function tryCreate(array $fields): ?IOrganizerData
+            public function tryCreate(array $fields): ?array
             {
-                return new OrganizerData(
+                return [new OrganizerData(
                     name: 'Test Organizer',
                     email: 'test@example.com',
                     contact: '123-456-7890',
                     telephone: '123-456-7890',
                     address: '123 Test St, Test City, TX 12345',
                     url: 'https://www.testorganizer.com'
-                );
+                )];
             }
         };
 
@@ -72,7 +72,7 @@ class CreateNewOrganizerFromEventSubmitTest extends TestCase
             }
         };
         $organizerDataFactory      = new class implements ICreateOrganizerDataFromSubmittedFields {
-            public function tryCreate(array $fields): ?IOrganizerData
+            public function tryCreate(array $fields): ?array
             {
                 return null;
             }
@@ -107,16 +107,16 @@ class CreateNewOrganizerFromEventSubmitTest extends TestCase
             }
         };
         $organizerDataFactory      = new class implements ICreateOrganizerDataFromSubmittedFields {
-            public function tryCreate(array $fields): ?IOrganizerData
+            public function tryCreate(array $fields): ?array
             {
-                return new OrganizerData(
+                return [new OrganizerData(
                     name: 'Test Organizer',
                     email: 'test@example.com',
                     contact: '123-456-7890',
                     telephone: '123-456-7890',
                     address: '123 Test St, Test City, TX 12345',
                     url: 'https://www.testorganizer.com'
-                );
+                )];
             }
         };
 
