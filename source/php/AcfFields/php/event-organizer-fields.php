@@ -30,7 +30,7 @@
         ),
         1 => array(
             'key' => 'field_68d28e231ee5d',
-            'label' => __('Organizer', 'api-event-manager'),
+            'label' => __('Organizers', 'api-event-manager'),
             'name' => 'organization',
             'aria-label' => '',
             'type' => 'taxonomy',
@@ -98,7 +98,7 @@
             'min' => 0,
             'max' => 0,
             'collapsed' => '',
-            'button_label' => __('Add Row', 'api-event-manager'),
+            'button_label' => __('Add row', 'api-event-manager'),
             'rows_per_page' => 20,
             'sub_fields' => array(
                 0 => array(

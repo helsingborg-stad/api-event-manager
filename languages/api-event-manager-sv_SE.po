@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-05 10:59+0100\n"
-"PO-Revision-Date: 2026-02-05 11:03+0100\n"
+"POT-Creation-Date: 2026-02-05 11:15+0100\n"
+"PO-Revision-Date: 2026-02-05 12:30+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: sv_SE\n"
@@ -47,8 +47,7 @@ msgstr ""
 "Välj de tillgänglighetsfunktioner som kommer att vara tillgängliga för "
 "deltagarna vid detta evenemang."
 
-#: AcfFields/php/event-organizer-fields.php:6
-#: AcfFields/php/event-organizer-fields.php:33 App.php:93
+#: AcfFields/php/event-organizer-fields.php:6 App.php:93
 msgid "Organizer"
 msgstr "Arrangör"
 
@@ -64,12 +63,18 @@ msgstr "Ja"
 msgid "Select from existing"
 msgstr "Välj från befintliga"
 
+#: AcfFields/php/event-organizer-fields.php:33
+msgid "Organizers"
+msgstr "Arrangörer"
+
 #: AcfFields/php/event-organizer-fields.php:73
 msgid "New organizers"
 msgstr "Nya arrangörer"
 
 #: AcfFields/php/event-organizer-fields.php:101
-msgid "Add Row"
+#, fuzzy
+#| msgid "Add Row"
+msgid "Add row"
 msgstr "Lägg till rad"
 
 #: AcfFields/php/event-organizer-fields.php:106
