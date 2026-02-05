@@ -30,16 +30,16 @@ class CreateNewOrganizerFromEventSubmitTest extends TestCase
             }
         };
         $organizerDataFactory      = new class implements ICreateOrganizerDataFromSubmittedFields {
-            public function tryCreate(array $fields): ?IOrganizerData
+            public function tryCreate(array $fields): ?array
             {
-                return new OrganizerData(
+                return [new OrganizerData(
                     name: 'Test Organizer',
                     email: 'test@example.com',
                     contact: '123-456-7890',
                     telephone: '123-456-7890',
                     address: '123 Test St, Test City, TX 12345',
                     url: 'https://www.testorganizer.com'
-                );
+                )];
             }
         };
 
@@ -54,7 +54,9 @@ class CreateNewOrganizerFromEventSubmitTest extends TestCase
 
         $instance->savePost(123);
         $this->assertCount(1, $wpService->methodCalls['wpSetObjectTerms']);
-        $this->assertContains([123, 456, 'organizer'], $wpService->methodCalls['wpSetObjectTerms']);
+        $this->assertContains(123, $wpService->methodCalls['wpSetObjectTerms'][0]);
+        $this->assertContains([456], $wpService->methodCalls['wpSetObjectTerms'][0]);
+        $this->assertContains('organizer', $wpService->methodCalls['wpSetObjectTerms'][0]);
     }
 
     /**
@@ -72,7 +74,7 @@ class CreateNewOrganizerFromEventSubmitTest extends TestCase
             }
         };
         $organizerDataFactory      = new class implements ICreateOrganizerDataFromSubmittedFields {
-            public function tryCreate(array $fields): ?IOrganizerData
+            public function tryCreate(array $fields): ?array
             {
                 return null;
             }
@@ -107,16 +109,16 @@ class CreateNewOrganizerFromEventSubmitTest extends TestCase
             }
         };
         $organizerDataFactory      = new class implements ICreateOrganizerDataFromSubmittedFields {
-            public function tryCreate(array $fields): ?IOrganizerData
+            public function tryCreate(array $fields): ?array
             {
-                return new OrganizerData(
+                return [new OrganizerData(
                     name: 'Test Organizer',
                     email: 'test@example.com',
                     contact: '123-456-7890',
                     telephone: '123-456-7890',
                     address: '123 Test St, Test City, TX 12345',
                     url: 'https://www.testorganizer.com'
-                );
+                )];
             }
         };
 
@@ -146,9 +148,7 @@ class CreateNewOrganizerFromEventSubmitTest extends TestCase
     private function getClearFields(): IClearFieldsFromPost
     {
         return new class implements IClearFieldsFromPost {
-            public function clearFields(int|string $postId): void
-            {
-            }
+            public function clearFields(int|string $postId): void {}
         };
     }
 

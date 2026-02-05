@@ -1,18 +1,22 @@
 # Copyright (C) 2026 Thor Brink, Sebastian Thulin @ Helsingborg Stad
 # This file is distributed under the MIT.
+#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Event Manager 3.12.7\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/api-event-manager\n"
+"POT-Creation-Date: 2026-02-05 10:59+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-01-19T13:49:07+00:00\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.12.0\n"
+"X-Generator: Poedit 3.4.2\n"
 "X-Domain: api-event-manager\n"
+"X-Poedit-KeywordsList: __\n"
+"X-Poedit-Basepath: ../source/php\n"
+"X-Poedit-SearchPath-0: .\n"
 
 #. Plugin Name of the plugin
 #: api-event-manager.php
@@ -67,8 +71,7 @@ msgid "Choose the accessibility features that will be available to attendees at 
 msgstr ""
 
 #: source/php/AcfFields/php/event-organizer-fields.php:8
-#: source/php/AcfFields/php/event-organizer-fields.php:35
-#: source/php/App.php:95
+#: source/php/AcfFields/php/event-organizer-fields.php:35 source/php/App.php:95
 msgid "Organizer"
 msgstr ""
 
@@ -435,14 +438,12 @@ msgstr ""
 msgid "Add New %s"
 msgstr ""
 
-#: source/php/PostTypes/PostType.php:44
-#: source/php/Taxonomies/Taxonomy.php:52
+#: source/php/PostTypes/PostType.php:44 source/php/Taxonomies/Taxonomy.php:52
 #, php-format
 msgid "Add new %s"
 msgstr ""
 
-#: source/php/PostTypes/PostType.php:45
-#: source/php/Taxonomies/Taxonomy.php:50
+#: source/php/PostTypes/PostType.php:45 source/php/Taxonomies/Taxonomy.php:50
 #, php-format
 msgid "Edit %s"
 msgstr ""
@@ -457,14 +458,12 @@ msgstr ""
 msgid "View %s"
 msgstr ""
 
-#: source/php/PostTypes/PostType.php:48
-#: source/php/Taxonomies/Taxonomy.php:45
+#: source/php/PostTypes/PostType.php:48 source/php/Taxonomies/Taxonomy.php:45
 #, php-format
 msgid "Search %s"
 msgstr ""
 
-#: source/php/PostTypes/PostType.php:49
-#: source/php/Taxonomies/Taxonomy.php:57
+#: source/php/PostTypes/PostType.php:49 source/php/Taxonomies/Taxonomy.php:57
 #, php-format
 msgid "No %s found"
 msgstr ""
@@ -474,8 +473,7 @@ msgstr ""
 msgid "No %s found in trash"
 msgstr ""
 
-#: source/php/PostTypes/PostType.php:51
-#: source/php/Taxonomies/Taxonomy.php:49
+#: source/php/PostTypes/PostType.php:51 source/php/Taxonomies/Taxonomy.php:49
 #, php-format
 msgid "Parent %s:"
 msgstr ""

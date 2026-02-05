@@ -4,5 +4,5 @@ namespace EventManager\AcfSavePostActions\CreateNewOrganizerFromEventSubmit\Orga
 
 interface ICreateOrganizerDataFromSubmittedFields
 {
-    public function tryCreate(array $fields): ?IOrganizerData;
+    public function tryCreate(array $fields): ?array;
 }

@@ -39,18 +39,27 @@ class CreateNewOrganizerFromEventSubmit implements IAcfSavePostAction
             return;
         }
 
-        $organizerData = $this->organizerDataFactory->tryCreate($this->acfService->getFields($postId));
+        $organizersData = $this->organizerDataFactory->tryCreate($this->acfService->getFields($postId));
 
-        if (is_null($organizerData)) {
+        if (empty($organizersData)) {
             return;
         }
 
-        // Create the term
-        $termId = $this->createNewOrganizationTerm->createTerm($organizerData);
+        $createdTermIds = [];
+        foreach ($organizersData as $organizerData) {
+            if (!$organizerData instanceof OrganizerData\IOrganizerData) {
+                return;
+            }
+
+            // Create the term
+            $createdTermIds[] = $this->createNewOrganizationTerm->createTerm($organizerData);
+        }
+
         // Clear the fields from the post
         $this->clearFieldsFromPost->clearFields($postId);
+
         // Assign the term to the post
-        $this->wpService->wpSetObjectTerms($postId, $termId, $this->taxonomy);
+        $this->wpService->wpSetObjectTerms($postId, $createdTermIds, $this->taxonomy);
     }
 
     private function shouldCreateOrganizer(int|string $postId): bool

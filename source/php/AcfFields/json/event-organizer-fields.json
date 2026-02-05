@@ -27,7 +27,7 @@
         },
         {
             "key": "field_68d28e231ee5d",
-            "label": "Organizer",
+            "label": "Organizers",
             "name": "organization",
             "aria-label": "",
             "type": "taxonomy",
@@ -54,83 +54,24 @@
             "save_terms": 1,
             "load_terms": 1,
             "return_format": "object",
-            "field_type": "select",
+            "field_type": "multi_select",
             "allow_null": 0,
+            "acfe_bidirectional": {
+                "acfe_bidirectional_enabled": "0"
+            },
             "allow_in_bindings": 0,
             "bidirectional": 0,
             "multiple": 0,
             "bidirectional_target": []
         },
         {
-            "key": "field_68d29c959a1f0",
-            "label": "Name",
-            "name": "organizerName",
+            "key": "field_69835b3f007a5",
+            "label": "New organizers",
+            "name": "newOrganizers",
             "aria-label": "",
-            "type": "text",
-            "instructions": "Name of the organization",
-            "required": 1,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_68d29c329a1ee",
-                        "operator": "==",
-                        "value": "1"
-                    }
-                ]
-            ],
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "is_publicly_hidden": 0,
-            "is_privately_hidden": 0,
-            "default_value": "",
-            "maxlength": "",
-            "allow_in_bindings": 0,
-            "placeholder": "",
-            "prepend": "",
-            "append": ""
-        },
-        {
-            "key": "field_68d29cad9a1f1",
-            "label": "Contact",
-            "name": "organizerContact",
-            "aria-label": "",
-            "type": "text",
-            "instructions": "Supply the name(first and last) of the organizations contact person",
-            "required": 1,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_68d29c329a1ee",
-                        "operator": "==",
-                        "value": "1"
-                    }
-                ]
-            ],
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "is_publicly_hidden": 0,
-            "is_privately_hidden": 0,
-            "default_value": "",
-            "maxlength": "",
-            "allow_in_bindings": 0,
-            "placeholder": "",
-            "prepend": "",
-            "append": ""
-        },
-        {
-            "key": "field_68d29d47a0b16",
-            "label": "Email",
-            "name": "organizerEmail",
-            "aria-label": "",
-            "type": "email",
+            "type": "repeater",
             "instructions": "",
-            "required": 1,
+            "required": 0,
             "conditional_logic": [
                 [
                     {
@@ -147,104 +88,159 @@
             },
             "is_publicly_hidden": 0,
             "is_privately_hidden": 0,
-            "default_value": "",
-            "allow_in_bindings": 0,
-            "placeholder": "",
-            "prepend": "",
-            "append": ""
-        },
-        {
-            "key": "field_68d29d56a0b17",
-            "label": "Telephone",
-            "name": "organizerTelephone",
-            "aria-label": "",
-            "type": "text",
-            "instructions": "",
-            "required": 1,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_68d29c329a1ee",
-                        "operator": "==",
-                        "value": "1"
-                    }
-                ]
-            ],
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "is_publicly_hidden": 0,
-            "is_privately_hidden": 0,
-            "default_value": "",
-            "maxlength": "",
-            "allow_in_bindings": 0,
-            "placeholder": "",
-            "prepend": "",
-            "append": ""
-        },
-        {
-            "key": "field_68d29d6aa0b18",
-            "label": "Address",
-            "name": "organizerAddress",
-            "aria-label": "",
-            "type": "text",
-            "instructions": "",
-            "required": 1,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_68d29c329a1ee",
-                        "operator": "==",
-                        "value": "1"
-                    }
-                ]
-            ],
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "is_publicly_hidden": 0,
-            "is_privately_hidden": 0,
-            "default_value": "",
-            "maxlength": "",
-            "allow_in_bindings": 0,
-            "placeholder": "",
-            "prepend": "",
-            "append": ""
-        },
-        {
-            "key": "field_68d385ffc8950",
-            "label": "Url",
-            "name": "organizerUrl",
-            "aria-label": "",
-            "type": "text",
-            "instructions": "",
-            "required": 1,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_68d29c329a1ee",
-                        "operator": "==",
-                        "value": "1"
-                    }
-                ]
-            ],
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "is_publicly_hidden": 0,
-            "is_privately_hidden": 0,
-            "default_value": "",
-            "maxlength": "",
-            "allow_in_bindings": 0,
-            "placeholder": "",
-            "prepend": "",
-            "append": ""
+            "acfe_repeater_stylised_button": 0,
+            "layout": "table",
+            "pagination": 0,
+            "min": 0,
+            "max": 0,
+            "collapsed": "",
+            "button_label": "Add row",
+            "rows_per_page": 20,
+            "sub_fields": [
+                {
+                    "key": "field_68d29c959a1f0",
+                    "label": "Name",
+                    "name": "organizerName",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "Name of the organization",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "is_publicly_hidden": 0,
+                    "is_privately_hidden": 0,
+                    "default_value": "",
+                    "maxlength": "",
+                    "allow_in_bindings": 0,
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "parent_repeater": "field_69835b3f007a5"
+                },
+                {
+                    "key": "field_68d29cad9a1f1",
+                    "label": "Contact",
+                    "name": "organizerContact",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "Supply the name(first and last) of the organizations contact person",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "is_publicly_hidden": 0,
+                    "is_privately_hidden": 0,
+                    "default_value": "",
+                    "maxlength": "",
+                    "allow_in_bindings": 0,
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "parent_repeater": "field_69835b3f007a5"
+                },
+                {
+                    "key": "field_68d29d47a0b16",
+                    "label": "Email",
+                    "name": "organizerEmail",
+                    "aria-label": "",
+                    "type": "email",
+                    "instructions": "",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "is_publicly_hidden": 0,
+                    "is_privately_hidden": 0,
+                    "default_value": "",
+                    "allow_in_bindings": 0,
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "parent_repeater": "field_69835b3f007a5"
+                },
+                {
+                    "key": "field_68d29d56a0b17",
+                    "label": "Telephone",
+                    "name": "organizerTelephone",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "is_publicly_hidden": 0,
+                    "is_privately_hidden": 0,
+                    "default_value": "",
+                    "maxlength": "",
+                    "allow_in_bindings": 0,
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "parent_repeater": "field_69835b3f007a5"
+                },
+                {
+                    "key": "field_68d29d6aa0b18",
+                    "label": "Address",
+                    "name": "organizerAddress",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "is_publicly_hidden": 0,
+                    "is_privately_hidden": 0,
+                    "default_value": "",
+                    "maxlength": "",
+                    "allow_in_bindings": 0,
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "parent_repeater": "field_69835b3f007a5"
+                },
+                {
+                    "key": "field_68d385ffc8950",
+                    "label": "Url",
+                    "name": "organizerUrl",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 1,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "is_publicly_hidden": 0,
+                    "is_privately_hidden": 0,
+                    "default_value": "",
+                    "maxlength": "",
+                    "allow_in_bindings": 0,
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "parent_repeater": "field_69835b3f007a5"
+                }
+            ]
         }
     ],
     "location": [
@@ -277,6 +273,11 @@
     ],
     "active": true,
     "description": "",
-    "show_in_rest": 1
+    "show_in_rest": 1,
+    "acfe_display_title": "",
+    "acfe_autosync": "",
+    "acfe_form": 0,
+    "acfe_meta": "",
+    "acfe_note": ""
 }]
 

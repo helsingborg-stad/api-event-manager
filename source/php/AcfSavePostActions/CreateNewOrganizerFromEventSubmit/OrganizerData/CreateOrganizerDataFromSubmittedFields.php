@@ -8,43 +8,64 @@ use WpService\Contracts\SanitizeTextField;
 
 class CreateOrganizerDataFromSubmittedFields implements ICreateOrganizerDataFromSubmittedFields
 {
-    public function __construct(private SanitizeTextField&SanitizeEmail&EscUrlRaw $wpService)
-    {
-    }
+    public function __construct(private SanitizeTextField&SanitizeEmail&EscUrlRaw $wpService) {}
 
-    public function tryCreate(array $fields): ?IOrganizerData
+    public function tryCreate(array $fields): ?array
     {
-        if (!$this->canCreate($fields)) {
+        if (!$this->hasNewOrganizersData($fields)) {
             return null;
         }
 
-        // Sanitize all fields
-        $name      = isset($fields['organizerName']) ? $this->wpService->sanitizeTextField($fields['organizerName']) : '';
-        $email     = isset($fields['organizerEmail']) ? $this->wpService->sanitizeEmail($fields['organizerEmail']) : '';
-        $contact   = isset($fields['organizerContact']) ? $this->wpService->sanitizeTextField($fields['organizerContact']) : '';
-        $telephone = isset($fields['organizerTelephone']) ? $this->wpService->sanitizeTextField($fields['organizerTelephone']) : '';
-        $address   = isset($fields['organizerAddress']) ? $this->wpService->sanitizeTextField($fields['organizerAddress']) : '';
-        $url       = isset($fields['organizerUrl']) ? $this->wpService->escUrlRaw($fields['organizerUrl']) : '';
+        $createdOrganizers = [];
+        foreach ($fields['newOrganizers'] as $organizer) {
+            if (!$this->canCreateOrganizer($organizer)) {
+                continue;
+            }
 
-        return new OrganizerData(
-            name: $name,
-            email: $email,
-            contact: $contact,
-            telephone: $telephone,
-            address: $address,
-            url: $url
-        );
+            $sanitizedOrganizer = $this->sanitizeOrganizerFields($organizer);
+
+            $createdOrganizers[] = new OrganizerData(
+                name: $sanitizedOrganizer['organizerName'],
+                email: $sanitizedOrganizer['organizerEmail'],
+                contact: $sanitizedOrganizer['organizerContact'],
+                telephone: $sanitizedOrganizer['organizerTelephone'],
+                address: $sanitizedOrganizer['organizerAddress'],
+                url: $sanitizedOrganizer['organizerUrl']
+            );
+        }
+
+        return !empty($createdOrganizers) ? $createdOrganizers : null;
     }
 
-    private function canCreate(array $fields): bool
+    private function sanitizeOrganizerFields(array $organizer): array
+    {
+        $organizer['organizerName'] = $this->wpService->sanitizeTextField($organizer['organizerName']);
+        $organizer['organizerEmail'] = $this->wpService->sanitizeEmail($organizer['organizerEmail']);
+        $organizer['organizerContact'] = $this->wpService->sanitizeTextField($organizer['organizerContact']);
+        $organizer['organizerTelephone'] = $this->wpService->sanitizeTextField($organizer['organizerTelephone']);
+        $organizer['organizerAddress'] = $this->wpService->sanitizeTextField($organizer['organizerAddress']);
+        $organizer['organizerUrl'] = $this->wpService->escUrlRaw($organizer['organizerUrl']);
+
+        return $organizer;
+    }
+
+    private function canCreateOrganizer(mixed $organizer): bool
     {
         return
-            isset($fields['submitNewOrganization']) && $fields['submitNewOrganization'] === true &&
-            !empty($fields['organizerName']) &&
-            !empty($fields['organizerEmail']) &&
-            !empty($fields['organizerContact']) &&
-            !empty($fields['organizerTelephone']) &&
-            !empty($fields['organizerAddress']) &&
-            !empty($fields['organizerUrl']);
+            is_array($organizer) &&
+            !empty($organizer['organizerName']) && is_string($organizer['organizerName']) &&
+            !empty($organizer['organizerEmail']) && is_string($organizer['organizerEmail']) &&
+            !empty($organizer['organizerContact']) && is_string($organizer['organizerContact']) &&
+            !empty($organizer['organizerTelephone']) && is_string($organizer['organizerTelephone']) &&
+            !empty($organizer['organizerAddress']) && is_string($organizer['organizerAddress']) &&
+            !empty($organizer['organizerUrl']) && is_string($organizer['organizerUrl']);
+    }
+
+    private function hasNewOrganizersData(array $fields): bool
+    {
+        return
+            isset($fields['submitNewOrganization']) &&
+            $fields['submitNewOrganization'] === true &&
+            !empty($fields['newOrganizers']);
     }
 }

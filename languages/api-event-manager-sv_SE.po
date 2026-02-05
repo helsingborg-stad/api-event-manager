@@ -2,541 +2,568 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-02-05 11:15+0100\n"
+"PO-Revision-Date: 2026-02-05 12:30+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
+"Language: sv_SE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-09-23T05:38:40+00:00\n"
-"PO-Revision-Date: 2025-09-23T05:38:40+00:00\n"
-"Language: \n"
+"X-Generator: Poedit 3.4.2\n"
+"X-Poedit-Basepath: ../source/php\n"
+"X-Poedit-KeywordsList: __\n"
+"X-Poedit-SearchPath-0: .\n"
 
-#. Plugin Name of the plugin
-#: api-event-manager.php
-msgid "Event Manager"
-msgstr "Eventhanterare"
+#: AcfFields/php/event-audience-category.php:6
+msgid "Audience & Category"
+msgstr "Målgrupp & Kategori"
 
-#. Plugin URI of the plugin
-#: api-event-manager.php
-msgid "https://github.com/helsingborg-stad/api-event-manager"
-msgstr ""
-
-#. Description of the plugin
-#: api-event-manager.php
-msgid "Creates a api that may be used to manage events"
-msgstr "Tillgängliggör ett API för att hantera evenemang"
-
-#. Author of the plugin
-#: api-event-manager.php
-msgid "Thor Brink, Sebastian Thulin @ Helsingborg Stad"
-msgstr ""
-
-#. Author URI of the plugin
-#: api-event-manager.php
-msgid "https://github.com/helsingborg-stad"
-msgstr ""
-
-#: source/php/AcfFields/php/event-presentation-fields.php:12
-msgid "Images"
-msgstr "Bilder"
-
-#: source/php/App.php:98
-msgid "Location"
-msgstr "Plats"
-
-#: source/php/AcfFields/php/event-organizer-fields.php:8
-#: source/php/AcfFields/php/event-organizer-fields.php:35
-#: source/php/App.php:95
-msgid "Organizer"
-msgstr "Arrangör"
-
-#: source/php/AcfFields/php/event-audience-category.php:12
-#: source/php/Taxonomies/Audience.php:36
+#: AcfFields/php/event-audience-category.php:10 Taxonomies/Audience.php:36
 msgid "Audience"
 msgstr "Målgrupp"
 
-#: source/php/AcfFields/php/event-time-fields.php:12
-msgid "Occasions"
-msgstr "Tillfällen"
-
-#: source/php/AcfFields/php/event-time-fields.php:16
-msgid "When is the event scheduled to take place? You have the option to establish a recurring schedule or specify up to 10 distinct dates and times."
-msgstr "När är evenemanget planerat att äga rum? Du har möjlighet att etablera ett återkommande schema eller specificera upp till 10 olika datum och tider."
-
-#: source/php/AcfFields/php/event-time-fields.php:36
-msgid "Repeat"
-msgstr "Upprepa"
-
-#: source/php/AcfFields/php/event-time-fields.php:51
-msgid "No"
-msgstr "Nej"
-
-#: source/php/AcfFields/php/event-time-fields.php:52
-msgid "Weekly occasion"
-msgstr "Veckovis"
-
-#: source/php/AcfFields/php/event-time-fields.php:63
-msgid "Every"
-msgstr "Varje"
-
-#: source/php/AcfFields/php/event-time-fields.php:89
-msgid "week/weeks"
-msgstr "vecka/veckor"
-
-#: source/php/AcfFields/php/event-time-fields.php:94
-msgid "Day"
-msgstr "Dag"
-
-#: source/php/AcfFields/php/event-time-fields.php:115
-msgid "Mon"
-msgstr "Mån"
-
-#: source/php/AcfFields/php/event-time-fields.php:116
-msgid "Tue"
-msgstr "Tis"
-
-#: source/php/AcfFields/php/event-time-fields.php:117
-msgid "Wed"
-msgstr "Ons"
-
-#: source/php/AcfFields/php/event-time-fields.php:118
-msgid "Thu"
-msgstr "Tor"
-
-#: source/php/AcfFields/php/event-time-fields.php:119
-msgid "Fri"
-msgstr "Fre"
-
-#: source/php/AcfFields/php/event-time-fields.php:120
-msgid "Sat"
-msgstr "Lör"
-
-#: source/php/AcfFields/php/event-time-fields.php:121
-msgid "Sun"
-msgstr "Sön"
-
-#: source/php/AcfFields/php/event-time-fields.php:135
-msgid "Date"
-msgstr "Datum"
-
-#: source/php/AcfFields/php/event-time-fields.php:155
-msgid "Until Date"
-msgstr "Till datum"
-
-#: source/php/AcfFields/php/event-time-fields.php:183
-msgid "Start time"
-msgstr "Starttid"
-
-#: source/php/AcfFields/php/event-time-fields.php:201
-msgid "End time"
-msgstr "Sluttid"
-
-#: source/php/AcfFields/php/event-time-fields.php:219
-msgid "Booking page URL"
-msgstr "Adress till bokningssida"
-
-#: source/php/AcfFields/php/event-place-fields.php:38
-msgid "Prices"
-msgstr "Priser"
-
-#: source/php/AcfFields/php/event-place-fields.php:42
-msgid "You have the option to offer multiple pricing tiers to accommodate attendees of different age groups. By not adding any ticket variations, your event will show up as free of charge."
-msgstr "Du har möjlighet att erbjuda flera priskategorier för att tillgodose deltagare i olika åldersgrupper. Genom att inte lägga till några biljettvarianter kommer ditt evenemang att visas som kostnadsfritt."
-
-#: source/php/AcfFields/php/event-place-fields.php:62
-msgid "Price Label"
-msgstr "Etikett för pris"
-
-#: source/php/AcfFields/php/event-place-fields.php:74
-msgid "Standard Ticket"
-msgstr "Standardbiljett"
-
-#: source/php/AcfFields/php/event-place-fields.php:83
-msgid "Price"
-msgstr "Pris"
-
-#: source/php/AcfFields/php/event-place-fields.php:101
-msgid "$"
-msgstr "SEK"
-
-#: source/php/AcfFields/php/organization-fields.php:8
-msgid "Organization Fields"
-msgstr "Organisationsfält"
-
-#: source/php/AcfFields/php/event-organizer-fields.php:195
-#: source/php/AcfFields/php/organization-fields.php:12
-msgid "Address"
-msgstr "Adress"
-
-#: source/php/AcfFields/php/event-organizer-fields.php:226
-#: source/php/AcfFields/php/organization-fields.php:35
-msgid "Url"
-msgstr "Webbadress"
-
-#: source/php/AcfFields/php/event-organizer-fields.php:134
-#: source/php/AcfFields/php/organization-fields.php:52
-msgid "Email"
-msgstr "E-post"
-
-#: source/php/AcfFields/php/event-organizer-fields.php:164
-#: source/php/AcfFields/php/organization-fields.php:71
-msgid "Telephone"
-msgstr "Telefon"
-
-#: source/php/AcfFields/php/plugin-settings.php:8
-msgid "Plugin Settings"
-msgstr "Plugininställningar"
-
-#: source/php/AcfFields/php/plugin-settings.php:12
-msgid "Cleanup"
-msgstr "Rensa"
-
-#: source/php/AcfFields/php/plugin-settings.php:30
-msgid "Clean up expired events"
-msgstr "Rensa utgångna händelser"
-
-#: source/php/AcfFields/php/plugin-settings.php:34
-msgid "Enables automatic deletion of expired events"
-msgstr "Aktiverar automatisk radering av utgångna händelser"
-
-#: source/php/AcfFields/php/plugin-settings.php:50
-msgid "Delete expired posts after"
-msgstr "Radera utgångna inlägg efter"
-
-#: source/php/AcfFields/php/plugin-settings.php:71
-msgid "## Weeks"
-msgstr "## Veckor"
-
-#: source/php/AcfFields/php/plugin-settings.php:72
-msgid "1 week"
-msgstr "1 vecka"
-
-#: source/php/AcfFields/php/plugin-settings.php:73
-msgid "2 weeks"
-msgstr "2 veckor"
-
-#: source/php/AcfFields/php/plugin-settings.php:74
-msgid "3 weeks"
-msgstr "3 veckor"
-
-#: source/php/AcfFields/php/plugin-settings.php:75
-msgid "## Months"
-msgstr "## Månader"
-
-#: source/php/AcfFields/php/plugin-settings.php:76
-msgid "1 month"
-msgstr "1 månad"
-
-#: source/php/AcfFields/php/plugin-settings.php:77
-msgid "2 months"
-msgstr "2 månader"
-
-#: source/php/AcfFields/php/plugin-settings.php:78
-msgid "3 months"
-msgstr "3 månader"
-
-#: source/php/AcfFields/php/plugin-settings.php:79
-msgid "6 months"
-msgstr "6 månader"
-
-#: source/php/AcfFields/php/plugin-settings.php:81
-msgid "-1 month"
-msgstr "-1 månad"
-
-#: source/php/AcfFields/php/user-fields.php:8
-msgid "Event Manager - User fields"
-msgstr "Eventhanterare - Användarfält"
-
-#: source/php/AcfFields/php/user-fields.php:12
-#: source/php/Taxonomies/Organization.php:41
-msgid "Organizations"
-msgstr "Organisationer"
-
-#: source/php/AcfFields/php/user-fields.php:16
-msgid "Determines which organization(s) this user is allowed to create events for. Also restricts the user from viewing, editing and deleting events belonging to any other organizer than the ones selected here."
-msgstr "Bestämmer vilka organisation(er) denna användare har rätt att skapa evenemang för. Begränsar också användaren från att visa, redigera och radera evenemang som tillhör någon annan arrangör än de som valts här."
-
-#: source/php/FieldSettingHidePrivate.php:27
-msgid "Hide in backend forms"
-msgstr "Dölj i backend-formulär"
-
-#: source/php/FieldSettingHidePublic.php:27
-msgid "Hide in frontend forms"
-msgstr "Dölj i frontend-formulär"
-
-#: source/php/Taxonomies/Audience.php:41
-msgid "Audiences"
-msgstr "Målgrupper"
-
-#: source/php/AcfFields/php/event-audience-category.php:41
-#: source/php/Taxonomies/Category.php:38
+#: AcfFields/php/event-audience-category.php:39 Taxonomies/Category.php:38
 msgid "Category"
 msgstr "Kategori"
 
-#: source/php/Taxonomies/Category.php:43
-msgid "Categories"
-msgstr "Kategorier"
+#: AcfFields/php/event-audience-category.php:43
+msgid ""
+"What category do you feel accurately reflects your event's purpose? This "
+"gives a brief overview of the event's content."
+msgstr ""
+"Vilken kategori anser du återspeglar ditt evenemangs syfte? Detta ger en "
+"kort översikt över evenemangets innehåll."
 
-#: source/php/Taxonomies/Keyword.php:37
-msgid "Keyword"
-msgstr "Nyckelord"
-
-#: source/php/Taxonomies/Keyword.php:42
-msgid "Keywords"
-msgstr "Nyckelord"
-
-#: source/php/Taxonomies/Organization.php:36
-msgid "Organization"
-msgstr "Organisation"
-
-#: source/php/PostTypes/PostType.php:48
-#: source/php/Taxonomies/Taxonomy.php:45
-#, php-format
-msgid "Search %s"
-msgstr "Sök %s"
-
-#: source/php/Taxonomies/Taxonomy.php:46
-#, php-format
-msgid "Popular %s"
-msgstr "Populära %s"
-
-#: source/php/Taxonomies/Taxonomy.php:47
-#, php-format
-msgid "All %s"
-msgstr "Alla %s"
-
-#: source/php/Taxonomies/Taxonomy.php:48
-#, php-format
-msgid "Parent %s"
-msgstr "Överordnad %s"
-
-#: source/php/PostTypes/PostType.php:51
-#: source/php/Taxonomies/Taxonomy.php:49
-#, php-format
-msgid "Parent %s:"
-msgstr "Överordnad %s:"
-
-#: source/php/PostTypes/PostType.php:45
-#: source/php/Taxonomies/Taxonomy.php:50
-#, php-format
-msgid "Edit %s"
-msgstr "Redigera %s"
-
-#: source/php/Taxonomies/Taxonomy.php:51
-#, php-format
-msgid "Update %s"
-msgstr "Uppdatera %s"
-
-#: source/php/PostTypes/PostType.php:44
-#: source/php/Taxonomies/Taxonomy.php:52
-#, php-format
-msgid "Add new %s"
-msgstr "Lägg till ny %s"
-
-#: source/php/Taxonomies/Taxonomy.php:53
-#, php-format
-msgid "New %s name"
-msgstr "Nytt %s namn"
-
-#: source/php/Taxonomies/Taxonomy.php:54
-#, php-format
-msgid "Separate %s with commas"
-msgstr "Separera %s med kommatecken"
-
-#: source/php/Taxonomies/Taxonomy.php:55
-#, php-format
-msgid "Add or remove %s"
-msgstr "Lägg till eller ta bort %s"
-
-#: source/php/Taxonomies/Taxonomy.php:56
-#, php-format
-msgid "Choose from most used %s"
-msgstr "Välj bland mest använda %s"
-
-#: source/php/PostTypes/PostType.php:49
-#: source/php/Taxonomies/Taxonomy.php:57
-#, php-format
-msgid "No %s found"
-msgstr "Inga %s hittades"
-
-#: source/php/AcfFields/php/event-audience-category.php:45
-msgid "What category do you feel accurately reflects your event's purpose? This gives a brief overview of the event's content."
-msgstr "Vilken kategori anser du återspeglar ditt evenemangs syfte? Detta ger en kort översikt över evenemangets innehåll."
-
-#: source/php/AcfFields/php/event-audience-category.php:70
-#: source/php/Taxonomies/Accessibility.php:36
+#: AcfFields/php/event-audience-category.php:68 Taxonomies/Accessibility.php:36
 msgid "Accessibility"
 msgstr "Tillgänglighetanpassning"
 
-#: source/php/Taxonomies/Accessibility.php:41
-msgid "Accessibilities"
-msgstr "Tillgänglighetsanpassningar"
+#: AcfFields/php/event-audience-category.php:72
+msgid ""
+"Choose the accessibility features that will be available to attendees at "
+"this event."
+msgstr ""
+"Välj de tillgänglighetsfunktioner som kommer att vara tillgängliga för "
+"deltagarna vid detta evenemang."
 
-#: source/php/AcfFields/php/event-audience-category.php:74
-msgid "Choose the accessibility features that will be available to attendees at this event."
-msgstr "Välj de tillgänglighetsfunktioner som kommer att vara tillgängliga för deltagarna vid detta evenemang."
+#: AcfFields/php/event-organizer-fields.php:6 App.php:93
+msgid "Organizer"
+msgstr "Arrangör"
 
-#: source/php/PostTypes/PostType.php:43
+#: AcfFields/php/event-organizer-fields.php:10
+msgid "Submit new organization"
+msgstr "Skicka in ny arrangör"
+
+#: AcfFields/php/event-organizer-fields.php:27
+msgid "Yes"
+msgstr "Ja"
+
+#: AcfFields/php/event-organizer-fields.php:28
+msgid "Select from existing"
+msgstr "Välj från befintliga"
+
+#: AcfFields/php/event-organizer-fields.php:33
+msgid "Organizers"
+msgstr "Arrangörer"
+
+#: AcfFields/php/event-organizer-fields.php:73
+msgid "New organizers"
+msgstr "Nya arrangörer"
+
+#: AcfFields/php/event-organizer-fields.php:101
+#, fuzzy
+#| msgid "Add Row"
+msgid "Add row"
+msgstr "Lägg till rad"
+
+#: AcfFields/php/event-organizer-fields.php:106
+msgid "Name"
+msgstr "Namn"
+
+#: AcfFields/php/event-organizer-fields.php:110
+msgid "Name of the organization"
+msgstr "Arrangörens namn"
+
+#: AcfFields/php/event-organizer-fields.php:130
+#: AcfFields/php/organization-fields.php:89
+msgid "Contact"
+msgstr "Kontakt"
+
+#: AcfFields/php/event-organizer-fields.php:134
+msgid "Supply the name(first and last) of the organizations contact person"
+msgstr "Ange namnet (för- och efternamn) på arrangörens kontaktperson"
+
+#: AcfFields/php/event-organizer-fields.php:154
+#: AcfFields/php/organization-fields.php:50
+msgid "Email"
+msgstr "E-post"
+
+#: AcfFields/php/event-organizer-fields.php:177
+#: AcfFields/php/organization-fields.php:69
+msgid "Telephone"
+msgstr "Telefon"
+
+#: AcfFields/php/event-organizer-fields.php:201
+#: AcfFields/php/organization-fields.php:10
+msgid "Address"
+msgstr "Adress"
+
+#: AcfFields/php/event-organizer-fields.php:225
+#: AcfFields/php/organization-fields.php:33
+msgid "Url"
+msgstr "Webbadress"
+
+#: AcfFields/php/event-place-fields.php:6
+msgid "Place"
+msgstr "Plats"
+
+#: AcfFields/php/event-place-fields.php:10
+msgid "Attendance mode"
+msgstr "Närvaroläge"
+
+#: AcfFields/php/event-place-fields.php:25
+msgid "Offline"
+msgstr "Offline"
+
+#: AcfFields/php/event-place-fields.php:26
+msgid "Online"
+msgstr "Online"
+
+#: AcfFields/php/event-place-fields.php:28
+msgid "offline"
+msgstr "offline"
+
+#: AcfFields/php/event-place-fields.php:36
+msgid "Location name"
+msgstr "Platsens namn"
+
+#: AcfFields/php/event-place-fields.php:67
+msgid "Location address"
+msgstr "Platsens adress"
+
+#: AcfFields/php/event-place-fields.php:97
+msgid "Online attendence url"
+msgstr "Online deltagande-URL"
+
+#: AcfFields/php/event-presentation-fields.php:6
+msgid "Presentation"
+msgstr "Presentation"
+
+#: AcfFields/php/event-presentation-fields.php:10
+msgid "Images"
+msgstr "Bilder"
+
+#: AcfFields/php/event-presentation-fields.php:14
+msgid ""
+"Make your event stand out by uploading high-resolution images. Your event "
+"image is often the first thing attendees notice, so choose visuals that "
+"capture attention and spark interest. Images will appear in the order they "
+"are uploaded."
+msgstr ""
+"Få ditt evenemang att sticka ut genom att ladda upp högupplösta bilder. Din "
+"evenemangsbild är ofta det första deltagarna lägger märke till, så välj "
+"visuella element som fångar uppmärksamhet och väcker intresse. Bilder kommer "
+"att visas i den ordning de laddas upp."
+
+#: AcfFields/php/event-prices-fields.php:6
+#: AcfFields/php/event-prices-fields.php:10
+msgid "Prices"
+msgstr "Priser"
+
+#: AcfFields/php/event-prices-fields.php:14
+msgid ""
+"You have the option to offer multiple pricing tiers to accommodate attendees "
+"of different age groups. By not adding any ticket variations, your event "
+"will show up as free of charge."
+msgstr ""
+"Du har möjlighet att erbjuda flera priskategorier för att tillgodose "
+"deltagare i olika åldersgrupper. Genom att inte lägga till några "
+"biljettvarianter kommer ditt evenemang att visas som kostnadsfritt."
+
+#: AcfFields/php/event-prices-fields.php:29
+msgid "Add Ticket / Variation"
+msgstr "Lägg till biljett / variant"
+
+#: AcfFields/php/event-prices-fields.php:34
+msgid "Price Label"
+msgstr "Etikett för pris"
+
+#: AcfFields/php/event-prices-fields.php:46
+msgid "Standard Ticket"
+msgstr "Standardbiljett"
+
+#: AcfFields/php/event-prices-fields.php:55
+msgid "Price"
+msgstr "Pris"
+
+#: AcfFields/php/event-prices-fields.php:73
+msgid "$"
+msgstr "SEK"
+
+#: AcfFields/php/event-time-fields.php:6
+msgid "Time"
+msgstr "Tid"
+
+#: AcfFields/php/event-time-fields.php:10
+msgid "Occasions"
+msgstr "Tillfällen"
+
+#: AcfFields/php/event-time-fields.php:14
+msgid ""
+"When is the event scheduled to take place? You have the option to establish "
+"a recurring schedule or specify up to 10 distinct dates and times."
+msgstr ""
+"När är evenemanget planerat att äga rum? Du har möjlighet att etablera ett "
+"återkommande schema eller specificera upp till 10 olika datum och tider."
+
+#: AcfFields/php/event-time-fields.php:29
+msgid "Add occation"
+msgstr "Lägg till tillfälle"
+
+#: AcfFields/php/event-time-fields.php:34
+msgid "Repeat"
+msgstr "Upprepa"
+
+#: AcfFields/php/event-time-fields.php:49
+msgid "No"
+msgstr "Nej"
+
+#: AcfFields/php/event-time-fields.php:50
+msgid "Weekly occasion"
+msgstr "Veckovis"
+
+#: AcfFields/php/event-time-fields.php:52
+msgid "no"
+msgstr "nej"
+
+#: AcfFields/php/event-time-fields.php:61
+msgid "Every"
+msgstr "Varje"
+
+#: AcfFields/php/event-time-fields.php:87
+msgid "week/weeks"
+msgstr "vecka/veckor"
+
+#: AcfFields/php/event-time-fields.php:92
+msgid "Day"
+msgstr "Dag"
+
+#: AcfFields/php/event-time-fields.php:113
+msgid "Mon"
+msgstr "Mån"
+
+#: AcfFields/php/event-time-fields.php:114
+msgid "Tue"
+msgstr "Tis"
+
+#: AcfFields/php/event-time-fields.php:115
+msgid "Wed"
+msgstr "Ons"
+
+#: AcfFields/php/event-time-fields.php:116
+msgid "Thu"
+msgstr "Tor"
+
+#: AcfFields/php/event-time-fields.php:117
+msgid "Fri"
+msgstr "Fre"
+
+#: AcfFields/php/event-time-fields.php:118
+msgid "Sat"
+msgstr "Lör"
+
+#: AcfFields/php/event-time-fields.php:119
+msgid "Sun"
+msgstr "Sön"
+
+#: AcfFields/php/event-time-fields.php:133
+msgid "Date"
+msgstr "Datum"
+
+#: AcfFields/php/event-time-fields.php:153
+msgid "Until Date"
+msgstr "Till datum"
+
+#: AcfFields/php/event-time-fields.php:181
+msgid "Start time"
+msgstr "Starttid"
+
+#: AcfFields/php/event-time-fields.php:199
+msgid "End time"
+msgstr "Sluttid"
+
+#: AcfFields/php/event-time-fields.php:217
+msgid "Booking page URL"
+msgstr "Adress till bokningssida"
+
+#: AcfFields/php/event-time-fields.php:235
+msgid "Description"
+msgstr "Beskrivning"
+
+#: AcfFields/php/event-time-fields.php:239
+msgid "Specific information about this occasion"
+msgstr "Specifik information om detta tillfälle"
+
+#: AcfFields/php/organization-fields.php:6
+msgid "Organization Fields"
+msgstr "Arrangörfält"
+
+#: AcfFields/php/plugin-settings.php:8
+msgid "Plugin Settings"
+msgstr "Plugininställningar"
+
+#: AcfFields/php/plugin-settings.php:12
+msgid "Cleanup"
+msgstr "Rensa"
+
+#: AcfFields/php/plugin-settings.php:30
+msgid "Clean up expired events"
+msgstr "Rensa utgångna händelser"
+
+#: AcfFields/php/plugin-settings.php:34
+msgid "Enables automatic deletion of expired events"
+msgstr "Aktiverar automatisk radering av utgångna händelser"
+
+#: AcfFields/php/plugin-settings.php:50
+msgid "Delete expired posts after"
+msgstr "Radera utgångna inlägg efter"
+
+#: AcfFields/php/plugin-settings.php:71
+msgid "## Weeks"
+msgstr "## Veckor"
+
+#: AcfFields/php/plugin-settings.php:72
+msgid "1 week"
+msgstr "1 vecka"
+
+#: AcfFields/php/plugin-settings.php:73
+msgid "2 weeks"
+msgstr "2 veckor"
+
+#: AcfFields/php/plugin-settings.php:74
+msgid "3 weeks"
+msgstr "3 veckor"
+
+#: AcfFields/php/plugin-settings.php:75
+msgid "## Months"
+msgstr "## Månader"
+
+#: AcfFields/php/plugin-settings.php:76
+msgid "1 month"
+msgstr "1 månad"
+
+#: AcfFields/php/plugin-settings.php:77
+msgid "2 months"
+msgstr "2 månader"
+
+#: AcfFields/php/plugin-settings.php:78
+msgid "3 months"
+msgstr "3 månader"
+
+#: AcfFields/php/plugin-settings.php:79
+msgid "6 months"
+msgstr "6 månader"
+
+#: AcfFields/php/plugin-settings.php:81
+msgid "-1 month"
+msgstr "-1 månad"
+
+#: AcfFields/php/user-fields.php:6
+msgid "Event Manager - User fields"
+msgstr "Eventhanterare - Användarfält"
+
+#: AcfFields/php/user-fields.php:10 Taxonomies/Organization.php:41
+msgid "Organizations"
+msgstr "Arrangörer"
+
+#: AcfFields/php/user-fields.php:14
+msgid ""
+"Determines which organization(s) this user is allowed to create events for. "
+"Also restricts the user from viewing, editing and deleting events belonging "
+"to any other organizer than the ones selected here."
+msgstr ""
+"Bestämmer vilka arrangör(er) denna användare har rätt att skapa evenemang "
+"för. Begränsar också användaren från att visa, redigera och radera evenemang "
+"som tillhör någon annan arrangör än de som valts här."
+
+#: AcfSavePostActions/CreateNewOrganizerFromEventSubmit/CreateNewOrganizationTerm/CreateNewOrganizationTerm.php:41
+#, php-format
+msgid "Failed to create organizer term: %s"
+msgstr "Misslyckades att skapa term för arrangören: %s"
+
+#: App.php:96
+msgid "Location"
+msgstr "Plats"
+
+#: FieldSettingHidePrivate.php:27
+msgid "Hide in backend forms"
+msgstr "Dölj i backend-formulär"
+
+#: FieldSettingHidePublic.php:27
+msgid "Hide in frontend forms"
+msgstr "Dölj i frontend-formulär"
+
+#: Notifications/PendingEventCreated.php:44
+msgid "Event submission receipt"
+msgstr "Kvitto för evenemanget"
+
+#: Notifications/PendingEventCreated.php:45
+msgid "This is a receipt for your event submission."
+msgstr "Detta är ett kvitto på ditt inskickade evenemang."
+
+#: Notifications/PendingEventCreated.php:47
+msgid "It will be reviewed by an administrator."
+msgstr "Detta kommer granskas av en administratör"
+
+#: Notifications/PendingEventCreated.php:48
+msgid "To edit the event before review, please visit the following link: "
+msgstr ""
+"För att redigera evenemanget före granskning, var god och följ denna länk: "
+
+#: PostTypes/Event.php:30
+msgid "Event"
+msgstr "Evenemang"
+
+#: PostTypes/Event.php:35
+msgid "Events"
+msgstr "Evenemang"
+
+#: PostTypes/PostType.php:43
 #, php-format
 msgid "Add New %s"
 msgstr "Lägg till ny %s"
 
-#: source/php/PostTypes/PostType.php:46
+#: PostTypes/PostType.php:44 Taxonomies/Taxonomy.php:52
+#, php-format
+msgid "Add new %s"
+msgstr "Lägg till ny %s"
+
+#: PostTypes/PostType.php:45 Taxonomies/Taxonomy.php:50
+#, php-format
+msgid "Edit %s"
+msgstr "Redigera %s"
+
+#: PostTypes/PostType.php:46
 #, php-format
 msgid "New %s"
 msgstr "Nytt %s"
 
-#: source/php/PostTypes/PostType.php:47
+#: PostTypes/PostType.php:47
 #, php-format
 msgid "View %s"
 msgstr "Visa %s"
 
-#: source/php/PostTypes/PostType.php:50
+#: PostTypes/PostType.php:48 Taxonomies/Taxonomy.php:45
+#, php-format
+msgid "Search %s"
+msgstr "Sök %s"
+
+#: PostTypes/PostType.php:49 Taxonomies/Taxonomy.php:57
+#, php-format
+msgid "No %s found"
+msgstr "Inga %s hittades"
+
+#: PostTypes/PostType.php:50
 #, php-format
 msgid "No %s found in trash"
 msgstr "Inga %s hittades i papperskorgen"
 
-#: source/php/PostTypes/Event.php:30
-msgid "Event"
-msgstr "Evenemang"
+#: PostTypes/PostType.php:51 Taxonomies/Taxonomy.php:49
+#, php-format
+msgid "Parent %s:"
+msgstr "Överordnad %s:"
 
-#: source/php/PostTypes/Event.php:35
-msgid "Events"
-msgstr "Evenemang"
+#: Taxonomies/Accessibility.php:41
+msgid "Accessibilities"
+msgstr "Tillgänglighetsanpassningar"
 
-#: source/php/AcfFields/php/event-place-fields.php:108
-msgid "Location name"
-msgstr "Platsens namn"
+#: Taxonomies/Audience.php:41
+msgid "Audiences"
+msgstr "Målgrupper"
 
-#: source/php/AcfFields/php/event-place-fields.php:139
-msgid "Location address"
-msgstr "Platsens adress"
+#: Taxonomies/Category.php:43
+msgid "Categories"
+msgstr "Kategorier"
 
-#: source/php/AcfFields/php/event-time-fields.php:31
-msgid "Add occation"
-msgstr "Lägg till tillfälle"
+#: Taxonomies/Keyword.php:37
+msgid "Keyword"
+msgstr "Nyckelord"
 
-#: source/php/AcfFields/php/event-place-fields.php:57
-msgid "Add Ticket / Variation"
-msgstr "Lägg till biljett / variant"
+#: Taxonomies/Keyword.php:42
+msgid "Keywords"
+msgstr "Nyckelord"
 
-#: source/php/AcfFields/php/event-time-fields.php:269
-msgid "Description"
-msgstr "Beskrivning"
+#: Taxonomies/Organization.php:36
+msgid "Organization"
+msgstr "Arrangör"
 
-#: source/php/AcfFields/php/event-audience-category.php:8
-msgid "Audience & Category"
-msgstr "Målgrupp & Kategori"
+#: Taxonomies/Taxonomy.php:46
+#, php-format
+msgid "Popular %s"
+msgstr "Populära %s"
 
-#: source/php/AcfFields/php/event-presentation-fields.php:8
-msgid "Presentation"
-msgstr "Presentation"
+#: Taxonomies/Taxonomy.php:47
+#, php-format
+msgid "All %s"
+msgstr "Alla %s"
 
-#: source/php/AcfFields/php/event-organizer-fields.php:72
-msgid "Name"
-msgstr "Namn"
+#: Taxonomies/Taxonomy.php:48
+#, php-format
+msgid "Parent %s"
+msgstr "Överordnad %s"
 
-#: source/php/AcfFields/php/event-presentation-fields.php:16
-msgid "Make your event stand out by uploading high-resolution images. Your event image is often the first thing attendees notice, so choose visuals that capture attention and spark interest. Images will appear in the order they are uploaded."
-msgstr "Få ditt evenemang att sticka ut genom att ladda upp högupplösta bilder. Din evenemangsbild är ofta det första deltagarna lägger märke till, så välj visuella element som fångar uppmärksamhet och väcker intresse. Bilder kommer att visas i den ordning de laddas upp."
+#: Taxonomies/Taxonomy.php:51
+#, php-format
+msgid "Update %s"
+msgstr "Uppdatera %s"
 
-#: source/php/AcfFields/php/event-organizer-fields.php:12
-msgid "Submit new organization"
-msgstr "Skicka in ny organisation"
+#: Taxonomies/Taxonomy.php:53
+#, php-format
+msgid "New %s name"
+msgstr "Nytt %s namn"
 
-#: source/php/AcfFields/php/event-organizer-fields.php:29
-msgid "Yes"
-msgstr "Ja"
+#: Taxonomies/Taxonomy.php:54
+#, php-format
+msgid "Separate %s with commas"
+msgstr "Separera %s med kommatecken"
 
-#: source/php/AcfFields/php/event-organizer-fields.php:30
-msgid "Select from existing"
-msgstr "Välj från befintliga"
+#: Taxonomies/Taxonomy.php:55
+#, php-format
+msgid "Add or remove %s"
+msgstr "Lägg till eller ta bort %s"
 
-#: source/php/AcfFields/php/event-organizer-fields.php:76
-msgid "Name of the organization"
-msgstr "Organisationsnamn"
+#: Taxonomies/Taxonomy.php:56
+#, php-format
+msgid "Choose from most used %s"
+msgstr "Välj bland mest använda %s"
 
-#: source/php/AcfFields/php/event-organizer-fields.php:103
-#: source/php/AcfFields/php/organization-fields.php:91
-msgid "Contact"
-msgstr "Kontakt"
+#~ msgid "Event Manager"
+#~ msgstr "Eventhanterare"
 
-#: source/php/AcfFields/php/event-organizer-fields.php:107
-msgid "Supply the name(first and last) of the organizations contact person"
-msgstr "Ange namnet (för- och efternamn) på organisationens kontaktperson"
+#~ msgid "Creates a api that may be used to manage events"
+#~ msgstr "Tillgängliggör ett API för att hantera evenemang"
 
-#: source/php/AcfFields/php/event-place-fields.php:12
-msgid "Attendance mode"
-msgstr "Närvaroläge"
+#~ msgid "Status"
+#~ msgstr "Status"
 
-#: source/php/AcfFields/php/event-place-fields.php:27
-msgid "Offline"
-msgstr "Offline"
+#~ msgid "Scheduled"
+#~ msgstr "Planerad"
 
-#: source/php/AcfFields/php/event-place-fields.php:28
-msgid "Online"
-msgstr "Online"
+#~ msgid "Rescheduled"
+#~ msgstr "Omplanerad"
 
-#: source/php/AcfFields/php/event-place-fields.php:30
-msgid "offline"
-msgstr "offline"
+#~ msgid "Postponed"
+#~ msgstr "Framflyttad"
 
-#: source/php/AcfFields/php/event-place-fields.php:169
-msgid "Online attendence url"
-msgstr "Online deltagande-URL"
+#~ msgid "Cancelled"
+#~ msgstr "Inställd"
 
-#: source/php/AcfFields/php/event-time-fields.php:54
-msgid "no"
-msgstr ""
+#~ msgid "Availablility for booking/purchase"
+#~ msgstr "Tillgänglighet för bokning/köp"
 
-#: source/php/AcfFields/php/event-time-fields.php:273
-msgid "Specific information about this occasion"
-msgstr "Specifik information om detta tillfälle"
+#~ msgid "Available for booking/purchase"
+#~ msgstr "Tillgänglig för bokning/köp"
 
-#: source/php/AcfFields/php/event-time-fields.php:301
-msgid "Status"
-msgstr "Status"
-
-#: source/php/AcfFields/php/event-time-fields.php:324
-msgid "Scheduled"
-msgstr "Planerad"
-
-#: source/php/AcfFields/php/event-time-fields.php:325
-msgid "Rescheduled"
-msgstr "Omplanerad"
-
-#: source/php/AcfFields/php/event-time-fields.php:326
-msgid "Postponed"
-msgstr "Framflyttad"
-
-#: source/php/AcfFields/php/event-time-fields.php:327
-msgid "Cancelled"
-msgstr "Inställd"
-
-#: source/php/AcfFields/php/event-time-fields.php:329
-msgid "https://schema.org/EventScheduled"
-msgstr ""
-
-#: source/php/AcfFields/php/event-place-fields.php:8
-msgid "Place"
-msgstr "Plats"
-
-#: source/php/AcfFields/php/event-time-fields.php:8
-msgid "Time"
-msgstr "Tid"
-
-#: source/php/AcfFields/php/event-time-fields.php:237
-msgid "Availablility for booking/purchase"
-msgstr "Tillgänglighet för bokning/köp"
-
-#: source/php/AcfFields/php/event-time-fields.php:252
-msgid "Available for booking/purchase"
-msgstr "Tillgänglig för bokning/köp"
-
-#: source/php/AcfFields/php/event-time-fields.php:253
-msgid "Sold out"
-msgstr "Slutsålt"
-
-#: source/php/AcfFields/php/event-time-fields.php:255
-msgid "inStock"
-msgstr ""
+#~ msgid "Sold out"
+#~ msgstr "Slutsålt"

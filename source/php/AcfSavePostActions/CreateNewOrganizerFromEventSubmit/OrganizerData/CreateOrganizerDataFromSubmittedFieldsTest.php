@@ -17,7 +17,15 @@ class CreateOrganizerDataFromSubmittedFieldsTest extends TestCase
         $instance      = new CreateOrganizerDataFromSubmittedFields($this->createWpService());
         $organizerData = $instance->tryCreate($this->getValidFields());
 
-        $this->assertInstanceOf(OrganizerData::class, $organizerData);
+        $this->assertInstanceOf(OrganizerData::class, $organizerData[0]);
+    }
+
+    public function testEmptyOrganizersDataReturnsNull(): void
+    {
+        $instance      = new CreateOrganizerDataFromSubmittedFields($this->createWpService());
+        $organizerData = $instance->tryCreate($this->emptyOrganizersData());
+
+        $this->assertNull($organizerData);
     }
 
     /**
@@ -32,16 +40,48 @@ class CreateOrganizerDataFromSubmittedFieldsTest extends TestCase
         $this->assertNull($organizerData);
     }
 
+    public function emptyOrganizersData(): array
+    {
+        return [
+            'submitNewOrganization' => true,
+            'newOrganizers'         => []
+        ];
+    }
+
     public function invalidFieldsProvider(): array
     {
         return [
             'invalid submitNewOrganization' => [array_merge($this->getValidFields(), ['submitNewOrganization' => false])],
-            'invalid organizerName'         => [array_merge($this->getValidFields(), ['organizerName' => ''])],
-            'invalid organizerEmail'        => [array_merge($this->getValidFields(), ['organizerEmail' => ''])],
-            'invalid organizerContact'      => [array_merge($this->getValidFields(), ['organizerContact' => ''])],
-            'invalid organizerTelephone'    => [array_merge($this->getValidFields(), ['organizerTelephone' => ''])],
-            'invalid organizerAddress'      => [array_merge($this->getValidFields(), ['organizerAddress' => ''])],
-            'invalid organizerUrl'          => [array_merge($this->getValidFields(), ['organizerUrl' => ''])],
+            'invalid organizerName'         => [array_replace_recursive($this->getValidFields(), [
+                'newOrganizers' => [
+                    ['organizerName' => '']
+                ]
+            ])],
+            'invalid organizerEmail'        => [array_replace_recursive($this->getValidFields(), [
+                'newOrganizers' => [
+                    ['organizerEmail' => '']
+                ]
+            ])],
+            'invalid organizerContact'      => [array_replace_recursive($this->getValidFields(), [
+                'newOrganizers' => [
+                    ['organizerContact' => '']
+                ]
+            ])],
+            'invalid organizerTelephone'    => [array_replace_recursive($this->getValidFields(), [
+                'newOrganizers' => [
+                    ['organizerTelephone' => '']
+                ]
+            ])],
+            'invalid organizerAddress'      => [array_replace_recursive($this->getValidFields(), [
+                'newOrganizers' => [
+                    ['organizerAddress' => '']
+                ]
+            ])],
+            'invalid organizerUrl'          => [array_replace_recursive($this->getValidFields(), [
+                'newOrganizers' => [
+                    ['organizerUrl' => '']
+                ]
+            ])],
         ];
     }
 
@@ -49,12 +89,16 @@ class CreateOrganizerDataFromSubmittedFieldsTest extends TestCase
     {
         return [
             'submitNewOrganization' => true,
-            'organizerName'         => 'Test Organizer',
-            'organizerEmail'        => 'test@example.com',
-            'organizerContact'      => '123456789',
-            'organizerTelephone'    => '123-456-7890',
-            'organizerAddress'      => '123 Test St, Test City, TX 12345',
-            'organizerUrl'          => 'https://example.com'
+            'newOrganizers' => [
+                [
+                    'organizerName'         => 'Test Organizer',
+                    'organizerEmail'        => 'test@example.com',
+                    'organizerContact'      => '123456789',
+                    'organizerTelephone'    => '123-456-7890',
+                    'organizerAddress'      => '123 Test St, Test City, TX 12345',
+                    'organizerUrl'          => 'https://example.com'
+                ]
+            ]
         ];
     }
 
