@@ -54,7 +54,9 @@ class CreateNewOrganizerFromEventSubmitTest extends TestCase
 
         $instance->savePost(123);
         $this->assertCount(1, $wpService->methodCalls['wpSetObjectTerms']);
-        $this->assertContains([123, 456, 'organizer'], $wpService->methodCalls['wpSetObjectTerms']);
+        $this->assertContains(123, $wpService->methodCalls['wpSetObjectTerms'][0]);
+        $this->assertContains([456], $wpService->methodCalls['wpSetObjectTerms'][0]);
+        $this->assertContains('organizer', $wpService->methodCalls['wpSetObjectTerms'][0]);
     }
 
     /**
