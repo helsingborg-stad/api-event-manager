@@ -148,7 +148,9 @@ class CreateNewOrganizerFromEventSubmitTest extends TestCase
     private function getClearFields(): IClearFieldsFromPost
     {
         return new class implements IClearFieldsFromPost {
-            public function clearFields(int|string $postId): void {}
+            public function clearFields(int|string $postId): void
+            {
+            }
         };
     }
 

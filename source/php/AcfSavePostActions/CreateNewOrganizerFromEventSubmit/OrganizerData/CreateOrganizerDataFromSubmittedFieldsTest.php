@@ -89,14 +89,14 @@ class CreateOrganizerDataFromSubmittedFieldsTest extends TestCase
     {
         return [
             'submitNewOrganization' => true,
-            'newOrganizers' => [
+            'newOrganizers'         => [
                 [
-                    'organizerName'         => 'Test Organizer',
-                    'organizerEmail'        => 'test@example.com',
-                    'organizerContact'      => '123456789',
-                    'organizerTelephone'    => '123-456-7890',
-                    'organizerAddress'      => '123 Test St, Test City, TX 12345',
-                    'organizerUrl'          => 'https://example.com'
+                    'organizerName'      => 'Test Organizer',
+                    'organizerEmail'     => 'test@example.com',
+                    'organizerContact'   => '123456789',
+                    'organizerTelephone' => '123-456-7890',
+                    'organizerAddress'   => '123 Test St, Test City, TX 12345',
+                    'organizerUrl'       => 'https://example.com'
                 ]
             ]
         ];
