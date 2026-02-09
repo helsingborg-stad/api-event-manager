@@ -62,6 +62,13 @@ class App
         $this->hooksRegistrar->register($setPostTermsFromContent);
     }
 
+    public function setPostMunicipalityTermsFromPostLocation(): void
+    {
+        $setPostTermsFromContent = new SetPostMunicipalityTermsFromPostLocation\SetPostMunicipalityTermsFromPostLocation($this->wpService, $this->acfService);
+
+        $this->hooksRegistrar->register($setPostTermsFromContent);
+    }
+
     public function cleanUpExpiredEvents(): void
     {
         $cleanupExpiredEvents = $this->wpService->getOption('options_cleanup_cleanupExpiredEvents') === '1';
@@ -139,6 +146,7 @@ class App
         $this->hooksRegistrar->register(new \EventManager\Taxonomies\Keyword($this->wpService));
         $this->hooksRegistrar->register(new \EventManager\Taxonomies\Accessibility($this->wpService));
         $this->hooksRegistrar->register(new \EventManager\Taxonomies\Category($this->wpService));
+        $this->hooksRegistrar->register(new \EventManager\Taxonomies\Municipality($this->wpService));
     }
 
     public function setupUserRoles(): void

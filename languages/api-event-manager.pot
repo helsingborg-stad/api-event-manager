@@ -1,22 +1,18 @@
 # Copyright (C) 2026 Thor Brink, Sebastian Thulin @ Helsingborg Stad
 # This file is distributed under the MIT.
-#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Event Manager 3.12.7\n"
+"Project-Id-Version: Event Manager 3.13.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/api-event-manager\n"
-"POT-Creation-Date: 2026-02-05 10:59+0100\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.4.2\n"
+"POT-Creation-Date: 2026-02-09T10:38:08+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: api-event-manager\n"
-"X-Poedit-KeywordsList: __\n"
-"X-Poedit-Basepath: ../source/php\n"
-"X-Poedit-SearchPath-0: .\n"
 
 #. Plugin Name of the plugin
 #: api-event-manager.php
@@ -71,7 +67,7 @@ msgid "Choose the accessibility features that will be available to attendees at 
 msgstr ""
 
 #: source/php/AcfFields/php/event-organizer-fields.php:8
-#: source/php/AcfFields/php/event-organizer-fields.php:35 source/php/App.php:95
+#: source/php/App.php:100
 msgid "Organizer"
 msgstr ""
 
@@ -87,39 +83,51 @@ msgstr ""
 msgid "Select from existing"
 msgstr ""
 
-#: source/php/AcfFields/php/event-organizer-fields.php:72
-msgid "Name"
+#: source/php/AcfFields/php/event-organizer-fields.php:35
+msgid "Organizers"
 msgstr ""
 
-#: source/php/AcfFields/php/event-organizer-fields.php:76
-msgid "Name of the organization"
+#: source/php/AcfFields/php/event-organizer-fields.php:75
+msgid "New organizers"
 msgstr ""
 
 #: source/php/AcfFields/php/event-organizer-fields.php:103
+msgid "Add row"
+msgstr ""
+
+#: source/php/AcfFields/php/event-organizer-fields.php:108
+msgid "Name"
+msgstr ""
+
+#: source/php/AcfFields/php/event-organizer-fields.php:112
+msgid "Name of the organization"
+msgstr ""
+
+#: source/php/AcfFields/php/event-organizer-fields.php:132
 #: source/php/AcfFields/php/organization-fields.php:91
 msgid "Contact"
 msgstr ""
 
-#: source/php/AcfFields/php/event-organizer-fields.php:107
+#: source/php/AcfFields/php/event-organizer-fields.php:136
 msgid "Supply the name(first and last) of the organizations contact person"
 msgstr ""
 
-#: source/php/AcfFields/php/event-organizer-fields.php:134
+#: source/php/AcfFields/php/event-organizer-fields.php:156
 #: source/php/AcfFields/php/organization-fields.php:52
 msgid "Email"
 msgstr ""
 
-#: source/php/AcfFields/php/event-organizer-fields.php:164
+#: source/php/AcfFields/php/event-organizer-fields.php:179
 #: source/php/AcfFields/php/organization-fields.php:71
 msgid "Telephone"
 msgstr ""
 
-#: source/php/AcfFields/php/event-organizer-fields.php:195
+#: source/php/AcfFields/php/event-organizer-fields.php:203
 #: source/php/AcfFields/php/organization-fields.php:12
 msgid "Address"
 msgstr ""
 
-#: source/php/AcfFields/php/event-organizer-fields.php:226
+#: source/php/AcfFields/php/event-organizer-fields.php:227
 #: source/php/AcfFields/php/organization-fields.php:35
 msgid "Url"
 msgstr ""
@@ -145,42 +153,14 @@ msgid "offline"
 msgstr ""
 
 #: source/php/AcfFields/php/event-place-fields.php:38
-msgid "Prices"
-msgstr ""
-
-#: source/php/AcfFields/php/event-place-fields.php:42
-msgid "You have the option to offer multiple pricing tiers to accommodate attendees of different age groups. By not adding any ticket variations, your event will show up as free of charge."
-msgstr ""
-
-#: source/php/AcfFields/php/event-place-fields.php:57
-msgid "Add Ticket / Variation"
-msgstr ""
-
-#: source/php/AcfFields/php/event-place-fields.php:62
-msgid "Price Label"
-msgstr ""
-
-#: source/php/AcfFields/php/event-place-fields.php:74
-msgid "Standard Ticket"
-msgstr ""
-
-#: source/php/AcfFields/php/event-place-fields.php:83
-msgid "Price"
-msgstr ""
-
-#: source/php/AcfFields/php/event-place-fields.php:101
-msgid "$"
-msgstr ""
-
-#: source/php/AcfFields/php/event-place-fields.php:108
 msgid "Location name"
 msgstr ""
 
-#: source/php/AcfFields/php/event-place-fields.php:139
+#: source/php/AcfFields/php/event-place-fields.php:69
 msgid "Location address"
 msgstr ""
 
-#: source/php/AcfFields/php/event-place-fields.php:169
+#: source/php/AcfFields/php/event-place-fields.php:99
 msgid "Online attendence url"
 msgstr ""
 
@@ -194,6 +174,35 @@ msgstr ""
 
 #: source/php/AcfFields/php/event-presentation-fields.php:16
 msgid "Make your event stand out by uploading high-resolution images. Your event image is often the first thing attendees notice, so choose visuals that capture attention and spark interest. Images will appear in the order they are uploaded."
+msgstr ""
+
+#: source/php/AcfFields/php/event-prices-fields.php:8
+#: source/php/AcfFields/php/event-prices-fields.php:12
+msgid "Prices"
+msgstr ""
+
+#: source/php/AcfFields/php/event-prices-fields.php:16
+msgid "You have the option to offer multiple pricing tiers to accommodate attendees of different age groups. By not adding any ticket variations, your event will show up as free of charge."
+msgstr ""
+
+#: source/php/AcfFields/php/event-prices-fields.php:31
+msgid "Add Ticket / Variation"
+msgstr ""
+
+#: source/php/AcfFields/php/event-prices-fields.php:36
+msgid "Price Label"
+msgstr ""
+
+#: source/php/AcfFields/php/event-prices-fields.php:48
+msgid "Standard Ticket"
+msgstr ""
+
+#: source/php/AcfFields/php/event-prices-fields.php:57
+msgid "Price"
+msgstr ""
+
+#: source/php/AcfFields/php/event-prices-fields.php:75
+msgid "$"
 msgstr ""
 
 #: source/php/AcfFields/php/event-time-fields.php:8
@@ -289,51 +298,11 @@ msgid "Booking page URL"
 msgstr ""
 
 #: source/php/AcfFields/php/event-time-fields.php:237
-msgid "Availablility for booking/purchase"
-msgstr ""
-
-#: source/php/AcfFields/php/event-time-fields.php:252
-msgid "Available for booking/purchase"
-msgstr ""
-
-#: source/php/AcfFields/php/event-time-fields.php:253
-msgid "Sold out"
-msgstr ""
-
-#: source/php/AcfFields/php/event-time-fields.php:255
-msgid "inStock"
-msgstr ""
-
-#: source/php/AcfFields/php/event-time-fields.php:269
 msgid "Description"
 msgstr ""
 
-#: source/php/AcfFields/php/event-time-fields.php:273
+#: source/php/AcfFields/php/event-time-fields.php:241
 msgid "Specific information about this occasion"
-msgstr ""
-
-#: source/php/AcfFields/php/event-time-fields.php:301
-msgid "Status"
-msgstr ""
-
-#: source/php/AcfFields/php/event-time-fields.php:324
-msgid "Scheduled"
-msgstr ""
-
-#: source/php/AcfFields/php/event-time-fields.php:325
-msgid "Rescheduled"
-msgstr ""
-
-#: source/php/AcfFields/php/event-time-fields.php:326
-msgid "Postponed"
-msgstr ""
-
-#: source/php/AcfFields/php/event-time-fields.php:327
-msgid "Cancelled"
-msgstr ""
-
-#: source/php/AcfFields/php/event-time-fields.php:329
-msgid "https://schema.org/EventScheduled"
 msgstr ""
 
 #: source/php/AcfFields/php/organization-fields.php:8
@@ -413,7 +382,12 @@ msgstr ""
 msgid "Determines which organization(s) this user is allowed to create events for. Also restricts the user from viewing, editing and deleting events belonging to any other organizer than the ones selected here."
 msgstr ""
 
-#: source/php/App.php:98
+#: source/php/AcfSavePostActions/CreateNewOrganizerFromEventSubmit/CreateNewOrganizationTerm/CreateNewOrganizationTerm.php:40
+#, php-format
+msgid "Failed to create organizer term: %s"
+msgstr ""
+
+#: source/php/App.php:103
 msgid "Location"
 msgstr ""
 
@@ -438,12 +412,14 @@ msgstr ""
 msgid "Add New %s"
 msgstr ""
 
-#: source/php/PostTypes/PostType.php:44 source/php/Taxonomies/Taxonomy.php:52
+#: source/php/PostTypes/PostType.php:44
+#: source/php/Taxonomies/Taxonomy.php:52
 #, php-format
 msgid "Add new %s"
 msgstr ""
 
-#: source/php/PostTypes/PostType.php:45 source/php/Taxonomies/Taxonomy.php:50
+#: source/php/PostTypes/PostType.php:45
+#: source/php/Taxonomies/Taxonomy.php:50
 #, php-format
 msgid "Edit %s"
 msgstr ""
@@ -458,12 +434,14 @@ msgstr ""
 msgid "View %s"
 msgstr ""
 
-#: source/php/PostTypes/PostType.php:48 source/php/Taxonomies/Taxonomy.php:45
+#: source/php/PostTypes/PostType.php:48
+#: source/php/Taxonomies/Taxonomy.php:45
 #, php-format
 msgid "Search %s"
 msgstr ""
 
-#: source/php/PostTypes/PostType.php:49 source/php/Taxonomies/Taxonomy.php:57
+#: source/php/PostTypes/PostType.php:49
+#: source/php/Taxonomies/Taxonomy.php:57
 #, php-format
 msgid "No %s found"
 msgstr ""
@@ -473,7 +451,8 @@ msgstr ""
 msgid "No %s found in trash"
 msgstr ""
 
-#: source/php/PostTypes/PostType.php:51 source/php/Taxonomies/Taxonomy.php:49
+#: source/php/PostTypes/PostType.php:51
+#: source/php/Taxonomies/Taxonomy.php:49
 #, php-format
 msgid "Parent %s:"
 msgstr ""
@@ -496,6 +475,14 @@ msgstr ""
 
 #: source/php/Taxonomies/Keyword.php:42
 msgid "Keywords"
+msgstr ""
+
+#: source/php/Taxonomies/Municipality.php:38
+msgid "Municipality"
+msgstr ""
+
+#: source/php/Taxonomies/Municipality.php:43
+msgid "Municipalities"
 msgstr ""
 
 #: source/php/Taxonomies/Organization.php:36
