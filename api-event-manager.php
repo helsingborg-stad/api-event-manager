@@ -56,6 +56,7 @@ $app->setupAcfExportManager();
 $app->setupPluginSettingsPage();
 $app->setupCleanupUnusedTags();
 $app->setPostTermsFromPostContent();
+$app->setPostMunicipalityTermsFromPostLocation();
 $app->cleanUpExpiredEvents();
 $app->modifyAdminTablesColumns();
 $app->disableGutenbergEditor();
