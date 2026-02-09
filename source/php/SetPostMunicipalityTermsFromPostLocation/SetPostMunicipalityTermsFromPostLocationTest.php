@@ -56,7 +56,7 @@ class SetPostMunicipalityTermsFromPostLocationTest extends TestCase
             'array without proper key' => [[]],
             'incorrect type'           => [['address_locality' => 321]],
             'empty string'             => [['address_locality' => '']],
-            'empty string'             => [['address_locality' => ' ']],
+            'empty untrimmed string'   => [['address_locality' => ' ']],
         ];
     }
 
