@@ -92,8 +92,7 @@
             ),
             'is_publicly_hidden' => 0,
             'is_privately_hidden' => 0,
-            'acfe_repeater_stylised_button' => 0,
-            'layout' => 'table',
+            'layout' => 'block',
             'pagination' => 0,
             'min' => 0,
             'max' => 0,
@@ -135,7 +134,7 @@
                     'required' => 1,
                     'conditional_logic' => 0,
                     'wrapper' => array(
-                        'width' => '',
+                        'width' => '0',
                         'class' => '',
                         'id' => '',
                     ),
@@ -230,7 +229,7 @@
                     'required' => 1,
                     'conditional_logic' => 0,
                     'wrapper' => array(
-                        'width' => '',
+                        'width' => '0',
                         'class' => '',
                         'id' => '',
                     ),
@@ -278,10 +277,6 @@
     'active' => true,
     'description' => '',
     'show_in_rest' => 1,
-    'acfe_display_title' => '',
-    'acfe_autosync' => '',
-    'acfe_form' => 0,
-    'acfe_meta' => '',
-    'acfe_note' => '',
+    'display_title' => '',
 ));
 }
