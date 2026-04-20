@@ -347,6 +347,21 @@ class TixTicket extends \HbgEventImporter\Parser
     }
 
     /**
+     * @inheritdoc
+     */
+    public function checkIfPostExists($postType, $postTitle, $threshold = 3)
+    {
+        $exists = parent::checkIfPostExists($postType, $postTitle, $threshold);
+        
+        if(is_numeric($exists) && get_post_meta($exists, 'import_client', true) === 'tixticket') {
+            return $exists;
+        }
+
+        // Similar post exists, but not created by this importer, so we allow importing it.
+        return null;
+    }
+
+    /**
      * Creates or updates a location if possible
      *
      * @param array $data Event data
