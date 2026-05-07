@@ -42,6 +42,12 @@ class App
         $this->hooksRegistrar->register($acfExportManager);
     }
 
+    public function preventAcfFieldGroupToHideTheContentEditor(): void
+    {
+        $preventAcfFieldGroupToHideTheContentEditor = new \EventManager\Modifiers\PreventAcfFieldGroupToHideTheContentEditor('event', $this->wpService);
+        $this->hooksRegistrar->register($preventAcfFieldGroupToHideTheContentEditor);
+    }
+
     public function setupPluginSettingsPage(): void
     {
         $adminSettingsPage = new \EventManager\Settings\AdminSettingsPage($this->wpService, $this->acfService);
