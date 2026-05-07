@@ -5,9 +5,9 @@ namespace EventManager;
 use AcfService\AcfService;
 use EventManager\CronScheduler\CronSchedulerInterface;
 use EventManager\HooksRegistrar\HooksRegistrarInterface;
-use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use WpService\WpService;
+use WpService\Implementations\FakeWpService;
 
 class AppTest extends TestCase
 {
@@ -29,7 +29,7 @@ class AppTest extends TestCase
     {
         $app = new App(
             'textdomain',
-            $this->createMock(WpService::class),
+            $this->getWpService(),
             $this->createMock(AcfService::class),
             $this->createMock(HooksRegistrarInterface::class),
             $this->createMock(CronSchedulerInterface::class)
@@ -40,8 +40,9 @@ class AppTest extends TestCase
 
     /**
      * @testdox all functions can be run without crashing
+     * @dataProvider provideAllFunctions
      */
-    public function testAllFunctions()
+    public function testAllFunctions(string $method)
     {
         $app = new App(
             'textdomain',
@@ -51,22 +52,32 @@ class AppTest extends TestCase
             $this->createMock(CronSchedulerInterface::class)
         );
 
-        foreach (get_class_methods(App::class) as $method) {
-            if ($method === '__construct') {
-                continue;
-            }
-
-            $app->$method();
-        }
+        $app->$method();
 
         $this->assertTrue(true);
     }
 
-    private function getWpService(): WpService|MockObject
+    public function provideAllFunctions(): array
     {
-        $mock = $this->createMock(WpService::class);
-        $mock->method('__')->willReturnArgument(0);
+        $appClass = App::class;
+        $methods  = get_class_methods(App::class);
+        $methods  = array_filter($methods, fn ($method) => $method !== '__construct');
 
-        return $mock;
+        $providedMethods = [];
+
+        foreach ($methods as $method) {
+            $providedMethods["{$appClass}::{$method}()"] = [$method];
+        }
+
+        return $providedMethods;
+    }
+
+    private function getWpService(): WpService
+    {
+        return new FakeWpService([
+            'addAction' => true,
+            'addFilter' => true,
+            '__'        => fn (string $text): string => $text,
+        ]);
     }
 }

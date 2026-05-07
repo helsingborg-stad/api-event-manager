@@ -53,6 +53,7 @@ $app = new App(
 
 $app->loadPluginTextDomain();
 $app->setupAcfExportManager();
+$app->preventAcfFieldGroupToHideTheContentEditor();
 $app->setupPluginSettingsPage();
 $app->setupCleanupUnusedTags();
 $app->setPostTermsFromPostContent();
