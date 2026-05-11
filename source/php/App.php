@@ -226,6 +226,12 @@ class App
         $this->hooksRegistrar->register($acfSavepostRegistrar);
     }
 
+    public function createUserWhenOrganizationCreated(): void
+    {
+        $createUserWhenOrganizationCreated = new CreateUserWhenOrganizationCreated\CreateUserWhenOrganizationCreated($this->wpService, $this->acfService);
+        $this->hooksRegistrar->register($createUserWhenOrganizationCreated);
+    }
+
     public function setupFeatureToShowOrHideAcfFieldsOnFrontendAndInAdmin(): void
     {
         $fieldSettingHidePublic = new \EventManager\FieldSettingHidePublic($this->wpService, $this->acfService);

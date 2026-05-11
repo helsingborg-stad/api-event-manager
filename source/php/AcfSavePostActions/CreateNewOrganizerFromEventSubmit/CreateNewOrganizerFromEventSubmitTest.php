@@ -136,6 +136,50 @@ class CreateNewOrganizerFromEventSubmitTest extends TestCase
         $this->assertArrayNotHasKey('wpSetObjectTerms', $wpService->methodCalls);
     }
 
+    /**
+     * @testdox action is applied after term is created and assigned to post to allow other processes to hook into it
+     */
+    public function testSavePostFiresActionAfterTermCreation(): void
+    {
+        $wpService                 = $this->getWpService();
+        $acfService                = $this->getAcfsService();
+        $clearFields               = $this->getClearFields();
+        $createNewOrganizationTerm = new class implements ICreateNewOrganizationTerm {
+            public function createTerm(IOrganizerData $organizerData): int
+            {
+                return 456;
+            }
+        };
+        $organizerDataFactory      = new class implements ICreateOrganizerDataFromSubmittedFields {
+            public function tryCreate(array $fields): ?array
+            {
+                return [new OrganizerData(
+                    name: 'Test Organizer',
+                    email: 'test@example.com',
+                    contact: '123-456-7890',
+                    telephone: '123-456-7890',
+                    address: '123 Test St, Test City, TX 12345',
+                    url: 'https://www.testorganizer.com'
+                )];
+            }
+        };
+
+        $instance = new CreateNewOrganizerFromEventSubmit(
+            $wpService,
+            $acfService,
+            'organizer',
+            $clearFields,
+            $createNewOrganizationTerm,
+            $organizerDataFactory
+        );
+
+        $instance->savePost(123);
+        $this->assertCount(1, $wpService->methodCalls['doAction']);
+        $this->assertSame('EventManager/OrganizationCreated', $wpService->methodCalls['doAction'][0][0]);
+        $this->assertSame(123, $wpService->methodCalls['doAction'][0][1]);
+        $this->assertSame(456, $wpService->methodCalls['doAction'][0][2]);
+    }
+
     private function getWpService(array $returnValues = []): WpService
     {
         return new FakeWpService(array_merge([

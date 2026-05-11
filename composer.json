@@ -7,6 +7,8 @@
         "test": "XDEBUG_MODE=off ./vendor/bin/phpunit --testdox --no-coverage",
         "test:debug": "XDEBUG_MODE=debug ./vendor/bin/phpunit --testdox --no-coverage",
         "test:coverage": "XDEBUG_MODE=coverage ./vendor/bin/phpunit --testdox",
+        "test:integration": "./vendor/bin/phpunit --config phpunit.integration.xml",
+        "test:integration:install": "./bin/install-wp-tests.sh",
         "minimal": "./vendor/bin/phpunit",
         "php:lint": "./vendor/bin/phpcs -s",
         "php:fix": "./vendor/bin/phpcbf",
@@ -58,20 +60,14 @@
         "squizlabs/php_codesniffer": "^3.7",
         "wp-coding-standards/wpcs": "^3.0",
         "brainmaestro/composer-git-hooks": "^2.8",
-        "composer/installers": "~1.0",
-        "wikimedia/composer-merge-plugin": "^2.1",
         "phpstan/phpstan": "2.0.x-dev",
-        "johnpbloch/wordpress-core": "dev-master",
         "php-stubs/wordpress-stubs": "dev-master",
         "phpunit/phpunit": "^9.6"
     },
     "config": {
         "allow-plugins": {
-            "composer/installers": true,
-            "dealerdirect/phpcodesniffer-composer-installer": true,
-            "wikimedia/composer-merge-plugin": true,
-            "johnpbloch/wordpress-core-installer": true
+            "dealerdirect/phpcodesniffer-composer-installer": true
         }
     },
-    "version": "3.15.1"
+    "version": "3.15.2"
 }
