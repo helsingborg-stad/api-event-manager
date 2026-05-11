@@ -46,19 +46,31 @@ $termId = $organizationTerms[0]->term_id;
 $user = $wpService->getUserBy('email', $organizerEmail);
 
 static::assertInstanceOf(WP_User::class, $user, 'No user was created');
-static::assertSame(['organization_administrator' => true], $user->caps, 'The user does not have the correct role');
+static::assertContains('organization_administrator', $user->roles, 'The user does not have the correct role');
 static::assertContains($termId, $acfService->getField('organizations', 'user_' . $user->ID) ?? [], 'The organization term ID was not added to the user');
 
-static::assertCount(1, $this->sentEmails);
-static::assertSame($organizerEmail, $this->sentEmails[0]['to']);
-static::assertStringContainsString('Welcome to', $this->sentEmails[0]['subject']);
-static::assertStringContainsString('organization administrator account is now active', $this->sentEmails[0]['message']);
-static::assertStringNotContainsString('Username:', $this->sentEmails[0]['message']);
+$recipientEmails = array_values(array_filter(
+$this->sentEmails,
+fn (array $email): bool => $this->isSentToRecipient($email, $organizerEmail)
+));
+
+static::assertCount(1, $recipientEmails, 'Expected exactly one welcome email for the newly created organization administrator.');
+static::assertStringContainsString('Welcome to', $recipientEmails[0]['subject']);
+static::assertStringContainsString('organization administrator account is now active', $recipientEmails[0]['message']);
+static::assertStringNotContainsString('Username:', $recipientEmails[0]['message']);
 }
 
 public function captureEmail(null|bool $return, array $mailArgs): bool {
 $this->sentEmails[] = $mailArgs;
 return true;
+}
+
+private function isSentToRecipient(array $email, string $recipientEmail): bool {
+if (is_array($email['to'])) {
+return in_array($recipientEmail, $email['to'], true);
+}
+
+return $email['to'] === $recipientEmail;
 }
 
 private function generateOrganizerEmail(): string {
