@@ -60,6 +60,15 @@ class CreateNewOrganizerFromEventSubmit implements IAcfSavePostAction
 
         // Assign the term to the post
         $this->wpService->wpSetObjectTerms($postId, $createdTermIds, $this->taxonomy);
+
+        /**
+         * Fires after an organizer term has been created and assigned to the event.
+         *
+         * @param int $postId The ID of the event post.
+         * @param int $termId The ID of the created organizer term.
+         * @param OrganizerData\IOrganizerData[] $organizersData An array of organizer data objects that were created from the submitted fields.
+         */
+        $this->wpService->doAction('EventManager/OrganizationCreated', $postId, $createdTermIds[0], $organizersData);
     }
 
     private function shouldCreateOrganizer(int|string $postId): bool

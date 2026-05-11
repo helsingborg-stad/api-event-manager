@@ -67,5 +67,6 @@ $app->setupUserRoles();
 $app->setupUserCapabilities();
 $app->setupAcfFieldContentModifiers();
 $app->setupAcfSavePostActions();
+$app->createUserWhenOrganizationCreated();
 $app->setupFeatureToShowOrHideAcfFieldsOnFrontendAndInAdmin();
 $app->setupNotifications();

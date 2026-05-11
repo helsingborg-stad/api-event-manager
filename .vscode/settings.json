@@ -1,0 +1,6 @@
+// generate settings json
+{
+    "intelephense.environment.includePaths": [
+        "/tmp/wordpress-tests-lib"
+    ]
+}
