@@ -15,6 +15,11 @@ if ( ! $_tests_dir ) {
 $_phpunit_polyfills_path = getenv( 'WP_TESTS_PHPUNIT_POLYFILLS_PATH' );
 if ( false !== $_phpunit_polyfills_path ) {
 	define( 'WP_TESTS_PHPUNIT_POLYFILLS_PATH', $_phpunit_polyfills_path );
+} else {
+	$defaultPhpUnitPolyfillsPath = dirname( __DIR__ ) . '/vendor/yoast/phpunit-polyfills';
+	if ( is_dir( $defaultPhpUnitPolyfillsPath ) ) {
+		define( 'WP_TESTS_PHPUNIT_POLYFILLS_PATH', $defaultPhpUnitPolyfillsPath );
+	}
 }
 
 if ( ! file_exists( "{$_tests_dir}/includes/functions.php" ) ) {

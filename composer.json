@@ -62,7 +62,8 @@
         "brainmaestro/composer-git-hooks": "^2.8",
         "phpstan/phpstan": "2.0.x-dev",
         "php-stubs/wordpress-stubs": "dev-master",
-        "phpunit/phpunit": "^9.6"
+        "phpunit/phpunit": "^9.6",
+        "yoast/phpunit-polyfills": "^3.0"
     },
     "config": {
         "allow-plugins": {

@@ -8,6 +8,7 @@ on:
 
 env:
   XDEBUG_MODE: off
+  WP_TESTS_PHPUNIT_POLYFILLS_PATH: ${{ github.workspace }}/vendor/yoast/phpunit-polyfills
 
 jobs:
   integration:
