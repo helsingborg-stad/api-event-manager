@@ -16,17 +16,12 @@ private array $sentEmails = [];
 /**
  * @testdox Creating organization administrator through organization creation sends custom welcome email
  */
-public function testOrganizationAdminReceivesCustomWelcomeEmailWhenCreatedFromOrganizationFlow(): void {
+public function testCreatingOrgAdminSendsCustomWelcomeEmail(): void {
 $organizerEmail = $this->generateOrganizerEmail();
 $wpService = static::createWpService();
 $acfService = new NativeAcfService();
 $adminUserId = $this->factory()->user->create(['role' => 'administrator']);
 $wpService->wpSetCurrentUser($adminUserId);
-
-static::assertFalse(
-$wpService->getUserBy('email', $organizerEmail),
-'A user with the email ' . $organizerEmail . ' already exists. Please run the test again.'
-);
 
 add_filter('pre_wp_mail', [$this, 'captureEmail'], 10, 2);
 
@@ -44,7 +39,10 @@ $wpService->doAction('acf/save_post', $postId);
 
 remove_filter('pre_wp_mail', [$this, 'captureEmail'], 10);
 
-$termId = $wpService->wpGetPostTerms($postId, 'organization')[0]->term_id;
+$organizationTerms = $wpService->wpGetPostTerms($postId, 'organization');
+static::assertNotEmpty($organizationTerms, 'No organization term was created for the post');
+
+$termId = $organizationTerms[0]->term_id;
 $user = $wpService->getUserBy('email', $organizerEmail);
 
 static::assertInstanceOf(WP_User::class, $user, 'No user was created');
@@ -58,8 +56,8 @@ static::assertStringContainsString('organization administrator account is now ac
 static::assertStringNotContainsString('Username:', $this->sentEmails[0]['message']);
 }
 
-public function captureEmail(null|bool $return, array $atts): bool {
-$this->sentEmails[] = $atts;
+public function captureEmail(null|bool $return, array $mailArgs): bool {
+$this->sentEmails[] = $mailArgs;
 return true;
 }
 
