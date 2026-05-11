@@ -246,9 +246,14 @@ class App
         $emailNotificationSender               = new \EventManager\NotificationServices\EmailNotificationService($this->wpService);
         $memberAddedToOrganizationNotification = new \EventManager\Notifications\MemberAddedToOrganization($emailNotificationSender, $this->wpService);
         $pendingEventCreatedNotification       = new \EventManager\Notifications\PendingEventCreated($emailNotificationSender, $this->wpService);
+        $organizationAdminWelcomeNotification  = new \EventManager\Notifications\OrganizationAdministratorWelcomeEmail(
+            $this->wpService,
+            new \EventManager\Notifications\Content\OrganizationAdministratorWelcomeEmailTemplate()
+        );
 
         $this->hooksRegistrar->register($userAddedToOrganizationEvent);
         $this->hooksRegistrar->register($memberAddedToOrganizationNotification);
         $this->hooksRegistrar->register($pendingEventCreatedNotification);
+        $this->hooksRegistrar->register($organizationAdminWelcomeNotification);
     }
 }
