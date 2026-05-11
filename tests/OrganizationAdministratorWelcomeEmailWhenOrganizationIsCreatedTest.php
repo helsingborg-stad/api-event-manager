@@ -13,6 +13,17 @@ class OrganizationAdministratorWelcomeEmailWhenOrganizationIsCreatedTest extends
 
 private array $sentEmails = [];
 
+protected function setUp(): void {
+parent::setUp();
+$this->sentEmails = [];
+add_filter('pre_wp_mail', [$this, 'captureEmail'], 10, 2);
+}
+
+protected function tearDown(): void {
+remove_filter('pre_wp_mail', [$this, 'captureEmail'], 10);
+parent::tearDown();
+}
+
 /**
  * @testdox Creating organization administrator through organization creation sends custom welcome email
  */
@@ -22,8 +33,6 @@ $wpService = static::createWpService();
 $acfService = new NativeAcfService();
 $adminUserId = $this->factory()->user->create(['role' => 'administrator']);
 $wpService->wpSetCurrentUser($adminUserId);
-
-add_filter('pre_wp_mail', [$this, 'captureEmail'], 10, 2);
 
 $postId = $wpService->wpInsertPost($this->getDraftEventPostData());
 
@@ -37,8 +46,6 @@ $wpService->wpUpdatePost([
 
 $wpService->doAction('acf/save_post', $postId);
 
-remove_filter('pre_wp_mail', [$this, 'captureEmail'], 10);
-
 $organizationTerms = $wpService->wpGetPostTerms($postId, 'organization');
 static::assertNotEmpty($organizationTerms, 'No organization term was created for the post');
 
@@ -47,7 +54,7 @@ $user = $wpService->getUserBy('email', $organizerEmail);
 
 static::assertInstanceOf(WP_User::class, $user, 'No user was created');
 static::assertContains('organization_administrator', $user->roles, 'The user does not have the correct role');
-static::assertContains($termId, $acfService->getField('organizations', 'user_' . $user->ID) ?? [], 'The organization term ID was not added to the user');
+static::assertContains($termId, $acfService->getField('organizations', 'user_' . $user->ID) ?? [], 'The organization term ID should be added to the user');
 
 $recipientEmails = array_values(array_filter(
 $this->sentEmails,
