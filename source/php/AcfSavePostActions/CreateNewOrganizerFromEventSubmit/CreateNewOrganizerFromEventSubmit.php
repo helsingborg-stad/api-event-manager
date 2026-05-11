@@ -63,7 +63,7 @@ class CreateNewOrganizerFromEventSubmit implements IAcfSavePostAction
 
         /**
          * Fires after an organizer term has been created and assigned to the event.
-         * 
+         *
          * @param int $postId The ID of the event post.
          * @param int $termId The ID of the created organizer term.
          * @param OrganizerData\IOrganizerData[] $organizersData An array of organizer data objects that were created from the submitted fields.

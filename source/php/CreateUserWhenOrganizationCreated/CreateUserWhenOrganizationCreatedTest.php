@@ -15,12 +15,14 @@ use WpService\Contracts\WpCreateUser;
 use WpService\Contracts\WpGeneratePassword;
 use WpService\Contracts\WpUpdateUser;
 
-class CreateUserWhenOrganizationCreatedTest extends TestCase {
+class CreateUserWhenOrganizationCreatedTest extends TestCase
+{
     /**
      * @testdox hooks into EventManager/OrganizationCreated
      */
-    public function testHooksIntoOrganizationCreated(): void {
-        $wpService = static::createWpService();
+    public function testHooksIntoOrganizationCreated(): void
+    {
+        $wpService  = static::createWpService();
         $acfService = static::createAcfService();
 
         $instance = new CreateUserWhenOrganizationCreated($wpService, $acfService);
@@ -34,10 +36,11 @@ class CreateUserWhenOrganizationCreatedTest extends TestCase {
     /**
      * @testdox does not create a user if the user already exists
      */
-    public function testDoesNotCreateUserIfUserAlreadyExists(): void {
-        $wpService = static::createWpService();
-        $acfService = static::createAcfService();
-        $existingUser = new WP_User(123);
+    public function testDoesNotCreateUserIfUserAlreadyExists(): void
+    {
+        $wpService                = static::createWpService();
+        $acfService               = static::createAcfService();
+        $existingUser             = new WP_User(123);
         $wpService->existingUsers = ['existing.user@example.com' => $existingUser];
 
         $instance = new CreateUserWhenOrganizationCreated($wpService, $acfService);
@@ -50,8 +53,9 @@ class CreateUserWhenOrganizationCreatedTest extends TestCase {
     /**
      * @testdox creates a user when an organization is created and no user with the same email exists
      */
-    public function testCreatesUserWhenOrganizationCreated(): void {
-        $wpService = static::createWpService();
+    public function testCreatesUserWhenOrganizationCreated(): void
+    {
+        $wpService  = static::createWpService();
         $acfService = static::createAcfService();
 
         $instance = new CreateUserWhenOrganizationCreated($wpService, $acfService);
@@ -66,8 +70,9 @@ class CreateUserWhenOrganizationCreatedTest extends TestCase {
     /**
      * @testdox returns early when no organizer data is provided
      */
-    public function testReturnsEarlyWhenNoOrganizerDataIsProvided(): void {
-        $wpService = static::createWpService();
+    public function testReturnsEarlyWhenNoOrganizerDataIsProvided(): void
+    {
+        $wpService  = static::createWpService();
         $acfService = static::createAcfService();
 
         $instance = new CreateUserWhenOrganizationCreated($wpService, $acfService);
@@ -82,9 +87,10 @@ class CreateUserWhenOrganizationCreatedTest extends TestCase {
     /**
      * @testdox skips setting role and updating user when wpCreateUser fails
      */
-    public function testSkipsRoleAndUpdateWhenUserCreationFails(): void {
-        $wpService = static::createWpService();
-        $acfService = static::createAcfService();
+    public function testSkipsRoleAndUpdateWhenUserCreationFails(): void
+    {
+        $wpService                     = static::createWpService();
+        $acfService                    = static::createAcfService();
         $wpService->wpCreateUserResult = new WP_Error('user_creation_failed', 'Could not create user');
 
         $instance = new CreateUserWhenOrganizationCreated($wpService, $acfService);
@@ -99,19 +105,20 @@ class CreateUserWhenOrganizationCreatedTest extends TestCase {
     /**
      * @testdox sets organization_admin role for a newly created user
      */
-    public function testSetsOrganizationAdminRoleForCreatedUser(): void {
-        $wpService = static::createWpService();
-        $acfService = static::createAcfService();
+    public function testSetsOrganizationAdminRoleForCreatedUser(): void
+    {
+        $wpService                     = static::createWpService();
+        $acfService                    = static::createAcfService();
         $wpService->wpCreateUserResult = 456;
-        $wpUser = new class(456) extends WP_User {
+        $wpUser                        = new class (456) extends WP_User {
             public ?string $roleSet = null;
 
-            public function set_role($role): void
+            public function set_role($role): void // phpcs:ignore PSR1.Methods.CamelCapsMethodName.NotCamelCaps
             {
                 $this->roleSet = $role;
             }
         };
-        $wpService->userdataResult = $wpUser;
+        $wpService->userdataResult     = $wpUser;
 
         $instance = new CreateUserWhenOrganizationCreated($wpService, $acfService);
         $instance->createUserForOrganization(1, 1, [static::createOrganizerData()]);
@@ -125,7 +132,8 @@ class CreateUserWhenOrganizationCreatedTest extends TestCase {
         ], $acfService->calls);
     }
 
-    private static function createOrganizerData(?string $email = null): IOrganizerData {
+    private static function createOrganizerData(?string $email = null): IOrganizerData
+    {
         return new OrganizerData(
             'Test Organizer',
             $email ?? 'test' . rand(1000, 9999) . '@example.com',
@@ -140,26 +148,25 @@ class CreateUserWhenOrganizationCreatedTest extends TestCase {
     private static function createWpService(): AddAction&GetUserBy&WpCreateUser&WpGeneratePassword&WpUpdateUser&GetUserdata
     {
         return new class implements AddAction, GetUserBy, WpCreateUser, WpGeneratePassword, WpUpdateUser, GetUserdata {
-
-            public array $addedActions = [];
-            public array $createdUsers = [];
-            public array $wpCreateUserCalls = [];
-            public array $existingUsers = [];
-            public array $getUserdataCalls = [];
-            public int $wpGeneratePasswordCalls = 0;
+            public array $addedActions              = [];
+            public array $createdUsers              = [];
+            public array $wpCreateUserCalls         = [];
+            public array $existingUsers             = [];
+            public array $getUserdataCalls          = [];
+            public int $wpGeneratePasswordCalls     = 0;
             public int|WP_Error $wpCreateUserResult = 123;
-            public array $updatedUsers = [];
-            public WP_User|false $userdataResult = false;
+            public array $updatedUsers              = [];
+            public WP_User|false $userdataResult    = false;
 
             public function __construct()
             {
-                $this->userdataResult = new class(123) extends WP_User {
-                    public function set_role($role): void
+                $this->userdataResult = new class (123) extends WP_User {
+                    public function set_role($role): void // phpcs:ignore PSR1.Methods.CamelCapsMethodName.NotCamelCaps
                     {
                     }
                 };
             }
-            
+
             public function addAction(string $hookName, callable $callback, int $priority = 10, int $acceptedArgs = 1): true
             {
                 $this->addedActions[] = func_get_args();
@@ -168,7 +175,7 @@ class CreateUserWhenOrganizationCreatedTest extends TestCase {
 
             public function getUserBy(string $field, int|string $value): WP_User|false
             {
-                if($field === 'email' && isset($this->existingUsers[$value]) ) {
+                if ($field === 'email' && isset($this->existingUsers[$value])) {
                     return $this->existingUsers[$value];
                 }
 
@@ -179,7 +186,7 @@ class CreateUserWhenOrganizationCreatedTest extends TestCase {
             {
                 $this->wpCreateUserCalls[] = func_get_args();
 
-                if( !($this->wpCreateUserResult instanceof WP_Error) ) {
+                if (!($this->wpCreateUserResult instanceof WP_Error)) {
                     $this->createdUsers[] = $this->wpCreateUserResult;
                 }
 
@@ -203,7 +210,6 @@ class CreateUserWhenOrganizationCreatedTest extends TestCase {
                 $this->getUserdataCalls[] = $userId;
                 return $this->userdataResult;
             }
-
         };
     }
 
