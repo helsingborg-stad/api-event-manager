@@ -17,6 +17,7 @@ use EventManager\TagReader\TagReader;
 use EventManager\ContentExpirationManagement\ExpiredEvents;
 use EventManager\CronScheduler\CronSchedulerInterface;
 use EventManager\HooksRegistrar\HooksRegistrarInterface;
+use WP_User;
 use WpService\WpService;
 
 class App
@@ -242,18 +243,10 @@ class App
 
     public function setupNotifications(): void
     {
-        $userAddedToOrganizationEvent          = new \EventManager\Notifications\Events\UserAddedToOrganization($this->wpService);
-        $emailNotificationSender               = new \EventManager\NotificationServices\EmailNotificationService($this->wpService);
-        $memberAddedToOrganizationNotification = new \EventManager\Notifications\MemberAddedToOrganization($emailNotificationSender, $this->wpService);
-        $pendingEventCreatedNotification       = new \EventManager\Notifications\PendingEventCreated($emailNotificationSender, $this->wpService);
-        $organizationAdminWelcomeNotification  = new \EventManager\Notifications\OrganizationAdministratorWelcomeEmail(
-            $this->wpService,
-            new \EventManager\Notifications\Content\OrganizationAdministratorWelcomeEmailTemplate()
-        );
+        $notificationsSender   = new \EventManager\Notifications\EmailNotificationSender($this->wpService);
+        $notificationsConfig   = new \EventManager\Notifications\NotificationsConfig($notificationsSender);
+        $notificationsDirector = new \EventManager\Notifications\NotificationsDirector($notificationsConfig);
 
-        $this->hooksRegistrar->register($userAddedToOrganizationEvent);
-        $this->hooksRegistrar->register($memberAddedToOrganizationNotification);
-        $this->hooksRegistrar->register($pendingEventCreatedNotification);
-        $this->hooksRegistrar->register($organizationAdminWelcomeNotification);
+        $this->hooksRegistrar->register(new \EventManager\Notifications\SendNotificationsOnHooks($this->wpService, $notificationsDirector));
     }
 }
