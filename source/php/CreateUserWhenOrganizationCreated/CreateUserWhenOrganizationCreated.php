@@ -16,7 +16,7 @@ use WpService\Contracts\WpUpdateUser;
 
 class CreateUserWhenOrganizationCreated implements Hookable
 {
-    public function __construct(private AddAction&GetUserBy&WpCreateUser&WpGeneratePassword&GetUserdata&WpUpdateUser&WpNewUserNotification&DoAction $wpService, private UpdateField $acfService)
+    public function __construct(private AddAction&GetUserBy&WpCreateUser&WpGeneratePassword&GetUserdata&WpUpdateUser&DoAction $wpService, private UpdateField $acfService)
     {
     }
 
@@ -59,7 +59,6 @@ class CreateUserWhenOrganizationCreated implements Hookable
             $wpUser->set_role('organization_administrator');
             $this->wpService->wpUpdateUser($wpUser);
             $this->acfService->updateField('organizations', [$termId], 'user_' . $userId);
-            $this->wpService->wpNewUserNotification($wpUser->ID, null, 'user');
 
             $this->wpService->doAction('EventManager/OrganizationUserCreated', $wpUser);
         }

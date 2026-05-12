@@ -9,10 +9,12 @@ use PHPUnit\Framework\TestCase;
 use WP_Error;
 use WP_User;
 use WpService\Contracts\AddAction;
+use WpService\Contracts\DoAction;
 use WpService\Contracts\GetUserBy;
 use WpService\Contracts\GetUserdata;
 use WpService\Contracts\WpCreateUser;
 use WpService\Contracts\WpGeneratePassword;
+use WpService\Contracts\WpNewUserNotification;
 use WpService\Contracts\WpUpdateUser;
 
 class CreateUserWhenOrganizationCreatedTest extends TestCase
@@ -145,9 +147,9 @@ class CreateUserWhenOrganizationCreatedTest extends TestCase
     }
 
 
-    private static function createWpService(): AddAction&GetUserBy&WpCreateUser&WpGeneratePassword&WpUpdateUser&GetUserdata
+    private static function createWpService(): AddAction&GetUserBy&WpCreateUser&WpGeneratePassword&WpUpdateUser&GetUserdata&DoAction
     {
-        return new class implements AddAction, GetUserBy, WpCreateUser, WpGeneratePassword, WpUpdateUser, GetUserdata {
+        return new class implements AddAction, GetUserBy, WpCreateUser, WpGeneratePassword, WpUpdateUser, GetUserdata, DoAction  {
             public array $addedActions              = [];
             public array $createdUsers              = [];
             public array $wpCreateUserCalls         = [];
@@ -209,6 +211,10 @@ class CreateUserWhenOrganizationCreatedTest extends TestCase
             {
                 $this->getUserdataCalls[] = $userId;
                 return $this->userdataResult;
+            }
+
+            public function doAction(string $hookName, mixed ...$arg): void
+            {
             }
         };
     }
