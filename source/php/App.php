@@ -248,5 +248,6 @@ class App
         $notificationsDirector = new \EventManager\Notifications\NotificationsDirector($notificationsConfig);
 
         $this->hooksRegistrar->register(new \EventManager\Notifications\SendNotificationsOnHooks($this->wpService, $notificationsDirector));
+        $this->hooksRegistrar->register(new \EventManager\Notifications\NotificationsEditor\NotificationsEditor($this->acfService, $this->wpService));
     }
 }
