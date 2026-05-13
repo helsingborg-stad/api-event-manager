@@ -1,7 +1,4 @@
 {
-    "intelephense.environment.includePaths": [
-        "/tmp/wordpress-tests-lib"
-    ],
     "phpSniffer.run": "onSave",
     "phpSniffer.executablesFolder": "./vendor/bin/",
     "phpSniffer.standard": "./phpcs.xml",

@@ -244,9 +244,11 @@ class App
     public function setupNotifications(): void
     {
         $notificationsSender   = new \EventManager\Notifications\EmailNotificationSender($this->wpService);
-        $notificationsConfig   = new \EventManager\Notifications\NotificationsConfig($notificationsSender);
+        $markdownParser        = new \EventManager\Notifications\MarkdownParser\MarkdownParser();
+        $notificationsConfig   = new \EventManager\Notifications\NotificationsConfig($notificationsSender, $this->acfService, $markdownParser, $this->wpService);
         $notificationsDirector = new \EventManager\Notifications\NotificationsDirector($notificationsConfig);
 
         $this->hooksRegistrar->register(new \EventManager\Notifications\SendNotificationsOnHooks($this->wpService, $notificationsDirector));
+        $this->hooksRegistrar->register(new \EventManager\Notifications\NotificationsEditor\NotificationsEditor($this->acfService, $this->wpService));
     }
 }
