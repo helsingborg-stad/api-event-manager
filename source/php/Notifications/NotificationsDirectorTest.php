@@ -12,6 +12,7 @@ class NotificationsDirectorTest extends TestCase
     public function testGetNotificationForNewOrganizationAdminUser(): void
     {
         $user             = new \WP_User();
+        $user->user_login = 'testuser';
         $user->user_email = 'test@example.com';
         $config           = static::createConfig();
 
@@ -51,7 +52,7 @@ class NotificationsDirectorTest extends TestCase
                 return 'Test subject for new organization member';
             }
 
-            public function getNotificationMessageForNewOrganizationAdminUser(): string
+            public function getNotificationMessageForNewOrganizationAdminUser(\WP_User $user): string
             {
                 return 'Test message for new organization member';
             }

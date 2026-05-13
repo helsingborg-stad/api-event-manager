@@ -11,7 +11,7 @@ class NotificationsDirector implements NotificationsDirectorInterface
     public function sendNotificationForNewOrganizationAdminUser(\WP_User $user): void
     {
         $subject    = $this->config->getNotificationSubjectForNewOrganizationAdminUser();
-        $message    = $this->config->getNotificationMessageForNewOrganizationAdminUser();
+        $message    = $this->config->getNotificationMessageForNewOrganizationAdminUser($user);
         $recipients = [$user->user_email];
 
         $this->config->getNotificationSender()->send(new Notification($subject, $message, $recipients));

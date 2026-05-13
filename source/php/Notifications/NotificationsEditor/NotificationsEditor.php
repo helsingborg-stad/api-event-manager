@@ -9,6 +9,8 @@ use WpService\Contracts\AddAction;
 
 class NotificationsEditor implements Hookable
 {
+    public const NEW_ORGANIZATION_ADMIN_USER_NOTIFICATION_GROUP = 'notification_new_organization_admin_user';
+
     public function __construct(private AddLocalFieldGroup $acfService, private AddAction&__ $wpService)
     {
     }
@@ -34,22 +36,22 @@ class NotificationsEditor implements Hookable
                 ],
                 [
                     'type'       => 'group',
-                    'name'       => 'notification_new_organization_admin_user',
+                    'name'       => static::NEW_ORGANIZATION_ADMIN_USER_NOTIFICATION_GROUP,
                     'key'        => 'field_notification_new_organization_admin_user',
                     'label'      => $this->wpService->__('New organization admin user', 'api-event-manager'),
                     'sub_fields' => [
                         [
-                            'key'          => 'field_notification_subject_new_organization_admin_user',
+                            'key'          => 'field_' . self::NEW_ORGANIZATION_ADMIN_USER_NOTIFICATION_GROUP . '_subject',
                             'label'        => $this->wpService->__('Subject', 'api-event-manager'),
-                            'name'         => 'notification_subject_new_organization_admin_user',
+                            'name'         => 'subject',
                             'type'         => 'text',
                             'instructions' => '',
                             'required'     => 1,
                         ],
                         [
-                            'key'          => 'field_notification_message_new_organization_admin_user',
+                            'key'          => 'field_' . self::NEW_ORGANIZATION_ADMIN_USER_NOTIFICATION_GROUP . '_message',
                             'label'        => $this->wpService->__('Message', 'api-event-manager'),
-                            'name'         => 'notification_message_new_organization_admin_user',
+                            'name'         => 'message',
                             'type'         => 'textarea',
                             'instructions' => $this->wpService->__('Variables available for use in the message: {username}, {passwordResetUrl}, {loginUrl}', 'api-event-manager'),
                             'required'     => 1,
