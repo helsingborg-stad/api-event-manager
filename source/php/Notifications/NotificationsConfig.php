@@ -5,7 +5,7 @@ namespace EventManager\Notifications;
 use AcfService\Contracts\GetField;
 use EventManager\Notifications\MarkdownParser\MarkdownParserInterface;
 use EventManager\Notifications\NotificationsEditor\NotificationsEditor;
-use Parsedown;
+use WpService\Contracts\AddQueryArg;
 use WpService\Contracts\__;
 use WpService\Contracts\GetPasswordResetKey;
 use WpService\Contracts\NetworkSiteUrl;
@@ -17,7 +17,7 @@ class NotificationsConfig implements NotificationsConfigInterface
         private NotificationSenderInterface $notificationSender,
         private GetField $acfService,
         private MarkdownParserInterface $markdownParser,
-        private NetworkSiteUrl&GetPasswordResetKey&WpLoginUrl&__ $wpService
+        private AddQueryArg&GetPasswordResetKey&NetworkSiteUrl&WpLoginUrl&__ $wpService
     ) {
     }
 
@@ -38,7 +38,11 @@ class NotificationsConfig implements NotificationsConfigInterface
         $key          = $this->wpService->getPasswordResetKey($user);
         $replacements = [
             'username'         => $user->user_login,
-            'passwordResetUrl' => $this->wpService->networkSiteUrl('wp-login.php?login=' . rawurlencode($user->user_login) . "&key=$key&action=rp", 'login'),
+            'passwordResetUrl' => $this->wpService->addQueryArg([
+                'login'  => $user->user_login,
+                'key'    => $key,
+                'action' => 'rp'
+            ], $this->wpService->networkSiteUrl('wp-login.php', 'login')),
             'loginUrl'         => $this->wpService->wpLoginUrl()
         ];
 
@@ -56,7 +60,8 @@ class NotificationsConfig implements NotificationsConfigInterface
     private static function replaceVariablesInMessage(string $text, array $replacements): string
     {
         foreach ($replacements as $key => $value) {
-            $text = str_replace("{" . $key . "}", $value, $text);
+            $replacementValue = is_scalar($value) ? (string) $value : '';
+            $text             = str_replace("{" . $key . "}", $replacementValue, $text);
         }
         return $text;
     }
