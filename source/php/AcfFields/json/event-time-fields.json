@@ -25,6 +25,7 @@
             "collapsed": "",
             "button_label": "Add occation",
             "rows_per_page": 20,
+            "acfe_repeater_stylised_button": 0,
             "sub_fields": [
                 {
                     "key": "field_68d28f0c8845b",
@@ -209,6 +210,48 @@
                     "parent_repeater": "field_68d28f0c845d0"
                 },
                 {
+                    "key": "field_6a0ad41242867",
+                    "label": "Status",
+                    "name": "status",
+                    "aria-label": "",
+                    "type": "select",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_68d28f0c8845b",
+                                "operator": "!=",
+                                "value": "byWeek"
+                            }
+                        ]
+                    ],
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "is_publicly_hidden": 0,
+                    "is_privately_hidden": 0,
+                    "choices": {
+                        "scheduled": "Scheduled",
+                        "canceled": "Canceled"
+                    },
+                    "default_value": "scheduled",
+                    "return_format": "value",
+                    "multiple": 0,
+                    "allow_null": 0,
+                    "allow_in_bindings": 0,
+                    "ui": 0,
+                    "ajax": 0,
+                    "placeholder": "",
+                    "create_options": 0,
+                    "save_options": 0,
+                    "allow_custom": 0,
+                    "search_placeholder": "",
+                    "parent_repeater": "field_68d28f0c845d0"
+                },
+                {
                     "key": "field_68d28f0c8abbe",
                     "label": "Booking page URL",
                     "name": "url",
@@ -294,6 +337,10 @@
     "show_in_rest": 1,
     "display_title": "",
     "allow_ai_access": false,
-    "ai_description": ""
+    "ai_description": "",
+    "acfe_autosync": "",
+    "acfe_form": 0,
+    "acfe_meta": "",
+    "acfe_note": ""
 }]
 

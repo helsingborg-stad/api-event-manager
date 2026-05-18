@@ -2,14 +2,14 @@
 # This file is distributed under the MIT.
 msgid ""
 msgstr ""
-"Project-Id-Version: Event Manager 3.13.0\n"
+"Project-Id-Version: Event Manager 3.18.2\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/api-event-manager\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-02-09T10:38:08+00:00\n"
+"POT-Creation-Date: 2026-05-18T08:59:17+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: api-event-manager\n"
@@ -67,7 +67,7 @@ msgid "Choose the accessibility features that will be available to attendees at 
 msgstr ""
 
 #: source/php/AcfFields/php/event-organizer-fields.php:8
-#: source/php/App.php:100
+#: source/php/App.php:107
 msgid "Organizer"
 msgstr ""
 
@@ -91,43 +91,44 @@ msgstr ""
 msgid "New organizers"
 msgstr ""
 
-#: source/php/AcfFields/php/event-organizer-fields.php:103
+#: source/php/AcfFields/php/event-organizer-fields.php:102
 msgid "Add row"
 msgstr ""
 
-#: source/php/AcfFields/php/event-organizer-fields.php:108
+#: source/php/AcfFields/php/event-organizer-fields.php:107
 msgid "Name"
 msgstr ""
 
-#: source/php/AcfFields/php/event-organizer-fields.php:112
+#: source/php/AcfFields/php/event-organizer-fields.php:111
 msgid "Name of the organization"
 msgstr ""
 
-#: source/php/AcfFields/php/event-organizer-fields.php:132
+#: source/php/AcfFields/php/event-organizer-fields.php:131
 #: source/php/AcfFields/php/organization-fields.php:91
 msgid "Contact"
 msgstr ""
 
-#: source/php/AcfFields/php/event-organizer-fields.php:136
+#: source/php/AcfFields/php/event-organizer-fields.php:135
 msgid "Supply the name(first and last) of the organizations contact person"
 msgstr ""
 
-#: source/php/AcfFields/php/event-organizer-fields.php:156
+#: source/php/AcfFields/php/event-organizer-fields.php:155
 #: source/php/AcfFields/php/organization-fields.php:52
 msgid "Email"
 msgstr ""
 
-#: source/php/AcfFields/php/event-organizer-fields.php:179
+#: source/php/AcfFields/php/event-organizer-fields.php:178
 #: source/php/AcfFields/php/organization-fields.php:71
 msgid "Telephone"
 msgstr ""
 
-#: source/php/AcfFields/php/event-organizer-fields.php:203
+#: source/php/AcfFields/php/event-organizer-fields.php:202
 #: source/php/AcfFields/php/organization-fields.php:12
 msgid "Address"
 msgstr ""
 
-#: source/php/AcfFields/php/event-organizer-fields.php:227
+#: source/php/AcfFields/php/event-organizer-fields.php:226
+#: source/php/AcfFields/php/event-presentation-fields.php:42
 #: source/php/AcfFields/php/organization-fields.php:35
 msgid "Url"
 msgstr ""
@@ -176,6 +177,10 @@ msgstr ""
 msgid "Make your event stand out by uploading high-resolution images. Your event image is often the first thing attendees notice, so choose visuals that capture attention and spark interest. Images will appear in the order they are uploaded."
 msgstr ""
 
+#: source/php/AcfFields/php/event-presentation-fields.php:46
+msgid "The provided URL should lead to the home website of the event."
+msgstr ""
+
 #: source/php/AcfFields/php/event-prices-fields.php:8
 #: source/php/AcfFields/php/event-prices-fields.php:12
 msgid "Prices"
@@ -221,87 +226,103 @@ msgstr ""
 msgid "Add occation"
 msgstr ""
 
-#: source/php/AcfFields/php/event-time-fields.php:36
+#: source/php/AcfFields/php/event-time-fields.php:37
 msgid "Repeat"
 msgstr ""
 
-#: source/php/AcfFields/php/event-time-fields.php:51
+#: source/php/AcfFields/php/event-time-fields.php:52
 msgid "No"
 msgstr ""
 
-#: source/php/AcfFields/php/event-time-fields.php:52
+#: source/php/AcfFields/php/event-time-fields.php:53
 msgid "Weekly occasion"
 msgstr ""
 
-#: source/php/AcfFields/php/event-time-fields.php:54
+#: source/php/AcfFields/php/event-time-fields.php:55
 msgid "no"
 msgstr ""
 
-#: source/php/AcfFields/php/event-time-fields.php:63
+#: source/php/AcfFields/php/event-time-fields.php:64
 msgid "Every"
 msgstr ""
 
-#: source/php/AcfFields/php/event-time-fields.php:89
+#: source/php/AcfFields/php/event-time-fields.php:90
 msgid "week/weeks"
 msgstr ""
 
-#: source/php/AcfFields/php/event-time-fields.php:94
+#: source/php/AcfFields/php/event-time-fields.php:95
 msgid "Day"
 msgstr ""
 
-#: source/php/AcfFields/php/event-time-fields.php:115
+#: source/php/AcfFields/php/event-time-fields.php:116
 msgid "Mon"
 msgstr ""
 
-#: source/php/AcfFields/php/event-time-fields.php:116
+#: source/php/AcfFields/php/event-time-fields.php:117
 msgid "Tue"
 msgstr ""
 
-#: source/php/AcfFields/php/event-time-fields.php:117
+#: source/php/AcfFields/php/event-time-fields.php:118
 msgid "Wed"
 msgstr ""
 
-#: source/php/AcfFields/php/event-time-fields.php:118
+#: source/php/AcfFields/php/event-time-fields.php:119
 msgid "Thu"
 msgstr ""
 
-#: source/php/AcfFields/php/event-time-fields.php:119
+#: source/php/AcfFields/php/event-time-fields.php:120
 msgid "Fri"
 msgstr ""
 
-#: source/php/AcfFields/php/event-time-fields.php:120
+#: source/php/AcfFields/php/event-time-fields.php:121
 msgid "Sat"
 msgstr ""
 
-#: source/php/AcfFields/php/event-time-fields.php:121
+#: source/php/AcfFields/php/event-time-fields.php:122
 msgid "Sun"
 msgstr ""
 
-#: source/php/AcfFields/php/event-time-fields.php:135
+#: source/php/AcfFields/php/event-time-fields.php:136
 msgid "Date"
 msgstr ""
 
-#: source/php/AcfFields/php/event-time-fields.php:155
+#: source/php/AcfFields/php/event-time-fields.php:156
 msgid "Until Date"
 msgstr ""
 
-#: source/php/AcfFields/php/event-time-fields.php:183
+#: source/php/AcfFields/php/event-time-fields.php:184
 msgid "Start time"
 msgstr ""
 
-#: source/php/AcfFields/php/event-time-fields.php:201
+#: source/php/AcfFields/php/event-time-fields.php:202
 msgid "End time"
 msgstr ""
 
-#: source/php/AcfFields/php/event-time-fields.php:219
+#: source/php/AcfFields/php/event-time-fields.php:220
+msgid "Status"
+msgstr ""
+
+#: source/php/AcfFields/php/event-time-fields.php:243
+msgid "Scheduled"
+msgstr ""
+
+#: source/php/AcfFields/php/event-time-fields.php:244
+msgid "Canceled"
+msgstr ""
+
+#: source/php/AcfFields/php/event-time-fields.php:246
+msgid "scheduled"
+msgstr ""
+
+#: source/php/AcfFields/php/event-time-fields.php:262
 msgid "Booking page URL"
 msgstr ""
 
-#: source/php/AcfFields/php/event-time-fields.php:237
+#: source/php/AcfFields/php/event-time-fields.php:280
 msgid "Description"
 msgstr ""
 
-#: source/php/AcfFields/php/event-time-fields.php:241
+#: source/php/AcfFields/php/event-time-fields.php:284
 msgid "Specific information about this occasion"
 msgstr ""
 
@@ -387,7 +408,7 @@ msgstr ""
 msgid "Failed to create organizer term: %s"
 msgstr ""
 
-#: source/php/App.php:103
+#: source/php/App.php:110
 msgid "Location"
 msgstr ""
 
@@ -397,6 +418,35 @@ msgstr ""
 
 #: source/php/FieldSettingHidePublic.php:27
 msgid "Hide in frontend forms"
+msgstr ""
+
+#: source/php/Notifications/NotificationsConfig.php:52
+msgid "You have been added as an administrator for your organization. You can now manage your organization and its events. To set your password, please click the following link: {passwordResetUrl}"
+msgstr ""
+
+#: source/php/Notifications/NotificationsEditor/NotificationsEditor.php:28
+msgid "Notifications"
+msgstr ""
+
+#: source/php/Notifications/NotificationsEditor/NotificationsEditor.php:35
+#, php-format
+msgid "Configure notifications sent out by the event manager, %suse markdown%s in the message field to format the content."
+msgstr ""
+
+#: source/php/Notifications/NotificationsEditor/NotificationsEditor.php:41
+msgid "New organization admin user"
+msgstr ""
+
+#: source/php/Notifications/NotificationsEditor/NotificationsEditor.php:45
+msgid "Subject"
+msgstr ""
+
+#: source/php/Notifications/NotificationsEditor/NotificationsEditor.php:53
+msgid "Message"
+msgstr ""
+
+#: source/php/Notifications/NotificationsEditor/NotificationsEditor.php:56
+msgid "Variables available for use in the message: {username}, {passwordResetUrl}, {loginUrl}"
 msgstr ""
 
 #: source/php/PostTypes/Event.php:30

@@ -28,6 +28,7 @@
             'collapsed' => '',
             'button_label' => __('Add occation', 'api-event-manager'),
             'rows_per_page' => 20,
+            'acfe_repeater_stylised_button' => 0,
             'sub_fields' => array(
                 0 => array(
                     'key' => 'field_68d28f0c8845b',
@@ -213,6 +214,48 @@
                     'parent_repeater' => 'field_68d28f0c845d0',
                 ),
                 7 => array(
+                    'key' => 'field_6a0ad41242867',
+                    'label' => __('Status', 'api-event-manager'),
+                    'name' => 'status',
+                    'aria-label' => '',
+                    'type' => 'select',
+                    'instructions' => '',
+                    'required' => 0,
+                    'conditional_logic' => array(
+                        0 => array(
+                            0 => array(
+                                'field' => 'field_68d28f0c8845b',
+                                'operator' => '!=',
+                                'value' => 'byWeek',
+                            ),
+                        ),
+                    ),
+                    'wrapper' => array(
+                        'width' => '',
+                        'class' => '',
+                        'id' => '',
+                    ),
+                    'is_publicly_hidden' => 0,
+                    'is_privately_hidden' => 0,
+                    'choices' => array(
+                        'scheduled' => __('Scheduled', 'api-event-manager'),
+                        'canceled' => __('Canceled', 'api-event-manager'),
+                    ),
+                    'default_value' => __('scheduled', 'api-event-manager'),
+                    'return_format' => 'value',
+                    'multiple' => 0,
+                    'allow_null' => 0,
+                    'allow_in_bindings' => 0,
+                    'ui' => 0,
+                    'ajax' => 0,
+                    'placeholder' => '',
+                    'create_options' => 0,
+                    'save_options' => 0,
+                    'allow_custom' => 0,
+                    'search_placeholder' => '',
+                    'parent_repeater' => 'field_68d28f0c845d0',
+                ),
+                8 => array(
                     'key' => 'field_68d28f0c8abbe',
                     'label' => __('Booking page URL', 'api-event-manager'),
                     'name' => 'url',
@@ -230,7 +273,7 @@
                     'placeholder' => '',
                     'parent_repeater' => 'field_68d28f0c845d0',
                 ),
-                8 => array(
+                9 => array(
                     'key' => 'field_68dd084d90dc7',
                     'label' => __('Description', 'api-event-manager'),
                     'name' => 'description',
@@ -299,5 +342,9 @@
     'display_title' => '',
     'allow_ai_access' => false,
     'ai_description' => '',
+    'acfe_autosync' => '',
+    'acfe_form' => 0,
+    'acfe_meta' => '',
+    'acfe_note' => '',
 ));
 }
