@@ -235,7 +235,7 @@
                         'class' => '',
                         'id' => '',
                     ),
-                    'is_publicly_hidden' => 0,
+                    'is_publicly_hidden' => 1,
                     'is_privately_hidden' => 0,
                     'choices' => array(
                         'scheduled' => __('Scheduled', 'api-event-manager'),
