@@ -46,7 +46,7 @@ class CreateUserWhenOrganizationCreated implements Hookable
             }
 
             $password = $this->wpService->wpGeneratePassword();
-            $userId   = $this->wpService->wpCreateUser($organizerData->getContact(), $password, $organizerData->getEmail());
+            $userId   = $this->wpService->wpCreateUser($organizerData->getEmail(), $password, $organizerData->getEmail());
 
             if ($userId instanceof \WP_Error) {
                 // Log error or handle it as needed. For now, we'll just skip creating this user.
