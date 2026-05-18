@@ -105,6 +105,22 @@ class CreateUserWhenOrganizationCreatedTest extends TestCase
     }
 
     /**
+     * @testdox uses e-mail address as user login when creating a new user
+     */
+    public function testUsesEmailAsUserLogin(): void
+    {
+        $wpService  = static::createWpService();
+        $acfService = static::createAcfService();
+        $email      = 'test' . rand(1000, 9999) . '@example.com';
+
+        $instance = new CreateUserWhenOrganizationCreated($wpService, $acfService);
+        $instance->createUserForOrganization(1, 1, [static::createOrganizerData($email)]);
+
+        $this->assertCount(1, $wpService->wpCreateUserCalls);
+        $this->assertSame($email, $wpService->wpCreateUserCalls[0][0], 'The email address should be used as the user login when creating a new user');
+    }
+
+    /**
      * @testdox sets organization_admin role for a newly created user
      */
     public function testSetsOrganizationAdminRoleForCreatedUser(): void
