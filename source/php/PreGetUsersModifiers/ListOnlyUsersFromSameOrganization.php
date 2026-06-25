@@ -38,6 +38,10 @@ class ListOnlyUsersFromSameOrganization implements IPreGetUsersModifier
 
     private function shouldModify(WP_User $user): bool
     {
+        if ($user->has_cap('administrator')) {
+            return false;
+        }
+
         return
             $this->wpService->isAdmin() &&
             $user->has_cap('organization_administrator') === true;

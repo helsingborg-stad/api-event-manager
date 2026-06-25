@@ -1,9 +1,16 @@
 <?php
 
-namespace EventManager\Taxonomies;
+namespace EventManager\Organizations;
 
-class Organization extends Taxonomy
+use EventManager\Taxonomies\Taxonomy;
+
+class OrganizationTaxonomy extends Taxonomy
 {
+    public function addHooks(): void
+    {
+        parent::addHooks();
+    }
+
     public function getName(): string
     {
         return 'organization';

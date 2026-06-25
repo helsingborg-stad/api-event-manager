@@ -149,11 +149,16 @@ class App
     public function setupTaxonomies(): void
     {
         $this->hooksRegistrar->register(new \EventManager\Taxonomies\Audience($this->wpService));
-        $this->hooksRegistrar->register(new \EventManager\Taxonomies\Organization($this->wpService));
         $this->hooksRegistrar->register(new \EventManager\Taxonomies\Keyword($this->wpService));
         $this->hooksRegistrar->register(new \EventManager\Taxonomies\Accessibility($this->wpService));
         $this->hooksRegistrar->register(new \EventManager\Taxonomies\Category($this->wpService));
         $this->hooksRegistrar->register(new \EventManager\Taxonomies\Municipality($this->wpService));
+    }
+
+    public function setupOrganizations(): void
+    {
+        $this->hooksRegistrar->register(new \EventManager\Organizations\OrganizationTaxonomy($this->wpService));
+        $this->hooksRegistrar->register(new \EventManager\Organizations\TaxonomyUserCountColumn($this->wpService));
     }
 
     public function setupUserRoles(): void
