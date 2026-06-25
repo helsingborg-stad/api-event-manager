@@ -5,13 +5,14 @@ namespace EventManager\Organizations;
 use EventManager\HooksRegistrar\Hookable;
 use WpService\Contracts\__;
 use WpService\Contracts\AddFilter;
+use WpService\Contracts\GetEditTermLink;
 use WpService\Contracts\GetTerm;
 use WpService\Contracts\GetUserdata;
 use WpService\Contracts\GetUserMeta;
 
 class UserTableOrganizationColumn implements Hookable
 {
-    public function __construct(private AddFilter&__&GetUserdata&GetUserMeta&GetTerm $wpService, private string $taxonomy)
+    public function __construct(private AddFilter&__&GetUserdata&GetUserMeta&GetTerm&GetEditTermLink $wpService, private string $taxonomy)
     {
     }
 
@@ -52,7 +53,7 @@ class UserTableOrganizationColumn implements Hookable
         foreach ((array) $organizationIds as $organizationId) {
             $term = $this->wpService->getTerm($organizationId, $this->taxonomy);
             if ($term && !$term instanceof \WP_Error) {
-                $organizationNames[] = $term->name;
+                $organizationNames[] = '<a href="' . $this->wpService->getEditTermLink($organizationId, $this->taxonomy) . '">' . $term->name . '</a>';
             }
         }
 
