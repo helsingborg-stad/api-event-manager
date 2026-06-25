@@ -17,13 +17,12 @@ use EventManager\TagReader\TagReader;
 use EventManager\ContentExpirationManagement\ExpiredEvents;
 use EventManager\CronScheduler\CronSchedulerInterface;
 use EventManager\HooksRegistrar\HooksRegistrarInterface;
-use WP_User;
 use WpService\WpService;
 
 class App
 {
     public function __construct(
-        private string $textDomain,
+        private AppConfigInterface $appConfig,
         private WpService $wpService,
         private AcfService $acfService,
         private HooksRegistrarInterface $hooksRegistrar,
@@ -33,7 +32,7 @@ class App
 
     public function loadPluginTextDomain(): void
     {
-        $loadTextDomain = new \EventManager\Helper\LoadTextDomain($this->textDomain, $this->wpService);
+        $loadTextDomain = new \EventManager\Helper\LoadTextDomain($this->appConfig->getTextDomain(), $this->wpService);
         $this->hooksRegistrar->register($loadTextDomain);
     }
 
@@ -64,7 +63,7 @@ class App
     public function setPostTermsFromPostContent(): void
     {
         $tagReader               = new TagReader();
-        $setPostTermsFromContent = new SetPostTermsFromContent('event', 'keyword', $tagReader, $this->wpService);
+        $setPostTermsFromContent = new SetPostTermsFromContent($this->appConfig->getEventPostType(), 'keyword', $tagReader, $this->wpService);
 
         $this->hooksRegistrar->register($setPostTermsFromContent);
     }
@@ -142,7 +141,7 @@ class App
 
     public function setupPostTypes(): void
     {
-        $eventPostType = new \EventManager\PostTypes\Event($this->wpService);
+        $eventPostType = new \EventManager\PostTypes\Event($this->wpService, $this->appConfig->getEventPostType());
         $this->hooksRegistrar->register($eventPostType);
     }
 
@@ -157,9 +156,13 @@ class App
 
     public function setupOrganizations(): void
     {
-        $taxonomy = 'organization';
+        $taxonomy = $this->appConfig->getOrganizationTaxonomy();
+
         $this->hooksRegistrar->register(new \EventManager\Organizations\OrganizationTaxonomy($this->wpService, $taxonomy));
         $this->hooksRegistrar->register(new \EventManager\Organizations\TaxonomyUserCountColumn($this->wpService, $taxonomy));
+        $this->hooksRegistrar->register(new \EventManager\Organizations\UserTableOrganizationColumn($this->wpService, $taxonomy));
+        $this->hooksRegistrar->register(new \EventManager\User\UserTableFilterForm\UserTableFilterForm($this->wpService));
+        $this->hooksRegistrar->register(new \EventManager\Organizations\UserTableOrganizationFilter($this->wpService, $taxonomy));
     }
 
     public function setupUserRoles(): void

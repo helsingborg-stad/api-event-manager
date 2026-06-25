@@ -3,12 +3,20 @@
 namespace EventManager\PostTypes;
 
 use EventManager\PostTypes\Icons\Icon;
+use WpService\Contracts\AddAction;
+use WpService\Contracts\RegisterPostType;
+use WpService\Contracts\__;
 
 class Event extends PostType
 {
+    public function __construct(AddAction&RegisterPostType&__ $wpService, private string $postType)
+    {
+        return parent::__construct($wpService);
+    }
+
     public function getName(): string
     {
-        return 'event';
+        return $this->postType;
     }
 
     public function getArgs(): array
