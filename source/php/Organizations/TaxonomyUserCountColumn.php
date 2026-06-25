@@ -7,14 +7,14 @@ use WpService\Contracts\__;
 
 class TaxonomyUserCountColumn implements Hookable
 {
-    public function __construct(private \WpService\Contracts\AddFilter&__ $wpService)
+    public function __construct(private \WpService\Contracts\AddFilter&__ $wpService, private string $taxonomy)
     {
     }
 
     public function addHooks(): void
     {
-        $this->wpService->addFilter('manage_edit-organization_columns', [$this, 'addUserCountColumn']);
-        $this->wpService->addFilter('manage_organization_custom_column', [$this, 'populateUserCountColumn'], 10, 3);
+        $this->wpService->addFilter('manage_edit-' . $this->taxonomy . '_columns', [$this, 'addUserCountColumn']);
+        $this->wpService->addFilter('manage_' . $this->taxonomy . '_custom_column', [$this, 'populateUserCountColumn'], 10, 3);
     }
 
     public function addUserCountColumn(array $columns): array

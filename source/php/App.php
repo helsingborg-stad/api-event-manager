@@ -157,8 +157,9 @@ class App
 
     public function setupOrganizations(): void
     {
-        $this->hooksRegistrar->register(new \EventManager\Organizations\OrganizationTaxonomy($this->wpService));
-        $this->hooksRegistrar->register(new \EventManager\Organizations\TaxonomyUserCountColumn($this->wpService));
+        $taxonomy = 'organization';
+        $this->hooksRegistrar->register(new \EventManager\Organizations\OrganizationTaxonomy($this->wpService, $taxonomy));
+        $this->hooksRegistrar->register(new \EventManager\Organizations\TaxonomyUserCountColumn($this->wpService, $taxonomy));
     }
 
     public function setupUserRoles(): void

@@ -3,9 +3,17 @@
 namespace EventManager\Organizations;
 
 use EventManager\Taxonomies\Taxonomy;
+use WpService\Contracts\__;
+use WpService\Contracts\AddAction;
+use WpService\Contracts\RegisterTaxonomy;
 
 class OrganizationTaxonomy extends Taxonomy
 {
+    public function __construct(protected AddAction&RegisterTaxonomy&__ $wpService, private string $taxonomy)
+    {
+        parent::__construct($wpService);
+    }
+
     public function addHooks(): void
     {
         parent::addHooks();
@@ -13,7 +21,7 @@ class OrganizationTaxonomy extends Taxonomy
 
     public function getName(): string
     {
-        return 'organization';
+        return $this->taxonomy;
     }
 
     public function getObjectType(): string
@@ -30,10 +38,10 @@ class OrganizationTaxonomy extends Taxonomy
             'meta_box_cb'  => false,
             'show_in_rest' => true,
             'capabilities' => [
-                'manage_terms' => 'manage_organizations',
-                'edit_terms'   => 'edit_organizations',
-                'delete_terms' => 'delete_organizations',
-                'assign_terms' => 'assign_organizations',
+                'manage_terms' => 'manage_' . $this->taxonomy,
+                'edit_terms'   => 'edit_' . $this->taxonomy,
+                'delete_terms' => 'delete_' . $this->taxonomy,
+                'assign_terms' => 'assign_' . $this->taxonomy,
             ],
         );
     }
