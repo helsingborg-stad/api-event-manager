@@ -43,7 +43,7 @@ msgid "Choose the accessibility features that will be available to attendees at 
 msgstr "Välj de tillgänglighetsfunktioner som kommer att vara tillgängliga för deltagarna vid detta evenemang."
 
 #: source/php/AcfFields/php/event-organizer-fields.php:8
-#: source/php/App.php:107
+#: source/php/App.php:106
 msgid "Organizer"
 msgstr "Arrangör"
 
@@ -355,8 +355,7 @@ msgid "Event Manager - User fields"
 msgstr "Eventhanterare - Användarfält"
 
 #: source/php/AcfFields/php/user-fields.php:12
-#: source/php/Organizations/OrganizationTaxonomy.php:81
-#: source/php/Taxonomies/Organization.php:79
+#: source/php/Organizations/OrganizationTaxonomy.php:56
 msgid "Organizations"
 msgstr "Arrangörer"
 
@@ -369,7 +368,7 @@ msgstr "Bestämmer vilka arrangör(er) denna användare har rätt att skapa even
 msgid "Failed to create organizer term: %s"
 msgstr "Misslyckades att skapa term för arrangören: %s"
 
-#: source/php/App.php:110
+#: source/php/App.php:109
 msgid "Location"
 msgstr "Plats"
 
@@ -381,11 +380,11 @@ msgstr "Dölj i backend-formulär"
 msgid "Hide in frontend forms"
 msgstr "Dölj i frontend-formulär"
 
-#: source/php/PostTypes/Event.php:30
+#: source/php/PostTypes/Event.php:38
 msgid "Event"
 msgstr "Evenemang"
 
-#: source/php/PostTypes/Event.php:35
+#: source/php/PostTypes/Event.php:43
 msgid "Events"
 msgstr "Evenemang"
 
@@ -467,8 +466,8 @@ msgstr "Kommun"
 msgid "Municipalities"
 msgstr "Kommuner"
 
-#: source/php/Organizations/OrganizationTaxonomy.php:76
-#: source/php/Taxonomies/Organization.php:74
+#: source/php/Organizations/OrganizationTaxonomy.php:51
+#: source/php/Organizations/UserTableOrganizationColumn.php:26
 msgid "Organization"
 msgstr "Arrangör"
 
@@ -539,33 +538,33 @@ msgstr ""
 
 #: source/php/Notifications/NotificationsConfig.php:52
 msgid "You have been added as an administrator for your organization. You can now manage your organization and its events. To set your password, please click the following link: {passwordResetUrl}"
-msgstr ""
+msgstr "Du har lagts till som administratör för din arrangör. Du kan nu hantera din arrangör och dess evenemang. För att ställa in ditt lösenord, vänligen klicka på följande länk: {passwordResetUrl}"
 
 #: source/php/Notifications/NotificationsEditor/NotificationsEditor.php:28
 msgid "Notifications"
-msgstr ""
+msgstr "Notiser"
 
 #: source/php/Notifications/NotificationsEditor/NotificationsEditor.php:35
 #, php-format
 msgid "Configure notifications sent out by the event manager, %suse markdown%s in the message field to format the content."
-msgstr ""
+msgstr "Konfigurera notiser som skickas ut av evenemangshanteraren, %sanvänd markdown%s i meddelandefältet för att formatera innehållet."
 
 #: source/php/Notifications/NotificationsEditor/NotificationsEditor.php:41
 msgid "New organization admin user"
-msgstr ""
+msgstr "Ny administratörsanvändare för arrangör"
 
 #: source/php/Notifications/NotificationsEditor/NotificationsEditor.php:45
 msgid "Subject"
-msgstr ""
+msgstr "Ämne"
 
 #: source/php/Notifications/NotificationsEditor/NotificationsEditor.php:53
 msgid "Message"
-msgstr ""
+msgstr "Meddelande"
 
 #: source/php/Notifications/NotificationsEditor/NotificationsEditor.php:56
 msgid "Variables available for use in the message: {username}, {passwordResetUrl}, {loginUrl}"
 msgstr ""
 
-#: source/php/Organizations/TaxonomyUserCountColumn.php:22
+#: source/php/Organizations/TaxonomyUserCountColumn.php:24
 msgid "User count"
 msgstr "Användare"

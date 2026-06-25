@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-06-25T05:52:10+00:00\n"
+"POT-Creation-Date: 2026-06-25T08:21:13+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: api-event-manager\n"
@@ -67,7 +67,7 @@ msgid "Choose the accessibility features that will be available to attendees at 
 msgstr ""
 
 #: source/php/AcfFields/php/event-organizer-fields.php:8
-#: source/php/App.php:107
+#: source/php/App.php:106
 msgid "Organizer"
 msgstr ""
 
@@ -379,8 +379,7 @@ msgid "Event Manager - User fields"
 msgstr ""
 
 #: source/php/AcfFields/php/user-fields.php:12
-#: source/php/Organizations/OrganizationTaxonomy.php:81
-#: source/php/Taxonomies/Organization.php:79
+#: source/php/Organizations/OrganizationTaxonomy.php:56
 msgid "Organizations"
 msgstr ""
 
@@ -393,7 +392,7 @@ msgstr ""
 msgid "Failed to create organizer term: %s"
 msgstr ""
 
-#: source/php/App.php:110
+#: source/php/App.php:109
 msgid "Location"
 msgstr ""
 
@@ -434,20 +433,20 @@ msgstr ""
 msgid "Variables available for use in the message: {username}, {passwordResetUrl}, {loginUrl}"
 msgstr ""
 
-#: source/php/Organizations/OrganizationTaxonomy.php:76
-#: source/php/Taxonomies/Organization.php:74
+#: source/php/Organizations/OrganizationTaxonomy.php:51
+#: source/php/Organizations/UserTableOrganizationColumn.php:26
 msgid "Organization"
 msgstr ""
 
-#: source/php/Organizations/TaxonomyUserCountColumn.php:22
+#: source/php/Organizations/TaxonomyUserCountColumn.php:24
 msgid "User count"
 msgstr ""
 
-#: source/php/PostTypes/Event.php:30
+#: source/php/PostTypes/Event.php:38
 msgid "Event"
 msgstr ""
 
-#: source/php/PostTypes/Event.php:35
+#: source/php/PostTypes/Event.php:43
 msgid "Events"
 msgstr ""
 
