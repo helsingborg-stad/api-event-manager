@@ -15,6 +15,7 @@ use EventManager\PostTableColumns\Helpers\GetNestedArrayStringValueRecursive;
 use EventManager\SetPostTermsFromContent\SetPostTermsFromContent;
 use EventManager\TagReader\TagReader;
 use EventManager\ContentExpirationManagement\ExpiredEvents;
+use EventManager\CreateUserWhenOrganizationCreated\CreateUserFromEmail;
 use EventManager\CronScheduler\CronSchedulerInterface;
 use EventManager\HooksRegistrar\HooksRegistrarInterface;
 use WpService\WpService;
@@ -238,7 +239,8 @@ class App
 
     public function createUserWhenOrganizationCreated(): void
     {
-        $createUserWhenOrganizationCreated = new CreateUserWhenOrganizationCreated\CreateUserWhenOrganizationCreated($this->wpService, $this->acfService);
+        $createUserFromEmail               = new \EventManager\Helper\CreateUserFromEmail($this->wpService);
+        $createUserWhenOrganizationCreated = new CreateUserWhenOrganizationCreated\CreateUserWhenOrganizationCreated($this->wpService, $this->acfService, $createUserFromEmail);
         $this->hooksRegistrar->register($createUserWhenOrganizationCreated);
     }
 

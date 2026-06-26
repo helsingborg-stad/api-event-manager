@@ -563,7 +563,7 @@ msgstr "Meddelande"
 
 #: source/php/Notifications/NotificationsEditor/NotificationsEditor.php:56
 msgid "Variables available for use in the message: {username}, {passwordResetUrl}, {loginUrl}"
-msgstr ""
+msgstr "Variabler som kan användas i meddelandet: {username}, {passwordResetUrl}, {loginUrl}"
 
 #: source/php/Organizations/TaxonomyUserCountColumn.php:24
 msgid "User count"

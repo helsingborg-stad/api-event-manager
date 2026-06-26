@@ -38,10 +38,6 @@ class TaxonomyUserCountColumn implements Hookable
     {
         $count = $this->getUserCountForTerm($term_id);
 
-        if ($count === 0) {
-            return '0';
-        }
-
         return '<a href="' . $this->getUserTableHref($term_id) . '">' . $count . '</a>';
     }
 
