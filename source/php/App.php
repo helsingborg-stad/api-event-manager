@@ -15,7 +15,6 @@ use EventManager\PostTableColumns\Helpers\GetNestedArrayStringValueRecursive;
 use EventManager\SetPostTermsFromContent\SetPostTermsFromContent;
 use EventManager\TagReader\TagReader;
 use EventManager\ContentExpirationManagement\ExpiredEvents;
-use EventManager\CreateUserWhenOrganizationCreated\CreateUserFromEmail;
 use EventManager\CronScheduler\CronSchedulerInterface;
 use EventManager\HooksRegistrar\HooksRegistrarInterface;
 use WpService\WpService;
@@ -164,6 +163,7 @@ class App
         $this->hooksRegistrar->register(new \EventManager\Organizations\UserTableOrganizationColumn($this->wpService, $taxonomy));
         $this->hooksRegistrar->register(new \EventManager\User\UserTableFilterForm\UserTableFilterForm($this->wpService));
         $this->hooksRegistrar->register(new \EventManager\Organizations\UserTableOrganizationFilter($this->wpService, $taxonomy));
+        $this->hooksRegistrar->register(new \EventManager\Organizations\MissingOrganizationAdminNotice($this->wpService, $this->acfService, $this->createOrganizationAdminUser(), $taxonomy));
     }
 
     public function setupUserRoles(): void
@@ -239,9 +239,25 @@ class App
 
     public function createUserWhenOrganizationCreated(): void
     {
-        $createUserFromEmail               = new \EventManager\Helper\CreateUserFromEmail($this->wpService);
-        $createUserWhenOrganizationCreated = new CreateUserWhenOrganizationCreated\CreateUserWhenOrganizationCreated($this->wpService, $this->acfService, $createUserFromEmail);
+        $createUserWhenOrganizationCreated = new CreateUserWhenOrganizationCreated\CreateUserWhenOrganizationCreated(
+            $this->wpService,
+            $this->createOrganizationAdminUser()
+        );
         $this->hooksRegistrar->register($createUserWhenOrganizationCreated);
+    }
+
+    /**
+     * Creates the shared service used to create and connect organization administrator users.
+     */
+    private function createOrganizationAdminUser(): \EventManager\Organizations\CreateOrganizationAdminUser
+    {
+        $createUserFromEmail = new \EventManager\Helper\CreateUserFromEmail($this->wpService);
+
+        return new \EventManager\Organizations\CreateOrganizationAdminUser(
+            $this->wpService,
+            $this->acfService,
+            $createUserFromEmail
+        );
     }
 
     public function setupFeatureToShowOrHideAcfFieldsOnFrontendAndInAdmin(): void

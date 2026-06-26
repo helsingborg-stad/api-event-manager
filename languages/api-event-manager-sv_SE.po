@@ -467,7 +467,7 @@ msgid "Municipalities"
 msgstr "Kommuner"
 
 #: source/php/Organizations/OrganizationTaxonomy.php:51
-#: source/php/Organizations/UserTableOrganizationColumn.php:26
+#: source/php/Organizations/UserTableOrganizationColumn.php:27
 msgid "Organization"
 msgstr "Arrangör"
 
@@ -568,3 +568,28 @@ msgstr "Variabler som kan användas i meddelandet: {username}, {passwordResetUrl
 #: source/php/Organizations/TaxonomyUserCountColumn.php:24
 msgid "User count"
 msgstr "Användare"
+
+#: source/php/Organizations/MissingOrganizationAdminNotice.php:84
+msgid "Organization administrator user created."
+msgstr "Administratörsanvändare för arrangören skapad."
+
+#: source/php/Organizations/MissingOrganizationAdminNotice.php:89
+msgid "Unable to create organization administrator user."
+msgstr "Kunde inte skapa administratörsanvändare för arrangören."
+
+#: source/php/Organizations/MissingOrganizationAdminNotice.php:117
+msgid "Add an email address to this organization before creating an administrator user."
+msgstr "Lägg till en e-postadress till denna arrangör innan du skapar en administratörsanvändare."
+
+#: source/php/Organizations/MissingOrganizationAdminNotice.php:217
+msgid "No organization administrator is connected to this organization."
+msgstr "Ingen administratörsanvändare är kopplad till denna arrangör."
+
+#: source/php/Organizations/MissingOrganizationAdminNotice.php:219
+#, php-format
+msgid "Create organization administrator for %s."
+msgstr "Skapa administratörsanvändare för arrangör %s."
+
+#: source/php/Organizations/MissingOrganizationAdminNotice.php:223
+msgid "Create organization administrator"
+msgstr "Skapa administratörsanvändare för arrangör"

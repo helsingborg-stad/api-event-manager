@@ -2,20 +2,16 @@
 
 namespace EventManager\CreateUserWhenOrganizationCreated;
 
-use AcfService\Contracts\UpdateField;
 use EventManager\AcfSavePostActions\CreateNewOrganizerFromEventSubmit\OrganizerData\IOrganizerData;
-use EventManager\Helper\CreateUserFromEmailInterface;
 use EventManager\HooksRegistrar\Hookable;
+use EventManager\Organizations\CreateOrganizationAdminUser;
 use WpService\Contracts\AddAction;
-use WpService\Contracts\DoAction;
-use WpService\Contracts\WpUpdateUser;
 
 class CreateUserWhenOrganizationCreated implements Hookable
 {
     public function __construct(
-        private AddAction&WpUpdateUser&DoAction $wpService,
-        private UpdateField $acfService,
-        private CreateUserFromEmailInterface $createUserFromEmail
+        private AddAction $wpService,
+        private CreateOrganizationAdminUser $createOrganizationAdminUser
     ) {
     }
 
@@ -39,18 +35,12 @@ class CreateUserWhenOrganizationCreated implements Hookable
 
         foreach ($organizersData as $organizerData) {
             try {
-                $wpUser = $this->createUserFromEmail->createUserFromEmail($organizerData->getEmail());
+                $this->createOrganizationAdminUser->create($termId, $organizerData->getEmail());
             } catch (\Exception $e) {
                 // Log error or handle it as needed. For now, we'll just skip creating this user.
                 error_log('Error creating user for organizer ' . $organizerData->getName() . ': ' . $e->getMessage());
                 continue;
             }
-
-            $wpUser->set_role('organization_administrator');
-            $this->wpService->wpUpdateUser($wpUser);
-            $this->acfService->updateField('organizations', [$termId], 'user_' . $wpUser->ID);
-
-            $this->wpService->doAction('EventManager/OrganizationUserCreated', $wpUser);
         }
     }
 }

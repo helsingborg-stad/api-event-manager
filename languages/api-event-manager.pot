@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-06-25T08:21:13+00:00\n"
+"POT-Creation-Date: 2026-06-26T05:29:22+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: api-event-manager\n"
@@ -433,8 +433,33 @@ msgstr ""
 msgid "Variables available for use in the message: {username}, {passwordResetUrl}, {loginUrl}"
 msgstr ""
 
+#: source/php/Organizations/MissingOrganizationAdminNotice.php:84
+msgid "Organization administrator user created."
+msgstr ""
+
+#: source/php/Organizations/MissingOrganizationAdminNotice.php:89
+msgid "Unable to create organization administrator user."
+msgstr ""
+
+#: source/php/Organizations/MissingOrganizationAdminNotice.php:117
+msgid "Add an email address to this organization before creating an administrator user."
+msgstr ""
+
+#: source/php/Organizations/MissingOrganizationAdminNotice.php:217
+msgid "No organization administrator is connected to this organization."
+msgstr ""
+
+#: source/php/Organizations/MissingOrganizationAdminNotice.php:219
+#, php-format
+msgid "Create organization administrator for %s."
+msgstr ""
+
+#: source/php/Organizations/MissingOrganizationAdminNotice.php:223
+msgid "Create organization administrator"
+msgstr ""
+
 #: source/php/Organizations/OrganizationTaxonomy.php:51
-#: source/php/Organizations/UserTableOrganizationColumn.php:26
+#: source/php/Organizations/UserTableOrganizationColumn.php:27
 msgid "Organization"
 msgstr ""
 
