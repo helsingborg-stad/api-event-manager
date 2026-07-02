@@ -24,8 +24,10 @@ class UserTableOrganizationColumn implements Hookable
 
     public function addOrganizationColumn(array $columns): array
     {
-        $columns['organization'] = $this->wpService->__('Organization', 'api-event-manager');
-        return $columns;
+        return [
+            ...$columns,
+            'organization' => $this->wpService->__('Organization', 'api-event-manager')
+        ];
     }
 
     public function populateOrganizationColumn(string $content, string $column_name, int $userId): string

@@ -159,11 +159,16 @@ class App
         $taxonomy = $this->appConfig->getOrganizationTaxonomy();
 
         $this->hooksRegistrar->register(new \EventManager\Organizations\OrganizationTaxonomy($this->wpService, $taxonomy));
-        $this->hooksRegistrar->register(new \EventManager\Organizations\TaxonomyUserCountColumn($this->wpService, $taxonomy));
-        $this->hooksRegistrar->register(new \EventManager\Organizations\UserTableOrganizationColumn($this->wpService, $taxonomy));
-        $this->hooksRegistrar->register(new \EventManager\User\UserTableFilterForm\UserTableFilterForm($this->wpService));
-        $this->hooksRegistrar->register(new \EventManager\Organizations\UserTableOrganizationFilter($this->wpService, $taxonomy));
-        $this->hooksRegistrar->register(new \EventManager\Organizations\MissingOrganizationAdminNotice($this->wpService, $this->acfService, $this->createOrganizationAdminUser(), $taxonomy));
+
+        $this->wpService->addAction('init', function () use ($taxonomy) {
+            if ($this->wpService->currentUserCan('administrator')) {
+                $this->hooksRegistrar->register(new \EventManager\Organizations\TaxonomyUserCountColumn($this->wpService, $taxonomy));
+                $this->hooksRegistrar->register(new \EventManager\Organizations\UserTableOrganizationColumn($this->wpService, $taxonomy));
+                $this->hooksRegistrar->register(new \EventManager\User\UserTableFilterForm\UserTableFilterForm($this->wpService));
+                $this->hooksRegistrar->register(new \EventManager\Organizations\UserTableOrganizationFilter($this->wpService, $taxonomy));
+                $this->hooksRegistrar->register(new \EventManager\Organizations\MissingOrganizationAdminNotice($this->wpService, $this->acfService, $this->createOrganizationAdminUser(), $taxonomy));
+            }
+        });
     }
 
     public function setupUserRoles(): void
