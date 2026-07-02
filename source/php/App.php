@@ -187,6 +187,7 @@ class App
         $userBelongsToOrganization           = new \EventManager\User\UserHasCap\Implementations\Helpers\UserBelongsToOrganization($this->acfService);
 
         $capabilities = [
+            new \EventManager\User\UserHasCap\Implementations\AssignEventTerms(),
             new \EventManager\User\UserHasCap\Implementations\EditEvents(),
             new \EventManager\User\UserHasCap\Implementations\EditEvent($postBelongsToSameOrganizationAsUser, $this->wpService),
             new \EventManager\User\UserHasCap\Implementations\EditOthersEvents(),

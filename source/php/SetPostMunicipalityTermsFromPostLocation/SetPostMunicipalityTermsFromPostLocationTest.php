@@ -12,6 +12,11 @@ use WpService\Implementations\FakeWpService;
 
 class SetPostMunicipalityTermsFromPostLocationTest extends TestCase
 {
+    protected function tearDown(): void
+    {
+        unset($_POST['tax_input']);
+    }
+
     /**
      * @testdox can be instantiated
      */
@@ -42,6 +47,22 @@ class SetPostMunicipalityTermsFromPostLocationTest extends TestCase
     {
         $wpService  = new FakeWpService();
         $acfService = new FakeAcfService(['getField' => $acfField]);
+        $sut        = new SetPostMunicipalityTermsFromPostLocation($wpService, $acfService);
+
+        $sut->postUpdated(123);
+
+        static::assertArrayNotHasKey('wpSetPostTerms', $wpService->methodCalls);
+    }
+
+    /**
+     * @testdox does not overwrite an explicitly submitted municipality term
+     */
+    public function testDoesNotOverwriteAnExplicitlySubmittedMunicipalityTerm(): void
+    {
+        $_POST['tax_input'] = ['municipality' => 'Landskrona kommun'];
+
+        $wpService  = new FakeWpService();
+        $acfService = new FakeAcfService(['getField' => ['address_locality' => 'Helsingborgs kommun']]);
         $sut        = new SetPostMunicipalityTermsFromPostLocation($wpService, $acfService);
 
         $sut->postUpdated(123);
