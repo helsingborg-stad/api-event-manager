@@ -28,7 +28,7 @@ class AppTest extends TestCase
     public function testInstantiation()
     {
         $app = new App(
-            'textdomain',
+            new AppConfig(),
             $this->getWpService(),
             $this->createMock(AcfService::class),
             $this->createMock(HooksRegistrarInterface::class),
@@ -45,7 +45,7 @@ class AppTest extends TestCase
     public function testAllFunctions(string $method)
     {
         $app = new App(
-            'textdomain',
+            new AppConfig(),
             $this->getWpService(),
             $this->createMock(AcfService::class),
             $this->createMock(HooksRegistrarInterface::class),

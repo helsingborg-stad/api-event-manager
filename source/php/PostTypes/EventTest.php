@@ -17,7 +17,7 @@ class EventTest extends TestCase
      */
     public function testGetName()
     {
-        $eventPostType = new Event(static::createWpService());
+        $eventPostType = new Event(static::createWpService(), 'event');
         static::assertSame('event', $eventPostType->getName());
     }
 
@@ -26,7 +26,7 @@ class EventTest extends TestCase
      */
     public function testGetArgs()
     {
-        $eventPostType = new Event(static::createWpService());
+        $eventPostType = new Event(static::createWpService(), 'event');
         $args          = $eventPostType->getArgs();
 
         static::assertArrayHasKey('show_in_rest', $args);
@@ -38,7 +38,7 @@ class EventTest extends TestCase
      */
     public function testGetLabelSingular()
     {
-        $eventPostType = new Event(static::createWpService());
+        $eventPostType = new Event(static::createWpService(), 'event');
         static::assertSame('Event', $eventPostType->getLabelSingular());
     }
 
@@ -47,7 +47,7 @@ class EventTest extends TestCase
      */
     public function testGetLabelPlural()
     {
-        $eventPostType = new Event(static::createWpService());
+        $eventPostType = new Event(static::createWpService(), 'event');
         static::assertSame('Events', $eventPostType->getLabelPlural());
     }
 

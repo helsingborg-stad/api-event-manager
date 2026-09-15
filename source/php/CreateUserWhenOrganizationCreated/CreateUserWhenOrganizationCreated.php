@@ -2,22 +2,17 @@
 
 namespace EventManager\CreateUserWhenOrganizationCreated;
 
-use AcfService\Contracts\UpdateField;
 use EventManager\AcfSavePostActions\CreateNewOrganizerFromEventSubmit\OrganizerData\IOrganizerData;
 use EventManager\HooksRegistrar\Hookable;
+use EventManager\Organizations\CreateOrganizationAdminUser;
 use WpService\Contracts\AddAction;
-use WpService\Contracts\DoAction;
-use WpService\Contracts\GetUserBy;
-use WpService\Contracts\GetUserdata;
-use WpService\Contracts\WpCreateUser;
-use WpService\Contracts\WpGeneratePassword;
-use WpService\Contracts\WpNewUserNotification;
-use WpService\Contracts\WpUpdateUser;
 
 class CreateUserWhenOrganizationCreated implements Hookable
 {
-    public function __construct(private AddAction&GetUserBy&WpCreateUser&WpGeneratePassword&GetUserdata&WpUpdateUser&DoAction $wpService, private UpdateField $acfService)
-    {
+    public function __construct(
+        private AddAction $wpService,
+        private CreateOrganizationAdminUser $createOrganizationAdminUser
+    ) {
     }
 
     public function addHooks(): void
@@ -39,28 +34,13 @@ class CreateUserWhenOrganizationCreated implements Hookable
         }
 
         foreach ($organizersData as $organizerData) {
-            $existingUser = $this->wpService->getUserBy('email', $organizerData->getEmail());
-
-            if ($existingUser !== false) {
-                continue;
-            }
-
-            $password = $this->wpService->wpGeneratePassword();
-            $userId   = $this->wpService->wpCreateUser($organizerData->getEmail(), $password, $organizerData->getEmail());
-
-            if ($userId instanceof \WP_Error) {
+            try {
+                $this->createOrganizationAdminUser->create($termId, $organizerData->getEmail());
+            } catch (\Exception $e) {
                 // Log error or handle it as needed. For now, we'll just skip creating this user.
-                error_log('Error creating user for organizer ' . $organizerData->getName() . ': ' . $userId->get_error_message());
+                error_log('Error creating user for organizer ' . $organizerData->getName() . ': ' . $e->getMessage());
                 continue;
             }
-
-            // Set user role to organization_administrator
-            $wpUser = $this->wpService->getUserdata($userId);
-            $wpUser->set_role('organization_administrator');
-            $this->wpService->wpUpdateUser($wpUser);
-            $this->acfService->updateField('organizations', [$termId], 'user_' . $userId);
-
-            $this->wpService->doAction('EventManager/OrganizationUserCreated', $wpUser);
         }
     }
 }

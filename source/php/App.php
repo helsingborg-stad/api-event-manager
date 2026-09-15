@@ -17,13 +17,12 @@ use EventManager\TagReader\TagReader;
 use EventManager\ContentExpirationManagement\ExpiredEvents;
 use EventManager\CronScheduler\CronSchedulerInterface;
 use EventManager\HooksRegistrar\HooksRegistrarInterface;
-use WP_User;
 use WpService\WpService;
 
 class App
 {
     public function __construct(
-        private string $textDomain,
+        private AppConfigInterface $appConfig,
         private WpService $wpService,
         private AcfService $acfService,
         private HooksRegistrarInterface $hooksRegistrar,
@@ -33,7 +32,7 @@ class App
 
     public function loadPluginTextDomain(): void
     {
-        $loadTextDomain = new \EventManager\Helper\LoadTextDomain($this->textDomain, $this->wpService);
+        $loadTextDomain = new \EventManager\Helper\LoadTextDomain($this->appConfig->getTextDomain(), $this->wpService);
         $this->hooksRegistrar->register($loadTextDomain);
     }
 
@@ -64,7 +63,7 @@ class App
     public function setPostTermsFromPostContent(): void
     {
         $tagReader               = new TagReader();
-        $setPostTermsFromContent = new SetPostTermsFromContent('event', 'keyword', $tagReader, $this->wpService);
+        $setPostTermsFromContent = new SetPostTermsFromContent($this->appConfig->getEventPostType(), 'keyword', $tagReader, $this->wpService);
 
         $this->hooksRegistrar->register($setPostTermsFromContent);
     }
@@ -142,18 +141,34 @@ class App
 
     public function setupPostTypes(): void
     {
-        $eventPostType = new \EventManager\PostTypes\Event($this->wpService);
+        $eventPostType = new \EventManager\PostTypes\Event($this->wpService, $this->appConfig->getEventPostType());
         $this->hooksRegistrar->register($eventPostType);
     }
 
     public function setupTaxonomies(): void
     {
         $this->hooksRegistrar->register(new \EventManager\Taxonomies\Audience($this->wpService));
-        $this->hooksRegistrar->register(new \EventManager\Taxonomies\Organization($this->wpService));
         $this->hooksRegistrar->register(new \EventManager\Taxonomies\Keyword($this->wpService));
         $this->hooksRegistrar->register(new \EventManager\Taxonomies\Accessibility($this->wpService));
         $this->hooksRegistrar->register(new \EventManager\Taxonomies\Category($this->wpService));
         $this->hooksRegistrar->register(new \EventManager\Taxonomies\Municipality($this->wpService));
+    }
+
+    public function setupOrganizations(): void
+    {
+        $taxonomy = $this->appConfig->getOrganizationTaxonomy();
+
+        $this->hooksRegistrar->register(new \EventManager\Organizations\OrganizationTaxonomy($this->wpService, $taxonomy));
+
+        $this->wpService->addAction('init', function () use ($taxonomy) {
+            if ($this->wpService->currentUserCan('administrator')) {
+                $this->hooksRegistrar->register(new \EventManager\Organizations\TaxonomyUserCountColumn($this->wpService, $taxonomy));
+                $this->hooksRegistrar->register(new \EventManager\Organizations\UserTableOrganizationColumn($this->wpService, $taxonomy));
+                $this->hooksRegistrar->register(new \EventManager\User\UserTableFilterForm\UserTableFilterForm($this->wpService));
+                $this->hooksRegistrar->register(new \EventManager\Organizations\UserTableOrganizationFilter($this->wpService, $taxonomy));
+                $this->hooksRegistrar->register(new \EventManager\Organizations\MissingOrganizationAdminNotice($this->wpService, $this->acfService, $this->createOrganizationAdminUser(), $taxonomy));
+            }
+        });
     }
 
     public function setupUserRoles(): void
@@ -230,8 +245,25 @@ class App
 
     public function createUserWhenOrganizationCreated(): void
     {
-        $createUserWhenOrganizationCreated = new CreateUserWhenOrganizationCreated\CreateUserWhenOrganizationCreated($this->wpService, $this->acfService);
+        $createUserWhenOrganizationCreated = new CreateUserWhenOrganizationCreated\CreateUserWhenOrganizationCreated(
+            $this->wpService,
+            $this->createOrganizationAdminUser()
+        );
         $this->hooksRegistrar->register($createUserWhenOrganizationCreated);
+    }
+
+    /**
+     * Creates the shared service used to create and connect organization administrator users.
+     */
+    private function createOrganizationAdminUser(): \EventManager\Organizations\CreateOrganizationAdminUser
+    {
+        $createUserFromEmail = new \EventManager\Helper\CreateUserFromEmail($this->wpService);
+
+        return new \EventManager\Organizations\CreateOrganizationAdminUser(
+            $this->wpService,
+            $this->acfService,
+            $createUserFromEmail
+        );
     }
 
     public function setupFeatureToShowOrHideAcfFieldsOnFrontendAndInAdmin(): void

@@ -16,6 +16,7 @@
 use AcfService\Implementations\NativeAcfService;
 use EventManager\HooksRegistrar\HooksRegistrar;
 use EventManager\App;
+use EventManager\AppConfig;
 use EventManager\CronScheduler\CronScheduler;
 use WpService\Implementations\NativeWpService;
 
@@ -44,7 +45,7 @@ $cronScheduler = new CronScheduler($wpService);
 $hooksRegistrar->register($cronScheduler);
 
 $app = new App(
-    'api-event-manager',
+    new AppConfig(),
     $wpService,
     $acfService,
     $hooksRegistrar,
@@ -63,6 +64,7 @@ $app->modifyAdminTablesColumns();
 $app->disableGutenbergEditor();
 $app->setupPostTypes();
 $app->setupTaxonomies();
+$app->setupOrganizations();
 $app->setupUserRoles();
 $app->setupUserCapabilities();
 $app->setupAcfFieldContentModifiers();
